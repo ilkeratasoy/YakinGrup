@@ -3,7 +3,10 @@
    ========================================================================== */
 
 // Global State
-let currentLang = localStorage.getItem('yakin_lang') || 'tr';
+let currentLang = localStorage.getItem('yakin_lang');
+if (!currentLang) {
+  currentLang = navigator.language.toLowerCase().startsWith('tr') ? 'tr' : 'en';
+}
 let activeSector = sessionStorage.getItem('yakin_sector') || null; // 'construction', 'energy' or null (splash)
 let constSlideIndex = 0;
 let energySlideIndex = 0;
@@ -18,6 +21,7 @@ const TRANSLATIONS = {
     nav_services: "Hizmetlerimiz",
     nav_partners: "İş Ortaklarımız",
     nav_marketplace: "Online Mağaza",
+    nav_energy_it: "Siber Güvenlik & IT",
     nav_contact: "İletişim",
     btn_explore: "Keşfet",
     btn_view_details: "Hizmetlerimizi İncele",
@@ -103,6 +107,10 @@ const TRANSLATIONS = {
     c_hero1_desc: "Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli (mission-critical) veri merkezleri inşası.",
     c_hero2_title: "Ağır Sanayi Tesisleri",
     c_hero2_desc: "Fabrikalar, dökümhaneler ve enerji üretim santrallerinde mühendislik ve anahtar teslim taahhüt.",
+    c_hero3_title: "Konut ve Yaşam Projeleri",
+    c_hero3_desc: "Modern mimari, yenilikçi yaklaşım ve ileri mühendislikle tasarlanan lüks yaşam kompleksleri.",
+    c_hero4_title: "Yapı Mühendisliği & Müşavirlik",
+    c_hero4_desc: "İleri seviye deprem mühendisliği, BIM entegrasyonu ve kapsamlı teknik projelendirme.",
     c_about_heading: "Yakın Grup İnşaat Mühendisliği",
     c_about_lead: "Endüstriyel vizyonumuz ve teknik tecrübemiz ile yapı sektöründe sınırları çiziyoruz.",
     c_about_body: "Mühendislik temelli yaklaşımımız, ağır inşaat projelerinde en yüksek uluslararası standartları garanti eder. Veri merkezlerinden konut ve sanayi yapılarına kadar her yapıda üstün kalite, dayanıklılık ve sürdürülebilir yöntemler uyguluyoruz.",
@@ -112,6 +120,10 @@ const TRANSLATIONS = {
     e_hero1_desc: "Arazi ve Çatı tipi GES EPC projelerinde yüksek kapasite verimlilik entegrasyonu.",
     e_hero2_title: "Akıllı Bina & Siber Güvenlik",
     e_hero2_desc: "Tesis otomasyon sistemleri ve zayıf akım tasarımları ile veri merkezleri için IT güvenliği.",
+    e_hero3_title: "Hibrit Enerji & Batarya Depolama",
+    e_hero3_desc: "Güneş ve rüzgar enerjisi sistemlerini lityum batarya (BESS) teknolojileriyle entegre ediyoruz.",
+    e_hero4_title: "Veri Merkezi & Ağ Mimarisi",
+    e_hero4_desc: "Tier sertifikalı veri merkezlerinde omurga ağ kurulumu, sunucu optimizasyonu ve zayıf akım çözümleri.",
     e_about_heading: "Yakın Grup Enerji & Akıllı Altyapı",
     e_about_lead: "Doğa ile uyumlu yenilenebilir enerji kaynakları ve yapay zeka entegreli yönetim teknolojileri.",
     e_about_body: "Sürdürülebilir kalkınmanın merkezine yenilenebilir enerjiyi koyuyoruz. Huawei, ABB, Vertiv gibi küresel markalar ile iş birliği içinde yüksek verimliliğe odaklanıyor, akıllı kontrol şebekeleri ve güvenli ağ mimarileri geliştiriyoruz.",
@@ -134,6 +146,7 @@ const TRANSLATIONS = {
     nav_services: "Services",
     nav_partners: "Technology Partners",
     nav_marketplace: "Shop / Marketplace",
+    nav_energy_it: "Cybersecurity & IT",
     nav_contact: "Contact",
     btn_explore: "Explore",
     btn_view_details: "Discover Solutions",
@@ -215,6 +228,10 @@ const TRANSLATIONS = {
     c_hero1_desc: "Tier III and Tier IV certified critical facilities building from site design to operations.",
     c_hero2_title: "Industrial Plant Engineering",
     c_hero2_desc: "Turnkey EPC construction for factories, metal foundries, and thermal / solar power fields.",
+    c_hero3_title: "Residential & Lifestyle Projects",
+    c_hero3_desc: "Luxury residential complexes designed with modern architecture, innovative approaches, and advanced engineering.",
+    c_hero4_title: "Structural Engineering & Consulting",
+    c_hero4_desc: "Advanced seismic engineering, BIM integration, and comprehensive technical project design.",
     c_about_heading: "Yakin Group Heavy Engineering",
     c_about_lead: "Pushing infrastructural limits through premium systems design and execution.",
     c_about_body: "Our heavy construction framework implements international directives. From mission-critical server environments to urban housing developments, we ensure engineering resilience.",
@@ -224,6 +241,10 @@ const TRANSLATIONS = {
     e_hero1_desc: "Strategic roof and terrestrial PV solar plant design, procurement, and site EPC management.",
     e_hero2_title: "Smart Facility Integration",
     e_hero2_desc: "Building management networks, structural low-voltage circuits, and data security nodes.",
+    e_hero3_title: "Hybrid Energy & Battery Storage",
+    e_hero3_desc: "Integrating solar and wind energy systems with advanced lithium battery (BESS) technologies.",
+    e_hero4_title: "Data Center & Network Architecture",
+    e_hero4_desc: "Backbone network installation, server optimization, and low-voltage solutions for Tier-certified data centers.",
     e_about_heading: "Yakin Group Energy & Intelligence",
     e_about_lead: "Interfacing eco-friendly grid distribution with machine-learning industrial optimization.",
     e_about_body: "Sustainability powers our future. Operating alongside global giants like Huawei, Vertiv, and ABB, we build intelligent energy collection layouts and secure network routing systems.",
