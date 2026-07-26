@@ -267,7 +267,7 @@ const CONSTRUCTION_SERVICES = [
       "Clean-agent fire extinguishing compartment engineering",
       "Fast-track scheduling and building acceleration management"
     ],
-    img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/construction_hero_1784577666966.png"
+    img: "assets/images/construction_hero_1784577666966.png"
   },
   {
     icon: "🏭",
@@ -291,7 +291,7 @@ const CONSTRUCTION_SERVICES = [
       "Large-span heavy steel frame configuration",
       "Structural rehabilitation and plant size extension"
     ],
-    img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/heavy_industry_factory_1785010003542.png"
+    img: "assets/images/heavy_industry_factory_1785010003542.png"
   },
   {
     icon: "🏡",
@@ -311,7 +311,7 @@ const CONSTRUCTION_SERVICES = [
       "Urban regeneration zone construction",
       "LEED/BREEAM certified smart houses"
     ],
-    img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/residential_luxury_project_1785010053703.png"
+    img: "assets/images/residential_luxury_project_1785010053703.png"
   },
   {
     icon: "📐",
@@ -333,7 +333,7 @@ const CONSTRUCTION_SERVICES = [
       "Operational HSE supervision and QA/QC quality assurance",
       "Retrofitting structures for severe seismic events"
     ],
-    img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/civil_engineering_bim_1785010076530.png"
+    img: "assets/images/civil_engineering_bim_1785010076530.png"
   },
   {
     icon: "💼",
@@ -353,7 +353,7 @@ const CONSTRUCTION_SERVICES = [
       "FIDIC matching international contract advisory",
       "Subcontractor pre-qualification analysis"
     ],
-    img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/tender_contract_management_1785010026255.png"
+    img: "assets/images/tender_contract_management_1785010026255.png"
   },
   {
     icon: "📈",
@@ -371,7 +371,7 @@ const CONSTRUCTION_SERVICES = [
       "Structuring project capital allocations",
       "Construction cost budget control and risk estimation"
     ],
-    img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/investment_finance_real_estate_1785010111511.png"
+    img: "assets/images/investment_finance_real_estate_1785010111511.png"
   }
 ];
 
@@ -1240,16 +1240,16 @@ function showToast(message) {
 // Lightbox modal handler
 const GALLERY_DB = {
   construction: [
-    { title: "T-3 Veri Merkezi Yapımı", sub: "Ankara / Türkiye", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/gallery_datacenter_1785092833568.png" },
-    { title: "Uluslararası Havalimanı Terminali", sub: "İzmir / Türkiye", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/construction_hero_1784577666966.png" },
-    { title: "Vadi Konakları Yaşam Kompleksi", sub: "İstanbul / Türkiye", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/gallery_vadi_mansion_1785092899049.png" },
-    { title: "Yapı Güçlendirme & BIM Tasarımı", sub: "Deprem Mühendisliği", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/gallery_seismic_retrofitting_1785092947617.png" }
+    { title: "T-3 Veri Merkezi Yapımı", sub: "Ankara / Türkiye", img: "assets/images/gallery_datacenter_1785092833568.png" },
+    { title: "Uluslararası Havalimanı Terminali", sub: "İzmir / Türkiye", img: "assets/images/construction_hero_1784577666966.png" },
+    { title: "Vadi Konakları Yaşam Kompleksi", sub: "İstanbul / Türkiye", img: "assets/images/gallery_vadi_mansion_1785092899049.png" },
+    { title: "Yapı Güçlendirme & BIM Tasarımı", sub: "Deprem Mühendisliği", img: "assets/images/gallery_seismic_retrofitting_1785092947617.png" }
   ],
   energy: [
-    { title: "150 MW Arazi GES Kurulumu", sub: "Konya / Türkiye", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/energy_hero_1784577681830.png" },
-    { title: "Akıllı Kamu Binası Otomasyonu", sub: "İzmir / Türkiye", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/yakin_grup_headquarters_1784577698669.png" },
-    { title: "Sertifikalı Tier III Veri Merkezi Beyaz Alan", sub: "Bursa / Türkiye", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/construction_hero_1784577666966.png" },
-    { title: "Siber Güvenlik Omurga Kurulumu", sub: "Finans Kurumu", img: "../../brain/8449d998-1892-4797-9722-c13cb25f75cf/energy_hero_1784577681830.png" }
+    { title: "150 MW Arazi GES Kurulumu", sub: "Konya / Türkiye", img: "assets/images/energy_hero_1784577681830.png" },
+    { title: "Akıllı Kamu Binası Otomasyonu", sub: "İzmir / Türkiye", img: "assets/images/yakin_grup_headquarters_1784577698669.png" },
+    { title: "Sertifikalı Tier III Veri Merkezi Beyaz Alan", sub: "Bursa / Türkiye", img: "assets/images/construction_hero_1784577666966.png" },
+    { title: "Siber Güvenlik Omurga Kurulumu", sub: "Finans Kurumu", img: "assets/images/energy_hero_1784577681830.png" }
   ]
 };
 
