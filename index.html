@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yakın Grup — Enerji ve İnşaat Kurumsal Web Sitesi</title>
+  <meta name="description" content="Yakın Grup holding çatısı altında veri merkezi inşaatları, yenilenebilir enerji, akıllı mühendislik çözümleri ve B2B/B2C altyapı hizmetleri sunmaktadır.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading-state">
+
+  <!-- Splash Screen (Karşılama Ekranı) -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-header">
+      <div class="logo">
+        <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
+      </div>
+      <div class="splash-controls">
+        <button class="lang-btn" id="splash-lang-btn" onclick="toggleLanguage()">EN</button>
+      </div>
+    </div>
+
+    <div class="splash-split">
+      <!-- Construction Panel -->
+      <div class="splash-panel construction-panel" onclick="selectSector('construction')">
+        <div class="panel-background" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/construction_hero_1784577666966.png');"></div>
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <div class="panel-badge" data-i18n="tag_construction">İNŞAAT & TAAHHÜT</div>
+          <h2 class="panel-title" data-i18n="splash_const_title">Geleceğin Güçlü Altyapıları</h2>
+          <p class="panel-desc" data-i18n="splash_const_desc">Veri merkezleri, endüstriyel tesisler ve ağır mühendislik taahhüt projelerinde küresel standartlar.</p>
+          <button class="panel-btn">
+            <span data-i18n="btn_explore">Keşfet</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Energy Panel -->
+      <div class="splash-panel energy-panel" onclick="selectSector('energy')">
+        <div class="panel-background" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/energy_hero_1784577681830.png');"></div>
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <div class="panel-badge" data-i18n="tag_energy">ENERJİ & TEKNOLOJİ</div>
+          <h2 class="panel-title" data-i18n="splash_energy_title">Sürdürülebilir Enerji Çözümleri</h2>
+          <p class="panel-desc" data-i18n="splash_energy_desc">Güneş, rüzgar, akıllı bina otomasyonu ve ileri düzey siber güvenlik altyapı mühendisliği.</p>
+          <button class="panel-btn">
+            <span data-i18n="btn_explore">Keşfet</span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="splash-footer">
+      <p data-i18n="splash_tagline">Mühendislik ve Enerjide Güç Birliği</p>
+    </div>
+  </div>
+
+  <!-- Global Template Header -->
+  <header id="main-header" class="main-header hidden-element">
+    <div class="header-container">
+      <div class="logo" onclick="backToSplash()">
+        <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
+      </div>
+
+      <!-- Navigation links -->
+      <nav class="nav-menu" id="nav-links">
+        <a href="#about" data-i18n="nav_about" onclick="scrollToAbout(event)">Kurumsal</a>
+        <a href="#services" data-i18n="nav_services" onclick="scrollToServices(event)">Hizmetlerimiz</a>
+        <a href="#partners" data-i18n="nav_partners" onclick="closeMobileMenu()">İş Ortaklarımız</a>
+        <a href="#marketplace" data-i18n="nav_marketplace" onclick="closeMobileMenu()">Online Mağaza</a>
+        <a href="#contact" data-i18n="nav_contact" onclick="closeMobileMenu()">İletişim</a>
+      </nav>
+
+      <!-- Action items -->
+      <div class="header-actions">
+        <button class="market-login-btn" onclick="openMarketplaceModal()" title="Müşteri Paneli / Customer Panel">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="sector-switch-btn" onclick="backToSplash()">
+          <span class="switch-icon">⇆</span>
+          <span data-i18n="btn_switch_sector">Sektör Değiştir</span>
+        </button>
+        <button class="lang-btn" id="header-lang-btn" onclick="toggleLanguage()">EN</button>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Construction Portal Layout -->
+  <main id="construction-portal" class="portal-view hidden-element">
+    <!-- Hero Slider -->
+    <section class="hero-section">
+      <div class="hero-slider" id="const-hero-slider">
+        <!-- Slide 1 -->
+        <div class="hero-slide active">
+          <div class="slide-bg" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/construction_hero_1784577666966.png');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="c_hero1_title">Veri Merkezi İnşaatları</h1>
+            <p data-i18n="c_hero1_desc">Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli (mission-critical) veri merkezleri inşası.</p>
+            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Çözümleri İncele</a>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="hero-slide">
+          <div class="slide-bg" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/heavy_industry_clean_1785012805596.png');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="c_hero2_title">Ağır Sanayi Tesisleri</h1>
+            <p data-i18n="c_hero2_desc">Fabrikalar, dökümhaneler ve enerji üretim santrallerinde mühendislik ve anahtar teslim taahhüt.</p>
+            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="hero-slide">
+          <div class="slide-bg" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/residential_luxury_project_1785010053703.png');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="c_hero3_title">Konut ve Yaşam Projeleri</h1>
+            <p data-i18n="c_hero3_desc">Modern mimari, yenilikçi yaklaşım ve ileri mühendislikle tasarlanan lüks yaşam kompleksleri.</p>
+            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="hero-slide">
+          <div class="slide-bg" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/civil_engineering_bim_1785010076530.png');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="c_hero4_title">Yapı Mühendisliği & Müşavirlik</h1>
+            <p data-i18n="c_hero4_desc">İleri seviye deprem mühendisliği, BIM entegrasyonu ve kapsamlı teknik projelendirme.</p>
+            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
+          </div>
+        </div>
+      </div>
+      <!-- Arrows -->
+      <button class="slider-arrow prev" onclick="prevSlide('const-hero-slider')">‹</button>
+      <button class="slider-arrow next" onclick="nextSlide('const-hero-slider')">›</button>
+      <!-- Dots -->
+      <div class="slider-dots" id="const-hero-dots"></div>
+    </section>
+
+    <!-- Kurumsal (About Us) Section -->
+    <section id="const-about-sec" class="about-section container py-large">
+      <div class="section-grid">
+        <div class="about-info">
+          <div class="section-badge" data-i18n="tag_about">KURUMSAL GÜVEN</div>
+          <h2 class="section-heading" data-i18n="c_about_heading">Yakın Grup İnşaat Mühendisliği</h2>
+          <p class="about-lead" data-i18n="c_about_lead">Endüstriyel vizyonumuz ve teknik tecrübemiz ile yapı sektöründe sınırları çiziyoruz.</p>
+          <p class="about-body" data-i18n="c_about_body">Mühendislik temelli yaklaşımımız, ağır inşaat projelerinde en yüksek uluslararası standartları garanti eder. Veri merkezlerinden konut ve sanayi yapılarına kadar her yapıda üstün kalite, dayanıklılık ve sürdürülebilir yöntemler uyguluyoruz.</p>
+          <div class="stats-row">
+            <div class="stat-card">
+              <span class="stat-num">15+</span>
+              <span class="stat-label" data-i18n="stat_experience">Yıllık Tecrübe</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">500K+</span>
+              <span class="stat-label" data-i18n="stat_area">m² İnşaat Alanı</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">100%</span>
+              <span class="stat-label" data-i18n="stat_success">Teslimat Başarısı</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <div class="image-wrapper">
+            <img src="../../brain/8449d998-1892-4797-9722-c13cb25f75cf/yakin_grup_headquarters_1784577698669.png" alt="Yakın Grup Corporate Architecture">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hizmet Mimarisi (Services - 6 categories) -->
+    <section id="const-services-sec" class="services-section bg-light py-large">
+      <div class="container">
+        <div class="text-center mb-large">
+          <div class="section-badge" data-i18n="nav_services">HİZMETLERİMİZ</div>
+          <h2 class="section-heading" data-i18n="c_services_title">Endüstriyel İnşaat Çözümlerimiz</h2>
+        </div>
+
+        <div class="services-tabs-container">
+          <div class="services-tabs-menu" id="const-services-menu">
+            <!-- Dynamically populated buttons -->
+          </div>
+          <div class="services-tab-content-wrapper" id="const-services-details">
+            <!-- Dynamically populated content -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Referans Projeler / Lightbox Galeri -->
+    <section class="gallery-section py-large container">
+      <div class="text-center mb-large">
+        <div class="section-badge" data-i18n="tag_portfolio">PROJELERİMİZ</div>
+        <h2 class="section-heading" data-i18n="portfolio_title">Seçkin Proje Galerisi</h2>
+      </div>
+      
+      <div class="gallery-grid" id="const-gallery">
+        <!-- 4 representative cards with lightboxes -->
+        <div class="gallery-item" onclick="openLightbox(0, 'construction')">
+          <img src="../../brain/8449d998-1892-4797-9722-c13cb25f75cf/gallery_datacenter_1785092833568.png" class="gallery-thumb" alt="Veri Merkezi İnşaatı">
+          <div class="gallery-item-info">
+            <span class="gallery-category" data-i18n="c_gal1_sub">Ankara / Türkiye</span>
+            <h4 class="gallery-title" data-i18n="c_gal1_title">T-3 Veri Merkezi Yapımı</h4>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(1, 'construction')">
+          <img src="../../brain/8449d998-1892-4797-9722-c13cb25f75cf/construction_hero_1784577666966.png" class="gallery-thumb" alt="Havalimanı Terminali">
+          <div class="gallery-item-info">
+            <span class="gallery-category" data-i18n="c_gal2_sub">İzmir / Türkiye</span>
+            <h4 class="gallery-title" data-i18n="c_gal2_title">Uluslararası Havalimanı Terminali</h4>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(2, 'construction')">
+          <img src="../../brain/8449d998-1892-4797-9722-c13cb25f75cf/gallery_vadi_mansion_1785092899049.png" class="gallery-thumb" alt="Lüks Konutlar">
+          <div class="gallery-item-info">
+            <span class="gallery-category" data-i18n="c_gal3_sub">İstanbul / Türkiye</span>
+            <h4 class="gallery-title" data-i18n="c_gal3_title">Vadi Konakları Yaşam Kompleksi</h4>
+          </div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox(3, 'construction')">
+          <img src="../../brain/8449d998-1892-4797-9722-c13cb25f75cf/gallery_seismic_retrofitting_1785092947617.png" class="gallery-thumb" alt="Teknik Projelendirme">
+          <div class="gallery-item-info">
+            <span class="gallery-category" data-i18n="c_gal4_sub">Deprem Mühendisliği</span>
+            <h4 class="gallery-title" data-i18n="c_gal4_title">Yapı Güçlendirme & BIM Tasarımı</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Energy Portal Layout -->
+  <main id="energy-portal" class="portal-view hidden-element">
+    <!-- Hero Slider -->
+    <section class="hero-section">
+      <div class="hero-slider" id="energy-hero-slider">
+        <!-- Slide 1 -->
+        <div class="hero-slide active">
+          <div class="slide-bg" style="background-image: url('../../brain/8449d998-1892-4797-9722-c13cb25f75cf/energy_hero_1784577681830.png');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="e_hero1_title">Güneş Enerjisi Sistemleri</h1>
+            <p data-i18n="e_hero1_desc">Arazi ve Çatı tipi GES EPC projelerinde yüksek kapasite verimlilik entegrasyonu.</p>
+            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Teknolojiyi İncele</a>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="hero-slide">
+          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e4/NOC-IUPUI.jpg');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="e_hero2_title">Akıllı Bina & Siber Güvenlik</h1>
+            <p data-i18n="e_hero2_desc">Tesis otomasyon sistemleri ve zayıf akım tasarımları ile veri merkezleri için IT güvenliği.</p>
+            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Hizmetleri Gör</a>
+          </div>
+        </div>
+        <!-- Slide 3 (Cluster A) -->
+        <div class="hero-slide">
+          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c6/Tesvolt_battery_energy_storage_system_Rheineck.jpg');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="e_hero3_title">Hibrit Enerji & Batarya Depolama</h1>
+            <p data-i18n="e_hero3_desc">Güneş ve rüzgar enerjisi sistemlerini lityum batarya (BESS) teknolojileriyle entegre ediyoruz.</p>
+            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
+          </div>
+        </div>
+        <!-- Slide 4 (Cluster B) -->
+        <div class="hero-slide">
+          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/eb/Racks_Amravati_Data_Center.jpg');"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <h1 data-i18n="e_hero4_title">Veri Merkezi & Ağ Mimarisi</h1>
+            <p data-i18n="e_hero4_desc">Tier sertifikalı veri merkezlerinde omurga ağ kurulumu, sunucu optimizasyonu ve zayıf akım çözümleri.</p>
+            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
+          </div>
+        </div>
+      </div>
+      <!-- Arrows -->
+      <button class="slider-arrow prev" onclick="prevSlide('energy-hero-slider')">‹</button>
+      <button class="slider-arrow next" onclick="nextSlide('energy-hero-slider')">›</button>
+      <!-- Dots -->
+      <div class="slider-dots" id="energy-dots"></div>
+    </section>
+
+    <!-- Kurumsal (About Us) Section -->
+    <section id="energy-about-sec" class="about-section container py-large">
+      <div class="section-grid">
+        <div class="about-info">
+          <div class="section-badge" data-i18n="tag_about">SÜRDÜRÜLEBİLİRLİK</div>
+          <h2 class="section-heading" data-i18n="e_about_heading">Yakın Grup Enerji & Akıllı Altyapı</h2>
+          <p class="about-lead" data-i18n="e_about_lead">Doğa ile uyumlu yenilenebilir enerji kaynakları ve yapay zeka entegreli yönetim teknolojileri.</p>
+          <p class="about-body" data-i18n="e_about_body">Sürdürülebilir kalkınmanın merkezine yenilenebilir enerjiyi koyuyoruz. Huawei, ABB, Vertiv gibi küresel markalar ile iş birliği içinde yüksek verimliliğe odaklanıyor, akıllı kontrol şebekeleri ve güvenli ağ mimarileri geliştiriyoruz.</p>
+          <div class="stats-row">
+            <div class="stat-card">
+              <span class="stat-num">250+</span>
+              <span class="stat-label" data-i18n="stat_power">MW Toplam Kurulu Güç</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">50K+</span>
+              <span class="stat-label" data-i18n="stat_reduction">Ton CO₂ Azaltımı</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">24/7</span>
+              <span class="stat-label" data-i18n="stat_monitoring">Akıllı SCADA İzleme</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <div class="image-wrapper">
+            <img src="../../brain/8449d998-1892-4797-9722-c13cb25f75cf/energy_hero_1784577681830.png" alt="Yakın Grup Energy Solutions">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hizmet Mimarisi (Services - Clusters A & B with 9 sub-categories) -->
+    <section id="energy-services-sec" class="services-section bg-light py-large">
+      <div class="container">
+        <div class="text-center mb-large">
+          <div class="section-badge" data-i18n="nav_services">HİZMETLERİMİZ</div>
+          <h2 class="section-heading" data-i18n="e_services_title">Enerji, Haberleşme ve Siber Güvenlik Mimariniz</h2>
+        </div>
+
+        <div class="energy-clusters-layout">
+          <!-- Cluster A: Yenilenebilir Enerji -->
+          <div class="cluster-card">
+            <h3 class="cluster-title" data-i18n="cluster_a_title">KÜME A — Yenilenebilir Enerji & Mekanik Sistemler</h3>
+            <div class="accordion-container" id="energy-cluster-a-acc">
+              <!-- Dynamically populated accordion -->
+            </div>
+          </div>
+
+          <!-- Cluster B: Elektronik ve IT -->
+          <div class="cluster-card">
+            <h3 class="cluster-title" data-i18n="cluster_b_title">KÜME B — Zayıf Akım, Network & Siber Güvenlik Müşavirliği</h3>
+            <div class="accordion-container" id="energy-cluster-b-acc">
+              <!-- Dynamically populated accordion -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Partners logo slider marquee (Common Section) -->
+  <section id="partners" class="partners-section py-large bg-dark-neutral hidden-element">
+    <div class="container">
+      <div class="text-center mb-medium">
+        <div id="partners-badge" class="section-badge" data-i18n="tag_technology">MÜHENDİSLİK PAYDAŞLARI</div>
+        <h2 id="partners-title" class="section-heading text-white" data-i18n="partners_title">Teknoloji İş Ortaklarımız</h2>
+        <p id="partners-subtitle" class="section-subtitle" data-i18n="partners_subtitle">Dünya devleri ile uluslararası standartlarda sistem entegrasyonu sağlıyoruz.</p>
+      </div>
+
+      <!-- Construction References Marquee -->
+      <div id="marquee-construction" class="marquee-container hidden-element">
+        <div class="marquee-track">
+          <div class="marquee-card">Vodafone Data Center</div>
+          <div class="marquee-card">Turkcell DC Maslak</div>
+          <div class="marquee-card">Kuzu Grup Metroproje</div>
+          <div class="marquee-card">Rönesans Holding</div>
+          <div class="marquee-card">Emlak Konut GYO</div>
+          <div class="marquee-card">Ağaoğlu Maslak 1453</div>
+          <div class="marquee-card">Tekfen İnşaat</div>
+          <div class="marquee-card">Nurol İnşaat</div>
+          <div class="marquee-card">Limak Holding</div>
+          <div class="marquee-card">TAV Havalimanları</div>
+          <!-- Duplicate -->
+          <div class="marquee-card">Vodafone Data Center</div>
+          <div class="marquee-card">Turkcell DC Maslak</div>
+          <div class="marquee-card">Kuzu Grup Metroproje</div>
+          <div class="marquee-card">Rönesans Holding</div>
+          <div class="marquee-card">Emlak Konut GYO</div>
+          <div class="marquee-card">Ağaoğlu Maslak 1453</div>
+          <div class="marquee-card">Tekfen İnşaat</div>
+          <div class="marquee-card">Nurol İnşaat</div>
+          <div class="marquee-card">Limak Holding</div>
+          <div class="marquee-card">TAV Havalimanları</div>
+        </div>
+      </div>
+
+      <!-- Energy Technology Partners Marquee -->
+      <div id="marquee-energy" class="marquee-container">
+        <div class="marquee-track">
+          <div class="marquee-card">ABB</div>
+          <div class="marquee-card">Schneider Electric</div>
+          <div class="marquee-card">Vertiv</div>
+          <div class="marquee-card">Siemens</div>
+          <div class="marquee-card">Huawei</div>
+          <div class="marquee-card">Cisco</div>
+          <div class="marquee-card">Fortinet</div>
+          <div class="marquee-card">Honeywell</div>
+          <div class="marquee-card">Dell</div>
+          <div class="marquee-card text-dim">VMware</div>
+          <!-- Duplicate -->
+          <div class="marquee-card">ABB</div>
+          <div class="marquee-card">Schneider Electric</div>
+          <div class="marquee-card">Vertiv</div>
+          <div class="marquee-card">Siemens</div>
+          <div class="marquee-card">Huawei</div>
+          <div class="marquee-card">Cisco</div>
+          <div class="marquee-card">Fortinet</div>
+          <div class="marquee-card">Honeywell</div>
+          <div class="marquee-card">Dell</div>
+          <div class="marquee-card text-dim">VMware</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B2B / B2C Marketplace Preview (Common Section) -->
+  <section id="marketplace" class="marketplace-section py-large bg-light-gradient hidden-element">
+    <div class="container">
+      <div class="text-center mb-large">
+        <div class="section-badge" data-i18n="tag_store">ONLINE SATIŞ & PORTAL</div>
+        <h2 class="section-heading" data-i18n="market_heading">Yakın Grup Online Marketplace</h2>
+        <p class="section-subtitle" data-i18n="market_sub">Endüstriyel ekipman tedariki ve enerji &amp; bilgi teknolojileri ürünlerine erişimde hızlı dijital altyapı.</p>
+      </div>
+
+      <div class="market-cards-grid">
+        <div class="market-promo-card">
+          <div class="badge-soon" data-i18n="badge_soon">ÇOK YAKINDA</div>
+          <h3 data-i18n="market_b2b_title">B2B Kurumsal Alım Portalı</h3>
+          <p data-i18n="market_b2b_desc">Anlaşmalı tedarikçilerimiz ve bayilerimiz için toptan sipariş, özel vergi indirimleri, şartnamelere uygun teklif toplama paneli.</p>
+          <button class="market-cta-btn secondary" onclick="openMarketplaceModal()" data-i18n="btn_market_register">Bekleme Listesine Katıl</button>
+        </div>
+
+        <div class="market-promo-card highlight">
+          <div class="badge-soon" data-i18n="badge_soon">ÇOK YAKINDA</div>
+          <h3 data-i18n="market_b2c_title">B2C Bireysel Siparişi</h3>
+          <p data-i18n="market_b2c_desc">Güneş PV camları, ev tipi şarj cihazları ve bina solar panelleri için doğrudan perakende satış ve montaj başvuru kanalları.</p>
+          <button class="market-cta-btn" onclick="openMarketplaceModal()" data-i18n="btn_market_browse">Kataloğu İncele</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Team with vCards (Common Section) -->
+  <section id="contact" class="contact-section py-large container hidden-element">
+    <div class="section-grid">
+      <!-- Contact card info -->
+      <div>
+        <div class="section-badge" data-i18n="nav_contact">İLETİŞİM</div>
+        <h2 class="section-heading" data-i18n="contact_title">Bizimle İletişime Geçin</h2>
+        <p class="contact-lead" data-i18n="contact_desc">Projeleriniz veya danışmanlık ihtiyaçlarınız için ekibimiz 7/24 hazırdır.</p>
+
+        <div class="contact-details-list">
+          <div class="contact-detail-item">
+            <span class="detail-icon">📍</span>
+            <div>
+              <strong data-i18n="contact_lbl_loc">Merkez Ofis</strong>
+              <p>Maslak Sun Plaza Kat: 12, Şişli / İstanbul</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <span class="detail-icon">📞</span>
+            <div>
+              <strong data-i18n="contact_lbl_phone">Telefon</strong>
+              <p>+90 (212) 555 0100</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <span class="detail-icon">✉️</span>
+            <div>
+              <strong data-i18n="contact_lbl_mail">E-posta</strong>
+              <p>info@yakingrup.net</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Management profiles and vCard triggers -->
+        <h3 class="subsection-title mt-medium" data-i18n="vcard_list_title">Kurumsal İrtibat Noktaları</h3>
+        <div class="vcard-compact-grid">
+          <!-- Card 1 -->
+          <div class="vcard-trigger-card" onclick="showVCard('ilker')">
+            <div class="vcard-avatar">İA</div>
+            <div class="vcard-info">
+              <h4>İlker ATASOY</h4>
+              <span class="vcard-role">Yönetim Kurulu Başkanı / CxO (Mühendis)</span>
+              <span class="vcard-contact-hint">ilker.atasoy@yakingrup.net</span>
+            </div>
+            <span class="vcard-arrow">›</span>
+          </div>
+          <!-- Card 2 -->
+          <div class="vcard-trigger-card" onclick="showVCard('eylul')">
+            <div class="vcard-avatar">EY</div>
+            <div class="vcard-info">
+              <h4>Eylül YILMAZ</h4>
+              <span class="vcard-role">Yönetim Kurulu Başkanı / CEO (Mimar)</span>
+              <span class="vcard-contact-hint">eylul.yilmaz@yakingrup.net</span>
+            </div>
+            <span class="vcard-arrow">›</span>
+          </div>
+          <!-- Card 3 -->
+          <div class="vcard-trigger-card" onclick="showVCard('murat')">
+            <div class="vcard-avatar">MK</div>
+            <div>
+              <h4>Dr. Murat Kaya</h4>
+              <p data-i18n="vc_murat_title">Mühendislik & Operasyon Lideri</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <div class="form-wrapper-box">
+        <h3 class="form-heading" data-i18n="contact_form_title">Haberleşme Formu</h3>
+        <form id="contact-form" onsubmit="handleContactSubmit(event)">
+          <div class="form-group">
+            <label for="c-name" data-i18n="lbl_form_name">Adınız Soyadınız / Firma</label>
+            <input type="text" id="c-name" required placeholder="Örn. Ahmet Yılmaz">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-email" data-i18n="lbl_form_email">E-posta Adresiniz</label>
+              <input type="email" id="c-email" required placeholder="ahmet@firma.com">
+            </div>
+            <div class="form-group">
+              <label for="c-phone" data-i18n="lbl_form_phone">Telefon Numaranız</label>
+              <input type="tel" id="c-phone" placeholder="+90 532...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="c-sector" data-i18n="lbl_form_sector">İlgili Birim / Sektör</label>
+            <select id="c-sector">
+              <option value="insaat" data-i18n="tag_construction">İnşaat & Taahhüt</option>
+              <option value="enerji" data-i18n="tag_energy">Enerji & Teknoloji</option>
+              <option value="market" data-i18n="lbl_market_opt">Online Mağaza / B2B</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="c-msg" data-i18n="lbl_form_msg">Mesajınız</label>
+            <textarea id="c-msg" rows="4" required placeholder="Mesajınızı bu alana yazınız..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="contact-submit-btn" data-i18n="btn_send">Mesajı Gönder</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Footer (Common Section) -->
+  <footer class="global-footer hidden-element">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
+        </div>
+        <p class="brand-desc" data-i18n="footer_tagline">Mühendislik temelli yaklaşımlarla altyapı ve enerjinin birleşimi.</p>
+        <div class="social-links">
+          <a href="https://tr.linkedin.com/company/yakingrupnet" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/yakingrupnet/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/yakingrupnet" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="footer_col_services">Sektör Çözümleri</h4>
+        <ul class="footer-links">
+          <li><a href="#const-services-sec" onclick="selectSector('construction'); scrollToSection('const-services-sec', event)" data-i18n="tag_construction">İnşaat Taahhüt</a></li>
+          <li><a href="#energy-services-sec" onclick="selectSector('energy'); scrollToSection('energy-services-sec', event)" data-i18n="tag_energy">Yenilenebilir Enerji</a></li>
+          <li><a href="#energy-services-sec" onclick="selectSector('energy'); scrollToSection('energy-services-sec', event)" data-i18n="nav_energy_it">Siber Güvenlik & IT</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_col_corporate">Kurumsal Bilgiler</h4>
+        <ul class="footer-links">
+          <li><a href="#" onclick="scrollToAbout(event)" data-i18n="nav_about">Hakkımızda</a></li>
+          <li><a href="#" onclick="scrollToSection('partners', event)" data-i18n="nav_partners">İş Ortaklarımız</a></li>
+          <li><a href="#" onclick="scrollToSection('marketplace', event)" data-i18n="nav_marketplace">Marketplace</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_col_legal">Yasal Mevzuat</h4>
+        <ul class="footer-links">
+          <li><a href="#" onclick="openLegalModal('kvkk'); return false;" data-i18n="footer_kvkk">KVKK Aydınlatma Metni</a></li>
+          <li><a href="#" onclick="openLegalModal('cerez'); return false;" data-i18n="footer_cookies">Çerez Politikası</a></li>
+          <li><a href="#" onclick="openLegalModal('kullanim'); return false;" data-i18n="footer_terms">Kullanım Şartları</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container flex-row text-center">
+        <p class="copyright">&copy; 2026 Yakın Grup Sanayi İnşaat Enerji Teknoloji LTD ŞTİ. All rights reserved. <span data-i18n="footer_lic_note">Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DIALOG: Popup vCard Modal -->
+  <dialog id="vcard-dialog" class="vcard-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeVCardDialog()">×</button>
+      <div class="modal-header">
+        <div class="modal-avatar" id="modal-card-avatar">İA</div>
+        <h3 id="modal-card-name">İlker ATASOY</h3>
+        <p class="modal-subtitle" id="modal-card-title">Yönetim Kurulu Başkanı / CEO (Mühendis)</p>
+      </div>
+      <div class="modal-body">
+        <div class="vcard-field">
+          <span class="field-icon">📞</span>
+          <div>
+            <span class="field-label" data-i18n="field_phone">Telefon</span>
+            <a href="tel:+905428973446" class="field-val" id="modal-card-phone">+90 542 897 34 46</a>
+          </div>
+        </div>
+        <div class="vcard-field">
+          <span class="field-icon">✉️</span>
+          <div>
+            <span class="field-label" data-i18n="field_email">E-posta</span>
+            <a href="mailto:ilker.atasoy@yakingrup.net" class="field-val" id="modal-card-email">ilker.atasoy@yakingrup.net</a>
+          </div>
+        </div>
+        <div class="vcard-field">
+          <span class="field-icon">🏢</span>
+          <div>
+            <span class="field-label" data-i18n="field_office">Ofis Adresi</span>
+            <span class="field-val" id="modal-card-office">Maslak Sun Plaza Kat: 12, Şişli / İstanbul</span>
+          </div>
+        </div>
+        <div class="vcard-field" id="modal-linkedin-field">
+          <span class="field-icon">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </span>
+          <div>
+            <span class="field-label">LinkedIn</span>
+            <a href="https://tr.linkedin.com/company/yakingrupnet" target="_blank" class="field-val" id="modal-card-linkedin">tr.linkedin.com/company/yakingrupnet</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions-row">
+        <button class="vcard-btn primary" onclick="downloadVCF()"><span data-i18n="btn_vcard_download">Kartviziti İndir (.vcf)</span></button>
+        <button class="vcard-btn secondary" onclick="shareCard()"><span data-i18n="btn_vcard_share">Paylaş</span></button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- DIALOG: Image Lightbox Slider Modal -->
+  <dialog id="lightbox-dialog" class="lightbox-modal">
+    <button class="modal-close-btn" onclick="closeLightboxDialog()">×</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Lightbox">
+      <div class="lightbox-footer">
+        <h4 id="lightbox-title">Proje Detayı</h4>
+        <p id="lightbox-caption">Açıklama</p>
+      </div>
+    </div>
+    <button class="lightbox-arrow prev" onclick="navigateLightbox(-1)">‹</button>
+    <button class="lightbox-arrow next" onclick="navigateLightbox(1)">›</button>
+  </dialog>
+
+  <!-- DIALOG: Marketplace Modal -->
+  <dialog id="market-dialog" class="market-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeMarketplaceModal()">×</button>
+      <div class="modal-header">
+        <h3 data-i18n="market_dialog_title">Yakın Grup Marketplace Erişimi</h3>
+        <p class="modal-subtitle" data-i18n="market_dialog_desc">Hizmet vermeye başlayacağımız mağaza altyapımız için erken erişim başvurusu.</p>
+      </div>
+      <form id="market-signup-form" onsubmit="handleMarketplaceSubmit(event)">
+        <div class="form-group">
+          <label for="m-name" data-i18n="lbl_form_name">İsim veya Firma Ünvanı</label>
+          <input type="text" id="m-name" required placeholder="Örn. ABC Mühendislik">
+        </div>
+        <div class="form-group">
+          <label for="m-email" data-i18n="lbl_form_email">E-posta Adresi</label>
+          <input type="email" id="m-email" required placeholder="isim@firma.com">
+        </div>
+        <div class="form-group">
+          <label for="m-client" data-i18n="lbl_form_type">Müşteri Türü</label>
+          <select id="m-client">
+            <option value="b2b" data-i18n="market_b2b_opt">Kurumsal / B2B Bayi Alıcısı</option>
+            <option value="b2c" data-i18n="market_b2c_opt">Bireysel / B2C Satış Talebi</option>
+          </select>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="m-kvkk" required>
+          <label for="m-kvkk" class="checkbox-label"><a href="#services" onclick="closeMarketplaceModal(); selectSector('energy')" data-i18n="market_kvkk_note">KVKK İletişim izni şartlarını ve bilgilendirme formunu okudum ve kabul ediyorum.</a></label>
+        </div>
+        <button type="submit" class="submit-btn" data-i18n="btn_market_join">Beni Listeye Ekle</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- DIALOG: Legal Modal -->
+  <dialog id="legal-dialog" class="market-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="this.closest('dialog').close()">×</button>
+      <div class="modal-header">
+        <h3 id="legal-modal-title">KVKK Aydınlatma Metni</h3>
+      </div>
+      <div id="legal-modal-body" style="max-height:55vh;overflow-y:auto;color:#4a5568;font-size:0.92rem;line-height:1.8;padding:1rem 0;"></div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
