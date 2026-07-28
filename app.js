@@ -101,7 +101,7 @@ const TRANSLATIONS = {
     footer_cookies: "Çerez Politikası",
     footer_terms: "Kullanım Şartları",
     footer_lic_note: "Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.",
-    footer_presentation: "Banka, Yatırımcı ve Finansman Ortaklığı Sunumu | 2026",
+    footer_presentation: "Yatırımcı Sunumu",
 
     // Inside Portals Localizations
     c_hero1_title: "Veri Merkezi İnşaatları",
@@ -225,7 +225,7 @@ const TRANSLATIONS = {
     footer_cookies: "Cookie Policy",
     footer_terms: "Terms of Service",
     footer_lic_note: "Logo trademarks belong to their respective registered legal owners.",
-    footer_presentation: "Bank, Investor & Financing Partnership Presentation | 2026",
+    footer_presentation: "Investor Presentation",
 
     c_hero1_title: "Data Center Construction",
     c_hero1_desc: "Tier III and Tier IV certified critical facilities building from site design to operations.",
