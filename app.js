@@ -117,7 +117,8 @@ const TRANSLATIONS = {
     c_services_title: "Endüstriyel İnşaat Çözümlerimiz",
 
     e_hero1_title: "Güneş Enerjisi Sistemleri",
-    e_hero1_desc: "Arazi ve Çatı tipi GES EPC projelerinde yüksek kapasite verimlilik entegrasyonu.",
+    e_hero1_title: "GES / RES & Hibrit Enerji Sistemleri",
+    e_hero1_desc: "Arazi ve çatı tipi GES, karasal RES ve hibrit enerji sistemlerinde yüksek kapasite EPC projeleri.",
     e_hero2_title: "Akıllı Bina & Siber Güvenlik",
     e_hero2_desc: "Tesis otomasyon sistemleri ve zayıf akım tasarımları ile veri merkezleri için IT güvenliği.",
     e_hero3_title: "Hibrit Enerji & Batarya Depolama",
@@ -238,7 +239,8 @@ const TRANSLATIONS = {
     c_services_title: "Civil & Infrastructure Services",
 
     e_hero1_title: "Utility Photovoltaic Arrays",
-    e_hero1_desc: "Strategic roof and terrestrial PV solar plant design, procurement, and site EPC management.",
+    e_hero1_title: "Solar (GES) / Wind (RES) & Hybrid Energy",
+    e_hero1_desc: "Utility-scale solar (GES), onshore wind (RES), and hybrid microgrid EPC projects at high capacity.",
     e_hero2_title: "Smart Facility Integration",
     e_hero2_desc: "Building management networks, structural low-voltage circuits, and data security nodes.",
     e_hero3_title: "Hybrid Energy & Battery Storage",
@@ -398,18 +400,18 @@ const CONSTRUCTION_SERVICES = [
 
 const ENERGY_CLUSTER_A = [
   {
-    tr_title: "7.1. Güneş Enerjisi Sistemleri (GES)",
-    en_title: "7.1. Solar Energy Solutions (PV)",
+    tr_title: "7.1. Güneş Enerjisi (GES) / Rüzgar Enerjisi (RES) & Hibrit Sistemler",
+    en_title: "7.1. Solar (GES) / Wind (RES) & Hybrid Energy Systems",
     tr_items: [
-      "Arazi tipi (utility-scale) mega GES sahaları taahhüt (EPC) işleri",
+      "Arazi tipi (utility-scale) mega GES ve RES sahaları taahhüt (EPC) işleri",
       "Endüstriyel çatı GES panel tasarımı ve saha uyarlaması",
-      "PV hücre seçimi ve performans yönelim analizleri",
+      "GES + RES hibrit mikro-şebeke (microgrid) tasarım ve entegrasyonu",
       "Uzaktan O&M (Bakım-Onarım) ve IoT SCADA performans analitiği"
     ],
     en_items: [
-      "Utility-scale photovoltaic (PV) solar fields EPC coordination",
+      "Utility-scale photovoltaic (PV/GES) and onshore wind (RES) EPC coordination",
       "Industrial roof solar arrays engineering and placement",
-      "Panel selection and layout shading optimization",
+      "Solar + Wind hybrid microgrid design and grid integration",
       "Remote O&M inspection and IoT SCADA analysis"
     ],
     partners: "Huawei FusionSolar, SMA, Trina Solar, Longi Solar"
@@ -640,6 +642,26 @@ function initApp() {
   // Fill in Dynamic lists
   populateConstructionServices();
   populateEnergyServices();
+
+  // Mobile / Tablet: Touch-based panel animation (mirrors desktop hover)
+  const panels = document.querySelectorAll('.splash-panel');
+  panels.forEach(panel => {
+    panel.addEventListener('touchstart', function(e) {
+      // If already active, let the click/onclick proceed normally
+      if (this.classList.contains('touch-active')) return;
+      // Otherwise, first touch just activates the panel (shows description), prevent navigation
+      e.preventDefault();
+      panels.forEach(p => p.classList.remove('touch-active'));
+      this.classList.add('touch-active');
+    }, { passive: false });
+  });
+
+  // Tap outside panels to deactivate
+  document.addEventListener('touchstart', function(e) {
+    if (!e.target.closest('.splash-panel')) {
+      panels.forEach(p => p.classList.remove('touch-active'));
+    }
+  });
 }
 
 // Translations Injector

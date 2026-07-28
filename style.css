@@ -343,21 +343,24 @@ body.theme-energy {
   transform: translateX(5px);
 }
 
-/* Hover Interactions for Panels (Flex expansion) */
-.splash-panel:hover {
+.splash-panel:hover,
+.splash-panel.touch-active {
   flex: 1.35;
 }
 
-.splash-panel:hover .panel-background {
+.splash-panel:hover .panel-background,
+.splash-panel.touch-active .panel-background {
   transform: scale(1.05);
   filter: grayscale(0%) contrast(100%);
 }
 
-.splash-panel:hover .panel-content {
+.splash-panel:hover .panel-content,
+.splash-panel.touch-active .panel-content {
   transform: translateY(0);
 }
 
-.splash-panel:hover .panel-desc {
+.splash-panel:hover .panel-desc,
+.splash-panel.touch-active .panel-desc {
   opacity: 1;
   transform: translateY(0);
 }
