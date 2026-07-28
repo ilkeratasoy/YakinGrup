@@ -220,7 +220,7 @@ const TRANSLATIONS = {
     footer_col_services: "Business Sectors",
     footer_col_corporate: "Company Profile",
     footer_col_legal: "Information",
-    footer_kvkk: "KVKK Declaration",
+    footer_kvkk: "Privacy Policy (GDPR)",
     footer_cookies: "Cookie Policy",
     footer_terms: "Terms of Service",
     footer_lic_note: "Logo trademarks belong to their respective registered legal owners.",
@@ -239,8 +239,8 @@ const TRANSLATIONS = {
     c_services_title: "Civil & Infrastructure Services",
 
     e_hero1_title: "Utility Photovoltaic Arrays",
-    e_hero1_title: "Solar (GES) / Wind (RES) & Hybrid Energy",
-    e_hero1_desc: "Utility-scale solar (GES), onshore wind (RES), and hybrid microgrid EPC projects at high capacity.",
+    e_hero1_title: "Solar (SPP) / Wind (WPP) & Hybrid Energy",
+    e_hero1_desc: "Utility-scale solar, onshore wind, and hybrid microgrid EPC projects at high capacity.",
     e_hero2_title: "Smart Facility Integration",
     e_hero2_desc: "Building management networks, structural low-voltage circuits, and data security nodes.",
     e_hero3_title: "Hybrid Energy & Battery Storage",
@@ -401,7 +401,7 @@ const CONSTRUCTION_SERVICES = [
 const ENERGY_CLUSTER_A = [
   {
     tr_title: "7.1. Güneş Enerjisi (GES) / Rüzgar Enerjisi (RES) & Hibrit Sistemler",
-    en_title: "7.1. Solar (GES) / Wind (RES) & Hybrid Energy Systems",
+    en_title: "7.1. Solar (SPP) / Wind (WPP) & Hybrid Energy Systems",
     tr_items: [
       "Arazi tipi (utility-scale) mega GES ve RES sahaları taahhüt (EPC) işleri",
       "Endüstriyel çatı GES panel tasarımı ve saha uyarlaması",
@@ -409,7 +409,7 @@ const ENERGY_CLUSTER_A = [
       "Uzaktan O&M (Bakım-Onarım) ve IoT SCADA performans analitiği"
     ],
     en_items: [
-      "Utility-scale photovoltaic (PV/GES) and onshore wind (RES) EPC coordination",
+      "Utility-scale photovoltaic (SPP) and onshore wind (WPP) EPC coordination",
       "Industrial roof solar arrays engineering and placement",
       "Solar + Wind hybrid microgrid design and grid integration",
       "Remote O&M inspection and IoT SCADA analysis"
