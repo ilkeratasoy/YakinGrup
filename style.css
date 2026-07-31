@@ -128,6 +128,17 @@ body.theme-energy {
   --color-theme-light: var(--e-primary-light);
   --color-theme-glow: var(--e-primary-glow);
 }
+body.theme-capital {
+  --color-theme: #1e3a8a;
+  --color-theme-light: #3b82f6;
+  --color-theme-glow: rgba(59, 130, 246, 0.4);
+}
+body.theme-technology {
+  --color-theme: #4c1d95;
+  --color-theme-light: #8b5cf6;
+  --color-theme-glow: rgba(139, 92, 246, 0.4);
+}
+
 
 /* Main Badges and Titles */
 .section-badge {
@@ -243,6 +254,13 @@ body.theme-energy {
   border-color: var(--color-white);
 }
 
+
+.splash-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
 .splash-split {
   flex: 1;
   display: flex;
@@ -307,6 +325,16 @@ body.theme-energy {
   color: #6ed0a1;
   border-left: 3px solid var(--e-primary-light);
 }
+.capital-panel .panel-badge {
+  color: #93c5fd;
+  border-left: 3px solid #3b82f6;
+}
+
+.technology-panel .panel-badge {
+  color: #c4b5fd;
+  border-left: 3px solid #8b5cf6;
+}
+
 
 .panel-title {
   font-family: var(--font-heading);
@@ -1841,7 +1869,14 @@ a.field-val:hover {
 
 @media (max-width: 768px) {
   /* Splash stack */
-  .splash-split {
+  
+.splash-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.splash-split {
     flex-direction: column;
   }
   

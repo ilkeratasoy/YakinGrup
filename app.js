@@ -741,15 +741,25 @@ function selectSector(sectorName) {
   // Body classes
   document.body.classList.remove('loading-state');
   
-  const constructionView = document.getElementById('construction-portal');
-  const energyView = document.getElementById('energy-portal');
+  const portals = ['construction-portal', 'energy-portal', 'capital-portal', 'technology-portal'];
+  portals.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.add('hidden-element');
+  });
+
+  const activePortal = document.getElementById(sectorName + '-portal');
+  if(activePortal) activePortal.classList.remove('hidden-element');
+
+  const themes = ['theme-construction', 'theme-energy', 'theme-capital', 'theme-technology'];
+  document.body.classList.remove(...themes);
+  document.body.classList.add('theme-' + sectorName);
+
   const header = document.getElementById('main-header');
   const partnersSec = document.getElementById('partners');
   const marketSec = document.getElementById('marketplace');
   const contactSec = document.getElementById('contact');
   const footer = document.querySelector('.global-footer');
 
-  // Reveal shared and specific zones
   header.classList.remove('hidden-element');
   partnersSec.classList.remove('hidden-element');
   marketSec.classList.remove('hidden-element');
@@ -763,22 +773,13 @@ function selectSector(sectorName) {
   const sub = document.getElementById('partners-subtitle');
 
   if (sectorName === 'construction') {
-    constructionView.classList.remove('hidden-element');
-    energyView.classList.add('hidden-element');
-    document.body.classList.add('theme-construction');
-    document.body.classList.remove('theme-energy');
-
     if (marqueeConst) marqueeConst.classList.remove('hidden-element');
     if (marqueeEnergy) marqueeEnergy.classList.add('hidden-element');
     if (badge) badge.setAttribute('data-i18n', 'tag_const_refs');
     if (title) title.setAttribute('data-i18n', 'partners_title_const');
     if (sub) sub.setAttribute('data-i18n', 'partners_subtitle_const');
-  } else if (sectorName === 'energy') {
-    energyView.classList.remove('hidden-element');
-    constructionView.classList.add('hidden-element');
-    document.body.classList.add('theme-energy');
-    document.body.classList.remove('theme-construction');
-
+  } else {
+    // For Energy, Capital, Technology use the same partners or hide it if needed
     if (marqueeEnergy) marqueeEnergy.classList.remove('hidden-element');
     if (marqueeConst) marqueeConst.classList.add('hidden-element');
     if (badge) badge.setAttribute('data-i18n', 'tag_technology');
@@ -786,7 +787,6 @@ function selectSector(sectorName) {
     if (sub) sub.setAttribute('data-i18n', 'partners_subtitle');
   }
 
-  // Refresh language translation and populate dynamic service accordions/tabs
   setLanguage(currentLang);
   populateConstructionServices();
   populateEnergyServices();
@@ -796,10 +796,17 @@ function selectSector(sectorName) {
 function scrollToServices(e) {
   if (e) e.preventDefault();
   closeMobileMenu();
-  const targetId = activeSector === 'energy' ? 'energy-services-sec' : 'const-services-sec';
+  let targetId = 'const-services-sec';
+  if (activeSector === 'energy') targetId = 'energy-services-sec';
+  if (activeSector === 'capital') targetId = 'capital-services-sec';
+  if (activeSector === 'technology') targetId = 'tech-services-sec';
+  
   const targetEl = document.getElementById(targetId);
   if (targetEl) {
-    targetEl.scrollIntoView({ behavior: 'smooth' });
+    const y = targetEl.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+});
   }
 }
 
@@ -815,10 +822,15 @@ function scrollToSection(targetId, e) {
 function scrollToAbout(e) {
   if (e) e.preventDefault();
   closeMobileMenu();
-  const targetId = activeSector === 'energy' ? 'energy-about-sec' : 'const-about-sec';
+  let targetId = 'const-about-sec';
+  if (activeSector === 'energy') targetId = 'energy-about-sec';
+  // Note: capital and technology might not have about sec yet, fallback or skip
   const targetEl = document.getElementById(targetId);
   if (targetEl) {
-    targetEl.scrollIntoView({ behavior: 'smooth' });
+    const y = targetEl.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+});
   }
 }
 
