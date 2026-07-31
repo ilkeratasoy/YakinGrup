@@ -758,12 +758,14 @@ function selectSector(sectorName) {
   const partnersSec = document.getElementById('partners');
   const marketSec = document.getElementById('marketplace');
   const contactSec = document.getElementById('contact');
+  const groupSec = document.getElementById('group-companies');
   const footer = document.querySelector('.global-footer');
 
   header.classList.remove('hidden-element');
   partnersSec.classList.remove('hidden-element');
   marketSec.classList.remove('hidden-element');
   contactSec.classList.remove('hidden-element');
+  if(groupSec) groupSec.classList.remove('hidden-element');
   footer.classList.remove('hidden-element');
 
   const marqueeConst = document.getElementById('marquee-construction');
