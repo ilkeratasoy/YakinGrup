@@ -3,667 +3,534 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yakın Grup — Enerji ve İnşaat Kurumsal Web Sitesi</title>
-  <meta name="description" content="Yakın Grup holding çatısı altında veri merkezi inşaatları, yenilenebilir enerji, akıllı mühendislik çözümleri ve B2B/B2C altyapı hizmetleri sunmaktadır.">
+  <title>Yakın Grup — Mühendislik, Enerji & Yatırım Holding</title>
+  <meta name="description" content="Yakın Grup; inşaat taahhüt, yenilenebilir enerji, proje finansmanı ve dijital teknoloji alanlarında uçtan uca çözümler sunan bir mühendislik holdingidir.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="loading-state">
+<body>
 
-  <!-- Splash Screen (Karşılama Ekranı) -->
-  <div id="splash-screen" class="splash-screen">
-    <div class="splash-header">
-      <div class="logo">
-        <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
-      </div>
-      <div class="splash-controls">
-        <button class="lang-btn" id="splash-lang-btn" onclick="toggleLanguage()">EN</button>
-      </div>
-    </div>
-
-        <div class="splash-split splash-4">
-      <!-- Construction Panel -->
-      <div class="splash-panel construction-panel" onclick="selectSector('construction')">
-        <div class="panel-background" style="background-image: url('assets/images/construction_hero_1784577666966.png');"></div>
-        <div class="panel-overlay"></div>
-        <div class="panel-content">
-          <div class="panel-badge" data-i18n="tag_construction">İNŞAAT & TAAHHÜT</div>
-          <h2 class="panel-title" data-i18n="splash_const_title">Yakın İnşaat</h2>
-          <button class="panel-btn"><span data-i18n="btn_explore">Keşfet</span><svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
-        </div>
-      </div>
-
-      <!-- Energy Panel -->
-      <div class="splash-panel energy-panel" onclick="selectSector('energy')">
-        <div class="panel-background" style="background-image: url('assets/images/energy_hero_1784577681830.png');"></div>
-        <div class="panel-overlay"></div>
-        <div class="panel-content">
-          <div class="panel-badge" data-i18n="tag_energy">ENERJİ</div>
-          <h2 class="panel-title" data-i18n="splash_energy_title">Yakın Enerji</h2>
-          <button class="panel-btn"><span data-i18n="btn_explore">Keşfet</span><svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
-        </div>
-      </div>
-
-      <!-- Capital Panel -->
-      <div class="splash-panel capital-panel" onclick="selectSector('capital')">
-        <div class="panel-background" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Financial_District%2C_Singapore.jpg');"></div>
-        <div class="panel-overlay"></div>
-        <div class="panel-content">
-          <div class="panel-badge" data-i18n="tag_capital">FİNANS & YATIRIM</div>
-          <h2 class="panel-title" data-i18n="splash_capital_title">Yakın Capital</h2>
-          <button class="panel-btn"><span data-i18n="btn_explore">Keşfet</span><svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
-        </div>
-      </div>
-
-      <!-- Technology Panel -->
-      <div class="splash-panel technology-panel" onclick="selectSector('technology')">
-        <div class="panel-background" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/eb/Racks_Amravati_Data_Center.jpg');"></div>
-        <div class="panel-overlay"></div>
-        <div class="panel-content">
-          <div class="panel-badge" data-i18n="tag_technology">DİJİTAL & YZ</div>
-          <h2 class="panel-title" data-i18n="splash_tech_title">Yakın Teknoloji</h2>
-          <button class="panel-btn"><span data-i18n="btn_explore">Keşfet</span><svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="splash-footer">
-      <p data-i18n="splash_tagline">Mühendislik ve Enerjide Güç Birliği</p>
-    </div>
-  </div>
-
-  <!-- Global Template Header -->
-  <header id="main-header" class="main-header hidden-element">
+  <!-- ===== HEADER ===== -->
+  <header id="main-header" class="main-header">
     <div class="header-container">
-      <div class="logo" onclick="backToSplash()">
+      <a href="#hero" class="logo">
         <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
-      </div>
-
-      <!-- Navigation links -->
+      </a>
       <nav class="nav-menu" id="nav-links">
-        <a href="#about" data-i18n="nav_about" onclick="scrollToAbout(event)">Kurumsal</a>
-        <a href="#services" data-i18n="nav_services" onclick="scrollToServices(event)">Hizmetlerimiz</a>
-        <a href="#partners" data-i18n="nav_partners" onclick="closeMobileMenu()">İş Ortaklarımız</a>
-        <a href="#marketplace" data-i18n="nav_marketplace" onclick="closeMobileMenu()">Online Mağaza</a>
-        <a href="#contact" data-i18n="nav_contact" onclick="closeMobileMenu()">İletişim</a>
+        <a href="#hakkimizda" data-i18n="nav_about">Kurumsal</a>
+        <a href="#insaat" data-i18n="nav_construction">İnşaat</a>
+        <a href="#enerji" data-i18n="nav_energy">Enerji</a>
+        <a href="#capital" data-i18n="nav_capital">Capital</a>
+        <a href="#teknoloji" data-i18n="nav_technology">Teknoloji</a>
+        <a href="#iletisim" data-i18n="nav_contact">İletişim</a>
       </nav>
-
-      <!-- Action items -->
       <div class="header-actions">
-        <button class="market-login-btn" onclick="openMarketplaceModal()" title="Müşteri Paneli / Customer Panel">
-          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <button class="sector-switch-btn" onclick="backToSplash()">
-          <span class="switch-icon">⇆</span>
-          <span data-i18n="btn_switch_sector">Sektör Değiştir</span>
-        </button>
         <button class="lang-btn" id="header-lang-btn" onclick="toggleLanguage()">EN</button>
         <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Construction Portal Layout -->
-  <main id="construction-portal" class="portal-view hidden-element">
-    <!-- Hero Slider -->
-    <section class="hero-section">
-      <div class="hero-slider" id="const-hero-slider">
-        <!-- Slide 1 -->
-        <div class="hero-slide active">
-          <div class="slide-bg" style="background-image: url('assets/images/construction_hero_1784577666966.png');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="c_hero1_title">Veri Merkezi İnşaatları</h1>
-            <p data-i18n="c_hero1_desc">Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli (mission-critical) veri merkezleri inşası.</p>
-            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Çözümleri İncele</a>
-          </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="hero-slide">
-          <div class="slide-bg" style="background-image: url('assets/images/heavy_industry_clean_1785012805596.png');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="c_hero2_title">Ağır Sanayi Tesisleri</h1>
-            <p data-i18n="c_hero2_desc">Fabrikalar, dökümhaneler ve enerji üretim santrallerinde mühendislik ve anahtar teslim taahhüt.</p>
-            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
-          </div>
-        </div>
-        <!-- Slide 3 -->
-        <div class="hero-slide">
-          <div class="slide-bg" style="background-image: url('assets/images/residential_luxury_project_1785010053703.png');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="c_hero3_title">Konut ve Yaşam Projeleri</h1>
-            <p data-i18n="c_hero3_desc">Modern mimari, yenilikçi yaklaşım ve ileri mühendislikle tasarlanan lüks yaşam kompleksleri.</p>
-            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
-          </div>
-        </div>
-        <!-- Slide 4 -->
-        <div class="hero-slide">
-          <div class="slide-bg" style="background-image: url('assets/images/civil_engineering_bim_1785010076530.png');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="c_hero4_title">Yapı Mühendisliği & Müşavirlik</h1>
-            <p data-i18n="c_hero4_desc">İleri seviye deprem mühendisliği, BIM entegrasyonu ve kapsamlı teknik projelendirme.</p>
-            <a href="#const-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
-          </div>
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero-section">
+    <div class="hero-slider" id="main-hero-slider">
+      <div class="hero-slide active">
+        <div class="slide-bg" style="background-image: url('assets/images/data_center_construction_1785092614608.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-badge" data-i18n="hero_badge1">İNŞAAT & TAAHHÜT</div>
+          <h1 data-i18n="hero_title1">Geleceğin Güçlü Altyapıları</h1>
+          <p data-i18n="hero_desc1">Veri merkezleri, endüstriyel tesisler ve ağır mühendislik taahhüt projelerinde küresel standartlar.</p>
+          <a href="#insaat" class="cta-primary-btn" data-i18n="btn_explore">Keşfet</a>
         </div>
       </div>
-      <!-- Arrows -->
-      <button class="slider-arrow prev" onclick="prevSlide('const-hero-slider')">‹</button>
-      <button class="slider-arrow next" onclick="nextSlide('const-hero-slider')">›</button>
-      <!-- Dots -->
-      <div class="slider-dots" id="const-hero-dots"></div>
-    </section>
+      <div class="hero-slide">
+        <div class="slide-bg" style="background-image: url('assets/images/energy_hero_1784579876155.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-badge" data-i18n="hero_badge2">YENİLENEBİLİR ENERJİ</div>
+          <h1 data-i18n="hero_title2">Sürdürülebilir Enerji Çözümleri</h1>
+          <p data-i18n="hero_desc2">Güneş, rüzgar, akıllı bina otomasyonu ve ileri düzey siber güvenlik altyapı mühendisliği.</p>
+          <a href="#enerji" class="cta-primary-btn" data-i18n="btn_explore">Keşfet</a>
+        </div>
+      </div>
+      <div class="hero-slide">
+        <div class="slide-bg" style="background-image: url('assets/images/investment_finance_real_estate_1785010111511.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-badge" data-i18n="hero_badge3">FİNANS & YATIRIM</div>
+          <h1 data-i18n="hero_title3">Yakın Capital</h1>
+          <p data-i18n="hero_desc3">Proje finansmanı danışmanlığı, yapılandırma ve yatırım çözümleri platformu.</p>
+          <a href="#capital" class="cta-primary-btn" data-i18n="btn_explore">Keşfet</a>
+        </div>
+      </div>
+      <div class="hero-slide">
+        <div class="slide-bg" style="background-image: url('assets/images/civil_engineering_bim_1785010076530.png');"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-badge" data-i18n="hero_badge4">DİJİTAL & YZ</div>
+          <h1 data-i18n="hero_title4">Yakın Teknoloji</h1>
+          <p data-i18n="hero_desc4">Dijital hakediş, yapay zekâ, BIM entegrasyonu ve ileri seviye proje yönetim platformu.</p>
+          <a href="#teknoloji" class="cta-primary-btn" data-i18n="btn_explore">Keşfet</a>
+        </div>
+      </div>
+    </div>
+    <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+    <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+    <div class="slider-dots" id="main-hero-dots"></div>
 
-    <!-- Kurumsal (About Us) Section -->
-    <section id="const-about-sec" class="about-section container py-large">
+    <!-- Group Companies Quick Nav -->
+    <div class="hero-company-nav">
+      <a href="#insaat" class="company-nav-item" data-color="construction">
+        <span class="company-nav-icon">🏗️</span>
+        <span class="company-nav-label" data-i18n="nav_construction_short">İnşaat</span>
+      </a>
+      <a href="#enerji" class="company-nav-item" data-color="energy">
+        <span class="company-nav-icon">⚡</span>
+        <span class="company-nav-label" data-i18n="nav_energy_short">Enerji</span>
+      </a>
+      <a href="#capital" class="company-nav-item" data-color="capital">
+        <span class="company-nav-icon">💼</span>
+        <span class="company-nav-label" data-i18n="nav_capital_short">Capital</span>
+      </a>
+      <a href="#teknoloji" class="company-nav-item" data-color="technology">
+        <span class="company-nav-icon">💻</span>
+        <span class="company-nav-label" data-i18n="nav_technology_short">Teknoloji</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== HAKKIMIZDA ===== -->
+  <section id="hakkimizda" class="about-group-section">
+    <div class="container">
       <div class="section-grid">
-        <div class="about-info">
-          <div class="section-badge" data-i18n="tag_about">KURUMSAL GÜVEN</div>
-          <h2 class="section-heading" data-i18n="c_about_heading">Yakın Grup İnşaat Mühendisliği</h2>
-          <p class="about-lead" data-i18n="c_about_lead">Endüstriyel vizyonumuz ve teknik tecrübemiz ile yapı sektöründe sınırları çiziyoruz.</p>
-          <p class="about-body" data-i18n="c_about_body">Mühendislik temelli yaklaşımımız, ağır inşaat projelerinde en yüksek uluslararası standartları garanti eder. Veri merkezlerinden konut ve sanayi yapılarına kadar her yapıda üstün kalite, dayanıklılık ve sürdürülebilir yöntemler uyguluyoruz.</p>
-          <div class="stats-row">
-            <div class="stat-card">
-              <span class="stat-num">15+</span>
-              <span class="stat-label" data-i18n="stat_experience">Yıllık Tecrübe</span>
+        <div class="about-info reveal">
+          <div class="section-badge" data-i18n="tag_group">YAKIN GRUP HOLDİNG</div>
+          <h2 class="section-heading" data-i18n="group_heading">Mühendislik ve Enerjide Güç Birliği</h2>
+          <p class="about-lead" data-i18n="group_lead">Çok disiplinli bir proje geliştirme grubu olarak inşaattan finansmana uçtan uca çözümler sunuyoruz.</p>
+          <p class="about-body" data-i18n="group_body">Yakın Grup; inşaat taahhüt, yenilenebilir enerji, proje finansmanı ve dijital teknoloji alanlarında faaliyet gösteren bir mühendislik holdingidir. Endüstriyel vizyonumuz ve teknik tecrübemiz ile yapı sektöründe sınırları çiziyoruz.</p>
+          <div class="group-stats">
+            <div class="stat-item reveal">
+              <span class="stat-num" data-count="15">15+</span>
+              <span class="stat-label" data-i18n="stat_years">Yıllık Tecrübe</span>
             </div>
-            <div class="stat-card">
-              <span class="stat-num">500K+</span>
+            <div class="stat-item reveal">
+              <span class="stat-num" data-count="500">500K+</span>
               <span class="stat-label" data-i18n="stat_area">m² İnşaat Alanı</span>
             </div>
-            <div class="stat-card">
-              <span class="stat-num">100%</span>
-              <span class="stat-label" data-i18n="stat_success">Teslimat Başarısı</span>
+            <div class="stat-item reveal">
+              <span class="stat-num" data-count="250">250+</span>
+              <span class="stat-label" data-i18n="stat_mw">MW Kurulu Güç</span>
+            </div>
+            <div class="stat-item reveal">
+              <span class="stat-num">4</span>
+              <span class="stat-label" data-i18n="stat_companies">Grup Şirketi</span>
             </div>
           </div>
         </div>
-        <div class="about-image">
+        <div class="about-image reveal">
           <div class="image-wrapper">
-            <img src="assets/images/yakin_grup_headquarters_1784577698669.png" alt="Yakın Grup Corporate Architecture">
+            <img src="assets/images/yakin_grup_headquarters_1784577698669.png" alt="Yakın Grup Kurumsal">
+          </div>
+          <div class="floating-badge">
+            <span class="fb-icon">🏆</span>
+            <div>
+              <strong data-i18n="fb_title">ISO Sertifikalı</strong>
+              <span data-i18n="fb_sub">Uluslararası Standartlar</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Hizmet Mimarisi (Services - 6 categories) -->
-    <section id="const-services-sec" class="services-section bg-light py-large">
-      <div class="container">
-        <div class="text-center mb-large">
-          <div class="section-badge" data-i18n="nav_services">HİZMETLERİMİZ</div>
-          <h2 class="section-heading" data-i18n="c_services_title">Endüstriyel İnşaat Çözümlerimiz</h2>
-        </div>
-
-        <div class="services-tabs-container">
-          <div class="services-tabs-menu" id="const-services-menu">
-            <!-- Dynamically populated buttons -->
-          </div>
-          <div class="services-tab-content-wrapper" id="const-services-details">
-            <!-- Dynamically populated content -->
-          </div>
-        </div>
+  <!-- ===== YAKIN İNŞAAT ===== -->
+  <section id="insaat" class="company-section theme-construction">
+    <div class="company-section-hero" style="background-image: url('assets/images/construction_hero_1784577666966.png');">
+      <div class="company-hero-overlay"></div>
+      <div class="container company-hero-content">
+        <div class="company-tag" data-i18n="tag_construction">İNŞAAT & TAAHHÜT</div>
+        <h2 class="company-title" data-i18n="c_title">Yakın İnşaat</h2>
+        <p class="company-desc" data-i18n="c_desc">Veri merkezlerinden konut ve sanayi yapılarına kadar her projede üstün kalite, dayanıklılık ve sürdürülebilir yöntemler.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Referans Projeler / Lightbox Galeri -->
-    <section class="gallery-section py-large container">
+    <div class="container py-large">
+      <!-- Services Grid -->
       <div class="text-center mb-large">
-        <div class="section-badge" data-i18n="tag_portfolio">PROJELERİMİZ</div>
-        <h2 class="section-heading" data-i18n="portfolio_title">Seçkin Proje Galerisi</h2>
+        <div class="section-badge theme-c" data-i18n="nav_services">HİZMETLERİMİZ</div>
+        <h3 class="section-heading reveal" data-i18n="c_services_title">Endüstriyel İnşaat Çözümlerimiz</h3>
       </div>
-      
-      <div class="gallery-grid" id="const-gallery">
-        <!-- 4 representative cards with lightboxes -->
-        <div class="gallery-item" onclick="openLightbox(0, 'construction')">
-          <img src="assets/images/gallery_datacenter_1785092833568.png" class="gallery-thumb" alt="Veri Merkezi İnşaatı">
+      <div class="services-grid">
+        <div class="service-card reveal" data-accent="#0B3C6B">
+          <div class="service-icon">🏛️</div>
+          <h4 data-i18n="c_s1_title">Veri Merkezi İnşaatı</h4>
+          <p data-i18n="c_s1_desc">Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli mission-critical veri merkezleri.</p>
+        </div>
+        <div class="service-card reveal" data-accent="#0B3C6B">
+          <div class="service-icon">🏭</div>
+          <h4 data-i18n="c_s2_title">Ağır Sanayi Tesisleri</h4>
+          <p data-i18n="c_s2_desc">Fabrikalar, dökümhaneler ve enerji üretim santrallerinde anahtar teslim taahhüt.</p>
+        </div>
+        <div class="service-card reveal" data-accent="#0B3C6B">
+          <div class="service-icon">🏙️</div>
+          <h4 data-i18n="c_s3_title">Konut & Yaşam Projeleri</h4>
+          <p data-i18n="c_s3_desc">Modern mimari ve ileri mühendislikle tasarlanan lüks yaşam kompleksleri.</p>
+        </div>
+        <div class="service-card reveal" data-accent="#0B3C6B">
+          <div class="service-icon">📐</div>
+          <h4 data-i18n="c_s4_title">Yapı Mühendisliği & BIM</h4>
+          <p data-i18n="c_s4_desc">İleri seviye deprem mühendisliği, BIM entegrasyonu ve kapsamlı teknik projelendirme.</p>
+        </div>
+        <div class="service-card reveal" data-accent="#0B3C6B">
+          <div class="service-icon">✈️</div>
+          <h4 data-i18n="c_s5_title">Havalimanı & Ulaşım</h4>
+          <p data-i18n="c_s5_desc">Uluslararası standartlarda havalimanı terminalleri ve ulaşım altyapısı projeleri.</p>
+        </div>
+        <div class="service-card reveal" data-accent="#0B3C6B">
+          <div class="service-icon">🔧</div>
+          <h4 data-i18n="c_s6_title">Kentsel Dönüşüm</h4>
+          <p data-i18n="c_s6_desc">Riskli yapıların tespiti, güçlendirilmesi ve dönüşüm projelerinde uçtan uca yönetim.</p>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div class="text-center mb-large mt-large">
+        <div class="section-badge theme-c" data-i18n="tag_portfolio">PROJELERİMİZ</div>
+        <h3 class="section-heading reveal" data-i18n="portfolio_title">Seçkin Proje Galerisi</h3>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal" onclick="openLightbox(0)">
+          <img src="assets/images/gallery_datacenter_1785092833568.png" class="gallery-thumb" alt="Veri Merkezi">
           <div class="gallery-item-info">
-            <span class="gallery-category" data-i18n="c_gal1_sub">Ankara / Türkiye</span>
+            <span class="gallery-category">Ankara / Türkiye</span>
             <h4 class="gallery-title" data-i18n="c_gal1_title">T-3 Veri Merkezi Yapımı</h4>
           </div>
         </div>
-        <div class="gallery-item" onclick="openLightbox(1, 'construction')">
-          <img src="assets/images/construction_hero_1784577666966.png" class="gallery-thumb" alt="Havalimanı Terminali">
+        <div class="gallery-item reveal" onclick="openLightbox(1)">
+          <img src="assets/images/construction_hero_1784577666966.png" class="gallery-thumb" alt="Havalimanı">
           <div class="gallery-item-info">
-            <span class="gallery-category" data-i18n="c_gal2_sub">İzmir / Türkiye</span>
+            <span class="gallery-category">İzmir / Türkiye</span>
             <h4 class="gallery-title" data-i18n="c_gal2_title">Uluslararası Havalimanı Terminali</h4>
           </div>
         </div>
-        <div class="gallery-item" onclick="openLightbox(2, 'construction')">
-          <img src="assets/images/gallery_vadi_mansion_1785092899049.png" class="gallery-thumb" alt="Lüks Konutlar">
+        <div class="gallery-item reveal" onclick="openLightbox(2)">
+          <img src="assets/images/gallery_vadi_mansion_1785092899049.png" class="gallery-thumb" alt="Lüks Konut">
           <div class="gallery-item-info">
-            <span class="gallery-category" data-i18n="c_gal3_sub">İstanbul / Türkiye</span>
+            <span class="gallery-category">İstanbul / Türkiye</span>
             <h4 class="gallery-title" data-i18n="c_gal3_title">Vadi Konakları Yaşam Kompleksi</h4>
           </div>
         </div>
-        <div class="gallery-item" onclick="openLightbox(3, 'construction')">
-          <img src="assets/images/gallery_seismic_retrofitting_1785092947617.png" class="gallery-thumb" alt="Teknik Projelendirme">
+        <div class="gallery-item reveal" onclick="openLightbox(3)">
+          <img src="assets/images/gallery_seismic_retrofitting_1785092947617.png" class="gallery-thumb" alt="Deprem Güçlendirme">
           <div class="gallery-item-info">
-            <span class="gallery-category" data-i18n="c_gal4_sub">Deprem Mühendisliği</span>
+            <span class="gallery-category">Deprem Mühendisliği</span>
             <h4 class="gallery-title" data-i18n="c_gal4_title">Yapı Güçlendirme & BIM Tasarımı</h4>
           </div>
         </div>
       </div>
-    </section>
-  </main>
-
-  <!-- Energy Portal Layout -->
-  <main id="energy-portal" class="portal-view hidden-element">
-    <!-- Hero Slider -->
-    <section class="hero-section">
-      <div class="hero-slider" id="energy-hero-slider">
-        <!-- Slide 1 -->
-        <div class="hero-slide active">
-          <div class="slide-bg" style="background-image: url('assets/images/energy_hero_1784577681830.png');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="e_hero1_title">Güneş Enerjisi Sistemleri</h1>
-            <p data-i18n="e_hero1_desc">Arazi ve Çatı tipi GES EPC projelerinde yüksek kapasite verimlilik entegrasyonu.</p>
-            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Teknolojiyi İncele</a>
-          </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="hero-slide">
-          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e4/NOC-IUPUI.jpg');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="e_hero2_title">Akıllı Bina & Siber Güvenlik</h1>
-            <p data-i18n="e_hero2_desc">Tesis otomasyon sistemleri ve zayıf akım tasarımları ile veri merkezleri için IT güvenliği.</p>
-            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Hizmetleri Gör</a>
-          </div>
-        </div>
-        <!-- Slide 3 (Cluster A) -->
-        <div class="hero-slide">
-          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c6/Tesvolt_battery_energy_storage_system_Rheineck.jpg');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="e_hero3_title">Hibrit Enerji & Batarya Depolama</h1>
-            <p data-i18n="e_hero3_desc">Güneş ve rüzgar enerjisi sistemlerini lityum batarya (BESS) teknolojileriyle entegre ediyoruz.</p>
-            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
-          </div>
-        </div>
-        <!-- Slide 4 (Cluster B) -->
-        <div class="hero-slide">
-          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/eb/Racks_Amravati_Data_Center.jpg');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1 data-i18n="e_hero4_title">Veri Merkezi & Ağ Mimarisi</h1>
-            <p data-i18n="e_hero4_desc">Tier sertifikalı veri merkezlerinde omurga ağ kurulumu, sunucu optimizasyonu ve zayıf akım çözümleri.</p>
-            <a href="#energy-services-sec" class="cta-primary-btn" data-i18n="btn_view_details">Detaylı Bilgi</a>
-          </div>
-        </div>
-      </div>
-      <!-- Arrows -->
-      <button class="slider-arrow prev" onclick="prevSlide('energy-hero-slider')">‹</button>
-      <button class="slider-arrow next" onclick="nextSlide('energy-hero-slider')">›</button>
-      <!-- Dots -->
-      <div class="slider-dots" id="energy-dots"></div>
-    </section>
-
-    <!-- Kurumsal (About Us) Section -->
-    <section id="energy-about-sec" class="about-section container py-large">
-      <div class="section-grid">
-        <div class="about-info">
-          <div class="section-badge" data-i18n="tag_about">SÜRDÜRÜLEBİLİRLİK</div>
-          <h2 class="section-heading" data-i18n="e_about_heading">Yakın Grup Enerji & Akıllı Altyapı</h2>
-          <p class="about-lead" data-i18n="e_about_lead">Doğa ile uyumlu yenilenebilir enerji kaynakları ve yapay zeka entegreli yönetim teknolojileri.</p>
-          <p class="about-body" data-i18n="e_about_body">Sürdürülebilir kalkınmanın merkezine yenilenebilir enerjiyi koyuyoruz. Huawei, ABB, Vertiv gibi küresel markalar ile iş birliği içinde yüksek verimliliğe odaklanıyor, akıllı kontrol şebekeleri ve güvenli ağ mimarileri geliştiriyoruz.</p>
-          <div class="stats-row">
-            <div class="stat-card">
-              <span class="stat-num">250+</span>
-              <span class="stat-label" data-i18n="stat_power">MW Toplam Kurulu Güç</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-num">50K+</span>
-              <span class="stat-label" data-i18n="stat_reduction">Ton CO₂ Azaltımı</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-num">24/7</span>
-              <span class="stat-label" data-i18n="stat_monitoring">Akıllı SCADA İzleme</span>
-            </div>
-          </div>
-        </div>
-        <div class="about-image">
-          <div class="image-wrapper">
-            <img src="assets/images/energy_hero_1784577681830.png" alt="Yakın Grup Energy Solutions">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Hizmet Mimarisi (Services - Clusters A & B with 9 sub-categories) -->
-    <section id="energy-services-sec" class="services-section bg-light py-large">
-      <div class="container">
-        <div class="text-center mb-large">
-          <div class="section-badge" data-i18n="nav_services">HİZMETLERİMİZ</div>
-          <h2 class="section-heading" data-i18n="e_services_title">Enerji, Haberleşme ve Siber Güvenlik Mimariniz</h2>
-        </div>
-
-        <div class="energy-clusters-layout">
-          <!-- Cluster A: Yenilenebilir Enerji -->
-          <div class="cluster-card">
-            <h3 class="cluster-title" data-i18n="cluster_a_title">KÜME A — Yenilenebilir Enerji & Mekanik Sistemler</h3>
-            <div class="accordion-container" id="energy-cluster-a-acc">
-              <!-- Dynamically populated accordion -->
-            </div>
-          </div>
-
-          <!-- Cluster B: Elektronik ve IT -->
-          <div class="cluster-card">
-            <h3 class="cluster-title" data-i18n="cluster_b_title">KÜME B — Zayıf Akım, Network & Siber Güvenlik Müşavirliği</h3>
-            <div class="accordion-container" id="energy-cluster-b-acc">
-              <!-- Dynamically populated accordion -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  
-  <!-- Capital Portal Layout -->
-  <main id="capital-portal" class="portal-view hidden-element">
-    <section class="hero-section">
-      <div class="hero-slider" id="capital-hero-slider">
-        <div class="hero-slide active">
-          <div class="slide-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3a/Financial_District%2C_Singapore.jpg');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1>Yakın Capital</h1>
-            <p>Proje Finansmanı, Danışmanlık ve Yatırım Çözümleri Platformu</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Legal / Position Info -->
-    <section class="about-section container py-large">
-      <div class="section-grid" style="grid-template-columns: 1fr;">
-        <div class="about-info" style="max-width: 800px; margin: 0 auto; text-align: center;">
-          <div class="section-badge">CAPITAL ADVISORY</div>
-          <h2 class="section-heading">Çok Disiplinli Finansman Yapılandırması</h2>
-          <p class="about-lead">Yakın Capital, klasik bir finans kuruluşu değil; grubumuzun projelerini uçtan uca geliştiren, finansman çözümleri üreten bir danışmanlık ve yatırım platformudur.</p>
-          <p class="about-body">
-            Vizyonumuz sadece inşaat ve enerji projeleri geliştirmek değil; aynı zamanda bu projelerin finansmanını organize etmek, riskleri yönetmek ve sürdürülebilir nakit akış modelleri oluşturmaktır. Bankalar, GYO'lar ve leasing kuruluşları için sadece kredi talep eden bir yapı değil, projeyi finansal açıdan yöneten güvenilir bir çözüm ortağıyız.
-          </p>
-          <p class="about-body" style="font-size: 0.85rem; color: #718096; margin-top: 1rem;">
-            * Yakın Capital, lisans gerektiren portföy yönetimi veya finansal aracılık faaliyetleri yürütmez. Odak noktamız "Proje Finansmanı Danışmanlığı ve Yapılandırma"dır.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Faaliyet Alanları & Vizyon (Cards) -->
-    <section id="capital-services-sec" class="services-section bg-light py-large">
-      <div class="container">
-        <div class="text-center mb-large">
-          <div class="section-badge">FAALİYET ALANLARI</div>
-          <h2 class="section-heading">Finansal Çözümlerimiz</h2>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-          <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Finansman ve Kredi</h3>
-            <ul style="list-style: none; padding: 0; line-height: 1.8;">
-              <li>✔️ Banka proje finansmanı</li>
-              <li>✔️ Leasing organizasyonu</li>
-              <li>✔️ Hakediş bazlı finansman modelleri</li>
-            </ul>
-          </div>
-          <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Yatırım ve Yapılandırma</h3>
-            <ul style="list-style: none; padding: 0; line-height: 1.8;">
-              <li>✔️ GYO İş birlikleri</li>
-              <li>✔️ Girişim sermayesi ilişkileri</li>
-              <li>✔️ SPV (Özel Amaçlı Şirket) kurulumu</li>
-            </ul>
-          </div>
-          <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h3 style="color: #1e3a8a; margin-bottom: 1rem;">Risk ve Danışmanlık</h3>
-            <ul style="list-style: none; padding: 0; line-height: 1.8;">
-              <li>✔️ Nakit akışı modelleme</li>
-              <li>✔️ Sigorta ve teminat çözümleri</li>
-              <li>✔️ Finansal fizibilite danışmanlığı</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="text-center mb-large mt-large">
-          <div class="section-badge">STRATEJİ</div>
-          <h2 class="section-heading">Uzun Vadeli Vizyonumuz</h2>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-          <div style="background: #f8fafc; padding: 2rem; border-left: 4px solid #3b82f6;">
-            <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">1. Aşama (Bugün)</h3>
-            <ul style="list-style: none; padding: 0; color: #4a5568;">
-              <li>• Bankalarla stratejik iş birlikleri</li>
-              <li>• Leasing şirketleriyle çerçeve anlaşmalar</li>
-              <li>• Sigorta şirketleriyle entegrasyon</li>
-            </ul>
-          </div>
-          <div style="background: #f8fafc; padding: 2rem; border-left: 4px solid #1e3a8a;">
-            <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">2. Aşama (Advisory)</h3>
-            <ul style="list-style: none; padding: 0; color: #4a5568;">
-              <li>• Proje finansmanı danışmanlığı</li>
-              <li>• Finansal modelleme</li>
-              <li>• Risk yönetimi</li>
-            </ul>
-          </div>
-          <div style="background: #f8fafc; padding: 2rem; border-left: 4px solid #172554;">
-            <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">3. Aşama (Fund)</h3>
-            <ul style="list-style: none; padding: 0; color: #4a5568;">
-              <li>• Gayrimenkul yatırım fonlarıyla projeler</li>
-              <li>• Yabancı yatırımcıların katılımı</li>
-              <li>• Proje bazlı yatırım platformu</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  
-  <!-- Technology Portal Layout -->
-  <main id="technology-portal" class="portal-view hidden-element">
-    <section class="hero-section">
-      <div class="hero-slider" id="tech-hero-slider">
-        <div class="hero-slide active">
-          <div class="slide-bg" style="background-image: url('assets/images/yakin_technology_hero.png');"></div>
-          <div class="slide-overlay"></div>
-          <div class="slide-content">
-            <h1>Yakın Teknoloji</h1>
-            <p>Dijital Hakediş, Yapay Zekâ, BIM ve Yakın Platform İleri Seviye Proje Yönetimi</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <section id="tech-services-sec" class="services-section bg-light py-large">
-      <div class="container">
-        <div class="text-center mb-large">
-          <div class="section-badge">DİJİTAL DÖNÜŞÜM</div>
-          <h2 class="section-heading">Geleceğin Proje Yönetimi</h2>
-          <p class="section-subtitle mt-medium">Ağır sanayi, enerji ve altyapı projelerini ileri teknoloji ile uçtan uca dijitalleştiriyoruz.</p>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-          <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-bottom: 4px solid #8b5cf6;">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem;">📊</div>
-            <h3 style="color: #4c1d95; margin-bottom: 1rem; font-size: 1.35rem;">Dijital Hakediş</h3>
-            <p style="color: #4a5568; line-height: 1.6;">Karmaşık taşeron ve malzeme süreçlerini otomatize ederek, sıfır hata ile anlık, şeffaf hakediş onay ve ödeme altyapıları kuruyoruz.</p>
-          </div>
-          
-          <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-bottom: 4px solid #8b5cf6;">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🧠</div>
-            <h3 style="color: #4c1d95; margin-bottom: 1rem; font-size: 1.35rem;">Yapay Zekâ</h3>
-            <p style="color: #4a5568; line-height: 1.6;">Şantiye verimliliğini makine öğrenmesi ile analiz ediyor, iş güvenliği risklerini öngörüyor ve maliyet artışlarını önceden uyaran yapay zeka modelleri geliştiriyoruz.</p>
-          </div>
-          
-          <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-bottom: 4px solid #8b5cf6;">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏗️</div>
-            <h3 style="color: #4c1d95; margin-bottom: 1rem; font-size: 1.35rem;">BIM Entegrasyonu</h3>
-            <p style="color: #4a5568; line-height: 1.6;">Building Information Modeling (BIM) standartlarında 5D (Zaman+Maliyet) dijital ikizler oluşturarak yapı ömrü boyunca kusursuz veri yönetimi sağlıyoruz.</p>
-          </div>
-          
-          <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-bottom: 4px solid #8b5cf6;">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem;">📱</div>
-            <h3 style="color: #4c1d95; margin-bottom: 1rem; font-size: 1.35rem;">Yakın Platform</h3>
-            <p style="color: #4a5568; line-height: 1.6;">İleri seviye proje yönetim yazılımımız olan "Yakın Platform" ile tüm mühendislik, satınalma ve saha koordinasyonunu tek bir ekrana taşıyoruz.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-
-  
-  
-  <!-- YAKIN GROUP Hiyerarşisi (Common Section) -->
-  <section id="group-companies" class="group-section py-large container hidden-element">
-    <div class="text-center mb-large">
-      <div class="section-badge">YAKIN GROUP</div>
-      <h2 class="section-heading">Grup Şirketlerimiz</h2>
-      <p class="section-subtitle">Çok disiplinli bir proje geliştirme grubu olarak, inşaattan finansmana uçtan uca çözümler sunuyoruz.</p>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-      <div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; position: relative; height: 200px;" onclick="selectSector('construction')">
-        <div style="position: absolute; inset: 0; background: url('assets/images/construction_hero_1784577666966.png') center/cover; filter: brightness(0.6);"></div>
-        <div style="position: relative; z-index: 10; padding: 1.5rem; color: white; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">🏗️ Yakın Construction</h3>
-          <p style="font-size: 0.95rem; opacity: 0.9;">Kentsel Dönüşüm, Taahhüt ve Proje Geliştirme</p>
+  </section>
+
+  <!-- ===== YAKIN ENERJİ ===== -->
+  <section id="enerji" class="company-section theme-energy bg-dark-section">
+    <div class="company-section-hero" style="background-image: url('assets/images/energy_hero_1784579876155.png');">
+      <div class="company-hero-overlay"></div>
+      <div class="container company-hero-content">
+        <div class="company-tag" data-i18n="tag_energy">ENERJİ & TEKNOLOJİ</div>
+        <h2 class="company-title" data-i18n="e_title">Yakın Enerji</h2>
+        <p class="company-desc" data-i18n="e_desc">Sürdürülebilir kalkınmanın merkezine yenilenebilir enerjiyi koyuyoruz. Huawei, ABB, Vertiv gibi küresel markalar ile iş birliği içinde yüksek verimliliğe odaklanıyoruz.</p>
+      </div>
+    </div>
+
+    <div class="container py-large">
+      <div class="energy-clusters">
+        <!-- Küme A -->
+        <div class="cluster reveal">
+          <div class="cluster-header">
+            <div class="cluster-badge" data-i18n="cluster_a_label">KÜME A</div>
+            <h3 data-i18n="cluster_a_title">Yenilenebilir Enerji & Mekanik Sistemler</h3>
+          </div>
+          <div class="cluster-services">
+            <div class="cluster-service-item">
+              <div class="csi-icon">☀️</div>
+              <div>
+                <h5 data-i18n="e_a1_title">Güneş Enerjisi Sistemleri (GES)</h5>
+                <p data-i18n="e_a1_desc">Arazi ve çatı tipi GES EPC projelerinde yüksek kapasite verimlilik entegrasyonu.</p>
+              </div>
+            </div>
+            <div class="cluster-service-item">
+              <div class="csi-icon">🌬️</div>
+              <div>
+                <h5 data-i18n="e_a2_title">Rüzgar Enerjisi</h5>
+                <p data-i18n="e_a2_desc">RES kurulum ve tesis mühendisliği, türbin entegrasyon hizmetleri.</p>
+              </div>
+            </div>
+            <div class="cluster-service-item">
+              <div class="csi-icon">🔋</div>
+              <div>
+                <h5 data-i18n="e_a3_title">Hibrit Enerji & BESS</h5>
+                <p data-i18n="e_a3_desc">Güneş ve rüzgar enerjisini lityum batarya teknolojileriyle entegre ediyoruz.</p>
+              </div>
+            </div>
+            <div class="cluster-service-item">
+              <div class="csi-icon">🏗️</div>
+              <div>
+                <h5 data-i18n="e_a4_title">Mekanik Tesisat</h5>
+                <p data-i18n="e_a4_desc">HVAC, boru tesisatı, iklimlendirme ve mekanik proje tasarımı.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Küme B -->
+        <div class="cluster reveal">
+          <div class="cluster-header">
+            <div class="cluster-badge" data-i18n="cluster_b_label">KÜME B</div>
+            <h3 data-i18n="cluster_b_title">Zayıf Akım, Network & Siber Güvenlik</h3>
+          </div>
+          <div class="cluster-services">
+            <div class="cluster-service-item">
+              <div class="csi-icon">🔒</div>
+              <div>
+                <h5 data-i18n="e_b1_title">Siber Güvenlik Müşavirliği</h5>
+                <p data-i18n="e_b1_desc">IT güvenliği, SOC kurulumu, penetrasyon testleri ve güvenlik denetimleri.</p>
+              </div>
+            </div>
+            <div class="cluster-service-item">
+              <div class="csi-icon">🌐</div>
+              <div>
+                <h5 data-i18n="e_b2_title">Veri Merkezi & Ağ Mimarisi</h5>
+                <p data-i18n="e_b2_desc">Omurga ağ kurulumu, sunucu optimizasyonu ve zayıf akım çözümleri.</p>
+              </div>
+            </div>
+            <div class="cluster-service-item">
+              <div class="csi-icon">🏠</div>
+              <div>
+                <h5 data-i18n="e_b3_title">Akıllı Bina Otomasyonu</h5>
+                <p data-i18n="e_b3_desc">Tesis otomasyon sistemleri, BMS ve SCADA entegrasyon projeleri.</p>
+              </div>
+            </div>
+            <div class="cluster-service-item">
+              <div class="csi-icon">📡</div>
+              <div>
+                <h5 data-i18n="e_b4_title">Elektrik Altyapısı</h5>
+                <p data-i18n="e_b4_desc">Güçlü ve zayıf akım elektrik projelendirme, panel ve dağıtım tasarımı.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; position: relative; height: 200px;" onclick="selectSector('energy')">
-        <div style="position: absolute; inset: 0; background: url('assets/images/energy_hero_1784577681830.png') center/cover; filter: brightness(0.6);"></div>
-        <div style="position: relative; z-index: 10; padding: 1.5rem; color: white; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">⚡ Yakın Energy</h3>
-          <p style="font-size: 0.95rem; opacity: 0.9;">Yenilenebilir Enerji ve EPC Çözümleri</p>
+
+      <!-- Energy Stats -->
+      <div class="energy-stats-bar reveal">
+        <div class="energy-stat">
+          <span class="estat-num">250+</span>
+          <span class="estat-label" data-i18n="stat_mw_full">MW Toplam Kurulu Güç</span>
         </div>
-      </div>
-      
-      <div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; position: relative; height: 200px;" onclick="selectSector('capital')">
-        <div style="position: absolute; inset: 0; background: url('assets/images/yakin_capital_hero.png') center/cover; filter: brightness(0.6);"></div>
-        <div style="position: relative; z-index: 10; padding: 1.5rem; color: white; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">💼 Yakın Capital</h3>
-          <p style="font-size: 0.95rem; opacity: 0.9;">Proje Finansmanı, Leasing ve Yatırım Çözümleri</p>
+        <div class="energy-stat-divider"></div>
+        <div class="energy-stat">
+          <span class="estat-num">50K+</span>
+          <span class="estat-label" data-i18n="stat_co2">Ton CO₂ Azaltımı</span>
         </div>
-      </div>
-      
-      <div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; position: relative; height: 200px;" onclick="selectSector('technology')">
-        <div style="position: absolute; inset: 0; background: url('assets/images/yakin_technology_hero.png') center/cover; filter: brightness(0.6);"></div>
-        <div style="position: relative; z-index: 10; padding: 1.5rem; color: white; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">💻 Yakın Technology</h3>
-          <p style="font-size: 0.95rem; opacity: 0.9;">Dijital Proje Yönetimi ve Yapay Zekâ</p>
+        <div class="energy-stat-divider"></div>
+        <div class="energy-stat">
+          <span class="estat-num">24/7</span>
+          <span class="estat-label" data-i18n="stat_scada">Akıllı SCADA İzleme</span>
         </div>
-      </div>
-      
-      <div style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; height: 200px;">
-        <div style="position: absolute; inset: 0; background: url('assets/images/yakin_ventures_hero.png') center/cover; filter: brightness(0.5) grayscale(50%);"></div>
-        <div style="position: relative; z-index: 10; padding: 1.5rem; color: white; display: flex; flex-direction: column; justify-content: flex-end; height: 100%;">
-          <div class="badge-soon" style="position: absolute; top: 1rem; right: 1rem; margin:0;">YAKINDA</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">🚀 Yakın Ventures</h3>
-          <p style="font-size: 0.95rem; opacity: 0.9;">Küresel Girişim ve Ölçeklenebilir Yatırımlar</p>
+        <div class="energy-stat-divider"></div>
+        <div class="energy-stat">
+          <span class="estat-num">9</span>
+          <span class="estat-label" data-i18n="stat_services">Hizmet Kategorisi</span>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===== YAKIN CAPITAL ===== -->
+  <section id="capital" class="company-section theme-capital">
+    <div class="company-section-hero" style="background-image: url('assets/images/investment_finance_real_estate_1785010111511.png');">
+      <div class="company-hero-overlay"></div>
+      <div class="container company-hero-content">
+        <div class="company-tag" data-i18n="tag_capital">FİNANS & YATIRIM</div>
+        <h2 class="company-title">Yakın Capital</h2>
+        <p class="company-desc" data-i18n="cap_desc">Yakın Capital, klasik bir finans kuruluşu değil; grubumuzun projelerini uçtan uca geliştiren, finansman çözümleri üreten bir danışmanlık ve yatırım platformudur.</p>
+      </div>
+    </div>
 
-  <!-- Global Partners logo slider marquee (Common Section) -->
-  <section id="partners" class="partners-section py-large bg-dark-neutral hidden-element">
+    <div class="container py-large">
+      <div class="capital-layout">
+        <div class="capital-info reveal">
+          <div class="section-badge theme-cap" data-i18n="tag_cap_advisory">CAPITAL ADVISORY</div>
+          <h3 class="section-heading" data-i18n="cap_heading">Çok Disiplinli Finansman Yapılandırması</h3>
+          <p class="about-body" data-i18n="cap_body">Vizyonumuz sadece inşaat ve enerji projeleri geliştirmek değil; aynı zamanda bu projelerin finansmanını organize etmek, riskleri yönetmek ve sürdürülebilir nakit akış modelleri oluşturmaktır.</p>
+          <p class="legal-note" data-i18n="cap_legal">* Yakın Capital, lisans gerektiren portföy yönetimi veya finansal aracılık faaliyetleri yürütmez. Odak noktamız "Proje Finansmanı Danışmanlığı ve Yapılandırma"dır.</p>
+        </div>
+
+        <div class="capital-services-grid">
+          <div class="capital-card reveal">
+            <div class="cap-card-icon">🏦</div>
+            <h4 data-i18n="cap_c1_title">Finansman ve Kredi</h4>
+            <ul class="cap-list">
+              <li data-i18n="cap_c1_i1">Banka proje finansmanı</li>
+              <li data-i18n="cap_c1_i2">Leasing organizasyonu</li>
+              <li data-i18n="cap_c1_i3">Hakediş bazlı finansman modelleri</li>
+            </ul>
+          </div>
+          <div class="capital-card reveal">
+            <div class="cap-card-icon">📈</div>
+            <h4 data-i18n="cap_c2_title">Yatırım ve Yapılandırma</h4>
+            <ul class="cap-list">
+              <li data-i18n="cap_c2_i1">GYO iş birlikleri</li>
+              <li data-i18n="cap_c2_i2">Girişim sermayesi ilişkileri</li>
+              <li data-i18n="cap_c2_i3">SPV (Özel Amaçlı Şirket) kurulumu</li>
+            </ul>
+          </div>
+          <div class="capital-card reveal">
+            <div class="cap-card-icon">🛡️</div>
+            <h4 data-i18n="cap_c3_title">Risk ve Danışmanlık</h4>
+            <ul class="cap-list">
+              <li data-i18n="cap_c3_i1">Nakit akışı modelleme</li>
+              <li data-i18n="cap_c3_i2">Sigorta ve teminat çözümleri</li>
+              <li data-i18n="cap_c3_i3">Finansal fizibilite danışmanlığı</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap -->
+      <div class="capital-roadmap reveal">
+        <div class="roadmap-step active">
+          <div class="step-num">01</div>
+          <h5 data-i18n="cap_phase1_title">Bugün — Stratejik İş Birlikleri</h5>
+          <p data-i18n="cap_phase1_desc">Bankalar, leasing şirketleri ve sigorta kuruluşlarıyla çerçeve anlaşmalar.</p>
+        </div>
+        <div class="roadmap-connector"></div>
+        <div class="roadmap-step">
+          <div class="step-num">02</div>
+          <h5 data-i18n="cap_phase2_title">Advisory — Danışmanlık</h5>
+          <p data-i18n="cap_phase2_desc">Proje finansmanı danışmanlığı, finansal modelleme ve risk yönetimi.</p>
+        </div>
+        <div class="roadmap-connector"></div>
+        <div class="roadmap-step">
+          <div class="step-num">03</div>
+          <h5 data-i18n="cap_phase3_title">Fund — Yatırım Fonu</h5>
+          <p data-i18n="cap_phase3_desc">Gayrimenkul yatırım fonları ve yabancı yatırımcı katılımıyla proje bazlı platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== YAKIN TEKNOLOJİ ===== -->
+  <section id="teknoloji" class="company-section theme-technology bg-dark-section">
+    <div class="company-section-hero" style="background-image: url('assets/images/civil_engineering_bim_1785010076530.png');">
+      <div class="company-hero-overlay"></div>
+      <div class="container company-hero-content">
+        <div class="company-tag" data-i18n="tag_technology">DİJİTAL & YZ</div>
+        <h2 class="company-title">Yakın Teknoloji</h2>
+        <p class="company-desc" data-i18n="tech_desc">Ağır sanayi, enerji ve altyapı projelerini ileri teknoloji ile uçtan uca dijitalleştiriyoruz.</p>
+      </div>
+    </div>
+
+    <div class="container py-large">
+      <div class="text-center mb-large">
+        <div class="section-badge theme-tech" data-i18n="tag_digital">DİJİTAL DÖNÜŞÜM</div>
+        <h3 class="section-heading reveal" data-i18n="tech_heading">Geleceğin Proje Yönetimi</h3>
+        <p class="section-subtitle reveal" data-i18n="tech_sub">Yakın Platform ile tüm mühendislik, satınalma ve saha koordinasyonunu tek ekrana taşıyoruz.</p>
+      </div>
+      <div class="tech-cards">
+        <div class="tech-card reveal">
+          <div class="tech-card-icon">📊</div>
+          <h4 data-i18n="tech_t1_title">Dijital Hakediş</h4>
+          <p data-i18n="tech_t1_desc">Karmaşık taşeron ve malzeme süreçlerini otomatize ederek sıfır hata ile anlık, şeffaf hakediş onay ve ödeme altyapıları.</p>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-card-icon">🧠</div>
+          <h4 data-i18n="tech_t2_title">Yapay Zekâ</h4>
+          <p data-i18n="tech_t2_desc">Şantiye verimliliğini makine öğrenmesi ile analiz ediyor, iş güvenliği risklerini ve maliyet artışlarını öngörüyoruz.</p>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-card-icon">🏗️</div>
+          <h4 data-i18n="tech_t3_title">BIM Entegrasyonu</h4>
+          <p data-i18n="tech_t3_desc">5D dijital ikizler oluşturarak yapı ömrü boyunca kusursuz veri yönetimi ve proje koordinasyonu.</p>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-card-icon">📱</div>
+          <h4 data-i18n="tech_t4_title">Yakın Platform</h4>
+          <p data-i18n="tech_t4_desc">İleri seviye proje yönetim yazılımımız ile tüm mühendislik, satınalma ve saha koordinasyonu tek ekranda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== İŞ ORTAKLARI ===== -->
+  <section id="ortaklar" class="partners-section">
     <div class="container">
-      <div class="text-center mb-medium">
-        <div id="partners-badge" class="section-badge" data-i18n="tag_technology">MÜHENDİSLİK PAYDAŞLARI</div>
-        <h2 id="partners-title" class="section-heading text-white" data-i18n="partners_title">Teknoloji İş Ortaklarımız</h2>
-        <p id="partners-subtitle" class="section-subtitle" data-i18n="partners_subtitle">Dünya devleri ile uluslararası standartlarda sistem entegrasyonu sağlıyoruz.</p>
+      <div class="text-center mb-large">
+        <div class="section-badge" data-i18n="tag_partners">MÜHENDİSLİK PAYDAŞLARI</div>
+        <h2 class="section-heading reveal" data-i18n="partners_title">Teknoloji İş Ortaklarımız</h2>
+        <p class="section-subtitle reveal" data-i18n="partners_subtitle">Dünya devleri ile uluslararası standartlarda sistem entegrasyonu sağlıyoruz.</p>
       </div>
-
-      <!-- Construction References Marquee -->
-      <div id="marquee-construction" class="marquee-container hidden-element">
-        <div class="marquee-track">
-          <div class="marquee-card">Vodafone Data Center</div>
-          <div class="marquee-card">Turkcell DC Maslak</div>
-          <div class="marquee-card">Kuzu Grup Metroproje</div>
-          <div class="marquee-card">Rönesans Holding</div>
-          <div class="marquee-card">Emlak Konut GYO</div>
-          <div class="marquee-card">Ağaoğlu Maslak 1453</div>
-          <div class="marquee-card">Tekfen İnşaat</div>
-          <div class="marquee-card">Nurol İnşaat</div>
-          <div class="marquee-card">Limak Holding</div>
-          <div class="marquee-card">TAV Havalimanları</div>
-          <!-- Duplicate -->
-          <div class="marquee-card">Vodafone Data Center</div>
-          <div class="marquee-card">Turkcell DC Maslak</div>
-          <div class="marquee-card">Kuzu Grup Metroproje</div>
-          <div class="marquee-card">Rönesans Holding</div>
-          <div class="marquee-card">Emlak Konut GYO</div>
-          <div class="marquee-card">Ağaoğlu Maslak 1453</div>
-          <div class="marquee-card">Tekfen İnşaat</div>
-          <div class="marquee-card">Nurol İnşaat</div>
-          <div class="marquee-card">Limak Holding</div>
-          <div class="marquee-card">TAV Havalimanları</div>
-        </div>
-      </div>
-
-      <!-- Energy Technology Partners Marquee -->
-      <div id="marquee-energy" class="marquee-container">
-        <div class="marquee-track">
-          <div class="marquee-card">ABB</div>
-          <div class="marquee-card">Schneider Electric</div>
-          <div class="marquee-card">Vertiv</div>
-          <div class="marquee-card">Siemens</div>
-          <div class="marquee-card">Huawei</div>
-          <div class="marquee-card">Cisco</div>
-          <div class="marquee-card">Fortinet</div>
-          <div class="marquee-card">Honeywell</div>
-          <div class="marquee-card">Dell</div>
-          <div class="marquee-card text-dim">VMware</div>
-          <!-- Duplicate -->
-          <div class="marquee-card">ABB</div>
-          <div class="marquee-card">Schneider Electric</div>
-          <div class="marquee-card">Vertiv</div>
-          <div class="marquee-card">Siemens</div>
-          <div class="marquee-card">Huawei</div>
-          <div class="marquee-card">Cisco</div>
-          <div class="marquee-card">Fortinet</div>
-          <div class="marquee-card">Honeywell</div>
-          <div class="marquee-card">Dell</div>
-          <div class="marquee-card text-dim">VMware</div>
-        </div>
+    </div>
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <div class="marquee-card">ABB</div>
+        <div class="marquee-card">Schneider Electric</div>
+        <div class="marquee-card">Vertiv</div>
+        <div class="marquee-card">Siemens</div>
+        <div class="marquee-card">Huawei</div>
+        <div class="marquee-card">Cisco</div>
+        <div class="marquee-card">Fortinet</div>
+        <div class="marquee-card">Honeywell</div>
+        <div class="marquee-card">Dell</div>
+        <div class="marquee-card">VMware</div>
+        <div class="marquee-card">Vodafone</div>
+        <div class="marquee-card">Turkcell</div>
+        <div class="marquee-card">TAV Havalimanları</div>
+        <div class="marquee-card">Rönesans Holding</div>
+        <!-- Duplicate for seamless loop -->
+        <div class="marquee-card">ABB</div>
+        <div class="marquee-card">Schneider Electric</div>
+        <div class="marquee-card">Vertiv</div>
+        <div class="marquee-card">Siemens</div>
+        <div class="marquee-card">Huawei</div>
+        <div class="marquee-card">Cisco</div>
+        <div class="marquee-card">Fortinet</div>
+        <div class="marquee-card">Honeywell</div>
+        <div class="marquee-card">Dell</div>
+        <div class="marquee-card">VMware</div>
+        <div class="marquee-card">Vodafone</div>
+        <div class="marquee-card">Turkcell</div>
+        <div class="marquee-card">TAV Havalimanları</div>
+        <div class="marquee-card">Rönesans Holding</div>
       </div>
     </div>
   </section>
 
-  <!-- B2B / B2C Marketplace Preview (Common Section) -->
-  <section id="marketplace" class="marketplace-section py-large bg-light-gradient hidden-element">
+  <!-- ===== MARKETPLACE ===== -->
+  <section id="marketplace" class="marketplace-section">
     <div class="container">
       <div class="text-center mb-large">
         <div class="section-badge" data-i18n="tag_store">ONLINE SATIŞ & PORTAL</div>
-        <h2 class="section-heading" data-i18n="market_heading">Yakın Grup Online Marketplace</h2>
-        <p class="section-subtitle" data-i18n="market_sub">Endüstriyel ekipman tedariki ve enerji &amp; bilgi teknolojileri ürünlerine erişimde hızlı dijital altyapı.</p>
+        <h2 class="section-heading reveal" data-i18n="market_heading">Yakın Grup Online Marketplace</h2>
+        <p class="section-subtitle reveal" data-i18n="market_sub">Endüstriyel ekipman tedariki ve enerji & bilgi teknolojileri ürünlerine erişimde hızlı dijital altyapı.</p>
       </div>
-
       <div class="market-cards-grid">
-        <div class="market-promo-card">
+        <div class="market-promo-card reveal">
           <div class="badge-soon" data-i18n="badge_soon">ÇOK YAKINDA</div>
+          <div class="market-card-icon">🏢</div>
           <h3 data-i18n="market_b2b_title">B2B Kurumsal Alım Portalı</h3>
           <p data-i18n="market_b2b_desc">Anlaşmalı tedarikçilerimiz ve bayilerimiz için toptan sipariş, özel vergi indirimleri, şartnamelere uygun teklif toplama paneli.</p>
           <button class="market-cta-btn secondary" onclick="openMarketplaceModal()" data-i18n="btn_market_register">Bekleme Listesine Katıl</button>
         </div>
-
-        <div class="market-promo-card highlight">
+        <div class="market-promo-card highlight reveal">
           <div class="badge-soon" data-i18n="badge_soon">ÇOK YAKINDA</div>
-          <h3 data-i18n="market_b2c_title">B2C Bireysel Siparişi</h3>
+          <div class="market-card-icon">⚡</div>
+          <h3 data-i18n="market_b2c_title">B2C Bireysel Sipariş</h3>
           <p data-i18n="market_b2c_desc">Güneş PV camları, ev tipi şarj cihazları ve bina solar panelleri için doğrudan perakende satış ve montaj başvuru kanalları.</p>
           <button class="market-cta-btn" onclick="openMarketplaceModal()" data-i18n="btn_market_browse">Kataloğu İncele</button>
         </div>
@@ -671,145 +538,148 @@
     </div>
   </section>
 
-  <!-- Contact & Team with vCards (Common Section) -->
-  <section id="contact" class="contact-section py-large container hidden-element">
-    <div class="section-grid">
-      <!-- Contact card info -->
-      <div>
+  <!-- ===== İLETİŞİM ===== -->
+  <section id="iletisim" class="contact-section">
+    <div class="container">
+      <div class="text-center mb-large">
         <div class="section-badge" data-i18n="nav_contact">İLETİŞİM</div>
-        <h2 class="section-heading" data-i18n="contact_title">Bizimle İletişime Geçin</h2>
-        <p class="contact-lead" data-i18n="contact_desc">Projeleriniz veya danışmanlık ihtiyaçlarınız için ekibimiz 7/24 hazırdır.</p>
-
-        <div class="contact-details-list">
-          <div class="contact-detail-item">
-            <span class="detail-icon">📍</span>
-            <div>
-              <strong data-i18n="contact_lbl_loc">Merkez Ofis</strong>
-              <p>Maslak Sun Plaza Kat: 12, Şişli / İstanbul</p>
-            </div>
-          </div>
-          <div class="contact-detail-item">
-            <span class="detail-icon">📞</span>
-            <div>
-              <strong data-i18n="contact_lbl_phone">Telefon</strong>
-              <p>+90 (212) 555 0100</p>
-            </div>
-          </div>
-          <div class="contact-detail-item">
-            <span class="detail-icon">✉️</span>
-            <div>
-              <strong data-i18n="contact_lbl_mail">E-posta</strong>
-              <p>info@yakingrup.net</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Management profiles and vCard triggers -->
-        <h3 class="subsection-title mt-medium" data-i18n="vcard_list_title">Kurumsal İrtibat Noktaları</h3>
-        <div class="vcard-compact-grid">
-          <!-- Card 1 -->
-          <div class="vcard-trigger-card" onclick="showVCard('ilker')">
-            <div class="vcard-avatar">İA</div>
-            <div class="vcard-info">
-              <h4>İlker ATASOY</h4>
-              <span class="vcard-role">Yönetim Kurulu Başkanı / CxO (Mühendis)</span>
-              <span class="vcard-contact-hint">ilker.atasoy@yakingrup.net</span>
-            </div>
-            <span class="vcard-arrow">›</span>
-          </div>
-          <!-- Card 2 -->
-          <div class="vcard-trigger-card" onclick="showVCard('eylul')">
-            <div class="vcard-avatar">EY</div>
-            <div class="vcard-info">
-              <h4>Eylül YILMAZ</h4>
-              <span class="vcard-role">Yönetim Kurulu Başkanı / CEO (Mimar)</span>
-              <span class="vcard-contact-hint">eylul.yilmaz@yakingrup.net</span>
-            </div>
-            <span class="vcard-arrow">›</span>
-          </div>
-          <!-- Card 3 -->
-          <div class="vcard-trigger-card" onclick="showVCard('murat')">
-            <div class="vcard-avatar">MK</div>
-            <div>
-              <h4>Dr. Murat Kaya</h4>
-              <p data-i18n="vc_murat_title">Mühendislik & Operasyon Lideri</p>
-            </div>
-          </div>
-        </div>
+        <h2 class="section-heading reveal" data-i18n="contact_title">Bizimle İletişime Geçin</h2>
+        <p class="section-subtitle reveal" data-i18n="contact_desc">Projeleriniz veya danışmanlık ihtiyaçlarınız için ekibimiz 7/24 hazırdır.</p>
       </div>
 
-      <!-- Contact form -->
-      <div class="form-wrapper-box">
-        <h3 class="form-heading" data-i18n="contact_form_title">Haberleşme Formu</h3>
-        <form id="contact-form" onsubmit="handleContactSubmit(event)">
-          <div class="form-group">
-            <label for="c-name" data-i18n="lbl_form_name">Adınız Soyadınız / Firma</label>
-            <input type="text" id="c-name" required placeholder="Örn. Ahmet Yılmaz">
+      <div class="contact-layout">
+        <!-- Left: Info + vCards -->
+        <div class="contact-info reveal">
+          <div class="contact-details-list">
+            <div class="contact-detail-item">
+              <span class="detail-icon">📍</span>
+              <div>
+                <strong data-i18n="contact_lbl_loc">Merkez Ofis</strong>
+                <p>Maslak Sun Plaza Kat: 12, Şişli / İstanbul</p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <span class="detail-icon">📞</span>
+              <div>
+                <strong data-i18n="contact_lbl_phone">Telefon</strong>
+                <p><a href="tel:+905428973446">+90 542 897 34 46</a></p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <span class="detail-icon">✉️</span>
+              <div>
+                <strong data-i18n="contact_lbl_mail">E-posta</strong>
+                <p><a href="mailto:info@yakingrup.net">info@yakingrup.net</a></p>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <span class="detail-icon">🌐</span>
+              <div>
+                <strong>LinkedIn</strong>
+                <p><a href="https://tr.linkedin.com/company/yakingrupnet" target="_blank">tr.linkedin.com/company/yakingrupnet</a></p>
+              </div>
+            </div>
           </div>
-          <div class="form-row">
+
+          <h3 class="subsection-title" data-i18n="vcard_list_title">Kurumsal İrtibat Noktaları</h3>
+          <div class="vcard-compact-grid">
+            <div class="vcard-trigger-card" onclick="showVCard('ilker')">
+              <div class="vcard-avatar" style="background: rgba(11,60,107,0.1); color: #0B3C6B;">İA</div>
+              <div class="vcard-info">
+                <h4>İlker ATASOY</h4>
+                <span class="vcard-role" data-i18n="vc_ilker_title">Yönetim Kurulu Başkanı / CxO (Mühendis)</span>
+                <span class="vcard-contact-hint">ilker.atasoy@yakingrup.net</span>
+              </div>
+              <span class="vcard-arrow">›</span>
+            </div>
+            <div class="vcard-trigger-card" onclick="showVCard('eylul')">
+              <div class="vcard-avatar" style="background: rgba(30,143,94,0.1); color: #1E8F5E;">EY</div>
+              <div class="vcard-info">
+                <h4>Eylül YILMAZ</h4>
+                <span class="vcard-role" data-i18n="vc_eylul_title">Yönetim Kurulu Başkanı / CEO (Mimar)</span>
+                <span class="vcard-contact-hint">eylul.yilmaz@yakingrup.net</span>
+              </div>
+              <span class="vcard-arrow">›</span>
+            </div>
+          </div>
+
+          <!-- Presentation Downloads -->
+          <div class="presentation-links">
+            <a href="assets/docs/presentation_tr.pdf" target="_blank" class="pres-btn" data-i18n="btn_presentation_tr">
+              <span>📄</span> Yatırımcı Sunumu (TR)
+            </a>
+            <a href="assets/docs/presentation_en.pdf" target="_blank" class="pres-btn" data-i18n="btn_presentation_en">
+              <span>📄</span> Investor Presentation (EN)
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="form-wrapper-box reveal">
+          <h3 class="form-heading" data-i18n="contact_form_title">Haberleşme Formu</h3>
+          <form id="contact-form" onsubmit="handleContactSubmit(event)">
             <div class="form-group">
-              <label for="c-email" data-i18n="lbl_form_email">E-posta Adresiniz</label>
-              <input type="email" id="c-email" required placeholder="ahmet@firma.com">
+              <label for="c-name" data-i18n="lbl_form_name">Adınız Soyadınız / Firma</label>
+              <input type="text" id="c-name" required placeholder="Örn. Ahmet Yılmaz">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="c-email" data-i18n="lbl_form_email">E-posta Adresiniz</label>
+                <input type="email" id="c-email" required placeholder="ahmet@firma.com">
+              </div>
+              <div class="form-group">
+                <label for="c-phone" data-i18n="lbl_form_phone">Telefon Numaranız</label>
+                <input type="tel" id="c-phone" placeholder="+90 532...">
+              </div>
             </div>
             <div class="form-group">
-              <label for="c-phone" data-i18n="lbl_form_phone">Telefon Numaranız</label>
-              <input type="tel" id="c-phone" placeholder="+90 532...">
+              <label for="c-sector" data-i18n="lbl_form_sector">İlgili Birim / Sektör</label>
+              <select id="c-sector">
+                <option value="insaat" data-i18n="tag_construction">Yakın İnşaat</option>
+                <option value="enerji" data-i18n="tag_energy">Yakın Enerji</option>
+                <option value="capital">Yakın Capital</option>
+                <option value="teknoloji">Yakın Teknoloji</option>
+              </select>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="c-sector" data-i18n="lbl_form_sector">İlgili Birim / Sektör</label>
-            <select id="c-sector">
-              <option value="insaat" data-i18n="tag_construction">Yakın İnşaat</option>
-              <option value="enerji" data-i18n="tag_energy">Yakın Enerji</option>
-              <option value="capital">Yakın Capital</option>
-              <option value="teknoloji">Yakın Teknoloji</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="c-msg" data-i18n="lbl_form_msg">Mesajınız</label>
-            <textarea id="c-msg" rows="4" required placeholder="Mesajınızı bu alana yazınız..."></textarea>
-          </div>
-          <button type="submit" class="submit-btn" id="contact-submit-btn" data-i18n="btn_send">Mesajı Gönder</button>
-        </form>
+            <div class="form-group">
+              <label for="c-msg" data-i18n="lbl_form_msg">Mesajınız</label>
+              <textarea id="c-msg" rows="4" required placeholder="Mesajınızı bu alana yazınız..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="contact-submit-btn" data-i18n="btn_send">Mesajı Gönder</button>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Global Footer (Common Section) -->
-  <footer class="global-footer hidden-element">
+  <!-- ===== FOOTER ===== -->
+  <footer class="global-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <div class="logo">
+        <a href="#hero" class="logo">
           <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
-        </div>
+        </a>
         <p class="brand-desc" data-i18n="footer_tagline">Mühendislik temelli yaklaşımlarla altyapı ve enerjinin birleşimi.</p>
         <div class="social-links">
-          <a href="https://tr.linkedin.com/company/yakingrupnet" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-          <a href="https://www.instagram.com/yakingrupnet/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-          </a>
-          <a href="https://www.youtube.com/yakingrupnet" target="_blank" rel="noopener" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          </a>
+          <a href="https://tr.linkedin.com/company/yakingrupnet" target="_blank" aria-label="LinkedIn">in</a>
         </div>
       </div>
       <div>
         <h4 data-i18n="footer_col_services">Sektör Çözümleri</h4>
         <ul class="footer-links">
-          <li><a href="#const-services-sec" onclick="selectSector('construction'); scrollToSection('const-services-sec', event)" data-i18n="tag_construction">İnşaat Taahhüt</a></li>
-          <li><a href="#energy-services-sec" onclick="selectSector('energy'); scrollToSection('energy-services-sec', event)" data-i18n="tag_energy">Yenilenebilir Enerji</a></li>
-          <li><a href="#energy-services-sec" onclick="selectSector('energy'); scrollToSection('energy-services-sec', event)" data-i18n="nav_energy_it">Siber Güvenlik & IT</a></li>
+          <li><a href="#insaat" data-i18n="tag_construction_short">Yakın İnşaat</a></li>
+          <li><a href="#enerji" data-i18n="tag_energy_short">Yakın Enerji</a></li>
+          <li><a href="#capital">Yakın Capital</a></li>
+          <li><a href="#teknoloji">Yakın Teknoloji</a></li>
         </ul>
       </div>
       <div>
         <h4 data-i18n="footer_col_corporate">Kurumsal Bilgiler</h4>
         <ul class="footer-links">
-          <li><a href="#" onclick="scrollToAbout(event)" data-i18n="nav_about">Hakkımızda</a></li>
-          <li><a href="#" onclick="scrollToSection('partners', event)" data-i18n="nav_partners">İş Ortaklarımız</a></li>
-          <li><a href="#" onclick="scrollToSection('marketplace', event)" data-i18n="nav_marketplace">Marketplace</a></li>
-          <li><a href="assets/docs/presentation_tr.pdf" id="footer-presentation-link" target="_blank" data-i18n="footer_presentation" style="color: var(--c-primary-light);">Yatırımcı Sunumu</a></li>
+          <li><a href="#hakkimizda" data-i18n="nav_about">Hakkımızda</a></li>
+          <li><a href="#ortaklar" data-i18n="nav_partners">İş Ortaklarımız</a></li>
+          <li><a href="#marketplace" data-i18n="nav_marketplace">Marketplace</a></li>
+          <li><a href="assets/docs/presentation_tr.pdf" target="_blank" data-i18n="footer_presentation">Yatırımcı Sunumu</a></li>
         </ul>
       </div>
       <div>
@@ -822,13 +692,13 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="container flex-row text-center">
-        <p class="copyright">&copy; 2026 Yakın Grup Sanayi İnşaat Enerji Teknoloji LTD ŞTİ A.Ş. All rights reserved. <span data-i18n="footer_lic_note">Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.</span></p>
+      <div class="container">
+        <p class="copyright">© 2026 Yakın Grup Sanayi İnşaat Enerji Teknoloji LTD ŞTİ A.Ş. All rights reserved. <span data-i18n="footer_lic_note">Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.</span></p>
       </div>
     </div>
   </footer>
 
-  <!-- DIALOG: Popup vCard Modal -->
+  <!-- DIALOG: vCard Modal -->
   <dialog id="vcard-dialog" class="vcard-modal">
     <div class="modal-card">
       <button class="modal-close-btn" onclick="closeVCardDialog()">×</button>
@@ -876,11 +746,11 @@
     </div>
   </dialog>
 
-  <!-- DIALOG: Image Lightbox Slider Modal -->
+  <!-- DIALOG: Lightbox -->
   <dialog id="lightbox-dialog" class="lightbox-modal">
     <button class="modal-close-btn" onclick="closeLightboxDialog()">×</button>
     <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Lightbox">
+      <img id="lightbox-img" src="" alt="Proje">
       <div class="lightbox-footer">
         <h4 id="lightbox-title">Proje Detayı</h4>
         <p id="lightbox-caption">Açıklama</p>
@@ -890,7 +760,7 @@
     <button class="lightbox-arrow next" onclick="navigateLightbox(1)">›</button>
   </dialog>
 
-  <!-- DIALOG: Marketplace Modal -->
+  <!-- DIALOG: Marketplace -->
   <dialog id="market-dialog" class="market-modal">
     <div class="modal-card">
       <button class="modal-close-btn" onclick="closeMarketplaceModal()">×</button>
@@ -916,14 +786,14 @@
         </div>
         <div class="form-group checkbox-group">
           <input type="checkbox" id="m-kvkk" required>
-          <label for="m-kvkk" class="checkbox-label"><a href="#services" onclick="closeMarketplaceModal(); selectSector('energy')" data-i18n="market_kvkk_note">KVKK İletişim izni şartlarını ve bilgilendirme formunu okudum ve kabul ediyorum.</a></label>
+          <label for="m-kvkk" class="checkbox-label"><a href="#" data-i18n="market_kvkk_note">KVKK İletişim izni şartlarını okudum ve kabul ediyorum.</a></label>
         </div>
         <button type="submit" class="submit-btn" data-i18n="btn_market_join">Beni Listeye Ekle</button>
       </form>
     </div>
   </dialog>
 
-  <!-- DIALOG: Legal Modal -->
+  <!-- DIALOG: Legal -->
   <dialog id="legal-dialog" class="market-modal">
     <div class="modal-card">
       <button class="modal-close-btn" onclick="this.closest('dialog').close()">×</button>
@@ -934,7 +804,6 @@
     </div>
   </dialog>
 
-  <!-- Scripts -->
   <script src="app.js"></script>
 </body>
 </html>
