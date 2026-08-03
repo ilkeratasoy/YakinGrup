@@ -414,60 +414,91 @@ img { max-width: 100%; height: auto; display: block; }
   overflow: hidden;
   box-shadow: 0 24px 60px rgba(0,0,0,0.08);
 }
-/* ISO Logo Badges Bar with Hover Popups */
-.iso-logo-bar {
+/* ISO Certification Bar - Clean, Modern Design */
+.iso-cert-bar {
   position: absolute;
-  bottom: 1.25rem; right: 1.25rem; left: 1.25rem;
+  bottom: 1.25rem; left: 1.25rem; right: 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  gap: 1rem;
   background: rgba(15, 23, 42, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-lg);
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 1rem;
   backdrop-filter: blur(16px);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
   z-index: 10;
 }
-.iso-logo-item {
-  position: relative;
-  cursor: pointer;
+.iso-cert-label {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
 }
-.iso-seal {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
-  background: rgba(0, 0, 0, 0.4);
+.iso-cert-divider-v {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.2);
 }
-.iso-logo-item:hover .iso-seal {
-  transform: scale(1.2) translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+.iso-cert-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  position: relative;
 }
+.iso-cert-badge {
+  --c: var(--c-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.4rem;
+  background: rgba(0,0,0,0.35);
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+.iso-cert-badge[data-color] {
+  background: rgba(0,0,0,0.42);
+}
+.iso-cert-badge span {
+  display: inline-block;
+}
+.iso-cert-tag { color: #d4af37; }
+.iso-cert-num { color: #fff; }
+.iso-cert-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.iso-cert-year { font-size: 0.66rem; color: rgba(255,255,255,0.7); }
+.iso-cert-name { font-size: 0.72rem; font-weight: 600; color: #fff; }
 
 /* Tooltip Popup */
-.iso-popup {
+.iso-cert-tooltip {
   position: absolute;
-  bottom: 130%;
+  bottom: 140%;
   left: 50%;
   transform: translateX(-50%) translateY(10px);
   background: #0f172a;
-  color: #ffffff;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #fff;
+  border: 1px solid rgba(212,175,55,0.4);
   border-radius: var(--radius-sm);
   padding: 0.65rem 0.95rem;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.2);
   z-index: 30;
   text-align: center;
 }
-.iso-popup::after {
+.iso-cert-tooltip::after {
   content: '';
   position: absolute;
   top: 100%; left: 50%;
@@ -476,12 +507,12 @@ img { max-width: 100%; height: auto; display: block; }
   border-style: solid;
   border-color: #0f172a transparent transparent transparent;
 }
-.iso-logo-item:hover .iso-popup {
+.iso-cert-item:hover .iso-cert-tooltip {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
-.iso-popup strong {
+.iso-cert-tooltip strong {
   display: block;
   font-family: var(--font-heading);
   font-size: 0.82rem;
@@ -490,11 +521,11 @@ img { max-width: 100%; height: auto; display: block; }
   letter-spacing: 0.04em;
   margin-bottom: 0.2rem;
 }
-.iso-popup span {
+.iso-cert-tooltip span {
   display: block;
   font-size: 0.72rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255,255,255,0.9);
 }
 
 /* ==========================================================================
