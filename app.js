@@ -383,20 +383,133 @@ function closeServiceModal() {
 }
 
 // ── Gallery / Lightbox ─────────────────────────────────────────────────────
+// ── Gallery / Lightbox ─────────────────────────────────────────────────────
 const galleryImages = [
-  { src: 'assets/images/gallery_datacenter_1785092833568.png', title: 'T-3 Veri Merkezi Yapımı', caption: 'Ankara / Türkiye — Tier III Sertifikalı Mission Critical Tesis (Yakın İnşaat)' },
-  { src: 'assets/images/construction_hero_1784577666966.png', title: 'Uluslararası Havalimanı Terminali', caption: 'İzmir / Türkiye — 120.000 m² Yolcu Terminali & Apron Altyapısı' },
-  { src: 'assets/images/gallery_vadi_mansion_1785092899049.png', title: 'Vadi Konakları Yaşam Kompleksi', caption: 'İstanbul / Türkiye — Akıllı Ev Otomasyonlu 450 Konutluk Yaşam Alanı' },
-  { src: 'assets/images/gallery_seismic_retrofitting_1785092947617.png', title: 'Yapı Güçlendirme & BIM Tasarımı', caption: 'Deprem Mühendisliği — Karbon Fiber Güçlendirme & 5D BIM Entegrasyonu' },
+  {
+    src: 'assets/images/gallery_datacenter_1785092833568.png',
+    tag: 'ANKARA / TÜRKİYE — VERİ MERKEZİ',
+    title: 'T-3 Veri Merkezi Yapımı',
+    caption: 'Tier III sertifikasyonuna uygun mission-critical veri merkezi inşası, N+2 yedekli güç ve hassas iklimlendirme altyapısı.',
+    specs: [
+      { label: 'Lokasyon', val: 'Ankara, Türkiye' },
+      { label: 'Kapasite', val: '12 MW BT Yükü / Tier III' },
+      { label: 'Kapsam', val: 'EPC Anahtar Teslim' },
+      { label: 'Yıl', val: '2024-2025' }
+    ]
+  },
+  {
+    src: 'assets/images/construction_hero_1784577666966.png',
+    tag: 'İZMİR / TÜRKİYE — HAVALİMANI & ULAŞIM',
+    title: 'Uluslararası Havalimanı Terminali',
+    caption: '120.000 m² kapalı alana sahip yolcu terminal binası, apron kaplamaları, körük altyapısı ve akıllı bagaj yönlendirme sistemleri.',
+    specs: [
+      { label: 'Lokasyon', val: 'İzmir, Türkiye' },
+      { label: 'Kapalı Alan', val: '120.000 m²' },
+      { label: 'Kapsam', val: 'Altyapı & Üstyapı Mühendisliği' },
+      { label: 'Yıl', val: '2023-2025' }
+    ]
+  },
+  {
+    src: 'assets/images/gallery_vadi_mansion_1785092899049.png',
+    tag: 'İSTANBUL / TÜRKİYE — LÜKS KONUT',
+    title: 'Vadi Konakları Yaşam Kompleksi',
+    caption: 'Akıllı ev otomasyonu, yenilenebilir enerji entegrasyonlu 450 bağımsız konut ünitesi ve sosyal yaşam alanları projelendirmesi.',
+    specs: [
+      { label: 'Lokasyon', val: 'İstanbul, Türkiye' },
+      { label: 'Bağımsız Bölüm', val: '450 Konut & Ticari' },
+      { label: 'Sertifika', val: 'LEED Gold Adayı' },
+      { label: 'Yıl', val: '2023-2024' }
+    ]
+  },
+  {
+    src: 'assets/images/gallery_seismic_retrofitting_1785092947617.png',
+    tag: 'DEPREM MÜHENDİSLİĞİ — BİNA GÜÇLENDİRME',
+    title: 'Yapı Güçlendirme & BIM Tasarımı',
+    caption: 'Karbon elyaf (CFRP) ve çelik manto uygulamaları ile bina sismik performansı artırımı ve 5D BIM dijital ikiz modellemesi.',
+    specs: [
+      { label: 'Kapsam', val: 'Sismik Analiz & FRP Güçlendirme' },
+      { label: 'Yöntem', val: '5D BIM Entegrasyonu' },
+      { label: 'Alan', val: 'Endüstriyel & Kamusal Yapılar' },
+      { label: 'Güvenlik', val: 'AFAD & Eurocode Standardı' }
+    ]
+  },
+  {
+    src: 'assets/images/heavy_industry_clean_1785012805596.png',
+    tag: 'İZMİR / TÜRKİYE — ENDÜSTRİYEL İNŞAAT',
+    title: 'Endüstriyel Fabrika & Üretim Tesisi',
+    caption: 'Ağır sanayi üretimi için yüksek mukavemetli çelik konstrüksiyon fabrika binası, vinç yolları ve özel zemin güçlendirme çözümleri.',
+    specs: [
+      { label: 'Lokasyon', val: 'İzmir ALOSBİ' },
+      { label: 'Kapalı Alan', val: '35.000 m²' },
+      { label: 'Yapı Tipi', val: 'Ağır Çelik Konstrüksiyon' },
+      { label: 'Yıl', val: '2024' }
+    ]
+  },
+  {
+    src: 'assets/images/residential_luxury_project_1785010053703.png',
+    tag: 'İSTANBUL / TÜRKİYE — REZİDANS',
+    title: 'Park Terrace Lüks Rezidans',
+    caption: 'Bosphorus manzaralı, sismik izolatörlü yüksek yapı mimarisi ve çevre dostu malzeme teknolojisi ile inşa edilen prestij projesi.',
+    specs: [
+      { label: 'Lokasyon', val: 'İstanbul (Beşiktaş)' },
+      { label: 'Yükseklik', val: '32 Kat / Sismik İzolatörlü' },
+      { label: 'Mimari', val: 'İleri Mühendislik & Cam Cephe' },
+      { label: 'Yıl', val: '2024' }
+    ]
+  },
+  {
+    src: 'assets/images/gallery_foundry_1785092866525.png',
+    tag: 'BURSA / TÜRKİYE — AĞIR SANAYİ',
+    title: 'Ağır Sanayi Dökümhane Kompleksi',
+    caption: 'Yüksek sıcaklık fırınları, özel havalandırma-baca arıtma sistemleri ve ağır yük zeminleri içeren endüstriyel döküm tesisi.',
+    specs: [
+      { label: 'Lokasyon', val: 'Bursa, Türkiye' },
+      { label: 'Kapasite', val: '45.000 Ton/Yıl Döküm' },
+      { label: 'Altyapı', val: 'Özel Deprem & Isı İzolasyonu' },
+      { label: 'Yıl', val: '2023' }
+    ]
+  },
+  {
+    src: 'assets/images/civil_engineering_bim_1785010076530.png',
+    tag: 'İSTANBUL / TÜRKİYE — DİJİTAL İKİZ',
+    title: 'BIM 5D Dijital İkiz Projesi',
+    caption: 'Tüm disiplinlerin (Mimari, Statik, Mekanik, Elektrik) çakışma analizi (Clash Detection), 5D maliyet simülasyonu ve dijital ikiz yönetimi.',
+    specs: [
+      { label: 'Yazılım', val: 'Revit, Navisworks, BIM 360' },
+      { label: 'Kapsam', val: 'Clash Detection & 5D Cost' },
+      { label: 'LOD', val: 'LOD 400 Uygulama Detayı' },
+      { label: 'Standart', val: 'ISO 19650 BIM Standardı' }
+    ]
+  }
 ];
 let lightboxIdx = 0;
 
 function openLightbox(idx) {
   lightboxIdx = idx;
-  const img = galleryImages[lightboxIdx];
-  document.getElementById('lightbox-img').src = img.src;
-  document.getElementById('lightbox-title').textContent = img.title;
-  document.getElementById('lightbox-caption').textContent = img.caption;
+  const item = galleryImages[lightboxIdx];
+  if (!item) return;
+
+  document.getElementById('lightbox-img').src = item.src;
+  document.getElementById('lightbox-tag').textContent = item.tag || 'PROJE GALERİSİ';
+  document.getElementById('lightbox-title').textContent = item.title;
+  document.getElementById('lightbox-caption').textContent = item.caption;
+
+  const specsGrid = document.getElementById('lightbox-specs-grid');
+  if (specsGrid) {
+    specsGrid.innerHTML = '';
+    if (item.specs && item.specs.length > 0) {
+      item.specs.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'lb-detail-item';
+        div.innerHTML = `
+          <span class="lb-detail-label">${s.label}</span>
+          <span class="lb-detail-value">${s.val}</span>
+        `;
+        specsGrid.appendChild(div);
+      });
+    }
+  }
+
   document.getElementById('lightbox-dialog').showModal();
 }
 function closeLightboxDialog() { document.getElementById('lightbox-dialog').close(); }

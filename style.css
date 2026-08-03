@@ -639,14 +639,124 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: bold;
 }
 
-/* Gallery Trigger & Modal */
-.gallery-vcard-trigger {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--e-light);
-  margin-top: 0.4rem;
+/* Gallery Mosaic Grid */
+.gallery-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
 }
+.gm-item {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: #1a1a2e;
+}
+.gm-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.gm-item:hover img {
+  transform: scale(1.08);
+}
+.gm-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7,9,14,0.88) 0%, rgba(7,9,14,0.3) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1rem 0.9rem;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.gm-item:hover .gm-overlay {
+  opacity: 1;
+}
+.gm-tag {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.25rem;
+}
+.gm-overlay h4 {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+.gm-cta {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--c-light);
+  letter-spacing: 0.05em;
+  transition: transform 0.2s;
+}
+.gm-item:hover .gm-cta {
+  transform: translateX(4px);
+}
+
+/* Lightbox project detail panel */
+.lightbox-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1.2rem;
+  margin: 0.75rem 0 1rem;
+}
+.lb-detail-item { display: flex; flex-direction: column; gap: 0.15rem; }
+.lb-detail-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.4);
+}
+.lb-detail-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+.lightbox-desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.lb-contact-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+.lb-vcard-btn {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border: none;
+}
+.lb-vcard-btn.primary {
+  background: var(--c-primary);
+  color: #fff;
+}
+.lb-vcard-btn.primary:hover { background: var(--c-light); }
+.lb-vcard-btn.secondary {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+}
+.lb-vcard-btn.secondary:hover { background: rgba(255,255,255,0.2); }
 
 /* ==========================================================================
    8. ENERJİ — Expanded Clusters & Technology Tags
@@ -1276,27 +1386,75 @@ a.field-val:hover { color: var(--c-light); }
 .checkbox-label { font-size: 0.78rem !important; color: #64748b; font-weight: 400 !important; line-height: 1.4; cursor: pointer; }
 .checkbox-label a { color: var(--c-light); }
 
-/* Lightbox */
-.lightbox-modal .lightbox-content { max-width: 90vw; }
-.lightbox-modal img { max-height: 72vh; border-radius: var(--radius-md); object-fit: contain; }
-.lightbox-footer { padding: 1rem; text-align: center; color: var(--color-white); }
-.lightbox-footer h4 { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; }
-.lightbox-footer p { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+/* Lightbox Modal Design */
+.lightbox-modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 950px;
+  width: 90vw;
+  border-radius: var(--radius-lg);
+}
+.lightbox-modal::backdrop {
+  background: rgba(7, 9, 14, 0.88);
+  backdrop-filter: blur(8px);
+}
+.lightbox-modal .lightbox-content {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  max-height: 85vh;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+.lightbox-media {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.lightbox-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lightbox-footer {
+  padding: 2rem;
+  text-align: left;
+  color: var(--color-white);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.lightbox-footer h3 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0.25rem 0 0.5rem;
+}
 .lightbox-arrow {
   position: fixed;
   top: 50%; transform: translateY(-50%);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
   color: var(--color-white);
-  width: 52px; height: 52px;
+  width: 48px; height: 48px;
   border-radius: 50%;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: var(--transition-fast);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  z-index: 10;
 }
 .lightbox-arrow:hover { background: rgba(255,255,255,0.25); }
-.lightbox-arrow.prev { left: 2rem; }
-.lightbox-arrow.next { right: 2rem; }
+.lightbox-arrow.prev { left: 1.5rem; }
+.lightbox-arrow.next { right: 1.5rem; }
 
 /* ==========================================================================
    16. RESPONSIVE
@@ -1304,7 +1462,7 @@ a.field-val:hover { color: var(--c-light); }
 @media (max-width: 1100px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .tech-cards { grid-template-columns: repeat(2, 1fr); }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-mosaic { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
   .energy-clusters { grid-template-columns: 1fr; }
   .capital-layout { grid-template-columns: 1fr; gap: 3rem; }
@@ -1344,7 +1502,9 @@ a.field-val:hover { color: var(--c-light); }
   .company-title { font-size: 2.2rem; }
   .services-grid { grid-template-columns: 1fr; }
   .tech-cards { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-mosaic { grid-template-columns: repeat(2, 1fr); }
+  .lightbox-modal .lightbox-content { grid-template-columns: 1fr; max-height: 90vh; }
+  .lightbox-media { max-height: 240px; }
   .section-heading { font-size: 1.85rem; }
   .energy-stats-bar { flex-direction: column; gap: 2rem; }
   .energy-stat-divider { width: 60px; height: 1px; }
