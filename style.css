@@ -435,14 +435,14 @@ img { max-width: 100%; height: auto; display: block; }
 .company-section { overflow: hidden; }
 .company-section-hero {
   position: relative;
-  height: 420px;
+  height: 440px;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 .company-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(7,9,14,0.88) 0%, rgba(7,9,14,0.55) 60%, rgba(7,9,14,0.3) 100%);
+  background: linear-gradient(to right, rgba(7,9,14,0.92) 0%, rgba(7,9,14,0.65) 60%, rgba(7,9,14,0.4) 100%);
 }
 .company-hero-content {
   position: relative;
@@ -478,93 +478,178 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .company-desc {
   font-size: 1.1rem;
-  color: rgba(255,255,255,0.75);
-  max-width: 600px;
+  color: rgba(255,255,255,0.8);
+  max-width: 650px;
+  line-height: 1.6;
 }
 
-/* İnşaat Services Grid */
+/* Enhanced İnşaat Service Cards with Images */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 .service-card {
   background: var(--color-white);
   border-radius: var(--radius-md);
-  padding: 2rem;
   border: 1px solid var(--color-border);
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
-.service-card::before {
-  content: '';
+.service-card-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+}
+.service-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.service-card:hover .service-card-img {
+  transform: scale(1.08);
+}
+.service-card-tag {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--c-primary);
-  transform: scaleX(0);
-  transition: var(--transition-fast);
-  transform-origin: left;
+  top: 1rem; left: 1rem;
+  background: rgba(7,9,14,0.75);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
 }
-.service-card:hover::before { transform: scaleX(1); }
-.service-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.07); transform: translateY(-3px); }
-.service-icon { font-size: 2rem; margin-bottom: 1rem; }
+.service-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 .service-card h4 {
   font-family: var(--font-heading);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-dark);
   margin-bottom: 0.6rem;
 }
-.service-card p { font-size: 0.9rem; color: #64748b; line-height: 1.6; }
-
-/* Gallery */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+.service-card p {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
 }
-.gallery-item {
-  position: relative;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  cursor: pointer;
-  aspect-ratio: 4/3;
+.service-card-footer {
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.85rem;
 }
-.gallery-thumb {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-.gallery-item:hover .gallery-thumb { transform: scale(1.06); }
-.gallery-item-info {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 1.25rem;
-  background: linear-gradient(transparent, rgba(7,9,14,0.85));
-  color: var(--color-white);
-  transform: translateY(4px);
+.service-vcard-btn {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--c-primary);
+  display: inline-flex;
+  align-items: center;
   transition: var(--transition-fast);
 }
-.gallery-item:hover .gallery-item-info { transform: translateY(0); }
-.gallery-category {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 0.3rem;
+.service-card:hover .service-vcard-btn {
+  color: var(--c-light);
+  transform: translateX(4px);
 }
-.gallery-title {
+.service-card:hover {
+  box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+
+/* Service Detail Modal Cover */
+.service-modal-card {
+  max-width: 620px;
+}
+.service-modal-header {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.service-modal-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+.service-modal-badge {
+  display: inline-block;
   font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--c-primary);
+  background: rgba(11,60,107,0.08);
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+}
+.service-modal-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+.service-modal-lead {
   font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+.service-modal-specs h4 {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-dark);
+  margin-bottom: 0.75rem;
+}
+.service-modal-specs ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.service-modal-specs li {
+  font-size: 0.88rem;
+  color: #64748b;
+  position: relative;
+  padding-left: 1.2rem;
+  line-height: 1.5;
+}
+.service-modal-specs li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--c-primary);
+  font-weight: bold;
+}
+
+/* Gallery Trigger & Modal */
+.gallery-vcard-trigger {
+  display: inline-block;
+  font-size: 0.75rem;
   font-weight: 700;
+  color: var(--e-light);
+  margin-top: 0.4rem;
 }
 
 /* ==========================================================================
-   8. ENERJİ — Clusters
+   8. ENERJİ — Expanded Clusters & Technology Tags
    ========================================================================== */
 .bg-dark-section { background: #f0f4f8; }
 .energy-clusters {
@@ -604,21 +689,76 @@ img { max-width: 100%; height: auto; display: block; }
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  padding: 1.1rem;
+  padding: 1.25rem;
   border-radius: var(--radius-md);
   background: #f8fafc;
   transition: var(--transition-fast);
+  border: 1px solid var(--color-border);
 }
-.cluster-service-item:hover { background: rgba(47,168,107,0.06); }
+.cluster-service-item:hover {
+  background: rgba(47,168,107,0.05);
+  border-color: rgba(47,168,107,0.3);
+}
 .csi-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
 .cluster-service-item h5 {
   font-family: var(--font-heading);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: var(--color-dark);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
 }
-.cluster-service-item p { font-size: 0.85rem; color: #64748b; line-height: 1.55; }
+.cluster-service-item p { font-size: 0.88rem; color: #4a5568; line-height: 1.6; }
+
+/* Tech Tags & Lists */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+.tech-pill {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(47,168,107,0.12);
+  color: var(--e-primary);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+.detail-tech-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.detail-tech-list li {
+  font-size: 0.84rem;
+  color: #4a5568;
+  position: relative;
+  padding-left: 0.85rem;
+  line-height: 1.5;
+}
+.detail-tech-list li::before {
+  content: '▪';
+  position: absolute;
+  left: 0;
+  color: var(--e-light);
+}
+.scada-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--e-light);
+}
+.scada-features li {
+  font-size: 0.83rem;
+  color: #2c3e50;
+}
+
 .energy-stats-bar {
   display: flex;
   align-items: center;

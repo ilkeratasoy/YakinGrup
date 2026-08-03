@@ -12,17 +12,17 @@ const TRANSLATIONS = {
     nav_capital: 'Capital', nav_technology: 'Teknoloji', nav_contact: 'İletişim',
     nav_construction_short: 'İnşaat', nav_energy_short: 'Enerji',
     nav_capital_short: 'Capital', nav_technology_short: 'Teknoloji',
-    tag_construction: 'İNŞAAT & TAAHHÜT', tag_energy: 'ENERJİ & TEKNOLOJİ',
-    tag_capital: 'FİNANS & YATIRIM', tag_technology: 'DİJİTAL & YZ',
+    tag_construction: 'İNŞAAT & TAAHHÜT', tag_energy: 'ENERJİ & ALTYAPI SİSTEMLERİ',
+    tag_capital: 'FİNANS & YATIRIM', tag_technology: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     tag_group: 'YAKIN GRUP HOLDİNG', tag_about: 'KURUMSAL GÜVEN',
     tag_portfolio: 'PROJELERİMİZ', tag_partners: 'MÜHENDİSLİK PAYDAŞLARI',
-    tag_store: 'ONLINE SATIŞ & PORTAL', tag_digital: 'DİJİTAL DÖNÜŞÜM',
+    tag_store: 'ONLINE SATIŞ & PORTAL', tag_digital: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     tag_cap_advisory: 'CAPITAL ADVISORY',
     cluster_a_label: 'KÜME A', cluster_b_label: 'KÜME B',
-    cluster_a_title: 'Yenilenebilir Enerji & Mekanik Sistemler',
-    cluster_b_title: 'Zayıf Akım, Network & Siber Güvenlik',
+    cluster_a_title: 'Yenilenebilir Enerji, Depolama & Mekanik Altyapı Sistemleri',
+    cluster_b_title: 'Bilgi Sistemleri, Network, Elektrik & Siber Güvenlik',
     hero_badge1: 'İNŞAAT & TAAHHÜT', hero_badge2: 'YENİLENEBİLİR ENERJİ',
-    hero_badge3: 'FİNANS & YATIRIM', hero_badge4: 'DİJİTAL & YZ',
+    hero_badge3: 'FİNANS & YATIRIM', hero_badge4: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     hero_title1: 'Geleceğin Güçlü Altyapıları',
     hero_title2: 'Sürdürülebilir Enerji Çözümleri',
     hero_title3: 'Yakın Capital', hero_title4: 'Yakın Teknoloji',
@@ -37,60 +37,39 @@ const TRANSLATIONS = {
     btn_presentation_tr: 'Yatırımcı Sunumu (TR)', btn_presentation_en: 'Investor Presentation (EN)',
     group_heading: 'Mühendislik ve Enerjide Güç Birliği',
     group_lead: 'Çok disiplinli bir proje geliştirme grubu olarak inşaattan finansmana uçtan uca çözümler sunuyoruz.',
-    group_body: 'Yakın Grup; inşaat taahhüt, yenilenebilir enerji, proje finansmanı ve dijital teknoloji alanlarında faaliyet gösteren bir mühendislik holdingidir.',
+    group_body: 'Yakın Grup; inşaat taahhüt, yenilenebilir enerji, proje finansmanı ve dijital teknoloji alanlarında faaliyet gösteren multidisipliner mühendislik şirketleridir. Endüstriyel vizyonumuz ve teknik tecrübemiz ile yapı ve enerji sektöründe sınırları çiziyoruz.',
     stat_years: 'Yıllık Tecrübe', stat_area: 'm² İnşaat Alanı',
     stat_mw: 'MW Kurulu Güç', stat_companies: 'Grup Şirketi',
     stat_mw_full: 'MW Toplam Kurulu Güç', stat_co2: 'Ton CO₂ Azaltımı',
-    stat_scada: 'Akıllı SCADA İzleme', stat_services: 'Hizmet Kategorisi',
+    stat_scada: 'Akıllı SCADA İzleme', stat_services: 'Mühendislik Branşı',
     fb_title: 'ISO Sertifikalı', fb_sub: 'Uluslararası Standartlar',
     c_title: 'Yakın İnşaat',
     c_desc: 'Veri merkezlerinden konut ve sanayi yapılarına kadar her projede üstün kalite, dayanıklılık ve sürdürülebilir yöntemler.',
     c_services_title: 'Endüstriyel İnşaat Çözümlerimiz',
-    c_s1_title: 'Veri Merkezi İnşaatı', c_s1_desc: 'Tier III ve IV sertifikalı, yüksek güvenilirlikli mission-critical veri merkezleri.',
+    c_s1_title: 'Veri Merkezi İnşaatı', c_s1_desc: 'Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli mission-critical veri merkezleri.',
     c_s2_title: 'Ağır Sanayi Tesisleri', c_s2_desc: 'Fabrikalar, dökümhaneler ve enerji üretim santrallerinde anahtar teslim taahhüt.',
     c_s3_title: 'Konut & Yaşam Projeleri', c_s3_desc: 'Modern mimari ve ileri mühendislikle tasarlanan lüks yaşam kompleksleri.',
     c_s4_title: 'Yapı Mühendisliği & BIM', c_s4_desc: 'İleri seviye deprem mühendisliği, BIM entegrasyonu ve teknik projelendirme.',
     c_s5_title: 'Havalimanı & Ulaşım', c_s5_desc: 'Uluslararası standartlarda havalimanı terminalleri ve ulaşım altyapısı.',
     c_s6_title: 'Kentsel Dönüşüm', c_s6_desc: 'Riskli yapıların tespiti, güçlendirilmesi ve dönüşüm projelerinde uçtan uca yönetim.',
+    btn_service_details: 'Detaylar & vCard İrtibat ›',
     portfolio_title: 'Seçkin Proje Galerisi',
     c_gal1_title: 'T-3 Veri Merkezi Yapımı', c_gal2_title: 'Uluslararası Havalimanı Terminali',
     c_gal3_title: 'Vadi Konakları Yaşam Kompleksi', c_gal4_title: 'Yapı Güçlendirme & BIM Tasarımı',
-    e_title: 'Yakın Enerji',
-    e_desc: 'Huawei, ABB, Vertiv gibi küresel markalar ile iş birliği içinde yüksek verimliliğe odaklanıyoruz.',
-    e_a1_title: 'Güneş Enerjisi Sistemleri (GES)', e_a1_desc: 'Arazi ve çatı tipi GES EPC projelerinde yüksek kapasite verimlilik entegrasyonu.',
-    e_a2_title: 'Rüzgar Enerjisi', e_a2_desc: 'RES kurulum ve tesis mühendisliği, türbin entegrasyon hizmetleri.',
-    e_a3_title: 'Hibrit Enerji & BESS', e_a3_desc: 'Güneş ve rüzgar enerjisini lityum batarya teknolojileriyle entegre ediyoruz.',
-    e_a4_title: 'Mekanik Tesisat', e_a4_desc: 'HVAC, boru tesisatı, iklimlendirme ve mekanik proje tasarımı.',
-    e_b1_title: 'Siber Güvenlik Müşavirliği', e_b1_desc: 'IT güvenliği, SOC kurulumu, penetrasyon testleri ve güvenlik denetimleri.',
-    e_b2_title: 'Veri Merkezi & Ağ Mimarisi', e_b2_desc: 'Omurga ağ kurulumu, sunucu optimizasyonu ve zayıf akım çözümleri.',
-    e_b3_title: 'Akıllı Bina Otomasyonu', e_b3_desc: 'Tesis otomasyon sistemleri, BMS ve SCADA entegrasyon projeleri.',
-    e_b4_title: 'Elektrik Altyapısı', e_b4_desc: 'Güçlü ve zayıf akım elektrik projelendirme, panel ve dağıtım tasarımı.',
+    e_title: 'Yakın Enerji — Enerji & Altyapı Sistemleri',
+    e_desc: 'Huawei, ABB, Vertiv, Siemens gibi küresel markalar ile iş birliği içinde yüksek verimliliğe odaklanıyoruz.',
     cap_desc: 'Yakın Capital, grubumuzun projelerini uçtan uca geliştiren, finansman çözümleri üreten bir danışmanlık ve yatırım platformudur.',
     cap_heading: 'Çok Disiplinli Finansman Yapılandırması',
     cap_body: 'Projelerin finansmanını organize etmek, riskleri yönetmek ve sürdürülebilir nakit akış modelleri oluşturmak temel vizyonumuzdur.',
     cap_legal: '* Yakın Capital, lisans gerektiren portföy yönetimi veya finansal aracılık faaliyetleri yürütmez.',
-    cap_c1_title: 'Finansman ve Kredi', cap_c1_i1: 'Banka proje finansmanı', cap_c1_i2: 'Leasing organizasyonu', cap_c1_i3: 'Hakediş bazlı finansman modelleri',
-    cap_c2_title: 'Yatırım ve Yapılandırma', cap_c2_i1: 'GYO iş birlikleri', cap_c2_i2: 'Girişim sermayesi ilişkileri', cap_c2_i3: 'SPV kurulumu',
-    cap_c3_title: 'Risk ve Danışmanlık', cap_c3_i1: 'Nakit akışı modelleme', cap_c3_i2: 'Sigorta ve teminat çözümleri', cap_c3_i3: 'Finansal fizibilite danışmanlığı',
-    cap_phase1_title: 'Bugün — Stratejik İş Birlikleri', cap_phase1_desc: 'Bankalar, leasing şirketleri ve sigorta kuruluşlarıyla çerçeve anlaşmalar.',
-    cap_phase2_title: 'Advisory — Danışmanlık', cap_phase2_desc: 'Proje finansmanı danışmanlığı, finansal modelleme ve risk yönetimi.',
-    cap_phase3_title: 'Fund — Yatırım Fonu', cap_phase3_desc: 'Gayrimenkul yatırım fonları ve yabancı yatırımcı katılımıyla proje bazlı platform.',
     tech_desc: 'Ağır sanayi, enerji ve altyapı projelerini ileri teknoloji ile uçtan uca dijitalleştiriyoruz.',
     tech_heading: 'Geleceğin Proje Yönetimi',
     tech_sub: 'Yakın Platform ile tüm mühendislik, satınalma ve saha koordinasyonunu tek ekrana taşıyoruz.',
-    tech_t1_title: 'Dijital Hakediş', tech_t1_desc: 'Karmaşık taşeron ve malzeme süreçlerini otomatize ederek anlık, şeffaf hakediş onay ve ödeme altyapıları.',
-    tech_t2_title: 'Yapay Zekâ', tech_t2_desc: 'Şantiye verimliliğini makine öğrenmesi ile analiz ediyor, iş güvenliği risklerini ve maliyet artışlarını öngörüyoruz.',
-    tech_t3_title: 'BIM Entegrasyonu', tech_t3_desc: '5D dijital ikizler oluşturarak yapı ömrü boyunca kusursuz veri yönetimi ve proje koordinasyonu.',
-    tech_t4_title: 'Yakın Platform', tech_t4_desc: 'İleri seviye proje yönetim yazılımımız ile tüm mühendislik, satınalma ve saha koordinasyonu tek ekranda.',
     partners_title: 'Teknoloji İş Ortaklarımız',
     partners_subtitle: 'Dünya devleri ile uluslararası standartlarda sistem entegrasyonu sağlıyoruz.',
     market_heading: 'Yakın Grup Online Marketplace',
     market_sub: 'Endüstriyel ekipman tedariki ve enerji & bilgi teknolojileri ürünlerine erişimde hızlı dijital altyapı.',
     badge_soon: 'ÇOK YAKINDA',
-    market_b2b_title: 'B2B Kurumsal Alım Portalı',
-    market_b2b_desc: 'Anlaşmalı tedarikçilerimiz ve bayilerimiz için toptan sipariş, özel vergi indirimleri, şartnamelere uygun teklif toplama paneli.',
-    market_b2c_title: 'B2C Bireysel Sipariş',
-    market_b2c_desc: 'Güneş PV camları, ev tipi şarj cihazları ve bina solar panelleri için doğrudan perakende satış ve montaj başvuru kanalları.',
     contact_title: 'Bizimle İletişime Geçin',
     contact_desc: 'Projeleriniz veya danışmanlık ihtiyaçlarınız için ekibimiz 7/24 hazırdır.',
     contact_lbl_loc: 'Merkez Ofis', contact_lbl_phone: 'Telefon', contact_lbl_mail: 'E-posta',
@@ -120,17 +99,17 @@ const TRANSLATIONS = {
     nav_capital: 'Capital', nav_technology: 'Technology', nav_contact: 'Contact',
     nav_construction_short: 'Construction', nav_energy_short: 'Energy',
     nav_capital_short: 'Capital', nav_technology_short: 'Technology',
-    tag_construction: 'CONSTRUCTION & EPC', tag_energy: 'ENERGY & TECHNOLOGY',
-    tag_capital: 'FINANCE & INVESTMENT', tag_technology: 'DIGITAL & AI',
+    tag_construction: 'CONSTRUCTION & EPC', tag_energy: 'ENERGY & INFRASTRUCTURE SYSTEMS',
+    tag_capital: 'FINANCE & INVESTMENT', tag_technology: 'DIGITAL TRANSFORMATION & AI',
     tag_group: 'YAKIN GROUP HOLDING', tag_about: 'CORPORATE TRUST',
     tag_portfolio: 'OUR PROJECTS', tag_partners: 'ENGINEERING PARTNERS',
-    tag_store: 'ONLINE STORE & PORTAL', tag_digital: 'DIGITAL TRANSFORMATION',
+    tag_store: 'ONLINE STORE & PORTAL', tag_digital: 'DIGITAL TRANSFORMATION & AI',
     tag_cap_advisory: 'CAPITAL ADVISORY',
     cluster_a_label: 'CLUSTER A', cluster_b_label: 'CLUSTER B',
-    cluster_a_title: 'Renewable Energy & Mechanical Systems',
-    cluster_b_title: 'Low-Current, Network & Cybersecurity',
+    cluster_a_title: 'Renewable Energy, Storage & Mechanical Infrastructure',
+    cluster_b_title: 'Information Systems, Network, Electrical & Cybersecurity',
     hero_badge1: 'CONSTRUCTION & EPC', hero_badge2: 'RENEWABLE ENERGY',
-    hero_badge3: 'FINANCE & INVESTMENT', hero_badge4: 'DIGITAL & AI',
+    hero_badge3: 'FINANCE & INVESTMENT', hero_badge4: 'DIGITAL TRANSFORMATION & AI',
     hero_title1: "Building Tomorrow's Infrastructure",
     hero_title2: 'Sustainable Energy Solutions',
     hero_title3: 'Yakın Capital', hero_title4: 'Yakın Technology',
@@ -145,11 +124,11 @@ const TRANSLATIONS = {
     btn_presentation_tr: 'Investor Presentation (TR)', btn_presentation_en: 'Investor Presentation (EN)',
     group_heading: 'Power in Engineering & Energy',
     group_lead: 'As a multi-disciplinary project development group, we offer end-to-end solutions from construction to financing.',
-    group_body: 'Yakın Group is an engineering holding operating in construction EPC, renewable energy, project financing and digital technology.',
+    group_body: 'Yakın Group is a multidisciplinary engineering holding operating in construction EPC, renewable energy, project finance, and digital technology. With our industrial vision and technical expertise, we set the standards in structure and energy sectors.',
     stat_years: 'Years Experience', stat_area: 'm² Construction Area',
     stat_mw: 'MW Installed Capacity', stat_companies: 'Group Companies',
     stat_mw_full: 'MW Total Installed Capacity', stat_co2: 'Tons CO₂ Reduction',
-    stat_scada: 'Smart SCADA Monitoring', stat_services: 'Service Categories',
+    stat_scada: 'Smart SCADA Monitoring', stat_services: 'Engineering Branches',
     fb_title: 'ISO Certified', fb_sub: 'International Standards',
     c_title: 'Yakın Construction',
     c_desc: 'Superior quality, durability and sustainable methods in every project from data centers to residential and industrial buildings.',
@@ -160,45 +139,24 @@ const TRANSLATIONS = {
     c_s4_title: 'Structural Engineering & BIM', c_s4_desc: 'Advanced seismic engineering, BIM integration and comprehensive technical design.',
     c_s5_title: 'Airport & Transportation', c_s5_desc: 'International standard airport terminals and transportation infrastructure projects.',
     c_s6_title: 'Urban Renewal', c_s6_desc: 'End-to-end management of identifying, strengthening and transforming at-risk buildings.',
+    btn_service_details: 'Details & vCard Contact ›',
     portfolio_title: 'Featured Project Gallery',
     c_gal1_title: 'T-3 Data Center Construction', c_gal2_title: 'International Airport Terminal',
     c_gal3_title: 'Vadi Mansions Living Complex', c_gal4_title: 'Structural Retrofitting & BIM Design',
-    e_title: 'Yakın Energy',
-    e_desc: 'Focused on high efficiency in collaboration with global brands like Huawei, ABB, and Vertiv.',
-    e_a1_title: 'Solar Energy Systems (SPP)', e_a1_desc: 'High-capacity efficiency integration in land and rooftop solar EPC projects.',
-    e_a2_title: 'Wind Energy', e_a2_desc: 'Wind farm installation and facility engineering, turbine integration services.',
-    e_a3_title: 'Hybrid Energy & BESS', e_a3_desc: 'Integrating solar and wind energy with lithium battery storage technologies.',
-    e_a4_title: 'Mechanical Installations', e_a4_desc: 'HVAC, piping, air conditioning and mechanical project design.',
-    e_b1_title: 'Cybersecurity Advisory', e_b1_desc: 'IT security, SOC setup, penetration testing and security audits.',
-    e_b2_title: 'Data Center & Network Architecture', e_b2_desc: 'Backbone network installation, server optimization and low-current solutions.',
-    e_b3_title: 'Smart Building Automation', e_b3_desc: 'Facility automation systems, BMS and SCADA integration projects.',
-    e_b4_title: 'Electrical Infrastructure', e_b4_desc: 'Strong and low current electrical design, panel and distribution layout.',
+    e_title: 'Yakın Energy — Energy & Infrastructure Systems',
+    e_desc: 'Focused on high efficiency in collaboration with global brands like Huawei, ABB, Vertiv, Siemens.',
     cap_desc: 'Yakın Capital is an advisory and investment platform that develops group projects end-to-end and creates financing solutions.',
     cap_heading: 'Multi-Disciplinary Finance Structuring',
     cap_body: 'Our vision is not only to develop construction and energy projects, but also to organize their financing, manage risks and create sustainable cash flow models.',
     cap_legal: '* Yakın Capital does not conduct portfolio management or financial brokerage activities requiring licenses.',
-    cap_c1_title: 'Financing & Credit', cap_c1_i1: 'Bank project financing', cap_c1_i2: 'Leasing organization', cap_c1_i3: 'Progress-based financing models',
-    cap_c2_title: 'Investment & Structuring', cap_c2_i1: 'REIT partnerships', cap_c2_i2: 'Venture capital relations', cap_c2_i3: 'SPV setup',
-    cap_c3_title: 'Risk & Advisory', cap_c3_i1: 'Cash flow modeling', cap_c3_i2: 'Insurance and collateral solutions', cap_c3_i3: 'Financial feasibility consulting',
-    cap_phase1_title: 'Today — Strategic Partnerships', cap_phase1_desc: 'Framework agreements with banks, leasing companies and insurance institutions.',
-    cap_phase2_title: 'Advisory Phase', cap_phase2_desc: 'Project financing advisory, financial modeling and risk management.',
-    cap_phase3_title: 'Fund Phase', cap_phase3_desc: 'Project-based investment platform with real estate funds and foreign investors.',
     tech_desc: 'We digitize heavy industry, energy and infrastructure projects end-to-end with advanced technology.',
     tech_heading: 'Next-Gen Project Management',
     tech_sub: 'With Yakın Platform, all engineering, procurement and field coordination in one screen.',
-    tech_t1_title: 'Digital Progress Payments', tech_t1_desc: 'Automated subcontractor and material processes with instant, transparent payment approval infrastructure.',
-    tech_t2_title: 'Artificial Intelligence', tech_t2_desc: 'Analyzing site efficiency with ML, predicting safety risks and cost overruns in advance.',
-    tech_t3_title: 'BIM Integration', tech_t3_desc: '5D digital twins for flawless data management and project coordination throughout building lifecycle.',
-    tech_t4_title: 'Yakın Platform', tech_t4_desc: 'Our advanced project management software consolidates all engineering, procurement and field coordination.',
     partners_title: 'Technology Partners',
     partners_subtitle: 'System integration at international standards with global industry leaders.',
     market_heading: 'Yakın Group Online Marketplace',
     market_sub: 'Fast digital infrastructure for industrial equipment supply and energy & IT products.',
     badge_soon: 'COMING SOON',
-    market_b2b_title: 'B2B Corporate Procurement Portal',
-    market_b2b_desc: 'Bulk ordering, special tax discounts, and specification-compliant quote collection panel for contracted suppliers and dealers.',
-    market_b2c_title: 'B2C Individual Orders',
-    market_b2c_desc: 'Direct retail sales and installation application channels for solar PV panels, home EV chargers and building solar systems.',
     contact_title: 'Get in Touch With Us',
     contact_desc: 'Our team is available 24/7 for your project or advisory needs.',
     contact_lbl_loc: 'Headquarters', contact_lbl_phone: 'Phone', contact_lbl_mail: 'Email',
@@ -296,25 +254,24 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
   document.getElementById('nav-links').classList.remove('active');
 }
-// Close when clicking a nav link
 document.querySelectorAll('.nav-menu a').forEach(a => {
   a.addEventListener('click', closeMobileMenu);
 });
 
-// ── Smooth scroll for anchor links ────────────────────────────────────────
+// ── Smooth scroll ──────────────────────────────────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const target = document.querySelector(a.getAttribute('href'));
     if (target) {
       e.preventDefault();
-      const offset = 72; // header height
+      const offset = 72;
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   });
 });
 
-// ── Reveal on scroll (IntersectionObserver) ────────────────────────────────
+// ── Reveal on scroll ───────────────────────────────────────────────────────
 function initReveal() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -327,12 +284,110 @@ function initReveal() {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
+// ── Service Details Modal ──────────────────────────────────────────────────
+const SERVICES_DATA = {
+  c_s1: {
+    badge: 'MISSION CRITICAL',
+    title: 'Veri Merkezi İnşaatı (Tier III & Tier IV)',
+    cover: 'assets/images/data_center_construction_1785092614608.png',
+    desc: 'Yüksek kullanılabilirlik ve yedeklilik gerektiren veri merkezi inşaatlarında uçtan uca EPC taahhüt hizmeti sunuyoruz. Sismik izolatörlü yapı tasarımları, yangın dayanımlı kompozit cepheler, N+2 iklimlendirme altyapısı ve kesintisiz güç sistemleri entegrasyonu.',
+    specs: [
+      'Tier III / Tier IV Uptime Institute Sertifikasyon Hizaması',
+      'Faraday Kafesi ve Elektromanyetik Kalkanlama (EMP Protection)',
+      'Hassas İklimlendirme (CRAC/CRAH) & Yükseltilmiş Taban Sistemleri',
+      'BMS & SCADA Entegre Fiziksel Güvenlik Altyapısı'
+    ]
+  },
+  c_s2: {
+    badge: 'INDUSTRIAL EPC',
+    title: 'Ağır Sanayi Tesisleri ve Fabrikalar',
+    cover: 'assets/images/heavy_industry_clean_1785012805596.png',
+    desc: 'Ağır sanayi dökümhaneleri, imalat fabrikaları ve enerji santrallerinde çelik konstrüksiyon, ağır vinç yolları, yüksek mukavemetli zemin betonları ve altyapı mühendisliği.',
+    specs: [
+      'Büyük Açıklıklı Endüstriyel Çelik Çatı ve Kolon Tasarımı',
+      'Ağır Ekipman Temelleri ve Titreşim Sönümleme Sistemleri',
+      'Endüstriyel Atık Su Arıtma & Gaz Tahliye Boru Hatları',
+      'Uluslararası İş Güvenliği & ISO 9001 / 14001 Standartları'
+    ]
+  },
+  c_s3: {
+    badge: 'LUXURY RESIDENTIAL',
+    title: 'Konut & Yaşam Projeleri',
+    cover: 'assets/images/residential_luxury_project_1785010053703.png',
+    desc: 'Estetik mimari, yüksek enerji verimliliği ve akıllı ev teknolojileri ile donatılmış lüks konut kompleksleri ve karma yaşam merkezleri.',
+    specs: [
+      'A+ Enerji Kimlik Sertifikalı Çevreci Binalar',
+      'Akıllı Bina Otomasyonu (BMS) ve Merkezi İklimlendirme',
+      'Ses & Isı İzolasyonunda Üst Seviye Konfor Detayları',
+      'Sosyal Tesisler, Kapalı Otopark ve Yeşil Alan Mimarisi'
+    ]
+  },
+  c_s4: {
+    badge: '5D BIM & SEISMIC',
+    title: 'Yapı Mühendisliği, Deprem & BIM Tasarımı',
+    cover: 'assets/images/civil_engineering_bim_1785010076530.png',
+    desc: 'İleri düzey performans bazlı deprem mühendisliği, sismik güçlendirme ve 5D BIM (Building Information Modeling) süreç yönetimi.',
+    specs: [
+      '5D BIM Modeli ile Çakışma Analizi ve Maliyet Yönetimi',
+      'Sismik İzolatör ve Damperli Yapı Tasarımları',
+      'Non-Linear Zaman Tanım Alanında Deprem Analizleri',
+      'Mevzuat Uyumlu Statik Raporlama ve Proje Onay Süreçleri'
+    ]
+  },
+  c_s5: {
+    badge: 'INFRASTRUCTURE',
+    title: 'Havalimanı & Ulaşım Altyapısı',
+    cover: 'assets/images/construction_hero_1784577666966.png',
+    desc: 'Uluslararası standartlarda havalimanı terminal binaları, pist ağır altyapıları, taksi yolları ve hızlı ulaşım entegrasyon projeleri.',
+    specs: [
+      'ICAO & FAA Standartlarında Terminal ve Apron İnşaatı',
+      'Özel Yüksek Dayanımlı Asfalt ve Beton Pist Kaplamaları',
+      'Yolcu Bagaj Entegrasyon (BHS) ve Güvenlik Altyapıları',
+      'Kesintisiz Hava Trafik Kontrol Kule Yapıları'
+    ]
+  },
+  c_s6: {
+    badge: 'RETROFITTING',
+    title: 'Kentsel Dönüşüm & Yapı Güçlendirme',
+    cover: 'assets/images/gallery_seismic_retrofitting_1785092947617.png',
+    desc: 'Mevcut riskli yapıların sismik incelemesi, karbon elyaf (FRP), çelik manto ve betonarme güçlendirme projeleri ile kentsel dönüşüm danışmanlığı.',
+    specs: [
+      'Karbon Fiber (CFRP) ve Çelik Manto ile Deprem Güçlendirme',
+      'Karot ve Sismik Testler ile Binasal Risk Analizi Raporlama',
+      'Hukuki ve Teknik Kentsel Dönüşüm Danışmanlığı',
+      'Sıfır Hata ile Bina Yenileme ve Projelendirme'
+    ]
+  }
+};
+
+function openServiceModal(id) {
+  const data = SERVICES_DATA[id];
+  if (!data) return;
+  document.getElementById('service-modal-img').src = data.cover;
+  document.getElementById('service-modal-badge').textContent = data.badge;
+  document.getElementById('service-modal-title').textContent = data.title;
+  document.getElementById('service-modal-desc').textContent = data.desc;
+  
+  const listEl = document.getElementById('service-modal-list');
+  listEl.innerHTML = '';
+  data.specs.forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = s;
+    listEl.appendChild(li);
+  });
+
+  document.getElementById('service-dialog').showModal();
+}
+function closeServiceModal() {
+  document.getElementById('service-dialog').close();
+}
+
 // ── Gallery / Lightbox ─────────────────────────────────────────────────────
 const galleryImages = [
-  { src: 'assets/images/gallery_datacenter_1785092833568.png', title: 'T-3 Veri Merkezi Yapımı', caption: 'Ankara / Türkiye' },
-  { src: 'assets/images/construction_hero_1784577666966.png', title: 'Uluslararası Havalimanı Terminali', caption: 'İzmir / Türkiye' },
-  { src: 'assets/images/gallery_vadi_mansion_1785092899049.png', title: 'Vadi Konakları Yaşam Kompleksi', caption: 'İstanbul / Türkiye' },
-  { src: 'assets/images/gallery_seismic_retrofitting_1785092947617.png', title: 'Yapı Güçlendirme & BIM Tasarımı', caption: 'Deprem Mühendisliği' },
+  { src: 'assets/images/gallery_datacenter_1785092833568.png', title: 'T-3 Veri Merkezi Yapımı', caption: 'Ankara / Türkiye — Tier III Sertifikalı Mission Critical Tesis (Yakın İnşaat)' },
+  { src: 'assets/images/construction_hero_1784577666966.png', title: 'Uluslararası Havalimanı Terminali', caption: 'İzmir / Türkiye — 120.000 m² Yolcu Terminali & Apron Altyapısı' },
+  { src: 'assets/images/gallery_vadi_mansion_1785092899049.png', title: 'Vadi Konakları Yaşam Kompleksi', caption: 'İstanbul / Türkiye — Akıllı Ev Otomasyonlu 450 Konutluk Yaşam Alanı' },
+  { src: 'assets/images/gallery_seismic_retrofitting_1785092947617.png', title: 'Yapı Güçlendirme & BIM Tasarımı', caption: 'Deprem Mühendisliği — Karbon Fiber Güçlendirme & 5D BIM Entegrasyonu' },
 ];
 let lightboxIdx = 0;
 
@@ -477,6 +532,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initReveal();
 
-  // Auto-advance slider
   slideTimer = setInterval(() => goToSlide(slideIndex + 1), SLIDE_INTERVAL);
 });
