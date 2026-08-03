@@ -669,16 +669,6 @@ function navigateLightbox(dir) {
   lightboxIdx = (lightboxIdx + dir + galleryImages.length) % galleryImages.length;
   openLightbox(lightboxIdx);
 }
-function openFullImage() {
-  const item = galleryImages[lightboxIdx];
-  if (!item) return;
-  document.getElementById('fullimage-img').src = item.src;
-  document.getElementById('fullimage-title').textContent = item.title + ' — ' + (item.tag || '');
-  document.getElementById('fullimage-dialog').showModal();
-}
-function closeFullImage() {
-  document.getElementById('fullimage-dialog').close();
-}
 
 // ── Energy Product References Modal ──────────────────────────────────────
 const energyProducts = [
