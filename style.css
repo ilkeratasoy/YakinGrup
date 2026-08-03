@@ -1415,12 +1415,37 @@ a.field-val:hover { color: var(--c-light); }
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
+  cursor: zoom-in;
 }
 .lightbox-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+.lightbox-media:hover img {
+  transform: scale(1.05);
+}
+.zoom-badge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+.lightbox-media:hover .zoom-badge {
+  background: var(--c-primary);
 }
 .lightbox-footer {
   padding: 2rem;
@@ -1455,6 +1480,44 @@ a.field-val:hover { color: var(--c-light); }
 .lightbox-arrow:hover { background: rgba(255,255,255,0.25); }
 .lightbox-arrow.prev { left: 1.5rem; }
 .lightbox-arrow.next { right: 1.5rem; }
+
+/* Full Screen Image Modal */
+.fullimage-modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+.fullimage-modal::backdrop {
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+}
+.fullimage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.fullimage-container img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+}
+.fullimage-caption {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
 
 /* ==========================================================================
    16. RESPONSIVE

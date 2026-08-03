@@ -958,8 +958,9 @@
   <dialog id="lightbox-dialog" class="lightbox-modal">
     <button class="modal-close-btn" onclick="closeLightboxDialog()">×</button>
     <div class="lightbox-content">
-      <div class="lightbox-media">
+      <div class="lightbox-media" onclick="openFullImage()" title="Tıklayın: Resmi Tam Ekran Büyüt">
         <img id="lightbox-img" src="" alt="Proje">
+        <div class="zoom-badge">🔍 Resmi Büyüt</div>
       </div>
       <div class="lightbox-footer">
         <span id="lightbox-tag" class="gm-tag">PROJE KATEGORİSİ</span>
@@ -978,6 +979,15 @@
     </div>
     <button class="lightbox-arrow prev" onclick="navigateLightbox(-1)">‹</button>
     <button class="lightbox-arrow next" onclick="navigateLightbox(1)">›</button>
+  </dialog>
+
+  <!-- DIALOG: Full Screen Image Zoom -->
+  <dialog id="fullimage-dialog" class="fullimage-modal" onclick="closeFullImage()">
+    <button class="modal-close-btn" onclick="closeFullImage()">×</button>
+    <div class="fullimage-container">
+      <img id="fullimage-img" src="" alt="Tam Ekran Görsel">
+      <div id="fullimage-title" class="fullimage-caption"></div>
+    </div>
   </dialog>
 
   <!-- DIALOG: Marketplace -->
