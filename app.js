@@ -398,10 +398,10 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/construction_hero_1784577666966.png',
-    tag: 'İZMİR / TÜRKİYE — HAVALİMANI & ULAŞIM',
-    title: 'Uluslararası Havalimanı Terminali',
-    caption: '120.000 m² kapalı alana sahip yolcu terminal binası, apron kaplamaları, körük altyapısı ve akıllı bagaj yönlendirme sistemleri.',
+    src: 'assets/images/heavy_industry_factory_1785010003542.png',
+    tag: 'İZMİR / TÜRKİYE — HAVALİMANI & LOJİSTİK',
+    title: 'Uluslararası Lojistik & Havalimanı Terminali',
+    caption: '120.000 m² kapalı alana sahip havalimanı kargo terminali, apron kaplamaları ve akıllı yönlendirme altyapısı.',
     specs: [
       { label: 'Lokasyon', val: 'İzmir, Türkiye' },
       { label: 'Kapalı Alan', val: '120.000 m²' },
@@ -422,39 +422,39 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/gallery_seismic_retrofitting_1785092947617.png',
-    tag: 'DEPREM MÜHENDİSLİĞİ — BİNA GÜÇLENDİRME',
-    title: 'Yapı Güçlendirme & BIM Tasarımı',
-    caption: 'Karbon elyaf (CFRP) ve çelik manto uygulamaları ile bina sismik performansı artırımı ve 5D BIM dijital ikiz modellemesi.',
+    src: 'assets/images/construction_hero_1784578660847.png',
+    tag: 'İSTANBUL / TÜRKİYE — İŞ KULESİ',
+    title: 'Sky Tower İş Kulesi & Sismik Tasarım',
+    caption: 'Taban izolatörlü ve yüksek mukavemetli sismik kolon yapısıyla depreme tam dayanıklı 42 katlı iş kulesi inşası.',
     specs: [
-      { label: 'Kapsam', val: 'Sismik Analiz & FRP Güçlendirme' },
-      { label: 'Yöntem', val: '5D BIM Entegrasyonu' },
-      { label: 'Alan', val: 'Endüstriyel & Kamusal Yapılar' },
-      { label: 'Güvenlik', val: 'AFAD & Eurocode Standardı' }
-    ]
-  },
-  {
-    src: 'assets/images/heavy_industry_clean_1785012805596.png',
-    tag: 'İZMİR / TÜRKİYE — ENDÜSTRİYEL İNŞAAT',
-    title: 'Endüstriyel Fabrika & Üretim Tesisi',
-    caption: 'Ağır sanayi üretimi için yüksek mukavemetli çelik konstrüksiyon fabrika binası, vinç yolları ve özel zemin güçlendirme çözümleri.',
-    specs: [
-      { label: 'Lokasyon', val: 'İzmir ALOSBİ' },
-      { label: 'Kapalı Alan', val: '35.000 m²' },
-      { label: 'Yapı Tipi', val: 'Ağır Çelik Konstrüksiyon' },
+      { label: 'Lokasyon', val: 'İstanbul (Ataşehir)' },
+      { label: 'Kat Sayısı', val: '42 Kat / 185m Yükseklik' },
+      { label: 'Teknoloji', val: 'Sismik Taban İzolatörü' },
       { label: 'Yıl', val: '2024' }
     ]
   },
   {
-    src: 'assets/images/residential_luxury_project_1785010053703.png',
-    tag: 'İSTANBUL / TÜRKİYE — REZİDANS',
-    title: 'Park Terrace Lüks Rezidans',
-    caption: 'Bosphorus manzaralı, sismik izolatörlü yüksek yapı mimarisi ve çevre dostu malzeme teknolojisi ile inşa edilen prestij projesi.',
+    src: 'assets/images/heavy_industry_tab_1784578875255.png',
+    tag: 'KOCAELİ / TÜRKİYE — PETROKİMYA',
+    title: 'Petrokimya & Enerji Santral Kompleksi',
+    caption: 'Ağır endüstriyel proses borulamaları, yüksek basınçlı depolama tankları ve türbin binası ağır mühendislik taahhüdü.',
     specs: [
-      { label: 'Lokasyon', val: 'İstanbul (Beşiktaş)' },
-      { label: 'Yükseklik', val: '32 Kat / Sismik İzolatörlü' },
-      { label: 'Mimari', val: 'İleri Mühendislik & Cam Cephe' },
+      { label: 'Lokasyon', val: 'Kocaeli (Dilovası)' },
+      { label: 'Kapasite', val: '250.000 Ton/Yıl İşleme' },
+      { label: 'Yapı Tipi', val: 'Ağır Çelik & Tank Çiftliği' },
       { label: 'Yıl', val: '2024' }
+    ]
+  },
+  {
+    src: 'assets/images/investment_finance_real_estate_1785010111511.png',
+    tag: 'İSTANBUL / TÜRKİYE — KARMA PROJE',
+    title: 'Park Terrace Karma Yaşam & Ofis Projesi',
+    caption: 'Alışveriş bulvarı, lüks rezidans blokları ve A+ ofis katlarını bir araya getiren prestijli karma kullanım projesi.',
+    specs: [
+      { label: 'Lokasyon', val: 'İstanbul (Maslak)' },
+      { label: 'İnşaat Alanı', val: '180.000 m²' },
+      { label: 'Karma Konsept', val: 'Rezidans + A+ Ofis + Retail' },
+      { label: 'Yıl', val: '2024-2025' }
     ]
   },
   {
@@ -470,14 +470,14 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/civil_engineering_bim_1785010076530.png',
-    tag: 'İSTANBUL / TÜRKİYE — DİJİTAL İKİZ',
-    title: 'BIM 5D Dijital İkiz Projesi',
-    caption: 'Tüm disiplinlerin (Mimari, Statik, Mekanik, Elektrik) çakışma analizi (Clash Detection), 5D maliyet simülasyonu ve dijital ikiz yönetimi.',
+    src: 'assets/images/tender_contract_management_1785010026255.png',
+    tag: 'İSTANBUL / TÜRKİYE — DİJİTAL İKİZ & BIM',
+    title: '5D BIM Projelendirme & İhale Yönetimi',
+    caption: 'Tüm disiplinlerin (Mimari, Statik, Mekanik, Elektrik) çakışma analizi, 5D maliyet simülasyonu ve şartname yönetimi.',
     specs: [
       { label: 'Yazılım', val: 'Revit, Navisworks, BIM 360' },
-      { label: 'Kapsam', val: 'Clash Detection & 5D Cost' },
-      { label: 'LOD', val: 'LOD 400 Uygulama Detayı' },
+      { label: 'Kapsam', val: '5D Cost & Clash Detection' },
+      { label: 'LOD Standardı', val: 'LOD 400 Uygulama Detayı' },
       { label: 'Standart', val: 'ISO 19650 BIM Standardı' }
     ]
   }
