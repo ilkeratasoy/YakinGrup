@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260804_16">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
   <header id="main-header" class="main-header">
     <div class="header-container">
       <a href="#hero" class="logo">
-        <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
+        <span class="logo-text" data-i18n-html="brand_logo">YAKIN <span class="logo-bold">GRUP</span></span>
       </a>
       <nav class="nav-menu" id="nav-links">
         <a href="#hakkimizda" data-i18n="nav_about">Kurumsal</a>
@@ -54,7 +54,7 @@
         <div class="slide-content">
           <div class="slide-badge" data-i18n="hero_badge2">ENERJİ & ALTYAPI</div>
           <h1 data-i18n="hero_title2">Yakın Enerji</h1>
-          <p data-i18n="hero_desc2">Güneş, rüzgar, hibrit, akıllı bina otomasyonu ve ileri düzey altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.</p>
+          <p data-i18n="hero_desc2">Yenilenebilir enerji sistemleri, Veri merkezi sistemleri ve Siber güvenlik çözümleri.</p>
           <a href="#enerji" class="cta-primary-btn" data-i18n="btn_explore">Keşfet</a>
         </div>
       </div>
@@ -82,26 +82,6 @@
     <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
     <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
     <div class="slider-dots" id="main-hero-dots"></div>
-
-    <!-- Group Companies Quick Nav -->
-    <div class="hero-company-nav">
-      <a href="#insaat" class="company-nav-item" data-color="construction">
-        <span class="company-nav-icon">🏗️</span>
-        <span class="company-nav-label" data-i18n="nav_construction_short">İnşaat</span>
-      </a>
-      <a href="#enerji" class="company-nav-item" data-color="energy">
-        <span class="company-nav-icon">⚡</span>
-        <span class="company-nav-label" data-i18n="nav_energy_short">Enerji</span>
-      </a>
-      <a href="#capital" class="company-nav-item" data-color="capital">
-        <span class="company-nav-icon">💼</span>
-        <span class="company-nav-label" data-i18n="nav_capital_short">Capital</span>
-      </a>
-      <a href="#teknoloji" class="company-nav-item" data-color="technology">
-        <span class="company-nav-icon">💻</span>
-        <span class="company-nav-label" data-i18n="nav_technology_short">Teknoloji</span>
-      </a>
-    </div>
   </section>
 
   <!-- ===== HAKKIMIZDA ===== -->
@@ -109,10 +89,11 @@
     <div class="container">
       <div class="section-grid">
         <div class="about-info reveal">
-          <div class="section-badge" data-i18n="tag_group">YAKIN GRUP HOLDİNG</div>
-          <h2 class="section-heading" data-i18n="group_heading">Yakın Grup Holding</h2>
-          <p class="about-lead" data-i18n="group_lead">Proje müşavirliği ve geliştirme grubu olarak inşaat, enerji, finansman ve teknoloji sektörlerinde uçtan uca çözümler sunuyoruz.</p>
+          <div class="section-badge" data-i18n="tag_group">Kurumsal</div>
+          <h2 class="section-heading" data-i18n="group_heading">Kurumsal</h2>
+          <p class="about-lead" data-i18n="group_lead">Proje müşavirliği ve proje geliştirme grubu olarak inşaat, enerji, finansman ve teknoloji sektörlerinde uçtan uca çözümler sunuyoruz.</p>
           <p class="about-body" data-i18n="group_body">Endüstriyel vizyonumuz ve mühendislik alanlarındaki tecrübemiz ile yapı ve enerjiye bağlı sektörlerde teknik sınırları çiziyoruz.</p>
+
           <div class="group-stats">
             <div class="stat-item reveal">
               <span class="stat-num" data-count="20">20+</span>
@@ -131,77 +112,30 @@
               <span class="stat-label" data-i18n="stat_companies">Grup Şirketi</span>
             </div>
           </div>
+            
+          <div class="group-stats iso-group-stats">
+            <div class="stat-item reveal">
+              <span class="stat-num" style="color: #c9a032; font-size: 1.3rem;">ISO 9001</span>
+              <span class="stat-label">KALİTE YÖNETİMİ</span>
+            </div>
+            <div class="stat-item reveal">
+              <span class="stat-num" style="color: #10b981; font-size: 1.3rem;">ISO 14001</span>
+              <span class="stat-label">ÇEVRE YÖNETİMİ</span>
+            </div>
+            <div class="stat-item reveal">
+              <span class="stat-num" style="color: #f43f5e; font-size: 1.3rem;">ISO 45001</span>
+              <span class="stat-label">İŞ GÜVENLİĞİ</span>
+            </div>
+            <div class="stat-item reveal">
+              <span class="stat-num" style="color: #3b82f6; font-size: 1.3rem;">ISO 27001</span>
+              <span class="stat-label">SİBER GÜVENLİK</span>
+            </div>
+          </div>
         </div>
+
         <div class="about-image reveal">
           <div class="image-wrapper">
-            <img src="assets/images/yakin_grup_headquarters_1784577698669.png" alt="Yakın Grup Kurumsal">
-          </div>
-          <div class="iso-cert-bar">
-            <div class="iso-cert-label">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <span>Uluslararası Sertifikalar</span>
-            </div>
-            <div class="iso-cert-divider-v"></div>
-
-            <div class="iso-cert-item" data-color="#d4af37">
-              <div class="iso-cert-badge" style="--c:#d4af37">
-                <span class="iso-cert-tag">ISO</span>
-                <span class="iso-cert-num">9001</span>
-              </div>
-              <div class="iso-cert-text">
-                <span class="iso-cert-year">:2015</span>
-                <span class="iso-cert-name">Kalite Yönetimi</span>
-              </div>
-              <div class="iso-cert-tooltip">
-                <strong>ISO 9001:2015</strong>
-                <span>Uluslararası Kalite Yönetim Sistemi — Tüm süreçlerde müşteri memnuniyeti ve sürekli iyileştirme standardı.</span>
-              </div>
-            </div>
-
-            <div class="iso-cert-item" data-color="#10b981">
-              <div class="iso-cert-badge" style="--c:#10b981">
-                <span class="iso-cert-tag">ISO</span>
-                <span class="iso-cert-num">14001</span>
-              </div>
-              <div class="iso-cert-text">
-                <span class="iso-cert-year">:2015</span>
-                <span class="iso-cert-name">Çevre Yönetimi</span>
-              </div>
-              <div class="iso-cert-tooltip">
-                <strong>ISO 14001:2015</strong>
-                <span>Çevre Yönetim Sistemi — Çevresel etkilerin kontrolü ve sürdürülebilir operasyon standardı.</span>
-              </div>
-            </div>
-
-            <div class="iso-cert-item" data-color="#f43f5e">
-              <div class="iso-cert-badge" style="--c:#f43f5e">
-                <span class="iso-cert-tag">ISO</span>
-                <span class="iso-cert-num">45001</span>
-              </div>
-              <div class="iso-cert-text">
-                <span class="iso-cert-year">:2018</span>
-                <span class="iso-cert-name">İş Güvenliği</span>
-              </div>
-              <div class="iso-cert-tooltip">
-                <strong>ISO 45001:2018</strong>
-                <span>İş Sağlığı ve Güvenliği Yönetim Sistemi — Çalışan sağlığı ve iş güvenliği standardı.</span>
-              </div>
-            </div>
-
-            <div class="iso-cert-item" data-color="#3b82f6">
-              <div class="iso-cert-badge" style="--c:#3b82f6">
-                <span class="iso-cert-tag">ISO</span>
-                <span class="iso-cert-num">27001</span>
-              </div>
-              <div class="iso-cert-text">
-                <span class="iso-cert-year">:2022</span>
-                <span class="iso-cert-name">Siber Güvenlik</span>
-              </div>
-              <div class="iso-cert-tooltip">
-                <strong>ISO 27001:2022</strong>
-                <span>Bilgi Güvenliği Yönetim Sistemi — Siber güvenlik ve veri koruma standardı.</span>
-              </div>
-            </div>
+            <img src="assets/images/yakin_grup_headquarters_1784577698669.png" alt="Yakın Grup Holding Genel Merkez" />
           </div>
         </div>
       </div>
@@ -210,7 +144,7 @@
 
   <!-- ===== YAKIN İNŞAAT ===== -->
   <section id="insaat" class="company-section theme-construction">
-    <div class="company-section-hero" style="background-image: url('assets/images/construction_hero_1784578660847.png');">
+    <div class="company-section-hero" style="background-image: url('assets/images/data_center_construction_1785092614608.png');">
       <div class="company-hero-overlay"></div>
       <div class="container company-hero-content">
         <div class="company-tag" data-i18n="tag_construction">İNŞAAT & TAAHHÜT</div>
@@ -314,12 +248,12 @@
       <!-- Gallery -->
       <div class="text-center mb-large mt-large">
         <div class="section-badge theme-c" data-i18n="tag_portfolio">PROJELERİMİZ</div>
-        <h3 class="section-heading reveal" data-i18n="portfolio_title">Seçkin Proje Galerisi</h3>
-        <p class="section-subtitle reveal">Tamamlanan referans projelerimiz — görsele tıklayarak proje detaylarını inceleyin.</p>
+        <h3 class="section-heading reveal" data-i18n="portfolio_title">Tamamlanan Referans Projelerimiz</h3>
+        <p class="section-subtitle reveal">Tüm projelerimizin detaylarını görsellere tıklayarak inceleyebilirsiniz.</p>
       </div>
       <div class="gallery-mosaic">
         <div class="gm-item reveal" onclick="openLightbox(0)">
-          <img src="assets/images/gallery_datacenter_1785092833568.png" alt="Veri Merkezi" loading="lazy">
+          <img src="assets/images/gallery_datacenter_v2.jpg" alt="Veri Merkezi" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">Ankara / Türkiye</span>
             <h4>T-3 Veri Merkezi</h4>
@@ -327,15 +261,15 @@
           </div>
         </div>
         <div class="gm-item reveal" onclick="openLightbox(1)">
-          <img src="assets/images/heavy_industry_factory_1785010003542.png" alt="Havalimanı & Lojistik" loading="lazy">
+          <img src="assets/images/gallery_factory_v2.jpg" alt="Ağır Sanayi Üretim Tesisi" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">İzmir / Türkiye</span>
-            <h4>Lojistik & Havalimanı</h4>
+            <h4>Ağır Sanayi Üretim Tesisi</h4>
             <span class="gm-cta">Detay ›</span>
           </div>
         </div>
         <div class="gm-item reveal" onclick="openLightbox(2)">
-          <img src="assets/images/gallery_vadi_mansion_1785092899049.png" alt="Lüks Konut" loading="lazy">
+          <img src="assets/images/gallery_residential_v2.jpg" alt="Lüks Konut" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">İstanbul / Türkiye</span>
             <h4>Vadi Konakları</h4>
@@ -343,7 +277,7 @@
           </div>
         </div>
         <div class="gm-item reveal" onclick="openLightbox(3)">
-          <img src="assets/images/construction_hero_1784578660847.png" alt="İş Kulesi & Sky Tower" loading="lazy">
+          <img src="assets/images/gallery_skytower_v2.jpg" alt="İş Kulesi & Sky Tower" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">İstanbul / Türkiye</span>
             <h4>Sky Tower İş Kulesi</h4>
@@ -351,7 +285,7 @@
           </div>
         </div>
         <div class="gm-item reveal" onclick="openLightbox(4)">
-          <img src="assets/images/heavy_industry_tab_1784578875255.png" alt="Petrokimya Santrali" loading="lazy">
+          <img src="assets/images/gallery_petrochemical_v2.jpg" alt="Petrokimya Santrali" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">Kocaeli / Türkiye</span>
             <h4>Petrokimya & Enerji Santrali</h4>
@@ -359,7 +293,7 @@
           </div>
         </div>
         <div class="gm-item reveal" onclick="openLightbox(5)">
-          <img src="assets/images/investment_finance_real_estate_1785010111511.png" alt="Karma Proje" loading="lazy">
+          <img src="assets/images/gallery_mixeduse_v2.jpg" alt="Karma Proje" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">İstanbul / Türkiye</span>
             <h4>Park Terrace Rezidans</h4>
@@ -375,7 +309,7 @@
           </div>
         </div>
         <div class="gm-item reveal" onclick="openLightbox(7)">
-          <img src="assets/images/tender_contract_management_1785010026255.png" alt="BIM Projelendirme" loading="lazy">
+          <img src="assets/images/civil_engineering_bim_1785010076530.png" alt="BIM Projelendirme" loading="lazy">
           <div class="gm-overlay">
             <span class="gm-tag">İstanbul / Türkiye</span>
             <h4>5D BIM & Projelendirme</h4>
@@ -393,101 +327,107 @@
       <div class="container company-hero-content">
         <div class="company-tag" data-i18n="tag_energy">ENERJİ & ALTYAPI</div>
         <h2 class="company-title" data-i18n="e_title">Yakın Enerji</h2>
-        <p class="company-desc" data-i18n="e_desc">Güneş, rüzgar, hibrit, akıllı bina otomasyonu ve ileri düzey altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.</p>
+        <p class="company-desc" data-i18n="e_desc">Güneş, rüzgar, hibrit, akıllı bina otomasyonu, veri merkezi altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.</p>
       </div>
     </div>
 
     <div class="container py-large">
+      <!-- Ürün ve Hizmetlerimiz Başlığı -->
+      <div class="text-center mb-large">
+        <div class="section-badge theme-e" data-i18n="tag_energy">ENERJİ &amp; ALTYAPI</div>
+        <h3 class="section-heading reveal">Ürün ve Hizmetlerimiz</h3>
+        <p class="section-subtitle reveal">Güneş, rüzgar, hibrit, akıllı bina otomasyonu, veri merkezi altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.</p>
+      </div>
+
       <div class="energy-clusters">
         <!-- Küme A -->
         <div class="cluster reveal">
           <div class="cluster-header">
             <div class="cluster-badge" data-i18n="cluster_a_label">KÜME A</div>
-            <h3 data-i18n="cluster_a_title">Yenilenebilir Enerji, Depolama & Mekanik Altyapı Sistemleri</h3>
+            <h3 data-i18n="cluster_a_title">Yenilenebilir Enerji Sistemleri &amp; Mekanik Çözümler</h3>
           </div>
-          <div class="cluster-services">
-            <!-- GES -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">☀️</div>
-              <div>
-                <h5>Güneş Enerjisi Sistemleri (GES) & BIPV</h5>
-                <p>Arazi ve çatı tipi GES EPC projeleri; <strong>Dış cephe fotovoltaik cephe kaplama ve akıllı cam sistemleri (BIPV - Building Integrated Photovoltaics)</strong> ile yüksek verim entegrasyonu.</p>
-                <div class="tech-tags">
-                  <span class="tech-pill">BIPV</span>
-                  <span class="tech-pill">Fotovoltaik Cam</span>
-                  <span class="tech-pill">Çatı / Arazi GES</span>
-                </div>
+          <div class="energy-grid">
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s1')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_solar_ges.jpg" alt="Güneş Enerjisi" class="energy-tile-img">
+                <span class="energy-tile-tag">SOLAR &amp; BIPV</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Güneş Enerjisi (GES) &amp; BIPV</h4>
+                <p>Arazi ve çatı tipi GES EPC projeleri; dış cephe fotovoltaik kaplama ve akıllı cam sistemleri (BIPV).</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- RES & WF -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🌬️</div>
-              <div>
-                <h5>Rüzgar Enerjisi Santrali (RES / WPP) & Rüzgar Çiftliği (WF)</h5>
-                <p><strong>RES: Rüzgar Enerjisi Santrali (WPP: Wind Power Plant)</strong> ve <strong>Rüzgar Çiftliği (WF: Wind Farm)</strong> kurulum, türbin montajı, şebeke entegrasyonu ve tesis mühendisliği.</p>
-                <div class="tech-tags">
-                  <span class="tech-pill">RES / WPP</span>
-                  <span class="tech-pill">Rüzgar Çiftliği (WF)</span>
-                  <span class="tech-pill">Türbin Entegrasyonu</span>
-                </div>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s2')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_wind_res.jpg" alt="Rüzgar Enerjisi" class="energy-tile-img">
+                <span class="energy-tile-tag">WIND POWER</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Rüzgar Enerjisi Santrali (RES) &amp; WPP</h4>
+                <p>Rüzgar santralleri kurulum, türbin montajı, şebeke entegrasyonu ve tesis mühendisliği.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- BESS / HES / HRES / HESS / BMS / LFP / PCS -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🔋</div>
-              <div>
-                <h5>Batarya Depolama & Hibrit Enerji Çözümleri</h5>
-                <p>Uçtan uca enerji depolama ve hibrit şebeke mimarileri:</p>
-                <ul class="detail-tech-list">
-                  <li><strong>BESS (Battery Energy Storage System):</strong> Batarya Enerji Depolama Sistemi</li>
-                  <li><strong>HES (Hybrid Energy System):</strong> Hibrit Enerji Sistemleri</li>
-                  <li><strong>HRES (Hybrid Renewable Energy System):</strong> Hibrit Yenilenebilir Enerji Sistemi</li>
-                  <li><strong>HESS (Hybrid Energy Storage System):</strong> Hibrit Enerji Depolama Sistemi</li>
-                  <li><strong>BMS (Battery Management System):</strong> Batarya Yönetim Sistemi & Lityum-iyon (LFP - LiFePO4) Hücreleri</li>
-                  <li><strong>PCS (Power Conversion System):</strong> Güç Dönüştürme Sistemi (AC/DC Çift Yönlü Çevirici)</li>
-                  <li><strong>Eviriciler (İnvertör):</strong> Isıtma & soğutma ve güvenlik konteynerli güç dönüştürücüler</li>
-                  <li><strong>Kontrol Yazılımları:</strong> Akıllı şarj ve deşarj süreç yönetimi ve yük dengeleme</li>
-                </ul>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s3')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_bess_battery.jpg" alt="BESS Batarya" class="energy-tile-img">
+                <span class="energy-tile-tag">BESS &amp; HYBRID</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Batarya Depolama &amp; Hibrit Enerji</h4>
+                <p>BESS, BMS, PCS ve evirici entegrasyonu ile enerji depolama ve hibrit şebeke mimarileri.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- HVAC VRF VAV & MEP -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🏗️</div>
-              <div>
-                <h5>Mekanik Tesisat & HVAC (VRF / VAV) / MEP</h5>
-                <p><strong>MEP (Mechanical, Electrical, and Plumbing):</strong> Elektrik ve mekanik tesisat proje tasarımları.</p>
-                <p><strong>HVAC VRF VAV:</strong> Isıtma, Soğutma, Havalandırma & İklimlendirme ve yüksek hassasiyetli mekanik proje mühendisliği.</p>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s4')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_hvac_mep.jpg" alt="HVAC MEP" class="energy-tile-img">
+                <span class="energy-tile-tag">MEP &amp; HVAC</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Mekanik Tesisat &amp; HVAC / MEP</h4>
+                <p>HVAC VRF VAV iklimlendirme, MEP elektrik ve mekanik tesisat projelendirmesi.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- SCADA -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🎛️</div>
-              <div>
-                <h5>SCADA — Merkezi Denetim, Kontrol ve Veri Toplama</h5>
-                <p><em>(Supervisory Control and Data Acquisition)</em></p>
-                <p><strong>Uygulama Tesisleri:</strong> Elektrik üretim & dağıtım hatları, Su arıtma & dağıtım tesisleri, Doğalgaz & petrol boru hatları, Otomotiv & gıda fabrikaları.</p>
-                <ul class="scada-features">
-                  <li><strong>📊 Veri Toplama:</strong> Sahadaki sensörlerden ve sayaçlardan bilgi alır.</li>
-                  <li><strong>📺 İzleme:</strong> Fabrikadaki durumu ekranda canlı gösterir.</li>
-                  <li><strong>🎛️ Kontrol:</strong> Uzaktan vana açma veya motor durdurma gibi otomasyon komutları verir.</li>
-                </ul>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s5')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_scada_control.jpg" alt="SCADA" class="energy-tile-img">
+                <span class="energy-tile-tag">SCADA</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>SCADA — Merkezi Denetim &amp; Kontrol</h4>
+                <p>Elektrik, su, doğalgaz ve sanayi tesislerinde merkezi izleme, kontrol ve veri toplama.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- YANGIN SÖNDÜRME -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🧯</div>
-              <div>
-                <h5>Yangın Söndürme Sistemleri</h5>
-                <ul class="detail-tech-list">
-                  <li><strong>Sprinkler System:</strong> Yağmurlama / Sulu Söndürme Sistemi</li>
-                  <li><strong>Gas Suppression System:</strong> Gazlı Söndürme Sistemi (FM200 / Novec)</li>
-                  <li><strong>Fire Extinguisher:</strong> Yangın Söndürme Tüpü & Mobil Cihazlar</li>
-                </ul>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s6')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_fire_suppression.jpg" alt="Yangın Söndürme" class="energy-tile-img">
+                <span class="energy-tile-tag">FIRE SUPPRESSION</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Yangın Söndürme Sistemleri</h4>
+                <p>Sprinkler, FM200/Novec gazlı söndürme ve VESDA erken uyarı duman algılama sistemleri.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
+              </div>
+            </div>
+
+            <div class="energy-tile reveal" onclick="openServiceModal('e_s7')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_ev_charge.jpg" alt="Elektrikli Araç Şarj İstasyonu" class="energy-tile-img">
+                <span class="energy-tile-tag">EV CHARGE</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Elektrikli Araç Şarj İstasyonu (EV Charge)</h4>
+                <p>AC/DC hızlı şarj istasyonları, Tip 2/CCS/CHAdeMO soketler ve apartman daire sayacı entegre şarj çözümleri.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
           </div>
@@ -497,76 +437,156 @@
         <div class="cluster reveal">
           <div class="cluster-header">
             <div class="cluster-badge" data-i18n="cluster_b_label">KÜME B</div>
-            <h3 data-i18n="cluster_b_title">Bilgi Sistemleri, Network, Elektrik & Siber Güvenlik</h3>
+            <h3 data-i18n="cluster_b_title">Veri Merkezi Sistemleri &amp; Entegrasyon Çözümler</h3>
           </div>
-          <div class="cluster-services">
-            <!-- Zayıf Akım -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">📡</div>
-              <div>
-                <h5>Zayıf Akım Sistemleri (Weak Current / ELV Systems)</h5>
-                <p>Genellikle 50V altı gerilimle çalışan kritik bina iletişim ve güvenlik altyapıları:</p>
-                <ul class="detail-tech-list">
-                  <li><strong>CCTV (Close Circuit Television):</strong> Kapalı Devre Güvenlik Kamerası Sistemleri</li>
-                  <li><strong>Fire Alarm Systems:</strong> Erken Uyarı Yangın Alarm Sistemleri</li>
-                  <li><strong>Data & Network Systems:</strong> Veri ve Bilgisayar Ağları Altyapısı</li>
-                  <li><strong>Intercom Systems:</strong> Diafon, Anons & Acil Seslendirme Sistemleri</li>
-                </ul>
+          <div class="energy-grid">
+            <div class="energy-tile reveal" onclick="openServiceModal('e_b1')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_dc_hardware.jpg" alt="Altyapı Donanım" class="energy-tile-img">
+                <span class="energy-tile-tag">HARDWARE &amp; INFRASTRUCTURE</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Altyapı ve Donanım Bileşenleri</h4>
+                <p>Rack kabinetler, ToR SW, busbar, UPS, hassas sıvı soğutma, modüler konteyner DC ve yükseltilmiş zemin.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- Güçlü / Kuvvetli Akım -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">⚡</div>
-              <div>
-                <h5>Güçlü / Kuvvetli Akım Sistemleri (Strong Current / Power Systems)</h5>
-                <p>Yüksek voltaj ve güç seviyelerinde elektrik enerjisi taşıma ve ana güç dağıtım çözümleri:</p>
-                <ul class="detail-tech-list">
-                  <li><strong>Lighting Installations:</strong> Aydınlatma Tesisatları & Otomasyonu</li>
-                  <li><strong>Power Outlets / Socket Circuits:</strong> Güç Tesisatı & Priz Devreleri</li>
-                  <li><strong>HVAC Power Connections:</strong> Klima ve Havalandırma Güç Bağlantıları</li>
-                  <li><strong>Main Distribution Boards:</strong> Ana Dağıtım Panoları & Kompanzasyon</li>
-                </ul>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_b2')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_cloud_virt.jpg" alt="Cloud & Virtualization" class="energy-tile-img">
+                <span class="energy-tile-tag">CLOUD &amp; VIRTUALIZATION</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Operasyonel, Bulut &amp; Sanallaştırma</h4>
+                <p>Colocation, DR, VDI, Sanal Sunucu, SAN&amp;NAS, Firewall, WLAN, VPN, VOIP ve Private/Public Cloud.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- Network & Terminasyon & Fiber -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🌐</div>
-              <div>
-                <h5>Network, Bakır/Fiber Kablolama & Terminasyon</h5>
-                <p>Yüksek hızlı veri iletim mimarileri:</p>
-                <ul class="detail-tech-list">
-                  <li><strong>Network & Terminasyon:</strong> UTP / STP / FTP / XXTP Kablolama Standartları</li>
-                  <li><strong>FO (Fiber Optic) & Cu (Copper Wire):</strong> Fiber optik omurga ve bakır kablo terminasyonları</li>
-                  <li><strong>FTTx (Fiber to the X):</strong> Binalara ve sahalara kadar fiber optik altyapı projeleri</li>
-                  <li><strong>MEP Entegrasyonu:</strong> Mekanik ve elektrik tesisat uyumlu proje tasarımı</li>
-                </ul>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_b3')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_regulation_advisory.jpg" alt="Regülasyon" class="energy-tile-img">
+                <span class="energy-tile-tag">REGULATION &amp; ADVISORY</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Regülasyon, İhale &amp; Asset Sizing</h4>
+                <p>KVKK, GDPR, ISO 27001/9001 uyum, Asset Sizing ve RFP/RFI/RFQ şartname ve tedarikçi yönetimi.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- Siber Güvenlik Müşavirliği -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🔒</div>
-              <div>
-                <h5>Siber Güvenlik Müşavirliği & SOC Kurulumu</h5>
-                <p>Kritik altyapı ve sanayi tesisleri için IT/OT siber güvenlik danışmanlığı, Güvenlik Operasyon Merkezi (SOC) kurulumu, penetrasyon testleri ve ISO 27001 güvenlik denetimleri.</p>
-                <div class="tech-tags">
-                  <span class="tech-pill">SOC Kurulumu</span>
-                  <span class="tech-pill">OT / IT Siber Güvenlik</span>
-                  <span class="tech-pill">Penetrasyon Testi</span>
-                </div>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_b4')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_datacenter_whitespace.jpg" alt="White Space DCIM" class="energy-tile-img">
+                <span class="energy-tile-tag">WHITE SPACE &amp; DCIM</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Veri Merkezi Beyaz Alan &amp; DCIM</h4>
+                <p>Rack yerleşimi, sıcak/soğuk koridor, PUE optimizasyonu, DCIM yazılımları ve zemin kablolama.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <!-- Akıllı Bina Otomasyonu -->
-            <div class="cluster-service-item">
-              <div class="csi-icon">🏠</div>
-              <div>
-                <h5>Akıllı Bina Otomasyonu (BMS)</h5>
-                <p>Tesis otomasyon sistemleri, BMS (Building Management System) ve akıllı iklimlendirme entegrasyonu.</p>
+            <div class="energy-tile reveal" onclick="openServiceModal('e_b5')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_cybersecurity_soc.jpg" alt="Cybersecurity BMS" class="energy-tile-img">
+                <span class="energy-tile-tag">CYBERSECURITY &amp; BMS</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Siber Güvenlik, SOC &amp; Akıllı Bina</h4>
+                <p>IT/OT siber güvenlik, 7/24 SOC kurulumu, penetrasyon testleri ve BMS bina otomasyon entegrasyonu.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Örnek Referanslar & Ürün Çözümlerimiz (8 Adet Ürün) -->
+      <div class="text-center mb-large mt-large">
+        <div class="section-badge theme-e">REFERANSLAR</div>
+        <p class="section-subtitle reveal" style="margin-top:1rem;">Uygulamasını gerçekleştirdiğimiz yenilenebilir enerji, depolama, akıllı ev otomasyonu ve veri merkezi çözümlerimiz.</p>
+      </div>
+
+      <div class="gallery-mosaic energy-products-mosaic">
+        <!-- 1. Ürün (Yüklenen Görsel 1: Mobil App & Akıllı Ev BESS) -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(0)">
+          <img src="assets/images/energy_ref_smart_bess.jpg" alt="Akıllı Ev & BESS Enerji Yönetimi" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">BIPV SOLAR & BESS</span>
+            <h4>Akıllı Ev BESS & Şarj İstasyonu</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 2. Ürün (Yüklenen Görsel 2: Lüks Villa BIPV Solar Kompleksi) -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(1)">
+          <img src="assets/images/energy_ref_luxury_solar.jpg" alt="Lüks Konut BIPV Solar & BESS" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">LUXURY RESIDENTIAL BIPV</span>
+            <h4>Lüks BIPV Solar & Depolama Odası</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 3. Ürün (Yüklenen Görsel 3: Konteyner BESS Depolama) -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(2)">
+          <img src="assets/images/energy_ref_bess_container.jpg" alt="Konteyner Tipi Endüstriyel BESS Batarya Santrali" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">INDUSTRIAL BESS</span>
+            <h4>Konteyner Tipi Endüstriyel BESS Batarya Santrali</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 4. Ürün: 50 MWp Endüstriyel GES -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(3)">
+          <img src="assets/images/energy_ref_solar_ges_50mw.jpg" alt="Endüstriyel Çatı GES" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">UTILITY SOLAR</span>
+            <h4>50 MWp Endüstriyel Çatı GES</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 5. Ürün: 100 MW RES Rüzgar Santrali -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(4)">
+          <img src="assets/images/energy_ref_wind_res_100mw.jpg" alt="RES Rüzgar Santrali" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">WIND POWER</span>
+            <h4>100 MW RES Rüzgar Santrali</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 6. Ürün: 7/24 SCADA Kontrol Odası -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(5)">
+          <img src="assets/images/energy_ref_scada_room.jpg" alt="SCADA Kontrol Merkezi" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">AUTOMATION &amp; SCADA</span>
+            <h4>Merkezi SCADA Otomasyon Sistemi</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 7. Ürün: OT / IT Siber Güvenlik SOC -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(6)">
+          <img src="assets/images/energy_ref_soc_cyber.jpg" alt="OT/IT Siber Güvenlik SOC" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">CYBERSECURITY SOC</span>
+            <h4>OT / IT Siber Güvenlik SOC Merkezi</h4>
+            <span class="gm-cta">Detay ›</span>
+          </div>
+        </div>
+
+        <!-- 8. Ürün: Veri Merkezi Hassas Sıvı Soğutma & MEP -->
+        <div class="gm-item reveal" onclick="openEnergyProductModal(7)">
+          <img src="assets/images/energy_ref_dc_cooling.jpg" alt="Veri Merkezi Hassas Sıvı Soğutma & MEP Tesisatı" loading="lazy">
+          <div class="gm-overlay">
+            <span class="gm-tag">DC MEP &amp; COOLING</span>
+            <h4>Veri Merkezi Hassas Sıvı Soğutma &amp; MEP Tesisatı</h4>
+            <span class="gm-cta">Detay ›</span>
           </div>
         </div>
       </div>
@@ -846,6 +866,7 @@
               </div>
               <span class="vcard-arrow">›</span>
             </div>
+
           </div>
 
           <!-- Presentation Downloads -->
@@ -902,7 +923,7 @@
     <div class="container footer-grid">
       <div class="footer-brand">
         <a href="#hero" class="logo">
-          <span class="logo-text">YAKIN <span class="logo-bold">GRUP</span></span>
+          <span class="logo-text" data-i18n-html="brand_logo">YAKIN <span class="logo-bold">GRUP</span></span>
         </a>
         <p class="brand-desc" data-i18n="footer_tagline">Mühendislik temelli yaklaşımlarla altyapı ve enerjinin birleşimi.</p>
         <div class="social-links">
@@ -938,7 +959,10 @@
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p class="copyright">© 2026 Yakın Grup Sanayi İnşaat Enerji Teknoloji LTD ŞTİ A.Ş. All rights reserved. <span data-i18n="footer_lic_note">Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.</span></p>
+        <p class="copyright">
+          © 2026 Yakın Grup Sanayi İnşaat Enerji Teknoloji LTD ŞTİ A.Ş. All rights reserved.
+          <span data-i18n="footer_lic_note">Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.</span>
+        </p>
       </div>
     </div>
   </footer>
@@ -1016,8 +1040,8 @@
 
   <!-- DIALOG: Lightbox -->
   <dialog id="lightbox-dialog" class="lightbox-modal">
-    <button class="modal-close-btn" onclick="closeLightboxDialog()">×</button>
     <div class="lightbox-content">
+      <button class="lightbox-close-btn" onclick="closeLightboxDialog()">×</button>
       <div class="lightbox-media" onclick="openFullImage()" title="Tıklayın: Resmi Tam Ekran Büyüt">
         <img id="lightbox-img" src="" alt="Proje">
         <div class="zoom-badge">🔍 Resmi Büyüt</div>
@@ -1094,6 +1118,6 @@
     </div>
   </dialog>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=20260804_12"></script>
 </body>
 </html>

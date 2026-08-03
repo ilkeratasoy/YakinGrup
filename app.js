@@ -14,20 +14,21 @@ const TRANSLATIONS = {
     nav_capital_short: 'Capital', nav_technology_short: 'Teknoloji',
     tag_construction: 'İNŞAAT & TAAHHÜT', tag_energy: 'ENERJİ & ALTYAPI',
     tag_capital: 'FİNANS & YATIRIM', tag_technology: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
-    tag_group: 'YAKIN GRUP HOLDİNG', tag_about: 'KURUMSAL GÜVEN',
+    tag_group: 'KURUMSAL', tag_about: 'KURUMSAL GÜVEN',
+    brand_logo: 'YAKIN <span class="logo-bold">GRUP</span>',
     tag_portfolio: 'PROJELERİMİZ', tag_partners: 'MÜHENDİSLİK PAYDAŞLARI',
     tag_store: 'ONLINE SATIŞ & PORTAL', tag_digital: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     tag_cap_advisory: 'CAPITAL ADVISORY',
     cluster_a_label: 'KÜME A', cluster_b_label: 'KÜME B',
-    cluster_a_title: 'Yenilenebilir Enerji, Depolama & Mekanik Altyapı Sistemleri',
-    cluster_b_title: 'Bilgi Sistemleri, Network, Elektrik & Siber Güvenlik',
+    cluster_a_title: 'Yenilenebilir Enerji Sistemleri & Mekanik Çözümler',
+    cluster_b_title: 'Veri Merkezi Sistemleri & Entegrasyon Çözümler',
     hero_badge1: 'İNŞAAT & TAAHHÜT', hero_badge2: 'ENERJİ & ALTYAPI',
     hero_badge3: 'FİNANS & YATIRIM', hero_badge4: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     hero_title1: 'Yakın İnşaat',
     hero_title2: 'Yakın Enerji',
     hero_title3: 'Yakın Capital', hero_title4: 'Yakın Teknoloji',
     hero_desc1: 'Veri merkezleri, endüstriyel tesisler ve ağır mühendislik taahhüt projelerinde küresel standartlar.',
-    hero_desc2: 'Güneş, rüzgar, hibrit, akıllı bina otomasyonu ve ileri düzey altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.',
+    hero_desc2: 'Yenilenebilir enerji sistemleri, Veri merkezi sistemleri ve Siber güvenlik çözümleri.',
     hero_desc3: 'Proje finansmanı danışmanlığı, yapılandırma ve yatırım çözümleri platformu.',
     hero_desc4: 'Dijital hakediş, yapay zekâ, BIM entegrasyonu ve ileri seviye proje yönetim platformu.',
     btn_explore: 'Keşfet', btn_view_details: 'Detaylı İncele',
@@ -36,7 +37,7 @@ const TRANSLATIONS = {
     btn_market_join: 'Beni Listeye Ekle', btn_send: 'Mesajı Gönder',
     btn_presentation_tr: 'Yatırımcı Sunumu (TR)', btn_presentation_en: 'Investor Presentation (EN)',
     group_heading: 'Yakın Grup Holding',
-    group_lead: 'Proje müşavirliği ve geliştirme grubu olarak inşaat, enerji, finansman ve teknoloji sektörlerinde uçtan uca çözümler sunuyoruz.',
+    group_lead: 'Proje müşavirliği ve proje geliştirme grubu olarak inşaat, enerji, finansman ve teknoloji sektörlerinde uçtan uca çözümler sunuyoruz.',
     group_body: 'Endüstriyel vizyonumuz ve mühendislik alanlarındaki tecrübemiz ile yapı ve enerjiye bağlı sektörlerde teknik sınırları çiziyoruz.',
     stat_years: 'YILLIK TECRÜBE', stat_area: 'm² İnşaat Alanı',
     stat_mw: 'MW Kurulu Güç', stat_companies: 'Grup Şirketi',
@@ -53,11 +54,11 @@ const TRANSLATIONS = {
     c_s5_title: 'Havalimanı & Ulaşım', c_s5_desc: 'Uluslararası standartlarda havalimanı terminalleri ve ulaşım altyapısı.',
     c_s6_title: 'Kentsel Dönüşüm', c_s6_desc: 'Riskli yapıların tespiti, güçlendirilmesi ve dönüşüm projelerinde uçtan uca yönetim.',
     btn_service_details: 'Detaylar & vCard İrtibat ›',
-    portfolio_title: 'Seçkin Proje Galerisi',
+    portfolio_title: 'Tamamlanan Referans Projelerimiz',
     c_gal1_title: 'T-3 Veri Merkezi Yapımı', c_gal2_title: 'Uluslararası Havalimanı Terminali',
     c_gal3_title: 'Vadi Konakları Yaşam Kompleksi', c_gal4_title: 'Yapı Güçlendirme & BIM Tasarımı',
     e_title: 'Yakın Enerji',
-    e_desc: 'Güneş, rüzgar, hibrit, akıllı bina otomasyonu ve ileri düzey altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.',
+    e_desc: 'Güneş, rüzgar, hibrit, akıllı bina otomasyonu, veri merkezi altyapı sistemleri mühendisliği ve siber güvenlik çözümleri.',
     cap_desc: 'Yakın Capital, grubumuzun projelerini uçtan uca geliştiren, finansman çözümleri üreten bir danışmanlık ve yatırım platformudur.',
     cap_heading: 'Çok Disiplinli Finansman Yapılandırması',
     cap_body: 'Projelerin finansmanını organize etmek, riskleri yönetmek ve sürdürülebilir nakit akış modelleri oluşturmak temel vizyonumuzdur.',
@@ -101,13 +102,14 @@ const TRANSLATIONS = {
     nav_capital_short: 'Capital', nav_technology_short: 'Technology',
     tag_construction: 'CONSTRUCTION & EPC', tag_energy: 'ENERGY & INFRASTRUCTURE',
     tag_capital: 'FINANCE & INVESTMENT', tag_technology: 'DIGITAL TRANSFORMATION & AI',
-    tag_group: 'YAKIN GROUP HOLDING', tag_about: 'CORPORATE TRUST',
+    tag_group: 'CORPORATE', tag_about: 'CORPORATE TRUST',
+    brand_logo: 'YAKIN <span class="logo-bold">GROUP</span>',
     tag_portfolio: 'OUR PROJECTS', tag_partners: 'ENGINEERING PARTNERS',
     tag_store: 'ONLINE STORE & PORTAL', tag_digital: 'DIGITAL TRANSFORMATION & AI',
     tag_cap_advisory: 'CAPITAL ADVISORY',
     cluster_a_label: 'CLUSTER A', cluster_b_label: 'CLUSTER B',
-    cluster_a_title: 'Renewable Energy, Storage & Mechanical Infrastructure',
-    cluster_b_title: 'Information Systems, Network, Electrical & Cybersecurity',
+    cluster_a_title: 'Renewable Energy Systems & Mechanical Solutions',
+    cluster_b_title: 'Data Center Systems & Integration Solutions',
     hero_badge1: 'CONSTRUCTION & EPC', hero_badge2: 'ENERGY & INFRASTRUCTURE',
     hero_badge3: 'FINANCE & INVESTMENT', hero_badge4: 'DIGITAL TRANSFORMATION & AI',
     hero_title1: 'Yakın Construction',
@@ -140,11 +142,11 @@ const TRANSLATIONS = {
     c_s5_title: 'Airport & Transportation', c_s5_desc: 'International standard airport terminals and transportation infrastructure projects.',
     c_s6_title: 'Urban Renewal', c_s6_desc: 'End-to-end management of identifying, strengthening and transforming at-risk buildings.',
     btn_service_details: 'Details & vCard Contact ›',
-    portfolio_title: 'Featured Project Gallery',
+    portfolio_title: 'Our Completed Reference Projects',
     c_gal1_title: 'T-3 Data Center Construction', c_gal2_title: 'International Airport Terminal',
     c_gal3_title: 'Vadi Mansions Living Complex', c_gal4_title: 'Structural Retrofitting & BIM Design',
     e_title: 'Yakın Energy',
-    e_desc: 'Solar, wind, hybrid, smart building automation, advanced infrastructure systems engineering & cybersecurity solutions.',
+    e_desc: 'Solar, wind, hybrid, smart building automation, data center infrastructure systems engineering & cybersecurity solutions.',
     cap_desc: 'Yakın Capital is an advisory and investment platform that develops group projects end-to-end and creates financing solutions.',
     cap_heading: 'Multi-Disciplinary Finance Structuring',
     cap_body: 'Our vision is not only to develop construction and energy projects, but also to organize their financing, manage risks and create sustainable cash flow models.',
@@ -187,6 +189,10 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key]) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (t[key]) el.innerHTML = t[key];
   });
   document.documentElement.lang = currentLang;
   const btn = document.getElementById('header-lang-btn');
@@ -357,6 +363,152 @@ const SERVICES_DATA = {
       'Hukuki ve Teknik Kentsel Dönüşüm Danışmanlığı',
       'Sıfır Hata ile Bina Yenileme ve Projelendirme'
     ]
+  },
+  // Enerji Küme A
+  e_s1: {
+    badge: 'SOLAR & BIPV',
+    title: 'Güneş Enerjisi Sistemleri (GES) & BIPV',
+    cover: 'assets/images/energy_solar_ges.jpg',
+    desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
+    specs: [
+      'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
+      'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC',
+      'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri',
+      'Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri'
+    ]
+  },
+  e_s2: {
+    badge: 'WIND POWER',
+    title: 'Rüzgar Enerjisi Santrali (RES / WPP) & Rüzgar Çiftliği',
+    cover: 'assets/images/energy_wind_res.jpg',
+    desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
+    specs: [
+      'Türbin Altyapı, Temel ve Montaj Mühendisliği',
+      'Rüzgar Sahası Ölçüm, Verim ve Fizibilite Raporlaması',
+      'Orta / Yüksek Gerilim Şebeke Bağlantı Altyapısı',
+      'Periyodik Bakım, Onarım ve SCADA Entegrasyonu'
+    ]
+  },
+  e_s3: {
+    badge: 'BESS & HYBRID',
+    title: 'Batarya Enerji Depolama (BESS) & Hibrit Sistemler',
+    cover: 'assets/images/energy_bess_battery.jpg',
+    desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
+    specs: [
+      'BESS Konteyner Tipi Depolama Çözümleri (LFP / LiFePO4)',
+      'BMS (Battery Management System) ve Hücre Dengeleme',
+      'PCS (Power Conversion System) AC/DC Çift Yönlü Çevirici Entegrasyonu',
+      'Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu'
+    ]
+  },
+  e_s4: {
+    badge: 'MEP & HVAC',
+    title: 'Mekanik Tesisat & HVAC (VRF / VAV) / MEP',
+    cover: 'assets/images/energy_hvac_mep.jpg',
+    desc: 'MEP (Mechanical, Electrical, Plumbing) mühendisliği, HVAC VRF VAV hassas iklimlendirme ve havalandırma sistem tasarımları.',
+    specs: [
+      'Bina ve Sanayi Tesisleri İklimlendirme (HVAC VRF / VAV / AHU)',
+      'MEP Mekanik & Elektrik Tesisat Projelendirmesi',
+      'Hassas Kontrollü Veri Merkezi Soğutma Altyapıları',
+      'Enerji Geri Kazanımlı Havalandırma Sistemleri'
+    ]
+  },
+  e_s5: {
+    badge: 'SCADA',
+    title: 'SCADA — Merkezi Denetim, Kontrol ve Veri Toplama',
+    cover: 'assets/images/energy_scada_control.jpg',
+    desc: 'Elektrik üretimi, su dağıtımı, doğalgaz hatları ve endüstriyel tesisler için gerçek zamanlı canlı izleme, alarm yönetimi ve uzaktan kontrol.',
+    specs: [
+      'Canlı Veri Toplama, Sensör Entegrasyonu ve Trend Analizleri',
+      'Merkezi İzleme Ekranları ve Uzaktan Otomasyon Komutları',
+      'PLC / RTU Haberleşme Protokolleri (Modbus, IEC 60870-5, DNP3)',
+      'Veri Güvenliği ve Yedekli Mimari Tasarımı'
+    ]
+  },
+  e_s6: {
+    badge: 'FIRE SUPPRESSION',
+    title: 'Yangın Söndürme ve Erken Uyarı Sistemleri',
+    cover: 'assets/images/energy_fire_suppression.jpg',
+    desc: 'Sprinkler sulu söndürme, gazlı söndürme (FM200 / Novec 1230), davlumbaz söndürme ve mobil yangın emniyet altyapıları.',
+    specs: [
+      'FM200 / Novec 1230 Gazlı Söndürme Sistemleri (Data Center & Sistem Odası)',
+      'Otomatik Sprinkler (Yağmurlama) Sulu Söndürme Tesisatı',
+      'Erken Uyarı Hassas Duman Algılama (VESDA) Entegrasyonu',
+      'NFPA Standartlarına Uygun Mühendislik ve Test Raporlama'
+    ]
+  },
+  e_s7: {
+    badge: 'EV CHARGE & E-MOBILITY',
+    title: 'Elektrikli Araç Şarj İstasyonları (EV Charge)',
+    cover: 'assets/images/energy_ev_charge.jpg',
+    desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Tip 2 / CCS / CHAdeMO soket çözümleri ve apartman bağımsız daire sayacı entegrasyonları.',
+    specs: [
+      'AC Şarj İstasyonları (3.7 kW - 22 kW): Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC\'ye çevirir (3-8 saat dolum). Konut, site, iş yeri ve park alanları.',
+      'Apartman & Site Daire Sayacı Entegrasyonu: Apartman ve sitelerde daire sakinlerinin doğrudan kendi bağımsız hane elektrik sayacından şarj besleme ve faturalandırma imkanı.',
+      'DC Hızlı Şarj İstasyonları (50 kW - 350+ kW): İstasyon içi doğrudan dönüştürme ile %20-%80 batarya dolumunu 20-40 dakikada sağlar (Otoyol, akaryakıt ve acil dolum alanları).',
+      'Soket ve Bağlantı Türleri: Tip 2 (Mennekes AC standart), CCS (Kombine AC/DC hızlı şarj) ve CHAdeMO (Asya DC hızlı şarj) soket standartları.'
+    ]
+  },
+  // Enerji Küme B — Veri Merkezi Sistemleri & Entegrasyonları
+  e_b1: {
+    badge: 'HARDWARE & INFRASTRUCTURE',
+    title: 'Altyapı ve Donanım Bileşenleri',
+    cover: 'assets/images/data_center_construction_1785092614608.png',
+    desc: 'Veri merkezi fiziksel altyapısı, rack kabinetler, ToR SW çözümleri, hassas sıvı soğutma, modüler konteyner sistemleri ve yükseltilmiş zemin mühendisliği.',
+    specs: [
+      'Kabin ve Muhafaza: Rack kabinetler, busbar sistemleri ve Top of Rack (ToR) SW Data Center çözümleri',
+      'Enerji ve İklimlendirme: Kesintisiz güç kaynakları (UPS) ve hassas sıvı soğutma üniteleri',
+      'Kapsayıcı Sistemler: Modüler & konteyner tipi taşınabilir veri merkezleri, Shell and Core kabinet odaları',
+      'Fiziksel Altyapı: Yükseltilmiş zemin, tavan ve taban kablolama taşıyıcı sistemleri'
+    ]
+  },
+  e_b2: {
+    badge: 'CLOUD & VIRTUALIZATION',
+    title: 'Operasyonel, Bulut & Sanallaştırma Hizmetleri',
+    cover: 'assets/images/energy_fiber_network.jpg',
+    desc: 'Colocation barındırma, İş Sürekliliği & Felaket Kurtarma (BCP/DR), sanallaştırma mimarileri (VDI, Sanal Sunucu, Storage, Network) ve uçtan uca IT donanım çözümleri.',
+    specs: [
+      'Sunucu Barındırma (Colocation): 7/24 korunan güvenli tesislerde cihaz barındırma ve alan kiralama',
+      'İş Sürekliliği & Felaket Kurtarma: Disaster Recovery (DR) planlaması, felaket erteleme ve veri yedekleme',
+      'Sanallaştırma Çözümleri: Sanal Masaüstü (VDI), Sanal Sunucu, Sanal Depolama, Sanal İş Yükleri & Network',
+      'Uçtan Uca IT Altyapı: Sunucu, Depolama (SAN&NAS), Network, Firewall, UTM, SW, WLAN, WiFi, VPN, VOIP ve Public/Private Cloud'
+    ]
+  },
+  e_b3: {
+    badge: 'REGULATION & ADVISORY',
+    title: 'Regülasyon, İhale Danışmanlığı & Asset Sizing',
+    cover: 'assets/images/tender_contract_management_1785010026255.png',
+    desc: 'KVKK, GDPR, ISO 27001/9001 hukuki ve teknik uyum süreçleri, Volume/Asset Sizing hesaplamaları ve RFP/RFQ ihale şartname danışmanlığı.',
+    specs: [
+      'Regülasyon Uyum: KVKK, GDPR, ISO 27001 & ISO 9001 teknik-idari tabloların adreslenmesi ve prosedür yazımı',
+      'Volume / Asset Sizing: İş büyüklüğüne göre kaynak, donanım, alan ve kapasite boyutlandırma hesabı',
+      'Doğru Maliyet Yönetimi: Fazla veya eksik yatırımı önleyen bütçe planlaması ve optimizasyon',
+      'İhale & Şartname Yönetimi: RFP, RFI, RFQ, RFx şartname hazırlığı, tedarikçi ve üretici yönetimi'
+    ]
+  },
+  e_b4: {
+    badge: 'WHITE SPACE & DCIM',
+    title: 'Veri Merkezi Beyaz Alan (White Space) Yönetimi & DCIM',
+    cover: 'assets/images/gallery_datacenter_v2.jpg',
+    desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
+    specs: [
+      'Kapasite ve Yerleşim: Kabin (rack) yerleşimi, ağırlık sınırları ve zemin altı kablolama düzeni',
+      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü ve enerji verimliliği',
+      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı takibi ve yedekli enerji mimarisi',
+      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama'
+    ]
+  },
+  e_b5: {
+    badge: 'CYBERSECURITY & BMS',
+    title: 'Siber Güvenlik, SOC & Akıllı Bina Otomasyonu (BMS)',
+    cover: 'assets/images/energy_cybersecurity.jpg',
+    desc: 'IT/OT siber güvenlik danışmanlığı, 7/24 Güvenlik Operasyon Merkezi (SOC) kurulumu, Zayıf/Güçlü Akım tesisatı ve BMS bina otomasyonu.',
+    specs: [
+      'IT / OT Siber Güvenlik Mimarisi ve ISO 27001 / IEC 62443 Uyum Denetimleri',
+      'SOC (Güvenlik Operasyon Merkezi) 7/24 Kurulumu, Canlı İzleme & Penetrasyon Testleri',
+      'Zayıf Akım (ELV) & Güçlü / Kuvvetli Akım Tesisat ve Dağıtım Panosu Entegrasyonları',
+      'BMS (Building Management System) Akıllı Bina Otomasyonu & Merkezi Kontrol Yazılımları'
+    ]
   }
 };
 
@@ -386,7 +538,7 @@ function closeServiceModal() {
 // ── Gallery / Lightbox ─────────────────────────────────────────────────────
 const galleryImages = [
   {
-    src: 'assets/images/gallery_datacenter_1785092833568.png',
+    src: 'assets/images/gallery_datacenter_v2.jpg',
     tag: 'ANKARA / TÜRKİYE — VERİ MERKEZİ',
     title: 'T-3 Veri Merkezi Yapımı',
     caption: 'Tier III sertifikasyonuna uygun mission-critical veri merkezi inşası, N+2 yedekli güç ve hassas iklimlendirme altyapısı.',
@@ -398,19 +550,19 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/heavy_industry_factory_1785010003542.png',
-    tag: 'İZMİR / TÜRKİYE — HAVALİMANI & LOJİSTİK',
-    title: 'Uluslararası Lojistik & Havalimanı Terminali',
-    caption: '120.000 m² kapalı alana sahip havalimanı kargo terminali, apron kaplamaları ve akıllı yönlendirme altyapısı.',
+    src: 'assets/images/gallery_factory_v2.jpg',
+    tag: 'İZMİR / TÜRKİYE — AĞIR SANAYİ',
+    title: 'Ağır Sanayi & Üretim Tesisleri',
+    caption: '120.000 m² kapalı alana sahip yüksek teknolojili ağır sanayi üretim tesisi, otomasyon altyapısı ve imalat hatları.',
     specs: [
       { label: 'Lokasyon', val: 'İzmir, Türkiye' },
       { label: 'Kapalı Alan', val: '120.000 m²' },
-      { label: 'Kapsam', val: 'Altyapı & Üstyapı Mühendisliği' },
+      { label: 'Kapsam', val: 'Ağır Sanayi & Fabrika İnşaatı' },
       { label: 'Yıl', val: '2023-2025' }
     ]
   },
   {
-    src: 'assets/images/gallery_vadi_mansion_1785092899049.png',
+    src: 'assets/images/gallery_residential_v2.jpg',
     tag: 'İSTANBUL / TÜRKİYE — LÜKS KONUT',
     title: 'Vadi Konakları Yaşam Kompleksi',
     caption: 'Akıllı ev otomasyonu, yenilenebilir enerji entegrasyonlu 450 bağımsız konut ünitesi ve sosyal yaşam alanları projelendirmesi.',
@@ -422,7 +574,7 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/construction_hero_1784578660847.png',
+    src: 'assets/images/gallery_skytower_v2.jpg',
     tag: 'İSTANBUL / TÜRKİYE — İŞ KULESİ',
     title: 'Sky Tower İş Kulesi & Sismik Tasarım',
     caption: 'Taban izolatörlü ve yüksek mukavemetli sismik kolon yapısıyla depreme tam dayanıklı 42 katlı iş kulesi inşası.',
@@ -434,7 +586,7 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/heavy_industry_tab_1784578875255.png',
+    src: 'assets/images/gallery_petrochemical_v2.jpg',
     tag: 'KOCAELİ / TÜRKİYE — PETROKİMYA',
     title: 'Petrokimya & Enerji Santral Kompleksi',
     caption: 'Ağır endüstriyel proses borulamaları, yüksek basınçlı depolama tankları ve türbin binası ağır mühendislik taahhüdü.',
@@ -446,7 +598,7 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/investment_finance_real_estate_1785010111511.png',
+    src: 'assets/images/gallery_mixeduse_v2.jpg',
     tag: 'İSTANBUL / TÜRKİYE — KARMA PROJE',
     title: 'Park Terrace Karma Yaşam & Ofis Projesi',
     caption: 'Alışveriş bulvarı, lüks rezidans blokları ve A+ ofis katlarını bir araya getiren prestijli karma kullanım projesi.',
@@ -470,7 +622,7 @@ const galleryImages = [
     ]
   },
   {
-    src: 'assets/images/tender_contract_management_1785010026255.png',
+    src: 'assets/images/civil_engineering_bim_1785010076530.png',
     tag: 'İSTANBUL / TÜRKİYE — DİJİTAL İKİZ & BIM',
     title: '5D BIM Projelendirme & İhale Yönetimi',
     caption: 'Tüm disiplinlerin (Mimari, Statik, Mekanik, Elektrik) çakışma analizi, 5D maliyet simülasyonu ve şartname yönetimi.',
@@ -527,6 +679,148 @@ function openFullImage() {
 function closeFullImage() {
   document.getElementById('fullimage-dialog').close();
 }
+
+// ── Energy Product References Modal ──────────────────────────────────────
+const energyProducts = [
+  {
+    src: 'assets/images/energy_ref_smart_bess.jpg',
+    tag: 'BIPV SOLAR & BESS MOBILE APP',
+    title: 'Akıllı Ev BESS & Şarj İstasyonu Entegrasyonu',
+    caption: 'Canlı Mobil Durum Ekranı ile 7.2 kW Solar Üretim, %68 Şarjlı Ev Tipi LFP Batarya, 1.3 kW EV Araç Şarj Yönetimi ve Şebeke Akıllı Otomasyonu.',
+    specs: [
+      { label: 'Güneş Üretimi', val: '7.2 kW BIPV Çatı PV' },
+      { label: 'Batarya Depolama', val: 'LFP (LiFePO4) Akıllı Depolama' },
+      { label: 'EV Şarj İstasyonu', val: '1.3 kW Smart EV Charger' },
+      { label: 'Yazılım', val: 'Canlı Mobil Takip & Otonom Şarj' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_luxury_solar.jpg',
+    tag: 'LUXURY RESIDENTIAL BIPV',
+    title: 'Lüks Konut & Otel BIPV Solar & Konteyner Depolama Tesisi',
+    caption: 'Deniz manzaralı lüks kompleks projesinde çatı entegre PV solar cam kaplaması ve ahşap mimari giydirmeli gizli BESS batarya konteyner odası.',
+    specs: [
+      { label: 'Lokasyon', val: 'Ege Kıyısı Lüks Kompleks' },
+      { label: 'Solar Altyapı', val: 'BIPV Fotovoltaik Cam Çatı' },
+      { label: 'Depolama', val: 'Özel Mimari Konteyner BESS' },
+      { label: 'Sürdürülebilirlik', val: 'Net Zero Carbon Hizaması' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_bess_container.jpg',
+    tag: 'INDUSTRIAL BESS',
+    title: 'Konteyner Tipi Endüstriyel BESS Batarya Santrali',
+    caption: 'MW ölçeğinde outdoor iklimlendirmeli LFP batarya konteynerleri, çift yönlü PCS invertörler ve Akıllı Peak Shaving şebeke entegrasyonu.',
+    specs: [
+      { label: 'Depolama Kapasitesi', val: '10 MWh LFP Batarya' },
+      { label: 'Güç Dönüştürme', val: 'PCS Çift Yönlü Çevirici' },
+      { label: 'Kullanım', val: 'Peak Shaving & Şebeke Dengeleme' },
+      { label: 'Emniyet', val: 'FM200 Gazlı Söndürme & BMS' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_solar_ges_50mw.jpg',
+    tag: 'UTILITY SOLAR',
+    title: '50 MWp Endüstriyel Çatı & Arazi GES EPC Projesi',
+    caption: 'Arazi ve endüstriyel tesis çatılarında yüksek verimli monokristal Bifacial PV paneller ve On-Grid santral entegrasyonu.',
+    specs: [
+      { label: 'Kurulu Güç', val: '50 MWp Toplam Güç' },
+      { label: 'Panel Tipi', val: 'Bifacial Monokristal PERC' },
+      { label: 'Kapsam', val: 'Anahtar Teslim EPC' },
+      { label: 'Katkı', val: '35.000 Ton CO₂ Tasarrufu' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_wind_res_100mw.jpg',
+    tag: 'WIND POWER',
+    title: '100 MW RES & WPP Rüzgar Santrali Türbin Entegrasyonu',
+    caption: 'Yüksek irtifa türbin altyapı mühendisliği, türbin montajı, şebeke bağlantısı ve periyodik SCADA izleme hizmetleri.',
+    specs: [
+      { label: 'Kapasite', val: '100 MW Rüzgar Santrali' },
+      { label: 'Altyapı', val: 'Ağır Mühendislik & Temeller' },
+      { label: 'Şebeke Entegrasyonu', val: '154 kV Yüksek Gerilim' },
+      { label: 'İzleme', val: '7/24 SCADA Uzaktan Kontrol' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_scada_room.jpg',
+    tag: 'AUTOMATION & SCADA',
+    title: 'Merkezi SCADA Otomasyon & Şebeke İzleme Kontrol',
+    caption: 'Elektrik santralleri, su arıtma ve sanayi tesisleri için canlı sensör verisi toplama, alarm yönetimi ve uzaktan otomasyon.',
+    specs: [
+      { label: 'Yazılım Altyapısı', val: 'SCADA & Canlı Telemetri' },
+      { label: 'Protokol', val: 'Modbus, IEC 60870, DNP3' },
+      { label: 'Ekran Mimarisi', val: 'Merkezi Video Wall' },
+      { label: 'Güvenlik', val: 'Yedekli Redundant Server' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_soc_cyber.jpg',
+    tag: 'CYBERSECURITY SOC',
+    title: 'OT / IT Siber Güvenlik Operations Center (SOC) Merkezi',
+    caption: 'Kritik altyapılar için IT ve OT siber güvenlik danışmanlığı, 7/24 SOC izleme, penetrasyon testleri ve ISO 27001 denetimleri.',
+    specs: [
+      { label: 'Mühendislik', val: 'ICS / OT Siber Güvenlik Mimarisi' },
+      { label: 'İzleme', val: '7/24 Canlı SOC Tehdit Avcılığı' },
+      { label: 'Test', val: 'Penetrasyon ve Sızma Testleri' },
+      { label: 'Uyum', val: 'ISO 27001 & IEC 62443 Standardı' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_dc_cooling.jpg',
+    tag: 'DC MEP & COOLING',
+    title: 'Veri Merkezi Hassas Sıvı Soğutma & MEP Tesisatı',
+    caption: 'Tier IV standartlarında veri merkezleri ve hassas iklimlendirme odaları için sıvı soğutma, CRAH/CRAC ve MEP tesisat projelendirmesi.',
+    specs: [
+      { label: 'Soğutma Teknolojisi', val: 'Hassas Sıvı & In-Row Soğutma' },
+      { label: 'Yedeklilik', val: 'N+2 Redundant Chiller' },
+      { label: 'PUE Oranı', val: '< 1.15 PUE Verimlilik' },
+      { label: 'Tesisat', val: 'MEP Paslanmaz Borulama' }
+    ]
+  }
+];
+
+function openEnergyProductModal(idx) {
+  const item = energyProducts[idx];
+  if (!item) return;
+
+  document.getElementById('lightbox-img').src = item.src;
+  document.getElementById('lightbox-tag').textContent = item.tag || 'ÜRÜN REFERANSI';
+  document.getElementById('lightbox-title').textContent = item.title;
+  document.getElementById('lightbox-caption').textContent = item.caption;
+
+  const specsGrid = document.getElementById('lightbox-specs-grid');
+  if (specsGrid) {
+    specsGrid.innerHTML = '';
+    if (item.specs && item.specs.length > 0) {
+      item.specs.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'lb-detail-item';
+        div.innerHTML = `
+          <span class="lb-detail-label">${s.label}</span>
+          <span class="lb-detail-value">${s.val}</span>
+        `;
+        specsGrid.appendChild(div);
+      });
+    }
+  }
+
+  document.getElementById('lightbox-dialog').showModal();
+}
+
+// Close dialogs when clicking outside content (on backdrop)
+document.addEventListener('click', (e) => {
+  if (e.target.tagName === 'DIALOG' && e.target.hasAttribute('open')) {
+    const rect = e.target.getBoundingClientRect();
+    const isInDialog = (
+      rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+    );
+    if (!isInDialog) {
+      e.target.close();
+    }
+  }
+});
 
 // ── vCard ──────────────────────────────────────────────────────────────────
 const VCARDS = {
