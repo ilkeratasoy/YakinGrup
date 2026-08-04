@@ -400,7 +400,7 @@ const SERVICES_DATA = {
   e_s2: {
     badge: 'WIND POWER',
     title: 'Rüzgar Enerjisi Santrali (RES / WPP) & Rüzgar Çiftliği',
-    cover: 'assets/images/wind_foundation_user.jpg',
+    cover: 'assets/images/wind_farm_cover_user.jpg',
     desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
     specs: [
       'Türbin Altyapı, Temel ve Montaj Mühendisliği',
