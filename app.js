@@ -400,13 +400,35 @@ const SERVICES_DATA = {
   e_s2: {
     badge: 'WIND POWER',
     title: 'Rüzgar Enerjisi Santrali (RES / WPP) & Rüzgar Çiftliği',
-    cover: 'assets/images/energy_wind_res.jpg',
+    cover: 'assets/images/wind_foundation_user.jpg',
     desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
     specs: [
       'Türbin Altyapı, Temel ve Montaj Mühendisliği',
       'Rüzgar Sahası Ölçüm, Verim ve Fizibilite Raporlaması',
       'Orta / Yüksek Gerilim Şebeke Bağlantı Altyapısı',
       'Periyodik Bakım, Onarım ve SCADA Entegrasyonu'
+    ],
+    slides: [
+      {
+        title: 'Türbin Altyapı, Temel ve Montaj Mühendisliği',
+        desc: 'Ağır betonarme dairesel radye türbin temeli dökümü, ankraj sepeti montajı, zemin iyileştirme ve dev vinçler ile kule/kanat montaj mühendisliği.',
+        image: 'assets/images/wind_foundation_user.jpg'
+      },
+      {
+        title: 'Rüzgar Sahası Ölçüm, Verim ve Fizibilite Raporlaması',
+        desc: 'Mikro-lokasyon rüzgar haritası analizi, anemometre ölçüm direği verileri, WAsP / WindPRO simülasyonları ve yıllık P50/P90 üretim fizibilite raporları.',
+        image: 'assets/images/wind_measurement_user.jpg'
+      },
+      {
+        title: 'Orta / Yüksek Gerilim Şebeke Bağlantı Altyapısı',
+        desc: 'Türbin içi trafo merkezleri, 34.5 kV / 154 kV / 400 kV şalt sahası inşası, güç transformatörleri, yeraltı OG kablolama ve TEİAŞ şebeke entegrasyonu.',
+        image: 'assets/images/wind_substation_user.jpg'
+      },
+      {
+        title: 'Periyodik Bakım, Onarım ve SCADA Entegrasyonu',
+        desc: '7/24 merkezi SCADA izleme ve haberleşme odası, kestirimci bakım, dişli kutusu/kanat kontrolleri ve canlı türbin verimlilik analizi.',
+        image: 'assets/images/wind_scada_user.jpg'
+      }
     ]
   },
   e_s3: {
