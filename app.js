@@ -19,7 +19,7 @@ const TRANSLATIONS = {
     tag_portfolio: 'PROJELERİMİZ', tag_partners: 'MÜHENDİSLİK PAYDAŞLARI',
     tag_store: 'ONLINE SATIŞ & PORTAL', tag_digital: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     tag_cap_advisory: 'CAPITAL ADVISORY',
-    cluster_a_label: 'Yenilenebilir Enerji Sistemleri', cluster_em_label: 'ELEKTRİK & MEKANİK TAAHHÜT', cluster_b_label: 'Veri Merkezi Sistemleri', cluster_telecom_label: 'Telekomünikasyon',
+    cluster_a_label: 'Yenilenebilir Enerji Sistemleri', cluster_em_label: 'ELEKTRİK & MEKANİK TAAHHÜT', cluster_b_label: 'Veri Merkezi Sistemleri', cluster_telecom_label: 'Telekomünikasyon', cluster_cyber_label: 'Siber Güvenlik Çözümleri',
     hero_badge1: 'İNŞAAT & TAAHHÜT', hero_badge2: 'ENERJİ & ALTYAPI',
     hero_badge3: 'FİNANS & YATIRIM', hero_badge4: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     hero_title1: 'Yakın İnşaat',
@@ -106,7 +106,7 @@ const TRANSLATIONS = {
     tag_portfolio: 'OUR PROJECTS', tag_partners: 'ENGINEERING PARTNERS',
     tag_store: 'ONLINE STORE & PORTAL', tag_digital: 'DIGITAL TRANSFORMATION & AI',
     tag_cap_advisory: 'CAPITAL ADVISORY',
-    cluster_a_label: 'Renewable Energy Systems', cluster_em_label: 'ELECTRICAL & MECHANICAL CONTRACTING', cluster_b_label: 'Data Center Systems', cluster_telecom_label: 'Telecommunications',
+    cluster_a_label: 'Renewable Energy Systems', cluster_em_label: 'ELECTRICAL & MECHANICAL CONTRACTING', cluster_b_label: 'Data Center Systems', cluster_telecom_label: 'Telecommunications', cluster_cyber_label: 'Cybersecurity Solutions',
     hero_badge1: 'CONSTRUCTION & EPC', hero_badge2: 'ENERGY & INFRASTRUCTURE',
     hero_badge3: 'FINANCE & INVESTMENT', hero_badge4: 'DIGITAL TRANSFORMATION & AI',
     hero_title1: 'Yakın Construction',
@@ -505,6 +505,42 @@ const SERVICES_DATA = {
       'Mikrodalga Radyo Link (RL) Donanım Montaj & Konfigürasyonu',
       'Hizalama (Alignment) Testleri ve Sinyal Seviye Optimizasyonu',
       'Lisanslı / Lisanssız Frekans Bandı Planlama ve Lisans Süreçleri'
+    ]
+  },
+  e_c1: {
+    badge: 'CYBERSECURITY / SOC',
+    title: 'IT / OT Siber Güvenlik & SOC Hizmetleri',
+    cover: 'assets/images/energy_cybersecurity_soc.jpg',
+    desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM entegrasyonu ve IT/OT endüstriyel kontrol sistemleri ağ güvenliği çözümleri.',
+    specs: [
+      '7/24 SIEM / SOC Güvenlik Tehdit İzleme ve Analizi',
+      'Endüstriyel Kontrol Sistemleri (ICS / OT) Siber Güvenlik Duvarı',
+      'Log Yönetimi, Korelasyon ve KVKK 5651 Sayılı Kanun Uyumu',
+      'Tehdit İstihbaratı ve Siber Olaylara Müdahale (Incident Response)'
+    ]
+  },
+  e_c2: {
+    badge: 'CYBERSECURITY / PENTEST',
+    title: 'Sızma Testleri & Güvenlik Denetimi',
+    cover: 'assets/images/energy_ref_soc_cyber.jpg',
+    desc: 'Sistem odası, ağ altyapısı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
+    specs: [
+      'Ağ (Network) ve Sunucu Altyapısı Sızma Testleri',
+      'Web ve Mobil Uygulama Zafiyet Tarama ve Güvenlik Testi',
+      'Sosyal Mühendislik, Oltalama (Phishing) Simülasyon Testleri',
+      'Zafiyet Analiz Raporlama ve Güvenlik Sıkılaştırma (Hardening)'
+    ]
+  },
+  e_c3: {
+    badge: 'COMPLIANCE / KVKK',
+    title: 'Uyum & Siber Güvenlik Standartları Danışmanlığı',
+    cover: 'assets/images/energy_regulation_advisory.jpg',
+    desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
+    specs: [
+      'ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) Uyum Süreci',
+      'IEC 62443 Endüstriyel Kontrol Sistemleri Siber Güvenlik Standardı',
+      'KVKK & GDPR Kişisel Verilerin Korunması Hukuki ve Teknik Uyum',
+      'Kurumsal Risk Analizi ve Bilgi Güvenliği Politikaları Oluşturma'
     ]
   },
   e_s4: {
