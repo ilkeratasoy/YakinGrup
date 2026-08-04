@@ -366,7 +366,7 @@ const SERVICES_DATA = {
   e_s1: {
     badge: 'SOLAR & BIPV',
     title: 'Güneş Enerjisi Sistemleri (GES) & BIPV',
-    cover: 'assets/images/energy_solar_ges.jpg',
+    cover: 'assets/images/solar_bipv_facade_user.jpg',
     desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
     specs: [
       'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
@@ -378,22 +378,22 @@ const SERVICES_DATA = {
       {
         title: 'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
         desc: 'Binaların dış cephelerine, giydirme cam sistemlerine ve çatı pencerelerine estetik fotovoltaik panel entegrasyonu. Yapı kabuğunu aktif elektrik üreten çevreci bir enerji kaynağına dönüştürür.',
-        image: 'assets/images/solar_bipv_facade.jpg'
+        image: 'assets/images/solar_bipv_facade_user.jpg'
       },
       {
         title: 'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC',
         desc: 'Endüstriyel tesisler, fabrikalar ve yüksek kapasiteli arazi GES projeleri için mühendislik (Engineering), tedarik (Procurement) ve inşaat (Construction) süreçlerinin anahtar teslim yürütülmesi.',
-        image: 'assets/images/solar_rooftop_epc.jpg'
+        image: 'assets/images/solar_rooftop_epc_user.jpg'
       },
       {
         title: 'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri',
         desc: 'Ön ve arka yüzeyden çift taraflı ışık yakalama kabiliyetine sahip N-Type TOPCon / HJT Bifacial monokristal paneller ile alan başına maksimum kWh enerji üretimi.',
-        image: 'assets/images/solar_bifacial_panels.jpg'
+        image: 'assets/images/solar_bifacial_panels_user.jpg'
       },
       {
         title: 'Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri',
-        desc: 'Merkezi ve dizi tipi yüksek verimli invertör sistemleri, enerji depolama uyumlu hibrit invertör çözümleri, SCADA ve uzaktan performans izleme yazılımları.',
-        image: 'assets/images/solar_inverter_system.jpg'
+        desc: 'Merkezi ve dizi tipi yüksek verimli invertör sistemleri, enerji depolama uyumlu hibrit invertör çözümleri, akıllı ev otomasyonu, EV şarj ve SCADA uzaktan izleme entegrasyonu.',
+        image: 'assets/images/solar_inverter_system_user.jpg'
       }
     ]
   },
