@@ -461,6 +461,18 @@ const SERVICES_DATA = {
       'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri'
     ]
   },
+  e_em6: {
+    badge: 'HV SYSTEMS / YG',
+    title: 'Yüksek Gerilim Sistemleri (YG) & Şalt Sahaları',
+    cover: 'assets/images/energy_em_yg.jpg',
+    desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon altyapıları.',
+    specs: [
+      '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
+      'Yüksek Gerilim Enerji İletim Hatları ve Direk Tesisatı',
+      'SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları',
+      'TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu'
+    ]
+  },
   e_s4: {
     badge: 'MEP & HVAC',
     title: 'Mekanik Tesisat & HVAC (VRF / VAV) / MEP',
