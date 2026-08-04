@@ -19,7 +19,7 @@ const TRANSLATIONS = {
     tag_portfolio: 'PROJELERİMİZ', tag_partners: 'MÜHENDİSLİK PAYDAŞLARI',
     tag_store: 'ONLINE SATIŞ & PORTAL', tag_digital: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     tag_cap_advisory: 'CAPITAL ADVISORY',
-    cluster_a_label: 'Yenilenebilir Enerji Sistemleri', cluster_em_label: 'ELEKTRİK & MEKANİK TAAHHÜT', cluster_b_label: 'Veri Merkezi Sistemleri',
+    cluster_a_label: 'Yenilenebilir Enerji Sistemleri', cluster_em_label: 'ELEKTRİK & MEKANİK TAAHHÜT', cluster_b_label: 'Veri Merkezi Sistemleri', cluster_telecom_label: 'Telekomünikasyon',
     hero_badge1: 'İNŞAAT & TAAHHÜT', hero_badge2: 'ENERJİ & ALTYAPI',
     hero_badge3: 'FİNANS & YATIRIM', hero_badge4: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
     hero_title1: 'Yakın İnşaat',
@@ -106,7 +106,7 @@ const TRANSLATIONS = {
     tag_portfolio: 'OUR PROJECTS', tag_partners: 'ENGINEERING PARTNERS',
     tag_store: 'ONLINE STORE & PORTAL', tag_digital: 'DIGITAL TRANSFORMATION & AI',
     tag_cap_advisory: 'CAPITAL ADVISORY',
-    cluster_a_label: 'Renewable Energy Systems', cluster_em_label: 'ELECTRICAL & MECHANICAL CONTRACTING', cluster_b_label: 'Data Center Systems',
+    cluster_a_label: 'Renewable Energy Systems', cluster_em_label: 'ELECTRICAL & MECHANICAL CONTRACTING', cluster_b_label: 'Data Center Systems', cluster_telecom_label: 'Telecommunications',
     hero_badge1: 'CONSTRUCTION & EPC', hero_badge2: 'ENERGY & INFRASTRUCTURE',
     hero_badge3: 'FINANCE & INVESTMENT', hero_badge4: 'DIGITAL TRANSFORMATION & AI',
     hero_title1: 'Yakın Construction',
@@ -469,6 +469,42 @@ const SERVICES_DATA = {
       'Yüksek Gerilim Enerji İletim Hatları ve Direk Tesisatı',
       'SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları',
       'TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu'
+    ]
+  },
+  e_t1: {
+    badge: 'TELECOM / FIBER',
+    title: 'Fiber Optik & Kablolama Altyapısı',
+    cover: 'assets/images/energy_fiber_network.jpg',
+    desc: 'Uçtan uca fiber optik (F/O) omurga tasarımları, ek füzyon kaynaklama, OTDR test ve raporlama hizmetleri ile yapısal kablolama projeleri.',
+    specs: [
+      'Fiber Optik Füzyon (Ek) Kaynaklama ve Sonlandırma',
+      'Fluke / OTDR Test Cihazları ile Sertifikasyon Raporlama',
+      'Yeraltı Kablo Kanalları ve Menhol Altyapı Sistemleri',
+      'Kategori Kablolama (Cat6/Cat6A/Cat7) & Kabin Düzenleme'
+    ]
+  },
+  e_t2: {
+    badge: 'TELECOM / GSM & 5G',
+    title: 'GSM, LTE & 5G Mobil Baz İstasyonları',
+    cover: 'assets/images/energy_telecom_gsm.jpg',
+    desc: 'Mobil baz istasyonları kule ve direk imalatları, RF planlama, anten ve kablo montajları, DC güç sistemleri entegrasyonu ve saha kabul süreçleri.',
+    specs: [
+      'Kule & Direk Tipi Mobil Baz İstasyonu Mekanik Kurulumları',
+      'RF (Radyo Frekans) Sektörel Anten & RRU Montajı ve Ayarı',
+      'DC Doğrultucu (Rectifier) Sistemleri & Akü Grubu Yedekleme',
+      'Saha Kabulleri (Acceptance Tests) ve Entegrasyon Raporlama'
+    ]
+  },
+  e_t3: {
+    badge: 'TELECOM / WIRELESS',
+    title: 'Mikrodalga & Radyo Link İletişim Sistemleri',
+    cover: 'assets/images/energy_telecom_microwave.jpg',
+    desc: 'Noktadan noktaya (P2P) ve noktadan çoklu noktaya (P2MP) kablosuz veri aktarım çözümleri, mikrodalga radyo link montajları ve sinyal hizalama testleri.',
+    specs: [
+      'Noktadan Noktaya (P2P) Kablosuz IP Köprü Kurulumları',
+      'Mikrodalga Radyo Link (RL) Donanım Montaj & Konfigürasyonu',
+      'Hizalama (Alignment) Testleri ve Sinyal Seviye Optimizasyonu',
+      'Lisanslı / Lisanssız Frekans Bandı Planlama ve Lisans Süreçleri'
     ]
   },
   e_s4: {
