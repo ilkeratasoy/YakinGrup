@@ -366,7 +366,7 @@ const SERVICES_DATA = {
   e_s1: {
     badge: 'SOLAR & BIPV',
     title: 'Güneş Enerjisi Sistemleri (GES) & BIPV',
-    cover: 'assets/images/solar_main_cover_user.png',
+    cover: 'assets/images/solar_rooftop_epc_user2.jpg',
     desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
     specs: [
       'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
@@ -383,7 +383,7 @@ const SERVICES_DATA = {
       {
         title: 'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC',
         desc: 'Endüstriyel tesisler, fabrikalar ve yüksek kapasiteli arazi GES projeleri için mühendislik (Engineering), tedarik (Procurement) ve inşaat (Construction) süreçlerinin anahtar teslim yürütülmesi.',
-        image: 'assets/images/solar_rooftop_epc_user.jpg'
+        image: 'assets/images/solar_rooftop_epc_user2.jpg'
       },
       {
         title: 'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri',
