@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260804_28">
+  <link rel="stylesheet" href="style.css?v=20260804_29">
 </head>
 <body>
 
@@ -388,50 +388,67 @@
             <div class="cluster-badge" data-i18n="cluster_em_label">ELEKTRİK &amp; MEKANİK TAAHHÜT</div>
           </div>
           <div class="energy-grid">
-            <div class="energy-tile reveal" onclick="openServiceModal('e_s4')">
+            <!-- 1. Elektrik & Mekanik Taahhüt -->
+            <div class="energy-tile reveal" onclick="openServiceModal('e_em1')">
               <div class="energy-tile-img-wrap">
-                <img src="assets/images/energy_hvac_mep.jpg" alt="HVAC MEP" class="energy-tile-img">
-                <span class="energy-tile-tag">MEP &amp; HVAC</span>
+                <img src="assets/images/energy_em_contracting.jpg" alt="Elektrik & Mekanik Taahhüt" class="energy-tile-img">
+                <span class="energy-tile-tag">MEP &amp; CONTRACTING</span>
               </div>
               <div class="energy-tile-content">
-                <h4>Mekanik Tesisat &amp; HVAC / MEP</h4>
-                <p>HVAC VRF VAV iklimlendirme, MEP elektrik ve mekanik tesisat projelendirmesi.</p>
+                <h4>Elektrik &amp; Mekanik Taahhüt</h4>
+                <p>Endüstriyel tesisler, ticari binalar ve veri merkezleri için anahtar teslim MEP elektrik &amp; mekanik tesisat taahhüdü.</p>
                 <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <div class="energy-tile reveal" onclick="openServiceModal('e_s5')">
+            <!-- 2. Zayıf Akım Çözümleri -->
+            <div class="energy-tile reveal" onclick="openServiceModal('e_em2')">
               <div class="energy-tile-img-wrap">
-                <img src="assets/images/energy_scada_control.jpg" alt="SCADA" class="energy-tile-img">
-                <span class="energy-tile-tag">SCADA</span>
+                <img src="assets/images/energy_em_elv.jpg" alt="Zayıf Akım Çözümleri" class="energy-tile-img">
+                <span class="energy-tile-tag">LOW VOLTAGE / ELV</span>
               </div>
               <div class="energy-tile-content">
-                <h4>SCADA — Merkezi Denetim &amp; Kontrol</h4>
-                <p>Elektrik, su, doğalgaz ve sanayi tesislerinde merkezi izleme, kontrol ve veri toplama.</p>
+                <h4>Zayıf Akım Çözümleri</h4>
+                <p>CCTV, yangın algılama, geçiş kontrol, IP anons, bina otomasyonu ve yapısal fiber kablolama sistemleri.</p>
                 <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <div class="energy-tile reveal" onclick="openServiceModal('e_s6')">
+            <!-- 3. Alçak Gerilim Sistemleri (AG) -->
+            <div class="energy-tile reveal" onclick="openServiceModal('e_em3')">
               <div class="energy-tile-img-wrap">
-                <img src="assets/images/energy_fire_suppression.jpg" alt="Yangın Söndürme" class="energy-tile-img">
-                <span class="energy-tile-tag">FIRE SUPPRESSION</span>
+                <img src="assets/images/energy_em_ag.jpg" alt="Alçak Gerilim Sistemleri (AG)" class="energy-tile-img">
+                <span class="energy-tile-tag">LV SYSTEMS / AG</span>
               </div>
               <div class="energy-tile-content">
-                <h4>Yangın Söndürme Sistemleri</h4>
-                <p>Sprinkler, FM200/Novec gazlı söndürme ve VESDA erken uyarı duman algılama sistemleri.</p>
+                <h4>Alçak Gerilim Sistemleri (AG)</h4>
+                <p>AG ana dağıtım panoları, ADP, MCC, kompanzasyon, busbar dağıtım ve UPS kesintisiz güç altyapısı.</p>
                 <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
 
-            <div class="energy-tile reveal" onclick="openServiceModal('e_s7')">
+            <!-- 4. Orta Gerilim Sistemleri (OG) -->
+            <div class="energy-tile reveal" onclick="openServiceModal('e_em4')">
               <div class="energy-tile-img-wrap">
-                <img src="assets/images/energy_ev_charge.jpg" alt="Elektrikli Araç Şarj İstasyonu" class="energy-tile-img">
-                <span class="energy-tile-tag">EV CHARGE</span>
+                <img src="assets/images/energy_em_og.jpg" alt="Orta Gerilim Sistemleri (OG)" class="energy-tile-img">
+                <span class="energy-tile-tag">MV SYSTEMS / OG</span>
               </div>
               <div class="energy-tile-content">
-                <h4>Elektrikli Araç Şarj İstasyonu (EV Charge)</h4>
-                <p>AC/DC hızlı şarj istasyonları, Tip 2/CCS/CHAdeMO soketler ve apartman daire sayacı entegre şarj çözümleri.</p>
+                <h4>Orta Gerilim Sistemleri (OG)</h4>
+                <p>OG hücresel şalt tesisleri, trafo merkezleri, kesiciler, koruma röleleri ve 36 kV yüksek gerilim hatları.</p>
+                <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
+              </div>
+            </div>
+
+            <!-- 5. Proje Mühendislik & Onay Hizmetleri -->
+            <div class="energy-tile reveal" onclick="openServiceModal('e_em5')">
+              <div class="energy-tile-img-wrap">
+                <img src="assets/images/energy_em_engineering.jpg" alt="Proje Mühendislik & Onay Hizmetleri" class="energy-tile-img">
+                <span class="energy-tile-tag">ENGINEERING &amp; APPROVAL</span>
+              </div>
+              <div class="energy-tile-content">
+                <h4>Proje Mühendislik &amp; Onay Hizmetleri</h4>
+                <p>TEDAŞ/EDAŞ proje onayları, röle koordinasyon hesapları, yük akış analizleri ve resmi kabul süreç yönetimi.</p>
                 <div class="energy-tile-footer"><span class="energy-tile-btn">Detaylar &amp; vCard İrtibat ›</span></div>
               </div>
             </div>
@@ -1112,6 +1129,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260804_28"></script>
+  <script src="app.js?v=20260804_29"></script>
 </body>
 </html>

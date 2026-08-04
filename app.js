@@ -401,6 +401,66 @@ const SERVICES_DATA = {
       'Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu'
     ]
   },
+  e_em1: {
+    badge: 'MEP & CONTRACTING',
+    title: 'Elektrik & Mekanik Taahhüt Hizmetleri',
+    cover: 'assets/images/energy_em_contracting.jpg',
+    desc: 'Endüstriyel üretim tesisleri, ticari binalar, hastaneler ve veri merkezleri için anahtar teslim MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama çözümleri.',
+    specs: [
+      'Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü',
+      'HVAC VRF / VAV İklimlendirme ve İleri Havalandırma',
+      'Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı',
+      'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning)'
+    ]
+  },
+  e_em2: {
+    badge: 'LOW VOLTAGE / ELV',
+    title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu',
+    cover: 'assets/images/energy_em_elv.jpg',
+    desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
+    specs: [
+      'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
+      'Adresli Yangın Algılama ve Erken Uyarı Tesisatı',
+      'Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş',
+      'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı'
+    ]
+  },
+  e_em3: {
+    badge: 'LV SYSTEMS / AG',
+    title: 'Alçak Gerilim Sistemleri (AG) & Güç Dağıtımı',
+    cover: 'assets/images/energy_em_ag.jpg',
+    desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
+    specs: [
+      'AG Ana Dağıtım ve Tali Dağıtım Panoları (Form 4b Standardı)',
+      'Motor Kontrol Merkezleri (MCC) ve Sürücü Panoları',
+      'Busbar Enerji Dağıtım Hatları ve Kablo Taşıma Sistemleri',
+      'Aktif / Pasif Harmonik Filtreli Kompanzasyon Panoları'
+    ]
+  },
+  e_em4: {
+    badge: 'MV SYSTEMS / OG',
+    title: 'Orta Gerilim Sistemleri (OG) & Şalt Tesisleri',
+    cover: 'assets/images/energy_em_og.jpg',
+    desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke entegrasyonu.',
+    specs: [
+      '36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler',
+      'Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA)',
+      'Mikroişlemcili Dijital Koruma Röleleri ve Testleri',
+      'OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları'
+    ]
+  },
+  e_em5: {
+    badge: 'ENGINEERING & APPROVAL',
+    title: 'Proje Mühendislik & Onay Hizmetleri',
+    cover: 'assets/images/energy_em_engineering.jpg',
+    desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
+    specs: [
+      'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
+      'Kısa Devre, Yük Akışı ve Gerilim Düşümü Hesaplamaları',
+      'Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri',
+      'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri'
+    ]
+  },
   e_s4: {
     badge: 'MEP & HVAC',
     title: 'Mekanik Tesisat & HVAC (VRF / VAV) / MEP',
