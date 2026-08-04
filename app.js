@@ -472,39 +472,135 @@ const SERVICES_DATA = {
     ]
   },
   e_t1: {
-    badge: 'TELECOM / FIBER',
-    title: 'Fiber Optik & Kablolama Altyapısı',
-    cover: 'assets/images/energy_fiber_network.jpg',
-    desc: 'Uçtan uca fiber optik (F/O) omurga tasarımları, ek füzyon kaynaklama, OTDR test ve raporlama hizmetleri ile yapısal kablolama projeleri.',
+    badge: 'TELECOM / MAINTENANCE',
+    title: 'Bakım Çözüm Hizmetleri',
+    cover: 'assets/images/telecom_maintenance.jpg',
+    desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
     specs: [
-      'Fiber Optik Füzyon (Ek) Kaynaklama ve Sonlandırma',
-      'Fluke / OTDR Test Cihazları ile Sertifikasyon Raporlama',
-      'Yeraltı Kablo Kanalları ve Menhol Altyapı Sistemleri',
-      'Kategori Kablolama (Cat6/Cat6A/Cat7) & Kabin Düzenleme'
+      '7/24 Saha Müdahale ve Arıza Giderme Ekipleri',
+      'Önleyici Bakım Planları ve Periyodik Kontrol Programları',
+      'Servis Düzeyi Anlaşması (SLA) Yönetimi ve Raporlama',
+      'Yedek Parça Depo Yönetimi ve Lojistik Destek'
     ]
   },
   e_t2: {
-    badge: 'TELECOM / GSM & 5G',
-    title: 'GSM, LTE & 5G Mobil Baz İstasyonları',
-    cover: 'assets/images/energy_telecom_gsm.jpg',
-    desc: 'Mobil baz istasyonları kule ve direk imalatları, RF planlama, anten ve kablo montajları, DC güç sistemleri entegrasyonu ve saha kabul süreçleri.',
+    badge: 'TELECOM / 5G',
+    title: '5G Altyapı & Kurulum',
+    cover: 'assets/images/telecom_5g.jpg',
+    desc: '5G NR (New Radio) aktif donanım kurulumu, anten entegrasyonu, küçük hücre (Small Cell) ve 5G ağ optimizasyon hizmetleri.',
     specs: [
-      'Kule & Direk Tipi Mobil Baz İstasyonu Mekanik Kurulumları',
-      'RF (Radyo Frekans) Sektörel Anten & RRU Montajı ve Ayarı',
-      'DC Doğrultucu (Rectifier) Sistemleri & Akü Grubu Yedekleme',
-      'Saha Kabulleri (Acceptance Tests) ve Entegrasyon Raporlama'
+      '5G NR Aktif Donanım (gNodeB) Mekanik Montajı ve Kurulumu',
+      'Massive MIMO Anten & RU Entegrasyonu ve Hizalaması',
+      'Küçük Hücre (Small Cell) ve O-RAN Mimarisi Kurulumları',
+      '5G SA/NSA Şebeke Optimizasyonu ve KPI Analizi'
     ]
   },
   e_t3: {
-    badge: 'TELECOM / WIRELESS',
-    title: 'Mikrodalga & Radyo Link İletişim Sistemleri',
-    cover: 'assets/images/energy_telecom_microwave.jpg',
-    desc: 'Noktadan noktaya (P2P) ve noktadan çoklu noktaya (P2MP) kablosuz veri aktarım çözümleri, mikrodalga radyo link montajları ve sinyal hizalama testleri.',
+    badge: 'TELECOM / IBS',
+    title: 'IBS / Bina İçi Kapsama',
+    cover: 'assets/images/telecom_ibs.jpg',
+    desc: 'AVM, hastane, havalimanı ve rezidanslarda In-Building Solution (IBS) tasarım ve kurulum; pasif/aktif DAS sistemleri.',
     specs: [
-      'Noktadan Noktaya (P2P) Kablosuz IP Köprü Kurulumları',
-      'Mikrodalga Radyo Link (RL) Donanım Montaj & Konfigürasyonu',
-      'Hizalama (Alignment) Testleri ve Sinyal Seviye Optimizasyonu',
-      'Lisanslı / Lisanssız Frekans Bandı Planlama ve Lisans Süreçleri'
+      'Pasif DAS (Distributed Antenna System) Tasarım ve Kurulumu',
+      'Aktif DAS & Small Cell İle Yüksek Kapasiteli Kapalı Alan Kapsama',
+      'Havalimanı, Tünel ve Metro Bina İçi Kapsama Projeleri',
+      'RF Kapsama Ölçümleri, Drive Test ve Optimizasyon Raporları'
+    ]
+  },
+  e_t4: {
+    badge: 'TELECOM / COW',
+    title: 'Mobil Baz İstasyonu (COW)',
+    cover: 'assets/images/telecom_cow.jpg',
+    desc: 'Geçici kapsama gerektiren etkinlik, afet ve acil alanlar için Cell on Wheels (COW) mobil baz istasyonu çözümleri.',
+    specs: [
+      'COW (Cell on Wheels) Araç Üstü Mobil Baz İstasyonu Kurulumu',
+      'Büyük Organizasyon & Etkinlikler için Geçici Kapsama Çözümleri',
+      'Doğal Afet ve Acil Durum Sahaları için Hızlı Devreye Alma',
+      'Güneş Enerjisi ve Jeneratör Destekli Off-Grid COW Sistemleri'
+    ]
+  },
+  e_t5: {
+    badge: 'TELECOM / TETRA',
+    title: 'TETRA Dijital Trunking Haberleşme',
+    cover: 'assets/images/telecom_tetra.jpg',
+    desc: 'Polis, jandarma, itfaiye ve kamu güvenliği birimleri için TETRA (Terrestrial Trunked Radio) dijital trunking telsiz sistemi kurulum ve entegrasyonu.',
+    specs: [
+      'TETRA Altyapı (Base Station, BSC, Dispatcher) Kurulumu',
+      'El Telsizi, Araç Telsizi ve Ağ Yönetim Sistemi Entegrasyonu',
+      'Şifreli Haberleşme ve Öncelikli Kanal Yönetimi',
+      'Kamu Güvenliği ve Kritik Altyapı TETRA Ağ Tasarımı'
+    ]
+  },
+  e_t6: {
+    badge: 'TELECOM / DPO',
+    title: 'DPO — Dizayn, Planlama, Optimizasyon',
+    cover: 'assets/images/telecom_dpo.jpg',
+    desc: 'Ağ altyapısı dizayn, RF planlama, frekans koordinasyonu, kapsama analizleri ve şebeke optimizasyon hizmetleri.',
+    specs: [
+      'RF Kapsama & Kapasite Planlama ve Frekans Koordinasyonu',
+      'Ağ Altyapısı Mimari Dizayn ve Teknik Şartname Hazırlama',
+      'Drive Test, Walk Test ve Sinyal Ölçüm Kampanyaları',
+      'KPI Analizi ve Şebeke Performans Optimizasyonu Raporları'
+    ]
+  },
+  e_t7: {
+    badge: 'TELECOM / WDM',
+    title: 'WDM — Dalga Boyu Çoklama Sistemleri',
+    cover: 'assets/images/telecom_wdm.jpg',
+    desc: 'DWDM ve CWDM optik iletim sistemleri kurulumu, kapasite artırımı ve metro/uzun mesafe fiber optik ağ altyapı çözümleri.',
+    specs: [
+      'DWDM/CWDM Optik Multiplexer & OADM Kurulumu',
+      'Fiber Optik Omurga Kapasite Artırımı ve Genişletme',
+      'Metro Ethernet ve Uzun Mesafe WDM Ağ Tasarımı',
+      'OTDR & Optik Güç Ölçümü ile Bağlantı Testi & Sertifikasyon'
+    ]
+  },
+  e_t8: {
+    badge: 'TELECOM / FTTX',
+    title: 'FTTX — Fiber to the X Altyapısı',
+    cover: 'assets/images/telecom_fttx.jpg',
+    desc: 'FTTH, FTTB ve FTTC fiber abone bağlantısı altyapı tasarımı, döşeme, fiber dağıtım kutusu ve ONU/ONT kurulumları.',
+    specs: [
+      'FTTH (Fiber to the Home) Abone Hat Tasarımı ve Döşemesi',
+      'Fiber Dağıtım Kutuları (FDP/FDB) ve Splitter Kurulumu',
+      'ONU / ONT / OLT Donanım Entegrasyonu ve Aktivasyonu',
+      'Servis Aktivasyon, Test ve Müşteri Kabul Raporlaması'
+    ]
+  },
+  e_t9: {
+    badge: 'TELECOM / CONSTRUCTION',
+    title: 'Telekom İnşaat İşleri',
+    cover: 'assets/images/telecom_construction.jpg',
+    desc: 'Baz istasyonu kule ve direk imalatı, montajı, YASS/şehiriçi kanallar, boru döşeme ve zemin sondajlı yeraltı kablo hatları.',
+    specs: [
+      'Telekom Kule & Direk İmalat, Zemin Etüdü ve Montajı',
+      'Yeraltı Boru ve Kablo Kanalı (Trench) Döşeme İşleri',
+      'Beton Kablo Kanalı ve Menhol Yapım ve Tamamlama İşleri',
+      'YASS (Yol Altı Altyapı) & Belediye İzin Süreç Yönetimi'
+    ]
+  },
+  e_t10: {
+    badge: 'TELECOM / AUDIT',
+    title: 'Denetim Hizmetleri',
+    cover: 'assets/images/telecom_audit.jpg',
+    desc: 'Telekom altyapısı saha denetimi, teknik uyumluluk raporlaması, kalite güvence (QA) testleri ve bağımsız proje yönetimi.',
+    specs: [
+      'Saha Denetimi ve Teknik Uyumluluk Kontrol Raporları',
+      'Kalite Güvence (QA) Testleri ve Kabul Protokolleri',
+      'Bağımsız Proje Yönetimi (PMO) ve Milestone Takibi',
+      'Operatör ve Yüklenici Performans Değerlendirme Raporları'
+    ]
+  },
+  e_t11: {
+    badge: 'TELECOM / LV',
+    title: 'LV — Alçak Gerilim Güç Beslemeleri',
+    cover: 'assets/images/telecom_lv.jpg',
+    desc: 'Telekom tesisleri ve baz istasyonlarına yönelik AG güç panosu, acil jeneratör bağlantısı ve kesintisiz güç besleme (UPS) sistemleri.',
+    specs: [
+      'Baz İstasyonu AC/DC Güç Altyapısı ve Pano Kurulumu',
+      'UPS Kesintisiz Güç Kaynağı Kurulumu ve Akü Grupları',
+      'Jeneratör Bağlantısı ve Otomatik Transfer Şalter (ATS)',
+      'Enerji Verimliliği Analizi ve Güç Yönetim Sistemleri'
     ]
   },
   e_c1: {
