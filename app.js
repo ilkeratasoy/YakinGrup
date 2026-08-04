@@ -366,7 +366,7 @@ const SERVICES_DATA = {
   e_s1: {
     badge: 'SOLAR & BIPV',
     title: 'Güneş Enerjisi Sistemleri (GES) & BIPV',
-    cover: 'assets/images/solar_bipv_facade_user.jpg',
+    cover: 'assets/images/solar_main_cover_user.png',
     desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
     specs: [
       'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
