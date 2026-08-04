@@ -799,6 +799,129 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: bold;
 }
 
+/* Spec Carousel inside Service Modal */
+.spec-carousel {
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+.spec-carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+.spec-carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+.spec-carousel-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.spec-slide-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background: #0f172a;
+  overflow: hidden;
+}
+.spec-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.spec-carousel-slide:hover .spec-slide-img {
+  transform: scale(1.03);
+}
+.spec-slide-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(11, 60, 107, 0.85);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.spec-slide-content {
+  padding: 1rem 1.25rem 1.25rem;
+  background: #ffffff;
+}
+.spec-slide-content h5 {
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--color-dark);
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+}
+.spec-slide-content p {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0;
+}
+.spec-carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.25rem;
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+}
+.spec-carousel-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--color-dark);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+.spec-carousel-btn:hover {
+  background: var(--c-primary);
+  color: #ffffff;
+  border-color: var(--c-primary);
+}
+.spec-carousel-indicators {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.spec-indicator-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.spec-indicator-dot.active {
+  width: 24px;
+  border-radius: 10px;
+  background: var(--c-primary);
+}
+
 /* Gallery Mosaic Grid */
 .gallery-mosaic {
   display: grid;

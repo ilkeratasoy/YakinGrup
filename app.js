@@ -373,6 +373,28 @@ const SERVICES_DATA = {
       'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC',
       'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri',
       'Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri'
+    ],
+    slides: [
+      {
+        title: 'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
+        desc: 'Binaların dış cephelerine, giydirme cam sistemlerine ve çatı pencerelerine estetik fotovoltaik panel entegrasyonu. Yapı kabuğunu aktif elektrik üreten çevreci bir enerji kaynağına dönüştürür.',
+        image: 'assets/images/solar_bipv_facade.jpg'
+      },
+      {
+        title: 'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC',
+        desc: 'Endüstriyel tesisler, fabrikalar ve yüksek kapasiteli arazi GES projeleri için mühendislik (Engineering), tedarik (Procurement) ve inşaat (Construction) süreçlerinin anahtar teslim yürütülmesi.',
+        image: 'assets/images/solar_rooftop_epc.jpg'
+      },
+      {
+        title: 'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri',
+        desc: 'Ön ve arka yüzeyden çift taraflı ışık yakalama kabiliyetine sahip N-Type TOPCon / HJT Bifacial monokristal paneller ile alan başına maksimum kWh enerji üretimi.',
+        image: 'assets/images/solar_bifacial_panels.jpg'
+      },
+      {
+        title: 'Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri',
+        desc: 'Merkezi ve dizi tipi yüksek verimli invertör sistemleri, enerji depolama uyumlu hibrit invertör çözümleri, SCADA ve uzaktan performans izleme yazılımları.',
+        image: 'assets/images/solar_inverter_system.jpg'
+      }
     ]
   },
   e_s2: {
@@ -750,6 +772,9 @@ const SERVICES_DATA = {
   }
 };
 
+let currentSpecSlideIndex = 0;
+let totalSpecSlides = 0;
+
 function openServiceModal(id) {
   const data = SERVICES_DATA[id];
   if (!data) return;
@@ -758,18 +783,90 @@ function openServiceModal(id) {
   document.getElementById('service-modal-title').textContent = data.title;
   document.getElementById('service-modal-desc').textContent = data.desc;
   
+  const sliderEl = document.getElementById('service-specs-slider');
+  const trackEl = document.getElementById('spec-carousel-track');
+  const indicatorsEl = document.getElementById('spec-carousel-indicators');
   const listEl = document.getElementById('service-modal-list');
+  
+  trackEl.innerHTML = '';
+  indicatorsEl.innerHTML = '';
   listEl.innerHTML = '';
-  data.specs.forEach(s => {
-    const li = document.createElement('li');
-    li.textContent = s;
-    listEl.appendChild(li);
-  });
+
+  const slides = data.slides || (data.specs ? data.specs.map(spec => ({
+    title: spec,
+    desc: 'Uluslararası mühendislik standartlarına ve kalite kontrol parametrelerine tam uyum.',
+    image: data.cover
+  })) : []);
+
+  if (slides && slides.length > 0) {
+    sliderEl.style.display = 'block';
+    listEl.style.display = 'none';
+    currentSpecSlideIndex = 0;
+    totalSpecSlides = slides.length;
+
+    slides.forEach((slide, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.className = 'spec-carousel-slide';
+      slideDiv.innerHTML = `
+        <div class="spec-slide-img-wrap">
+          <img src="${slide.image}" alt="${slide.title}" class="spec-slide-img">
+          <span class="spec-slide-badge">TEKNİK ÖZELLİK ${idx + 1} / ${slides.length}</span>
+        </div>
+        <div class="spec-slide-content">
+          <h5>${slide.title}</h5>
+          <p>${slide.desc || ''}</p>
+        </div>
+      `;
+      trackEl.appendChild(slideDiv);
+
+      const ind = document.createElement('button');
+      ind.className = 'spec-indicator-dot' + (idx === 0 ? ' active' : '');
+      ind.setAttribute('aria-label', `Slide ${idx + 1}`);
+      ind.onclick = () => goToSpecSlide(idx);
+      indicatorsEl.appendChild(ind);
+    });
+
+    updateSpecSliderPosition();
+  } else {
+    sliderEl.style.display = 'none';
+    listEl.style.display = 'flex';
+    if (data.specs) {
+      data.specs.forEach(s => {
+        const li = document.createElement('li');
+        li.textContent = s;
+        listEl.appendChild(li);
+      });
+    }
+  }
 
   document.getElementById('service-dialog').showModal();
 }
+
 function closeServiceModal() {
   document.getElementById('service-dialog').close();
+}
+
+function moveSpecSlide(dir) {
+  if (totalSpecSlides <= 0) return;
+  currentSpecSlideIndex = (currentSpecSlideIndex + dir + totalSpecSlides) % totalSpecSlides;
+  updateSpecSliderPosition();
+}
+
+function goToSpecSlide(idx) {
+  if (idx < 0 || idx >= totalSpecSlides) return;
+  currentSpecSlideIndex = idx;
+  updateSpecSliderPosition();
+}
+
+function updateSpecSliderPosition() {
+  const trackEl = document.getElementById('spec-carousel-track');
+  if (!trackEl) return;
+  trackEl.style.transform = `translateX(-${currentSpecSlideIndex * 100}%)`;
+  
+  const dots = document.querySelectorAll('#spec-carousel-indicators .spec-indicator-dot');
+  dots.forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === currentSpecSlideIndex);
+  });
 }
 
 // ── Gallery / Lightbox ─────────────────────────────────────────────────────

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260804_39">
+  <link rel="stylesheet" href="style.css?v=20260804_40">
 </head>
 <body>
 
@@ -1223,7 +1223,20 @@
       <div class="service-modal-body">
         <p id="service-modal-desc" class="service-modal-lead"></p>
         <div class="service-modal-specs">
-          <h4>Kritik Teknik Özellikler & Mühendislik Standartları</h4>
+          <h4>Kritik Teknik Özellikler &amp; Mühendislik Standartları</h4>
+          
+          <!-- Spec Slider Carousel -->
+          <div id="service-specs-slider" class="spec-carousel" style="display:none;">
+            <div class="spec-carousel-viewport">
+              <div class="spec-carousel-track" id="spec-carousel-track"></div>
+            </div>
+            <div class="spec-carousel-nav">
+              <button class="spec-carousel-btn prev" id="spec-prev-btn" onclick="moveSpecSlide(-1)">❮</button>
+              <div class="spec-carousel-indicators" id="spec-carousel-indicators"></div>
+              <button class="spec-carousel-btn next" id="spec-next-btn" onclick="moveSpecSlide(1)">❯</button>
+            </div>
+          </div>
+
           <ul id="service-modal-list"></ul>
         </div>
       </div>
@@ -1352,6 +1365,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260804_39"></script>
+  <script src="app.js?v=20260804_40"></script>
 </body>
 </html>
