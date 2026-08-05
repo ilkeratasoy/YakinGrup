@@ -805,10 +805,11 @@ img { max-width: 100%; height: auto; display: block; }
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    155deg,
-    rgba(4,10,22,0.35) 0%,
-    rgba(4,10,22,0.80) 50%,
-    rgba(4,10,22,0.97) 100%
+    to bottom,
+    rgba(4,10,22,0.00) 0%,
+    rgba(4,10,22,0.05) 40%,
+    rgba(4,10,22,0.72) 72%,
+    rgba(4,10,22,0.92) 100%
   );
 }
 .svc-slide-overview-body {
@@ -913,10 +914,10 @@ img { max-width: 100%; height: auto; display: block; }
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(4,10,22,0.96) 0%,
-    rgba(4,10,22,0.80) 40%,
-    rgba(4,10,22,0.25) 72%,
-    rgba(4,10,22,0.05) 100%
+    rgba(4,10,22,0.88) 0%,
+    rgba(4,10,22,0.65) 38%,
+    rgba(4,10,22,0.10) 62%,
+    rgba(4,10,22,0.00) 100%
   );
 }
 .svc-slide-spec-body {
