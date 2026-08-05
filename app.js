@@ -767,17 +767,17 @@ const SERVICES_DATA = {
       {
         title: 'AC Şarj İstasyonları (3.7 kW - 22 kW)',
         desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
-        image: 'assets/images/ev_ac_chargers_user.png'
+        image: 'assets/images/ev_ac_chargers_user.jpg'
       },
       {
         title: 'Apartman & Site Daire Sayacı Entegrasyonu',
         desc: 'Apartman ve sitelerde daire sakinlerinin doğrudan kendi bağımsız hane elektrik sayacından şarj besleme, adil kullanım takibi, otomatik faturalandırma ve site yönetimi entegrasyon imkanı.',
-        image: 'assets/images/ev_meter_integration_user.png'
+        image: 'assets/images/ev_meter_integration_user.jpg'
       },
       {
         title: 'DC Hızlı Şarj İstasyonları (50 kW - 350+ kW)',
         desc: 'İstasyon içi doğrudan AC/DC dönüştürme ile %20-%80 batarya dolumunu 20-40 dakikada sağlayan ultra hızlı şarj altyapısı. Otoyollar, akaryakıt dinlenme tesisleri ve acil dolum alanları için.',
-        image: 'assets/images/ev_dc_fast_chargers_user.png'
+        image: 'assets/images/ev_dc_fast_chargers_user.jpg'
       },
       {
         title: 'Soket ve Bağlantı Türleri (Tip 2 / CCS / CHAdeMO)',
