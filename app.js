@@ -713,42 +713,33 @@ const SERVICES_DATA = {
   e_s4: {
     badge: 'MEP & HVAC',
     title: 'Mekanik Tesisat & HVAC (VRF / VAV) / MEP',
-    cover: 'assets/images/energy_hvac_mep.jpg',
-    desc: 'MEP (Mechanical, Electrical, Plumbing) mühendisliği, HVAC VRF VAV hassas iklimlendirme ve havalandırma sistem tasarımları.',
-    specs: [
-      'Bina ve Sanayi Tesisleri İklimlendirme (HVAC VRF / VAV / AHU)',
-      'MEP Mekanik & Elektrik Tesisat Projelendirmesi',
-      'Hassas Kontrollü Veri Merkezi Soğutma Altyapıları',
-      'Enerji Geri Kazanımlı Havalandırma Sistemleri'
-    ]
-  },
-  e_s5: {
-    badge: 'SCADA',
-    title: 'SCADA — Merkezi Denetim, Kontrol ve Veri Toplama',
-    cover: 'assets/images/energy_scada_control.jpg',
-    desc: 'Elektrik üretimi, su dağıtımı, doğalgaz hatları ve endüstriyel tesisler için gerçek zamanlı canlı izleme, alarm yönetimi ve uzaktan kontrol.',
-    specs: [
-      'Canlı Veri Toplama, Sensör Entegrasyonu ve Trend Analizleri',
-      'Merkezi İzleme Ekranları ve Uzaktan Otomasyon Komutları',
-      'PLC / RTU Haberleşme Protokolleri (Modbus, IEC 60870-5, DNP3)',
-      'Veri Güvenliği ve Yedekli Mimari Tasarımı'
-    ]
-  },
-  e_s6: {
-    badge: 'FIRE SUPPRESSION',
-    title: 'Yangın Söndürme ve Erken Uyarı Sistemleri',
-    cover: 'assets/images/energy_fire_suppression.jpg',
-    desc: 'Sprinkler sulu söndürme, gazlı söndürme (FM200 / Novec 1230), davlumbaz söndürme ve mobil yangın emniyet altyapıları.',
-    specs: [
-      'FM200 / Novec 1230 Gazlı Söndürme Sistemleri (Data Center & Sistem Odası)',
-      'Otomatik Sprinkler (Yağmurlama) Sulu Söndürme Tesisatı',
-      'Erken Uyarı Hassas Duman Algılama (VESDA) Entegrasyonu',
-      'NFPA Standartlarına Uygun Mühendislik ve Test Raporlama'
-    ]
-  },
-  e_s7: {
-    badge: 'EV CHARGE & E-MOBILITY',
-    title: 'Elektrikli Araç Şarj İstasyonları (EV Charge)',
+    cover: 'a    slides: [
+      {
+        title: 'BESS & Solar Entegre E-Mobility Şarj Hub Altyapısı',
+        desc: 'Güneş enerjisi panelleri (GES), BESS depolama konteyneri ve akıllı şebeke izleme ekranı (Solar Power Generation & Battery Storage) entegrasyonlu sıfır emisyonlu EV şarj istasyonu hub altyapısı.',
+        image: 'assets/images/ev_bess_solar_hub_user.jpg'
+      },
+      {
+        title: 'AC Şarj İstasyonları (3.7 kW - 22 kW)',
+        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
+        image: 'assets/images/ev_ac_chargers_user.jpg'
+      },
+      {
+        title: 'Apartman & Site Daire Sayacı Entegrasyonu',
+        desc: 'Apartman ve sitelerde daire sakinlerinin doğrudan kendi bağımsız hane elektrik sayacından şarj besleme, adil kullanım takibi, otomatik faturalandırma ve site yönetimi entegrasyon imkanı.',
+        image: 'assets/images/ev_meter_integration_user.jpg'
+      },
+      {
+        title: 'DC Hızlı Şarj İstasyonları (50 kW - 350+ kW)',
+        desc: 'İstasyon içi doğrudan AC/DC dönüştürme ile %20-%80 batarya dolumunu 20-40 dakikada sağlayan ultra hızlı şarj altyapısı. Otoyollar, akaryakıt dinlenme tesisleri ve acil dolum alanları için.',
+        image: 'assets/images/ev_dc_fast_chargers_user.jpg'
+      },
+      {
+        title: 'Soket ve Bağlantı Türleri (Tip 2 / CCS / CHAdeMO)',
+        desc: 'EV şarj istasyonlarında kullanılan başlıca uluslararası soket standartları: Tip 2 Mennekes (AC Standart 3.7-22 kW), CCS Combo 2 (AC/DC Hızlı 50-350+ kW) ve CHAdeMO (DC Hızlı 50-100+ kW).',
+        image: 'assets/images/ev_socket_types_user.jpg'
+      }
+    ]� (EV Charge)',
     cover: 'assets/images/ev_bess_solar_hub_user.jpg',
     desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Tip 2 / CCS / CHAdeMO soket çözümleri ve apartman bağımsız daire sayacı entegrasyonları.',
     specs: [
@@ -767,17 +758,17 @@ const SERVICES_DATA = {
       {
         title: 'AC Şarj İstasyonları (3.7 kW - 22 kW)',
         desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
-        image: 'assets/images/ev_ac_chargers_user.png'
+        image: 'assets/images/ev_ac_chargers_user.jpg'
       },
       {
         title: 'Apartman & Site Daire Sayacı Entegrasyonu',
         desc: 'Apartman ve sitelerde daire sakinlerinin doğrudan kendi bağımsız hane elektrik sayacından şarj besleme, adil kullanım takibi, otomatik faturalandırma ve site yönetimi entegrasyon imkanı.',
-        image: 'assets/images/ev_meter_integration_user.png'
+        image: 'assets/images/ev_meter_integration_user.jpg'
       },
       {
         title: 'DC Hızlı Şarj İstasyonları (50 kW - 350+ kW)',
         desc: 'İstasyon içi doğrudan AC/DC dönüştürme ile %20-%80 batarya dolumunu 20-40 dakikada sağlayan ultra hızlı şarj altyapısı. Otoyollar, akaryakıt dinlenme tesisleri ve acil dolum alanları için.',
-        image: 'assets/images/ev_dc_fast_chargers_user.png'
+        image: 'assets/images/ev_dc_fast_chargers_user.jpg'
       },
       {
         title: 'Soket ve Bağlantı Türleri (Tip 2 / CCS / CHAdeMO)',
