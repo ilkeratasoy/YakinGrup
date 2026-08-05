@@ -512,13 +512,20 @@ const SERVICES_DATA = {
   e_em2: {
     badge: 'LOW VOLTAGE / ELV',
     title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu',
-    cover: 'assets/images/energy_em_elv.jpg',
+    cover: 'assets/images/energy_em_elv_user.jpg',
     desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
     specs: [
       'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
       'Adresli Yangın Algılama ve Erken Uyarı Tesisatı',
       'Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş',
       'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı'
+    ],
+    slides: [
+      {
+        title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu',
+        desc: 'Yüksek hızlı yapısal fiber kablolama, rack kabinet düzenlemeleri, Cat6A/Cat7 patch panel sonlandırma ve akıllı bina otomasyon altyapısı.',
+        image: 'assets/images/energy_em_elv_user.jpg'
+      }
     ]
   },
   e_em3: {
