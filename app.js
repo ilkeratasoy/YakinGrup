@@ -749,39 +749,50 @@ const SERVICES_DATA = {
   e_s7: {
     badge: 'EV CHARGE & E-MOBILITY',
     title: 'Elektrikli Araç Şarj İstasyonları (EV Charge)',
-    cover: 'assets/images/ev_bess_solar_hub_user.jpg',
-    desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Tip 2 / CCS / CHAdeMO soket çözümleri ve apartman bağımsız daire sayacı entegrasyonları.',
+    cover: 'assets/images/ev_bess_solar_carport_user.jpg',
+    desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC ultra hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Solar Carport & BESS entegrasyonu, Sicharge ürün ailesi ve daire sayacı çözümleri.',
     specs: [
-      'BESS & Solar Entegre E-Mobility Şarj Hub Altyapısı',
+      'Solar Carport & BESS Entegre Yeşil Şarj İstasyonu Altyapısı',
+      'Endüstriyel Sicharge & DC Ultra Hızlı Şarj Ürün Ailesi (50 - 350+ kW)',
+      'Otopark & AVM Solar Sundurmalı Modüler Şarj İstasyonları',
       'AC Şarj İstasyonları (3.7 kW - 22 kW)',
       'Apartman & Site Daire Sayacı Entegrasyonu',
-      'DC Hızlı Şarj İstasyonları (50 kW - 350+ kW)',
       'Soket ve Bağlantı Türleri (Tip 2 / CCS / CHAdeMO)'
     ],
     slides: [
       {
-        title: 'BESS & Solar Entegre E-Mobility Şarj Hub Altyapısı',
-        desc: 'Güneş enerjisi panelleri (GES), BESS depolama konteyneri ve akıllı şebeke izleme ekranı (Solar Power Generation & Battery Storage) entegrasyonlu sıfır emisyonlu EV şarj istasyonu hub altyapısı.',
-        image: 'assets/images/ev_bess_solar_hub_user.jpg'
+        title: 'Solar Carport & BESS Entegre Yeşil Şarj İstasyonu Altyapısı',
+        desc: 'Güneş paneli sundurmalı (Solar Carport), BESS batarya depolama ünitesi ve hızlı DC şarj istasyonu entegreli sıfır emisyonlu açık otopark enerji çözümü.',
+        image: 'assets/images/ev_bess_solar_carport_user.jpg'
+      },
+      {
+        title: 'Endüstriyel Sicharge & DC Ultra Hızlı Şarj Ürün Ailesi',
+        desc: 'Sicharge serisi kompakt duvara monte, yüksek güçlü dispenser ve modüler güç kabinli DC ultra hızlı şarj istasyonu ürün yelpazesi (50 kW - 350+ kW).',
+        image: 'assets/images/ev_siemens_chargers_lineup_user.png'
+      },
+      {
+        title: 'Otopark & AVM Solar Sundurmalı Modüler Şarj İstasyonları',
+        desc: 'Ticari binalar, AVM otoparkları ve kamu alanları için güneş paneli zemin kaplamalı, bağımsız peron işaretlemeli akıllı EV şarj noktası altyapısı.',
+        image: 'assets/images/ev_canopy_station_user.png'
       },
       {
         title: 'AC Şarj İstasyonları (3.7 kW - 22 kW)',
-        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
+        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC'ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve park alanları için akıllı koruma.',
         image: 'assets/images/ev_ac_chargers_user.jpg'
       },
       {
         title: 'Apartman & Site Daire Sayacı Entegrasyonu',
-        desc: 'Apartman ve sitelerde daire sakinlerinin doğrudan kendi bağımsız hane elektrik sayacından şarj besleme, adil kullanım takibi, otomatik faturalandırma ve site yönetimi entegrasyon imkanı.',
+        desc: 'Apartman ve sitelerde daire sakinlerinin doğrudan kendi bağımsız hane elektrik sayacından şarj besleme, adil kullanım takibi ve şeffaf faturalandırma imkanı.',
         image: 'assets/images/ev_meter_integration_user.jpg'
       },
       {
         title: 'DC Hızlı Şarj İstasyonları (50 kW - 350+ kW)',
-        desc: 'İstasyon içi doğrudan AC/DC dönüştürme ile %20-%80 batarya dolumunu 20-40 dakikada sağlayan ultra hızlı şarj altyapısı. Otoyollar, akaryakıt dinlenme tesisleri ve acil dolum alanları için.',
+        desc: 'İstasyon içi doğrudan AC/DC dönüştürme ile %20-%80 batarya dolumunu 20-40 dakikada sağlayan ultra hızlı şarj altyapısı ve akaryakıt tesis entegrasyonu.',
         image: 'assets/images/ev_dc_fast_chargers_user.jpg'
       },
       {
         title: 'Soket ve Bağlantı Türleri (Tip 2 / CCS / CHAdeMO)',
-        desc: 'EV şarj istasyonlarında kullanılan başlıca uluslararası soket standartları: Tip 2 Mennekes (AC Standart 3.7-22 kW), CCS Combo 2 (AC/DC Hızlı 50-350+ kW) ve CHAdeMO (DC Hızlı 50-100+ kW).',
+        desc: 'EV şarj istasyonlarında kullanılan başlıca uluslararası soket standartları: Tip 2 Mennekes (AC Standart), CCS Combo 2 (AC/DC Hızlı) ve CHAdeMO (DC Hızlı).',
         image: 'assets/images/ev_socket_types_user.jpg'
       }
     ]
