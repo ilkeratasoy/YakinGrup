@@ -721,7 +721,7 @@ const SERVICES_DATA = {
       },
       {
         title: 'AC Şarj İstasyonları (3.7 kW - 22 kW)',
-        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
+        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC'ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
         image: 'assets/images/ev_ac_chargers_user.jpg'
       },
       {
@@ -757,7 +757,7 @@ const SERVICES_DATA = {
       },
       {
         title: 'AC Şarj İstasyonları (3.7 kW - 22 kW)',
-        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
+        desc: 'Alternatif akımı araç içi dönüştürücü (on-board charger) ile DC'ye çeviren 3-8 saatlik emniyetli dolum çözümleri. Konut, site, iş yeri ve açık/kapalı park alanları için akıllı koruma ve yüksek verimlilik.',
         image: 'assets/images/ev_ac_chargers_user.jpg'
       },
       {
