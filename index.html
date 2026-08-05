@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260805_47">
+  <link rel="stylesheet" href="style.css?v=20260805_48">
 </head>
 <body>
 
@@ -1211,38 +1211,17 @@
     </div>
   </footer>
 
-  <!-- DIALOG: Service Detail Modal -->
-  <dialog id="service-dialog" class="market-modal">
-    <div class="modal-card service-modal-card">
-      <button class="modal-close-btn" onclick="closeServiceModal()">×</button>
-      <div class="service-modal-header">
-        <img id="service-modal-img" src="" alt="Hizmet Görseli" class="service-modal-cover">
-        <div class="service-modal-badge" id="service-modal-badge">MÜHENDİSLİK UZMANLIĞI</div>
-        <h3 id="service-modal-title">Hizmet Başlığı</h3>
-      </div>
-      <div class="service-modal-body">
-        <p id="service-modal-desc" class="service-modal-lead"></p>
-        <div class="service-modal-specs">
-          <h4>Kritik Teknik Özellikler &amp; Mühendislik Standartları</h4>
-          
-          <!-- Spec Slider Carousel -->
-          <div id="service-specs-slider" class="spec-carousel" style="display:none;">
-            <div class="spec-carousel-viewport">
-              <div class="spec-carousel-track" id="spec-carousel-track"></div>
-            </div>
-            <div class="spec-carousel-nav">
-              <button class="spec-carousel-btn prev" id="spec-prev-btn" onclick="moveSpecSlide(-1)">❮</button>
-              <div class="spec-carousel-indicators" id="spec-carousel-indicators"></div>
-              <button class="spec-carousel-btn next" id="spec-next-btn" onclick="moveSpecSlide(1)">❯</button>
-            </div>
-          </div>
-
-          <ul id="service-modal-list"></ul>
-        </div>
-      </div>
-      <div class="modal-actions-row">
-        <button class="vcard-btn primary" onclick="showVCard('ilker')">Direct Lead vCard (İlker ATASOY)</button>
-        <button class="vcard-btn secondary" onclick="showVCard('eylul')">Architecture vCard (Eylül YILMAZ)</button>
+  <!-- DIALOG: Service Detail Modal (One-Page Slide Design) -->
+  <dialog id="service-dialog" class="service-slide-dialog">
+    <button class="svc-close-btn" onclick="closeServiceModal()">×</button>
+    <div class="svc-slider-viewport">
+      <div class="svc-slider-track" id="svc-slider-track"></div>
+    </div>
+    <div class="svc-slider-footer">
+      <div class="svc-slide-indicators" id="svc-slide-indicators"></div>
+      <div class="svc-slide-arrows">
+        <button class="svc-arrow-btn" onclick="moveSvcSlide(-1)">❮</button>
+        <button class="svc-arrow-btn" onclick="moveSvcSlide(1)">❯</button>
       </div>
     </div>
   </dialog>
@@ -1365,6 +1344,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260805_47"></script>
+  <script src="app.js?v=20260805_48"></script>
 </body>
 </html>

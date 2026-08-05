@@ -821,73 +821,75 @@ const SERVICES_DATA = {
   }
 };
 
-let currentSpecSlideIndex = 0;
-let totalSpecSlides = 0;
+// ── Service Slide Modal — One-Page Horizontal Slide Design ────────────────
+let currentSvcSlideIndex = 0;
+let totalSvcSlides = 0;
 
 function openServiceModal(id) {
   const data = SERVICES_DATA[id];
   if (!data) return;
-  document.getElementById('service-modal-img').src = data.cover;
-  document.getElementById('service-modal-badge').textContent = data.badge;
-  document.getElementById('service-modal-title').textContent = data.title;
-  document.getElementById('service-modal-desc').textContent = data.desc;
-  
-  const sliderEl = document.getElementById('service-specs-slider');
-  const trackEl = document.getElementById('spec-carousel-track');
-  const indicatorsEl = document.getElementById('spec-carousel-indicators');
-  const listEl = document.getElementById('service-modal-list');
-  
-  trackEl.innerHTML = '';
-  indicatorsEl.innerHTML = '';
-  listEl.innerHTML = '';
 
-  const slides = data.slides || (data.specs ? data.specs.map(spec => ({
+  const track = document.getElementById('svc-slider-track');
+  const indicators = document.getElementById('svc-slide-indicators');
+  track.innerHTML = '';
+  indicators.innerHTML = '';
+
+  // Build spec slides array (explicit slides or auto-generate from specs list)
+  const specSlides = data.slides || (data.specs ? data.specs.map(spec => ({
     title: spec,
-    desc: 'Uluslararası mühendislik standartlarına ve kalite kontrol parametrelerine tam uyum.',
+    desc: 'Uluslararası mühendislik standartları ve kalite kontrol parametrelerine tam uyumlu uygulama.',
     image: data.cover
   })) : []);
 
-  if (slides && slides.length > 0) {
-    sliderEl.style.display = 'block';
-    listEl.style.display = 'none';
-    currentSpecSlideIndex = 0;
-    totalSpecSlides = slides.length;
+  totalSvcSlides = 1 + specSlides.length;
+  currentSvcSlideIndex = 0;
 
-    slides.forEach((slide, idx) => {
-      const slideDiv = document.createElement('div');
-      slideDiv.className = 'spec-carousel-slide';
-      slideDiv.innerHTML = `
-        <div class="spec-slide-img-wrap">
-          <img src="${slide.image}" alt="${slide.title}" class="spec-slide-img">
-          <span class="spec-slide-badge">TEKNİK ÖZELLİK ${idx + 1} / ${slides.length}</span>
-        </div>
-        <div class="spec-slide-content">
-          <h5>${slide.title}</h5>
-          <p>${slide.desc || ''}</p>
-        </div>
-      `;
-      trackEl.appendChild(slideDiv);
+  // ── Slide 0: Overview ──────────────────────────────────────────────
+  const overviewSlide = document.createElement('div');
+  overviewSlide.className = 'svc-slide svc-slide--overview';
+  overviewSlide.innerHTML = `
+    <div class="svc-slide-bg" style="background-image:url('${data.cover}')"></div>
+    <div class="svc-slide-overlay"></div>
+    <div class="svc-slide-overview-body">
+      <span class="svc-overview-badge">${data.badge}</span>
+      <h3 class="svc-overview-title">${data.title}</h3>
+      <p class="svc-overview-desc">${data.desc}</p>
+      <div class="svc-overview-divider"></div>
+      <div class="svc-vcard-row">
+        <button class="svc-vcard-btn primary" onclick="showVCard('ilker')">📋 Direct Lead vCard — İlker ATASOY</button>
+        <button class="svc-vcard-btn secondary" onclick="showVCard('eylul')">📋 Architecture vCard — Eylül YILMAZ</button>
+      </div>
+    </div>
+    ${specSlides.length > 0 ? '<div class="svc-swipe-hint">Teknik Özellikler ❯</div>' : ''}
+  `;
+  track.appendChild(overviewSlide);
 
-      const ind = document.createElement('button');
-      ind.className = 'spec-indicator-dot' + (idx === 0 ? ' active' : '');
-      ind.setAttribute('aria-label', `Slide ${idx + 1}`);
-      ind.onclick = () => goToSpecSlide(idx);
-      indicatorsEl.appendChild(ind);
-    });
+  // ── Slides 1-N: Spec Slides ────────────────────────────────────────
+  specSlides.forEach((slide, idx) => {
+    const specSlide = document.createElement('div');
+    specSlide.className = 'svc-slide svc-slide--spec';
+    specSlide.innerHTML = `
+      <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
+      <div class="svc-slide-overlay"></div>
+      <div class="svc-slide-spec-body">
+        <div class="svc-spec-counter">TEKNİK ÖZELLİK ${idx + 1} / ${specSlides.length}</div>
+        <h4 class="svc-spec-title">${slide.title}</h4>
+        <p class="svc-spec-desc">${slide.desc || ''}</p>
+      </div>
+    `;
+    track.appendChild(specSlide);
+  });
 
-    updateSpecSliderPosition();
-  } else {
-    sliderEl.style.display = 'none';
-    listEl.style.display = 'flex';
-    if (data.specs) {
-      data.specs.forEach(s => {
-        const li = document.createElement('li');
-        li.textContent = s;
-        listEl.appendChild(li);
-      });
-    }
+  // ── Indicators ─────────────────────────────────────────────────────
+  for (let i = 0; i < totalSvcSlides; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'svc-indicator-dot' + (i === 0 ? ' home-dot active' : '');
+    dot.setAttribute('aria-label', i === 0 ? 'Ana Sayfa' : `Teknik Özellik ${i}`);
+    dot.onclick = () => goToSvcSlide(i);
+    indicators.appendChild(dot);
   }
 
+  updateSvcSliderPosition();
   document.getElementById('service-dialog').showModal();
 }
 
@@ -895,26 +897,24 @@ function closeServiceModal() {
   document.getElementById('service-dialog').close();
 }
 
-function moveSpecSlide(dir) {
-  if (totalSpecSlides <= 0) return;
-  currentSpecSlideIndex = (currentSpecSlideIndex + dir + totalSpecSlides) % totalSpecSlides;
-  updateSpecSliderPosition();
+function moveSvcSlide(dir) {
+  if (totalSvcSlides <= 0) return;
+  currentSvcSlideIndex = (currentSvcSlideIndex + dir + totalSvcSlides) % totalSvcSlides;
+  updateSvcSliderPosition();
 }
 
-function goToSpecSlide(idx) {
-  if (idx < 0 || idx >= totalSpecSlides) return;
-  currentSpecSlideIndex = idx;
-  updateSpecSliderPosition();
+function goToSvcSlide(idx) {
+  if (idx < 0 || idx >= totalSvcSlides) return;
+  currentSvcSlideIndex = idx;
+  updateSvcSliderPosition();
 }
 
-function updateSpecSliderPosition() {
-  const trackEl = document.getElementById('spec-carousel-track');
-  if (!trackEl) return;
-  trackEl.style.transform = `translateX(-${currentSpecSlideIndex * 100}%)`;
-  
-  const dots = document.querySelectorAll('#spec-carousel-indicators .spec-indicator-dot');
-  dots.forEach((dot, idx) => {
-    dot.classList.toggle('active', idx === currentSpecSlideIndex);
+function updateSvcSliderPosition() {
+  const track = document.getElementById('svc-slider-track');
+  if (!track) return;
+  track.style.transform = `translateX(-${currentSvcSlideIndex * 100}%)`;
+  document.querySelectorAll('#svc-slide-indicators .svc-indicator-dot').forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === currentSvcSlideIndex);
   });
 }
 

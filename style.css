@@ -730,7 +730,283 @@ img { max-width: 100%; height: auto; display: block; }
   transform: translateY(-4px);
 }
 
-/* Service Detail Modal Cover */
+/* ── Service Slide Modal — One-Page Horizontal Design ─────────────── */
+.service-slide-dialog {
+  position: fixed;
+  max-width: 900px;
+  width: 94vw;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #07111f;
+  box-shadow: 0 48px 120px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.06);
+}
+.service-slide-dialog::backdrop {
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(8px);
+}
+.svc-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 200;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.svc-close-btn:hover {
+  background: rgba(180,20,20,0.85);
+  border-color: #c0392b;
+}
+.svc-slider-viewport {
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+  position: relative;
+}
+.svc-slider-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+/* Generic slide */
+.svc-slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.svc-slide-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 6s ease;
+}
+.svc-slide:hover .svc-slide-bg {
+  transform: scale(1.04);
+}
+/* ── Overview Slide (Slide 0) ── */
+.svc-slide--overview .svc-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    155deg,
+    rgba(4,10,22,0.35) 0%,
+    rgba(4,10,22,0.80) 50%,
+    rgba(4,10,22,0.97) 100%
+  );
+}
+.svc-slide-overview-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem 2.5rem 1.75rem;
+}
+.svc-overview-badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  color: #fff;
+  background: rgba(11,60,107,0.72);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(6px);
+  align-self: flex-start;
+  text-transform: uppercase;
+}
+.svc-overview-title {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.22;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.45);
+}
+.svc-overview-desc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.70);
+  line-height: 1.65;
+  margin-bottom: 1.2rem;
+  max-width: 640px;
+}
+.svc-overview-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin-bottom: 1.15rem;
+}
+.svc-vcard-row {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.svc-vcard-btn {
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  border: 1.5px solid transparent;
+}
+.svc-vcard-btn.primary {
+  background: var(--c-primary, #0b3c6b);
+  color: #fff;
+  border-color: var(--c-primary, #0b3c6b);
+}
+.svc-vcard-btn.primary:hover {
+  background: #b31b1b;
+  border-color: #b31b1b;
+}
+.svc-vcard-btn.secondary {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border-color: rgba(255,255,255,0.28);
+  backdrop-filter: blur(6px);
+}
+.svc-vcard-btn.secondary:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.5);
+}
+.svc-swipe-hint {
+  position: absolute;
+  bottom: 14px;
+  right: 20px;
+  font-size: 0.67rem;
+  color: rgba(255,255,255,0.38);
+  letter-spacing: 0.1em;
+  font-family: var(--font-heading);
+  pointer-events: none;
+  text-transform: uppercase;
+  animation: svcHintPulse 2.5s ease-in-out infinite;
+}
+@keyframes svcHintPulse {
+  0%, 100% { opacity: 0.38; }
+  50% { opacity: 0.7; }
+}
+/* ── Spec Slides (Slide 1+) ── */
+.svc-slide--spec .svc-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(4,10,22,0.96) 0%,
+    rgba(4,10,22,0.80) 40%,
+    rgba(4,10,22,0.25) 72%,
+    rgba(4,10,22,0.05) 100%
+  );
+}
+.svc-slide-spec-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 2.75rem;
+  max-width: 58%;
+}
+.svc-spec-counter {
+  font-family: var(--font-heading);
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+.svc-spec-title {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.28;
+  margin-bottom: 0.9rem;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+}
+.svc-spec-desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.68;
+}
+/* ── Footer Navigation ── */
+.svc-slider-footer {
+  background: #07111f;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 0.65rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.svc-slide-indicators {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.svc-indicator-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.svc-indicator-dot.active {
+  width: 24px;
+  border-radius: 10px;
+  background: var(--c-primary, #0b3c6b);
+}
+.svc-indicator-dot.home-dot.active {
+  background: #b31b1b;
+}
+.svc-slide-arrows {
+  display: flex;
+  gap: 0.45rem;
+}
+.svc-arrow-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.11);
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.svc-arrow-btn:hover {
+  background: var(--c-primary, #0b3c6b);
+  border-color: var(--c-primary, #0b3c6b);
+  color: #fff;
+}
+/* Old service-modal-card kept for legacy */
 .service-modal-card {
   max-width: 620px;
 }
