@@ -434,13 +434,40 @@ const SERVICES_DATA = {
   e_s3: {
     badge: 'BESS & HYBRID',
     title: 'Batarya Enerji Depolama (BESS) & Hibrit Sistemler',
-    cover: 'assets/images/energy_bess_battery.jpg',
+    cover: 'assets/images/bess_main_cover_user.jpg',
     desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
     specs: [
       'BESS Konteyner Tipi Depolama Çözümleri (LFP / LiFePO4)',
       'BMS (Battery Management System) ve Hücre Dengeleme',
       'PCS (Power Conversion System) AC/DC Çift Yönlü Çevirici Entegrasyonu',
       'Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu'
+    ],
+    slides: [
+      {
+        title: 'BESS Konteyner Tipi Depolama Çözümleri (LFP / LiFePO4)',
+        desc: 'Arazi GES sahalarına entegre edilmiş büyük ölçekli hibrit BESS konteyner depolama sistemi. Yüksek gerilim şalt sahası ve rüzgar tribünleri ile tam entegre hibrit enerji çiftliği.',
+        image: 'assets/images/bess_main_cover_user.jpg'
+      },
+      {
+        title: 'BESS Mimari: Rack, LFP Hücre, Modül & BMS Sistemi',
+        desc: 'BESS konteyner içi sistem mimarisi: Rack, LFP Cell, Modül, DC Panel, Yangın Söndürme Sistemi, Modül BMS (BMU), Rack BMS (BCMU), Sistem BMS (BAMS) ve Battery Protection Unit (BPU) bileşenleri.',
+        image: 'assets/images/bess_container_architecture_user.jpg'
+      },
+      {
+        title: 'BMS (Battery Management System) ve Hücre Dengeleme',
+        desc: 'Yüksek gerilim RBMS kartı; T-CAN/T-485 haberleşme arayüzü, LAN portu, AC giriş, kesici koruma, P+/P- UPS/invertör bağlantısı, BMU-OUT, DC Start ve COM-IN/COM-OUT iletişim portları ile kapsamlı hücre yönetim ve dengeleme sistemi.',
+        image: 'assets/images/bess_bms_interface_user.jpg'
+      },
+      {
+        title: 'PCS (Power Conversion System) AC/DC Çift Yönlü Çevirici Entegrasyonu',
+        desc: 'Güneş paneli ve rüzgar türbini ile bütünleşik açık alanlara kurulu PCS konteyner sistemi; şarj/deşarj döngüsünü yöneten çift yönlü AC/DC çevirici ve BESS entegrasyonu.',
+        image: 'assets/images/bess_pcs_container_user.jpg'
+      },
+      {
+        title: 'Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu',
+        desc: 'PowerON BESS kontrol panosu; Peak Shaving grafiksel gösterimi, yük dengeleme eğrileri, akıllı şebeke otomasyon yazılımı ve endüstriyel pano entegrasyonu ile anlık talep yönetimi.',
+        image: 'assets/images/bess_peak_shaving_user.jpg'
+      }
     ]
   },
   e_em1: {
