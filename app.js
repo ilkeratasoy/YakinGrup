@@ -473,13 +473,40 @@ const SERVICES_DATA = {
   e_em1: {
     badge: 'MEP & CONTRACTING',
     title: 'Elektrik & Mekanik Taahhüt Hizmetleri',
-    cover: 'assets/images/energy_em_contracting.jpg',
+    cover: 'assets/images/mep_cover_electrician_user.jpg',
     desc: 'Endüstriyel üretim tesisleri, ticari binalar, hastaneler ve veri merkezleri için anahtar teslim MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama çözümleri.',
     specs: [
       'Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü',
       'HVAC VRF / VAV İklimlendirme ve İleri Havalandırma',
       'Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı',
       'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning)'
+    ],
+    slides: [
+      {
+        title: 'Elektrik & Mekanik Taahhüt Hizmetleri',
+        desc: 'Endüstriyel üretim tesisleri, ticari binalar ve veri merkezleri için anahtar teslim MEP taahhüt, güç panoları ve sahada bağlantı çalışmaları.',
+        image: 'assets/images/mep_cover_electrician_user.jpg'
+      },
+      {
+        title: 'Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü',
+        desc: 'Projenin konsept tasarımından fiziksel uygulamaya kadar elektrik tesisat planı, malzeme seçimi ve anahtar teslim uygulama sürecinin tam yönetimi.',
+        image: 'assets/images/mep_anahtar_teslim_user.png'
+      },
+      {
+        title: 'HVAC VRF / VAV İklimlendirme ve İleri Havalandırma',
+        desc: 'VRF (Variable Refrigerant Flow) ve VAV (Variable Air Volume) sistemleri ile bina katlı çok bölgeli enerji verimli iklimlendirme ve taze hava çözümleri.',
+        image: 'assets/images/mep_hvac_vrf_user.jpg'
+      },
+      {
+        title: 'Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı',
+        desc: 'Havalandırma kanalları, yangın söndürme sistemleri, kuru/ıslak sprinkler, sıhhi tesisat ve endüstriyel borulama altyapısı kurulum ve devreye alma hizmetleri.',
+        image: 'assets/images/mep_sihhi_yangin_user.jpg'
+      },
+      {
+        title: 'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning)',
+        desc: 'MEP proje mühendisliği, saha koordinasyonu, test & devreye alma (commissioning) süreç yönetimi ve resmi kabul belgelendirme hizmetleri.',
+        image: 'assets/images/mep_commissioning_user.png'
+      }
     ]
   },
   e_em2: {
