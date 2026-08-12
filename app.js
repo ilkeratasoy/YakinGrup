@@ -512,7 +512,7 @@ const SERVICES_DATA = {
   e_em2: {
     badge: 'LOW VOLTAGE / ELV',
     title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu',
-    cover: 'assets/images/elv_cctv_monitoring_user.jpg',
+    cover: 'assets/images/elv_cover_network_user.jpg',
     desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
     specs: [
       'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
@@ -539,7 +539,7 @@ const SERVICES_DATA = {
       {
         title: 'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı',
         desc: 'Multimodal ve singlemode fiber optik kablolama, patch panel sonlandırma, yüksek yoğunluklu veri merkezi kablo yönetimi ve yapısal kablolama altyapısı.',
-        image: 'assets/images/elv_fiber_cabling_user.jpg'
+        image: 'assets/images/elv_cover_network_user.jpg'
       }
     ]
   },
