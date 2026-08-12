@@ -624,7 +624,7 @@ const SERVICES_DATA = {
   e_em5: {
     badge: 'ENGINEERING & APPROVAL',
     title: 'Proje Mühendislik & Onay Hizmetleri',
-    cover: 'assets/images/eng_cover_inspection_user.jpg',
+    cover: 'assets/images/eng_cover_blueprint_user.jpg',
     desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
     specs: [
       'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
@@ -634,24 +634,24 @@ const SERVICES_DATA = {
     ],
     slides: [
       {
+        title: 'Proje Mühendislik & Onay Hizmetleri',
+        desc: 'Mühendislik proje paftası üzerinde sarı baretli teknik ekip çalışması ve resmi onay süreç yönetimi.',
+        image: 'assets/images/eng_cover_blueprint_user.jpg'
+      },
+      {
         title: 'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
         desc: 'Uluslararası mühendislik standartları ve kalite kontrol parametrelerine tam uyumlu uygulama.',
-        image: 'assets/images/eng_cover_inspection_user.jpg'
+        image: 'assets/images/eng_tedas_approval_user.png'
       },
       {
         title: 'Kısa Devre, Yük Akışı ve Gerilim Düşümü Hesaplamaları',
-        desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ/EDAŞ) uyumlu kısa devre analizleri, yük akışı simülasyonları ve şebeke gerilim düşümü hesaplama raporları.',
-        image: 'assets/images/eng_cover_inspection_user.jpg'
-      },
-      {
-        title: 'Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri',
-        desc: 'Tesis güvenlik analizi, koruma rölesi selektivite eğrileri, saha mühendislik danışmanlığı ve sürdürülebilir enerji uygunluk çalışmaları.',
-        image: 'assets/images/eng_relays_sustainability_user.jpg'
+        desc: 'Proje paftası üzerinde teknik çizim, pergel ve kalemle hassas kısa devre ile yük akışı hesaplama mühendislik çalışmaları.',
+        image: 'assets/images/eng_calculations_user.png'
       },
       {
         title: 'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri',
-        desc: 'Geçici kabul işlemlerinde dikkat edilmesi gereken noktalar; proje ekibi ile saha inceleme, tesis ruhsatı ve resmi kurum kabul danışmanlığı.',
-        image: 'assets/images/eng_temporary_acceptance_user.png'
+        desc: 'Geçici kabul işlemlerinde dikkat edilmesi gereken noktalar; baretli mühendisler ve proje ekibi ile ruhsat onay toplantısı.',
+        image: 'assets/images/eng_temporary_acceptance_new_user.png'
       }
     ]
   },
