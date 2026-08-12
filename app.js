@@ -512,7 +512,7 @@ const SERVICES_DATA = {
   e_em2: {
     badge: 'LOW VOLTAGE / ELV',
     title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu',
-    cover: 'assets/images/energy_em_elv_user.jpg',
+    cover: 'assets/images/elv_cctv_monitoring_user.jpg',
     desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
     specs: [
       'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
@@ -522,9 +522,24 @@ const SERVICES_DATA = {
     ],
     slides: [
       {
-        title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu',
-        desc: 'Yüksek hızlı yapısal fiber kablolama, rack kabinet düzenlemeleri, Cat6A/Cat7 patch panel sonlandırma ve akıllı bina otomasyon altyapısı.',
-        image: 'assets/images/energy_em_elv_user.jpg'
+        title: 'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
+        desc: 'Çok ekranlı güvenlik izleme merkezi, IP CCTV kamera sistemleri, yapay zeka destekli video analiz, hareket algılama ve merkezi kayıt yönetimi (NVR/DVR).',
+        image: 'assets/images/elv_cctv_monitoring_user.jpg'
+      },
+      {
+        title: 'Adresli Yangın Algılama ve Erken Uyarı Tesisatı',
+        desc: 'Duman dedektörleri, adresli yangın alarm paneli, kırmızı yangın sprinkler boru hatları, yangın tüpleri ve kat bazlı erken uyarı sistemi kurulumu.',
+        image: 'assets/images/elv_fire_detection_user.png'
+      },
+      {
+        title: 'Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş',
+        desc: 'Yüz tanıma teknolojisi, biyometrik kimlik doğrulama, kartlı geçiş sistemleri ve entegre erişim yetkilendirme yönetimi ile tesislerin fiziksel güvenliğinin sağlanması.',
+        image: 'assets/images/elv_biometric_access_user.png'
+      },
+      {
+        title: 'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı',
+        desc: 'Multimodal ve singlemode fiber optik kablolama, patch panel sonlandırma, yüksek yoğunluklu veri merkezi kablo yönetimi ve yapısal kablolama altyapısı.',
+        image: 'assets/images/elv_fiber_cabling_user.jpg'
       }
     ]
   },
