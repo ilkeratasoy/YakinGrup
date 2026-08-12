@@ -546,13 +546,40 @@ const SERVICES_DATA = {
   e_em3: {
     badge: 'LV SYSTEMS / AG',
     title: 'Alçak Gerilim Sistemleri (AG) & Güç Dağıtımı',
-    cover: 'assets/images/energy_em_ag.jpg',
+    cover: 'assets/images/ag_cover_panel_team_user.png',
     desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
     specs: [
       'AG Ana Dağıtım ve Tali Dağıtım Panoları (Form 4b Standardı)',
       'Motor Kontrol Merkezleri (MCC) ve Sürücü Panoları',
       'Busbar Enerji Dağıtım Hatları ve Kablo Taşıma Sistemleri',
       'Aktif / Pasif Harmonik Filtreli Kompanzasyon Panoları'
+    ],
+    slides: [
+      {
+        title: 'Alçak Gerilim Sistemleri (AG) & Güç Dağıtımı',
+        desc: 'Endüstriyel tesislerde AG pano sırası önünde tablet ve ölçüm aleti ile denetim yapan iki mühendisten oluşan teknik ekip sahası.',
+        image: 'assets/images/ag_cover_panel_team_user.png'
+      },
+      {
+        title: 'AG Ana Dağıtım ve Tali Dağıtım Panoları (Form 4b Standardı)',
+        desc: 'Form 4b standardında üretilmiş çok bölümlü AG ana dağıtım panoları, koruma röleleri, kompakt şalterleri ve dijital sayaçlarla tam donanımlı tesisat odası.',
+        image: 'assets/images/ag_adp_panel_user.png'
+      },
+      {
+        title: 'Motor Kontrol Merkezleri (MCC) ve Sürücü Panoları',
+        desc: 'Endüstriyel MCC sürücü panoları, PLC bağlantılı frekans konvertörleri, klemens kutuları ve çok katlı kablo yönetimi ile entegre motor kontrol sistemi.',
+        image: 'assets/images/ag_mcc_srucu_user.jpg'
+      },
+      {
+        title: 'Busbar Enerji Dağıtım Hatları ve Kablo Taşıma Sistemleri',
+        desc: 'Tavan montajlı kırmızı ve beyaz renkli busbar trunk hatları, modüler tap-off kutuları ve bina içi etkin kablo taşıma altyapısı.',
+        image: 'assets/images/ag_busbar_user.png'
+      },
+      {
+        title: 'Aktif / Pasif Harmonik Filtreli Kompanzasyon Panoları',
+        desc: 'Aktif harmonik filtre ve reaktif güç kompanzasyonu entegre büyük ölçekli güç kalitesi kabinleri; endüstriyel üretim sahası teslim hazır depo görünümü.',
+        image: 'assets/images/ag_kompanzasyon_user.png'
+      }
     ]
   },
   e_em4: {
