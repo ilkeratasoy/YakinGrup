@@ -636,13 +636,35 @@ const SERVICES_DATA = {
   e_em6: {
     badge: 'HV SYSTEMS / YG',
     title: 'Yüksek Gerilim Sistemleri (YG) & Şalt Sahaları',
-    cover: 'assets/images/energy_em_yg.jpg',
+    cover: 'assets/images/yg_trafo_merkezi_user.png',
     desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon altyapıları.',
     specs: [
       '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
       'Yüksek Gerilim Enerji İletim Hatları ve Direk Tesisatı',
       'SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları',
       'TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu'
+    ],
+    slides: [
+      {
+        title: '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
+        desc: 'Uluslararası mühendislik standartları ve kalite kontrol parametrelerine tam uyumlu uygulama.',
+        image: 'assets/images/yg_trafo_merkezi_user.png'
+      },
+      {
+        title: 'Yüksek Gerilim Enerji İletim Hatları ve Direk Tesisatı',
+        desc: 'Yüksek gerilim enerji iletim hatları, kafes çelik direk tesisatları ve dağlık sahalarda uzun mesafe enerji aktarım altyapısı.',
+        image: 'assets/images/yg_iletim_hatlari_user.png'
+      },
+      {
+        title: 'SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları',
+        desc: 'SF6 gaz yalıtımlı (GIS) yüksek gerilim kesicileri, döner/düşey ayırıcılar, akım-gerilim trafo üniteleri ve şalt sahası baraları.',
+        image: 'assets/images/yg_sf6_kesiciler_user.jpg'
+      },
+      {
+        title: 'TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu',
+        desc: 'TEİAŞ şebeke yönetmeliğine uygun çok ekranlı SCADA kontrol merkezi, uzaktan izleme, veri toplama ve röle otomasyon sistemleri.',
+        image: 'assets/images/yg_scada_otomasyon_user.jpg'
+      }
     ]
   },
   e_t1: {
