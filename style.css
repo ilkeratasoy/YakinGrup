@@ -305,7 +305,7 @@ img { max-width: 100%; height: auto; display: block; }
 .hero-slide.active .slide-bg { transform: scale(1); }
 .slide-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(105deg, rgba(7,9,14,0.85) 0%, rgba(7,9,14,0.5) 55%, rgba(7,9,14,0.25) 100%);
+  background: linear-gradient(105deg, rgba(7,9,14,0.55) 0%, rgba(7,9,14,0.25) 55%, rgba(7,9,14,0.05) 100%);
 }
 .slide-content {
   position: absolute;
@@ -602,7 +602,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .company-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(7,9,14,0.92) 0%, rgba(7,9,14,0.65) 60%, rgba(7,9,14,0.4) 100%);
+  background: linear-gradient(to right, rgba(7,9,14,0.60) 0%, rgba(7,9,14,0.30) 60%, rgba(7,9,14,0.10) 100%);
 }
 .company-hero-content {
   position: relative;
