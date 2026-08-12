@@ -823,6 +823,64 @@ const SERVICES_DATA = {
       }
     ]
   },
+  // Enerji Küme F — IOT & Otomasyon Sistemleri
+  e_iot1: {
+    badge: 'SCADA & AUTOMATION',
+    title: 'Endüstriyel SCADA & Otomasyon Sistemleri',
+    cover: 'assets/images/energy_ref_scada_ui.jpg',
+    desc: 'Endüstriyel üretim tesisleri, enerji santralleri ve alt yapı projeleri için PLC/RTU programlama, HMI arayüz tasarımı ve 7/24 SCADA merkezi izleme altyapısı.',
+    specs: [
+      'PLC & RTU Tabanlı Endüstriyel Kontrol ve Programlama',
+      'Merkezi SCADA İzleme, Veri Toplama ve Alarm Yönetimi',
+      'HMI Dokunmatik Operatör Paneli Arayüz Tasarımları',
+      'Endüstriyel İletişim Protokolleri Entegrasyonu (Modbus, Profinet, IEC 60870-5-104)'
+    ],
+    slides: [
+      {
+        title: 'Endüstriyel SCADA & Otomasyon Sistemleri',
+        desc: 'Merkezi SCADA yazılımları, canlı mimik diyagramlar, uzaktan vana/şalter kontrolü, trend analizleri ve arıza erim kayıt izleme sistemleri.',
+        image: 'assets/images/energy_ref_scada_ui.jpg'
+      }
+    ]
+  },
+  e_iot2: {
+    badge: 'INDUSTRIAL IOT / IIOT',
+    title: 'Endüstriyel IoT (IIoT) & Akıllı Sensör Ağları',
+    cover: 'assets/images/energy_ref_iot_dashboard.png',
+    desc: 'Kablosuz sensör ağları (LoRaWAN, NB-IoT), kestirimci bakım (Predictive Maintenance), titreşim/sıcaklık takibi ve IoT gateway altyapıları.',
+    specs: [
+      'LoRaWAN / NB-IoT Kablosuz Sensör Ağı Kurulumları',
+      'Kestirimci Bakım (Predictive Maintenance) ve Erken Arıza Tespiti',
+      'Makine Sağlığı, Titreşim, Sıcaklık ve Basınç Canlı Takip Sensörleri',
+      'Edge Computing ve IoT Gateway Veri Aktarım Donanımları'
+    ],
+    slides: [
+      {
+        title: 'Endüstriyel IoT (IIoT) & Akıllı Sensör Ağları',
+        desc: 'Mobil ve web tabanlı canlı IoT dashboard ekranı; elektrik tüketimi, depolama durumu ve ortam parametrelerini anlık takip etme çözümleri.',
+        image: 'assets/images/energy_ref_iot_dashboard.png'
+      }
+    ]
+  },
+  e_iot3: {
+    badge: 'BMS / SMART BUILDING',
+    title: 'Akıllı Bina Yönetim Sistemleri (BMS / RMS)',
+    cover: 'assets/images/energy_ref_soc_cyber.jpg',
+    desc: 'Bina Otomasyon Sistemleri (BMS), enerji izleme (EMS), akıllı iklimlendirme ve aydınlatma otomasyonu ile yüksek konfor ve enerji tasarrufu.',
+    specs: [
+      'BMS (Building Management System) Akıllı Bina Otomasyonu',
+      'Enerji İzleme & Otomatik Faturalandırma Yazılımları (EMS)',
+      'DALI / DMX Akıllı Aydınlatma ve VAV Fan-Coil İklim Kontrolü',
+      'BACnet, KNX ve LonWorks Entegre Bina Otomasyon Protokolleri'
+    ],
+    slides: [
+      {
+        title: 'Akıllı Bina Yönetim Sistemleri (BMS / RMS)',
+        desc: 'Bina merkezi kontrol odasından HVAC, aydınlatma, yangın ve enerji sayaçlarının entegre akıllı yönetimi ve raporlanması.',
+        image: 'assets/images/energy_ref_soc_cyber.jpg'
+      }
+    ]
+  },
   // Enerji Küme B — Veri Merkezi Sistemleri & Entegrasyonları
   e_b1: {
     badge: 'HARDWARE & INFRASTRUCTURE',
