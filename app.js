@@ -585,13 +585,40 @@ const SERVICES_DATA = {
   e_em4: {
     badge: 'MV SYSTEMS / OG',
     title: 'Orta Gerilim Sistemleri (OG) & Şalt Tesisleri',
-    cover: 'assets/images/energy_em_og.jpg',
+    cover: 'assets/images/og_cover_substation_user.jpg',
     desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke entegrasyonu.',
     specs: [
       '36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler',
       'Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA)',
       'Mikroişlemcili Dijital Koruma Röleleri ve Testleri',
       'OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları'
+    ],
+    slides: [
+      {
+        title: 'Orta Gerilim Sistemleri (OG) & Şalt Tesisleri',
+        desc: 'Açık şalt sahası, yüksek gerilim iletkenleri, trafo altyapısı ve açık havada masa üstü proje inceleyen baretli teknik mühendis ekibi.',
+        image: 'assets/images/og_cover_substation_user.jpg'
+      },
+      {
+        title: '36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler',
+        desc: '36 kV metal-clad ve hava yalıtımlı modüler şalt hücreleri dizilimi; teknisyenlerin açık kapaklı OG panolarında montaj ve test çalışmaları.',
+        image: 'assets/images/og_metalclad_cells_user.png'
+      },
+      {
+        title: 'Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA)',
+        desc: 'Yüksek kapasiteli yağlı ve kuru tip güç dağıtım trafosu, OG/AG bağlantı buşingleri ve şalt sahası soğutma/güvenlik altyapısı.',
+        image: 'assets/images/og_transformer_unit_user.png'
+      },
+      {
+        title: 'Mikroişlemcili Dijital Koruma Röleleri ve Testleri',
+        desc: 'Saha bilgisayarı ve ikincil enjeksiyon test cihazı (Omicron) ile dijital koruma rölelerinin haberleşme, aşırı akım ve selektivite testleri.',
+        image: 'assets/images/og_protection_relay_test_user.png'
+      },
+      {
+        title: 'OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları',
+        desc: 'Derin tünel ve TBM delgi sahasında ağır sanayi OG/YG yeraltı kablo kanalı hazırlığı, kaynak ve montaj altyapı çalışmaları.',
+        image: 'assets/images/og_underground_tunnel_user.jpg'
+      }
     ]
   },
   e_em5: {
