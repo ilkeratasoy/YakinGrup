@@ -624,13 +624,35 @@ const SERVICES_DATA = {
   e_em5: {
     badge: 'ENGINEERING & APPROVAL',
     title: 'Proje Mühendislik & Onay Hizmetleri',
-    cover: 'assets/images/energy_em_engineering.jpg',
+    cover: 'assets/images/eng_cover_inspection_user.jpg',
     desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
     specs: [
       'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
       'Kısa Devre, Yük Akışı ve Gerilim Düşümü Hesaplamaları',
       'Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri',
       'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri'
+    ],
+    slides: [
+      {
+        title: 'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
+        desc: 'Uluslararası mühendislik standartları ve kalite kontrol parametrelerine tam uyumlu uygulama.',
+        image: 'assets/images/eng_cover_inspection_user.jpg'
+      },
+      {
+        title: 'Kısa Devre, Yük Akışı ve Gerilim Düşümü Hesaplamaları',
+        desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ/EDAŞ) uyumlu kısa devre analizleri, yük akışı simülasyonları ve şebeke gerilim düşümü hesaplama raporları.',
+        image: 'assets/images/eng_cover_inspection_user.jpg'
+      },
+      {
+        title: 'Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri',
+        desc: 'Tesis güvenlik analizi, koruma rölesi selektivite eğrileri, saha mühendislik danışmanlığı ve sürdürülebilir enerji uygunluk çalışmaları.',
+        image: 'assets/images/eng_relays_sustainability_user.jpg'
+      },
+      {
+        title: 'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri',
+        desc: 'Geçici kabul işlemlerinde dikkat edilmesi gereken noktalar; proje ekibi ile saha inceleme, tesis ruhsatı ve resmi kurum kabul danışmanlığı.',
+        image: 'assets/images/eng_temporary_acceptance_user.png'
+      }
     ]
   },
   e_em6: {
