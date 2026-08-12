@@ -981,6 +981,18 @@ const SERVICES_DATA = {
   },
   // Enerji Küme B — Veri Merkezi Sistemleri & Entegrasyonları
   e_b1: {
+    badge: 'WHITE SPACE & DCIM',
+    title: 'Veri Merkezi Beyaz Alan (White Space) Yönetimi & DCIM',
+    cover: 'assets/images/gallery_datacenter_v2.jpg',
+    desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
+    specs: [
+      'Kapasite ve Yerleşim: Kabin (rack) yerleşimi, ağırlık sınırları ve zemin altı kablolama düzeni',
+      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü ve enerji verimliliği',
+      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı takibi ve yedekli enerji mimarisi',
+      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama'
+    ]
+  },
+  e_b2: {
     badge: 'HARDWARE & INFRASTRUCTURE',
     title: 'Altyapı ve Donanım Bileşenleri',
     cover: 'assets/images/data_center_construction_1785092614608.png',
@@ -992,7 +1004,7 @@ const SERVICES_DATA = {
       'Fiziksel Altyapı: Yükseltilmiş zemin, tavan ve taban kablolama taşıyıcı sistemleri'
     ]
   },
-  e_b2: {
+  e_b3: {
     badge: 'CLOUD & VIRTUALIZATION',
     title: 'Operasyonel, Bulut & Sanallaştırma Hizmetleri',
     cover: 'assets/images/energy_fiber_network.jpg',
@@ -1004,7 +1016,7 @@ const SERVICES_DATA = {
       'Uçtan Uca IT Altyapı: Sunucu, Depolama (SAN&NAS), Network, Firewall, UTM, SW, WLAN, WiFi, VPN, VOIP ve Public/Private Cloud'
     ]
   },
-  e_b3: {
+  e_b4: {
     badge: 'REGULATION & ADVISORY',
     title: 'Regülasyon, İhale Danışmanlığı & Asset Sizing',
     cover: 'assets/images/tender_contract_management_1785010026255.png',
@@ -1014,18 +1026,6 @@ const SERVICES_DATA = {
       'Volume / Asset Sizing: İş büyüklüğüne göre kaynak, donanım, alan ve kapasite boyutlandırma hesabı',
       'Doğru Maliyet Yönetimi: Fazla veya eksik yatırımı önleyen bütçe planlaması ve optimizasyon',
       'İhale & Şartname Yönetimi: RFP, RFI, RFQ, RFx şartname hazırlığı, tedarikçi ve üretici yönetimi'
-    ]
-  },
-  e_b4: {
-    badge: 'WHITE SPACE & DCIM',
-    title: 'Veri Merkezi Beyaz Alan (White Space) Yönetimi & DCIM',
-    cover: 'assets/images/gallery_datacenter_v2.jpg',
-    desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
-    specs: [
-      'Kapasite ve Yerleşim: Kabin (rack) yerleşimi, ağırlık sınırları ve zemin altı kablolama düzeni',
-      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü ve enerji verimliliği',
-      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı takibi ve yedekli enerji mimarisi',
-      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama'
     ]
   },
   e_b5: {
