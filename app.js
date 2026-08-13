@@ -842,7 +842,7 @@ const SERVICES_DATA = {
       '1. Ağ (Network) ve Sunucu Altyapısı Sızma Testleri (Çözüm ve Hizmetler : <br>İç ve dış ağ sunucu altyapılarına yönelik etik hackleme ve güvenlik açığı tespit simülasyonları.<br>Kritik ağ bileşenleri ve port seviyesinde güvenlik düzeyi analizi ile sızma engelleme planı.)',
       '2. Web ve Mobil Uygulama Zafiyet Tarama ve Güvenlik Testi (Çözüm ve Hizmetler : <br>OWASP Top 10 standartlarında web yazılım ve mobil uygulama güvenlik açıkları tespiti.<br>Veritabanı sızma, kod analizi ve yetkisiz erişim açıklarının kapatılması danışmanlığı.)',
       '3. Sosyal Mühendislik & Oltalama (Phishing) Simülasyonları (Çözüm ve Hizmetler : <br>Personel farkındalık seviyesini ölçen senaryo bazlı kurumsal oltalama e-posta simülasyonları.<br>İnsan kaynaklı güvenlik zafiyetlerinin tespiti ve siber güvenlik farkındalık eğitimleri.)',
-      '4. Zafiyet Analiz Raporlaması ve Güvenlik Sıkılaştırma (Çözüm ve Hizmetler : <br>Tespit edilen açıkların risk derecesine göre önceliklendirildiği detaylı teknik yönetim raporu.<br>Sunucu, firewall ve işletim sistemi seviyesinde hardening (sıkılaştırma) uygulama desteği.)'
+      '4. Zafiyet Analiz Raporlaması ve Güvenlik Sıkılaştırma (Çözüm ve Hizmetler : <br>Tespit edilen açıkların risk derecesine göre önceliklendirildiği detaylı teknik yönetim raporu.<br><br>Sunucu, firewall ve işletim sistemi seviyesinde hardening (sıkılaştırma) uygulama desteği.)'
     ]
   },
   e_c3: {
