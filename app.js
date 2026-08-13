@@ -1102,13 +1102,14 @@ function openServiceModal(id) {
     }
     const finalDesc = vendorText ? `<strong>${labelName}</strong><br>${vendorText}` : '';
 
+    const descHtml = finalDesc ? `<p class="svc-spec-desc">${finalDesc}</p>` : '';
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
       <div class="svc-slide-overlay"></div>
       <div class="svc-slide-spec-body">
         <div class="svc-spec-counter">TEKNİK ÖZELLİK ${idx + 1} / ${specSlides.length}</div>
         <h4 class="svc-spec-title">${cleanTitleHtml}</h4>
-        <p class="svc-spec-desc">${finalDesc}</p>
+        ${descHtml}
       </div>
     `;
     track.appendChild(specSlide);
