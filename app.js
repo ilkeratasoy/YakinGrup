@@ -990,7 +990,7 @@ const SERVICES_DATA = {
       'Ağ ve Bağlantı Cihazları: Router (yönlendirici), Switch (anahtar), Firewall (güvenlik duvarı), Access Point ve fiber optik kablolama. (Cisco Catalyst/Nexus, Fortinet FortiGate, Palo Alto Networks, Juniper Networks, Aruba, Huawei CloudEngine, Ruckus)',
       'İstemci Donanımları: Kurumsal masaüstü bilgisayarlar, dizüstü bilgisayarlar, iş istasyonları (Workstation) ve terminaller. (Dell OptiPlex/Precision/Latitude, HP ZBook/EliteBook, Lenovo ThinkPad/ThinkStation, Apple Mac)',
       'KVM, PDU, UPS, PUE Sistemleri: Akıllı yönetilebilir PDU, KVM over IP switchler, kesintisiz güç kaynakları (UPS) ve PUE izleme sistemleri. (APC by Schneider Electric, Vertiv Liebert, Eaton, Tripp Lite, Raritan, CyberPower)',
-      'Tedarik Süreci Aşamaları: İhtiyaç Analizi (Kapasite ve gelecek projeksiyonu) - Marka ve Model Seçimi (Fiyat/performans ve garanti) - Teklif ve Satın Alma (Yetkili distribütör/üretici tedariki) - Lojistik ve Entegrasyon (Çözüm ve Hizmetler : *Kurumun mevcut kapasitesi ve gelecek projeksiyonları çıkarılır. *Fiyat/performans, garanti koşulları ve yedek parça bulunabilirliği değerlendirilir. *Yetkili distribütörlerden veya üreticilerden en uygun maliyetli teklifler toplanır. *Cihazların güvenli taşınması, montajı ve mevcut sistemle uyumlaştırılması sağlanır.)'
+      'Tedarik Süreci Aşamaları: <br>1. İhtiyaç Analizi (Kapasite ve gelecek projeksiyonu)<br>2. Marka ve Model Seçimi (Fiyat/performans ve garanti)<br>3. Teklif ve Satın Alma (Yetkili distribütör/üretici tedariki)<br>4. Lojistik ve Entegrasyon (Çözüm ve Hizmetler : <br>1. Kurumun mevcut kapasitesi ve gelecek projeksiyonları çıkarılır.<br>2. Fiyat/performans, garanti koşulları ve yedek parça bulunabilirliği değerlendirilir.<br>3. Yetkili distribütörlerden veya üreticilerden en uygun maliyetli teklifler toplanır.<br>4. Cihazların güvenli taşınması, montajı ve mevcut sistemle uyumlaştırılması sağlanır.)'
     ]
   },
   e_b2: {
@@ -1111,7 +1111,7 @@ function openServiceModal(id) {
       labelName = 'Çözüm ve Hizmetler :';
       vendorText = vendorText.replace('Çözüm ve Hizmetler :', '').trim();
     }
-    const finalDesc = vendorText ? `<strong>${labelName}</strong> ${vendorText}` : (slide.desc || '');
+    const finalDesc = vendorText ? `<strong>${labelName}</strong><br>${vendorText}` : (slide.desc || '');
 
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
