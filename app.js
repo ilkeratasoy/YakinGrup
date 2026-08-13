@@ -575,10 +575,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/ag_cover_panel_team_user.png',
     desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
     specs: [
-      'AG Ana Dağıtım ve Tali Dağıtım Panoları (Form 4b Standardı)',
-      'Motor Kontrol Merkezleri (MCC) ve Sürücü Panoları',
-      'Busbar Enerji Dağıtım Hatları ve Kablo Taşıma Sistemleri',
-      'Aktif / Pasif Harmonik Filtreli Kompanzasyon Panoları'
+      '1. AG Ana Dağıtım ve Tali Dağıtım Panoları (Form 4b Standardı) (Üretici & Ürün Çözümleri : <br>1. Schneider Electric Okken/Prisma, ABB Emax 2 / TriLine, Siemens SIVACON S8 Form 4b panolar.<br>2. Kompakt şalterler, açık tip şalterler (ACB) ve haberleşmeli enerji analizörleri ile güvenli dağıtım.)',
+      '2. Motor Kontrol Merkezleri (MCC) ve Sürücü Panoları (Üretici & Ürün Çözümleri : <br>1. ABB ACS880, Danfoss VLT AutomationDrive, Siemens SINAMICS frekans konvertör panoları.<br>2. PLC ve SCADA entegreli çekmeceli tipi MCC üniteleri ile motor koruma ve hız kontrolü.)',
+      '3. Busbar Enerji Dağıtım Hatları ve Kablo Taşıma Sistemleri (Üretici & Ürün Çözümleri : <br>1. EAE Elektrik KX/KB Busbar, Legrand Zucchini, Schneider Canalis modüler busbar sistemleri.<br>2. Ağır hizmet tipi delikli kablo kanalları, merdiven kanallar ve yangına dayanıklı tava montajı.)',
+      '4. Aktif / Pasif Harmonik Filtreli Kompanzasyon Panoları (Üretici & Ürün Çözümleri : <br>1. Schaffner, Janitza, Nokian Capacitors, Entes SVG aktif harmonik filtre panoları.<br>2. Reaktif güç kompanzasyonu, kondansatör kademe kontrolü ve güç kalitesi iyileştirme.)'
     ],
     slides: [
       {
@@ -653,10 +653,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/eng_cover_blueprint_user.jpg',
     desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
     specs: [
-      'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
-      'Kısa Devre, Yük Akışı ve Gerilim Düşümü Hesaplamaları',
-      'Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri',
-      'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri'
+      '1. TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri (Çözüm ve Hizmetler : <br>1. Elektrik Dağıtım Şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 2D/3D CAD elektrik projelendirme.<br>2. Resmi Kurum onay takipleri, mimari çakışma kontrolü ve tesis ruhsat belgelendirme Danışmanlığı.)',
+      '2. Kısa Devre, Yük Akışı ve Gerilim Düşümü Hesaplamaları (Çözüm ve Hizmetler : <br>1. ETAP, Neplan ve SKM PowerTools mühendislik simülasyon yazılımları ile hat yük akışı analizi.<br>2. IEC 60909 standardında 3 faz / tek faz kısa devre akımları ve kablo gerilim düşümü hesap raporları.)',
+      '3. Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri (Çözüm ve Hizmetler : <br>1. Şebeke koruma röleleri aşırı akım, toprak arıza ve selektivite zaman koordinasyon eğrilerinin çizimi.<br>2. Arıza anında sadece ilgili şalterin açmasını sağlayan basamaklı selektivite mühendislik raporu.)',
+      '4. Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri (Çözüm ve Hizmetler : <br>1. Bakanlık ve EDAŞ yetkili heyetleri ile saha eksik listesi (punch list) inceleme ve kabul yönetimi.<br>2. İşletme belgesi, tesis ruhsatı, topraklama/iç tesisat ölçüm raporları ve müşavirlik hizmetleri.)'
     ],
     slides: [
       {
@@ -687,10 +687,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/yg_trafo_merkezi_user.png',
     desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon altyapıları.',
     specs: [
-      '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
-      'Yüksek Gerilim Enerji İletim Hatları ve Direk Tesisatı',
-      'SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları',
-      'TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu'
+      '1. 154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası (Üretici & Ürün Çözümleri : <br>1. Hitachi Energy / ABB, Siemens Energy, GE Grid Solutions 154kV / 380kV güç trafoları.<br>2. TEİAŞ şartnamelerine tam uyumlu AIS / GIS açık ve kapalı şalt sahası anahtar teslim taahhüdü.)',
+      '2. Yüksek Gerilim Enerji İletim Hatları ve Direk Tesisatı (Üretici & Ürün Çözümleri : <br>1. Mitaş Enerji, Şa-Ra Grubu kafes çelik direkler ve Mimsan yüksek gerilim iletken donanımları.<br>2. 154 kV / 380 kV 2x3B Pheasant / Cardinal iletken çekimi ve tel çekme sahası altyapısı.)',
+      '3. SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları (Üretici & Ürün Çözümleri : <br>1. Siemens 3AP1, ABB LTB SF6 canlı tank kesiciler, Pfiffner / Trench akım-gerilim trafoları.<br>2. Döner ve düşey mekanizmalı açık şalt ayırıcı üniteleri ve bara sistemleri montajı.)',
+      '4. TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu (Üretici & Ürün Çözümleri : <br>1. SEL-421 / SEL-487, Siemens SIPROTEC 5, ABB Relion 670 serisi hat koruma ve fider kontrol röleleri.<br>2. TEİAŞ RYS ve YTM haberleşme protokolleri uyumlu RTU (IEC 60870-5-104) ve SCADA pano sistemleri.)'
     ],
     slides: [
       {
@@ -757,10 +757,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_cow.jpg',
     desc: 'Geçici kapsama gerektiren etkinlik, afet ve acil alanlar için Cell on Wheels (COW) mobil baz istasyonu çözümleri.',
     specs: [
-      'COW (Cell on Wheels) Araç Üstü Mobil Baz İstasyonu Kurulumu',
-      'Büyük Organizasyon & Etkinlikler için Geçici Kapsama Çözümleri',
-      'Doğal Afet ve Acil Durum Sahaları için Hızlı Devreye Alma',
-      'Güneş Enerjisi ve Jeneratör Destekli Off-Grid COW Sistemleri'
+      '1. COW (Cell on Wheels) Araç Üstü Mobil Baz İstasyonu Kurulumu (Üretici & Ürün Çözümleri : <br>1. Rohn, Will-Burt hidrolik/teleskobik mast kuleleri ve özel imalat araç üstü kompozit kabinler.<br>2. Ericsson/Nokia entegre multi-band baz istasyonu ve uydu/radyolink altyapısı kurulumu.)',
+      '2. Büyük Organizasyon & Etkinlikler İçin Geçici Kapsama Çözümleri (Çözüm ve Hizmetler : <br>1. Stadyum, konser ve fuar alanlarında anlık yüksek insan yoğunluğuna özel mobil kapasite artırımı.<br>2. Hızlı intikal, yerinde devreye alma ve etkinlik süresince canlı şebeke izleme operasyonu.)',
+      '3. Doğal Afet ve Acil Durum Sahaları İçin Hızlı Devreye Alma (Çözüm ve Hizmetler : <br>1. Deprem, yangın ve afet bölgelerinde haberleşmenin kesintisiz sürdürülmesi için acil intikal.<br>2. Otonom uydu transmisyonu (VSAT/Starlink) ile merkeze doğrudan bağlantı sağlama.)',
+      '4. Güneş Enerjisi ve Jeneratör Destekli Off-Grid COW Sistemleri (Üretici & Ürün Çözümleri : <br>1. Victron Energy, Aksa Jeneratör, Lithium-ion BESS batarya ve katlanabilir solar paneller.<br>2. Şebekeden bağımsız (off-grid) sahalarda 7/24 yakıt tasarruflu hibrit enerji beslemesi.)'
     ]
   },
   e_t5: {
@@ -925,9 +925,9 @@ const SERVICES_DATA = {
     cover: 'assets/images/ev_bess_solar_carport_user.jpg',
     desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC ultra hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Solar Carport & BESS entegrasyonu, Sicharge ürün ailesi ve modüler otopark çözümleri.',
     specs: [
-      'Solar Carport & BESS Entegre Yeşil Şarj İstasyonu Altyapısı',
-      'Endüstriyel Sicharge & DC Ultra Hızlı Şarj Ürün Ailesi (50 - 350+ kW)',
-      'Otopark & AVM Solar Sundurmalı Modüler Şarj İstasyonları'
+      '1. Solar Carport & BESS Entegre Yeşil Şarj İstasyonu Altyapısı (Üretici & Ürün Çözümleri : <br>1. Siemens Sicharge UC, ABB Terra HP 350kW, Schneider EVlink hızlı şarj istasyonları.<br>2. Güneş paneli sundurmalı (Solar Carport), BESS batarya depolama ve sıfır emisyonlu şarj altyapısı.)',
+      '2. Endüstriyel Sicharge & DC Ultra Hızlı Şarj Ürün Ailesi (Üretici & Ürün Çözümleri : <br>1. Siemens Sicharge D 160-300kW, Alpitronic HYC 300, Vestel EVC06 DC hızlı şarj üniteleri.<br>2. 50 kW - 350+ kW modüler güç kabinleri, dinamik güç paylaşımı ve Tip 2/CCS2/CHAdeMO soketler.)',
+      '3. Otopark & AVM Solar Sundurmalı Modüler Şarj Noktaları (Üretici & Ürün Çözümleri : <br>1. Schneider EVlink Pro AC 22kW, Ensto One Home, Phoenix Contact şarj denetleyicileri.<br>2. AVM, otel ve ticari binalar için OCPP 1.6J / 2.0.1 entegreli merkezi faturalandırmalı şarj noktaları.)'
     ],
     slides: [
       {
@@ -1016,7 +1016,7 @@ const SERVICES_DATA = {
       'Ağ ve Bağlantı Cihazları: Router (yönlendirici), Switch (anahtar), Firewall (güvenlik duvarı), Access Point ve fiber optik kablolama. (Cisco Catalyst/Nexus, Fortinet FortiGate, Palo Alto Networks, Juniper Networks, Aruba, Huawei CloudEngine, Ruckus)',
       'İstemci Donanımları: Kurumsal masaüstü bilgisayarlar, dizüstü bilgisayarlar, iş istasyonları (Workstation) ve terminaller. (Dell OptiPlex/Precision/Latitude, HP ZBook/EliteBook, Lenovo ThinkPad/ThinkStation, Apple Mac)',
       'KVM, PDU, UPS, PUE Sistemleri: Akıllı yönetilebilir PDU, KVM over IP switchler, kesintisiz güç kaynakları (UPS) ve PUE izleme sistemleri. (APC by Schneider Electric, Vertiv Liebert, Eaton, Tripp Lite, Raritan, CyberPower)',
-      'Tedarik Süreci Aşamaları: <br>1. İhtiyaç Analizi : Kurumun mevcut kapasitesi ve gelecek projeksiyonları çıkarılır.<br>2. Marka ve Model Seçimi : Fiyat/performans, garanti koşulları ve yedek parça bulunabilirliği değerlendirilir.<br>3. Teklif ve Satın Alma : Yetkili distribütörlerden veya üreticilerden en uygun maliyetli teklifler toplanır.<br>4. Lojistik ve Entegrasyon : Cihazların güvenli taşınması, montajı ve mevcut sistemle uyumlaştırılması sağlanır.'
+      '5. Tedarik Süreci Aşamaları (Çözüm ve Hizmetler : <br>1. İhtiyaç Analizi : Kurumun mevcut kapasitesi ve gelecek projeksiyonları çıkarılır.<br>2. Marka ve Model Seçimi : Fiyat/performans, garanti koşulları ve yedek parça bulunabilirliği değerlendirilir.<br>3. Teklif ve Satın Alma : Yetkili distribütörlerden veya üreticilerden en uygun maliyetli teklifler toplanır.<br>4. Lojistik ve Entegrasyon : Cihazların güvenli taşınması, montajı ve mevcut sistemle uyumlaştırılması sağlanır.)'
     ]
   },
   e_b2: {
@@ -1025,7 +1025,7 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_fiber_network.jpg',
     desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme çözümleri, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma altyapıları.',
     specs: [
-      'Yönetilen Hizmetler : NOC, SOC, Managed Services, Trafik, Enerji, Soğutma, Kabinet, Sunucu ölçeklendirme. (1. 7/24 NOC & SOC Ağ ve Güvenlik İzleme: Kesintisiz şebeke altyapısı, anlık trafik analizi ve 7/24 tehdit yönetimi.<br>2. Veri Merkezi İklimlendirme ve Enerji Yönetimi: Kabinet bazlı yüksek hassasiyetli soğutma ve kesintisiz enerji altyapısı.<br>3. Sunucu ve Donanım Ölçeklendirme: Esnek x86/x64 fiziki ve sanal sunucu kaynak tahsisi ve kapasite artırımı.<br>4. Uçtan Uca Yönetilen Servis Mimarisi: Dedicated Server, Sanal Sunucu (VPS/VDS) ve Co-Location barındırma çözümleri.)',
+      '1. Yönetilen Hizmetler : NOC, SOC, Managed Services, Trafik, Enerji, Soğutma, Kabinet, Sunucu ölçeklendirme. (Üretici & Ürün Çözümleri : <br>1. 7/24 NOC & SOC Ağ ve Güvenlik İzleme: Kesintisiz şebeke altyapısı, anlık trafik analizi ve 7/24 tehdit yönetimi.<br>2. Veri Merkezi İklimlendirme ve Enerji Yönetimi: Kabinet bazlı yüksek hassasiyetli soğutma ve kesintisiz enerji altyapısı.<br>3. Sunucu ve Donanım Ölçeklendirme: Esnek x86/x64 fiziki ve sanal sunucu kaynak tahsisi ve kapasite artırımı.<br>4. Uçtan Uca Yönetilen Servis Mimarisi: Dedicated Server, Sanal Sunucu (VPS/VDS) ve Co-Location barındırma çözümleri.)',
       'Yüksek Performanslı Sunucu : CPU / GPU / TPU / NPU / DPU / QPU compute ölçeklendirme. (NVIDIA H100/H200/B200 Grace Hopper, AMD EPYC/Instinct MI300X, Intel Xeon 6/Gaudi 3, Google TPU v5p, AWS Trainium/Inferentia)',
       'Yedekleme Hizmetleri : BackUp / İş sürekliliği ve Felaket Kurtarma DR çözümleri. (Veeam Data Platform, Commvault Cloud, Cohesity DataProtect, Rubrik Security Cloud, Zerto Site Recovery, Dell PowerProtect DD)',
       'Network Çözümleri : SD-WAN, WAF, MPLS, VPN, VoIP, NLB, IPsec, WLAN, Firewall, Router, Switch, Access Point, UTM. (Fortinet FortiGate/FortiManager, Palo Alto PAN-OS/Prisma SD-WAN, Cisco Meraki/Viptela, F5 BIG-IP WAF/LTM, VMware Velocloud, Check Point Quantum)',
@@ -1060,12 +1060,26 @@ function openServiceModal(id) {
   track.innerHTML = '';
   indicators.innerHTML = '';
 
-  // Build spec slides array (explicit slides or auto-generate from specs list)
-  const specSlides = data.slides || (data.specs ? data.specs.map(spec => ({
-    title: spec,
-    desc: 'Uluslararası standartlarda profesyonel mühendislik tasarımı, tedarik yönetimi ve saha entegrasyonu.',
-    image: data.cover
-  })) : []);
+  // Build spec slides array: ALWAYS use data.specs for text content to ensure formatted Üretici & Ürün / Çözüm ve Hizmetler render on all cards, while pulling custom images from data.slides
+  let specSlides = [];
+  if (data.specs && data.specs.length > 0) {
+    specSlides = data.specs.map((specText, idx) => {
+      let img = data.cover;
+      if (data.slides && data.slides.length > 0) {
+        if (data.slides.length === data.specs.length + 1 && data.slides[idx + 1] && data.slides[idx + 1].image) {
+          img = data.slides[idx + 1].image;
+        } else if (data.slides[idx] && data.slides[idx].image) {
+          img = data.slides[idx].image;
+        }
+      }
+      return {
+        title: specText,
+        image: img
+      };
+    });
+  } else if (data.slides) {
+    specSlides = data.slides;
+  }
 
   totalSvcSlides = 1 + specSlides.length;
   currentSvcSlideIndex = 0;
@@ -1103,14 +1117,14 @@ function openServiceModal(id) {
       titleHtml = `<span class="svc-spec-title-prefix">${prefix}</span> <span class="svc-spec-title-rest">${rest}</span>`;
     }
 
-    // Check if title contains vendor/product in parentheses at the end e.g. (Dell, HPE...)
+    // Check if title contains vendor/product in parentheses at the end (supports nested parens)
     let vendorText = '';
     let cleanTitleHtml = titleHtml;
-    const parenMatch = slide.title.match(/\s*\(([^()]+)\)\s*$/);
+    const parenMatch = slide.title.match(/\s*\(((?:Üretici & Ürün Çözümleri|Çözüm ve Hizmetler|[\w\s\&\/]+:).*)\)\s*$/) || slide.title.match(/\s*\(([^()]+)\)\s*$/);
     if (parenMatch) {
       vendorText = parenMatch[1];
-      // strip parenthetical from titleHtml
-      const titleWithoutParen = slide.title.replace(/\s*\(([^()]+)\)\s*$/, '').trim();
+      const fullParenStr = parenMatch[0];
+      const titleWithoutParen = slide.title.slice(0, slide.title.length - fullParenStr.length).trim();
       if (titleWithoutParen.includes(':')) {
         const colonIndex = titleWithoutParen.indexOf(':');
         const prefix = titleWithoutParen.substring(0, colonIndex + 1);
@@ -1122,9 +1136,13 @@ function openServiceModal(id) {
     }
 
     let labelName = 'Üretici & Ürün Çözümleri:';
-    if (vendorText && vendorText.includes('Çözüm ve Hizmetler :')) {
-      labelName = 'Çözüm ve Hizmetler :';
-      vendorText = vendorText.replace('Çözüm ve Hizmetler :', '').trim();
+    if (vendorText) {
+      if (vendorText.includes('Çözüm ve Hizmetler')) {
+        labelName = 'Çözüm ve Hizmetler :';
+        vendorText = vendorText.replace(/Çözüm ve Hizmetler\s*:/g, '').trim();
+      } else {
+        vendorText = vendorText.replace(/Üretici & Ürün Çözümleri\s*:/g, '').trim();
+      }
     }
     const finalDesc = vendorText ? `<strong>${labelName}</strong><br>${vendorText}` : '';
 
