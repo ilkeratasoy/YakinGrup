@@ -999,7 +999,7 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_fiber_network.jpg',
     desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme çözümleri, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma altyapıları.',
     specs: [
-      'Yönetilen Hizmetler : NOC, SOC, Managed Services, Trafik, Enerji, Soğutma, Kabinet, x64-86 Sunucu ölçeklendirme. (Dedicated / Virtual / Co-Location)',
+      'Yönetilen Hizmetler : NOC, SOC, Managed Services, Trafik, Enerji, Soğutma, Kabinet, Sunucu ölçeklendirme. (1. 7/24 NOC & SOC Ağ ve Güvenlik İzleme: Kesintisiz şebeke altyapısı, anlık trafik analizi ve 7/24 tehdit yönetimi.<br>2. Veri Merkezi İklimlendirme ve Enerji Yönetimi: Kabinet bazlı yüksek hassasiyetli soğutma ve kesintisiz enerji altyapısı.<br>3. Sunucu ve Donanım Ölçeklendirme: Esnek x86/x64 fiziki ve sanal sunucu kaynak tahsisi ve kapasite artırımı.<br>4. Uçtan Uca Yönetilen Servis Mimarisi: Dedicated Server, Sanal Sunucu (VPS/VDS) ve Co-Location barındırma çözümleri.)',
       'Yüksek Performanslı Sunucu : CPU / GPU / TPU / NPU / DPU / QPU compute ölçeklendirme. (NVIDIA H100/H200/B200 Grace Hopper, AMD EPYC/Instinct MI300X, Intel Xeon 6/Gaudi 3, Google TPU v5p, AWS Trainium/Inferentia)',
       'Yedekleme Hizmetleri : BackUp / İş sürekliliği ve Felaket Kurtarma DR çözümleri. (Veeam Data Platform, Commvault Cloud, Cohesity DataProtect, Rubrik Security Cloud, Zerto Site Recovery, Dell PowerProtect DD)',
       'Network Çözümleri : SD-WAN, WAF, MPLS, VPN, VoIP, NLB, IPsec, WLAN, Firewall, Router, Switch, Access Point, UTM. (Fortinet FortiGate/FortiManager, Palo Alto PAN-OS/Prisma SD-WAN, Cisco Meraki/Viptela, F5 BIG-IP WAF/LTM, VMware Velocloud, Check Point Quantum)',
