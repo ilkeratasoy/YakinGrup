@@ -1023,11 +1023,11 @@ const SERVICES_DATA = {
     cover: 'assets/images/gallery_datacenter_v2.jpg',
     desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
     specs: [
-      'Kapasite ve Yerleşim: Kabin (Rack) yerleşimi, ağırlık sınırları ve taban zemin altı kablolama düzeni, tavan busbar sistemleri ve Top of Rack (ToR) SW Data Center çözümleri.',
-      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü ve enerji verimliliği kabin tipi sıvı soğutma.',
-      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı takibi ve yedekli enerji mimarisi.',
-      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama.',
-      'Kapsayıcı Sistemler: Modüler & konteyner tipi taşınabilir DRS veri merkezleri, Shell&Core ünite tasarımları.'
+      'Kapasite ve Yerleşim: Kabin (Rack) yerleşimi, ağırlık sınırları ve taban zemin altı kablolama düzeni, tavan busbar sistemleri ve Top of Rack (ToR) SW Data Center çözümleri. (APC NetShelter SX/VX, Vertiv VR Rack, Eaton RS Enclosure, EAE Busbar, Cisco Nexus 9300 ToR Switch, Arista 7050X3)',
+      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü, PUE hedefleri ve kabin tipi sıvı soğutma entegrasyonu. (Vertiv Liebert CRV/PDX, Schneider Uniflair InRow, Stulz CyberAir, CoolIT Direct Liquid Cooling, Rittal LCP Inline)',
+      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı izleme, akıllı PDU ve yedekli A+B enerji mimarisi. (APC AP8959 Managed PDU, Vertiv Geist GU2 PDU, Eaton EATS Transfer Switch, Socomec Masterys UPS, Janitza UMG Power Monitor)',
+      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, biyometrik geçiş kontrolü, CCTV ve erken uyarı yangın algılama. (Schneider EcoStruxure IT DCIM, Vertiv Trellis Platform, Sunbird DCIM, Honeywell Pro-Watch, Axis Communications IP CCTV, Xtralis VESDA Early Fire Detection)',
+      'Kapsayıcı Sistemler: Modüler & konteyner tipi taşınabilir DRS veri merkezleri, ISO konteyner ve Shell&Core kabinet ünite tasarımları. (Schneider EcoStruxure Modular Data Center, Vertiv SmartMod, Huawei FusionModule2000, Rittal RiMatrix Micro Data Center)'
     ]
   },
 };
