@@ -743,10 +743,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_tetra.jpg',
     desc: 'Polis, jandarma, itfaiye ve kamu güvenliği birimleri için TETRA (Terrestrial Trunked Radio) dijital trunking telsiz sistemi kurulum ve entegrasyonu.',
     specs: [
-      'TETRA Altyapı (Base Station, BSC, Dispatcher) Kurulumu',
-      'El Telsizi, Araç Telsizi ve Ağ Yönetim Sistemi Entegrasyonu',
-      'Şifreli Haberleşme ve Öncelikli Kanal Yönetimi',
-      'Kamu Güvenliği ve Kritik Altyapı TETRA Ağ Tasarımı'
+      '1. TETRA Altyapı (Base Station, BSC, Dispatcher) Kurulumu (Üretici & Ürün Çözümleri : <br>1. Motorola DIMETRA IP, Airbus DS TACTILON Dabat, Hytera HBS (Hybrid Base Station) altyapıları.<br>2. Çok siteli geniş alan şebeke (Wide Area Network) TETRA sistemi ve merkezi kontrol odası.)',
+      '2. El Telsizi, Araç Telsizi ve Ağ Yönetim Sistemi Entegrasyonu (Üretici & Ürün Çözümleri : <br>1. Motorola MTP3550, Airbus THR9, Hytera PD795Ex ATEX onaylı patlama korumalı el telsizleri.<br>2. Araç telsizleri, GPS takip modülleri ve merkezi Ağ Yönetim Sistemi (NMS) konsol entegrasyonu.)',
+      '3. Şifreli Haberleşme ve Öncelikli Kanal Yönetimi (Çözüm ve Hizmetler : <br>1. TETRA TEA1/TEA2 hava arayüzü şifreleme ve uçtan uca E2EE kriptografik haberleşme güvenliği.<br>2. Yetki seviyesine göre öncelikli kanal tahsisi ve acil çağrı (Emergency Call) yönetimi.)',
+      '4. Kamu Güvenliği ve Kritik Altyapı TETRA Ağ Tasarımı (Çözüm ve Hizmetler : <br>1. ETSI EN 300 392 TETRA standardına uygun frekans planlaması ve bölgesel kapsama tasarımı.<br>2. Enerji, su, doğalgaz ve ulaşım kritik altyapılarında güvenli trunking haberleşme mimarisi.)'
     ]
   },
   e_t6: {
@@ -755,10 +755,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_dpo.jpg',
     desc: 'Ağ altyapısı dizayn, RF planlama, frekans koordinasyonu, kapsama analizleri ve şebeke optimizasyon hizmetleri.',
     specs: [
-      'RF Kapsama & Kapasite Planlama ve Frekans Koordinasyonu',
-      'Ağ Altyapısı Mimari Dizayn ve Teknik Şartname Hazırlama',
-      'Drive Test, Walk Test ve Sinyal Ölçüm Kampanyaları',
-      'KPI Analizi ve Şebeke Performans Optimizasyonu Raporları'
+      '1. RF Kapsama & Kapasite Planlama ve Frekans Koordinasyonu (Üretici & Ürün Çözümleri : <br>1. Atoll, Asset 3G/4G/5G, Forsk RF planlama yazılımları ile hücre yerleşim ve frekans simülasyonu.<br>2. BTSH frekans koordinasyonu, anten azimut/tilt hesaplamaları ve kapsama boşluğu analizi.)',
+      '2. Ağ Altyapısı Mimari Dizayn ve Teknik Şartname Hazırlama (Çözüm ve Hizmetler : <br>1. Çekirdek ağ (Core), taşıyıcı (Transport) ve erişim (RAN) katmanı mimari tasarım ve boyutlama.<br>2. Ekipman teknik şartnamesi (RFQ/RFP) hazırlanması ve üretici teknik değerlendirmesi.)',
+      '3. Drive Test, Walk Test ve Sinyal Ölçüm Kampanyaları (Üretici & Ürün Çözümleri : <br>1. TEMS Investigation, Nemo Outdoor, XCAL-Solo 5G analizörleri ile sahada canlı şebeke ölçümü.<br>2. CQT (Call Quality Test), DT (Drive Test) kampanyaları ve bölgesel kapsama haritaları.)',
+      '4. KPI Analizi ve Şebeke Performans Optimizasyonu Raporları (Çözüm ve Hizmetler : <br>1. OSS (Ericsson ENIQ, Nokia NetAct) veri madenciliği ile şebeke KPI trendi ve kök neden analizi.<br>2. Drop call, handover başarısızlıkları ve veri hızı düşüşlerinin optimizasyon aksiyon raporu.)'
     ]
   },
   e_t7: {
@@ -767,10 +767,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_wdm.jpg',
     desc: 'DWDM ve CWDM optik iletim sistemleri kurulumu, kapasite artırımı ve metro/uzun mesafe fiber optik ağ altyapı çözümleri.',
     specs: [
-      'DWDM/CWDM Optik Multiplexer & OADM Kurulumu',
-      'Fiber Optik Omurga Kapasite Artırımı ve Genişletme',
-      'Metro Ethernet ve Uzun Mesafe WDM Ağ Tasarımı',
-      'OTDR & Optik Güç Ölçümü ile Bağlantı Testi & Sertifikasyon'
+      '1. DWDM/CWDM Optik Multiplexer & OADM Kurulumu (Üretici & Ürün Çözümleri : <br>1. Ciena 6500 Packet-Optical, Nokia 1830 PSS, Huawei OptiX OSN 9800 DWDM platform çözümleri.<br>2. Çok kanallı (96x100G / 400G Flex-Grid) ROADM ile dinamik optik ağ anahtarlama altyapısı.)',
+      '2. Fiber Optik Omurga Kapasite Artırımı ve Genişletme (Çözüm ve Hizmetler : <br>1. Mevcut fiber altyapı üzerinde Raman ve EDFA optik kuvvetlendirici ilave ile kapasite katlaması.<br>2. QAM-256, QPSK ve DP-16QAM modülasyon teknikleriyle spektral verimlilik optimizasyonu.)',
+      '3. Metro Ethernet ve Uzun Mesafe WDM Ağ Tasarımı (Üretici & Ürün Çözümleri : <br>1. Coriant / Infinera GX Series, ECI Apollo OTN, Adtran Metro Ethernet taşıma ekipmanları.<br>2. Şehiriçi ring topoloji metro ağları ve 1000+ km uzun mesafe terrestrial omurga hat tasarımı.)',
+      '4. OTDR & Optik Güç Ölçümü ile Bağlantı Testi & Sertifikasyon (Üretici & Ürün Çözümleri : <br>1. JDSU / VIAVI T-BERD 8000, Yokogawa AQ7280 OTDR ve Fluke Networks OF-500 fiber test setleri.<br>2. Ek kayıpları, yansıma haritaları ve link bütçe raporlaması ile profesyonel fiber sertifikasyon.)'
     ]
   },
   e_t8: {
@@ -779,10 +779,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_fttx.jpg',
     desc: 'FTTH, FTTB ve FTTC fiber abone bağlantısı altyapı tasarımı, döşeme, fiber dağıtım kutusu ve ONU/ONT kurulumları.',
     specs: [
-      'FTTH (Fiber to the Home) Abone Hat Tasarımı ve Döşemesi',
-      'Fiber Dağıtım Kutuları (FDP/FDB) ve Splitter Kurulumu',
-      'ONU / ONT / OLT Donanım Entegrasyonu ve Aktivasyonu',
-      'Servis Aktivasyon, Test ve Müşteri Kabul Raporlaması'
+      '1. FTTH (Fiber to the Home) Abone Hat Tasarımı ve Döşemesi (Üretici & Ürün Çözümleri : <br>1. Corning SMF-28 Ultra G.657.A2, Prysmian FlexRibbon mikro fiber kablo ve ADSS hava hatları.<br>2. GIS tabanlı ağ envanter sistemi ile mahalle ve bina bazlı GPON abone hat projelendirmesi.)',
+      '2. Fiber Dağıtım Kutuları (FDP/FDB) ve Splitter Kurulumu (Üretici & Ürün Çözümleri : <br>1. CommScope OptiSheath, Huawei ETP distribution box, PPC Broadband fiber bağlantı ekipmanları.<br>2. 1:8 / 1:16 / 1:32 PLC splitter kaskad dağıtımı ve pasif optik ağ güç bütçe hesabı.)',
+      '3. ONU / ONT / OLT Donanım Entegrasyonu ve Aktivasyonu (Üretici & Ürün Çözümleri : <br>1. Huawei MA5800 OLT, ZTE C650, Nokia 7360 ISAM FX ve GPON/XGS-PON ONU/ONT terminalleri.<br>2. TR-069 ACS ile uzaktan ZTP (Zero Touch Provisioning) ve toplu ONU konfigürasyon yönetimi.)',
+      '4. Servis Aktivasyon, Test ve Müşteri Kabul Raporlaması (Çözüm ve Hizmetler : <br>1. RFC 2544 / Y.1564 Ethernet servis testi, BERT ve optik güç ölçümü ile hizmet kalite onayı.<br>2. Abone kabul formları, LAN tarafı bağlantı testi ve RFS (Ready For Service) onay raporlaması.)'
     ]
   },
   e_t9: {
@@ -791,10 +791,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_construction.jpg',
     desc: 'Baz istasyonu kule ve direk imalatı, montajı, YASS/şehiriçi kanallar, boru döşeme ve zemin sondajlı yeraltı kablo hatları.',
     specs: [
-      'Telekom Kule & Direk İmalat, Zemin Etüdü ve Montajı',
-      'Yeraltı Boru ve Kablo Kanalı (Trench) Döşeme İşleri',
-      'Beton Kablo Kanalı ve Menhol Yapım ve Tamamlama İşleri',
-      'YASS (Yol Altı Altyapı) & Belediye İzin Süreç Yönetimi'
+      '1. Telekom Kule & Direk İmalat, Zemin Etüdü ve Montajı (Çözüm ve Hizmetler : <br>1. Rüzgar yükü hesabı ve zemin sondaj raporlarına göre 20-80m monopol ve kafes çelik kule imalatı.<br>2. Kule yükleme kapasitesi analizi, zemin çelik temel ve kule montaj mühendislik süreç yönetimi.)',
+      '2. Yeraltı Boru ve Kablo Kanalı (Trench) Döşeme İşleri (Çözüm ve Hizmetler : <br>1. HDD (Yatay Yönlü Sondaj) ve geleneksel açık hendek yöntemi ile fiber optik boru hattı döşemesi.<br>2. PVC, HDPE ve çelik borular ile kablolara mekanik koruma altında güvenli yeraltı geçişleri.)',
+      '3. Beton Kablo Kanalı ve Menhol Yapım ve Tamamlama İşleri (Çözüm ve Hizmetler : <br>1. Belediye standartlarına uygun prefabrik ve yerinde döküm beton menhol ile baca yapımı.<br>2. Yol boyu beton kablo kanalı, kablo askı menholleri ve kapak, çerçeve malzeme temini.)',
+      '4. YASS (Yol Altı Altyapı) & Belediye İzin Süreç Yönetimi (Çözüm ve Hizmetler : <br>1. Belediye ve karayolları kurumlarına yol kazı, YASS ve zemin restorasyonu onay başvuruları.<br>2. İzin takibi, trafik çevirme planları ve çalışma sonrası asfalt/bordür restorasyon tamamlama.)'
     ]
   },
   e_t10: {
@@ -803,10 +803,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_audit.jpg',
     desc: 'Telekom altyapısı saha denetimi, teknik uyumluluk raporlaması, kalite güvence (QA) testleri ve bağımsız proje yönetimi.',
     specs: [
-      'Saha Denetimi ve Teknik Uyumluluk Kontrol Raporları',
-      'Kalite Güvence (QA) Testleri ve Kabul Protokolleri',
-      'Bağımsız Proje Yönetimi (PMO) ve Milestone Takibi',
-      'Operatör ve Yüklenici Performans Değerlendirme Raporları'
+      '1. Saha Denetimi ve Teknik Uyumluluk Kontrol Raporları (Çözüm ve Hizmetler : <br>1. Baz istasyonu, IBS, fiber dağıtım ve kule tesisatlarının operatör teknik şartnamesi uyumluluğu denetimi.<br>2. Saha eksik listesi (punch list) takibi ve sonuçlarını belgeleyen dijital saha denetim raporları.)',
+      '2. Kalite Güvence (QA) Testleri ve Kabul Protokolleri (Çözüm ve Hizmetler : <br>1. RF sinyal gücü, fiber optik kayıp, güç ve topraklama testleri ile bağımsız kalite kabul protokolleri.<br>2. FAT (Factory Acceptance Test) ve SAT (Site Acceptance Test) raporlarının hazırlanması.)',
+      '3. Bağımsız Proje Yönetimi (PMO) ve Milestone Takibi (Çözüm ve Hizmetler : <br>1. MS Project / Primavera P6 programları ile proje takvimi, iş gücü ve kaynak yönetim planlaması.<br>2. Haftalık/aylık milestone ilerleme raporları, risk kaydı ve değişiklik yönetimi süreci.)',
+      '4. Operatör ve Yüklenici Performans Değerlendirme Raporları (Çözüm ve Hizmetler : <br>1. KPI bazlı yüklenici puanlama kartı ve proje SLA uyum denetim raporları.<br>2. Operatör bayi/yüklenici sözleşme performansı çeyreklik değerlendirme ve yaptırım önerileri.)'
     ]
   },
   e_t11: {
@@ -815,10 +815,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_lv.jpg',
     desc: 'Telekom tesisleri ve baz istasyonlarına yönelik AG güç panosu, acil jeneratör bağlantısı ve kesintisiz güç besleme (UPS) sistemleri.',
     specs: [
-      'Baz İstasyonu AC/DC Güç Altyapısı ve Pano Kurulumu',
-      'UPS Kesintisiz Güç Kaynağı Kurulumu ve Akü Grupları',
-      'Jeneratör Bağlantısı ve Otomatik Transfer Şalter (ATS)',
-      'Enerji Verimliliği Analizi ve Güç Yönetim Sistemleri'
+      '1. Baz İstasyonu AC/DC Güç Altyapısı ve Pano Kurulumu (Üretici & Ürün Çözümleri : <br>1. Eltek Flatpack2, Huawei ETP48100, Vertiv NetSure 701 DC güç sistemi ve akü rafları.<br>2. -48V DC dağıtım panelları, PDU ve akü grup kabini kurulumu ile kapasite hesapları.)',
+      '2. UPS Kesintisiz Güç Kaynağı Kurulumu ve Akü Grupları (Üretici & Ürün Çözümleri : <br>1. Eaton 9PX / 9SX, APC Galaxy VS / VX, Vertiv Liebert GXT5 modüler online UPS sistemleri.<br>2. VRLA ve Lityum-iyon akü grupları, kapasite testi ve akü ömür yönetim yazılımları.)',
+      '3. Jeneratör Bağlantısı ve Otomatik Transfer Şalter (ATS) (Üretici & Ürün Çözümleri : <br>1. Aksa Power Generation, Cummins, Kohler ve Perkins motorlu telekom sahası jeneratörleri.<br>2. Schneider / Socomec ATYS ATS şalter ve jeneratör uzaktan başlatma otomasyon paneli.)',
+      '4. Enerji Verimliliği Analizi ve Güç Yönetim Sistemleri (Çözüm ve Hizmetler : <br>1. Site bazında PUE (Power Usage Effectiveness) ölçümü ve enerji giderini düşüren optimizasyon raporu.<br>2. Uzaktan akü şarj, yük dengesi ve enerji tüketim izleme yazılımı entegrasyonu.)'
     ]
   },
   e_c1: {
