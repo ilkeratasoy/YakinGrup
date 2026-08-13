@@ -851,10 +851,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_regulation_advisory.jpg',
     desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
     specs: [
-      '1. ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) Uyum Süreci (Çözüm ve Hizmetler : <br>Kurumsal BGYS politikalarının hazırlanması, varlık yönetimi ve belgelendirme danışmanlığı.<br>İç denetim süreçlerinin yürütülmesi ve uluslararası ISO 27001 sertifikasyon hazırlığı.)',
-      '2. IEC 62443 Endüstriyel Kontrol Sistemleri Siber Güvenlik Standardı (Çözüm ve Hizmetler : <br>OT, SCADA ve fabrika otomasyon sistemlerinin IEC 62443 standartlarına tam uyum denetimi.<br>Siber-fiziksel sistemler için alan (zone) ve kanal (conduit) güvenlik mimarisi tasarımı.)',
-      '3. KVKK & GDPR Kişisel Verilerin Korunması Hukuki ve Teknik Uyum (Çözüm ve Hizmetler : <br>VERBİS kaydı, kişisel veri envanteri hazırlığı ve hukuki metinlerin düzenlenmesi.<br>Veri sızıntısı önleme (DLP), yetki matrisi ve teknik veri koruma altyapı kurulumu.)',
-      '4. Kurumsal Risk Analizi ve Bilgi Güvenliği Politikaları Oluşturma (Çözüm ve Hizmetler : <br>Kurum genelinde siber risk haritasının çıkarılması ve tehdit önceliklendirmesi.<br>İş sürekliliği, felaket kurtarma ve bilgi güvenliği prosedürlerinin kurum kültürüne entegrasyonu.)'
+      '1. ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) Uyum Süreci (Çözüm ve Hizmetler : <br>1. Kurumsal BGYS politikalarının hazırlanması, varlık yönetimi ve belgelendirme danışmanlığı.<br>2. İç denetim süreçlerinin yürütülmesi ve uluslararası ISO 27001 sertifikasyon hazırlığı.)',
+      '2. IEC 62443 Endüstriyel Kontrol Sistemleri Siber Güvenlik Standardı (Çözüm ve Hizmetler : <br>1. OT, SCADA ve fabrika otomasyon sistemlerinin IEC 62443 standartlarına tam uyum denetimi.<br>2. Siber-fiziksel sistemler için alan (zone) ve kanal (conduit) güvenlik mimarisi tasarımı.)',
+      '3. KVKK & GDPR Kişisel Verilerin Korunması Hukuki ve Teknik Uyum (Çözüm ve Hizmetler : <br>1. VERBİS kaydı, kişisel veri envanteri hazırlığı ve hukuki metinlerin düzenlenmesi.<br>2. Veri sızıntısı önleme (DLP), yetki matrisi ve teknik veri koruma altyapı kurulumu.)',
+      '4. Kurumsal Risk Analizi ve Bilgi Güvenliği Politikaları Oluşturma (Çözüm ve Hizmetler : <br>1. Kurum genelinde siber risk haritasının çıkarılması ve tehdit önceliklendirmesi.<br>2. İş sürekliliği, felaket kurtarma ve bilgi güvenliği prosedürlerinin kurum kültürüne entegrasyonu.)'
     ]
   },
   e_s4: {
