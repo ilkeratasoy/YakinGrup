@@ -982,14 +982,15 @@ const SERVICES_DATA = {
   // Enerji Küme B — Veri Merkezi Sistemleri & Entegrasyonları
   e_b1: {
     badge: 'HARDWARE & INFRASTRUCTURE',
-    title: 'Altyapı ve Donanım Bileşenleri',
+    title: 'Altyapı Donanım Bileşenleri Tedariği',
     cover: 'assets/images/data_center_construction_1785092614608.png',
-    desc: 'Veri merkezi fiziksel altyapısı, rack kabinetler, ToR SW çözümleri, hassas sıvı soğutma, modüler konteyner sistemleri ve yükseltilmiş zemin mühendisliği.',
+    desc: 'Kurumsal sunuculardan ağ ve güvenlik cihazlarına, KVM/PDU/UPS sistemlerinden istemci donanımlarına kadar uçtan uca yüksek performanslı IT altyapı donanım tedariği ve entegrasyonu.',
     specs: [
-      'Kabin ve Muhafaza: Rack kabinetler, busbar sistemleri ve Top of Rack (ToR) SW Data Center çözümleri',
-      'Enerji ve İklimlendirme: Kesintisiz güç kaynakları (UPS) ve hassas sıvı soğutma üniteleri',
-      'Kapsayıcı Sistemler: Modüler & konteyner tipi taşınabilir veri merkezleri, Shell and Core kabinet odaları',
-      'Fiziksel Altyapı: Yükseltilmiş zemin, tavan ve taban kablolama taşıyıcı sistemleri'
+      'Sunucu ve Veri Depolama: Fiziksel sunucular, blade sistemler, NAS/SAN depolama üniteleri ve disk dizileri. (Dell PowerEdge, HPE ProLiant, Lenovo ThinkSystem, NetApp FAS/AFF, Pure Storage FlashArray, IBM Storage)',
+      'Ağ ve Bağlantı Cihazları: Router (yönlendirici), Switch (anahtar), Firewall (güvenlik duvarı), Access Point ve fiber optik kablolama. (Cisco Catalyst/Nexus, Fortinet FortiGate, Palo Alto Networks, Juniper Networks, Aruba, Huawei CloudEngine, Ruckus)',
+      'İstemci Donanımları: Kurumsal masaüstü bilgisayarlar, dizüstü bilgisayarlar, iş istasyonları (Workstation) ve terminaller. (Dell OptiPlex/Precision/Latitude, HP ZBook/EliteBook, Lenovo ThinkPad/ThinkStation, Apple Mac)',
+      'KVM, PDU, UPS, PUE Sistemleri: Akıllı yönetilebilir PDU, KVM over IP switchler, kesintisiz güç kaynakları (UPS) ve PUE izleme sistemleri. (APC by Schneider Electric, Vertiv Liebert, Eaton, Tripp Lite, Raritan, CyberPower)',
+      'Tedarik Süreci Aşamaları: İhtiyaç Analizi (Kapasite ve gelecek projeksiyonu) → Marka ve Model Seçimi (Fiyat/performans ve garanti) → Teklif ve Satın Alma (Yetkili distribütör/üretici tedariki) → Lojistik ve Entegrasyon (Güvenli taşıma, montaj ve uyumlaştırma)'
     ]
   },
   e_b2: {
