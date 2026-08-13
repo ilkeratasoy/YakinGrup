@@ -640,7 +640,7 @@ const SERVICES_DATA = {
       },
       {
         title: 'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
-        desc: 'High End Product & Global Tier-1 Vendor Entegrasyonu (Dell, HPE, Cisco, Fortinet, APC, Vertiv, Palo Alto).',
+        desc: 'Elektrik dağıtım şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 3D/2D CAD proje çizimleri, resmi onay takibi ve ruhsat belgelendirme süreç yönetimi.',
         image: 'assets/images/eng_tedas_approval_user.png'
       },
       {
@@ -669,7 +669,7 @@ const SERVICES_DATA = {
     slides: [
       {
         title: '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
-        desc: 'High End Product & Global Tier-1 Vendor Entegrasyonu (Dell, HPE, Cisco, Fortinet, APC, Vertiv, Palo Alto).',
+        desc: 'Elektrik dağıtım şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 3D/2D CAD proje çizimleri, resmi onay takibi ve ruhsat belgelendirme süreç yönetimi.',
         image: 'assets/images/yg_trafo_merkezi_user.png'
       },
       {
@@ -1037,7 +1037,7 @@ function openServiceModal(id) {
   // Build spec slides array (explicit slides or auto-generate from specs list)
   const specSlides = data.slides || (data.specs ? data.specs.map(spec => ({
     title: spec,
-    desc: 'High End Product & Global Tier-1 Vendor Entegrasyonu (Dell, HPE, Cisco, Fortinet, APC, Vertiv, Palo Alto).',
+    desc: 'Elektrik dağıtım şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 3D/2D CAD proje çizimleri, resmi onay takibi ve ruhsat belgelendirme süreç yönetimi.',
     image: data.cover
   })) : []);
 
