@@ -1006,18 +1006,6 @@ const SERVICES_DATA = {
       'Sanallaştırma Çözümleri : SDDC, SD Server/Storage/Network & VDI, Private/Public Cloud. (VMware vSphere/vSAN/NSX-T, Nutanix Cloud Infrastructure, Microsoft Azure Stack HCI, Red Hat OpenShift/OpenStack, AWS Outposts, Cisco HyperFlex)'
     ]
   },
-  e_b3: {
-    badge: 'REGULATION & ADVISORY',
-    title: 'Regülasyon, İhale Danışmanlığı & Asset Sizing',
-    cover: 'assets/images/tender_contract_management_1785010026255.png',
-    desc: 'KVKK, GDPR, ISO 27001/9001 hukuki ve teknik uyum süreçleri, Volume/Asset Sizing hesaplamaları ve RFP/RFQ ihale şartname danışmanlığı.',
-    specs: [
-      'Regülasyon Uyum: KVKK, GDPR, ISO 27001 & ISO 9001 teknik-idari tabloların adreslenmesi ve prosedür yazımı',
-      'Volume / Asset Sizing: İş büyüklüğüne göre kaynak, donanım, alan ve kapasite boyutlandırma hesabı',
-      'Doğru Maliyet Yönetimi: Fazla veya eksik yatırımı önleyen bütçe planlaması ve optimizasyon',
-      'İhale & Şartname Yönetimi: RFP, RFI, RFQ, RFx şartname hazırlığı, tedarikçi ve üretici yönetimi'
-    ]
-  },
   e_b4: {
     badge: 'WHITE SPACE & DCIM',
     title: 'Veri Merkezi Beyaz Alan (White Space) Yönetimi & DCIM',
