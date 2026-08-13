@@ -640,7 +640,7 @@ const SERVICES_DATA = {
       },
       {
         title: 'TEDAŞ / EDAŞ Elektrik Proje Çizimi ve Resmi Onay Süreçleri',
-        desc: 'Elektrik dağıtım şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 3D/2D CAD proje çizimleri, resmi onay takibi ve ruhsat belgelendirme süreç yönetimi.',
+        desc: 'Uluslararası standartlarda profesyonel mühendislik tasarımı, tedarik yönetimi ve saha entegrasyonu.',
         image: 'assets/images/eng_tedas_approval_user.png'
       },
       {
@@ -669,7 +669,7 @@ const SERVICES_DATA = {
     slides: [
       {
         title: '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
-        desc: 'Elektrik dağıtım şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 3D/2D CAD proje çizimleri, resmi onay takibi ve ruhsat belgelendirme süreç yönetimi.',
+        desc: 'Uluslararası standartlarda profesyonel mühendislik tasarımı, tedarik yönetimi ve saha entegrasyonu.',
         image: 'assets/images/yg_trafo_merkezi_user.png'
       },
       {
@@ -1037,7 +1037,7 @@ function openServiceModal(id) {
   // Build spec slides array (explicit slides or auto-generate from specs list)
   const specSlides = data.slides || (data.specs ? data.specs.map(spec => ({
     title: spec,
-    desc: 'Elektrik dağıtım şirketleri (TEDAŞ/EDAŞ) standartlarına uygun 3D/2D CAD proje çizimleri, resmi onay takibi ve ruhsat belgelendirme süreç yönetimi.',
+    desc: 'Uluslararası standartlarda profesyonel mühendislik tasarımı, tedarik yönetimi ve saha entegrasyonu.',
     image: data.cover
   })) : []);
 
@@ -1100,7 +1100,7 @@ function openServiceModal(id) {
       labelName = 'Çözüm ve Hizmetler :';
       vendorText = vendorText.replace('Çözüm ve Hizmetler :', '').trim();
     }
-    const finalDesc = vendorText ? `<strong>${labelName}</strong><br>${vendorText}` : (slide.desc || '');
+    const finalDesc = vendorText ? `<strong>${labelName}</strong><br>${vendorText}` : '';
 
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
