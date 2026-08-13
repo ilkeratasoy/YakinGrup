@@ -1414,6 +1414,7 @@ img { max-width: 100%; height: auto; display: block; }
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .energy-tile:hover {
   box-shadow: 0 16px 36px rgba(0,0,0,0.08);
