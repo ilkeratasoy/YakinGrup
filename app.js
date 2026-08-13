@@ -1022,10 +1022,11 @@ const SERVICES_DATA = {
     cover: 'assets/images/gallery_datacenter_v2.jpg',
     desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
     specs: [
-      'Kapasite ve Yerleşim: Kabin (rack) yerleşimi, ağırlık sınırları ve zemin altı kablolama düzeni',
-      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü ve enerji verimliliği',
-      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı takibi ve yedekli enerji mimarisi',
-      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama'
+      'Kapasite ve Yerleşim: Kabin (Rack) yerleşimi, ağırlık sınırları ve taban zemin altı kablolama düzeni, tavan busbar sistemleri ve Top of Rack (ToR) SW Data Center çözümleri.',
+      'İklimlendirme & PUE Optimizasyonu: Sıcak/soğuk koridor tasarımı, sıcaklık/nem kontrolü ve enerji verimliliği kabin tipi sıvı soğutma.',
+      'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı takibi ve yedekli enerji mimarisi.',
+      'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama.',
+      'Kapsayıcı Sistemler: Modüler & konteyner tipi taşınabilir DRS veri merkezleri, Shell&Core ünite tasarımları.'
     ]
   },
 };
