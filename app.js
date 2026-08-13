@@ -1028,18 +1028,6 @@ const SERVICES_DATA = {
       'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, geçiş kontrolü, CCTV ve erken uyarı yangın algılama'
     ]
   },
-  e_b5: {
-    badge: 'CYBERSECURITY & BMS',
-    title: 'Siber Güvenlik, SOC & Akıllı Bina Otomasyonu (BMS)',
-    cover: 'assets/images/energy_cybersecurity.jpg',
-    desc: 'IT/OT siber güvenlik danışmanlığı, 7/24 Güvenlik Operasyon Merkezi (SOC) kurulumu, Zayıf/Güçlü Akım tesisatı ve BMS bina otomasyonu.',
-    specs: [
-      'IT / OT Siber Güvenlik Mimarisi ve ISO 27001 / IEC 62443 Uyum Denetimleri',
-      'SOC (Güvenlik Operasyon Merkezi) 7/24 Kurulumu, Canlı İzleme & Penetrasyon Testleri',
-      'Zayıf Akım (ELV) & Güçlü / Kuvvetli Akım Tesisat ve Dağıtım Panosu Entegrasyonları',
-      'BMS (Building Management System) Akıllı Bina Otomasyonu & Merkezi Kontrol Yazılımları'
-    ]
-  }
 };
 
 // ── Service Slide Modal — One-Page Horizontal Slide Design ────────────────
