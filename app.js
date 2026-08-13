@@ -503,7 +503,7 @@ const SERVICES_DATA = {
         image: 'assets/images/mep_sihhi_yangin_user.jpg'
       },
       {
-        title: 'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning)',
+        title: 'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning) (Çözüm ve Hizmetler : <br>1. Uluslararası ASHRAE ve CIBSE standartlarına uygun MEP (Mekanik, Elektrik, Tesisat) 3D BIM mühendislik tasarımları ve saha çakışma (clash) analizleri.<br>2. Proje süreç yönetimi, iş programı takibi, malzeme onay süreçleri ve kalite kontrol denetimleri ile zamanında teslimat garantisi.<br>3. Sistemlerin fonksiyonel performans testleri, TAB (Test, Ayar, Dengeleme), devreye alma (Commissioning) ve geçici/kesin kabul resmi belgelendirmeleri.)',
         desc: 'MEP proje mühendisliği, saha koordinasyonu, test & devreye alma (commissioning) süreç yönetimi ve resmi kabul belgelendirme hizmetleri.',
         image: 'assets/images/mep_commissioning_user.png'
       }
