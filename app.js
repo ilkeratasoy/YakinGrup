@@ -1088,13 +1088,33 @@ function openServiceModal(id) {
       titleHtml = `<span class="svc-spec-title-prefix">${prefix}</span> <span class="svc-spec-title-rest">${rest}</span>`;
     }
 
+    // Check if title contains vendor/product in parentheses at the end e.g. (Dell, HPE...)
+    let vendorText = '';
+    let cleanTitleHtml = titleHtml;
+    const parenMatch = slide.title.match(/\s*\(([^()]+)\)\s*$/);
+    if (parenMatch) {
+      vendorText = parenMatch[1];
+      // strip parenthetical from titleHtml
+      const titleWithoutParen = slide.title.replace(/\s*\(([^()]+)\)\s*$/, '').trim();
+      if (titleWithoutParen.includes(':')) {
+        const colonIndex = titleWithoutParen.indexOf(':');
+        const prefix = titleWithoutParen.substring(0, colonIndex + 1);
+        const rest = titleWithoutParen.substring(colonIndex + 1).trim();
+        cleanTitleHtml = `<span class="svc-spec-title-prefix">${prefix}</span> <span class="svc-spec-title-rest">${rest}</span>`;
+      } else {
+        cleanTitleHtml = titleWithoutParen;
+      }
+    }
+
+    const finalDesc = vendorText ? `<strong>Öne Çıkan Üretici & Ürün Çözümleri:</strong> ${vendorText}` : (slide.desc || '');
+
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
       <div class="svc-slide-overlay"></div>
       <div class="svc-slide-spec-body">
         <div class="svc-spec-counter">TEKNİK ÖZELLİK ${idx + 1} / ${specSlides.length}</div>
-        <h4 class="svc-spec-title">${titleHtml}</h4>
-        <p class="svc-spec-desc">${slide.desc || ''}</p>
+        <h4 class="svc-spec-title">${cleanTitleHtml}</h4>
+        <p class="svc-spec-desc">${finalDesc}</p>
       </div>
     `;
     track.appendChild(specSlide);
