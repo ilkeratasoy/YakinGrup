@@ -369,10 +369,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/solar_rooftop_epc_user2.jpg',
     desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
     specs: [
-      'BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu',
-      'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC',
-      'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri',
-      'Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri'
+      '1. BIPV (Building Integrated Photovoltaics) Cephe ve Cam Entegrasyonu (Üretici & Ürün Çözümleri : <br>1. Onyx Solar BIPV cam paneller, Schüco fotovoltaik giydirme cephe sistemleri, SunStyle Roof entegrasyonu.<br>2. Bina kabuğunu aktif enerji üretimine dönüştüren yarı saydam / opak BIPV panel kurulum mühendisliği.)',
+      '2. Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC (Üretici & Ürün Çözümleri : <br>1. Schletter, K2 Systems ve Clenergy güneş panel taşıyıcı konstrüksiyon montaj sistemleri.<br>2. Mühendislik (E), Tedarik (P) ve İnşaat (C) tüm süreçlerini kapsayan anahtar teslim EPC taahhüdü.)',
+      '3. Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri (Üretici & Ürün Çözümleri : <br>1. LONGi Hi-MO 7 (N-Type HPBC), JA Solar DeepBlue 4.0 Pro, Trina Vertex S+ bifacial TOPCon paneller.<br>2. Çift taraflı ışık yakalayan yüksek verimli N-Type TOPCon / HJT teknolojisi ile maksimum kWh üretimi.)',
+      '4. Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri (Üretici & Ürün Çözümleri : <br>1. Huawei SUN2000 Smart String, Sungrow SG250HX, Fronius Tauro ve SMA Sunny Tripower invertörler.<br>2. BESS ve EV şarj entegreli hibrit invertör çözümleri ile uzaktan SCADA enerji yönetim otomasyonu.)'
     ],
     slides: [
       {
@@ -403,10 +403,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/wind_farm_cover_user.jpg',
     desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
     specs: [
-      'Türbin Altyapı, Temel ve Montaj Mühendisliği',
-      'Rüzgar Sahası Ölçüm, Verim ve Fizibilite Raporlaması',
-      'Orta / Yüksek Gerilim Şebeke Bağlantı Altyapısı',
-      'Periyodik Bakım, Onarım ve SCADA Entegrasyonu'
+      '1. Türbin Altyapı, Temel ve Montaj Mühendisliği (Üretici & Ürün Çözümleri : <br>1. Vestas V150/V162, Siemens Gamesa SG 5.0-145, GE Vernova 6.0 MW karada rüzgar türbinleri.<br>2. Ağır betonarme radye temel, kule bölüm montajı ve dev vinç operasyonu proje mühendisliği.)',
+      '2. Rüzgar Sahası Ölçüm, Verim ve Fizibilite Raporlaması (Üretici & Ürün Çözümleri : <br>1. NRG Systems Symphonie Plus, Second Wind Nomad anemometre direk ve sensör sistemleri.<br>2. WAsP / WindPRO simülasyonları ile mikro-lokasyon rüzgar haritası ve P50/P90 fizibilite raporu.)',
+      '3. Orta / Yüksek Gerilim Şebeke Bağlantı Altyapısı (Üretici & Ürün Çözümleri : <br>1. Hitachi Energy / ABB trafo, Siemens Energy şalt hücreleri ve Prysmian 34.5 kV yeraltı kablolama.<br>2. Türbin içi trafo merkezleri, 34.5/154/400 kV şalt sahası inşası ve TEİAŞ şebeke entegrasyonu.)',
+      '4. Periyodik Bakım, Onarım ve SCADA Entegrasyonu (Üretici & Ürün Çözümleri : <br>1. Bachmann M1 SCADA, GE eTruck CMS, Mita-Teknik AgrosMet rüzgar türbin izleme sistemleri.<br>2. Dişli kutusu/yağ analizi, kanat muayenesi (drone), kestirimci bakım ve 7/24 arıza yönetimi.)'
     ],
     slides: [
       {
@@ -437,10 +437,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/bess_main_cover_user.jpg',
     desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
     specs: [
-      'BESS Konteyner Tipi Depolama Çözümleri (LFP / LiFePO4)',
-      'BMS (Battery Management System) ve Hücre Dengeleme',
-      'PCS (Power Conversion System) AC/DC Çift Yönlü Çevirici Entegrasyonu',
-      'Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu'
+      '1. BESS Konteyner Tipi Depolama Çözümleri (LFP / LiFePO4) (Üretici & Ürün Çözümleri : <br>1. CATL EnerC, BYD Battery Box Premium HVS, Tesla Megapack 2 ve Sungrow PowerTitan 2.0 BESS.<br>2. LFP kimyası, 20+ yıl ömür ve %90+ tur verimliliği ile konteyner tipi sahaya taşınabilir depolama.)',
+      '2. BMS (Battery Management System) ve Hücre Dengeleme (Üretici & Ürün Çözümleri : <br>1. Orion BMS 2, Elithion Lithiumate Pro, CATL entegre hücre-modül-raf BMS hiyerarşik sistemler.<br>2. SOC/SOH hesaplama, aktif/pasif hücre dengeleme, termal yönetim ve acil devre dışı bırakma.)',
+      '3. PCS (Power Conversion System) AC/DC Çift Yönlü Çevirici Entegrasyonu (Üretici & Ürün Çözümleri : <br>1. Sungrow SC2500UD-MV, Huawei SmartPCS1500KW-MV, ABB PVS-275 BESS PCS üniteleri.<br>2. Şarj/deşarj döngüsünü yöneten %98+ dönüştürme verimli çift yönlü AC/DC güç dönüştürücüler.)',
+      '4. Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu (Üretici & Ürün Çözümleri : <br>1. Power Innovations BESS EMS, Fluence MOSAIC, Schneider EcoStruxure BESS enerji yönetim yazılımları.<br>2. Peak Shaving, frekans düzenleme (FCR/FFR) ve arbitraj uygulamaları için akıllı şebeke otomasyon.)'
     ],
     slides: [
       {
@@ -863,10 +863,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_hvac_mep.jpg',
     desc: 'MEP (Mechanical, Electrical, Plumbing) mühendisliği, HVAC VRF VAV hassas iklimlendirme ve havalandırma sistem tasarımları.',
     specs: [
-      'Bina ve Sanayi Tesisleri İklimlendirme (HVAC VRF / VAV / AHU)',
-      'MEP Mekanik & Elektrik Tesisat Projelendirmesi',
-      'Hassas Kontrollü Veri Merkezi Soğutma Altyapıları',
-      'Enerji Geri Kazanımlı Havalandırma Sistemleri'
+      '1. Bina ve Sanayi Tesisleri İklimlendirme (HVAC VRF / VAV / AHU) (Üretici & Ürün Çözümleri : <br>1. Daikin VRV IV / VRV X, Mitsubishi Electric City Multi R3, Carrier AquaEdge sanayi soğutma grupları.<br>2. Çok bölgeli (multi-zone) VRF sistemler, VAV hava dağıtım kanalları ve enerji geri kazanımlı HRV üniteler.)',
+      '2. MEP Mekanik & Elektrik Tesisat Projelendirmesi (Çözüm ve Hizmetler : <br>1. IFC uyumlu Revit MEP ve AutoCAD MEP araçlarıyla 3D BIM tabanlı mekanik ve elektrik proje tasarımı.<br>2. Koordinasyon toplantıları, saha clash analizi ve as-built belgelemeleri ile kaliteli tesisat teslimi.)',
+      '3. Hassas Kontrollü Veri Merkezi Soğutma Altyapıları (Üretici & Ürün Çözümleri : <br>1. Vertiv Liebert CRV / DCD, Stulz CyberAir 4, Schneider InRow RC hassas iklimlendirme üniteleri.<br>2. Sıcak/soğuk koridor izolasyonu, yüksek yoğunluklu kabinet soğutması ve PUE optimizasyonu.)',
+      '4. Enerji Geri Kazanımlı Havalandırma Sistemleri (Üretici & Ürün Çözümleri : <br>1. Systemair VEX, Swegon GOLD, Dantherm HCV Roof entalpik ısı geri kazanımlı havalandırma santralleri.<br>2. Isı geri kazanım verimliliği (η ≥ %85) ile yıllık enerji giderini önemli ölçüde düşüren HRV kurulumu.)'
     ]
   },
   e_s5: {
@@ -875,10 +875,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_scada_control.jpg',
     desc: 'Elektrik üretimi, su dağıtımı, doğalgaz hatları ve endüstriyel tesisler için gerçek zamanlı canlı izleme, alarm yönetimi ve uzaktan kontrol.',
     specs: [
-      'Canlı Veri Toplama, Sensör Entegrasyonu ve Trend Analizleri',
-      'Merkezi İzleme Ekranları ve Uzaktan Otomasyon Komutları',
-      'PLC / RTU Haberleşme Protokolleri (Modbus, IEC 60870-5, DNP3)',
-      'Veri Güvenliği ve Yedekli Mimari Tasarımı'
+      '1. Canlı Veri Toplama, Sensör Entegrasyonu ve Trend Analizleri (Üretici & Ürün Çözümleri : <br>1. Emerson DeltaV, Honeywell Experion PKS, Yokogawa CENTUM VP süreç kontrol sistemleri.<br>2. Çok noktalı analog/dijital sensör datası, zaman damgalı veri arşivleme ve grafik trend çizimi.)',
+      '2. Merkezi İzleme Ekranları ve Uzaktan Otomasyon Komutları (Üretici & Ürün Çözümleri : <br>1. Siemens WinCC Advanced, AVEVA System Platform, ICONICS GENESIS64 SCADA yazılımları.<br>2. Canlı mimik diyagramlar, uzaktan vana/şalter kontrolü ve çok kullanıcılı yetki tabanlı erişim.)',
+      '3. PLC / RTU Haberleşme Protokolleri (Üretici & Ürün Çözümleri : <br>1. Schneider Quantum/M340 RTU, ABB AC500 PLC, Beckhoff CX serisi protokol gateway donanımları.<br>2. Modbus TCP/RTU, IEC 60870-5-101/104, DNP3 ve OPC UA çoklu protokol dönüştürme entegrasyonu.)',
+      '4. Veri Güvenliği ve Yedekli Mimari Tasarımı (Çözüm ve Hizmetler : <br>1. Hotstandby yedekli SCADA sunucu mimarisi, veri replikasyonu ve otomatik fail-over yönetimi.<br>2. IEC 62443 OT siber güvenlik standartları uyumlu saha ağı izolasyonu ve erişim denetimi.)'
     ]
   },
   e_s6: {
@@ -887,10 +887,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_fire_suppression.jpg',
     desc: 'Sprinkler sulu söndürme, gazlı söndürme (FM200 / Novec 1230), davlumbaz söndürme ve mobil yangın emniyet altyapıları.',
     specs: [
-      'FM200 / Novec 1230 Gazlı Söndürme Sistemleri (Data Center & Sistem Odası)',
-      'Otomatik Sprinkler (Yağmurlama) Sulu Söndürme Tesisatı',
-      'Erken Uyarı Hassas Duman Algılama (VESDA) Entegrasyonu',
-      'NFPA Standartlarına Uygun Mühendislik ve Test Raporlama'
+      '1. FM200 / Novec 1230 Gazlı Söndürme Sistemleri (Üretici & Ürün Çözümleri : <br>1. Kidde Fenwal Inergen/FM-200, Siemens Cerberus FIT, Fike Autopulse kontrol panelli gazlı söndürme.<br>2. Veri merkezleri ve sistem odaları için çevre dostu Novec 1230 / CO2 inert gaz söndürme tasarımı.)',
+      '2. Otomatik Sprinkler (Yağmurlama) Sulu Söndürme Tesisatı (Üretici & Ürün Çözümleri : <br>1. Viking, Tyco / Johnson Controls, Minimax kuru/ıslak tip sprinkler başlıkları ve dağıtım borulama.<br>2. Pompa istasyonu, basınç tankı, alarm kapağı ve kat bazlı otomatik sprinkler tesisatı kurulumu.)',
+      '3. Erken Uyarı Hassas Duman Algılama (VESDA) Entegrasyonu (Üretici & Ürün Çözümleri : <br>1. Xtralis VESDA-E LaserSCANNER, Wagner TITANUS MULTICRITERIA hava örneklemeli duman dedektörleri.<br>2. Laser tabanlı çok kriterli erken uyarı dedektörleri ile ppm seviyesinde duman tespiti altyapısı.)',
+      '4. NFPA Standartlarına Uygun Mühendislik ve Test Raporlama (Çözüm ve Hizmetler : <br>1. NFPA 13 (Sprinkler), NFPA 72 (Yangın Alarm) ve NFPA 2001 (Gazlı Söndürme) uyumlu mühendislik.<br>2. Hidro testler, söndürme sistemi devreye alma ve bağımsız sertifikasyon raporu hazırlanması.)'
     ]
   },
   e_s7: {
