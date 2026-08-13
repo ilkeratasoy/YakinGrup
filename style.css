@@ -186,12 +186,14 @@ img { max-width: 100%; height: auto; display: block; }
 /* Reveal animation */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.reveal.visible,
+.visible .reveal,
+.visible.reveal {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* ==========================================================================

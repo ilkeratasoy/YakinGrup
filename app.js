@@ -277,15 +277,41 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 // ── Reveal on scroll ───────────────────────────────────────────────────────
 function initReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        entry.target.classList.add('visible');
+        entry.target.querySelectorAll('.reveal').forEach(child => child.classList.add('visible'));
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }, { threshold: 0.01, rootMargin: '100px 0px 100px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  const checkVisibility = () => {
+    reveals.forEach(el => {
+      if (!el.classList.contains('visible')) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 150 && rect.bottom > -150) {
+          el.classList.add('visible');
+          el.querySelectorAll('.reveal').forEach(child => child.classList.add('visible'));
+        }
+      }
+    });
+  };
+
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener('resize', checkVisibility, { passive: true });
+  setTimeout(checkVisibility, 200);
+  setTimeout(checkVisibility, 800);
 }
 
 // ── Service Details Modal ──────────────────────────────────────────────────
