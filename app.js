@@ -476,10 +476,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/mep_cover_electrician_user.jpg',
     desc: 'Endüstriyel üretim tesisleri, ticari binalar, hastaneler ve veri merkezleri için anahtar teslim MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama çözümleri.',
     specs: [
-      'Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü',
-      'HVAC VRF / VAV İklimlendirme ve İleri Havalandırma',
-      'Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı',
-      'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning)'
+      '1. Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü (Çözüm ve Hizmetler : <br>1. Konsept tasarımdan saha montajına kadar uçtan uca elektrik ve mekanik altyapı kurulumu.<br>2. Schneider Electric, Siemens, Legrand elektrik panoları ve Prysmian/Kablo kablolama sistemleri.)',
+      '2. HVAC VRF / VAV İklimlendirme ve İleri Havalandırma (Üretici & Ürün Çözümleri : <br>1. Daikin VRV, Mitsubishi Electric City Multi, Systemair havalandırma santralleri entegrasyonu.<br>2. Hassas sıcaklık ve nem kontrollü iklimlendirme ile yüksek enerji tasarrufu çözümleri.)',
+      '3. Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı (Üretici & Ürün Çözümleri : <br>1. Grundfos ve Wilo yangın pompaları, Viking/Tyco sprinkler söndürme başlıkları altyapısı.<br>2. GF Piping, GF Victaulic endüstriyel boru hatları ve kat bazlı ıslak/kuru yangın tesisatı.)',
+      '4. Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning) (Çözüm ve Hizmetler : <br>1. Uluslararası ASHRAE ve CIBSE standartlarına uygun MEP 3D BIM mühendislik tasarımları.<br>2. TAB (Test, Ayar, Dengeleme) ve geçici/kesin kabul resmi belgelendirme süreç yönetimi.)'
     ],
     slides: [
       {
@@ -488,22 +488,22 @@ const SERVICES_DATA = {
         image: 'assets/images/mep_cover_electrician_user.jpg'
       },
       {
-        title: 'Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü',
+        title: '1. Anahtar Teslim Elektrik & Mekanik Tesisat Taahhüdü (Çözüm ve Hizmetler : <br>1. Konsept tasarımdan saha montajına kadar uçtan uca elektrik ve mekanik altyapı kurulumu.<br>2. Schneider Electric, Siemens, Legrand elektrik panoları ve Prysmian/Kablo kablolama sistemleri.)',
         desc: 'Projenin konsept tasarımından fiziksel uygulamaya kadar elektrik tesisat planı, malzeme seçimi ve anahtar teslim uygulama sürecinin tam yönetimi.',
         image: 'assets/images/mep_anahtar_teslim_user.png'
       },
       {
-        title: 'HVAC VRF / VAV İklimlendirme ve İleri Havalandırma',
-        desc: 'VRF (Variable Refrigerant Flow) ve VAV (Variable Air Volume) sistemleri ile bina katlı çok bölgeli enerji verimli iklimlendirme ve taze hava çözümleri.',
+        title: '2. HVAC VRF / VAV İklimlendirme ve İleri Havalandırma (Üretici & Ürün Çözümleri : <br>1. Daikin VRV, Mitsubishi Electric City Multi, Systemair havalandırma santralleri entegrasyonu.<br>2. Hassas sıcaklık ve nem kontrollü iklimlendirme ile yüksek enerji tasarrufu çözümleri.)',
+        desc: 'VRF ve VAV sistemleri ile bina katlı çok bölgeli enerji verimli iklimlendirme ve taze hava çözümleri.',
         image: 'assets/images/mep_hvac_vrf_user.jpg'
       },
       {
-        title: 'Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı',
-        desc: 'Havalandırma kanalları, yangın söndürme sistemleri, kuru/ıslak sprinkler, sıhhi tesisat ve endüstriyel borulama altyapısı kurulum ve devreye alma hizmetleri.',
+        title: '3. Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı (Üretici & Ürün Çözümleri : <br>1. Grundfos ve Wilo yangın pompaları, Viking/Tyco sprinkler söndürme başlıkları altyapısı.<br>2. GF Piping, GF Victaulic endüstriyel boru hatları ve kat bazlı ıslak/kuru yangın tesisatı.)',
+        desc: 'Havalandırma kanalları, yangın söndürme sistemleri, kuru/ıslak sprinkler, sıhhi tesisat ve endüstriyel borulama altyapısı.',
         image: 'assets/images/mep_sihhi_yangin_user.jpg'
       },
       {
-        title: 'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning) (Çözüm ve Hizmetler : <br>1. Uluslararası ASHRAE ve CIBSE standartlarına uygun MEP (Mekanik, Elektrik, Tesisat) 3D BIM mühendislik tasarımları ve saha çakışma (clash) analizleri.<br>2. Proje süreç yönetimi, iş programı takibi, malzeme onay süreçleri ve kalite kontrol denetimleri ile zamanında teslimat garantisi.<br>3. Sistemlerin fonksiyonel performans testleri, TAB (Test, Ayar, Dengeleme), devreye alma (Commissioning) ve geçici/kesin kabul resmi belgelendirmeleri.)',
+        title: '4. Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning) (Çözüm ve Hizmetler : <br>1. Uluslararası ASHRAE ve CIBSE standartlarına uygun MEP 3D BIM mühendislik tasarımları.<br>2. TAB (Test, Ayar, Dengeleme) ve geçici/kesin kabul resmi belgelendirme süreç yönetimi.)',
         desc: 'MEP proje mühendisliği, saha koordinasyonu, test & devreye alma (commissioning) süreç yönetimi ve resmi kabul belgelendirme hizmetleri.',
         image: 'assets/images/mep_commissioning_user.png'
       }
@@ -515,29 +515,29 @@ const SERVICES_DATA = {
     cover: 'assets/images/elv_cover_network_user.jpg',
     desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
     specs: [
-      'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
-      'Adresli Yangın Algılama ve Erken Uyarı Tesisatı',
-      'Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş',
-      'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı'
+      '1. IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri (Üretici & Ürün Çözümleri : <br>1. Axis Communications, Hikvision Pro Series, Dahua WizMind IP kamera ve NVR üniteleri.<br>2. Yapay zeka destekli plaka tanıma, yüz algılama, çit ihlal analizi ve 7/24 izleme merkezi.)',
+      '2. Adresli Yangın Algılama ve Erken Uyarı Tesisatı (Üretici & Ürün Çözümleri : <br>1. Honeywell Notifier, Bosch Building Technologies, Siemens Cerberus PRO yangın panelleri.<br>2. Adresli optik duman dedektörleri, flanşlı sirenler ve kat bazlı acil durum yönlendirme.)',
+      '3. Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş (Üretici & Ürün Çözümleri : <br>1. HID Global, Suprema BioEntry, Nedap Access Control biyometrik ve RFID kartlı okuyucular.<br>2. Turnike entegrasyonu, ziyaretçi kayıt yönetimi ve merkezi yetki matrisi yazılımları.)',
+      '4. Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı (Üretici & Ürün Çözümleri : <br>1. CommScope AMPNetconnect, Corning Fiber, Legrand LCS3 Cat6A / Cat8 ve OM4/OM5 fiber kablolar.<br>2. Yüksek yoğunluklu patch paneller, OTDR fiber testleri ve profesyonel kablo düzenleme.)'
     ],
     slides: [
       {
-        title: 'IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri',
+        title: '1. IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri (Üretici & Ürün Çözümleri : <br>1. Axis Communications, Hikvision Pro Series, Dahua WizMind IP kamera ve NVR üniteleri.<br>2. Yapay zeka destekli plaka tanıma, yüz algılama, çit ihlal analizi ve 7/24 izleme merkezi.)',
         desc: 'Çok ekranlı güvenlik izleme merkezi, IP CCTV kamera sistemleri, yapay zeka destekli video analiz, hareket algılama ve merkezi kayıt yönetimi (NVR/DVR).',
         image: 'assets/images/elv_cctv_monitoring_user.jpg'
       },
       {
-        title: 'Adresli Yangın Algılama ve Erken Uyarı Tesisatı',
+        title: '2. Adresli Yangın Algılama ve Erken Uyarı Tesisatı (Üretici & Ürün Çözümleri : <br>1. Honeywell Notifier, Bosch Building Technologies, Siemens Cerberus PRO yangın panelleri.<br>2. Adresli optik duman dedektörleri, flanşlı sirenler ve kat bazlı acil durum yönlendirme.)',
         desc: 'Duman dedektörleri, adresli yangın alarm paneli, kırmızı yangın sprinkler boru hatları, yangın tüpleri ve kat bazlı erken uyarı sistemi kurulumu.',
         image: 'assets/images/elv_fire_detection_user.png'
       },
       {
-        title: 'Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş',
+        title: '3. Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş (Üretici & Ürün Çözümleri : <br>1. HID Global, Suprema BioEntry, Nedap Access Control biyometrik ve RFID kartlı okuyucular.<br>2. Turnike entegrasyonu, ziyaretçi kayıt yönetimi ve merkezi yetki matrisi yazılımları.)',
         desc: 'Yüz tanıma teknolojisi, biyometrik kimlik doğrulama, kartlı geçiş sistemleri ve entegre erişim yetkilendirme yönetimi ile tesislerin fiziksel güvenliğinin sağlanması.',
         image: 'assets/images/elv_biometric_access_user.png'
       },
       {
-        title: 'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı',
+        title: '4. Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı (Üretici & Ürün Çözümleri : <br>1. CommScope AMPNetconnect, Corning Fiber, Legrand LCS3 Cat6A / Cat8 ve OM4/OM5 fiber kablolar.<br>2. Yüksek yoğunluklu patch paneller, OTDR fiber testleri ve profesyonel kablo düzenleme.)',
         desc: 'Multimodal ve singlemode fiber optik kablolama, patch panel sonlandırma, yüksek yoğunluklu veri merkezi kablo yönetimi ve yapısal kablolama altyapısı.',
         image: 'assets/images/elv_cover_network_user.jpg'
       }
@@ -588,10 +588,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/og_cover_substation_user.jpg',
     desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke entegrasyonu.',
     specs: [
-      '36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler',
-      'Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA)',
-      'Mikroişlemcili Dijital Koruma Röleleri ve Testleri',
-      'OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları'
+      '1. 36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler (Üretici & Ürün Çözümleri : <br>1. Schneider Electric SM6 / RM6, Eaton Capitole, ABB UniGear / SafePlus modüler şalt hücreleri.<br>2. SF6 gaz yalıtımlı kesiciler, yük ayırıcıları ve vakumlu kesicili Metal-Clad hücresel şalt sahası.)',
+      '2. Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA) (Üretici & Ürün Çözümleri : <br>1. ABB / Hitachi Energy Resibloc, Schneider Trihal, BEST Trafoları, Astor Kuru ve Yağlı Trafolar.<br>2. 100 kVA - 10 MVA güç aralığında dökme reçineli kuru ve genleşme depolu/hermetik yağlı trafolar.)',
+      '3. Mikroişlemcili Dijital Koruma Röleleri ve Testleri (Üretici & Ürün Çözümleri : <br>1. SEL (Schweitzer Engineering Labs), Schneider MiCOM / Sepam, ABB Relion koruma röleleri.<br>2. Omicron CMC 356 ikincil enjeksiyon test cihazı ile aşırı akım, toprak arıza ve selektivite doğrulaması.)',
+      '4. OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları (Üretici & Ürün Çözümleri : <br>1. Prysmian Group, Hes Kablo, Nexans 36 kV XLPE yeraltı güç kabloları ve Raychem ek/başlık aksesuarları.<br>2. Tünel ve kablo kanalı tipi ağır sanayi yeraltı hat çekimi, boru başlık montajı ve izolasyon testleri.)'
     ],
     slides: [
       {
@@ -600,22 +600,22 @@ const SERVICES_DATA = {
         image: 'assets/images/og_cover_substation_user.jpg'
       },
       {
-        title: '36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler',
+        title: '1. 36 kV OG Hücresel Şalt Tesisleri & Metal-Clad Hücreler (Üretici & Ürün Çözümleri : <br>1. Schneider Electric SM6 / RM6, Eaton Capitole, ABB UniGear / SafePlus modüler şalt hücreleri.<br>2. SF6 gaz yalıtımlı kesiciler, yük ayırıcıları ve vakumlu kesicili Metal-Clad hücresel şalt sahası.)',
         desc: '36 kV metal-clad ve hava yalıtımlı modüler şalt hücreleri dizilimi; teknisyenlerin açık kapaklı OG panolarında montaj ve test çalışmaları.',
         image: 'assets/images/og_metalclad_cells_user.png'
       },
       {
-        title: 'Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA)',
+        title: '2. Yağlı ve Kuru Tipi Dağıtım Trafoları (100 kVA - 10 MVA) (Üretici & Ürün Çözümleri : <br>1. ABB / Hitachi Energy Resibloc, Schneider Trihal, BEST Trafoları, Astor Kuru ve Yağlı Trafolar.<br>2. 100 kVA - 10 MVA güç aralığında dökme reçineli kuru ve genleşme depolu/hermetik yağlı trafolar.)',
         desc: 'Yüksek kapasiteli yağlı ve kuru tip güç dağıtım trafosu, OG/AG bağlantı buşingleri ve şalt sahası soğutma/güvenlik altyapısı.',
         image: 'assets/images/og_transformer_unit_user.png'
       },
       {
-        title: 'Mikroişlemcili Dijital Koruma Röleleri ve Testleri',
+        title: '3. Mikroişlemcili Dijital Koruma Röleleri ve Testleri (Üretici & Ürün Çözümleri : <br>1. SEL (Schweitzer Engineering Labs), Schneider MiCOM / Sepam, ABB Relion koruma röleleri.<br>2. Omicron CMC 356 ikincil enjeksiyon test cihazı ile aşırı akım, toprak arıza ve selektivite doğrulaması.)',
         desc: 'Saha bilgisayarı ve ikincil enjeksiyon test cihazı (Omicron) ile dijital koruma rölelerinin haberleşme, aşırı akım ve selektivite testleri.',
         image: 'assets/images/og_protection_relay_test_user.png'
       },
       {
-        title: 'OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları',
+        title: '4. OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları (Üretici & Ürün Çözümleri : <br>1. Prysmian Group, Hes Kablo, Nexans 36 kV XLPE yeraltı güç kabloları ve Raychem ek/başlık aksesuarları.<br>2. Tünel ve kablo kanalı tipi ağır sanayi yeraltı hat çekimi, boru başlık montajı ve izolasyon testleri.)',
         desc: 'Derin tünel ve TBM delgi sahasında ağır sanayi OG/YG yeraltı kablo kanalı hazırlığı, kaynak ve montaj altyapı çalışmaları.',
         image: 'assets/images/og_underground_tunnel_user.jpg'
       }
