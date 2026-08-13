@@ -1003,7 +1003,7 @@ const SERVICES_DATA = {
       'Yüksek Performanslı Sunucu : CPU / GPU / TPU / NPU / DPU / QPU compute ölçeklendirme. (NVIDIA H100/H200/B200 Grace Hopper, AMD EPYC/Instinct MI300X, Intel Xeon 6/Gaudi 3, Google TPU v5p, AWS Trainium/Inferentia)',
       'Yedekleme Hizmetleri : BackUp / İş sürekliliği ve Felaket Kurtarma DR çözümleri. (Veeam Data Platform, Commvault Cloud, Cohesity DataProtect, Rubrik Security Cloud, Zerto Site Recovery, Dell PowerProtect DD)',
       'Özel Yazılım Çözümleri : SD-WAN, WAF, MPLS, VPN, VoIP, NLB, IPsec, WLAN, Firewall, Router, Switch, Access Point, UTM. (Fortinet FortiGate/FortiManager, Palo Alto PAN-OS/Prisma SD-WAN, Cisco Meraki/Viptela, F5 BIG-IP WAF/LTM, VMware Velocloud, Check Point Quantum)',
-      'Donanım Çözümleri : SDDC, SD Server/Storage/Network & VDI, Private/Public Cloud. (VMware vSphere/vSAN/NSX-T, Nutanix Cloud Infrastructure, Microsoft Azure Stack HCI, Red Hat OpenShift/OpenStack, AWS Outposts, Cisco HyperFlex)'
+      'Sanallaştırma Çözümleri : SDDC, SD Server/Storage/Network & VDI, Private/Public Cloud. (VMware vSphere/vSAN/NSX-T, Nutanix Cloud Infrastructure, Microsoft Azure Stack HCI, Red Hat OpenShift/OpenStack, AWS Outposts, Cisco HyperFlex)'
     ]
   },
   e_b3: {
