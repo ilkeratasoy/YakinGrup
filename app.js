@@ -990,7 +990,7 @@ const SERVICES_DATA = {
       'Ağ ve Bağlantı Cihazları: Router (yönlendirici), Switch (anahtar), Firewall (güvenlik duvarı), Access Point ve fiber optik kablolama. (Cisco Catalyst/Nexus, Fortinet FortiGate, Palo Alto Networks, Juniper Networks, Aruba, Huawei CloudEngine, Ruckus)',
       'İstemci Donanımları: Kurumsal masaüstü bilgisayarlar, dizüstü bilgisayarlar, iş istasyonları (Workstation) ve terminaller. (Dell OptiPlex/Precision/Latitude, HP ZBook/EliteBook, Lenovo ThinkPad/ThinkStation, Apple Mac)',
       'KVM, PDU, UPS, PUE Sistemleri: Akıllı yönetilebilir PDU, KVM over IP switchler, kesintisiz güç kaynakları (UPS) ve PUE izleme sistemleri. (APC by Schneider Electric, Vertiv Liebert, Eaton, Tripp Lite, Raritan, CyberPower)',
-      'Tedarik Süreci Aşamaları: İhtiyaç Analizi (Kapasite ve gelecek projeksiyonu) → Marka ve Model Seçimi (Fiyat/performans ve garanti) → Teklif ve Satın Alma (Yetkili distribütör/üretici tedariki) → Lojistik ve Entegrasyon (Güvenli taşıma, montaj ve uyumlaştırma)'
+      'Tedarik Süreci Aşamaları: İhtiyaç Analizi (Kapasite ve gelecek projeksiyonu) - Marka ve Model Seçimi (Fiyat/performans ve garanti) - Teklif ve Satın Alma (Yetkili distribütör/üretici tedariki) - Lojistik ve Entegrasyon (Çözüm ve Hizmetler : *Kurumun mevcut kapasitesi ve gelecek projeksiyonları çıkarılır. *Fiyat/performans, garanti koşulları ve yedek parça bulunabilirliği değerlendirilir. *Yetkili distribütörlerden veya üreticilerden en uygun maliyetli teklifler toplanır. *Cihazların güvenli taşınması, montajı ve mevcut sistemle uyumlaştırılması sağlanır.)'
     ]
   },
   e_b2: {
@@ -1106,7 +1106,12 @@ function openServiceModal(id) {
       }
     }
 
-    const finalDesc = vendorText ? `<strong>Üretici & Ürün Çözümleri:</strong> ${vendorText}` : (slide.desc || '');
+    let labelName = 'Üretici & Ürün Çözümleri:';
+    if (vendorText && vendorText.includes('Çözüm ve Hizmetler :')) {
+      labelName = 'Çözüm ve Hizmetler :';
+      vendorText = vendorText.replace('Çözüm ve Hizmetler :', '').trim();
+    }
+    const finalDesc = vendorText ? `<strong>${labelName}</strong> ${vendorText}` : (slide.desc || '');
 
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
