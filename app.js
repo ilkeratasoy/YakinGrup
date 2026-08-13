@@ -951,7 +951,7 @@ const SERVICES_DATA = {
   e_iot1: {
     badge: 'SCADA & AUTOMATION',
     title: 'Endüstriyel SCADA & Otomasyon Sistemleri',
-    cover: 'assets/images/energy_ref_scada_ui.jpg',
+    cover: 'assets/images/energy_scada_control.jpg',
     desc: 'Endüstriyel üretim tesisleri, enerji santralleri ve alt yapı projeleri için PLC/RTU programlama, HMI arayüz tasarımı ve 7/24 SCADA merkezi izleme altyapısı.',
     specs: [
       '1. PLC & RTU Tabanlı Endüstriyel Kontrol ve Programlama (Üretici & Ürün Çözümleri : <br>1. Siemens S7-1500 / S7-1200, Schneider Modicon M580, Rockwell Allen-Bradley ControlLogix.<br>2. IEC 61131-3 standartlarında merdiven (Ladder) ve FBD dillerinde otonom süreç yazılımları.)',
@@ -963,14 +963,14 @@ const SERVICES_DATA = {
       {
         title: 'Endüstriyel SCADA & Otomasyon Sistemleri',
         desc: 'Merkezi SCADA yazılımları, canlı mimik diyagramlar, uzaktan vana/şalter kontrolü, trend analizleri ve arıza erim kayıt izleme sistemleri.',
-        image: 'assets/images/energy_ref_scada_ui.jpg'
+        image: 'assets/images/energy_scada_control.jpg'
       }
     ]
   },
   e_iot2: {
     badge: 'INDUSTRIAL IOT / IIOT',
     title: 'Endüstriyel IoT & Akıllı Sensör Ağları',
-    cover: 'assets/images/energy_ref_iot_dashboard.png',
+    cover: 'assets/images/energy_smart_building.jpg',
     desc: 'Kablosuz sensör ağları (LoRaWAN, NB-IoT), kestirimci bakım (Predictive Maintenance), titreşim/sıcaklık takibi ve IoT gateway altyapıları.',
     specs: [
       '1. LoRaWAN / NB-IoT Kablosuz Sensör Ağı Kurulumları (Üretici & Ürün Çözümleri : <br>1. Multitech Conduit LoRa Gateway, Milesight IoT, Kerlink iFemtoCell ve Quectel NB-IoT modülleri.<br>2. Uzun menzilli, düşük güç tüketimli endüstriyel kablosuz veri toplama şebekesi kurulumu.)',
@@ -982,7 +982,7 @@ const SERVICES_DATA = {
       {
         title: 'Endüstriyel IoT & Akıllı Sensör Ağları',
         desc: 'Mobil ve web tabanlı canlı IoT dashboard ekranı; elektrik tüketimi, depolama durumu ve ortam parametrelerini anlık takip etme çözümleri.',
-        image: 'assets/images/energy_ref_iot_dashboard.png'
+        image: 'assets/images/energy_smart_building.jpg'
       }
     ]
   },
