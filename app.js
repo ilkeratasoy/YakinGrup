@@ -695,10 +695,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_maintenance.jpg',
     desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
     specs: [
-      '7/24 Saha Müdahale ve Arıza Giderme Ekipleri',
-      'Önleyici Bakım Planları ve Periyodik Kontrol Programları',
-      'Servis Düzeyi Anlaşması (SLA) Yönetimi ve Raporlama',
-      'Yedek Parça Depo Yönetimi ve Lojistik Destek'
+      '1. 7/24 Saha Müdahale ve Arıza Giderme Ekipleri (Çözüm ve Hizmetler : <br>1. Kritik baz istasyonları ve fiber şebeke arızalarına ortalama 2-4 saat içinde yerinde müdahale.<br>2. Mobil yedek jeneratör ve acil durum kule yedekleme ekipleri ile 7/24 kesintisiz iletişim.)',
+      '2. Önleyici Bakım Planları ve Periyodik Kontrol Programları (Çözüm ve Hizmetler : <br>1. Baz istasyonu kule, RF anten, kablo ve güç sistemlerinin periyodik fiziki/elektronik muayenesi.<br>2. Akü kapasite testleri, klima iklimlendirme bakımları ve topraklama direnci ölçümleri.)',
+      '3. Servis Düzeyi Anlaşması (SLA) Yönetimi ve Raporlama (Çözüm ve Hizmetler : <br>1. %99.99 erişilebilirlik (uptime) hedefli SLA kriterlerine uygun kurumsal şebeke yönetimi.<br>2. Canlı bilet (ticketing) takip portalı ve aylık performans/arıza kök neden raporlaması.)',
+      '4. Yedek Parça Depo Yönetimi ve Lojistik Destek (Çözüm ve Hizmetler : <br>1. Bölgesel lojistik merkezlerinde kritik aktif donanım ve pasif sarf malzeme stok yönetimi.<br>2. Hızlı parça değişimi, arızalı ünite onarımı (RMA) ve üretici servis entegrasyonu.)'
     ]
   },
   e_t2: {
@@ -707,10 +707,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_5g.jpg',
     desc: '5G NR (New Radio) aktif donanım kurulumu, anten entegrasyonu, küçük hücre (Small Cell) ve 5G ağ optimizasyon hizmetleri.',
     specs: [
-      '5G NR Aktif Donanım (gNodeB) Mekanik Montajı ve Kurulumu',
-      'Massive MIMO Anten & RU Entegrasyonu ve Hizalaması',
-      'Küçük Hücre (Small Cell) ve O-RAN Mimarisi Kurulumları',
-      '5G SA/NSA Şebeke Optimizasyonu ve KPI Analizi'
+      '1. 5G NR Aktif Donanım (gNodeB) Mekanik Montajı ve Kurulumu (Üretici & Ürün Çözümleri : <br>1. Ericsson Radio System gNodeB, Huawei AAU 5G, Nokia AirScale 5G baz istasyon üniteleri.<br>2. Kule ve çatı tipi esnek donanım montajı, güç kablolaması ve yüksek hızlı fiber fronthaul bağlantısı.)',
+      '2. Massive MIMO Anten & RU Entegrasyonu ve Hizalaması (Üretici & Ürün Çözümleri : <br>1. Kathrein, Huawei, CommScope 32R32T / 64R64T Massive MIMO aktif anten üniteleri.<br>2. Lazer kule açı hizalaması, RET (Remote Electrical Tilt) ayarlaması ve hüzme şekillendirme.)',
+      '3. Küçük Hücre (Small Cell) ve O-RAN Mimarisi Kurulumları (Üretici & Ürün Çözümleri : <br>1. Ericsson Dot System, Nokia Smart Node, Mavenir / Samsung Open-RAN CU/DU donanımları.<br>2. Yüksek yoğunluklu şehir merkezleri ve endüstriyel tesisler için kapalı/açık küçük hücre ağı.)',
+      '4. 5G SA/NSA Şebeke Optimizasyonu ve KPI Analizi (Çözüm ve Hizmetler : <br>1. Standalone (SA) ve Non-Standalone (NSA) 5G şebeke hız, gecikme (latency) ve kapsama testleri.<br>2. VIAVI, Anritsu 5G sinyal analizörleri ile sürücü testleri ve performans iyileştirme.)'
     ]
   },
   e_t3: {
@@ -719,10 +719,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/telecom_ibs.jpg',
     desc: 'AVM, hastane, havalimanı ve rezidanslarda In-Building Solution (IBS) tasarım ve kurulum; pasif/aktif DAS sistemleri.',
     specs: [
-      'Pasif DAS (Distributed Antenna System) Tasarım ve Kurulumu',
-      'Aktif DAS & Small Cell İle Yüksek Kapasiteli Kapalı Alan Kapsama',
-      'Havalimanı, Tünel ve Metro Bina İçi Kapsama Projeleri',
-      'RF Kapsama Ölçümleri, Drive Test ve Optimizasyon Raporları'
+      '1. Pasif DAS (Distributed Antenna System) Tasarım ve Kurulumu (Üretici & Ürün Çözümleri : <br>1. Rosenberger, Andrew / CommScope pasif RF bölücüler (splitter), kuplörler ve omni antenler.<br>2. Düşük kayıplı 1/2" coaxial kablolama ile AVM ve gökdelenlerde homojen sinyal dağıtımı.)',
+      '2. Aktif DAS & Small Cell İle Yüksek Kapasiteli Kapalı Alan Kapsama (Üretici & Ürün Çözümleri : <br>1. CommScope ERA Active DAS, Corning ONE Active DAS, SOLiD ALLIANCE fiber-DAS üniteleri.<br>2. Fiber optik omurga üzerinden çok operatörlü (Multi-Operator) 4G/5G yüksek kapasite kapsama.)',
+      '3. Havalimanı, Tünel ve Metro Bina İçi Kapsama Projeleri (Üretici & Ürün Çözümleri : <br>1. RFS (Radio Frequency Systems) sızdırmalı (leaky) feeder kablo çözümleri ve tünel antenleri.<br>2. Yeraltı metro hatları, karayolu tünelleri ve terminal binalarında kesintisiz haberleşme altyapısı.)',
+      '4. RF Kapsama Ölçümleri, Drive Test ve Optimizasyon Raporları (Çözüm ve Hizmetler : <br>1. iBwave Design 3D simülasyon yazılımı ile bina içi RF kapsama ve kapasite projelendirme.<br>2. TEMS Pocket, Nemo Outdoor ölçüm cihazları ile bina içi yürüyüş (walk) testleri ve raporlama.)'
     ]
   },
   e_t4: {
@@ -928,10 +928,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_ref_scada_ui.jpg',
     desc: 'Endüstriyel üretim tesisleri, enerji santralleri ve alt yapı projeleri için PLC/RTU programlama, HMI arayüz tasarımı ve 7/24 SCADA merkezi izleme altyapısı.',
     specs: [
-      'PLC & RTU Tabanlı Endüstriyel Kontrol ve Programlama',
-      'Merkezi SCADA İzleme, Veri Toplama ve Alarm Yönetimi',
-      'HMI Dokunmatik Operatör Paneli Arayüz Tasarımları',
-      'Endüstriyel İletişim Protokolleri Entegrasyonu (Modbus, Profinet, IEC 60870-5-104)'
+      '1. PLC & RTU Tabanlı Endüstriyel Kontrol ve Programlama (Üretici & Ürün Çözümleri : <br>1. Siemens S7-1500 / S7-1200, Schneider Modicon M580, Rockwell Allen-Bradley ControlLogix.<br>2. IEC 61131-3 standartlarında merdiven (Ladder) ve FBD dillerinde otonom süreç yazılımları.)',
+      '2. Merkezi SCADA İzleme, Veri Toplama ve Alarm Yönetimi (Üretici & Ürün Çözümleri : <br>1. Siemens WinCC Professional, AVEVA System Platform (Wonderware), COPA-DATA zenon SCADA.<br>2. Canlı mimik diyagramlar, gerçek zamanlı alarmlar, veri arşivleme ve yüksek erişilebilirlik.)',
+      '3. HMI Dokunmatik Operatör Paneli Arayüz Tasarımları (Üretici & Ürün Çözümleri : <br>1. Siemens SIMATIC HMI Comfort Panel, Weintek cMT Series, Pro-face SP5000 dokunmatik paneller.<br>2. Saha operatörleri için ergonomik grafik tasarım, reçete yönetimi ve şifreli yetki kontrolü.)',
+      '4. Endüstriyel İletişim Protokolleri Entegrasyonu (Üretici & Ürün Çözümleri : <br>1. Moxa EDS/EDR industrial switch/router, HMS Anybus gateway ve Phoenix Contact donanımları.<br>2. Modbus TCP/RTU, Profinet, OPC UA, IEC 60870-5-104 ve DNP3 protokol dönüştürme çözümleri.)'
     ],
     slides: [
       {
@@ -947,10 +947,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_ref_iot_dashboard.png',
     desc: 'Kablosuz sensör ağları (LoRaWAN, NB-IoT), kestirimci bakım (Predictive Maintenance), titreşim/sıcaklık takibi ve IoT gateway altyapıları.',
     specs: [
-      'LoRaWAN / NB-IoT Kablosuz Sensör Ağı Kurulumları',
-      'Kestirimci Bakım (Predictive Maintenance) ve Erken Arıza Tespiti',
-      'Makine Sağlığı, Titreşim, Sıcaklık ve Basınç Canlı Takip Sensörleri',
-      'Edge Computing ve IoT Gateway Veri Aktarım Donanımları'
+      '1. LoRaWAN / NB-IoT Kablosuz Sensör Ağı Kurulumları (Üretici & Ürün Çözümleri : <br>1. Multitech Conduit LoRa Gateway, Milesight IoT, Kerlink iFemtoCell ve Quectel NB-IoT modülleri.<br>2. Uzun menzilli, düşük güç tüketimli endüstriyel kablosuz veri toplama şebekesi kurulumu.)',
+      '2. Kestirimci Bakım (Predictive Maintenance) ve Erken Arıza Tespiti (Üretici & Ürün Çözümleri : <br>1. SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection yapay zeka analiz algoritmaları.<br>2. Makine arızalarını oluşmadan haftalar önce tespit eden yapay zeka destekli uyarı sistemi.)',
+      '3. Makine Sağlığı, Titreşim, Sıcaklık ve Basınç Canlı Takip Sensörleri (Üretici & Ürün Çözümleri : <br>1. IFM Efector, Turck, Pepperl+Fuchs, Banner Engineering endüstriyel akıllı sensörler.<br>2. Motor, rulman, kompresör ve pompa hatlarında 7/24 kablosuz kitle titreşim ve sıcaklık takibi.)',
+      '4. Edge Computing ve IoT Gateway Veri Aktarım Donanımları (Üretici & Ürün Çözümleri : <br>1. Advantech UNO/ECU Edge Controller, Siemens SIMATIC IOT2050, Cisco IR1101 Router.<br>2. Saha verisini bulut/merkez sunuculara MQTT, HTTPS ve Sparkplug B protokolleri ile güvenli aktarım.)'
     ],
     slides: [
       {
@@ -966,10 +966,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_ref_soc_cyber.jpg',
     desc: 'Bina Otomasyon Sistemleri (BMS), enerji izleme (EMS), akıllı iklimlendirme ve aydınlatma otomasyonu ile yüksek konfor ve enerji tasarrufu.',
     specs: [
-      'BMS (Building Management System) Akıllı Bina Otomasyonu',
-      'Enerji İzleme & Otomatik Faturalandırma Yazılımları (EMS)',
-      'DALI / DMX Akıllı Aydınlatma ve VAV Fan-Coil İklim Kontrolü',
-      'BACnet, KNX ve LonWorks Entegre Bina Otomasyon Protokolleri'
+      '1. BMS (Building Management System) Akıllı Bina Otomasyonu (Üretici & Ürün Çözümleri : <br>1. Honeywell Enterprise Buildings Integrator (EBI), Schneider EcoStruxure Building Operation, Johnson Controls Metasys.<br>2. HVAC santralleri, chidatör, pompa ve aydınlatma sistemlerinin tek merkezden akıllı kontrolü.)',
+      '2. Enerji İzleme & Otomatik Faturalandırma Yazılımları (EMS) (Üretici & Ürün Çözümleri : <br>1. Janitza PAS4000, Entes ENTRABUS, Schneider Power Monitoring Expert (PME) yazılımları.<br>2. Kat ve kiracı bazlı süzme sayaç elektrik, su, doğalgaz tüketim ölçümü ve faturalandırması.)',
+      '3. DALI / DMX Akıllı Aydınlatma ve VAV Fan-Coil İklim Kontrolü (Üretici & Ürün Çözümleri : <br>1. Helvar DALI Lighting Control, Tridonic, Thermokon fan-coil ve VAV oda termostat panelleri.<br>2. Varlık sensörlü gün ışığı kompanzasyonlu akıllı aydınlatma ve bina iklimlendirme yönetimi.)',
+      '4. BACnet, KNX ve LonWorks Entegre Bina Otomasyon Protokolleri (Üretici & Ürün Çözümleri : <br>1. WAGO I/O System BACnet/IP, ABB i-bus KNX, Loytec L-INX Automation Server donanımları.<br>2. Farklı üretici bina otomasyon cihazlarının standart açık protokoller altında entegrasyonu.)'
     ],
     slides: [
       {
