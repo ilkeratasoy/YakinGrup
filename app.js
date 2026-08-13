@@ -827,10 +827,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_cybersecurity_soc.jpg',
     desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM entegrasyonu ve IT/OT endüstriyel kontrol sistemleri ağ güvenliği çözümleri.',
     specs: [
-      '7/24 SIEM / SOC Güvenlik Tehdit İzleme ve Analizi',
-      'Endüstriyel Kontrol Sistemleri (ICS / OT) Siber Güvenlik Duvarı',
-      'Log Yönetimi, Korelasyon ve KVKK 5651 Sayılı Kanun Uyumu',
-      'Tehdit İstihbaratı ve Siber Olaylara Müdahale (Incident Response)'
+      '1. 7/24 SIEM & SOC Güvenlik Tehdit İzleme ve Analizi : <br>Kurumsal ağlarda 7/24 canlı tehdit avcılığı, SIEM korelasyonu ve anlık güvenlik ihlali takibi. (Splunk Enterprise Security, IBM QRadar SIEM, Microsoft Sentinel, LogRhythm NextGen SIEM)',
+      '2. Endüstriyel Kontrol Sistemleri (ICS / OT) Güvenlik Duvarı : <br>SCADA, PLC ve fabrika otomasyon ağları için OT uyumlu derin paket inceleme ve izolasyon. (Palo Alto Networks PA-400 Series, Fortinet FortiGate Rugged, Claroty CTD, Nozomi Networks Guardian)',
+      '3. Log Yönetimi, Korelasyon ve 5651 Sayılı Kanun Uyumu : <br>Yasal mevzuata uygun zaman damgalı log toplama, imzalama ve merkezi arşivleme altyapısı. (Logsign Unified SecOps, Crypttech CryptoLog, Trend Micro Apex Central, Micro Focus ArcSight)',
+      '4. Tehdit İstihbaratı ve Siber Olaylara Müdahale (SOAR / IR) : <br>Otomatik siber tehdit engelleme, olay müdahale senaryoları ve 7/24 uzman müdahale hizmeti. (Cisco SecureX, CrowdStrike Falcon Complete, Palo Alto Cortex XSOAR, FireEye Mandiant IR)'
     ]
   },
   e_c2: {
@@ -839,10 +839,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_ref_soc_cyber.jpg',
     desc: 'Sistem odası, ağ altyapısı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
     specs: [
-      'Ağ (Network) ve Sunucu Altyapısı Sızma Testleri',
-      'Web ve Mobil Uygulama Zafiyet Tarama ve Güvenlik Testi',
-      'Sosyal Mühendislik, Oltalama (Phishing) Simülasyon Testleri',
-      'Zafiyet Analiz Raporlama ve Güvenlik Sıkılaştırma (Hardening)'
+      '1. Ağ (Network) ve Sunucu Altyapısı Sızma Testleri (Çözüm ve Hizmetler : <br>İç ve dış ağ sunucu altyapılarına yönelik etik hackleme ve güvenlik açığı tespit simülasyonları.<br>Kritik ağ bileşenleri ve port seviyesinde güvenlik düzeyi analizi ile sızma engelleme planı.)',
+      '2. Web ve Mobil Uygulama Zafiyet Tarama ve Güvenlik Testi (Çözüm ve Hizmetler : <br>OWASP Top 10 standartlarında web yazılım ve mobil uygulama güvenlik açıkları tespiti.<br>Veritabanı sızma, kod analizi ve yetkisiz erişim açıklarının kapatılması danışmanlığı.)',
+      '3. Sosyal Mühendislik & Oltalama (Phishing) Simülasyonları (Çözüm me Hizmetler : <br>Personel farkındalık seviyesini ölçen senaryo bazlı kurumsal oltalama e-posta simülasyonları.<br>İnsan kaynaklı güvenlik zafiyetlerinin tespiti ve siber güvenlik farkındalık eğitimleri.)',
+      '4. Zafiyet Analiz Raporlaması ve Güvenlik Sıkılaştırma (Çözüm ve Hizmetler : <br>Tespit edilen açıkların risk derecesine göre önceliklendirildiği detaylı teknik yönetim raporu.<br>Sunucu, firewall ve işletim sistemi seviyesinde hardening (sıkılaştırma) uygulama desteği.)'
     ]
   },
   e_c3: {
@@ -851,10 +851,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/energy_regulation_advisory.jpg',
     desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
     specs: [
-      'ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) Uyum Süreci',
-      'IEC 62443 Endüstriyel Kontrol Sistemleri Siber Güvenlik Standardı',
-      'KVKK & GDPR Kişisel Verilerin Korunması Hukuki ve Teknik Uyum',
-      'Kurumsal Risk Analizi ve Bilgi Güvenliği Politikaları Oluşturma'
+      '1. ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) Uyum Süreci (Çözüm ve Hizmetler : <br>Kurumsal BGYS politikalarının hazırlanması, varlık yönetimi ve belgelendirme danışmanlığı.<br>İç denetim süreçlerinin yürütülmesi ve uluslararası ISO 27001 sertifikasyon hazırlığı.)',
+      '2. IEC 62443 Endüstriyel Kontrol Sistemleri Siber Güvenlik Standardı (Çözüm ve Hizmetler : <br>OT, SCADA ve fabrika otomasyon sistemlerinin IEC 62443 standartlarına tam uyum denetimi.<br>Siber-fiziksel sistemler için alan (zone) ve kanal (conduit) güvenlik mimarisi tasarımı.)',
+      '3. KVKK & GDPR Kişisel Verilerin Korunması Hukuki ve Teknik Uyum (Çözüm ve Hizmetler : <br>VERBİS kaydı, kişisel veri envanteri hazırlığı ve hukuki metinlerin düzenlenmesi.<br>Veri sızıntısı önleme (DLP), yetki matrisi ve teknik veri koruma altyapı kurulumu.)',
+      '4. Kurumsal Risk Analizi ve Bilgi Güvenliği Politikaları Oluşturma (Çözüm ve Hizmetler : <br>Kurum genelinde siber risk haritasının çıkarılması ve tehdit önceliklendirmesi.<br>İş sürekliliği, felaket kurtarma ve bilgi güvenliği prosedürlerinin kurum kültürüne entegrasyonu.)'
     ]
   },
   e_s4: {
