@@ -1079,12 +1079,21 @@ function openServiceModal(id) {
   specSlides.forEach((slide, idx) => {
     const specSlide = document.createElement('div');
     specSlide.className = 'svc-slide svc-slide--spec';
+
+    let titleHtml = slide.title;
+    if (slide.title && slide.title.includes(':')) {
+      const colonIndex = slide.title.indexOf(':');
+      const prefix = slide.title.substring(0, colonIndex + 1);
+      const rest = slide.title.substring(colonIndex + 1).trim();
+      titleHtml = `<span class="svc-spec-title-prefix">${prefix}</span> <span class="svc-spec-title-rest">${rest}</span>`;
+    }
+
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
       <div class="svc-slide-overlay"></div>
       <div class="svc-slide-spec-body">
         <div class="svc-spec-counter">TEKNİK ÖZELLİK ${idx + 1} / ${specSlides.length}</div>
-        <h4 class="svc-spec-title">${slide.title}</h4>
+        <h4 class="svc-spec-title">${titleHtml}</h4>
         <p class="svc-spec-desc">${slide.desc || ''}</p>
       </div>
     `;
