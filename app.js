@@ -1106,7 +1106,7 @@ function openServiceModal(id) {
       }
     }
 
-    const finalDesc = vendorText ? `<strong>Öne Çıkan Üretici & Ürün Çözümleri:</strong> ${vendorText}` : (slide.desc || '');
+    const finalDesc = vendorText ? `<strong>Üretici & Ürün Çözümleri:</strong> ${vendorText}` : (slide.desc || '');
 
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
