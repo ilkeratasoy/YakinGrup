@@ -995,14 +995,15 @@ const SERVICES_DATA = {
   },
   e_b2: {
     badge: 'CLOUD & VIRTUALIZATION',
-    title: 'Operasyonel, Bulut & Sanallaştırma Hizmetleri',
+    title: 'Operasyonel, Bulut & Sanallaştırma Çözümleri',
     cover: 'assets/images/energy_fiber_network.jpg',
-    desc: 'Colocation barındırma, İş Sürekliliği & Felaket Kurtarma (BCP/DR), sanallaştırma mimarileri (VDI, Sanal Sunucu, Storage, Network) ve uçtan uca IT donanım çözümleri.',
+    desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme çözümleri, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma altyapıları.',
     specs: [
-      'Sunucu Barındırma (Colocation): 7/24 korunan güvenli tesislerde cihaz barındırma ve alan kiralama',
-      'İş Sürekliliği & Felaket Kurtarma: Disaster Recovery (DR) planlaması, felaket erteleme ve veri yedekleme',
-      'Sanallaştırma Çözümleri: Sanal Masaüstü (VDI), Sanal Sunucu, Sanal Depolama, Sanal İş Yükleri & Network',
-      'Uçtan Uca IT Altyapı: Sunucu, Depolama (SAN&NAS), Network, Firewall, UTM, SW, WLAN, WiFi, VPN, VOIP ve Public/Private Cloud'
+      'Yönetilen Hizmetler : NOC, SOC, Managed Services, Trafik, Enerji, Soğutma, Kabinet, x64-86 Sunucu ölçeklendirme. (Dedicated / Virtual / Co-Location)',
+      'Yüksek Performanslı Sunucu : CPU / GPU / TPU / NPU / DPU / QPU compute ölçeklendirme.',
+      'Yedekleme Hizmetleri : BackUp / İş sürekliliği ve Felaket Kurtarma DR çözümleri.',
+      'Özel Yazılım Çözümleri : SD-WAN, WAF, MPLS, VPN, VoIP, NLB, IPsec, WLAN, Firewall, Router, Switch, Access Point, UTM.',
+      'Donanım Çözümleri : SDDC, SD Server/Storage/Network & VDI, Private/Public Cloud.'
     ]
   },
   e_b3: {
