@@ -969,7 +969,7 @@ const SERVICES_DATA = {
   },
   e_iot2: {
     badge: 'INDUSTRIAL IOT / IIOT',
-    title: 'Endüstriyel IoT (IIoT) & Akıllı Sensör Ağları',
+    title: 'Endüstriyel IoT & Akıllı Sensör Ağları',
     cover: 'assets/images/energy_ref_iot_dashboard.png',
     desc: 'Kablosuz sensör ağları (LoRaWAN, NB-IoT), kestirimci bakım (Predictive Maintenance), titreşim/sıcaklık takibi ve IoT gateway altyapıları.',
     specs: [
@@ -980,7 +980,7 @@ const SERVICES_DATA = {
     ],
     slides: [
       {
-        title: 'Endüstriyel IoT (IIoT) & Akıllı Sensör Ağları',
+        title: 'Endüstriyel IoT & Akıllı Sensör Ağları',
         desc: 'Mobil ve web tabanlı canlı IoT dashboard ekranı; elektrik tüketimi, depolama durumu ve ortam parametrelerini anlık takip etme çözümleri.',
         image: 'assets/images/energy_ref_iot_dashboard.png'
       }
