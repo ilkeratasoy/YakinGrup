@@ -952,20 +952,29 @@ const SERVICES_DATA = {
     badge: 'IOT / SMART SENSORS',
     title: 'Akıllı Sensörler',
     cover: 'assets/images/iot_hardware_components.jpg',
-    desc: 'Algılayıcılar, mikroişlemciler, kablosuz iletişim birimleri ile gaz dedektörleri, desibelmetreler, takometreler ve refraktometre cihazları.',
+    desc: 'Sensör transdüserleri, mikroişlemciler, kablosuz haberleşme ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi sensörleri.',
     specs: [
-      'Algılayıcı (Sensör) (Üretici & Ürün Çözümleri : <br>IFM Efector, Bosch Sensortec, Honeywell Sensing, Sensirion, Turck, Pepperl+Fuchs.<br>Çevredeki fiziksel değişimi yakalar.)',
-      'Mikroişlemci (MCU) (Üretici & Ürün Çözümleri : <br>STMicroelectronics STM32, Texas Instruments MSP430, Microchip PIC/AVR, NXP Kinetis.<br>Veriyi işler ve analiz eder.)',
-      'İletişim Birimi (Üretici & Ürün Çözümleri : <br>Quectel Wireless, Semtech LoRa Transceiver, Nordic Semiconductor BLE, Telit Cinet.<br>Veriyi kablosuz ağlar veya sistemler üzerinden başka cihazlara aktarır.)',
-      'Gaz Dedektörleri (Üretici & Ürün Çözümleri : <br>Dräger Safety, Honeywell Analytics, MSA Safety, Crowcon Detection, Smart Sensor.<br>Sıcaklık, nem, basınç, hareket gibi yanıcı ve zehirli gaz kaçaklarını tespit eder verileri toplar.)',
+      'Algılama (Transdüser) (Üretici & Ürün Çözümleri : <br>IFM Efector, Bosch Sensortec, Honeywell Sensing, Sensirion, Turck, Pepperl+Fuchs.<br>Ortamdaki fiziksel değişimi (ısı, ışık vb.) yakalar.)',
+      'İşleme (Mikroişlemci) (Üretici & Ürün Çözümleri : <br>STMicroelectronics STM32, Texas Instruments MSP430, Microchip PIC/AVR, NXP Kinetis.<br>Verideki gürültüyü giderir ve analize uygun dijital formata çevirir.)',
+      'İletişim Birimi (Üretici & Ürün Çözümleri : <br>Quectel Wireless, Semtech LoRa Transceiver, Nordic Semiconductor BLE, Telit Cinet.<br>Toplanan veriyi Wi-Fi, Bluetooth veya hücresel ağlar üzerinden buluta gönderir.)',
+      'Gaz Dedektörleri (Üretici & Ürün Çözümleri : <br>Dräger Safety, Honeywell Analytics, MSA Safety, Crowcon Detection, Smart Sensor.<br>Yanıcı ve zehirli gaz kaçaklarını tespit eder.)',
       'Desibelmetreler (Üretici & Ürün Çözümleri : <br>Brüel & Kjær, Testo, Extech Instruments, Smart Sensor AR844 / AR854.<br>Ortamdaki ses ve gürültü seviyesini ölçer.)',
       'Takometreler (Üretici & Ürün Çözümleri : <br>SKF Tachometer, Shimpo Instruments, Testo 470, Smart Sensor AR926 / AR925.<br>Motor veya dönen parça devir hızını ölçer.)',
-      'Refraktometreler (Üretici & Ürün Çözümleri : <br>Anton Paar, Atago refractometers, Mettler Toledo, Smart Sensor AR931.<br>Sıvıların kırılma indeksini ve yoğunluğunu belirler.)'
+      'Refraktometreler (Üretici & Ürün Çözümleri : <br>Anton Paar, Atago refractometers, Mettler Toledo, Smart Sensor AR931.<br>Sıvıların kırılma indeksini ve yoğunluğunu belirler.)',
+      'Sıcaklık ve Nem Sensörleri (Üretici & Ürün Çözümleri : <br>Sensirion SHT3x/SHT4x, Testo 605i, Vaisala HUMICAP, Honeywell HIH Series.<br>Ortam ısısını ve rutubeti ölçer; klima ve tarımda kullanılır.)',
+      'Hareket Sensörleri (PIR / Kızılötesi) (Üretici & Ürün Çözümleri : <br>Panasonic PIR Sensors, Schneider Electric Argus, Bosch Security, Optex Infrared.<br>Alandaki canlı veya nesne hareketini algılar; güvenlik sistemlerinde yaygındır.)',
+      'Basınç Sensörleri (Üretici & Ürün Çözümleri : <br>WIKA Pressure Transmitters, Endress+Hauser Cerabar, Keller Pressure, Danfoss MBS.<br>Gaz veya sıvı basıncındaki değişimleri takip eder; endüstriyel hatlarda ve barometrelerde yer alır.)',
+      'Işık Sensörleri (LDR) (Üretici & Ürün Çözümleri : <br>ams OSRAM Lux Sensors, Vishay Opto, Texas Instruments OPT3001, Testo 540.<br>Ortamdaki aydınlık düzeyini ölçer; otomatik aydıntalarda kullanılır.)',
+      'Hava Kalitesi Sensörleri (Üretici & Ürün Çözümleri : <br>Sensirion SCD30/SCD40, Vaisala CARBOCAP, Amphenol Telaire, Bosch BME680.<br>Karbondioksit veya zararlı gazları tespit eder; akıllı binalar için önemlidir.)',
+      'Akıllı Ev Kullanım Alanları (Üretici & Ürün Çözümleri : <br>Somfy Smart Home, Schneider Wiser, Legrand Netatmo, Bosch Smart Home, Philips Hue.<br>Otomatik ışık, kombi ve güvenlik alarm sistemleri.)',
+      'Endüstri 4.0 (Fabrikalar) (Üretici & Ürün Çözümleri : <br>Siemens Anomaly Detection, SKF Insight, Schaeffler OPTIME, ABB Ability.<br>Makinelerin arızalanmadan önce tahmin edilmesini sağlayan öngörücü bakım.)',
+      'Akıllı Tarım Kullanım Alanları (Üretici & Ürün Çözümleri : <br>Netafim Smart Irrigation, Sentek Soil Moisture, CropX AgTech, Meter Group TEROS.<br>Toprak nemine göre sulama otomasyonu.)',
+      'Sağlık Kullanım Alanları (Üretici & Ürün Çözümleri : <br>Medtronic Patient Monitoring, BioIntelliSense BioButton, Apple HealthKit Pro, Dexcom.<br>Hastaların nabız ve vücut ısısını uzaktan takip eden giyilebilir cihazlar.)'
     ],
     slides: [
       {
         title: 'Akıllı Sensörler',
-        desc: 'Sensör algılayıcı, mikroişlemci, haberleşme modülleri ile gaz dedektörü, desibelmetre, takometre ve refraktometre ölçüm donanımları.',
+        desc: 'Transdüser, mikroişlemci, haberleşme ünitesi ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi akıllı sensörleri.',
         image: 'assets/images/iot_hardware_components.jpg'
       }
     ]
