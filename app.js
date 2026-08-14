@@ -949,17 +949,23 @@ const SERVICES_DATA = {
   },
   // Enerji Küme F — IoT & Otomasyon Sistemleri
   e_iot1: {
-    badge: 'IOT / SENSORS',
-    title: 'Akıllı Sensörler',
+    badge: 'IOT / SMART SENSORS',
+    title: 'Akıllı Sensörlerin Temel Unsurları & Cihazlar',
     cover: 'assets/images/iot_hardware_components.jpg',
-    desc: 'Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri yüksek hassasiyetle toplayan endüstriyel sensör çözümleri.',
+    desc: 'Algılayıcılar, mikroişlemciler, kablosuz iletişim birimleri ile gaz dedektörleri, desibelmetreler, takometreler ve refraktometre cihazları.',
     specs: [
-      'Akıllı Sensörler & Veri Toplama (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Bosch Sensortec, Honeywell Sensing, Sensirion.<br>Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri toplar.)'
+      'Algılayıcı (Sensör) (Üretici & Ürün Çözümleri : <br>IFM Efector, Bosch Sensortec, Honeywell Sensing, Sensirion, Turck, Pepperl+Fuchs.<br>Çevredeki fiziksel değişimi yakalar.)',
+      'Mikroişlemci (MCU) (Üretici & Ürün Çözümleri : <br>STMicroelectronics STM32, Texas Instruments MSP430, Microchip PIC/AVR, NXP Kinetis.<br>Veriyi işler ve analiz eder.)',
+      'İletişim Birimi (Üretici & Ürün Çözümleri : <br>Quectel Wireless, Semtech LoRa Transceiver, Nordic Semiconductor BLE, Telit Cinet.<br>Veriyi kablosuz ağlar veya sistemler üzerinden başka cihazlara aktarır.)',
+      'Gaz Dedektörleri (Üretici & Ürün Çözümleri : <br>Dräger Safety, Honeywell Analytics, MSA Safety, Crowcon Detection, Smart Sensor.<br>Sıcaklık, nem, basınç, hareket gibi yanıcı ve zehirli gaz kaçaklarını tespit eder verileri toplar.)',
+      'Desibelmetreler (Üretici & Ürün Çözümleri : <br>Brüel & Kjær, Testo, Extech Instruments, Smart Sensor AR844 / AR854.<br>Ortamdaki ses ve gürültü seviyesini ölçer.)',
+      'Takometreler (Üretici & Ürün Çözümleri : <br>SKF Tachometer, Shimpo Instruments, Testo 470, Smart Sensor AR926 / AR925.<br>Motor veya dönen parça devir hızını ölçer.)',
+      'Refraktometreler (Üretici & Ürün Çözümleri : <br>Anton Paar, Atago refractometers, Mettler Toledo, Smart Sensor AR931.<br>Sıvıların kırılma indeksini ve yoğunluğunu belirler.)'
     ],
     slides: [
       {
-        title: 'Akıllı Sensörler',
-        desc: 'Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri yüksek hassasiyetle toplayan kablosuz ve kablolu akıllı sensör şebekeleri.',
+        title: 'Akıllı Sensörlerin Temel Unsurları & Cihazlar',
+        desc: 'Sensör algılayıcı, mikroişlemci, haberleşme modülleri ile gaz dedektörü, desibelmetre, takometre ve refraktometre ölçüm donanımları.',
         image: 'assets/images/iot_hardware_components.jpg'
       }
     ]
