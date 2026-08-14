@@ -949,39 +949,39 @@ const SERVICES_DATA = {
   },
   // Enerji Küme F — IoT & Otomasyon Sistemleri
   e_iot1: {
-    badge: 'SCADA & AUTOMATION',
-    title: 'Endüstriyel SCADA & Otomasyon Sistemleri',
+    badge: 'IOT HARDWARE & COMPONENTS',
+    title: 'IoT Donanım & Mimari Bileşenleri',
     cover: 'assets/images/energy_scada_control.jpg',
-    desc: 'Endüstriyel üretim tesisleri, enerji santralleri ve alt yapı projeleri için PLC/RTU programlama, HMI arayüz tasarımı ve 7/24 SCADA merkezi izleme altyapısı.',
+    desc: 'Akıllı sensörler, eyleyiciler (aktüatörler), IoT ağ geçitleri (gateways), bulut mimarisi ve canlı izleme dashboard yazılımları.',
     specs: [
-      'PLC & RTU Tabanlı Endüstriyel Kontrol ve Programlama (Üretici & Ürün Çözümleri : <br>Siemens S7-1500 / S7-1200, Schneider Modicon M580, Rockwell Allen-Bradley ControlLogix.<br>IEC 61131-3 standartlarında merdiven (Ladder) ve FBD dillerinde otonom süreç yazılımları.)',
-      'Merkezi SCADA İzleme, Veri Toplama ve Alarm Yönetimi (Üretici & Ürün Çözümleri : <br>Siemens WinCC Professional, AVEVA System Platform (Wonderware), COPA-DATA zenon SCADA.<br>Canlı mimik diyagramlar, gerçek zamanlı alarmlar, veri arşivleme ve yüksek erişilebilirlik.)',
-      'HMI Dokunmatik Operatör Paneli Arayüz Tasarımları (Üretici & Ürün Çözümleri : <br>Siemens SIMATIC HMI Comfort Panel, Weintek cMT Series, Pro-face SP5000 dokunmatik paneller.<br>Saha operatörleri için ergonomik grafik tasarım, reçete yönetimi ve şifreli yetki kontrolü.)',
-      'Endüstriyel İletişim Protokolleri Entegrasyonu (Üretici & Ürün Çözümleri : <br>Moxa EDS/EDR industrial switch/router, HMS Anybus gateway ve Phoenix Contact donanımları.<br>Modbus TCP/RTU, Profinet, OPC UA, IEC 60870-5-104 ve DNP3 protokol dönüştürme çözümleri.)'
+      'Akıllı Sensörler & Veri Toplama (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Bosch Sensortec, Honeywell Sensing, Sensirion.<br>Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri toplar.)',
+      'Aktüatörler (Eyleyiciler) & Çalıştırma Çözümleri (Üretici & Ürün Çözümleri : <br>Festo, SMC Corporation, Belimo, Danfoss, Siemens Aktüatör Donanımları.<br>Gelen komutlara göre motorları, vanaları veya anahtarları fiziksel olarak çalıştırır.)',
+      'Ağ Geçitleri (Gateways) & Veri Aktarımı (Üretici & Ürün Çözümleri : <br>Advantech UNO/ECU, Siemens SIMATIC IOT2050, Moxa ThingsPro, Cisco IR1101, Multitech Gateway.<br>Sahadaki cihazların verilerini güvenli bir şekilde bulut platformlarına aktarır.)',
+      'Bulut Mimari & Görsel Paneller (Dashboard) (Üretici & Ürün Çözümleri : <br>AWS IoT Core, Microsoft Azure IoT Hub, Google Cloud IoT, Siemens MindSphere, ThingsBoard Platform.<br>Gelen verileri işler, depolar ve kullanıcının erişebileceği görsel paneller (dashboard) sunar.)'
     ],
     slides: [
       {
-        title: 'Endüstriyel SCADA & Otomasyon Sistemleri',
-        desc: 'Merkezi SCADA yazılımları, canlı mimik diyagramlar, uzaktan vana/şalter kontrolü, trend analizleri ve arıza erim kayıt izleme sistemleri.',
+        title: 'IoT Donanım & Mimari Bileşenleri',
+        desc: 'Akıllı sensörler, aktüatörler, IoT gateway cihazları ve bulut tabanlı izleme panelleri ile uçtan uca nesnelerin interneti altyapısı.',
         image: 'assets/images/energy_scada_control.jpg'
       }
     ]
   },
   e_iot2: {
-    badge: 'INDUSTRIAL IOT / IIOT',
-    title: 'Endüstriyel IoT & Akıllı Sensör Ağları',
+    badge: 'IOT APPLICATIONS & USE CASES',
+    title: 'IoT Sektörel Uygulama & Kullanım Alanları',
     cover: 'assets/images/energy_smart_building.jpg',
-    desc: 'Kablosuz sensör ağları (LoRaWAN, NB-IoT), kestirimci bakım (Predictive Maintenance), titreşim/sıcaklık takibi ve IoT gateway altyapıları.',
+    desc: 'Endüstriyel kestirimci bakım, akıllı ev otomasyonu, enerji/altyapı optimizasyonu ve lojistik/araç takip çözümleri.',
     specs: [
-      'LoRaWAN / NB-IoT Kablosuz Sensör Ağı Kurulumları (Üretici & Ürün Çözümleri : <br>Multitech Conduit LoRa Gateway, Milesight IoT, Kerlink iFemtoCell ve Quectel NB-IoT modülleri.<br>Uzun menzilli, düşük güç tüketimli endüstriyel kablosuz veri toplama şebekesi kurulumu.)',
-      'Kestirimci Bakım (Predictive Maintenance) ve Erken Arıza Tespiti (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection yapay zeka analiz algoritmaları.<br>Makine arızalarını oluşmadan haftalar önce tespit eden yapay zeka destekli uyarı sistemi.)',
-      'Makine Sağlığı, Titreşim, Sıcaklık ve Basınç Canlı Takip Sensörleri (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Banner Engineering endüstriyel akıllı sensörler.<br>Motor, rulman, kompresör ve pompa hatlarında 7/24 kablosuz kitle titreşim ve sıcaklık takibi.)',
-      'Edge Computing ve IoT Gateway Veri Aktarım Donanımları (Üretici & Ürün Çözümleri : <br>Advantech UNO/ECU Edge Controller, Siemens SIMATIC IOT2050, Cisco IR1101 Router.<br>Saha verisini bulut/merkez sunuculara MQTT, HTTPS ve Sparkplug B protokolleri ile güvenli aktarım.)'
+      'Endüstriyel Otomasyon (IoT) & Kestirimci Bakım (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, KUKA Robotics IoT, ABB Ability.<br>Fabrikalarda robotik kolların, üretim hatlarının ve makinelerin arıza yapmadan önce tahminlenmesini (kestirimci bakım) sağlar.)',
+      'Akıllı Ev Sistemleri & Uzaktan Kontrol (Üretici & Ürün Çözümleri : <br>Schneider Wiser, Somfy, KNX Smart Home, Legrand Netatmo, Bosch Smart Home, Crestron.<br>Aydınlatma, kombi, güvenlik kameraları ve beyaz eşyaların uzaktan kontrol edilmesini sağlar.)',
+      'Enerji ve Altyapı Otomasyon Çözümleri (Üretici & Ürün Çözümleri : <br>Itron Smart Grid, Landis+Gyr, Signify / Philips Interact City, Schneider EcoStruxure Grid, Telensa.<br>Akıllı şebekeler ve sokak aydınlatma otomasyonları ile enerji tüketimini optimize eder.)',
+      'Lojistik ve Takip Otomasyonu (Üretici & Ürün Çözümleri : <br>Trimble Transportation, Zebra Technologies, Hirschmann Crane Safety, Teltonika Telematics, Siemens RTLS.<br>Vinçlerde yük dengesinin izlenmesi, araç takibi ve depo sıcaklıklarının anlık kontrolü gibi alanlarda kullanılır.)'
     ],
     slides: [
       {
-        title: 'Endüstriyel IoT & Akıllı Sensör Ağları',
-        desc: 'Mobil ve web tabanlı canlı IoT dashboard ekranı; elektrik tüketimi, depolama durumu ve ortam parametrelerini anlık takip etme çözümleri.',
+        title: 'IoT Sektörel Uygulama & Kullanım Alanları',
+        desc: 'Fabrika otomasyonu, akıllı ev, enerji şebekeleri ve lojistik araç takip altyapılarında canlı IoT izleme ve kontrol çözümleri.',
         image: 'assets/images/energy_smart_building.jpg'
       }
     ]
