@@ -26,7 +26,7 @@ const TRANSLATIONS = {
     hero_title2: 'Yakın Enerji',
     hero_title3: 'Yakın Capital', hero_title4: 'Yakın Teknoloji',
     hero_desc1: 'Veri merkezleri, endüstriyel tesisler ve ağır mühendislik taahhüt projelerinde küresel standartlar.',
-    hero_desc2: 'Enerji Sistemleri, Elektrik Mekanik Taahhüt, Telekomünikasyon, Veri Merkezi & Siber Güvenlik, IoT & Otomasyon.',
+    hero_desc2: 'Endüstriyel altyapı ve teknoloji projelerinde anahtar teslim teslimatlar.',
     hero_desc3: 'Proje finansmanı danışmanlığı, yapılandırma ve yatırım çözümleri platformu.',
     hero_desc4: 'Dijital hakediş, yapay zekâ, BIM entegrasyonu ve ileri seviye proje yönetim platformu.',
     btn_explore: 'Keşfet', btn_view_details: 'Detaylı İncele',
