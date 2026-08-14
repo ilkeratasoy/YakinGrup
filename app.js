@@ -1029,16 +1029,23 @@ const SERVICES_DATA = {
   e_iot4: {
     badge: 'IOT / CLOUD & DASHBOARD',
     title: 'Bulut ve Yazılım',
-    cover: 'assets/images/energy_ref_soc_cyber.jpg',
-    desc: 'Sahadan gelen verileri işleyen, depolayan ve anlık izleme olanağı sunan özelleştirilebilir canlı dashboard görsel panelleri.',
+    cover: 'assets/images/iot_cloud_software.jpg',
+    desc: 'Cihaz/sensör katmanı, MQTT/HTTP protokolleri, bulut bilişim ve canlı izleme arayüz panelleri.',
     specs: [
-      'Bulut ve Yazılım & Görsel Paneller (Üretici & Ürün Çözümleri : <br>AWS IoT Core, Microsoft Azure IoT Hub, Google Cloud IoT, Siemens MindSphere, ThingsBoard Platform.<br>Gelen verileri işler, depolar ve kullanıcının erişebileceği görsel paneller (dashboard) sunar.)'
+      'Cihaz ve Sensör Katmanı (Üretici & Ürün Çözümleri : <br>IFM Efector, Bosch Sensortec, STMicroelectronics, Turck, Honeywell Sensing.<br>Veri üreten fiziksel donanımlar.)',
+      'Ağ ve İletişim Protokolleri (Üretici & Ürün Çözümleri : <br>EMQX MQTT Broker, Eclipse Mosquitto, HiveMQ, Cisco IoT Networking, Teltonika.<br>MQTT, HTTP gibi yöntemlerle veri aktarımı.)',
+      'Bulut Bilişim (Üretici & Ürün Çözümleri : <br>AWS IoT Core, Microsoft Azure IoT Hub, Google Cloud IoT, Siemens MindSphere.<br>Verilerin depolandığı ve analiz edildiği esnek altyapılar.)',
+      'Uygulama Yazılımı (Üretici & Ürün Çözümleri : <br>ThingsBoard IoT Platform, Grafana IoT Dashboards, PTC ThingWorx, Losant IoT.<br>Kullanıcıların verileri takip ettiği arayüz panelleri.)',
+      'Gerçek Zamanlı İzleme (Üretici & Ürün Çözümleri : <br>Datadog IoT Monitoring, Dynatrace Real-Time Analytics, Siemens WinCC OA, ThingsBoard Live.<br>Cihazların anlık takibi.)',
+      'Ölçeklenebilirlik (Üretici & Ürün Çözümleri : <br>Kubernetes Edge Clusters, AWS Greengrass Fleet, Azure IoT Edge Deployment, Docker IoT.<br>Kolayca büyütülebilir sistem altyapısı.)',
+      'Veri Analizi (Üretici & Ürün Çözümleri : <br>AWS IoT Analytics, Azure Stream Analytics, Snowflake IoT Data Lake, Databricks.<br>Üretilen veriden değer çıkarma.)',
+      'Maliyet Tasarrufu (Üretici & Ürün Çözümleri : <br>Litmus Edge Computing, AWS Serverless IoT, Azure Pay-As-You-Go, ThingsBoard Cloud.<br>Donanım ve operasyonel yükün azalması.)'
     ],
     slides: [
       {
         title: 'Bulut ve Yazılım',
-        desc: 'Gelen verileri işleyen, depolayan ve kullanıcının anlık erişebileceği görsel paneller (dashboard) ve raporlama yazılımları.',
-        image: 'assets/images/energy_ref_soc_cyber.jpg'
+        desc: 'Cihaz/sensör katmanı, MQTT/HTTP iletişim protokolleri, esnek bulut altyapıları ve canlı dashboard arayüz panelleri.',
+        image: 'assets/images/iot_cloud_software.jpg'
       }
     ]
   },
