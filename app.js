@@ -999,14 +999,20 @@ const SERVICES_DATA = {
     badge: 'IOT / GATEWAYS',
     title: 'Ağ Geçitleri (Gateways)',
     cover: 'assets/images/energy_scada_control.jpg',
-    desc: 'Sahadaki IoT cihaz ve sensör verilerini MQTT, HTTPS ve Modbus protokolleri ile güvenli bir şekilde buluta aktaran gateway çözümleri.',
+    desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
     specs: [
-      'Ağ Geçitleri (Gateways) & Veri Aktarımı (Üretici & Ürün Çözümleri : <br>Advantech UNO/ECU, Siemens SIMATIC IOT2050, Moxa ThingsPro, Cisco IR1101, Multitech Gateway.<br>Sahadaki cihazların verilerini güvenli bir şekilde bulut platformlarına aktarır.)'
+      'Protokol Çevrimi (Üretici & Ürün Çözümleri : <br>HMS Anybus Gateways, Moxa MGate, Advantech WebAccess/CNC, Teltonika RUTX.<br>Zigbee, Modbus veya LoRaWAN gibi farklı diller konuşan cihazların verilerini MQTT veya HTTP gibi bulut diline çevirir.)',
+      'Ön İşleme (Edge Computing) (Üretici & Ürün Çözümleri : <br>Siemens SIMATIC IOT2050, Advantech UNO/ECU Edge, Cisco IR1101 Industrial Router, Eurotech Everyware.<br>Veriyi buluta göndermeden önce yerelde temizler, filtreler ve gereksiz yükü azaltır.)',
+      'Güvenlik (Üretici & Ürün Çözümleri : <br>Fortinet FortiGate Rugged, Palo Alto Networks PA-220R, Phoenix Contact mGuard, Claroty Edge.<br>Sahadaki cihazlar ile dış dünya arasında şifreli bir duvar oluşturarak sızmaları engeller.)',
+      'Kesintisiz Bağlantı (Üretici & Ürün Çözümleri : <br>Multitech Conduit Gateway, Kerlink iFemtoCell, Milesight Industrial Gateway, Sierra Wireless AirLink.<br>İnternet kopsa bile verileri geçici olarak depolar ve internet gelince buluta yollar.)',
+      'Eski Tip Makinelerin Bağlanması (Üretici & Ürün Çözümleri : <br>Moxa NPort Serial-to-Ethernet, Advantech ADAM Modules, Siemens LOGO! 8, Brainboxes.<br>Eski tip makinelerin yeni sistemlere bağlanmasını sağlar.)',
+      'Maliyet Optimizasyonu (Üretici & Ürün Çözümleri : <br>AWS IoT Greengrass, Azure IoT Edge, ThingsBoard Edge, Litmus Edge.<br>Buluta giden veri miktarını azalttığı için maliyeti düşürür.)',
+      'Düşük Gecikme Süresi (Latency) (Üretici & Ürün Çözümleri : <br>Siemens Edge Industrial, Advantech WISE-PaaS, Cisco Edge Intelligence, Red Hat Edge.<br>Gecikme süresini (latency) en aza indirir.)'
     ],
     slides: [
       {
         title: 'Ağ Geçitleri (Gateways)',
-        desc: 'Sahadaki cihazların verilerini güvenli bir şekilde bulut ve merkez sunucu platformlarına aktaran endüstriyel gateway sistemleri.',
+        desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
         image: 'assets/images/energy_scada_control.jpg'
       }
     ]
