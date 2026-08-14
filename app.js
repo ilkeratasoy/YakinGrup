@@ -951,7 +951,7 @@ const SERVICES_DATA = {
   e_iot1: {
     badge: 'IOT / SMART SENSORS',
     title: 'Akıllı Sensörler',
-    cover: 'assets/images/iot_hardware_components.jpg',
+    cover: 'assets/images/iot_smart_sensors_hand.jpg',
     desc: 'Sensör transdüserleri, mikroişlemciler, kablosuz haberleşme ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi sensörleri.',
     specs: [
       'Algılama (Transdüser) (Üretici & Ürün Çözümleri : <br>IFM Efector, Bosch Sensortec, Honeywell Sensing, Sensirion, Turck, Pepperl+Fuchs.<br>Ortamdaki fiziksel değişimi (ısı, ışık vb.) yakalar.)',
@@ -975,7 +975,7 @@ const SERVICES_DATA = {
       {
         title: 'Akıllı Sensörler',
         desc: 'Transdüser, mikroişlemci, haberleşme ünitesi ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi akıllı sensörleri.',
-        image: 'assets/images/iot_hardware_components.jpg'
+        image: 'assets/images/iot_smart_sensors_hand.jpg'
       }
     ]
   },
