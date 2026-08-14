@@ -951,7 +951,7 @@ const SERVICES_DATA = {
   e_iot1: {
     badge: 'IOT / SENSORS',
     title: 'Akıllı Sensörler',
-    cover: 'assets/images/energy_smart_building.jpg',
+    cover: 'assets/images/iot_hardware_components.jpg',
     desc: 'Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri yüksek hassasiyetle toplayan endüstriyel sensör çözümleri.',
     specs: [
       'Akıllı Sensörler & Veri Toplama (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Bosch Sensortec, Honeywell Sensing, Sensirion.<br>Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri toplar.)'
@@ -960,7 +960,7 @@ const SERVICES_DATA = {
       {
         title: 'Akıllı Sensörler',
         desc: 'Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri yüksek hassasiyetle toplayan kablosuz ve kablolu akıllı sensör şebekeleri.',
-        image: 'assets/images/energy_smart_building.jpg'
+        image: 'assets/images/iot_hardware_components.jpg'
       }
     ]
   },
