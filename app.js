@@ -1052,18 +1052,23 @@ const SERVICES_DATA = {
   e_iot5: {
     badge: 'IIOT & INDUSTRY 4.0',
     title: 'Endüstri ve Üretim (IIoT)',
-    cover: 'assets/images/eng_cover_blueprint_user.jpg',
-    desc: 'Fabrikalarda kestirimci bakım, akıllı fabrika operasyonları ve tedarik zinciri/envanter canlı takibi.',
+    cover: 'assets/images/iiot_factory_robotics.jpg',
+    desc: 'Akıllı sensörler, endüstriyel ağlar, veri analitiği, edge computing ile kestirimci bakım, kalite kontrol ve iş güvenliği.',
     specs: [
-      'Kestirimci Bakım & Arıza Tahminleme (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, ABB Ability.<br>Makine arızalarını önceden tahmin etme.)',
-      'Akıllı Fabrika Operasyonları & Hat Takibi (Üretici & Ürün Çözümleri : <br>Siemens Opcenter, Rockwell Plex MES, SAP Digital Manufacturing, Schneider EcoStruxure.<br>Üretim hattı takibi ve optimizasyon.)',
-      'Tedarik Zinciri ve Envanter İzleme (Üretici & Ürün Çözümleri : <br>Zebra Technologies RFID, Siemens RTLS, SAP Extended Warehouse Management (EWM).<br>Stok ve hammadde durumu izleme.)'
+      'Akıllı Sensörler (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Sick AG, Banner Engineering.<br>Sıcaklık, basınç ve titreşim gibi fiziksel durumları ölçer.)',
+      'Ağ ve Bağlantı (Üretici & Ürün Çözümleri : <br>Moxa Industrial Networking, Siemens SCALANCE, Cisco Industrial Ethernet, HMS Anybus.<br>Cihazların birbiriyle ve bulut sistemleriyle konuşmasını sağlar.)',
+      'Veri Analitiği (Üretici & Ürün Çözümleri : <br>Siemens MindSphere Analytics, PTC ThingWorx Analytics, GE Digital Predix, SAP Analytics.<br>Toplanan büyük veriyi işleyerek anlamlı sonuçlar çıkarır.)',
+      'Bulut ve Uç Bilişim (Üretici & Ürün Çözümleri : <br>Advantech Edge, Siemens Industrial Edge, AWS IoT Greengrass, Azure IoT Edge.<br>Verilerin depolanması ve hızlıca karar alınması için kullanılır.)',
+      'Kestirimci Bakım (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, ABB Ability Predictive.<br>Makineler bozulmadan önce sorunları haber verir ve duruş sürelerini azaltır.)',
+      'Enerji Tasarrufu (Üretici & Ürün Çözümleri : <br>Schneider EcoStruxure Resource Advisor, Siemens Power Manager, Janitza EMS.<br>Kaynakların verimli kullanılmasını sağlar.)',
+      'Kalite Kontrol (Üretici & Ürün Çözümleri : <br>Cognex Industrial Vision, Keyence Machine Vision, Omron Microscan, Basler.<br>Hatalı üretimleri anında fark edip düzeltir.)',
+      'İş Güvenliği (Üretici & Ürün Çözümleri : <br>Honeywell Safety Suite, Sick Safety Systems, Pilz Safety Automation, Rockwell GuardMaster.<br>Riskli alanları sürekli izleyerek kazaları önler.)'
     ],
     slides: [
       {
-        title: 'Endüstri ve Üretim (Endüstriyel IoT - IIoT)',
-        desc: 'Fabrikalarda kestirimci bakım, üretim hattı takibi ve optimizasyon ile canlı stok/hammadde izleme çözümleri.',
-        image: 'assets/images/eng_cover_blueprint_user.jpg'
+        title: 'Endüstri ve Üretim (IIoT)',
+        desc: 'Akıllı fabrika otonom robotları, kestirimci bakım, kalite kontrol ve yüksek iş emniyeti endüstriyel otomasyon çözümleri.',
+        image: 'assets/images/iiot_factory_robotics.jpg'
       }
     ]
   },
