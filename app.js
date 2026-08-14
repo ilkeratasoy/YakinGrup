@@ -862,7 +862,7 @@ const SERVICES_DATA = {
   e_c2: {
     badge: 'CYBERSECURITY / PENTEST',
     title: 'Sızma Testleri & Güvenlik Denetimi',
-    cover: 'assets/images/energy_ref_soc_cyber.jpg',
+    cover: 'assets/images/pentest_security_audit.jpg',
     desc: 'Sistem odası, ağ altyapısı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
     specs: [
       'Ağ (Network) ve Sunucu Altyapısı Sızma Testleri (Çözüm ve Hizmetler : <br>İç ve dış ağ sunucu altyapılarına yönelik etik hackleme ve güvenlik açığı tespit simülasyonları.<br>Kritik ağ bileşenleri ve port seviyesinde güvenlik düzeyi analizi ile sızma engelleme planı.)',
@@ -874,7 +874,7 @@ const SERVICES_DATA = {
   e_c3: {
     badge: 'COMPLIANCE / KVKK',
     title: 'Uyum & Siber Güvenlik Standartları Danışmanlığı',
-    cover: 'assets/images/energy_regulation_advisory.jpg',
+    cover: 'assets/images/compliance_security_advisory.jpg',
     desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
     specs: [
       'ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) Uyum Süreci (Çözüm ve Hizmetler : <br>Kurumsal BGYS politikalarının hazırlanması, varlık yönetimi ve belgelendirme danışmanlığı.<br>İç denetim süreçlerinin yürütülmesi ve uluslararası ISO 27001 sertifikasyon hazırlığı.)',
