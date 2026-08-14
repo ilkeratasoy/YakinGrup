@@ -1013,66 +1013,74 @@ const SERVICES_DATA = {
     ]
   },
   e_iot5: {
-    badge: 'IOT / INDUSTRIAL & IIOT',
-    title: 'Endüstriyel Otomasyon (IoT)',
+    badge: 'IIOT & INDUSTRY 4.0',
+    title: 'Endüstri ve Üretim (IIoT)',
     cover: 'assets/images/eng_cover_blueprint_user.jpg',
-    desc: 'Fabrikalarda robotik kolların, üretim hatlarının ve kritik makinelerin arıza yapmadan önce tahminlenmesini (kestirimci bakım) sağlar.',
+    desc: 'Fabrikalarda kestirimci bakım, akıllı fabrika operasyonları ve tedarik zinciri/envanter canlı takibi.',
     specs: [
-      'Endüstriyel Otomasyon (IoT) & Kestirimci Bakım (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, KUKA Robotics IoT, ABB Ability.<br>Fabrikalarda robotik kolların, üretim hatlarının ve makinelerin arıza yapmadan önce tahminlenmesini (kestirimci bakım) sağlar.)'
+      'Kestirimci Bakım & Arıza Tahminleme (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, ABB Ability.<br>Makine arızalarını önceden tahmin etme.)',
+      'Akıllı Fabrika Operasyonları & Hat Takibi (Üretici & Ürün Çözümleri : <br>Siemens Opcenter, Rockwell Plex MES, SAP Digital Manufacturing, Schneider EcoStruxure.<br>Üretim hattı takibi ve optimizasyon.)',
+      'Tedarik Zinciri ve Envanter İzleme (Üretici & Ürün Çözümleri : <br>Zebra Technologies RFID, Siemens RTLS, SAP Extended Warehouse Management (EWM).<br>Stok ve hammadde durumu izleme.)'
     ],
     slides: [
       {
-        title: 'Endüstriyel Otomasyon (IoT)',
-        desc: 'Fabrikalarda robotik kolların, üretim hatlarının ve makinelerin arıza yapmadan önce tahminlenmesini ve kestirimci bakımını sağlayan IIoT çözümleri.',
+        title: 'Endüstri ve Üretim (Endüstriyel IoT - IIoT)',
+        desc: 'Fabrikalarda kestirimci bakım, üretim hattı takibi ve optimizasyon ile canlı stok/hammadde izleme çözümleri.',
         image: 'assets/images/eng_cover_blueprint_user.jpg'
       }
     ]
   },
   e_iot6: {
-    badge: 'IOT / SMART HOME',
-    title: 'Akıllı Ev Sistemleri',
-    cover: 'assets/images/energy_datacenter_whitespace.jpg',
-    desc: 'Aydınlatma, kombi, iklimlendirme, güvenlik kameraları ve beyaz eşyaların uzaktan mobil kontrolünü sağlayan akıllı otomasyonlar.',
+    badge: 'SMART HEALTHCARE / IOMT',
+    title: 'Sağlık Sektörü',
+    cover: 'assets/images/energy_ref_soc_cyber.jpg',
+    desc: 'Uzaktan hasta izleme, giyilebilir tıbbi cihazlar ve akıllı hastane varlık yönetimi altyapıları.',
     specs: [
-      'Akıllı Ev Sistemleri & Uzaktan Kontrol (Üretici & Ürün Çözümleri : <br>Schneider Wiser, Somfy, KNX Smart Home, Legrand Netatmo, Bosch Smart Home, Crestron.<br>Aydınlatma, kombi, güvenlik kameraları ve beyaz eşyaların uzaktan kontrol edilmesini sağlar.)'
+      'Uzaktan Hasta İzleme & Hayati Bulgu Takibi (Üretici & Ürün Çözümleri : <br>Philips Patient Care Analytics, GE HealthCare CARESCAPE, Medtronic CareLink.<br>Hayati bulguların anlık takibi.)',
+      'Giyilebilir Cihazlar & Biyosensörler (Üretici & Ürün Çözümleri : <br>Apple HealthKit Pro, Garmin Health, BioIntelliSense BioButton, Dexcom Biyosensörler.<br>Kalp atışı ve adım sayar gibi kişisel takipler.)',
+      'Akıllı Hastane Varlık Yönetimi & RTLS (Üretici & Ürün Çözümleri : <br>Stanley Healthcare AeroScout, Zebra Healthcare RTLS, Siemens Hospital Asset Tracking.<br>Tıbbi cihazların yerini ve durumunu bulma.)'
     ],
     slides: [
       {
-        title: 'Akıllı Ev Sistemleri',
-        desc: 'Aydınlatma, kombi, güvenlik kameraları ve beyaz eşyaların mobil uygulama üzerinden uzaktan ve otonom kontrol edilmesini sağlayan akıllı ev mimarisi.',
-        image: 'assets/images/energy_datacenter_whitespace.jpg'
+        title: 'Sağlık Sektörü (Akıllı Sağlık IoT)',
+        desc: 'Uzaktan hasta izleme, giyilebilir sağlık cihazları ve hastane içi RTLS tıbbi cihaz konum takip sistemleri.',
+        image: 'assets/images/energy_ref_soc_cyber.jpg'
       }
     ]
   },
   e_iot7: {
-    badge: 'IOT / ENERGY & SMART GRID',
-    title: 'Enerji ve Altyapı',
-    cover: 'assets/images/energy_cybersecurity_soc.jpg',
-    desc: 'Akıllı elektrik şebekeleri ve sokak aydınlatma otomasyonları ile şehir ve tesis çapında enerji tüketimini optimize eden sistemler.',
+    badge: 'SMART AGRICULTURE & AGTECH',
+    title: 'Tarım ve Hayvancılık (Akıllı Tarım)',
+    cover: 'assets/images/energy_smart_building.jpg',
+    desc: 'Toprak nem sensörleri ile otomatik sulama, sera iklim otomasyonu ve sürü sağlığı/konum takibi.',
     specs: [
-      'Enerji ve Altyapı Otomasyonu (Üretici & Ürün Çözümleri : <br>Itron Smart Grid, Landis+Gyr, Signify / Philips Interact City, Schneider EcoStruxure Grid, Telensa.<br>Akıllı şebekeler ve sokak aydınlatma otomasyonları ile enerji tüketimini optimize eder.)'
+      'Toprak Nem Sensörleri & Otomatik Sulama (Üretici & Ürün Çözümleri : <br>Sentek Sensor Technologies, Meter Group TEROS, CropX Soil Sensor, Netafim Smart Irrigation.<br>Su ihtiyacına göre otomatik sulama.)',
+      'Sera Otomasyonu & İklimlendirme (Üretici & Ürün Çözümleri : <br>Priva Connext, Ridder Climate Control, Hoogendoorn Growth Management.<br>Sıcaklık ve ışık seviyesi kontrolü.)',
+      'Hayvan Takibi & Sürü Sağlığı (Üretici & Ürün Çözümleri : <br>Allflex Livestock Intelligence, CowManager Sensor, Nedap Livestock Management.<br>Sürü sağlığı ve konum izleme.)'
     ],
     slides: [
       {
-        title: 'Enerji ve Altyapı',
-        desc: 'Akıllı şebekeler ve sokak aydınlatma otomasyonları ile şehir ve tesis seviyesinde enerji tüketimini optimize eden çözümler.',
-        image: 'assets/images/energy_cybersecurity_soc.jpg'
+        title: 'Tarım ve Hayvancılık (Akıllı Tarım)',
+        desc: 'Toprak nem sensörlü hassas sulama, iklim kontrollü sera otomasyonu ve GPS sürü takip altyapısı.',
+        image: 'assets/images/energy_smart_building.jpg'
       }
     ]
   },
   e_iot8: {
-    badge: 'IOT / LOGISTICS & TRACKING',
-    title: 'Lojistik ve Takip',
-    cover: 'assets/images/elv_cover_network_user.jpg',
-    desc: 'Vinçlerde yük dengesinin izlenmesi, araç takibi, depo sıcaklıklarının anlık kontrolü ve soğuk zincir otomasyonları.',
+    badge: 'SMART CITIES & MOBILITY',
+    title: 'Akıllı Şehirler ve Ulaşım',
+    cover: 'assets/images/iot_hardware_components.jpg',
+    desc: 'Dinamik trafik sinyalizasyonu, akıllı sokak aydınlatması ve filo/lojistik araç takip çözümleri.',
     specs: [
-      'Lojistik ve Takip Otomasyonu (Üretici & Ürün Çözümleri : <br>Trimble Transportation, Zebra Technologies, Hirschmann Crane Safety, Teltonika Telematics, Siemens RTLS.<br>Vinçlerde yük dengesinin izlenmesi, araç takibi ve depo sıcaklıklarının anlık kontrolü gibi alanlarda kullanılır.)'
+      'Akıllı Trafik Sistemleri & Sinyalizasyon (Üretici & Ürün Çözümleri : <br>Yunex Traffic (Siemens), Swarco Traffic Management, Kapsch TrafficCom Systems.<br>Yoğunluğa göre ayarlanan sinyalizasyon.)',
+      'Akıllı Aydınlatma & Sokak Lambası Otomasyonu (Üretici & Ürün Çözümleri : <br>Signify / Philips Interact City, Schréder EXEDRA, Telensa Smart Lighting Platforms.<br>İhtiyaca göre ışıltı değiştiren sokak lambaları.)',
+      'Filo ve Lojistik Takibi & Rota Optimizasyonu (Üretici & Ürün Çözümleri : <br>Geotab Fleet Management, Samsara IoT, Teltonika Telematics, Trimble Mobility.<br>Araç rotası ve yakıt tüketimi optimizasyonu.)'
     ],
     slides: [
       {
-        title: 'Lojistik ve Takip',
-        desc: 'Vinçlerde yük dengesinin izlenmesi, araç takibi ve depo sıcaklıklarının anlık kontrolü gibi alanlarda kullanılan lojistik takip otomasyonları.',
-        image: 'assets/images/elv_cover_network_user.jpg'
+        title: 'Akıllı Şehirler ve Ulaşım',
+        desc: 'Akıllı kavşak sinyalizasyonu, tasarruflu sokak aydınlatma otomasyonu ve canlı filo takip sistemleri.',
+        image: 'assets/images/iot_hardware_components.jpg'
       }
     ]
   },
