@@ -1075,18 +1075,25 @@ const SERVICES_DATA = {
   e_iot6: {
     badge: 'SMART HEALTHCARE / IOMT',
     title: 'Sağlık Sektörü',
-    cover: 'assets/images/energy_ref_soc_cyber.jpg',
-    desc: 'Uzaktan hasta izleme, giyilebilir tıbbi cihazlar ve akıllı hastane varlık yönetimi altyapıları.',
+    cover: 'assets/images/iomt_smart_healthcare.jpg',
+    desc: 'Giyilebilir cihazlar, tıbbi sensörler, edge bilişim, yapay zeka, uzaktan hasta takibi, veri güvenliği ve FHIR uyumluluğu.',
     specs: [
-      'Uzaktan Hasta İzleme & Hayati Bulgu Takibi (Üretici & Ürün Çözümleri : <br>Philips Patient Care Analytics, GE HealthCare CARESCAPE, Medtronic CareLink.<br>Hayati bulguların anlık takibi.)',
-      'Giyilebilir Cihazlar & Biyosensörler (Üretici & Ürün Çözümleri : <br>Apple HealthKit Pro, Garmin Health, BioIntelliSense BioButton, Dexcom Biyosensörler.<br>Kalp atışı ve adım sayar gibi kişisel takipler.)',
-      'Akıllı Hastane Varlık Yönetimi & RTLS (Üretici & Ürün Çözümleri : <br>Stanley Healthcare AeroScout, Zebra Healthcare RTLS, Siemens Hospital Asset Tracking.<br>Tıbbi cihazların yerini ve durumunu bulma.)'
+      'Giyilebilir Cihazlar (Üretici & Ürün Çözümleri : <br>Apple HealthKit Pro, Garmin Health, Omron Healthcare, Dexcom Continuous Glucose, BioIntelliSense.<br>Akıllı saatler ve tansiyon aletleri gibi araçlar nabız ve şeker gibi verileri toplar.)',
+      'Tıbbi Sensörler (Üretici & Ürün Çözümleri : <br>Medtronic Guardian, GE HealthCare CARESCAPE, Philips Patient Monitoring, Sensirion Medical.<br>Vücuda yerleştirilen veya eşyalara konan cihazlar hayati belirtileri ölçer.)',
+      'Bulut ve Kenar Bilişim (Edge Computing) (Üretici & Ürün Çözümleri : <br>AWS HealthLake, Microsoft Cloud for Healthcare, Google Cloud Healthcare API, Siemens Healthineers.<br>Toplanan büyük verileri hızlıca işler ve saklar.)',
+      'Yapay Zeka (AI) (Üretici & Ürün Çözümleri : <br>IBM Watson Health, GE HealthCare Edison AI, Philips HealthSuite AI, Siemens syngo.via.<br>Verileri analiz ederek hastalık risklerini önceden tahmin eder.)',
+      'Uzaktan Hasta Takibi (Üretici & Ürün Çözümleri : <br>Philips RPM Platform, ResMed Remote Care, Vivify Health (Optum), Medtronic CareLink.<br>Kronik hastalar evlerinden ayrılmadan doktorlar tarafından izlenir.)',
+      'Hızlı Müdahale (Üretici & Ürün Çözümleri : <br>Ascom Myco Hospital Emergency, Vocera Smart Badges, Everbridge Critical Event Management.<br>Acil bir durumda sistemler doktora veya hastaneye hemen haber verir.)',
+      'Kişiselleştirilmiş Tedavi (Üretici & Ürün Çözümleri : <br>Epic Systems MyChart, Cerner Millennium, Allscripts FollowMyHealth, Roche Digital Health.<br>Her hastanın verisine özel iyileştirme planları yapılır.)',
+      'Veri Güvenliği (Üretici & Ürün Çözümleri : <br>Fortinet Medical Security, Palo Alto Networks IoMT Security, Claroty Medigate, Forescout.<br>Hasta bilgilerinin internet üzerinden akması siber saldırı riski taşır.)',
+      'Gizlilik (Üretici & Ürün Çözümleri : <br>IBM Security Guardium, OneTrust Healthcare Privacy, Varonis Data Security Platform.<br>Hassas sağlık verilerinin üçüncü taraflardan korunması gerekir.)',
+      'Cihaz Uyumluluğu (Üretici & Ürün Çözümleri : <br>InterSystems IRIS for Health, Infor Cloverleaf, Redox Engine, HL7 / FHIR Standards.<br>Farklı üreticilerin aletlerinin birbiriyle veri paylaşması zor olabilir.)'
     ],
     slides: [
       {
-        title: 'Sağlık Sektörü (Akıllı Sağlık IoT)',
-        desc: 'Uzaktan hasta izleme, giyilebilir sağlık cihazları ve hastane içi RTLS tıbbi cihaz konum takip sistemleri.',
-        image: 'assets/images/energy_ref_soc_cyber.jpg'
+        title: 'Sağlık Sektörü (Akıllı Sağlık IoMT)',
+        desc: 'IoMT tıbbi sensörler, giyilebilir cihazlar, yapay zeka analizleri, uzaktan hasta takibi ve siber güvenlik altyapıları.',
+        image: 'assets/images/iomt_smart_healthcare.jpg'
       }
     ]
   },
