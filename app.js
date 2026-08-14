@@ -730,7 +730,7 @@ const SERVICES_DATA = {
   e_t2: {
     badge: 'TELECOM / 5G',
     title: '5G Altyapı & Kurulum',
-    cover: 'assets/images/telecom_5g.jpg',
+    cover: 'assets/images/telecom_5g_infra.jpg',
     desc: '5G NR (New Radio) aktif donanım kurulumu, anten entegrasyonu, küçük hücre (Small Cell) ve 5G ağ optimizasyon hizmetleri.',
     specs: [
       '5G NR Aktif Donanım (gNodeB) Mekanik Montajı ve Kurulumu (Üretici & Ürün Çözümleri : <br>Ericsson Radio System gNodeB, Huawei AAU 5G, Nokia AirScale 5G baz istasyon üniteleri.<br>Kule ve çatı tipi esnek donanım montajı, güç kablolaması ve yüksek hızlı fiber fronthaul bağlantısı.)',
