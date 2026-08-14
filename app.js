@@ -850,7 +850,7 @@ const SERVICES_DATA = {
   e_c1: {
     badge: 'CYBERSECURITY / SOC',
     title: 'IT / OT Siber Güvenlik & SOC Hizmetleri',
-    cover: 'assets/images/energy_cybersecurity_soc.jpg',
+    cover: 'assets/images/energy_ref_soc_cyber.jpg',
     desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM entegrasyonu ve IT/OT endüstriyel kontrol sistemleri ağ güvenliği çözümleri.',
     specs: [
       '7/24 SIEM & SOC Güvenlik Tehdit İzleme ve Analizi : <br>Kurumsal ağlarda 7/24 canlı tehdit avcılığı, SIEM korelasyonu ve anlık güvenlik ihlali takibi. (Splunk Enterprise Security, IBM QRadar SIEM, Microsoft Sentinel, LogRhythm NextGen SIEM)',
