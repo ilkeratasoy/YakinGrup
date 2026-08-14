@@ -322,10 +322,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/data_center_construction_1785092614608.png',
     desc: 'Büyük ölçekli veri merkezlerinde statik taşıyıcı sistemler, iklimlendirme ve yüksek güvenlikli fiziki bina taahhüdü.<br>Kesintisiz enerji mimarisi, yangın izolasyonu ve uluslararası uptime sertifikasyonlarına tam uyumlu inşaat çözümleri.',
     specs: [
-      'Tier III / Tier IV Uptime Institute Sertifikasyon Hizaması',
-      'Faraday Kafesi ve Elektromanyetik Kalkanlama (EMP Protection)',
-      'Hassas İklimlendirme (CRAC/CRAH) & Yükseltilmiş Taban Sistemleri',
-      'BMS & SCADA Entegre Fiziksel Güvenlik Altyapısı'
+      'Tier III / Tier IV Uptime Institute Sertifikasyon Hizaması (Çözüm ve Hizmetler : <br>Tier III ve Tier IV uluslararası standartlarda %99.99 erişilebilirlik hedefli statik ve mekanik inşaat taahhüdü.<br>Tasarım (TCDD) ve Tesis (FCCD) sertifikasyonlarına tam uyumlu mission-critical veri merkezi yapı çözümleri.)',
+      'Faraday Kafesi ve Elektromanyetik Kalkanlama (EMP Protection) (Üretici & Ürün Çözümleri : <br>ETS-Lindgren, Soliani EMC, Albatross Projects elektromanyetik kalkanlama ve sönümleme kafes üniteleri.<br>Askeri ve kurumsal veri merkezlerinde elektromanyetik dinleme ve EMP dış müdahalelere karşı tam koruma.)',
+      'Hassas İklimlendirme (CRAC/CRAH) & Yükseltilmiş Taban Sistemleri (Üretici & Ürün Çözümleri : <br>Lindner, Tate Access Floors, Mero-TSK antistatik yükseltilmiş taban ve yangına dayanıklı kaset paneller.<br>Hassas koridor iklimlendirme kanalları, soğuk/sıcak hava sirkülasyon odaları ve ağır yük zemin taahhüdü.)',
+      'BMS & SCADA Entegre Fiziksel Güvenlik Altyapısı (Üretici & Ürün Çözümleri : <br>Schneider EcoStruxure, Honeywell Enterprise Buildings, Johnson Controls Metasys bina otomasyonları.<br>Biyometrik geçiş kontrol, CCTV çevre güvenlik duvarı, gazlı yangın söndürme ve sismik izolatörlü bina yapısı.)'
     ]
   },
   c_s2: {
@@ -334,10 +334,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/heavy_industry_clean_1785012805596.png',
     desc: 'Ağır yük taşıyıcı betonarme/çelik strüktürler ve yüksek mukavemetli endüstriyel epoksi zemin kaplama uygulamaları.<br>Endüstriyel üretim hatları, yüksek vinç kapasiteli fabrika binaları ve ağır altyapı mühendislik imalatları.',
     specs: [
-      'Büyük Açıklıklı Endüstriyel Çelik Çatı ve Kolon Tasarımı',
-      'Ağır Ekipman Temelleri ve Titreşim Sönümleme Sistemleri',
-      'Endüstriyel Atık Su Arıtma & Gaz Tahliye Boru Hatları',
-      'Uluslararası İş Güvenliği & ISO 9001 / 14001 Standartları'
+      'Büyük Açıklıklı Endüstriyel Çelik Çatı ve Kolon Tasarımı (Çözüm ve Hizmetler : <br>Geniş açıklıklı endüstriyel çelik konstrüksiyon karkas, çatı makası ve ağır kreyn vinç yolları üretimi.<br>Yüksek rüzgar ve sismik yük dayanımlı fabrika taşıyıcı sistemlerinin fabrikasyon imalatı ve sahada montajı.)',
+      'Ağır Ekipman Temelleri ve Titreşim Sönümleme Sistemleri (Çözüm ve Hizmetler : <br>Sanayi döküm presleri ve ağır makineler için kütlesel betonarme radye temeller ve anti-vibrasyon yatakları.<br>Darbe ve titreşim sönümleyici elastomerik mesnet kurulumları ile makine hassasiyetinin korunması.)',
+      'Endüstriyel Atık Su Arıtma & Gaz Tahliye Boru Hatları (Çözüm ve Hizmetler : <br>Ağır kimyasal ve endüstriyel atık su nötralizasyon havuzları, paslanmaz çelik baca ve gaz tahliye kanalları.<br>Çevre mevzuatlarına tam uyumlu arıtma tesisi inşaatı, borulama ve yüksek izolasyonlu tank yapıları.)',
+      'Uluslararası İş Güvenliği & ISO 9001 / 14001 Standartları (Çözüm ve Hizmetler : <br>Sıfır kaza hedefli OHSAS / ISO 45001 iş sağlığı ve güvenliği yönetim sistemleri eşliğinde saha taahhüdü.<br>ISO 9001 kalite ve ISO 14001 çevre yönetim sertifikalı inşaat teknikleri ile sürdürülebilir tesis teslimi.)'
     ]
   },
   c_s3: {
@@ -346,10 +346,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/residential_luxury_project_1785010053703.png',
     desc: 'Sürdürülebilir yeşil bina standartlarında karma konut, sosyal tesis ve yüksek katlı rezidans mimari projeleri.<br>Akıllı bina otomasyonu, yüksek enerji verimliliği ve depreme dayanıklı tünel kalıp/kaset döşeme taşıyıcı sistemler.',
     specs: [
-      'A+ Enerji Kimlik Sertifikalı Çevreci Binalar',
-      'Akıllı Bina Otomasyonu (BMS) ve Merkezi İklimlendirme',
-      'Ses & Isı İzolasyonunda Üst Seviye Konfor Detayları',
-      'Sosyal Tesisler, Kapalı Otopark ve Yeşil Alan Mimarisi'
+      'A+ Enerji Kimlik Sertifikalı Çevreci Binalar (Çözüm ve Hizmetler : <br>LEED Gold / Platinum ve BREEAM standartlarına uyumlu yüksek ısı yalıtımlı bina kabuğu tasarımları.<br>Güneş paneli entegreli ortak alan aydınlatmaları, gri su geri kazanım sistemleri ve A+ enerji kimlik belgelendirmesi.)',
+      'Akıllı Bina Otomasyonu (BMS) ve Merkezi İklimlendirme (Üretici & Ürün Çözümleri : <br>KNX / BACnet tabanlı akıllı ev otomasyon panelleri, Daikin VRV / Mitsubishi VRF iklimlendirme üniteleri.<br>Mobil uygulama üzerinden aydınlatma, iklimlendirme, perde/panjur ve güvenlik sensörlerinin tek merkezden yönetimi.)',
+      'Ses & Isı İzolasyonunda Üst Seviye Konfor Detayları (Üretici & Ürün Çözümleri : <br>Knauf Akustik, Izocam Taşyünü, Schüco 3-camlı alüminyum doğrama ve lamine akustik cam sistemleri.<br>Katlar arası yüzer şap ve daire bölme duvarlarında yüksek desibel ses yalıtımı ile lüks yaşam konforu.)',
+      'Sosyal Tesisler, Kapalı Otopark ve Yeşil Alan Mimarisi (Çözüm ve Hizmetler : <br>Kapalı yüzme havuzları, fitness salonları, peyzaj düzenlemeleri ve elektrikli araç şarjlı otoparklar.<br>7/24 güvenlik kamerası entegreli, geniş peyzaj alanlarına sahip modern karma yaşam kompleksi inşası.)'
     ]
   },
   c_s4: {
@@ -358,10 +358,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/civil_engineering_bim_1785010076530.png',
     desc: '3D çakışma (clash) tespiti, statik mukavemet hesapları ve uluslararası EUROCODE / IBC bina yönetmelik uyumu.<br>BIM tabanlı metraj, hakediş ve zaman planlaması ile şantiye imalatlarının dijital ikiz üzerinden canlı takibi.',
     specs: [
-      '5D BIM Modeli ile Çakışma Analizi ve Maliyet Yönetimi',
-      'Sismik İzolatör ve Damperli Yapı Tasarımları',
-      'Non-Linear Zaman Tanım Alanında Deprem Analizleri',
-      'Mevzuat Uyumlu Statik Raporlama ve Proje Onay Süreçleri'
+      '5D BIM Modeli ile Çakışma Analizi ve Maliyet Yönetimi (Üretici & Ürün Çözümleri : <br>Autodesk Revit 5D BIM, Navisworks Manage, Trimble Tekla Structures projelendirme ve çakışma araçları.<br>Mimari, statik ve MEP disiplinleri arasındaki 3D çakışmaların (clash) şantiye öncesinde sıfırlanması ve metraj hesabı.)',
+      'Sismik İzolatör ve Damperli Yapı Tasarımları (Üretici & Ürün Çözümleri : <br>Maurer Magnetic, Mageba, EPS (Earthquake Protection Systems) kurşun çekirdekli kauçuk sismik izolatörler.<br>Deprem anında yapının üst katlarına geçen sismik ivmeyi %80 oranında sönümleyen izolatörlü bina mühendisliği.)',
+      'Non-Linear Zaman Tanım Alanında Deprem Analizleri (Üretici & Ürün Çözümleri : <br>SAP2000, ETAP, CSI Bridge ve Perform-3D doğrusal olmayan (non-linear) statik ve dinamik analiz yazılımları.<br>Gelecekteki olası büyüklükteki deprem senaryolarına göre performans bazlı tasarım ve güçlendirme raporlaması.)',
+      'Mevzuat Uyumlu Statik Raporlama ve Proje Onay Süreçleri (Çözüm ve Hizmetler : <br>2018 Türkiye Bina Deprem Yönetmeliği (TBDY) ve EUROCODE uluslararası statik yönetmelik uyumu.<br>Üniversite onaylı statik raporlar, bağımsız denetim onayları ve ruhsat projelerinin eksiksiz hazırlanması.)'
     ]
   },
   c_s5: {
@@ -370,10 +370,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/construction_hero_1784577666966.png',
     desc: 'Yüksek yolcu kapasiteli apron, pist, tünel, viyadük ve raylı sistem metro istasyon yapılarında taahhüt hizmetleri.<br>Uluslararası havacılık ve ulaştırma şartnamelerine tam uyumlu ağır mühendislik altyapı imalatları.',
     specs: [
-      'ICAO & FAA Standartlarında Terminal ve Apron İnşaatı',
-      'Özel Yüksek Dayanımlı Asfalt ve Beton Pist Kaplamaları',
-      'Yolcu Bagaj Entegrasyon (BHS) ve Güvenlik Altyapıları',
-      'Kesintisiz Hava Trafik Kontrol Kule Yapıları'
+      'ICAO & FAA Standartlarında Terminal ve Apron İnşaatı (Çözüm ve Hizmetler : <br>Uluslararası Sivil Havacılık Örgütü (ICAO) ve FAA standartlarında yolcu terminal binaları inşası.<br>Geniş açıklıklı çelik çatı terminalleri, körük bağlantı yapıları ve apron uçak park sahaları taahhüdü.)',
+      'Özel Yüksek Dayanımlı Asfalt ve Beton Pist Kaplamaları (Çözüm ve Hizmetler : <br>Ağır gövdeli kargo ve yolcu uçaklarının iniş kalkışına uygun modifiye polimer asfalt ve ağır beton pist kaplaması.<br>Pist aydınlatma armatür kanalları, drenaj kanalları ve yüksek sürtünme katsayılı pist kaplama üretimi.)',
+      'Yolcu Bagaj Entegrasyon (BHS) ve Güvenlik Altyapıları (Üretici & Ürün Çözümleri : <br>Vanderlande, Siemens Logistics BHS bagaj taşıma, Smiths Detection X-ray güvenlik tarayıcıları.<br>Saatlik yüksek bagaj tasnif kapasiteli konveyör hatları ve çok seviyeli patlayıcı tespit güvenlik entegrasyonu.)',
+      'Kesintisiz Hava Trafik Kontrol Kule Yapıları (Çözüm ve Hizmetler : <br>Yüksek kule yapılarında rüzgar ve sismik konfor sağlayan mimari mühendislik tasarımı.<br>Radar, haberleşme ve kule kontrol konsolları için kesintisiz yedekli enerji ve iklimlendirme altyapısı.)'
     ]
   },
   c_s6: {
@@ -382,10 +382,10 @@ const SERVICES_DATA = {
     cover: 'assets/images/gallery_seismic_retrofitting_1785092947617.png',
     desc: 'Kentsel dönüşüm projelerinde hak sahipleri yönetimi, resmi ruhsatlandırma ve sıfırdan güvenli bina inşası.<br>Mevcut beton/donatı analizleri, karbon elyaf (CFRP) sargı ve betonarme perde ilaveleri ile binaların güçlendirilmesi.',
     specs: [
-      'Karbon Fiber (CFRP) ve Çelik Manto ile Deprem Güçlendirme',
-      'Karot ve Sismik Testler ile Binasal Risk Analizi Raporlama',
-      'Hukuki ve Teknik Kentsel Dönüşüm Danışmanlığı',
-      'Sıfır Hata ile Bina Yenileme ve Projelendirme'
+      'Karbon Fiber (CFRP) ve Çelik Manto ile Deprem Güçlendirme (Üretici & Ürün Çözümleri : <br>SikaWrap CFRP karbon elyaf kumaşlar, BASF MasterBrace polimer matrisli güçlendirme kompozitleri.<br>Kolon ve kirişlerin karbon fiber sargı ve çelik levha mantolama ile sünekliğinin ve taşıma kapasitesinin artırılması.)',
+      'Karot ve Sismik Testler ile Binasal Risk Analizi Raporlama (Çözüm ve Hizmetler : <br>Tahribatsız ultrasonik testler, karot numune beton basınç deneyleri ve donatı korozyon tespiti.<br>Çevre ve Şehircilik Bakanlığı lisanslı riskli bina tespit raporlarının hazırlanması ve kentsel dönüşüm süreci.)',
+      'Hukuki ve Teknik Kentsel Dönüşüm Danışmanlığı (Çözüm ve Hizmetler : <br>6306 sayılı kanun kapsamında kat malikleri ve hak sahipleri sözleşme yönetimi ve noter süreçleri.<br>Resmi tahliye, yıkım ruhsatı, proje onayları ve devlet kira yardımı başvurularının uçtan uca yürütülmesi.)',
+      'Sıfır Hata ile Bina Yenileme ve Projelendirme (Çözüm ve Hizmetler : <br>Eski riskli binaların güvenli şekilde yıkılması ve yerine depreme tam dayanıklı yeni binaların inşası.<br>Zemin etüdü, kazık/temel altı yalıtım ve yüksek kaliteli malzeme kullanımı ile anahtar teslim ev teslimatı.)'
     ]
   },
   // Enerji Küme A
