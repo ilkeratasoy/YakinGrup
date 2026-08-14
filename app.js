@@ -57,7 +57,7 @@ const TRANSLATIONS = {
     c_gal3_title: 'Vadi Konakları Yaşam Kompleksi', c_gal4_title: 'Yapı Güçlendirme & BIM Tasarımı',
     e_title: 'Yakın Enerji',
     e_services_title: 'Endüstriyel Çözüm ve Hizmetler',
-    e_desc: 'Yenilenebilir enerji, elektromekanik taahhüt, telekomünikasyon, veri merkezi ve akıllı otomasyon alanlarında uçtan uca sürdürülebilir altyapı çözümleri sunuyoruz.',
+    e_desc: 'Yenilenebilir Enerji, Elektromekanik Taahhüt, Telekomünikasyon, Veri Merkezi ve Akıllı Otomasyon alanlarında uçtan uca sürdürülebilir altyapı çözümleri sunuyoruz.',
     cap_desc: 'Yakın Capital, grubumuzun projelerini uçtan uca geliştiren, finansman çözümleri üreten bir danışmanlık ve yatırım platformudur.',
     cap_heading: 'Çok Disiplinli Finansman Yapılandırması',
     cap_body: 'Projelerin finansmanını organize etmek, riskleri yönetmek ve sürdürülebilir nakit akış modelleri oluşturmak temel vizyonumuzdur.',
