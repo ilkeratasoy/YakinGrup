@@ -949,59 +949,130 @@ const SERVICES_DATA = {
   },
   // Enerji Küme F — IoT & Otomasyon Sistemleri
   e_iot1: {
-    badge: 'IOT HARDWARE & COMPONENTS',
-    title: 'IoT Donanım & Mimari Bileşenleri',
-    cover: 'assets/images/energy_scada_control.jpg',
-    desc: 'Akıllı sensörler, eyleyiciler (aktüatörler), IoT ağ geçitleri (gateways), bulut mimarisi ve canlı izleme dashboard yazılımları.',
-    specs: [
-      'Akıllı Sensörler & Veri Toplama (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Bosch Sensortec, Honeywell Sensing, Sensirion.<br>Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri toplar.)',
-      'Aktüatörler (Eyleyiciler) & Çalıştırma Çözümleri (Üretici & Ürün Çözümleri : <br>Festo, SMC Corporation, Belimo, Danfoss, Siemens Aktüatör Donanımları.<br>Gelen komutlara göre motorları, vanaları veya anahtarları fiziksel olarak çalıştırır.)',
-      'Ağ Geçitleri (Gateways) & Veri Aktarımı (Üretici & Ürün Çözümleri : <br>Advantech UNO/ECU, Siemens SIMATIC IOT2050, Moxa ThingsPro, Cisco IR1101, Multitech Gateway.<br>Sahadaki cihazların verilerini güvenli bir şekilde bulut platformlarına aktarır.)',
-      'Bulut Mimari & Görsel Paneller (Dashboard) (Üretici & Ürün Çözümleri : <br>AWS IoT Core, Microsoft Azure IoT Hub, Google Cloud IoT, Siemens MindSphere, ThingsBoard Platform.<br>Gelen verileri işler, depolar ve kullanıcının erişebileceği görsel paneller (dashboard) sunar.)'
-    ],
-    slides: [
-      {
-        title: 'IoT Donanım & Mimari Bileşenleri',
-        desc: 'Akıllı sensörler, aktüatörler, IoT gateway cihazları ve bulut tabanlı izleme panelleri ile uçtan uca nesnelerin interneti altyapısı.',
-        image: 'assets/images/energy_scada_control.jpg'
-      }
-    ]
-  },
-  e_iot2: {
-    badge: 'IOT APPLICATIONS & USE CASES',
-    title: 'IoT Sektörel Uygulama & Kullanım Alanları',
+    badge: 'IOT / SENSORS',
+    title: 'Akıllı Sensörler',
     cover: 'assets/images/energy_smart_building.jpg',
-    desc: 'Endüstriyel kestirimci bakım, akıllı ev otomasyonu, enerji/altyapı optimizasyonu ve lojistik/araç takip çözümleri.',
+    desc: 'Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri yüksek hassasiyetle toplayan endüstriyel sensör çözümleri.',
     specs: [
-      'Endüstriyel Otomasyon (IoT) & Kestirimci Bakım (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, KUKA Robotics IoT, ABB Ability.<br>Fabrikalarda robotik kolların, üretim hatlarının ve makinelerin arıza yapmadan önce tahminlenmesini (kestirimci bakım) sağlar.)',
-      'Akıllı Ev Sistemleri & Uzaktan Kontrol (Üretici & Ürün Çözümleri : <br>Schneider Wiser, Somfy, KNX Smart Home, Legrand Netatmo, Bosch Smart Home, Crestron.<br>Aydınlatma, kombi, güvenlik kameraları ve beyaz eşyaların uzaktan kontrol edilmesini sağlar.)',
-      'Enerji ve Altyapı Otomasyon Çözümleri (Üretici & Ürün Çözümleri : <br>Itron Smart Grid, Landis+Gyr, Signify / Philips Interact City, Schneider EcoStruxure Grid, Telensa.<br>Akıllı şebekeler ve sokak aydınlatma otomasyonları ile enerji tüketimini optimize eder.)',
-      'Lojistik ve Takip Otomasyonu (Üretici & Ürün Çözümleri : <br>Trimble Transportation, Zebra Technologies, Hirschmann Crane Safety, Teltonika Telematics, Siemens RTLS.<br>Vinçlerde yük dengesinin izlenmesi, araç takibi ve depo sıcaklıklarının anlık kontrolü gibi alanlarda kullanılır.)'
+      'Akıllı Sensörler & Veri Toplama (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Bosch Sensortec, Honeywell Sensing, Sensirion.<br>Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri toplar.)'
     ],
     slides: [
       {
-        title: 'IoT Sektörel Uygulama & Kullanım Alanları',
-        desc: 'Fabrika otomasyonu, akıllı ev, enerji şebekeleri ve lojistik araç takip altyapılarında canlı IoT izleme ve kontrol çözümleri.',
+        title: 'Akıllı Sensörler',
+        desc: 'Ortamdaki sıcaklık, nem, basınç veya hareket gibi fiziksel verileri yüksek hassasiyetle toplayan kablosuz ve kablolu akıllı sensör şebekeleri.',
         image: 'assets/images/energy_smart_building.jpg'
       }
     ]
   },
-  e_iot3: {
-    badge: 'BMS / SMART BUILDING',
-    title: 'Akıllı Bina Yönetim Sistemleri (BMS / RMS)',
-    cover: 'assets/images/energy_ref_soc_cyber.jpg',
-    desc: 'Bina Otomasyon Sistemleri (BMS), enerji izleme (EMS), akıllı iklimlendirme ve aydınlatma otomasyonu ile yüksek konfor ve enerji tasarrufu.',
+  e_iot2: {
+    badge: 'IOT / ACTUATORS',
+    title: 'Aktüatörler (Eyleyiciler)',
+    cover: 'assets/images/ag_mcc_srucu_user.jpg',
+    desc: 'Otomasyon komutlarına göre motorları, vanaları ve elektrikli anahtarları fiziksel olarak çalıştıran eyleyici çözümleri.',
     specs: [
-      'BMS (Building Management System) Akıllı Bina Otomasyonu (Üretici & Ürün Çözümleri : <br>Honeywell Enterprise Buildings Integrator (EBI), Schneider EcoStruxure Building Operation, Johnson Controls Metasys.<br>HVAC santralleri, chidatör, pompa ve aydınlatma sistemlerinin tek merkezden akıllı kontrolü.)',
-      'Enerji İzleme & Otomatik Faturalandırma Yazılımları (EMS) (Üretici & Ürün Çözümleri : <br>Janitza PAS4000, Entes ENTRABUS, Schneider Power Monitoring Expert (PME) yazılımları.<br>Kat ve kiracı bazlı süzme sayaç elektrik, su, doğalgaz tüketim ölçümü ve faturalandırması.)',
-      'DALI / DMX Akıllı Aydınlatma ve VAV Fan-Coil İklim Kontrolü (Üretici & Ürün Çözümleri : <br>Helvar DALI Lighting Control, Tridonic, Thermokon fan-coil ve VAV oda termostat panelleri.<br>Varlık sensörlü gün ışığı kompanzasyonlu akıllı aydınlatma ve bina iklimlendirme yönetimi.)',
-      'BACnet, KNX ve LonWorks Entegre Bina Otomasyon Protokolleri (Üretici & Ürün Çözümleri : <br>WAGO I/O System BACnet/IP, ABB i-bus KNX, Loytec L-INX Automation Server donanımları.<br>Farklı üretici bina otomasyon cihazlarının standart açık protokoller altında entegrasyonu.)'
+      'Aktüatörler (Eyleyiciler) & Otomasyon Sürücüleri (Üretici & Ürün Çözümleri : <br>Festo, SMC Corporation, Belimo, Danfoss, Siemens Aktüatör Donanımları.<br>Gelen komutlara göre motorları, vanaları veya anahtarları fiziksel olarak çalıştırır.)'
     ],
     slides: [
       {
-        title: 'Akıllı Bina Yönetim Sistemleri (BMS / RMS)',
-        desc: 'Bina merkezi kontrol odasından HVAC, aydınlatma, yangın ve enerji sayaçlarının entegre akıllı yönetimi ve raporlanması.',
+        title: 'Aktüatörler (Eyleyiciler)',
+        desc: 'Gelen komutlara göre motorları, vanaları veya anahtarları fiziksel olarak çalıştıran endüstriyel eyleyici donanımları.',
+        image: 'assets/images/ag_mcc_srucu_user.jpg'
+      }
+    ]
+  },
+  e_iot3: {
+    badge: 'IOT / GATEWAYS',
+    title: 'Ağ Geçitleri (Gateways)',
+    cover: 'assets/images/energy_scada_control.jpg',
+    desc: 'Sahadaki IoT cihaz ve sensör verilerini MQTT, HTTPS ve Modbus protokolleri ile güvenli bir şekilde buluta aktaran gateway çözümleri.',
+    specs: [
+      'Ağ Geçitleri (Gateways) & Veri Aktarımı (Üretici & Ürün Çözümleri : <br>Advantech UNO/ECU, Siemens SIMATIC IOT2050, Moxa ThingsPro, Cisco IR1101, Multitech Gateway.<br>Sahadaki cihazların verilerini güvenli bir şekilde bulut platformlarına aktarır.)'
+    ],
+    slides: [
+      {
+        title: 'Ağ Geçitleri (Gateways)',
+        desc: 'Sahadaki cihazların verilerini güvenli bir şekilde bulut ve merkez sunucu platformlarına aktaran endüstriyel gateway sistemleri.',
+        image: 'assets/images/energy_scada_control.jpg'
+      }
+    ]
+  },
+  e_iot4: {
+    badge: 'IOT / CLOUD & DASHBOARD',
+    title: 'Bulut ve Yazılım',
+    cover: 'assets/images/energy_ref_soc_cyber.jpg',
+    desc: 'Sahadan gelen verileri işleyen, depolayan ve anlık izleme olanağı sunan özelleştirilebilir canlı dashboard görsel panelleri.',
+    specs: [
+      'Bulut ve Yazılım & Görsel Paneller (Üretici & Ürün Çözümleri : <br>AWS IoT Core, Microsoft Azure IoT Hub, Google Cloud IoT, Siemens MindSphere, ThingsBoard Platform.<br>Gelen verileri işler, depolar ve kullanıcının erişebileceği görsel paneller (dashboard) sunar.)'
+    ],
+    slides: [
+      {
+        title: 'Bulut ve Yazılım',
+        desc: 'Gelen verileri işleyen, depolayan ve kullanıcının anlık erişebileceği görsel paneller (dashboard) ve raporlama yazılımları.',
         image: 'assets/images/energy_ref_soc_cyber.jpg'
+      }
+    ]
+  },
+  e_iot5: {
+    badge: 'IOT / INDUSTRIAL & IIOT',
+    title: 'Endüstriyel Otomasyon (IoT)',
+    cover: 'assets/images/eng_cover_blueprint_user.jpg',
+    desc: 'Fabrikalarda robotik kolların, üretim hatlarının ve kritik makinelerin arıza yapmadan önce tahminlenmesini (kestirimci bakım) sağlar.',
+    specs: [
+      'Endüstriyel Otomasyon (IoT) & Kestirimci Bakım (Üretici & Ürün Çözümleri : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection, KUKA Robotics IoT, ABB Ability.<br>Fabrikalarda robotik kolların, üretim hatlarının ve makinelerin arıza yapmadan önce tahminlenmesini (kestirimci bakım) sağlar.)'
+    ],
+    slides: [
+      {
+        title: 'Endüstriyel Otomasyon (IoT)',
+        desc: 'Fabrikalarda robotik kolların, üretim hatlarının ve makinelerin arıza yapmadan önce tahminlenmesini ve kestirimci bakımını sağlayan IIoT çözümleri.',
+        image: 'assets/images/eng_cover_blueprint_user.jpg'
+      }
+    ]
+  },
+  e_iot6: {
+    badge: 'IOT / SMART HOME',
+    title: 'Akıllı Ev Sistemleri',
+    cover: 'assets/images/energy_datacenter_whitespace.jpg',
+    desc: 'Aydınlatma, kombi, iklimlendirme, güvenlik kameraları ve beyaz eşyaların uzaktan mobil kontrolünü sağlayan akıllı otomasyonlar.',
+    specs: [
+      'Akıllı Ev Sistemleri & Uzaktan Kontrol (Üretici & Ürün Çözümleri : <br>Schneider Wiser, Somfy, KNX Smart Home, Legrand Netatmo, Bosch Smart Home, Crestron.<br>Aydınlatma, kombi, güvenlik kameraları ve beyaz eşyaların uzaktan kontrol edilmesini sağlar.)'
+    ],
+    slides: [
+      {
+        title: 'Akıllı Ev Sistemleri',
+        desc: 'Aydınlatma, kombi, güvenlik kameraları ve beyaz eşyaların mobil uygulama üzerinden uzaktan ve otonom kontrol edilmesini sağlayan akıllı ev mimarisi.',
+        image: 'assets/images/energy_datacenter_whitespace.jpg'
+      }
+    ]
+  },
+  e_iot7: {
+    badge: 'IOT / ENERGY & SMART GRID',
+    title: 'Enerji ve Altyapı',
+    cover: 'assets/images/energy_cybersecurity_soc.jpg',
+    desc: 'Akıllı elektrik şebekeleri ve sokak aydınlatma otomasyonları ile şehir ve tesis çapında enerji tüketimini optimize eden sistemler.',
+    specs: [
+      'Enerji ve Altyapı Otomasyonu (Üretici & Ürün Çözümleri : <br>Itron Smart Grid, Landis+Gyr, Signify / Philips Interact City, Schneider EcoStruxure Grid, Telensa.<br>Akıllı şebekeler ve sokak aydınlatma otomasyonları ile enerji tüketimini optimize eder.)'
+    ],
+    slides: [
+      {
+        title: 'Enerji ve Altyapı',
+        desc: 'Akıllı şebekeler ve sokak aydınlatma otomasyonları ile şehir ve tesis seviyesinde enerji tüketimini optimize eden çözümler.',
+        image: 'assets/images/energy_cybersecurity_soc.jpg'
+      }
+    ]
+  },
+  e_iot8: {
+    badge: 'IOT / LOGISTICS & TRACKING',
+    title: 'Lojistik ve Takip',
+    cover: 'assets/images/elv_cover_network_user.jpg',
+    desc: 'Vinçlerde yük dengesinin izlenmesi, araç takibi, depo sıcaklıklarının anlık kontrolü ve soğuk zincir otomasyonları.',
+    specs: [
+      'Lojistik ve Takip Otomasyonu (Üretici & Ürün Çözümleri : <br>Trimble Transportation, Zebra Technologies, Hirschmann Crane Safety, Teltonika Telematics, Siemens RTLS.<br>Vinçlerde yük dengesinin izlenmesi, araç takibi ve depo sıcaklıklarının anlık kontrolü gibi alanlarda kullanılır.)'
+    ],
+    slides: [
+      {
+        title: 'Lojistik ve Takip',
+        desc: 'Vinçlerde yük dengesinin izlenmesi, araç takibi ve depo sıcaklıklarının anlık kontrolü gibi alanlarda kullanılan lojistik takip otomasyonları.',
+        image: 'assets/images/elv_cover_network_user.jpg'
       }
     ]
   },
