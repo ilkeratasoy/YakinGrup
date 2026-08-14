@@ -718,7 +718,7 @@ const SERVICES_DATA = {
   e_t1: {
     badge: 'TELECOM / MAINTENANCE',
     title: 'Bakım Çözüm Hizmetleri',
-    cover: 'assets/images/telecom_maintenance_field.jpg',
+    cover: 'assets/images/telecom_maintenance_tower.jpg',
     desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
     specs: [
       '7/24 Saha Müdahale ve Arıza Giderme Ekipleri (Çözüm ve Hizmetler : <br>Kritik baz istasyonları ve fiber şebeke arızalarına ortalama 2-4 saat içinde yerinde müdahale.<br>Mobil yedek jeneratör ve acil durum kule yedekleme ekipleri ile 7/24 kesintisiz iletişim.)',
