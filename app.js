@@ -950,7 +950,7 @@ const SERVICES_DATA = {
   // Enerji Küme F — IoT & Otomasyon Sistemleri
   e_iot1: {
     badge: 'IOT / SMART SENSORS',
-    title: 'Akıllı Sensörlerin Temel Unsurları & Cihazlar',
+    title: 'Akıllı Sensörler',
     cover: 'assets/images/iot_hardware_components.jpg',
     desc: 'Algılayıcılar, mikroişlemciler, kablosuz iletişim birimleri ile gaz dedektörleri, desibelmetreler, takometreler ve refraktometre cihazları.',
     specs: [
@@ -964,7 +964,7 @@ const SERVICES_DATA = {
     ],
     slides: [
       {
-        title: 'Akıllı Sensörlerin Temel Unsurları & Cihazlar',
+        title: 'Akıllı Sensörler',
         desc: 'Sensör algılayıcı, mikroişlemci, haberleşme modülleri ile gaz dedektörü, desibelmetre, takometre ve refraktometre ölçüm donanımları.',
         image: 'assets/images/iot_hardware_components.jpg'
       }
