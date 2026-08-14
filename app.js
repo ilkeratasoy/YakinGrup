@@ -1007,7 +1007,7 @@ const SERVICES_DATA = {
   e_iot3: {
     badge: 'IOT / GATEWAYS',
     title: 'Ağ Geçitleri (Gateways)',
-    cover: 'assets/images/energy_scada_control.jpg',
+    cover: 'assets/images/iot_gateways_network.jpg',
     desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
     specs: [
       'Protokol Çevrimi (Üretici & Ürün Çözümleri : <br>HMS Anybus Gateways, Moxa MGate, Advantech WebAccess/CNC, Teltonika RUTX.<br>Zigbee, Modbus veya LoRaWAN gibi farklı diller konuşan cihazların verilerini MQTT veya HTTP gibi bulut diline çevirir.)',
@@ -1022,7 +1022,7 @@ const SERVICES_DATA = {
       {
         title: 'Ağ Geçitleri (Gateways)',
         desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
-        image: 'assets/images/energy_scada_control.jpg'
+        image: 'assets/images/iot_gateways_network.jpg'
       }
     ]
   },
