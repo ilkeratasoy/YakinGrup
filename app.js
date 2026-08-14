@@ -1100,18 +1100,25 @@ const SERVICES_DATA = {
   e_iot7: {
     badge: 'SMART AGRICULTURE & AGTECH',
     title: 'Tarım ve Hayvancılık (Akıllı Tarım)',
-    cover: 'assets/images/energy_smart_building.jpg',
-    desc: 'Toprak nem sensörleri ile otomatik sulama, sera iklim otomasyonu ve sürü sağlığı/konum takibi.',
+    cover: 'assets/images/smart_agriculture_drone.jpg',
+    desc: 'Toprak nem sensörleri, sera iklimlendirme, zirai İHA, akıllı tasmalar, otomatik yemleme, ahır kontrolü ve erken teşhis.',
     specs: [
-      'Toprak Nem Sensörleri & Otomatik Sulama (Üretici & Ürün Çözümleri : <br>Sentek Sensor Technologies, Meter Group TEROS, CropX Soil Sensor, Netafim Smart Irrigation.<br>Su ihtiyacına göre otomatik sulama.)',
-      'Sera Otomasyonu & İklimlendirme (Üretici & Ürün Çözümleri : <br>Priva Connext, Ridder Climate Control, Hoogendoorn Growth Management.<br>Sıcaklık ve ışık seviyesi kontrolü.)',
-      'Hayvan Takibi & Sürü Sağlığı (Üretici & Ürün Çözümleri : <br>Allflex Livestock Intelligence, CowManager Sensor, Nedap Livestock Management.<br>Sürü sağlığı ve konum izleme.)'
+      'Toprak Nem Sensörleri & Otomatik Sulama (Üretici & Ürün Çözümleri : <br>Sentek Sensor Technologies, Meter Group TEROS, CropX Soil Sensor, Netafim.<br>Toprak nem verilerine ve su ihtiyacına göre otomatik sulama ve gübreleme.)',
+      'Sera Otomasyonu & İklimlendirme (Üretici & Ürün Çözümleri : <br>Priva Connext, Ridder Climate Control, Hoogendoorn Growth Management.<br>Sera içi sıcaklık, nem, CO2 ve ışık seviyesinin hassas otonom kontrolü.)',
+      'Zirai İHA / Drone Spreyleme (Üretici & Ürün Çözümleri : <br>DJI Agras T40 / T30, XAG Agricultural Drones, PrecisionHawk, Yamaha RMAX.<br>Otonom zirai dronlar ile haritalama, bitki sağlığı tespiti ve nokta atışı ilaçlama.)',
+      'Akıllı Tasmalar ve Küpeler (Üretici & Ürün Çözümleri : <br>Allflex Livestock Intelligence, CowManager Sensor, Nedap CowControl, Moocall.<br>Hayvanların ateşini, adım sayısını ve yerini takip eder.)',
+      'Otomatik Yemleme (Üretici & Ürün Çözümleri : <br>Lely Vector Automatic Feeding, DeLaval OptiFeeder, TRIOLIET Automatic, GEA DairyFeed.<br>Hayvanlara en uygun miktarda ve zamanda yem verir.)',
+      'Ahır Kontrolü (Üretici & Ürün Çözümleri : <br>SKOV Climate Control, Big Dutchman Barn Systems, Munters Ventilation, DeLaval.<br>İçerideki hava kalitesini, sıcaklığı ve nemi dengede tutar.)',
+      'Erken Teşhis (Üretici & Ürün Çözümleri : <br>HerdX Livestock AI, Smaxtec Bolus Health, DeLaval DelPro BioModel, Afimilk.<br>Hastalık belirtilerini erkenden fark edip veterinere haber verir.)',
+      'Az Maliyet (Üretici & Ürün Çözümleri : <br>John Deere Precision Ag, Climate FieldView, Trimble Agriculture, Valmont.<br>Su, elektrik, ilaç ve yem giderlerini azaltır.)',
+      'Çok Ürün (Üretici & Ürün Çözümleri : <br>Topcon Agriculture, Raven Industries, Kubota Smart Ag, AGCO Fuse Precision.<br>Kaliteli ve yüksek miktarda mahsul elde edilmesini sağlar.)',
+      'Kolay Takip (Üretici & Ürün Çözümleri : <br>FarmLogs, Agrivi Farm Management, Granular (Corteva), xarvio Digital Farming.<br>Çiftçilerin her şeyi telefon veya bilgisayardan yönetmesine yardım eder.)'
     ],
     slides: [
       {
-        title: 'Tarım ve Hayvancılık (Akıllı Tarım)',
-        desc: 'Toprak nem sensörlü hassas sulama, iklim kontrollü sera otomasyonu ve GPS sürü takip altyapısı.',
-        image: 'assets/images/energy_smart_building.jpg'
+        title: 'Tarım ve Hayvancılık (Akıllı Tarım & AgTech)',
+        desc: 'Zirai dronlar, toprak nem sensörleri, akıllı hayvan tasmaları, otomatik yemleme ve çiftlik yönetim yazılımları.',
+        image: 'assets/images/smart_agriculture_drone.jpg'
       }
     ]
   },
