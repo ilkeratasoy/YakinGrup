@@ -974,14 +974,23 @@ const SERVICES_DATA = {
     badge: 'IOT / ACTUATORS',
     title: 'Aktüatörler (Eyleyiciler)',
     cover: 'assets/images/ag_mcc_srucu_user.jpg',
-    desc: 'Otomasyon komutlarına göre motorları, vanaları ve elektrikli anahtarları fiziksel olarak çalıştıran eyleyici çözümleri.',
+    desc: 'Elektrikli, pnömatik, hidrolik aktüatörler; akıllı ev, endüstriyel otomasyon ve tarımsal eyleyici sistemleri.',
     specs: [
-      'Aktüatörler (Eyleyiciler) & Otomasyon Sürücüleri (Üretici & Ürün Çözümleri : <br>Festo, SMC Corporation, Belimo, Danfoss, Siemens Aktüatör Donanımları.<br>Gelen komutlara göre motorları, vanaları veya anahtarları fiziksel olarak çalıştırır.)'
+      'Veri Toplama (Üretici & Ürün Çözümleri : <br>IFM Efector, Turck, Pepperl+Fuchs, Bosch Sensortec, Honeywell Sensing.<br>Sensörler çevreden bilgi alır.)',
+      'Karar / Sinyal Üretimi (Üretici & Ürün Çözümleri : <br>Siemens S7-1500 PLC, Schneider Modicon, Rockwell Allen-Bradley, Beckhoff.<br>Kontrol ünitesi veriyi işleyip elektrik sinyali üretir.)',
+      'Eylem & Mekanik Hareket (Üretici & Ürün Çözümleri : <br>Festo Motion Terminal, SMC Actuators, Belimo Smart Actuators, Danfoss.<br>Aktüatör sinyali alıp mekanik ya da fiziksel hareketi başlatır.)',
+      'Elektrikli Aktüatörler (Üretici & Ürün Çözümleri : <br>Siemens SIMOTICS, Yaskawa Sigma-7, Mitsubishi Electric, Oriental Motor, Parker.<br>Motorlar (step, servo) ve selenoidler; elektrik enerjisini dönel veya doğrusal harekete çevirir.)',
+      'Pnömatik Aktüatörler (Üretici & Ürün Çözümleri : <br>Festo Pneumatic Cylinders, SMC Pneumatics, Norgren, Aventics (Emerson).<br>Basınçlı hava kullanarak mekanik hareket üretir.)',
+      'Hidrolik Aktüatörler (Üretici & Ürün Çözümleri : <br>Bosch Rexroth, Parker Hannifin Hydraulics, Eaton Hydraulics, Moog Industrial.<br>Sıvı basıncı ile yüksek kuvvet gerektiren endüstriyel işleri yapar.)',
+      'Termal / Manyetik Aktüatörler (Üretici & Ürün Çözümleri : <br>Thermocoax, Cedrat Technologies, Johnson Matthey, Magnet-Schultz.<br>Sıcaklık veya akım değişimleriyle şekil veya konum değiştirir.)',
+      'Akıllı Ev Aktüatör Kullanımı (Üretici & Ürün Çözümleri : <br>Somfy Smart Motors, Belimo HVAC, Yale/August Smart Lock Actuators, Legrand.<br>Otomatik perdeler, akıllı kilitler, klima ve HVAC sistem ayarları.)',
+      'Endüstriyel Otomasyon Aktüatörleri (Üretici & Ürün Çözümleri : <br>KUKA Robotics, ABB Motion, Emerson Smart Valve Actuators, Festo Automation.<br>Akıllı vanalar, robotik kollar, bant hareketleri ve üretim hattı kesicileri.)',
+      'Tarım Otomasyon Aktüatörleri (Üretici & Ürün Çözümleri : <br>Netafim Smart Valves, Rain Bird Solenoids, Hunter Industries, Bermad Water Control.<br>Otomatik sulama vanalarının açılıp kapanması.)'
     ],
     slides: [
       {
         title: 'Aktüatörler (Eyleyiciler)',
-        desc: 'Gelen komutlara göre motorları, vanaları veya anahtarları fiziksel olarak çalıştıran endüstriyel eyleyici donanımları.',
+        desc: 'Elektrikli, pnömatik, hidrolik aktüatörler; akıllı ev, endüstriyel otomasyon ve tarımsal eyleyici sistemleri.',
         image: 'assets/images/ag_mcc_srucu_user.jpg'
       }
     ]
