@@ -1149,7 +1149,7 @@ const SERVICES_DATA = {
   e_b1: {
     badge: 'HARDWARE & INFRASTRUCTURE',
     title: 'Altyapı Donanım Bileşenleri Tedariği',
-    cover: 'assets/images/data_center_construction_1785092614608.png',
+    cover: 'assets/images/infra_hardware_supply.jpg',
     desc: 'Kurumsal sunuculardan ağ ve güvenlik cihazlarına, KVM/PDU/UPS sistemlerinden istemci donanımlarına kadar uçtan uca yüksek performanslı IT altyapı donanım tedariği ve entegrasyonu.',
     specs: [
       'Sunucu ve Veri Depolama: Fiziksel sunucular, blade sistemler, NAS/SAN depolama üniteleri ve disk dizileri. (Dell PowerEdge, HPE ProLiant, Lenovo ThinkSystem, NetApp FAS/AFF, Pure Storage FlashArray, IBM Storage)',
@@ -1162,7 +1162,7 @@ const SERVICES_DATA = {
   e_b2: {
     badge: 'CLOUD & VIRTUALIZATION',
     title: 'Bulut & Network & Sanallaştırma Çözümleri',
-    cover: 'assets/images/energy_fiber_network.jpg',
+    cover: 'assets/images/cloud_network_virt.jpg',
     desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme çözümleri, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma altyapıları.',
     specs: [
       'Yönetilen Hizmetler : NOC, SOC, Managed Services, Trafik, Enerji, Soğutma, Kabinet, Sunucu ölçeklendirme. (Üretici & Ürün Çözümleri : <br>7/24 NOC & SOC Ağ ve Güvenlik İzleme: Kesintisiz şebeke altyapısı, anlık trafik analizi ve 7/24 tehdit yönetimi.<br>Veri Merkezi İklimlendirme ve Enerji Yönetimi: Kabinet bazlı yüksek hassasiyetli soğutma ve kesintisiz enerji altyapısı.<br>Sunucu ve Donanım Ölçeklendirme: Esnek x86/x64 fiziki ve sanal sunucu kaynak tahsisi ve kapasite artırımı.<br>Uçtan Uca Yönetilen Servis Mimarisi: Dedicated Server, Sanal Sunucu (VPS/VDS) ve Co-Location barındırma çözümleri.)',
