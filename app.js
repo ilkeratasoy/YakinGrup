@@ -133,59 +133,59 @@ const TRANSLATIONS = {
     stat_scada: 'Akıllı SCADA İzleme', stat_services: 'Mühendislik Branşı',
         iso_heading: 'ULUSLARARASI ISO SERTİFİKALARI', iso_sub: 'Entegre Kalite & Güvenlik Yönetim Sistemleri',
     iso_quality: 'KALİTE YÖNETİMİ', iso_env: 'ÇEVRE YÖNETİMİ', iso_safety: 'İŞ GÜVENLİĞİ', iso_cyber: 'SİBER GÜVENLİK',
-    c_s1_title: 'Veri Merkezi İnşaatı (Tier III & Tier IV)', c_s1_desc: 'Büyük ölçekli veri merkezlerinde statik taşıyıcı sistemler, iklimlendirme ve yüksek güvenlikli fiziki bina taahhüdü.<br>Kesintisiz enerji mimarisi, yangın izolasyonu ve uluslararası uptime sertifikasyonlarına tam uyumlu inşaat çözümleri.',
-    c_s2_title: 'Ağır Sanayi Tesisleri ve Fabrikalar', c_s2_desc: 'Ağır yük taşıyıcı betonarme/çelik strüktürler ve yüksek mukavemetli endüstriyel epoksi zemin kaplama uygulamaları.<br>Endüstriyel üretim hatları, yüksek vinç kapasiteli fabrika binaları ve ağır altyapı mühendislik imalatları.',
-    c_s3_title: 'Konut & Yaşam Projeleri', c_s3_desc: 'Sürdürülebilir yeşil bina standartlarında karma konut, sosyal tesis ve yüksek katlı rezidans mimari projeleri.<br>Akıllı bina otomasyonu, yüksek enerji verimliliği ve depreme dayanıklı tünel kalıp/kaset döşeme taşıyıcı sistemler.',
-    c_s4_title: 'Yapı Mühendisliği, Deprem & BIM Tasarımı', c_s4_desc: '3D çakışma (clash) tespiti, statik mukavemet hesapları ve uluslararası EUROCODE / IBC bina yönetmelik uyumu.<br>BIM tabanlı metraj, hakediş ve zaman planlaması ile şantiye imalatlarının dijital ikiz üzerinden canlı takibi.',
-    c_s5_title: 'Havalimanı & Ulaşım Altyapısı', c_s5_desc: 'Yüksek yolcu kapasiteli apron, pist, tünel, viyadük ve raylı sistem metro istasyon yapılarında taahhüt hizmetleri.<br>Uluslararası havacılık ve ulaştırma şartnamelerine tam uyumlu ağır mühendislik altyapı imalatları.',
-    c_s6_title: 'Kentsel Dönüşüm & Yapı Güçlendirme', c_s6_desc: 'Kentsel dönüşüm projelerinde hak sahipleri yönetimi, resmi ruhsatlandırma ve sıfırdan güvenli bina inşası.<br>Mevcut beton/donatı analizleri, karbon elyaf (CFRP) sargı ve betonarme perde ilaveleri ile binaların güçlendirilmesi.',
-    e_s1_title: 'Güneş Enerjisi Sistemleri (GES) & BIPV', e_s1_desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
-    e_s2_title: 'Rüzgar Enerjisi Santrali (RES / WPP) & Rüzgar Çiftliği', e_s2_desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
-    e_s3_title: 'Batarya Enerji Depolama (BESS) & Hibrit Sistemler', e_s3_desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
-    e_em1_title: 'Elektrik & Mekanik Taahhüt Hizmetleri', e_em1_desc: 'Endüstriyel üretim tesisleri, ticari binalar, hastaneler ve veri merkezleri için anahtar teslim MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama çözümleri.',
-    e_em2_title: 'Zayıf Akım Çözümleri & Akıllı Bina Otomasyonu', e_em2_desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
-    e_em3_title: 'Alçak Gerilim Sistemleri (AG) & Güç Dağıtımı', e_em3_desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
-    e_em4_title: 'Orta Gerilim Sistemleri (OG) & Şalt Tesisleri', e_em4_desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke entegrasyonu.',
-    e_em5_title: 'Proje Mühendislik & Onay Hizmetleri', e_em5_desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
-    e_em6_title: 'Yüksek Gerilim Sistemleri (YG) & Şalt Sahaları', e_em6_desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon altyapıları.',
-    e_t1_title: 'Bakım Çözüm Hizmetleri', e_t1_desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
-    e_t2_title: '5G Altyapı & Kurulum', e_t2_desc: '5G NR (New Radio) aktif donanım kurulumu, anten entegrasyonu, küçük hücre (Small Cell) ve 5G ağ optimizasyon hizmetleri.',
-    e_t3_title: 'IBS / Bina İçi Kapsama', e_t3_desc: 'AVM, hastane, havalimanı ve rezidanslarda In-Building Solution (IBS) tasarım ve kurulum; pasif/aktif DAS sistemleri.',
-    e_t4_title: 'Mobil Baz İstasyonu (COW)', e_t4_desc: 'Geçici kapsama gerektiren etkinlik, afet ve acil alanlar için Cell on Wheels (COW) mobil baz istasyonu çözümleri.',
-    e_t5_title: 'TETRA Dijital Trunking Haberleşme', e_t5_desc: 'Polis, jandarma, itfaiye ve kamu güvenliği birimleri için TETRA (Terrestrial Trunked Radio) dijital trunking telsiz sistemi kurulum ve entegrasyonu.',
-    e_t6_title: 'DPO — Dizayn, Planlama, Optimizasyon', e_t6_desc: 'Ağ altyapısı dizayn, RF planlama, frekans koordinasyonu, kapsama analizleri ve şebeke optimizasyon hizmetleri.',
-    e_t7_title: 'WDM — Dalga Boyu Çoklama Sistemleri', e_t7_desc: 'DWDM ve CWDM optik iletim sistemleri kurulumu, kapasite artırımı ve metro/uzun mesafe fiber optik ağ altyapı çözümleri.',
-    e_t8_title: 'FTTX — Fiber to the X Altyapısı', e_t8_desc: 'FTTH, FTTB ve FTTC fiber abone bağlantısı altyapı tasarımı, döşeme, fiber dağıtım kutusu ve ONU/ONT kurulumları.',
-    e_t9_title: 'Telekom İnşaat İşleri', e_t9_desc: 'Baz istasyonu kule ve direk imalatı, montajı, YASS/şehiriçi kanallar, boru döşeme ve zemin sondajlı yeraltı kablo hatları.',
-    e_t10_title: 'Denetim Hizmetleri', e_t10_desc: 'Telekom altyapısı saha denetimi, teknik uyumluluk raporlaması, kalite güvence (QA) testleri ve bağımsız proje yönetimi.',
-    e_t11_title: 'LV — Alçak Gerilim Güç Beslemeleri', e_t11_desc: 'Telekom tesisleri ve baz istasyonlarına yönelik AG güç panosu, acil jeneratör bağlantısı ve kesintisiz güç besleme (UPS) sistemleri.',
-    e_c1_title: 'IT / OT Siber Güvenlik & SOC Hizmetleri', e_c1_desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM entegrasyonu ve IT/OT endüstriyel kontrol sistemleri ağ güvenliği çözümleri.',
-    e_c2_title: 'Sızma Testleri & Güvenlik Denetimi', e_c2_desc: 'Sistem odası, ağ altyapısı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
-    e_c3_title: 'Uyum & Siber Güvenlik Standartları Danışmanlığı', e_c3_desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
+    c_s1_title: 'Data Center Construction (Tier III & Tier IV)', c_s1_desc: 'Büyük ölçekli veri merkezlerinde statik taşıyıcı sistemler, iklimlendirme ve yüksek güvenlikli fiziki bina taahhüdü.<br>Kesintisiz enerji mimarisi, yangın izolasyonu ve uluslararası uptime sertifikasyonlarına tam uyumlu inşaat çözümleri.',
+    c_s2_title: 'Heavy Industry Facilities & Factories', c_s2_desc: 'Ağır yük taşıyıcı betonarme/çelik strüktürler ve yüksek mukavemetli endüstriyel epoksi zemin kaplama uygulamaları.<br>Endüstriyel üretim hatları, yüksek vinç kapasiteli fabrika binaları ve ağır altyapı mühendislik imalatları.',
+    c_s3_title: 'Residential & Luxury Living Projects', c_s3_desc: 'Sürdürülebilir yeşil bina standartlarında karma konut, sosyal tesis ve yüksek katlı rezidans mimari projeleri.<br>Akıllı bina otomasyonu, yüksek enerji verimliliği ve depreme dayanıklı tünel kalıp/kaset döşeme taşıyıcı sistemler.',
+    c_s4_title: 'Structural Engineering, Seismic & 5D BIM', c_s4_desc: '3D çakışma (clash) tespiti, statik mukavemet hesapları ve uluslararası EUROCODE / IBC bina yönetmelik uyumu.<br>BIM tabanlı metraj, hakediş ve zaman planlaması ile şantiye imalatlarının dijital ikiz üzerinden canlı takibi.',
+    c_s5_title: 'Airport Terminals & Transportation Infrastructure', c_s5_desc: 'Yüksek yolcu kapasiteli apron, pist, tünel, viyadük ve raylı sistem metro istasyon yapılarında taahhüt hizmetleri.<br>Uluslararası havacılık ve ulaştırma şartnamelerine tam uyumlu ağır mühendislik altyapı imalatları.',
+    c_s6_title: 'Urban Renewal & Seismic Retrofitting', c_s6_desc: 'Kentsel dönüşüm projelerinde hak sahipleri yönetimi, resmi ruhsatlandırma ve sıfırdan güvenli bina inşası.<br>Mevcut beton/donatı analizleri, karbon elyaf (CFRP) sargı ve betonarme perde ilaveleri ile binaların güçlendirilmesi.',
+    e_s1_title: 'Solar Power Plants (GES) & BIPV Systems', e_s1_desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam sistemleri (BIPV) entegrasyonu.',
+    e_s2_title: 'Wind Power Plants (RES / WPP)', e_s2_desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
+    e_s3_title: 'Battery Energy Storage (BESS) & Hybrid Systems', e_s3_desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
+    e_em1_title: 'Electrical & Mechanical (MEP) Contracting', e_em1_desc: 'Endüstriyel üretim tesisleri, ticari binalar, hastaneler ve veri merkezleri için anahtar teslim MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama çözümleri.',
+    e_em2_title: 'Low Voltage (ELV) Building Systems', e_em2_desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber altyapı.',
+    e_em3_title: 'Low Voltage (LV) Power Distribution Systems', e_em3_desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
+    e_em4_title: 'Medium Voltage (MV / OG) Power Systems', e_em4_desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke entegrasyonu.',
+    e_em5_title: 'Engineering, Load Flow & Official Approvals', e_em5_desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
+    e_em6_title: 'High Voltage (HV / YG) Power Systems', e_em6_desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon altyapıları.',
+    e_t1_title: 'Telecom Network Maintenance & Field Services', e_t1_desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
+    e_t2_title: '5G Network Infrastructure & Rollout', e_t2_desc: '5G NR (New Radio) aktif donanım kurulumu, anten entegrasyonu, küçük hücre (Small Cell) ve 5G ağ optimizasyon hizmetleri.',
+    e_t3_title: 'In-Building Solution (IBS) Coverage', e_t3_desc: 'AVM, hastane, havalimanı ve rezidanslarda In-Building Solution (IBS) tasarım ve kurulum; pasif/aktif DAS sistemleri.',
+    e_t4_title: 'Cell on Wheels (COW) Mobile Base Stations', e_t4_desc: 'Geçici kapsama gerektiren etkinlik, afet ve acil alanlar için Cell on Wheels (COW) mobil baz istasyonu çözümleri.',
+    e_t5_title: 'TETRA Digital Radio Communications', e_t5_desc: 'Polis, jandarma, itfaiye ve kamu güvenliği birimleri için TETRA (Terrestrial Trunked Radio) dijital trunking telsiz sistemi kurulum ve entegrasyonu.',
+    e_t6_title: 'Network Design, RF Planning & Optimization (DPO)', e_t6_desc: 'Ağ altyapısı dizayn, RF planlama, frekans koordinasyonu, kapsama analizleri ve şebeke optimizasyon hizmetleri.',
+    e_t7_title: 'Wavelength Division Multiplexing (WDM / DWDM)', e_t7_desc: 'DWDM ve CWDM optik iletim sistemleri kurulumu, kapasite artırımı ve metro/uzun mesafe fiber optik ağ altyapı çözümleri.',
+    e_t8_title: 'FTTX — Fiber to the Home / Building', e_t8_desc: 'FTTH, FTTB ve FTTC fiber abone bağlantısı altyapı tasarımı, döşeme, fiber dağıtım kutusu ve ONU/ONT kurulumları.',
+    e_t9_title: 'Telecom Civil Engineering & Tower Works', e_t9_desc: 'Baz istasyonu kule ve direk imalatı, montajı, YASS/şehiriçi kanallar, boru döşeme ve zemin sondajlı yeraltı kablo hatları.',
+    e_t10_title: 'Telecom Field Audit & Quality Assurance', e_t10_desc: 'Telekom altyapısı saha denetimi, teknik uyumluluk raporlaması, kalite güvence (QA) testleri ve bağımsız proje yönetimi.',
+    e_t11_title: 'Low Voltage (LV) Telecom Power Feeds', e_t11_desc: 'Telekom tesisleri ve baz istasyonlarına yönelik AG güç panosu, acil jeneratör bağlantısı ve kesintisiz güç besleme (UPS) sistemleri.',
+    e_c1_title: 'IT / OT Cybersecurity Operations Center (SOC)', e_c1_desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM entegrasyonu ve IT/OT endüstriyel kontrol sistemleri ağ güvenliği çözümleri.',
+    e_c2_title: 'Penetration Testing & Vulnerability Audits', e_c2_desc: 'Sistem odası, ağ altyapısı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
+    e_c3_title: 'Cybersecurity Compliance & Standards Consulting', e_c3_desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
     e_s4_title: 'Mekanik Tesisat & HVAC (VRF / VAV) / MEP', e_s4_desc: 'MEP (Mechanical, Electrical, Plumbing) mühendisliği, HVAC VRF VAV hassas iklimlendirme ve havalandırma sistem tasarımları.',
     e_s5_title: 'SCADA — Merkezi Denetim, Kontrol ve Veri Toplama', e_s5_desc: 'Elektrik üretimi, su dağıtımı, doğalgaz hatları ve endüstriyel tesisler için gerçek zamanlı canlı izleme, alarm yönetimi ve uzaktan kontrol.',
     e_s6_title: 'Yangın Söndürme ve Erken Uyarı Sistemleri', e_s6_desc: 'Sprinkler sulu söndürme, gazlı söndürme (FM200 / Novec 1230), davlumbaz söndürme ve mobil yangın emniyet altyapıları.',
-    e_s7_title: 'Elektrikli Araç Şarj İstasyonları (EV Charge)', e_s7_desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC ultra hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Solar Carport & BESS entegrasyonu, Sicharge ürün ailesi ve modüler otopark çözümleri.',
-    e_iot1_title: 'Akıllı Sensörler', e_iot1_desc: 'Sensör transdüserleri, mikroişlemciler, kablosuz haberleşme ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi sensörleri.',
-    e_iot2_title: 'Aktüatörler (Eyleyiciler)', e_iot2_desc: 'Elektrikli, pnömatik, hidrolik aktüatörler; akıllı ev, endüstriyel otomasyon ve tarımsal eyleyici sistemleri.',
-    e_iot3_title: 'Ağ Geçitleri (Gateways)', e_iot3_desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
-    e_iot4_title: 'Bulut ve Yazılım', e_iot4_desc: 'Cihaz/sensör katmanı, MQTT/HTTP protokolleri, bulut bilişim ve canlı izleme arayüz panelleri.',
-    e_iot5_title: 'Endüstri ve Üretim (IIoT)', e_iot5_desc: 'Akıllı sensörler, endüstriyel ağlar, veri analitiği, edge computing ile kestirimci bakım, kalite kontrol ve iş güvenliği.',
-    e_iot6_title: 'Sağlık Sektörü', e_iot6_desc: 'Giyilebilir cihazlar, tıbbi sensörler, edge bilişim, yapay zeka, uzaktan hasta takibi, veri güvenliği ve FHIR uyumluluğu.',
-    e_iot7_title: 'Tarım ve Hayvancılık (Akıllı Tarım)', e_iot7_desc: 'Toprak nem sensörleri, sera iklimlendirme, zirai İHA, akıllı tasmalar, otomatik yemleme, ahır kontrolü ve erken teşhis.',
-    e_iot8_title: 'Akıllı Şehirler ve Ulaşım', e_iot8_desc: 'Dinamik sinyalizasyon, akıllı otopark, canlı toplu taşıma takibi, filo yönetimi, EV şarjı, otonom araçlar ve yapay zeka trafik analitiği.',
-    e_b1_title: 'Altyapı Donanım Bileşenleri Tedariği', e_b1_desc: 'Kurumsal sunuculardan ağ ve güvenlik cihazlarına, KVM/PDU/UPS sistemlerinden istemci donanımlarına kadar uçtan uca yüksek performanslı IT altyapı donanım tedariği ve entegrasyonu.',
-    e_b2_title: 'Bulut & Network & Sanallaştırma Çözümleri', e_b2_desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme çözümleri, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma altyapıları.',
-    e_b4_title: 'Veri Merkezi Beyaz Alan (White Space) Yönetimi & DCIM', e_b4_desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
+    e_s7_title: 'EV Charging Stations (AC / DC Fast Charge)', e_s7_desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC ultra hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Solar Carport & BESS entegrasyonu, Sicharge ürün ailesi ve modüler otopark çözümleri.',
+    e_iot1_title: 'Smart Sensors & Industrial Telemetry', e_iot1_desc: 'Sensör transdüserleri, mikroişlemciler, kablosuz haberleşme ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi sensörleri.',
+    e_iot2_title: 'Actuators & Industrial Automation Control', e_iot2_desc: 'Elektrikli, pnömatik, hidrolik aktüatörler; akıllı ev, endüstriyel otomasyon ve tarımsal eyleyici sistemleri.',
+    e_iot3_title: 'Industrial IoT Network Gateways', e_iot3_desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
+    e_iot4_title: 'IoT Cloud Platforms & Real-Time Dashboards', e_iot4_desc: 'Cihaz/sensör katmanı, MQTT/HTTP protokolleri, bulut bilişim ve canlı izleme arayüz panelleri.',
+    e_iot5_title: 'Industrial IoT (IIoT) & Industry 4.0', e_iot5_desc: 'Akıllı sensörler, endüstriyel ağlar, veri analitiği, edge computing ile kestirimci bakım, kalite kontrol ve iş güvenliği.',
+    e_iot6_title: 'Smart Healthcare & IoMT Solutions', e_iot6_desc: 'Giyilebilir cihazlar, tıbbi sensörler, edge bilişim, yapay zeka, uzaktan hasta takibi, veri güvenliği ve FHIR uyumluluğu.',
+    e_iot7_title: 'Smart Agriculture & AgTech Systems', e_iot7_desc: 'Toprak nem sensörleri, sera iklimlendirme, zirai İHA, akıllı tasmalar, otomatik yemleme, ahır kontrolü ve erken teşhis.',
+    e_iot8_title: 'Smart Cities & Mobility Systems', e_iot8_desc: 'Dinamik sinyalizasyon, akıllı otopark, canlı toplu taşıma takibi, filo yönetimi, EV şarjı, otonom araçlar ve yapay zeka trafik analitiği.',
+    e_b1_title: 'IT Hardware Supply & Server Infrastructure', e_b1_desc: 'Kurumsal sunuculardan ağ ve güvenlik cihazlarına, KVM/PDU/UPS sistemlerinden istemci donanımlarına kadar uçtan uca yüksek performanslı IT altyapı donanım tedariği ve entegrasyonu.',
+    e_b2_title: 'Cloud, Network & Virtualization Solutions', e_b2_desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme çözümleri, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma altyapıları.',
+    e_b4_title: 'Data Center White Space & DCIM Management', e_b4_desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM altyapı yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
     c_title: 'Yakın İnşaat',
     c_desc: 'Veri merkezlerinden konut ve sanayi yapılarına kadar her projede üstün kalite, dayanıklılık ve sürdürülebilir yöntemler.',
     c_services_title: 'Endüstriyel İnşaat Çözümlerimiz',
-    c_s1_title: 'Veri Merkezi İnşaatı', c_s1_desc: 'Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli mission-critical veri merkezi yapıları.',
-    c_s2_title: 'Ağır Sanayi Tesisleri', c_s2_desc: 'Fabrikalar, dökümhaneler ve ağır sanayi tesislerinde uçtan uca anahtar teslim inşaat taahhüdü.',
-    c_s3_title: 'Konut & Yaşam Projeleri', c_s3_desc: 'Modern mimari estetik ve ileri deprem mühendisliğiyle tasarlanan lüks yaşam kompleksleri.',
-    c_s4_title: 'Yapı Mühendisliği & BIM', c_s4_desc: 'İleri seviye deprem mühendisliği, 5D BIM entegrasyonu ve teknik mühendislik projelendirme.',
-    c_s5_title: 'Havalimanı & Ulaşım', c_s5_desc: 'Uluslararası standartlarda havalimanı terminal binaları ve raylı sistem ulaşım altyapıları.',
-    c_s6_title: 'Kentsel Dönüşüm', c_s6_desc: 'Riskli binaların tespiti, karbon elyaf / çelik mantolama ile deprem güçlendirme uygulamaları.',
+    c_s1_title: 'Data Center Construction (Tier III & Tier IV)', c_s1_desc: 'Tier III ve Tier IV sertifikalı, yüksek güvenilirlikli mission-critical veri merkezi yapıları.',
+    c_s2_title: 'Heavy Industry Facilities & Factories', c_s2_desc: 'Fabrikalar, dökümhaneler ve ağır sanayi tesislerinde uçtan uca anahtar teslim inşaat taahhüdü.',
+    c_s3_title: 'Residential & Luxury Living Projects', c_s3_desc: 'Modern mimari estetik ve ileri deprem mühendisliğiyle tasarlanan lüks yaşam kompleksleri.',
+    c_s4_title: 'Structural Engineering, Seismic & 5D BIM', c_s4_desc: 'İleri seviye deprem mühendisliği, 5D BIM entegrasyonu ve teknik mühendislik projelendirme.',
+    c_s5_title: 'Airport Terminals & Transportation Infrastructure', c_s5_desc: 'Uluslararası standartlarda havalimanı terminal binaları ve raylı sistem ulaşım altyapıları.',
+    c_s6_title: 'Urban Renewal & Seismic Retrofitting', c_s6_desc: 'Riskli binaların tespiti, karbon elyaf / çelik mantolama ile deprem güçlendirme uygulamaları.',
     btn_service_details: 'Detaylar & vCard İrtibat ›',
     portfolio_title: 'Tamamlanan Referans Projelerimiz',
     c_gal1_title: 'T-3 Veri Merkezi Yapımı', c_gal2_title: 'Uluslararası Havalimanı Terminali',
@@ -316,59 +316,59 @@ const TRANSLATIONS = {
     stat_scada: 'Smart SCADA Monitoring', stat_services: 'Engineering Branches',
         iso_heading: 'INTERNATIONAL ISO CERTIFICATIONS', iso_sub: 'Integrated Quality & Security Management Systems',
     iso_quality: 'QUALITY MANAGEMENT', iso_env: 'ENVIRONMENTAL MANAGEMENT', iso_safety: 'OCCUPATIONAL SAFETY', iso_cyber: 'CYBERSECURITY',
-    c_s1_title: 'Veri Merkezi İnşaatı (Tier III & Tier IV)', c_s1_desc: 'Büyük ölçekli veri merkezlerinde statik taşıyıcı sistemler, iklimlendirme ve yüksek güvenlikli fiziki bina contracting.<br>Kesintisiz enerji mimarisi, yangın izolasyonu ve uluslararası uptime sertifikasyonlarına tam uyumlu inşaat solutionsi.',
-    c_s2_title: 'Ağır Sanayi facilities ve Fabrikalar', c_s2_desc: 'Ağır yük taşıyıcı betonarme/çelik strüktürler ve yüksek mukavemetli endüstriyel epoksi zemin kaplama uygulamaları.<br>Endüstriyel üretim hatları, yüksek vinç kapasiteli fabrika binaları ve ağır infrastructure mühendislik imalatları.',
-    c_s3_title: 'Konut & Yaşam Projeleri', c_s3_desc: 'Sürdürülebilir yeşil bina standartlarında karma konut, sosyal tesis ve yüksek katlı rezidans mimari projeleri.<br>Akıllı bina otomasyonu, yüksek enerji verimliliği ve depreme dayanıklı tünel kalıp/kaset döşeme taşıyıcı sistemler.',
-    c_s4_title: 'Yapı Mühendisliği, Deprem & BIM Tasarımı', c_s4_desc: '3D çakışma (clash) tespiti, statik mukavemet hesapları ve uluslararası EUROCODE / IBC bina yönetmelik uyumu.<br>BIM tabanlı metraj, hakediş ve zaman planlaması ile şantiye imalatlarının dijital ikiz üzerinden canlı takibi.',
-    c_s5_title: 'Havalimanı & Ulaşım infrastructuresı', c_s5_desc: 'Yüksek yolcu kapasiteli apron, pist, tünel, viyadük ve raylı sistem metro istasyon structuresnda taahhüt services.<br>Uluslararası havacılık ve ulaştırma şartnamelerine tam uyumlu ağır mühendislik infrastructure imalatları.',
-    c_s6_title: 'Kentsel Dönüşüm & Yapı Güçlendirme', c_s6_desc: 'Kentsel dönüşüm projects, hak sahipleri yönetimi, resmi ruhsatlandırma ve sıfırdan güvenli bina inşası.<br>Mevcut beton/donatı analizleri, karbon elyaf (CFRP) sargı ve betonarme perde ilaveleri ile binaların güçlendirilmesi.',
-    e_s1_title: 'Güneş Enerjisi systems (GES) & BIPV', e_s1_desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam systems (BIPV) integration.',
-    e_s2_title: 'Rüzgar Enerjisi Santrali (RES / WPP) & Rüzgar Çiftliği', e_s2_desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
-    e_s3_title: 'Batarya Enerji Depolama (BESS) & Hibrit Sistemler', e_s3_desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
-    e_em1_title: 'Electrical & Mechanical Contracting services', e_em1_desc: 'Endüstriyel üretim facilities, ticari binalar, hastaneler ve veri merkezleri için turnkey MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama solutionsi.',
-    e_em2_title: 'Low Voltage (ELV) Solutions & Akıllı Bina Otomasyonu', e_em2_desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber infrastructure.',
-    e_em3_title: 'Low Voltage Systems (LV) & Güç Dağıtımı', e_em3_desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
-    e_em4_title: 'Medium Voltage Systems (MV) & Şalt facilities', e_em4_desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke integration.',
-    e_em5_title: 'Engineering & Approval Services', e_em5_desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
-    e_em6_title: 'High Voltage Systems (HV) & Şalt Sahaları', e_em6_desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon infrastructureları.',
-    e_t1_title: 'Maintenance Solution Services', e_t1_desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
-    e_t2_title: '5G Infrastructure & Installation', e_t2_desc: '5G NR (New Radio) aktif donanım kurulumu, anten integration, küçük hücre (Small Cell) ve 5G ağ optimizasyon services.',
-    e_t3_title: 'IBS / In-Building Coverage', e_t3_desc: 'AVM, hastane, havalimanı ve rezidanslarda In-Building Solution (IBS) tasarım ve kurulum; pasif/aktif DAS systems.',
-    e_t4_title: 'Mobile Base Station (COW)', e_t4_desc: 'Geçici kapsama gerektiren etkinlik, afet ve acil alanlar için Cell on Wheels (COW) mobil baz istasyonu solutionsi.',
-    e_t5_title: 'TETRA Dijital Trunking Haberleşme', e_t5_desc: 'Polis, jandarma, itfaiye ve kamu güvenliği birimleri için TETRA (Terrestrial Trunked Radio) dijital trunking telsiz sistemi kurulum ve integration.',
-    e_t6_title: 'DPO — Design, Planning, Optimization', e_t6_desc: 'Ağ infrastructuresı dizayn, RF planlama, frekans koordinasyonu, kapsama analizleri ve şebeke optimizasyon services.',
-    e_t7_title: 'WDM — Wavelength Division Multiplexing systems', e_t7_desc: 'DWDM ve CWDM optik iletim systems kurulumu, kapasite artırımı ve metro/uzun mesafe fiber optik ağ infrastructure solutionsi.',
-    e_t8_title: 'FTTX — Fiber to the X infrastructuresı', e_t8_desc: 'FTTH, FTTB ve FTTC fiber abone bağlantısı infrastructure tasarımı, döşeme, fiber dağıtım kutusu ve ONU/ONT kurulumları.',
-    e_t9_title: 'Telecom Construction Works', e_t9_desc: 'Baz istasyonu kule ve direk imalatı, montajı, YASS/şehiriçi kanallar, boru döşeme ve zemin sondajlı yeraltı kablo hatları.',
-    e_t10_title: 'Audit Services', e_t10_desc: 'Telekom infrastructuresı saha denetimi, teknik uyumluluk raporlaması, kalite güvence (QA) testleri ve bağımsız proje yönetimi.',
-    e_t11_title: 'LV — Alçak Gerilim Güç Beslemeleri', e_t11_desc: 'Telekom facilities ve baz istasyonlarına yönelik AG güç panosu, acil jeneratör bağlantısı ve kesintisiz güç besleme (UPS) systems.',
-    e_c1_title: 'IT / OT Cybersecurity & SOC services', e_c1_desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM integration ve IT/OT endüstriyel kontrol systems ağ güvenliği solutionsi.',
-    e_c2_title: 'Sızma Testleri & Güvenlik Denetimi', e_c2_desc: 'Sistem odası, ağ infrastructuresı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
-    e_c3_title: 'Uyum & Siber Güvenlik Standartları Danışmanlığı', e_c3_desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
+    c_s1_title: 'Data Center Construction (Tier III & Tier IV)', c_s1_desc: 'Büyük ölçekli veri merkezlerinde statik taşıyıcı sistemler, iklimlendirme ve yüksek güvenlikli fiziki bina contracting.<br>Kesintisiz enerji mimarisi, yangın izolasyonu ve uluslararası uptime sertifikasyonlarına tam uyumlu inşaat solutionsi.',
+    c_s2_title: 'Heavy Industry Facilities & Factories', c_s2_desc: 'Ağır yük taşıyıcı betonarme/çelik strüktürler ve yüksek mukavemetli endüstriyel epoksi zemin kaplama uygulamaları.<br>Endüstriyel üretim hatları, yüksek vinç kapasiteli fabrika binaları ve ağır infrastructure mühendislik imalatları.',
+    c_s3_title: 'Residential & Luxury Living Projects', c_s3_desc: 'Sürdürülebilir yeşil bina standartlarında karma konut, sosyal tesis ve yüksek katlı rezidans mimari projeleri.<br>Akıllı bina otomasyonu, yüksek enerji verimliliği ve depreme dayanıklı tünel kalıp/kaset döşeme taşıyıcı sistemler.',
+    c_s4_title: 'Structural Engineering, Seismic & 5D BIM', c_s4_desc: '3D çakışma (clash) tespiti, statik mukavemet hesapları ve uluslararası EUROCODE / IBC bina yönetmelik uyumu.<br>BIM tabanlı metraj, hakediş ve zaman planlaması ile şantiye imalatlarının dijital ikiz üzerinden canlı takibi.',
+    c_s5_title: 'Airport Terminals & Transportation Infrastructure', c_s5_desc: 'Yüksek yolcu kapasiteli apron, pist, tünel, viyadük ve raylı sistem metro istasyon structuresnda taahhüt services.<br>Uluslararası havacılık ve ulaştırma şartnamelerine tam uyumlu ağır mühendislik infrastructure imalatları.',
+    c_s6_title: 'Urban Renewal & Seismic Retrofitting', c_s6_desc: 'Kentsel dönüşüm projects, hak sahipleri yönetimi, resmi ruhsatlandırma ve sıfırdan güvenli bina inşası.<br>Mevcut beton/donatı analizleri, karbon elyaf (CFRP) sargı ve betonarme perde ilaveleri ile binaların güçlendirilmesi.',
+    e_s1_title: 'Solar Power Plants (GES) & BIPV Systems', e_s1_desc: 'Arazi ve çatı tipi GES EPC projeleri ile dış cephe fotovoltaik cephe kaplama ve akıllı fotovoltaik cam systems (BIPV) integration.',
+    e_s2_title: 'Wind Power Plants (RES / WPP)', e_s2_desc: 'Rüzgar santralleri (WPP) ve rüzgar çiftliği (WF) kurulum, türbin montajı, yüksek gerilim şebeke bağlantıları ve saha mühendisliği.',
+    e_s3_title: 'Battery Energy Storage (BESS) & Hybrid Systems', e_s3_desc: 'BESS (Battery Energy Storage System), HES/HRES hibrit sistemler, LFP batarya hücreleri, BMS ve çift yönlü PCS güç dönüştürücüler.',
+    e_em1_title: 'Electrical & Mechanical (MEP) Contracting', e_em1_desc: 'Endüstriyel üretim facilities, ticari binalar, hastaneler ve veri merkezleri için turnkey MEP (Mekanik, Elektrik, Tesisat) taahhüt ve uygulama solutionsi.',
+    e_em2_title: 'Low Voltage (ELV) Building Systems', e_em2_desc: 'Bina ve tesis emniyetini üst düzeye çıkaran CCTV siber güvenlik kameraları, yangın algılama, geçiş kontrol (Access Control), IP anons ve yapısal fiber infrastructure.',
+    e_em3_title: 'Low Voltage (LV) Power Distribution Systems', e_em3_desc: 'AG ana dağıtım panoları (ADP), tali dağıtım panoları, MCC kumanda merkezleri, Otomatik Reaktif Güç Kompanzasyonu ve Kesintisiz Güç Kaynağı (UPS) kurulumları.',
+    e_em4_title: 'Medium Voltage (MV / OG) Power Systems', e_em4_desc: '36 kV Orta Gerilim hücresel şalt merkezleri, SF6 gazlı / hava yalıtımlı modüler hücreler, kuru ve yağlı tip trafo kurulumları ve OG şebeke integration.',
+    e_em5_title: 'Engineering, Load Flow & Official Approvals', e_em5_desc: 'Elektrik Dağıtım Şirketleri (TEDAŞ, EDAŞ) resmi proje onayları, röle koordinasyon hesaplamaları, kısa devre analizleri ve kabul/ruhsat süreç danışmanlığı.',
+    e_em6_title: 'High Voltage (HV / YG) Power Systems', e_em6_desc: '154 kV / 380 kV Yüksek Gerilim (YG) indirici ve şalt trafo merkezleri, yüksek gerilim enerji iletim hatları, kesiciler, ayırıcılar ve röle otomasyon infrastructureları.',
+    e_t1_title: 'Telecom Network Maintenance & Field Services', e_t1_desc: 'Sabit ve mobil ağların 7/24 önleyici ve düzeltici bakımı, saha müdahale ekipleri ve servis düzeyi anlaşmaları (SLA) yönetimi.',
+    e_t2_title: '5G Network Infrastructure & Rollout', e_t2_desc: '5G NR (New Radio) aktif donanım kurulumu, anten integration, küçük hücre (Small Cell) ve 5G ağ optimizasyon services.',
+    e_t3_title: 'In-Building Solution (IBS) Coverage', e_t3_desc: 'AVM, hastane, havalimanı ve rezidanslarda In-Building Solution (IBS) tasarım ve kurulum; pasif/aktif DAS systems.',
+    e_t4_title: 'Cell on Wheels (COW) Mobile Base Stations', e_t4_desc: 'Geçici kapsama gerektiren etkinlik, afet ve acil alanlar için Cell on Wheels (COW) mobil baz istasyonu solutionsi.',
+    e_t5_title: 'TETRA Digital Radio Communications', e_t5_desc: 'Polis, jandarma, itfaiye ve kamu güvenliği birimleri için TETRA (Terrestrial Trunked Radio) dijital trunking telsiz sistemi kurulum ve integration.',
+    e_t6_title: 'Network Design, RF Planning & Optimization (DPO)', e_t6_desc: 'Ağ infrastructuresı dizayn, RF planlama, frekans koordinasyonu, kapsama analizleri ve şebeke optimizasyon services.',
+    e_t7_title: 'Wavelength Division Multiplexing (WDM / DWDM)', e_t7_desc: 'DWDM ve CWDM optik iletim systems kurulumu, kapasite artırımı ve metro/uzun mesafe fiber optik ağ infrastructure solutionsi.',
+    e_t8_title: 'FTTX — Fiber to the Home / Building', e_t8_desc: 'FTTH, FTTB ve FTTC fiber abone bağlantısı infrastructure tasarımı, döşeme, fiber dağıtım kutusu ve ONU/ONT kurulumları.',
+    e_t9_title: 'Telecom Civil Engineering & Tower Works', e_t9_desc: 'Baz istasyonu kule ve direk imalatı, montajı, YASS/şehiriçi kanallar, boru döşeme ve zemin sondajlı yeraltı kablo hatları.',
+    e_t10_title: 'Telecom Field Audit & Quality Assurance', e_t10_desc: 'Telekom infrastructuresı saha denetimi, teknik uyumluluk raporlaması, kalite güvence (QA) testleri ve bağımsız proje yönetimi.',
+    e_t11_title: 'Low Voltage (LV) Telecom Power Feeds', e_t11_desc: 'Telekom facilities ve baz istasyonlarına yönelik AG güç panosu, acil jeneratör bağlantısı ve kesintisiz güç besleme (UPS) systems.',
+    e_c1_title: 'IT / OT Cybersecurity Operations Center (SOC)', e_c1_desc: '7/24 kesintisiz tehdit izleme, siber olaylara müdahale, log analizi, SIEM integration ve IT/OT endüstriyel kontrol systems ağ güvenliği solutionsi.',
+    e_c2_title: 'Penetration Testing & Vulnerability Audits', e_c2_desc: 'Sistem odası, ağ infrastructuresı, web uygulamaları ve kablosuz ağlar için sızma testleri (Pentest), zafiyet tarama analizleri ve sosyal mühendislik testleri.',
+    e_c3_title: 'Cybersecurity Compliance & Standards Consulting', e_c3_desc: 'ISO 27001 Bilgi Güvenliği Yönetim Sistemi, IEC 62443 endüstriyel siber güvenlik standart uyumu ve KVKK/GDPR kişisel veri koruma danışmanlığı.',
     e_s4_title: 'Mekanik Tesisat & HVAC (VRF / VAV) / MEP', e_s4_desc: 'MEP (Mechanical, Electrical, Plumbing) mühendisliği, HVAC VRF VAV hassas iklimlendirme ve havalandırma sistem tasarımları.',
     e_s5_title: 'SCADA — Merkezi Denetim, Kontrol ve Veri Toplama', e_s5_desc: 'Elektrik üretimi, su dağıtımı, doğalgaz hatları ve endüstriyel tesisler için gerçek zamanlı canlı izleme, alarm yönetimi ve uzaktan kontrol.',
     e_s6_title: 'Yangın Söndürme ve Erken Uyarı systems', e_s6_desc: 'Sprinkler sulu söndürme, gazlı söndürme (FM200 / Novec 1230), davlumbaz söndürme ve mobil yangın emniyet infrastructureları.',
-    e_s7_title: 'Elektrikli Araç Şarj İstasyonları (EV Charge)', e_s7_desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC ultra hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Solar Carport & BESS integration, Sicharge ürün ailesi ve modüler otopark solutionsi.',
-    e_iot1_title: 'Smart Sensors', e_iot1_desc: 'Sensör transdüserleri, mikroişlemciler, kablosuz haberleşme ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi sensörleri.',
-    e_iot2_title: 'Actuators', e_iot2_desc: 'Elektrikli, pnömatik, hidrolik aktüatörler; akıllı ev, endüstriyel otomasyon ve tarımsal eyleyici systems.',
-    e_iot3_title: 'Network Gateways', e_iot3_desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
-    e_iot4_title: 'Cloud and Software', e_iot4_desc: 'Cihaz/sensör katmanı, MQTT/HTTP protokolleri, bulut bilişim ve canlı izleme arayüz panelleri.',
-    e_iot5_title: 'Industry & Manufacturing (IIoT)', e_iot5_desc: 'Akıllı sensörler, endüstriyel ağlar, veri analitiği, edge computing ile kestirimci bakım, kalite kontrol ve iş güvenliği.',
-    e_iot6_title: 'Healthcare Sector (IoMT)', e_iot6_desc: 'Giyilebilir cihazlar, tıbbi sensörler, edge bilişim, yapay zeka, uzaktan hasta takibi, veri güvenliği ve FHIR uyumluluğu.',
-    e_iot7_title: 'Smart Agriculture & AgTech', e_iot7_desc: 'Toprak nem sensörleri, sera iklimlendirme, zirai İHA, akıllı tasmalar, otomatik yemleme, ahır kontrolü ve erken teşhis.',
-    e_iot8_title: 'Smart Cities & Mobility', e_iot8_desc: 'Dinamik sinyalizasyon, akıllı otopark, canlı toplu taşıma takibi, filo yönetimi, EV şarjı, otonom araçlar ve yapay zeka trafik analitiği.',
-    e_b1_title: 'Hardware Supply & Infrastructure', e_b1_desc: 'Kurumsal sunuculardan ağ ve güvenlik cihazlarına, KVM/PDU/UPS systemsnden istemci donanımlarına kadar uçtan uca yüksek performanslı IT infrastructure donanım tedariği ve integration.',
+    e_s7_title: 'EV Charging Stations (AC / DC Fast Charge)', e_s7_desc: 'AC yavaş/normal (3.7 - 22 kW) ve DC ultra hızlı (50 - 350+ kW) şarj istasyonu kurulumları, Solar Carport & BESS integration, Sicharge ürün ailesi ve modüler otopark solutionsi.',
+    e_iot1_title: 'Smart Sensors & Industrial Telemetry', e_iot1_desc: 'Sensör transdüserleri, mikroişlemciler, kablosuz haberleşme ve gaz, desibel, takometre, refraktometre, sıcaklık/nem, basınç, hava kalitesi sensörleri.',
+    e_iot2_title: 'Actuators & Industrial Automation Control', e_iot2_desc: 'Elektrikli, pnömatik, hidrolik aktüatörler; akıllı ev, endüstriyel otomasyon ve tarımsal eyleyici systems.',
+    e_iot3_title: 'Industrial IoT Network Gateways', e_iot3_desc: 'Protokol çevrimi, edge computing, endüstriyel güvenlik şifreleme ve kesintisiz veri aktarım ağ geçitleri.',
+    e_iot4_title: 'IoT Cloud Platforms & Real-Time Dashboards', e_iot4_desc: 'Cihaz/sensör katmanı, MQTT/HTTP protokolleri, bulut bilişim ve canlı izleme arayüz panelleri.',
+    e_iot5_title: 'Industrial IoT (IIoT) & Industry 4.0', e_iot5_desc: 'Akıllı sensörler, endüstriyel ağlar, veri analitiği, edge computing ile kestirimci bakım, kalite kontrol ve iş güvenliği.',
+    e_iot6_title: 'Smart Healthcare & IoMT Solutions', e_iot6_desc: 'Giyilebilir cihazlar, tıbbi sensörler, edge bilişim, yapay zeka, uzaktan hasta takibi, veri güvenliği ve FHIR uyumluluğu.',
+    e_iot7_title: 'Smart Agriculture & AgTech Systems', e_iot7_desc: 'Toprak nem sensörleri, sera iklimlendirme, zirai İHA, akıllı tasmalar, otomatik yemleme, ahır kontrolü ve erken teşhis.',
+    e_iot8_title: 'Smart Cities & Mobility Systems', e_iot8_desc: 'Dinamik sinyalizasyon, akıllı otopark, canlı toplu taşıma takibi, filo yönetimi, EV şarjı, otonom araçlar ve yapay zeka trafik analitiği.',
+    e_b1_title: 'IT Hardware Supply & Server Infrastructure', e_b1_desc: 'Kurumsal sunuculardan ağ ve güvenlik cihazlarına, KVM/PDU/UPS systemsnden istemci donanımlarına kadar uçtan uca yüksek performanslı IT infrastructure donanım tedariği ve integration.',
     e_b2_title: 'Cloud, Network & Virtualization Solutions', e_b2_desc: 'Yönetilen hizmetler, yüksek performanslı bilgi işlem (HPC), iş sürekliliği/DR yedekleme solutionsi, SD-WAN & güvenlik ağ mimarileri ile SDDC bulut sanallaştırma infrastructureları.',
-    e_b4_title: 'Veri Merkezi Beyaz Alan (White Space) Yönetimi & DCIM', e_b4_desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM infrastructure yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
+    e_b4_title: 'Data Center White Space & DCIM Management', e_b4_desc: 'Sıcak/soğuk koridor tasarımı, PUE enerji ve soğutma verimliliği optimizasyonu, DCIM infrastructure yazılımları ve beyaz alan fiziksel güvenlik yönetimi.',
     c_title: 'Yakın Construction',
     c_desc: 'Superior quality, durability and sustainable methods in every project from data centers to residential and industrial buildings.',
     c_services_title: 'Industrial Construction Solutions',
-    c_s1_title: 'Data Center Construction', c_s1_desc: 'Tier III and IV certified, high-reliability mission-critical data centers.',
-    c_s2_title: 'Heavy Industry Facilities', c_s2_desc: 'Turnkey EPC for factories, foundries and energy generation plants.',
-    c_s3_title: 'Residential & Living Projects', c_s3_desc: 'Luxury living complexes designed with modern architectural aesthetics and advanced seismic engineering.',
-    c_s4_title: 'Structural Engineering & BIM', c_s4_desc: 'Advanced seismic engineering, BIM integration and comprehensive technical design.',
-    c_s5_title: 'Airport & Transportation', c_s5_desc: 'International standard airport terminals and transportation infrastructure projects.',
-    c_s6_title: 'Urban Renewal', c_s6_desc: 'Assessment of vulnerable structures, seismic retrofitting via carbon fiber / steel jacketing.',
+    c_s1_title: 'Data Center Construction (Tier III & Tier IV)', c_s1_desc: 'Tier III and IV certified, high-reliability mission-critical data centers.',
+    c_s2_title: 'Heavy Industry Facilities & Factories', c_s2_desc: 'Turnkey EPC for factories, foundries and energy generation plants.',
+    c_s3_title: 'Residential & Luxury Living Projects', c_s3_desc: 'Luxury living complexes designed with modern architectural aesthetics and advanced seismic engineering.',
+    c_s4_title: 'Structural Engineering, Seismic & 5D BIM', c_s4_desc: 'Advanced seismic engineering, BIM integration and comprehensive technical design.',
+    c_s5_title: 'Airport Terminals & Transportation Infrastructure', c_s5_desc: 'International standard airport terminals and transportation infrastructure projects.',
+    c_s6_title: 'Urban Renewal & Seismic Retrofitting', c_s6_desc: 'Assessment of vulnerable structures, seismic retrofitting via carbon fiber / steel jacketing.',
     btn_service_details: 'Details & vCard Contact ›',
     portfolio_title: 'Our Completed Reference Projects',
     c_gal1_title: 'T-3 Data Center Construction', c_gal2_title: 'International Airport Terminal',
@@ -608,6 +608,12 @@ const SERVICES_DATA = {
       'Faraday Kafesi ve Elektromanyetik Kalkanlama (EMP Protection) (Üretici & Ürün Çözümleri : <br>ETS-Lindgren, Soliani EMC, Albatross Projects elektromanyetik kalkanlama ve sönümleme kafes üniteleri.<br>Askeri ve kurumsal veri merkezlerinde elektromanyetik dinleme ve EMP dış müdahalelere karşı tam koruma.)',
       'Hassas İklimlendirme (CRAC/CRAH) & Yükseltilmiş Taban Sistemleri (Üretici & Ürün Çözümleri : <br>Lindner, Tate Access Floors, Mero-TSK antistatik yükseltilmiş taban ve yangına dayanıklı kaset paneller.<br>Hassas koridor iklimlendirme kanalları, soğuk/sıcak hava sirkülasyon odaları ve ağır yük zemin taahhüdü.)',
       'BMS & SCADA Entegre Fiziksel Güvenlik Altyapısı (Üretici & Ürün Çözümleri : <br>Schneider EcoStruxure, Honeywell Enterprise Buildings, Johnson Controls Metasys bina otomasyonları.<br>Biyometrik geçiş kontrol, CCTV çevre güvenlik duvarı, gazlı yangın söndürme ve sismik izolatörlü bina yapısı.)'
+    ],
+    specsEn: [
+      'Tier III / Tier IV Uptime Institute Alignment (Solutions & Services : <br>Mission-critical structural and mechanical contracting targeting 99.99% availability compliant with TCDD/FCCD certifications.)',
+      'Faraday Cage & EMP Shielding (Manufacturer & Product Solutions : <br>ETS-Lindgren, Soliani EMC, Albatross Projects electromagnetic shielding cages protecting critical servers from EMP threats.)',
+      'Precision Cooling (CRAC/CRAH) & Raised Access Flooring (Manufacturer & Product Solutions : <br>Lindner, Tate, Mero-TSK antistatic raised flooring with fireproof cassette panels and cold/hot aisle containment.)',
+      'BMS & SCADA Integrated Physical Security (Manufacturer & Product Solutions : <br>Schneider EcoStruxure, Honeywell, Johnson Controls Metasys with biometric access, CCTV perimeter, gas fire suppression, and seismic isolators.)'
     ]
   },
   c_s2: {
@@ -620,6 +626,12 @@ const SERVICES_DATA = {
       'Ağır Ekipman Temelleri ve Titreşim Sönümleme Sistemleri (Çözüm ve Hizmetler : <br>Sanayi döküm presleri ve ağır makineler için kütlesel betonarme radye temeller ve anti-vibrasyon yatakları.<br>Darbe ve titreşim sönümleyici elastomerik mesnet kurulumları ile makine hassasiyetinin korunması.)',
       'Endüstriyel Atık Su Arıtma & Gaz Tahliye Boru Hatları (Çözüm ve Hizmetler : <br>Ağır kimyasal ve endüstriyel atık su nötralizasyon havuzları, paslanmaz çelik baca ve gaz tahliye kanalları.<br>Çevre mevzuatlarına tam uyumlu arıtma tesisi inşaatı, borulama ve yüksek izolasyonlu tank yapıları.)',
       'Uluslararası İş Güvenliği & ISO 9001 / 14001 Standartları (Çözüm ve Hizmetler : <br>Sıfır kaza hedefli OHSAS / ISO 45001 iş sağlığı ve güvenliği yönetim sistemleri eşliğinde saha taahhüdü.<br>ISO 9001 kalite ve ISO 14001 çevre yönetim sertifikalı inşaat teknikleri ile sürdürülebilir tesis teslimi.)'
+    ],
+    specsEn: [
+      'Large-Span Industrial Steel Roof & Column Design (Solutions & Services : <br>Wide-span structural steel framing, roof trusses, and heavy crane runway fabrication engineered for high wind and seismic loads.)',
+      'Heavy Equipment Foundations & Vibration Damping (Solutions & Services : <br>Massive reinforced concrete raft foundations and anti-vibration elastomeric mounts for heavy industrial presses and machinery.)',
+      'Industrial Wastewater & Flue Gas Pipelines (Solutions & Services : <br>Neutralization basins, stainless steel stacks, and insulated tank structures fully compliant with environmental regulations.)',
+      'HSE & ISO 9001 / 14001 / 45001 Standards (Solutions & Services : <br>Zero-accident site management certified under ISO 45001 safety, ISO 9001 quality, and ISO 14001 environmental management.)'
     ]
   },
   c_s3: {
@@ -632,6 +644,12 @@ const SERVICES_DATA = {
       'Akıllı Bina Otomasyonu (BMS) ve Merkezi İklimlendirme (Üretici & Ürün Çözümleri : <br>KNX / BACnet tabanlı akıllı ev otomasyon panelleri, Daikin VRV / Mitsubishi VRF iklimlendirme üniteleri.<br>Mobil uygulama üzerinden aydınlatma, iklimlendirme, perde/panjur ve güvenlik sensörlerinin tek merkezden yönetimi.)',
       'Ses & Isı İzolasyonunda Üst Seviye Konfor Detayları (Üretici & Ürün Çözümleri : <br>Knauf Akustik, Izocam Taşyünü, Schüco 3-camlı alüminyum doğrama ve lamine akustik cam sistemleri.<br>Katlar arası yüzer şap ve daire bölme duvarlarında yüksek desibel ses yalıtımı ile lüks yaşam konforu.)',
       'Sosyal Tesisler, Kapalı Otopark ve Yeşil Alan Mimarisi (Çözüm ve Hizmetler : <br>Kapalı yüzme havuzları, fitness salonları, peyzaj düzenlemeleri ve elektrikli araç şarjlı otoparklar.<br>7/24 güvenlik kamerası entegreli, geniş peyzaj alanlarına sahip modern karma yaşam kompleksi inşası.)'
+    ],
+    specsEn: [
+      'A+ Energy Certified Green Buildings (Solutions & Services : <br>LEED Gold / BREEAM compliant high-insulation building envelopes with rooftop solar lighting and greywater recycling.)',
+      'Smart Home Automation (BMS) & VRF Climate Control (Manufacturer & Product Solutions : <br>KNX / BACnet smart touch panels, Daikin VRV / Mitsubishi VRF central HVAC integrated via mobile apps.)',
+      'Premium Acoustic & Thermal Insulation (Manufacturer & Product Solutions : <br>Knauf acoustic systems, Izocam rockwool, Schüco triple-glazed acoustic aluminum profiles for maximum living comfort.)',
+      'Social Facilities, Indoor Parking & Landscaping (Solutions & Services : <br>Indoor pools, fitness centers, EV charging garages, 24/7 CCTV, and extensive green landscape architecture.)'
     ]
   },
   c_s4: {
@@ -644,6 +662,12 @@ const SERVICES_DATA = {
       'Sismik İzolatör ve Damperli Yapı Tasarımları (Üretici & Ürün Çözümleri : <br>Maurer Magnetic, Mageba, EPS (Earthquake Protection Systems) kurşun çekirdekli kauçuk sismik izolatörler.<br>Deprem anında yapının üst katlarına geçen sismik ivmeyi %80 oranında sönümleyen izolatörlü bina mühendisliği.)',
       'Non-Linear Zaman Tanım Alanında Deprem Analizleri (Üretici & Ürün Çözümleri : <br>SAP2000, ETAP, CSI Bridge ve Perform-3D doğrusal olmayan (non-linear) statik ve dinamik analiz yazılımları.<br>Gelecekteki olası büyüklükteki deprem senaryolarına göre performans bazlı tasarım ve güçlendirme raporlaması.)',
       'Mevzuat Uyumlu Statik Raporlama ve Proje Onay Süreçleri (Çözüm ve Hizmetler : <br>2018 Türkiye Bina Deprem Yönetmeliği (TBDY) ve EUROCODE uluslararası statik yönetmelik uyumu.<br>Üniversite onaylı statik raporlar, bağımsız denetim onayları ve ruhsat projelerinin eksiksiz hazırlanması.)'
+    ],
+    specsEn: [
+      '5D BIM Model Clash Detection & Cost Management (Manufacturer & Product Solutions : <br>Autodesk Revit 5D, Navisworks Manage, Tekla Structures eliminating 3D interdisciplinary clashes prior to site execution.)',
+      'Seismic Isolator & Damper Structural Engineering (Manufacturer & Product Solutions : <br>Maurer, Mageba, EPS lead-rubber seismic isolators reducing earthquake ground acceleration by up to 80%.)',
+      'Non-Linear Time-History Seismic Simulation (Manufacturer & Product Solutions : <br>SAP2000, ETAP, CSI Perform-3D non-linear dynamic analysis software for performance-based structural design.)',
+      'Regulatory Compliance & Municipal Approvals (Solutions & Services : <br>Full alignment with Turkish Building Earthquake Code (TBDY 2018) and Eurocodes with university-approved structural reports.)'
     ]
   },
   c_s5: {
@@ -656,6 +680,12 @@ const SERVICES_DATA = {
       'Özel Yüksek Dayanımlı Asfalt ve Beton Pist Kaplamaları (Çözüm ve Hizmetler : <br>Ağır gövdeli kargo ve yolcu uçaklarının iniş kalkışına uygun modifiye polimer asfalt ve ağır beton pist kaplaması.<br>Pist aydınlatma armatür kanalları, drenaj kanalları ve yüksek sürtünme katsayılı pist kaplama üretimi.)',
       'Yolcu Bagaj Entegrasyon (BHS) ve Güvenlik Altyapıları (Üretici & Ürün Çözümleri : <br>Vanderlande, Siemens Logistics BHS bagaj taşıma, Smiths Detection X-ray güvenlik tarayıcıları.<br>Saatlik yüksek bagaj tasnif kapasiteli konveyör hatları ve çok seviyeli patlayıcı tespit güvenlik entegrasyonu.)',
       'Kesintisiz Hava Trafik Kontrol Kule Yapıları (Çözüm ve Hizmetler : <br>Yüksek kule yapılarında rüzgar ve sismik konfor sağlayan mimari mühendislik tasarımı.<br>Radar, haberleşme ve kule kontrol konsolları için kesintisiz yedekli enerji ve iklimlendirme altyapısı.)'
+    ],
+    specsEn: [
+      'ICAO & FAA Standard Airport Terminal Construction (Solutions & Services : <br>High-capacity passenger terminal construction, wide-span steel canopies, jet bridge structures, and aircraft parking aprons.)',
+      'High-Strength Runway Pavement & Lighting Channels (Solutions & Services : <br>Polymer-modified asphalt and heavy concrete runway paving engineered for wide-body cargo and commercial aircraft.)',
+      'Baggage Handling Systems (BHS) & Security Integration (Manufacturer & Product Solutions : <br>Vanderlande, Siemens BHS conveyance, Smiths Detection multi-level explosive detection X-ray systems.)',
+      'Redundant Air Traffic Control Tower Structures (Solutions & Services : <br>Seismically isolated high tower engineering with redundant power and HVAC for radar and flight control consoles.)'
     ]
   },
   c_s6: {
@@ -668,6 +698,12 @@ const SERVICES_DATA = {
       'Karot ve Sismik Testler ile Binasal Risk Analizi Raporlama (Çözüm ve Hizmetler : <br>Tahribatsız ultrasonik testler, karot numune beton basınç deneyleri ve donatı korozyon tespiti.<br>Çevre ve Şehircilik Bakanlığı lisanslı riskli bina tespit raporlarının hazırlanması ve kentsel dönüşüm süreci.)',
       'Hukuki ve Teknik Kentsel Dönüşüm Danışmanlığı (Çözüm ve Hizmetler : <br>6306 sayılı kanun kapsamında kat malikleri ve hak sahipleri sözleşme yönetimi ve noter süreçleri.<br>Resmi tahliye, yıkım ruhsatı, proje onayları ve devlet kira yardımı başvurularının uçtan uca yürütülmesi.)',
       'Sıfır Hata ile Bina Yenileme ve Projelendirme (Çözüm ve Hizmetler : <br>Eski riskli binaların güvenli şekilde yıkılması ve yerine depreme tam dayanıklı yeni binaların inşası.<br>Zemin etüdü, kazık/temel altı yalıtım ve yüksek kaliteli malzeme kullanımı ile anahtar teslim ev teslimatı.)'
+    ],
+    specsEn: [
+      'Carbon Fiber (CFRP) & Steel Jacketing Retrofit (Manufacturer & Product Solutions : <br>SikaWrap CFRP carbon fiber composites, BASF MasterBrace polymer matrices enhancing column ductility and load capacity.)',
+      'Concrete Core Drilling & Non-Destructive Testing (Solutions & Services : <br>Ultrasonic pulse testing, core sample compression analysis, and licensed earthquake risk reporting.)',
+      'Urban Transformation Legal & Technical Consulting (Solutions & Services : <br>End-to-end management of official permits, tenant agreements, municipal demolition permits, and state subsidies.)',
+      'Turnkey Earthquake-Resistant Re-Construction (Solutions & Services : <br>Safe demolition of vulnerable structures and turnkey construction of modern, earthquake-proof replacement buildings.)'
     ]
   },
   // Enerji Küme A
@@ -681,6 +717,12 @@ const SERVICES_DATA = {
       'Endüstriyel Çatı ve Arazi Tipi GES Anahtar Teslim EPC (Üretici & Ürün Çözümleri : <br>Schletter, K2 Systems ve Clenergy güneş panel taşıyıcı konstrüksiyon montaj sistemleri.<br>Mühendislik (E), Tedarik (P) ve İnşaat (C) tüm süreçlerini kapsayan anahtar teslim EPC taahhüdü.)',
       'Yüksek Verimli Monokristal & Bifacial Panel Teknolojileri (Üretici & Ürün Çözümleri : <br>LONGi Hi-MO 7 (N-Type HPBC), JA Solar DeepBlue 4.0 Pro, Trina Vertex S+ bifacial TOPCon paneller.<br>Çift taraflı ışık yakalayan yüksek verimli N-Type TOPCon / HJT teknolojisi ile maksimum kWh üretimi.)',
       'Şebeke Bağlantılı (On-Grid) & Hibrit İnvertör Sistemleri (Üretici & Ürün Çözümleri : <br>Huawei SUN2000 Smart String, Sungrow SG250HX, Fronius Tauro ve SMA Sunny Tripower invertörler.<br>BESS ve EV şarj entegreli hibrit invertör çözümleri ile uzaktan SCADA enerji yönetim otomasyonu.)'
+    ],
+    specsEn: [
+      'BIPV Facade & Smart Photovoltaic Glass Integration (Manufacturer & Product Solutions : <br>Onyx Solar BIPV glass, Schüco PV curtain walls, and SunStyle integrated roof systems turning building envelopes into clean power generators.)',
+      'Turnkey Industrial Rooftop & Ground Solar EPC (Manufacturer & Product Solutions : <br>Schletter, K2 Systems, Clenergy mounting structures with full Engineering, Procurement, and Construction execution.)',
+      'High-Efficiency Monocrystalline & Bifacial N-Type Modules (Manufacturer & Product Solutions : <br>LONGi Hi-MO 7 TOPCon, JA Solar DeepBlue 4.0 Pro, Trina Vertex S+ bifacial modules maximizing kWh yield.)',
+      'Grid-Tied (On-Grid) & Hybrid Inverter Systems (Manufacturer & Product Solutions : <br>Huawei SUN2000 smart string, Sungrow SG250HX, Fronius, SMA inverters with SCADA monitoring.)'
     ],
     slides: [
       {
@@ -716,6 +758,12 @@ const SERVICES_DATA = {
       'Orta / Yüksek Gerilim Şebeke Bağlantı Altyapısı (Üretici & Ürün Çözümleri : <br>Hitachi Energy / ABB trafo, Siemens Energy şalt hücreleri ve Prysmian 34.5 kV yeraltı kablolama.<br>Türbin içi trafo merkezleri, 34.5/154/400 kV şalt sahası inşası ve TEİAŞ şebeke entegrasyonu.)',
       'Periyodik Bakım, Onarım ve SCADA Entegrasyonu (Üretici & Ürün Çözümleri : <br>Bachmann M1 SCADA, GE eTruck CMS, Mita-Teknik AgrosMet rüzgar türbin izleme sistemleri.<br>Dişli kutusu/yağ analizi, kanat muayenesi (drone), kestirimci bakım ve 7/24 arıza yönetimi.)'
     ],
+    specsEn: [
+      'High-Altitude Wind Turbine Erection & Assembly (Manufacturer & Product Solutions : <br>Vestas, Siemens Gamesa, Nordex, GE Vernova wind turbine integration and heavy crane logistics.)',
+      'Massive Turbine Foundation Civil Engineering (Solutions & Services : <br>Heavy reinforced concrete gravity foundations and anchor cage installation engineered for fatigue loads.)',
+      '154 kV / 380 kV Substation Grid Connection (Solutions & Services : <br>High-voltage step-up transformers, outdoor switchyards, and grid interconnection compliant with TEİAŞ standards.)',
+      '24/7 Remote SCADA Monitoring & Predictive Maintenance (Manufacturer & Product Solutions : <br>Siemens WinCC SCADA, Vestas Online Business telemetry monitoring turbine vibration and pitch control.)'
+    ],
     slides: [
       {
         title: 'Türbin Altyapı, Temel ve Montaj Mühendisliği',
@@ -749,6 +797,12 @@ const SERVICES_DATA = {
       'BMS (Battery Management System) ve Hücre Dengeleme (Üretici & Ürün Çözümleri : <br>Orion BMS 2, Elithion Lithiumate Pro, CATL entegre hücre-modül-raf BMS hiyerarşik sistemler.<br>SOC/SOH hesaplama, aktif/pasif hücre dengeleme, termal yönetim ve acil devre dışı bırakma.)',
       'PCS (Power Conversion System) AC/DC Çift Yönlü Çevirici Entegrasyonu (Üretici & Ürün Çözümleri : <br>Sungrow SC2500UD-MV, Huawei SmartPCS1500KW-MV, ABB PVS-275 BESS PCS üniteleri.<br>Şarj/deşarj döngüsünü yöneten %98+ dönüştürme verimli çift yönlü AC/DC güç dönüştürücüler.)',
       'Şebeke Yük Dengeleme ve Peak Shaving Yazılım Otomasyonu (Üretici & Ürün Çözümleri : <br>Power Innovations BESS EMS, Fluence MOSAIC, Schneider EcoStruxure BESS enerji yönetim yazılımları.<br>Peak Shaving, frekans düzenleme (FCR/FFR) ve arbitraj uygulamaları için akıllı şebeke otomasyon.)'
+    ],
+    specsEn: [
+      'Containerized Outdoor LFP Battery Storage (Manufacturer & Product Solutions : <br>CATL EnerOne, BYD Chess, Tesla Megapack high-density Lithium Iron Phosphate battery storage containers.)',
+      'Bi-Directional Power Conversion Systems (PCS) (Manufacturer & Product Solutions : <br>Sungrow Power Titan, Kehua Tech, Dynapower bi-directional PCS inverters providing millisecond grid response.)',
+      'Smart Peak Shaving & Frequency Regulation (Solutions & Services : <br>AI-driven energy management software optimizing peak load shaving, demand response, and ancillary grid services.)',
+      'Integrated BMS & FM200 Fire Suppression (Manufacturer & Product Solutions : <br>Multi-tier Battery Management Systems (BMS) with FM200 / Novec gas suppression and deflagration venting.)'
     ],
     slides: [
       {
@@ -789,6 +843,12 @@ const SERVICES_DATA = {
       'Sıhhi Tesisat, Yangın Koruma ve Borulama Altyapısı (Üretici & Ürün Çözümleri : <br>Grundfos ve Wilo yangın pompaları, Viking/Tyco sprinkler söndürme başlıkları altyapısı.<br>GF Piping, GF Victaulic endüstriyel boru hatları ve kat bazlı ıslak/kuru yangın tesisatı.)',
       'Projelendirme, Süreç Yönetimi ve Devreye Alma (Commissioning) (Çözüm ve Hizmetler : <br>Uluslararası ASHRAE ve CIBSE standartlarına uygun MEP 3D BIM mühendislik tasarımları.<br>TAB (Test, Ayar, Dengeleme) ve geçici/kesin kabul resmi belgelendirme süreç yönetimi.)'
     ],
+    specsEn: [
+      'Turnkey MEP Design & Engineering (Solutions & Services : <br>Comprehensive electrical, mechanical, and plumbing design coordinated via 3D BIM models.)',
+      'HVAC & Air Handling Units (AHU) (Manufacturer & Product Solutions : <br>Daikin, Carrier, Trane chillers, AHUs, and ducting systems for cleanrooms and commercial spaces.)',
+      'Industrial Piping & Fire Protection (Manufacturer & Product Solutions : <br>Victaulic, Tyco sprinkler systems, stainless steel process piping, and hydronic heating/cooling loops.)',
+      'Commissioning & T&C Process Management (Solutions & Services : <br>Testing, Adjusting, and Balancing (TAB) and integrated systems testing for international certifications.)'
+    ],
     slides: [
       {
         title: 'Elektrik & Mekanik Taahhüt Hizmetleri',
@@ -828,6 +888,12 @@ const SERVICES_DATA = {
       'Geçiş Kontrol (Access Control), Kartlı & Biyometrik Geçiş (Üretici & Ürün Çözümleri : <br>HID Global, Suprema BioEntry, Nedap Access Control biyometrik ve RFID kartlı okuyucular.<br>Turnike entegrasyonu, ziyaretçi kayıt yönetimi ve merkezi yetki matrisi yazılımları.)',
       'Yapısal Fiber Kablolama ve Veri Merkezi Network Altyapısı (Üretici & Ürün Çözümleri : <br>CommScope AMPNetconnect, Corning Fiber, Legrand LCS3 Cat6A / Cat8 ve OM4/OM5 fiber kablolar.<br>Yüksek yoğunluklu patch paneller, OTDR fiber testleri ve profesyonel kablo düzenleme.)'
     ],
+    specsEn: [
+      'IP CCTV & Video Analytics (Manufacturer & Product Solutions : <br>Axis Communications, Bosch Security, Hanwha Vision cameras with AI perimeter analytics.)',
+      'Addressable Fire Detection & Alarm (Manufacturer & Product Solutions : <br>Notifier by Honeywell, Siemens Cerberus PRO, Bosch fire panels and aspirating smoke detectors.)',
+      'Biometric Access Control & Turnstiles (Manufacturer & Product Solutions : <br>HID Global, Nedap, Gunnebo turnstiles and RFID/facial recognition access controllers.)',
+      'Structured Cat6A / Fiber Optic Cabling (Manufacturer & Product Solutions : <br>CommScope Uniprise, Legrand LCS3, Corning fiber optics infrastructure certified for 10G/40G networks.)'
+    ],
     slides: [
       {
         title: '1. IP CCTV Güvenlik Kamera ve Video Analiz Sistemleri (Üretici & Ürün Çözümleri : <br>1. Axis Communications, Hikvision Pro Series, Dahua WizMind IP kamera ve NVR üniteleri.<br>2. Yapay zeka destekli plaka tanıma, yüz algılama, çit ihlal analizi ve 7/24 izleme merkezi.)',
@@ -861,6 +927,12 @@ const SERVICES_DATA = {
       'Motor Kontrol Merkezleri (MCC) ve Sürücü Panoları (Üretici & Ürün Çözümleri : <br>ABB ACS880, Danfoss VLT AutomationDrive, Siemens SINAMICS frekans konvertör panoları.<br>PLC ve SCADA entegreli çekmeceli tipi MCC üniteleri ile motor koruma ve hız kontrolü.)',
       'Busbar Enerji Dağıtım Hatları ve Kablo Taşıma Sistemleri (Üretici & Ürün Çözümleri : <br>EAE Elektrik KX/KB Busbar, Legrand Zucchini, Schneider Canalis modüler busbar sistemleri.<br>Ağır hizmet tipi delikli kablo kanalları, merdiven kanallar ve yangına dayanıklı tava montajı.)',
       'Aktif / Pasif Harmonik Filtreli Kompanzasyon Panoları (Üretici & Ürün Çözümleri : <br>Schaffner, Janitza, Nokian Capacitors, Entes SVG aktif harmonik filtre panoları.<br>Reaktif güç kompanzasyonu, kondansatör kademe kontrolü ve güç kalitesi iyileştirme.)'
+    ],
+    specsEn: [
+      'LV Main Switchboards & MCC Panels (Manufacturer & Product Solutions : <br>ABB Emax 2, Schneider Okken / Prisma, Siemens SIVACON S8 type-tested assembly panels up to 6300A.)',
+      'Busbar Power Distribution Trunking (Manufacturer & Product Solutions : <br>EAE Busbar, Schneider Canalis, Legrand Zucchini copper and aluminum busbar trunking systems.)',
+      'Uninterruptible Power Supplies (UPS) (Manufacturer & Product Solutions : <br>APC by Schneider MGE, Vertiv Liebert EXM, Eaton 9395 modular UPS systems with high efficiency.)',
+      'Power Factor Correction & Active Harmonic Filters (Manufacturer & Product Solutions : <br>Janitza, Schaffner, ABB PQFI active filters eliminating THD and optimizing power quality.)'
     ],
     slides: [
       {
@@ -901,6 +973,12 @@ const SERVICES_DATA = {
       'Mikroişlemcili Dijital Koruma Röleleri ve Testleri (Üretici & Ürün Çözümleri : <br>SEL (Schweitzer Engineering Labs), Schneider MiCOM / Sepam, ABB Relion koruma röleleri.<br>Omicron CMC 356 ikincil enjeksiyon test cihazı ile aşırı akım, toprak arıza ve selektivite doğrulaması.)',
       'OG Yeraltı Kablo Tesisatı ve Yüksek Gerilim İletim Hatları (Üretici & Ürün Çözümleri : <br>Prysmian Group, Hes Kablo, Nexans 36 kV XLPE yeraltı güç kabloları ve Raychem ek/başlık aksesuarları.<br>Tünel ve kablo kanalı tipi ağır sanayi yeraltı hat çekimi, boru başlık montajı ve izolasyon testleri.)'
     ],
+    specsEn: [
+      '36 kV Air & Gas Insulated Switchgear (GIS/AIS) (Manufacturer & Product Solutions : <br>ABB UniGear / SafeRing, Schneider PremSet / FBX, Siemens 8DJH medium voltage switchgear.)',
+      'Cast Resin Dry-Type & Oil Transformers (Manufacturer & Product Solutions : <br>ABB Resibloc, Schneider Trihal, BEST Transformers dry-type transformers up to 25 MVA.)',
+      'Substation Automation & Protection Relays (Manufacturer & Product Solutions : <br>SEL (Schweitzer), ABB Relion, Schneider Sepam protection relays supporting IEC 61850 protocol.)',
+      'Underground MV Cable Lines & Trenching (Solutions & Services : <br>36 kV XLPE insulated heavy power cable installation, jointing, and high-voltage testing.)'
+    ],
     slides: [
       {
         title: 'Orta Gerilim Sistemleri (OG) & Şalt Tesisleri',
@@ -940,6 +1018,12 @@ const SERVICES_DATA = {
       'Dijital Koruma Rölesi Selektivite ve Koordinasyon Analizleri (Çözüm ve Hizmetler : <br>Şebeke koruma röleleri aşırı akım, toprak arıza ve selektivite zaman koordinasyon eğrilerinin çizimi.<br>Arıza anında sadece ilgili şalterin açmasını sağlayan basamaklı selektivite mühendislik raporu.)',
       'Geçici Kabul, Tesis Ruhsatı ve Müşavirlik Danışmanlık Hizmetleri (Çözüm ve Hizmetler : <br>Bakanlık ve EDAŞ yetkili heyetleri ile saha eksik listesi (punch list) inceleme ve kabul yönetimi.<br>İşletme belgesi, tesis ruhsatı, topraklama/iç tesisat ölçüm raporları ve müşavirlik hizmetleri.)'
     ],
+    specsEn: [
+      'Utility Interconnection & Permit Approval (Solutions & Services : <br>End-to-end management of official project filings, grid impact studies, and municipal approvals.)',
+      'Short-Circuit & Relay Coordination Analysis (Manufacturer & Product Solutions : <br>ETAP Electrical Power Systems Software, DigSILENT PowerFactory arc flash and relay studies.)',
+      'Harmonic & Power Quality Audits (Solutions & Services : <br>Class A power quality logging, harmonic spectrum analysis, and compliance reporting.)',
+      'Final Provisional & Definite Official Acceptance (Solutions & Services : <br>Representation during ministry and utility acceptance testing for energized asset commissioning.)'
+    ],
     slides: [
       {
         title: 'Proje Mühendislik & Onay Hizmetleri',
@@ -974,6 +1058,12 @@ const SERVICES_DATA = {
       'SF6 Gazlı YG Kesiciler, Döner / Düşey Ayırıcılar ve Akım-Gerilim Trafoları (Üretici & Ürün Çözümleri : <br>Siemens 3AP1, ABB LTB SF6 canlı tank kesiciler, Pfiffner / Trench akım-gerilim trafoları.<br>Döner ve düşey mekanizmalı açık şalt ayırıcı üniteleri ve bara sistemleri montajı.)',
       'TEİAŞ Bağlantı ve İletim Anlaşması Uyumlu Koruma & SCADA Otomasyonu (Üretici & Ürün Çözümleri : <br>SEL-421 / SEL-487, Siemens SIPROTEC 5, ABB Relion 670 serisi hat koruma ve fider kontrol röleleri.<br>TEİAŞ RYS ve YTM haberleşme protokolleri uyumlu RTU (IEC 60870-5-104) ve SCADA pano sistemleri.)'
     ],
+    specsEn: [
+      '154 kV / 380 kV Substation Turnkey Contracting (Solutions & Services : <br>High-voltage power transformer installation, circuit breakers, disconnectors, and surge arresters.)',
+      'Gas Insulated High Voltage Switchyards (GIS) (Manufacturer & Product Solutions : <br>ABB ELK series, Siemens 8DN9 SF6 gas-insulated switchgear for compact HV footprints.)',
+      'High Voltage Overhead Transmission Lines (Solutions & Services : <br>Lattice steel tower erection, conductor stringing, and OPGW fiber optic ground wire installation.)',
+      'Differential & Distance Relay Protection (Manufacturer & Product Solutions : <br>Siemens SIPROTEC 5, GE Multilin protection systems for utility-scale transmission lines.)'
+    ],
     slides: [
       {
         title: '154 kV & 380 kV Yüksek Gerilim (YG) Trafo Merkezleri & Şalt Sahası',
@@ -1007,6 +1097,11 @@ const SERVICES_DATA = {
       'Önleyici Bakım Planları ve Periyodik Kontrol Programları (Çözüm ve Hizmetler : <br>Baz istasyonu kule, RF anten, kablo ve güç sistemlerinin periyodik fiziki/elektronik muayenesi.<br>Akü kapasite testleri, klima iklimlendirme bakımları ve topraklama direnci ölçümleri.)',
       'Servis Düzeyi Anlaşması (SLA) Yönetimi ve Raporlama (Çözüm ve Hizmetler : <br>%99.99 erişilebilirlik (uptime) hedefli SLA kriterlerine uygun kurumsal şebeke yönetimi.<br>Canlı bilet (ticketing) takip portalı ve aylık performans/arıza kök neden raporlaması.)',
       'Yedek Parça Depo Yönetimi ve Lojistik Destek (Çözüm ve Hizmetler : <br>Bölgesel lojistik merkezlerinde kritik aktif donanım ve pasif sarf malzeme stok yönetimi.<br>Hızlı parça değişimi, arızalı ünite onarımı (RMA) ve üretici servis entegrasyonu.)'
+    ],
+    specsEn: [
+      '24/7 First Line Maintenance (FLM) (Solutions & Services : <br>Rapid response field teams for base stations, fiber breaks, and power outages with guaranteed SLAs.)',
+      'Diesel Generator & Power Maintenance (Solutions & Services : <br>Periodic servicing of emergency generators, rectifier units, and backup battery banks.)',
+      'Passive & Active Infrastructure Repairs (Solutions & Services : <br>Tower structural repairs, antenna alignment, feeder replacement, and fiber OTDR splicing.)'
     ]
   },
   e_t2: {
@@ -1019,6 +1114,11 @@ const SERVICES_DATA = {
       'Massive MIMO Anten & RU Entegrasyonu ve Hizalaması (Üretici & Ürün Çözümleri : <br>Kathrein, Huawei, CommScope 32R32T / 64R64T Massive MIMO aktif anten üniteleri.<br>Lazer kule açı hizalaması, RET (Remote Electrical Tilt) ayarlaması ve hüzme şekillendirme.)',
       'Küçük Hücre (Small Cell) ve O-RAN Mimarisi Kurulumları (Üretici & Ürün Çözümleri : <br>Ericsson Dot System, Nokia Smart Node, Mavenir / Samsung Open-RAN CU/DU donanımları.<br>Yüksek yoğunluklu şehir merkezleri ve endüstriyel tesisler için kapalı/açık küçük hücre ağı.)',
       '5G SA/NSA Şebeke Optimizasyonu ve KPI Analizi (Çözüm ve Hizmetler : <br>Standalone (SA) ve Non-Standalone (NSA) 5G şebeke hız, gecikme (latency) ve kapsama testleri.<br>VIAVI, Anritsu 5G sinyal analizörleri ile sürücü testleri ve performans iyileştirme.)'
+    ],
+    specsEn: [
+      '5G NR Base Station Hardware Rollout (Manufacturer & Product Solutions : <br>Ericsson Radio System, Nokia AirScale, Huawei 5G AAU massive MIMO radio units.)',
+      'Small Cell & Micro Base Station Deployment (Solutions & Services : <br>Street pole and indoor small cell deployment for high-density 5G coverage enhancement.)',
+      '5G Fronthaul & Backhaul Fiber Integration (Solutions & Services : <br>High-speed eCPRI optical fronthaul and 10G/100G IP microwave backhaul installation.)'
     ]
   },
   e_t3: {
@@ -1031,6 +1131,11 @@ const SERVICES_DATA = {
       'Aktif DAS & Small Cell İle Yüksek Kapasiteli Kapalı Alan Kapsama (Üretici & Ürün Çözümleri : <br>CommScope ERA Active DAS, Corning ONE Active DAS, SOLiD ALLIANCE fiber-DAS üniteleri.<br>Fiber optik omurga üzerinden çok operatörlü (Multi-Operator) 4G/5G yüksek kapasite kapsama.)',
       'Havalimanı, Tünel ve Metro Bina İçi Kapsama Projeleri (Üretici & Ürün Çözümleri : <br>RFS (Radio Frequency Systems) sızdırmalı (leaky) feeder kablo çözümleri ve tünel antenleri.<br>Yeraltı metro hatları, karayolu tünelleri ve terminal binalarında kesintisiz haberleşme altyapısı.)',
       'RF Kapsama Ölçümleri, Drive Test ve Optimizasyon Raporları (Çözüm ve Hizmetler : <br>iBwave Design 3D simülasyon yazılımı ile bina içi RF kapsama ve kapasite projelendirme.<br>TEMS Pocket, Nemo Outdoor ölçüm cihazları ile bina içi yürüyüş (walk) testleri ve raporlama.)'
+    ],
+    specsEn: [
+      'Passive & Active DAS Architecture (Manufacturer & Product Solutions : <br>CommScope ERA, Corning ONE, Kathrein passive DAS splitters and coaxial leaky feeders.)',
+      'Multi-Operator Neutral Host Systems (Solutions & Services : <br>Shared indoor antenna networks supporting all mobile network operators on a single grid.)',
+      'iBwave Certified Indoor RF Design (Solutions & Services : <br>Precision 3D indoor RF propagation modeling guaranteeing seamless voice and data coverage.)'
     ]
   },
   e_t4: {
@@ -1043,6 +1148,11 @@ const SERVICES_DATA = {
       'Büyük Organizasyon & Etkinlikler İçin Geçici Kapsama Çözümleri (Çözüm ve Hizmetler : <br>Stadyum, konser ve fuar alanlarında anlık yüksek insan yoğunluğuna özel mobil kapasite artırımı.<br>Hızlı intikal, yerinde devreye alma ve etkinlik süresince canlı şebeke izleme operasyonu.)',
       'Doğal Afet ve Acil Durum Sahaları İçin Hızlı Devreye Alma (Çözüm ve Hizmetler : <br>Deprem, yangın ve afet bölgelerinde haberleşmenin kesintisiz sürdürülmesi için acil intikal.<br>Otonom uydu transmisyonu (VSAT/Starlink) ile merkeze doğrudan bağlantı sağlama.)',
       'Güneş Enerjisi ve Jeneratör Destekli Off-Grid COW Sistemleri (Üretici & Ürün Çözümleri : <br>Victron Energy, Aksa Jeneratör, Lithium-ion BESS batarya ve katlanabilir solar paneller.<br>Şebekeden bağımsız (off-grid) sahalarda 7/24 yakıt tasarruflu hibrit enerji beslemesi.)'
+    ],
+    specsEn: [
+      'Telescopic Mast & Trailer Integration (Solutions & Services : <br>Pneumatic and hydraulic antenna masts up to 30m mounted on heavy-duty road trailers.)',
+      'Onboard Silent Generator & Hybrid Power (Solutions & Services : <br>Integrated quiet diesel generators and solar/battery packs for autonomous off-grid operation.)',
+      'Satellite & Microwave Backhaul Options (Solutions & Services : <br>Instant satellite VSAT or high-capacity IP microwave links connecting COW to core networks.)'
     ]
   },
   e_t5: {
@@ -1055,6 +1165,11 @@ const SERVICES_DATA = {
       'El Telsizi, Araç Telsizi ve Ağ Yönetim Sistemi Entegrasyonu (Üretici & Ürün Çözümleri : <br>Motorola MTP3550, Airbus THR9, Hytera PD795Ex ATEX onaylı patlama korumalı el telsizleri.<br>Araç telsizleri, GPS takip modülleri ve merkezi Ağ Yönetim Sistemi (NMS) konsol entegrasyonu.)',
       'Şifreli Haberleşme ve Öncelikli Kanal Yönetimi (Çözüm ve Hizmetler : <br>TETRA TEA1/TEA2 hava arayüzü şifreleme ve uçtan uca E2EE kriptografik haberleşme güvenliği.<br>Yetki seviyesine göre öncelikli kanal tahsisi ve acil çağrı (Emergency Call) yönetimi.)',
       'Kamu Güvenliği ve Kritik Altyapı TETRA Ağ Tasarımı (Çözüm ve Hizmetler : <br>ETSI EN 300 392 TETRA standardına uygun frekans planlaması ve bölgesel kapsama tasarımı.<br>Enerji, su, doğalgaz ve ulaşım kritik altyapılarında güvenli trunking haberleşme mimarisi.)'
+    ],
+    specsEn: [
+      'TETRA Base Station & Switch Infrastructure (Manufacturer & Product Solutions : <br>Motorola Solutions Dimetra, Airbus Tactilon, Sepura TETRA radio infrastructure.)',
+      'Public Safety & Emergency Response Networks (Solutions & Services : <br>Encrypted trunked radio coverage for police, fire, ambulance, and airport operational teams.)',
+      'Heavy-Duty IP67 Handheld & Vehicle Radios (Manufacturer & Product Solutions : <br>Motorola MTP6650, Sepura STP9000 rugged TETRA terminals with GPS tracking.)'
     ]
   },
   e_t6: {
@@ -1067,6 +1182,11 @@ const SERVICES_DATA = {
       'Ağ Altyapısı Mimari Dizayn ve Teknik Şartname Hazırlama (Çözüm ve Hizmetler : <br>Çekirdek ağ (Core), taşıyıcı (Transport) ve erişim (RAN) katmanı mimari tasarım ve boyutlama.<br>Ekipman teknik şartnamesi (RFQ/RFP) hazırlanması ve üretici teknik değerlendirmesi.)',
       'Drive Test, Walk Test ve Sinyal Ölçüm Kampanyaları (Üretici & Ürün Çözümleri : <br>TEMS Investigation, Nemo Outdoor, XCAL-Solo 5G analizörleri ile sahada canlı şebeke ölçümü.<br>CQT (Call Quality Test), DT (Drive Test) kampanyaları ve bölgesel kapsama haritaları.)',
       'KPI Analizi ve Şebeke Performans Optimizasyonu Raporları (Çözüm ve Hizmetler : <br>OSS (Ericsson ENIQ, Nokia NetAct) veri madenciliği ile şebeke KPI trendi ve kök neden analizi.<br>Drop call, handover başarısızlıkları ve veri hızı düşüşlerinin optimizasyon aksiyon raporu.)'
+    ],
+    specsEn: [
+      'RF Propagation Modeling & Site Selection (Manufacturer & Product Solutions : <br>Fentbi Atoll, Planet Mentum RF planning software for optimal site candidate selection.)',
+      'Drive Test & QoS Benchmark Analysis (Manufacturer & Product Solutions : <br>Rohde & Schwarz ROMES, Infovista TEMS Investigation drive test tools analyzing KPI metrics.)',
+      'Capacity & Interference Optimization (Solutions & Services : <br>Antenna tilt tuning, neighbor list optimization, and handover parameter adjustments.)'
     ]
   },
   e_t7: {
@@ -1079,6 +1199,11 @@ const SERVICES_DATA = {
       'Fiber Optik Omurga Kapasite Artırımı ve Genişletme (Çözüm ve Hizmetler : <br>Mevcut fiber altyapı üzerinde Raman ve EDFA optik kuvvetlendirici ilave ile kapasite katlaması.<br>QAM-256, QPSK ve DP-16QAM modülasyon teknikleriyle spektral verimlilik optimizasyonu.)',
       'Metro Ethernet ve Uzun Mesafe WDM Ağ Tasarımı (Üretici & Ürün Çözümleri : <br>Coriant / Infinera GX Series, ECI Apollo OTN, Adtran Metro Ethernet taşıma ekipmanları.<br>Şehiriçi ring topoloji metro ağları ve 1000+ km uzun mesafe terrestrial omurga hat tasarımı.)',
       'OTDR & Optik Güç Ölçümü ile Bağlantı Testi & Sertifikasyon (Üretici & Ürün Çözümleri : <br>JDSU / VIAVI T-BERD 8000, Yokogawa AQ7280 OTDR ve Fluke Networks OF-500 fiber test setleri.<br>Ek kayıpları, yansıma haritaları ve link bütçe raporlaması ile profesyonel fiber sertifikasyon.)'
+    ],
+    specsEn: [
+      '100G / 400G Coherent Optical Transmission (Manufacturer & Product Solutions : <br>Ciena Waveserver, Nokia 1830 PSS, Huawei OptiX OSN DWDM optical platforms.)',
+      'Reconfigurable Optical Add-Drop Multiplexers (ROADM) (Solutions & Services : <br>Colorless, directionless ROADM node installations for dynamic optical routing.)',
+      'Fiber Optic Network Span Optimization (Solutions & Services : <br>EDFA optical amplifiers, Raman amplification, and chromatic dispersion compensation.)'
     ]
   },
   e_t8: {
@@ -1091,6 +1216,11 @@ const SERVICES_DATA = {
       'Fiber Dağıtım Kutuları (FDP/FDB) ve Splitter Kurulumu (Üretici & Ürün Çözümleri : <br>CommScope OptiSheath, Huawei ETP distribution box, PPC Broadband fiber bağlantı ekipmanları.<br>1:8 / 1:16 / 1:32 PLC splitter kaskad dağıtımı ve pasif optik ağ güç bütçe hesabı.)',
       'ONU / ONT / OLT Donanım Entegrasyonu ve Aktivasyonu (Üretici & Ürün Çözümleri : <br>Huawei MA5800 OLT, ZTE C650, Nokia 7360 ISAM FX ve GPON/XGS-PON ONU/ONT terminalleri.<br>TR-069 ACS ile uzaktan ZTP (Zero Touch Provisioning) ve toplu ONU konfigürasyon yönetimi.)',
       'Servis Aktivasyon, Test ve Müşteri Kabul Raporlaması (Çözüm ve Hizmetler : <br>RFC 2544 / Y.1564 Ethernet servis testi, BERT ve optik güç ölçümü ile hizmet kalite onayı.<br>Abone kabul formları, LAN tarafı bağlantı testi ve RFS (Ready For Service) onay raporlaması.)'
+    ],
+    specsEn: [
+      'GPON / XGS-PON Optical Line Terminals (OLT) (Manufacturer & Product Solutions : <br>Huawei SmartAX, Nokia ISAM, ZTE ZXA10 GPON OLT infrastructure platforms.)',
+      'Fiber Distribution Hubs & Splice Enclosures (Manufacturer & Product Solutions : <br>3M, Tyco Raychem, Corning outdoor optical distribution cabinets and splice closures.)',
+      'Microtrenching & Drop Cable Installs (Solutions & Services : <br>Narrow asphalt microtrenching, blown fiber installation, and indoor subscriber ONU turn-up.)'
     ]
   },
   e_t9: {
@@ -1103,6 +1233,11 @@ const SERVICES_DATA = {
       'Yeraltı Boru ve Kablo Kanalı (Trench) Döşeme İşleri (Çözüm ve Hizmetler : <br>HDD (Yatay Yönlü Sondaj) ve geleneksel açık hendek yöntemi ile fiber optik boru hattı döşemesi.<br>PVC, HDPE ve çelik borular ile kablolara mekanik koruma altında güvenli yeraltı geçişleri.)',
       'Beton Kablo Kanalı ve Menhol Yapım ve Tamamlama İşleri (Çözüm ve Hizmetler : <br>Belediye standartlarına uygun prefabrik ve yerinde döküm beton menhol ile baca yapımı.<br>Yol boyu beton kablo kanalı, kablo askı menholleri ve kapak, çerçeve malzeme temini.)',
       'YASS (Yol Altı Altyapı) & Belediye İzin Süreç Yönetimi (Çözüm ve Hizmetler : <br>Belediye ve karayolları kurumlarına yol kazı, YASS ve zemin restorasyonu onay başvuruları.<br>İzin takibi, trafik çevirme planları ve çalışma sonrası asfalt/bordür restorasyon tamamlama.)'
+    ],
+    specsEn: [
+      'Lattice Steel Tower & Monopole Fabrication (Solutions & Services : <br>Galvanized steel lattice towers and guyed masts engineered for extreme wind loads.)',
+      'Underground Conduit & Manhole Networks (Solutions & Services : <br>PVC/HDPE duct bank laying, concrete manhole construction, and fiber optic innerduct pulling.)',
+      'Horizontal Directional Drilling (HDD) (Solutions & Services : <br>Trenchless directional drilling beneath highways, railways, and rivers for fiber ducts.)'
     ]
   },
   e_t10: {
@@ -1115,6 +1250,11 @@ const SERVICES_DATA = {
       'Kalite Güvence (QA) Testleri ve Kabul Protokolleri (Çözüm ve Hizmetler : <br>RF sinyal gücü, fiber optik kayıp, güç ve topraklama testleri ile bağımsız kalite kabul protokolleri.<br>FAT (Factory Acceptance Test) ve SAT (Site Acceptance Test) raporlarının hazırlanması.)',
       'Bağımsız Proje Yönetimi (PMO) ve Milestone Takibi (Çözüm ve Hizmetler : <br>MS Project / Primavera P6 programları ile proje takvimi, iş gücü ve kaynak yönetim planlaması.<br>Haftalık/aylık milestone ilerleme raporları, risk kaydı ve değişiklik yönetimi süreci.)',
       'Operatör ve Yüklenici Performans Değerlendirme Raporları (Çözüm ve Hizmetler : <br>KPI bazlı yüklenici puanlama kartı ve proje SLA uyum denetim raporları.<br>Operatör bayi/yüklenici sözleşme performansı çeyreklik değerlendirme ve yaptırım önerileri.)'
+    ],
+    specsEn: [
+      'Tower Structural Integrity & Corrosion Audits (Solutions & Services : <br>Ultrasonic steel thickness measurements, guy wire tensioning tests, and tower safety audits.)',
+      'Active & Passive Inventory Reconciliation (Solutions & Services : <br>Barcode and RFID tagging of telecom assets for accurate network inventory databases.)',
+      'Acceptance Testing & Snag-List Clearance (Solutions & Services : <br>Third-party quality assurance inspections prior to commercial network handover.)'
     ]
   },
   e_t11: {
@@ -1127,6 +1267,11 @@ const SERVICES_DATA = {
       'UPS Kesintisiz Güç Kaynağı Kurulumu ve Akü Grupları (Üretici & Ürün Çözümleri : <br>Eaton 9PX / 9SX, APC Galaxy VS / VX, Vertiv Liebert GXT5 modüler online UPS sistemleri.<br>VRLA ve Lityum-iyon akü grupları, kapasite testi ve akü ömür yönetim yazılımları.)',
       'Jeneratör Bağlantısı ve Otomatik Transfer Şalter (ATS) (Üretici & Ürün Çözümleri : <br>Aksa Power Generation, Cummins, Kohler ve Perkins motorlu telekom sahası jeneratörleri.<br>Schneider / Socomec ATYS ATS şalter ve jeneratör uzaktan başlatma otomasyon paneli.)',
       'Enerji Verimliliği Analizi ve Güç Yönetim Sistemleri (Çözüm ve Hizmetler : <br>Site bazında PUE (Power Usage Effectiveness) ölçümü ve enerji giderini düşüren optimizasyon raporu.<br>Uzaktan akü şarj, yük dengesi ve enerji tüketim izleme yazılımı entegrasyonu.)'
+    ],
+    specsEn: [
+      'Telecom DC Power Systems & Rectifiers (Manufacturer & Product Solutions : <br>Delta Electronics, Eltek Valere, Vertiv NetSure high-efficiency DC power bays.)',
+      'Deep-Cycle Gel & Lithium Telecom Batteries (Manufacturer & Product Solutions : <br>Enersys PowerSafe, Narada, Coslight 48V LiFePO4 battery modules for extended backup.)',
+      'Automatic Transfer Switches (ATS) & Surge Protection (Solutions & Services : <br>Lightning surge arresters and ATS panels for reliable utility power transition.)'
     ]
   },
   e_c1: {
@@ -1139,6 +1284,11 @@ const SERVICES_DATA = {
       'Endüstriyel Kontrol Sistemleri (ICS / OT) Güvenlik Duvarı : <br>SCADA, PLC ve fabrika otomasyon ağları için OT uyumlu derin paket inceleme ve izolasyon. (Palo Alto Networks PA-400 Series, Fortinet FortiGate Rugged, Claroty CTD, Nozomi Networks Guardian)',
       'Log Yönetimi, Korelasyon ve 5651 Sayılı Kanun Uyumu : <br>Yasal mevzuata uygun zaman damgalı log toplama, imzalama ve merkezi arşivleme altyapısı. (Logsign Unified SecOps, Crypttech CryptoLog, Trend Micro Apex Central, Micro Focus ArcSight)',
       'Tehdit İstihbaratı ve Siber Olaylara Müdahale (SOAR / IR) : <br>Otomatik siber tehdit engelleme, olay müdahale senaryoları ve 7/24 uzman müdahale hizmeti. (Cisco SecureX, CrowdStrike Falcon Complete, Palo Alto Cortex XSOAR, FireEye Mandiant IR)'
+    ],
+    specsEn: [
+      '24/7 Threat Hunting & SIEM Analytics (Manufacturer & Product Solutions : <br>Splunk Enterprise Security, Microsoft Sentinel, IBM QRadar 24/7 SOC monitoring.)',
+      'Industrial OT / ICS Network Protection (Manufacturer & Product Solutions : <br>Claroty CTD, Nozomi Networks Guardian, Dragos industrial cybersecurity platforms.)',
+      'Endpoint Detection & Response (EDR / XDR) (Manufacturer & Product Solutions : <br>CrowdStrike Falcon, Palo Alto Cortex XDR, FortiEDR automated threat containment.)'
     ]
   },
   e_c2: {
@@ -1151,6 +1301,11 @@ const SERVICES_DATA = {
       'Web ve Mobil Uygulama Zafiyet Tarama ve Güvenlik Testi (Çözüm ve Hizmetler : <br>OWASP Top 10 standartlarında web yazılım ve mobil uygulama güvenlik açıkları tespiti.<br>Veritabanı sızma, kod analizi ve yetkisiz erişim açıklarının kapatılması danışmanlığı.)',
       'Sosyal Mühendislik & Oltalama (Phishing) Simülasyonları (Çözüm ve Hizmetler : <br>Personel farkındalık seviyesini ölçen senaryo bazlı kurumsal oltalama e-posta simülasyonları.<br>İnsan kaynaklı güvenlik zafiyetlerinin tespiti ve siber güvenlik farkındalık eğitimleri.)',
       'Zafiyet Analiz Raporlaması ve Güvenlik Sıkılaştırma (Hardening) (Çözüm ve Hizmetler : <br>Tespit edilen açıkların risk derecesine göre önceliklendirildiği detaylı teknik yönetim raporu.<br>Sunucu, firewall ve işletim sistemi seviyesinde hardening sıkılaştırma uygulama desteği.)'
+    ],
+    specsEn: [
+      'Web Application & API Pentesting (Solutions & Services : <br>Comprehensive OWASP Top 10 security audits, code reviews, and API vulnerability exploitation.)',
+      'Internal & External Network Penetration (Solutions & Services : <br>Red teaming, Active Directory privilege escalation testing, and perimeter security audits.)',
+      'Social Engineering & Phishing Simulations (Solutions & Services : <br>Automated employee phishing awareness campaigns and physical security penetration tests.)'
     ]
   },
   e_c3: {
@@ -1163,6 +1318,11 @@ const SERVICES_DATA = {
       'IEC 62443 Endüstriyel Kontrol Sistemleri Siber Güvenlik Standardı (Çözüm ve Hizmetler : <br>OT, SCADA ve fabrika otomasyon sistemlerinin IEC 62443 standartlarına tam uyum denetimi.<br>Siber-fiziksel sistemler için alan (zone) ve kanal (conduit) güvenlik mimarisi tasarımı.)',
       'KVKK & GDPR Kişisel Verilerin Korunması Hukuki ve Teknik Uyum (Çözüm ve Hizmetler : <br>VERBİS kaydı, kişisel veri envanteri hazırlığı ve hukuki metinlerin düzenlenmesi.<br>Veri sızıntısı önleme (DLP), yetki matrisi ve teknik veri koruma altyapı kurulumu.)',
       'Kurumsal Risk Analizi ve Bilgi Güvenliği Politikaları Oluşturma (Çözüm ve Hizmetler : <br>Kurum genelinde siber risk haritasının çıkarılması ve tehdit önceliklendirmesi.<br>İş sürekliliği, felaket kurtarma ve bilgi güvenliği prosedürlerinin kurum kültürüne entegrasyonu.)'
+    ],
+    specsEn: [
+      'ISO 27001 Information Security Management (Solutions & Services : <br>Gap analysis, ISMS policy authoring, risk assessment, and certification audit prep.)',
+      'IEC 62443 Industrial Cybersecurity Compliance (Solutions & Services : <br>Security level zoning and conduit design for SCADA and industrial automation networks.)',
+      'GDPR / KVKK Data Privacy Compliance (Solutions & Services : <br>Personal data inventory mapping, data protection impact assessments (DPIA), and consent workflows.)'
     ]
   },
   e_s4: {
@@ -1211,6 +1371,12 @@ const SERVICES_DATA = {
       'Endüstriyel Sicharge & DC Ultra Hızlı Şarj Ürün Ailesi (Üretici & Ürün Çözümleri : <br>Siemens Sicharge D 160-300kW, Alpitronic HYC 300, Vestel EVC06 DC hızlı şarj üniteleri.<br>50 kW - 350+ kW modüler güç kabinleri, dinamik güç paylaşımı ve Tip 2/CCS2/CHAdeMO soketler.)',
       'Otopark & AVM Solar Sundurmalı Modüler Şarj Noktaları (Üretici & Ürün Çözümleri : <br>Schneider EVlink Pro AC 22kW, Ensto One Home, Phoenix Contact şarj denetleyicileri.<br>AVM, otel ve ticari binalar için OCPP 1.6J / 2.0.1 entegreli merkezi faturalandırmalı şarj noktaları.)'
     ],
+    specsEn: [
+      'Ultra-Fast DC Charging Stations (180 kW - 360 kW) (Manufacturer & Product Solutions : <br>ABB Terra 360, Schneider ChargePoint, Siemens SICHARGE D liquid-cooled ultra-fast DC chargers.)',
+      'AC Commercial & Residential Wallbox Stations (Manufacturer & Product Solutions : <br>Vestel EVC04, Ensto One, Mennekes Amtron 11 kW / 22 kW smart AC chargers with RFID access.)',
+      'Solar Carport & BESS Microgrid Integration (Solutions & Services : <br>Photovoltaic parking canopies paired with battery storage for off-grid and peak-balanced EV charging.)',
+      'OCPP 1.6J / 2.0.1 Mobile Billing Software (Solutions & Services : <br>Open Charge Point Protocol (OCPP) cloud management backend with credit card and mobile app payments.)'
+    ],
     slides: [
       {
         title: 'Solar Carport & BESS Entegre Yeşil Şarj İstasyonu Altyapısı',
@@ -1253,6 +1419,10 @@ const SERVICES_DATA = {
       'Akıllı Tarım Kullanım Alanları (Üretici & Ürün Çözümleri : <br>Netafim Smart Irrigation, Sentek Soil Moisture, CropX AgTech, Meter Group TEROS.<br>Toprak nemine göre sulama otomasyonu.)',
       'Sağlık Kullanım Alanları (Üretici & Ürün Çözümleri : <br>Medtronic Patient Monitoring, BioIntelliSense BioButton, Apple HealthKit Pro, Dexcom.<br>Hastaların nabız ve vücut ısısını uzaktan takip eden giyilebilir cihazlar.)'
     ],
+    specsEn: [
+      'Industrial Process & Environmental Sensors (Manufacturer & Product Solutions : <br>IFM Efector, Bosch Sensortec, STMicroelectronics, Turck, Honeywell industrial sensors.)',
+      'Wireless LoRaWAN & NB-IoT Telemetry (Solutions & Services : <br>Long-range, ultra-low power wireless sensor nodes for remote environmental monitoring.)'
+    ],
     slides: [
       {
         title: 'Akıllı Sensörler',
@@ -1278,6 +1448,10 @@ const SERVICES_DATA = {
       'Endüstriyel Otomasyon Aktüatörleri (Üretici & Ürün Çözümleri : <br>KUKA Robotics, ABB Motion, Emerson Smart Valve Actuators, Festo Automation.<br>Akıllı vanalar, robotik kollar, bant hareketleri ve üretim hattı kesicileri.)',
       'Tarım Otomasyon Aktüatörleri (Üretici & Ürün Çözümleri : <br>Netafim Smart Valves, Rain Bird Solenoids, Hunter Industries, Bermad Water Control.<br>Otomatik sulama vanalarının açılıp kapanması.)'
     ],
+    specsEn: [
+      'Motorized Valves & Linear Actuators (Manufacturer & Product Solutions : <br>Belimo, Festo pneumatic actuators, SMC, Rotork heavy industrial electric valve actuators.)',
+      'Smart Building & HVAC Actuator Systems (Solutions & Services : <br>Proportional damper actuators and modulating valve controllers integrated with BMS.)'
+    ],
     slides: [
       {
         title: 'Aktüatörler (Eyleyiciler)',
@@ -1299,6 +1473,10 @@ const SERVICES_DATA = {
       'Eski Tip Makinelerin Bağlanması (Üretici & Ürün Çözümleri : <br>Moxa NPort Serial-to-Ethernet, Advantech ADAM Modules, Siemens LOGO! 8, Brainboxes.<br>Eski tip makinelerin yeni sistemlere bağlanmasını sağlar.)',
       'Maliyet Optimizasyonu (Üretici & Ürün Çözümleri : <br>AWS IoT Greengrass, Azure IoT Edge, ThingsBoard Edge, Litmus Edge.<br>Buluta giden veri miktarını azalttığı için maliyeti düşürür.)',
       'Düşük Gecikme Süresi (Latency) (Üretici & Ürün Çözümleri : <br>Siemens Edge Industrial, Advantech WISE-PaaS, Cisco Edge Intelligence, Red Hat Edge.<br>Gecikme süresini (latency) en aza indirir.)'
+    ],
+    specsEn: [
+      'Protocol Conversion & Edge Analytics (Manufacturer & Product Solutions : <br>HMS Anybus, Moxa MGate, Advantech UNO Edge, Teltonika RUTX Modbus-to-MQTT gateways.)',
+      'Industrial Rugged Security Gateways (Manufacturer & Product Solutions : <br>Fortinet FortiGate Rugged, Siemens SIMATIC IOT2050, Phoenix Contact mGuard firewalls.)'
     ],
     slides: [
       {
@@ -1323,6 +1501,10 @@ const SERVICES_DATA = {
       'Veri Analizi (Üretici & Ürün Çözümleri : <br>AWS IoT Analytics, Azure Stream Analytics, Snowflake IoT Data Lake, Databricks.<br>Üretilen veriden değer çıkarma.)',
       'Maliyet Tasarrufu (Üretici & Ürün Çözümleri : <br>Litmus Edge Computing, AWS Serverless IoT, Azure Pay-As-You-Go, ThingsBoard Cloud.<br>Donanım ve operasyonel yükün azalması.)'
     ],
+    specsEn: [
+      'MQTT Message Brokers & IoT Cloud Core (Manufacturer & Product Solutions : <br>AWS IoT Core, Microsoft Azure IoT Hub, EMQX Broker, ThingsBoard IoT platform.)',
+      'Real-Time Monitoring & Telemetry Dashboards (Manufacturer & Product Solutions : <br>Grafana IoT dashboards, PTC ThingWorx, Datadog IoT monitoring for live fleet tracking.)'
+    ],
     slides: [
       {
         title: 'Bulut ve Yazılım',
@@ -1345,6 +1527,10 @@ const SERVICES_DATA = {
       'Enerji Tasarrufu (Üretici & Ürün Çözümleri : <br>Schneider EcoStruxure Resource Advisor, Siemens Power Manager, Janitza EMS.<br>Kaynakların verimli kullanılmasını sağlar.)',
       'Kalite Kontrol (Üretici & Ürün Çözümleri : <br>Cognex Industrial Vision, Keyence Machine Vision, Omron Microscan, Basler.<br>Hatalı üretimleri anında fark edip düzeltir.)',
       'İş Güvenliği (Üretici & Ürün Çözümleri : <br>Honeywell Safety Suite, Sick Safety Systems, Pilz Safety Automation, Rockwell GuardMaster.<br>Riskli alanları sürekli izleyerek kazaları önler.)'
+    ],
+    specsEn: [
+      'Predictive Maintenance Analytics (Manufacturer & Product Solutions : <br>SKF Insight, Schaeffler OPTIME, Siemens Anomaly Detection eliminating unplanned machine downtime.)',
+      'Machine Vision Quality Inspection (Manufacturer & Product Solutions : <br>Cognex Industrial Vision, Keyence, Omron Microscan automated defect detection.)'
     ],
     slides: [
       {
@@ -1371,6 +1557,10 @@ const SERVICES_DATA = {
       'Gizlilik (Üretici & Ürün Çözümleri : <br>IBM Security Guardium, OneTrust Healthcare Privacy, Varonis Data Security Platform.<br>Hassas sağlık verilerinin üçüncü taraflardan korunması gerekir.)',
       'Cihaz Uyumluluğu (Üretici & Ürün Çözümleri : <br>InterSystems IRIS for Health, Infor Cloverleaf, Redox Engine, HL7 / FHIR Standards.<br>Farklı üreticilerin aletlerinin birbiriyle veri paylaşması zor olabilir.)'
     ],
+    specsEn: [
+      'Wearable & Bedside Patient Monitors (Manufacturer & Product Solutions : <br>Medtronic Guardian, GE HealthCare CARESCAPE, Philips Patient Monitoring IoMT devices.)',
+      'Remote Patient Monitoring (RPM) Cloud (Manufacturer & Product Solutions : <br>Philips RPM Platform, ResMed Remote Care, Epic Systems MyChart FHIR data integration.)'
+    ],
     slides: [
       {
         title: 'Sağlık Sektörü (Akıllı Sağlık IoMT)',
@@ -1396,6 +1586,11 @@ const SERVICES_DATA = {
       'Çok Ürün (Üretici & Ürün Çözümleri : <br>Topcon Agriculture, Raven Industries, Kubota Smart Ag, AGCO Fuse Precision.<br>Kaliteli ve yüksek miktarda mahsul elde edilmesini sağlar.)',
       'Kolay Takip (Üretici & Ürün Çözümleri : <br>FarmLogs, Agrivi Farm Management, Granular (Corteva), xarvio Digital Farming.<br>Çiftçilerin her şeyi telefon veya bilgisayardan yönetmesine yardım eder.)'
     ],
+    specsEn: [
+      'Soil Moisture & Automated Irrigation (Manufacturer & Product Solutions : <br>Sentek, Meter Group TEROS, Netafim automated precision fertigation systems.)',
+      'Agricultural Spraying & Mapping Drones (Manufacturer & Product Solutions : <br>DJI Agras T40 / T30, XAG agricultural drones for autonomous crop health mapping.)',
+      'Smart Livestock Collars & Barn Control (Manufacturer & Product Solutions : <br>Allflex Livestock Intelligence, Lely Vector automatic feeding, DeLaval barn climate controls.)'
+    ],
     slides: [
       {
         title: 'Tarım ve Hayvancılık (Akıllı Tarım & AgTech)',
@@ -1420,6 +1615,10 @@ const SERVICES_DATA = {
       'Otonom Sistemler (Üretici & Ürün Çözümleri : <br>EasyMile Autonomous Shuttles, Navya Autonom, Zoox, Baidu Apollo Bus.<br>Sürücüsüz toplu taşıma araçları denemeleri.)',
       'Veri Analitiği (Üretici & Ürün Çözümleri : <br>INRIX Traffic Analytics, TomTom City, HERE Mobility Platform, Google Cloud Traffic AI.<br>Yapay zeka ile gelecek trafik yoğunluğunu tahmin etme.)'
     ],
+    specsEn: [
+      'Adaptive Traffic Control & Smart Parking (Manufacturer & Product Solutions : <br>Siemens Yunex Traffic, Swarco, Nedap smart parking sensors, Inrix traffic AI.)',
+      'Transit Tracking & Fleet Management (Manufacturer & Product Solutions : <br>Geotab, Samsara, Teltonika Telematics, Conduent contactless mobile ticketing systems.)'
+    ],
     slides: [
       {
         title: 'Akıllı Şehirler ve Ulaşım',
@@ -1439,6 +1638,12 @@ const SERVICES_DATA = {
       'İstemci Donanımları: Kurumsal masaüstü bilgisayarlar, dizüstü bilgisayarlar, iş istasyonları (Workstation) ve terminaller. (Dell OptiPlex/Precision/Latitude, HP ZBook/EliteBook, Lenovo ThinkPad/ThinkStation, Apple Mac)',
       'KVM, PDU, UPS, PUE Sistemleri: Akıllı yönetilebilir PDU, KVM over IP switchler, kesintisiz güç kaynakları (UPS) ve PUE izleme sistemleri. (APC by Schneider Electric, Vertiv Liebert, Eaton, Tripp Lite, Raritan, CyberPower)',
       'Tedarik Süreci Aşamaları (Çözüm ve Hizmetler : <br>İhtiyaç Analizi : Kurumun mevcut kapasitesi ve gelecek projeksiyonları çıkarılır.<br>Marka ve Model Seçimi : Fiyat/performans, garanti koşulları ve yedek parça bulunabilirliği değerlendirilir.<br>Teklif ve Satın Alma : Yetkili distribütörlerden veya üreticilerden en uygun maliyetli teklifler toplanır.<br>Lojistik ve Entegrasyon : Cihazların güvenli taşınması, montajı ve mevcut sistemle uyumlaştırılması sağlanır.)'
+    ],
+    specsEn: [
+      'Enterprise Servers & Storage Arrays (Manufacturer & Product Solutions : <br>Dell PowerEdge, HPE ProLiant, Lenovo ThinkSystem, NetApp FAS/AFF, Pure Storage FlashArray.)',
+      'Network Switches & Next-Gen Firewalls (Manufacturer & Product Solutions : <br>Cisco Catalyst/Nexus, Fortinet FortiGate, Palo Alto Networks, Juniper Networks switches.)',
+      'Corporate Client Workstations & Laptops (Manufacturer & Product Solutions : <br>Dell OptiPlex/Precision, HP ZBook/EliteBook, Lenovo ThinkPad workstations for engineering.)',
+      'Rack PDU, KVM Over IP & Modular UPS (Manufacturer & Product Solutions : <br>APC by Schneider, Vertiv Liebert, Eaton, Raritan KVM over IP switches and UPS units.)'
     ]
   },
   e_b2: {
@@ -1452,6 +1657,12 @@ const SERVICES_DATA = {
       'Yedekleme Hizmetleri : BackUp / İş sürekliliği ve Felaket Kurtarma DR çözümleri. (Veeam Data Platform, Commvault Cloud, Cohesity DataProtect, Rubrik Security Cloud, Zerto Site Recovery, Dell PowerProtect DD)',
       'Network Çözümleri : SD-WAN, WAF, MPLS, VPN, VoIP, NLB, IPsec, WLAN, Firewall, Router, Switch, Access Point, UTM. (Fortinet FortiGate/FortiManager, Palo Alto PAN-OS/Prisma SD-WAN, Cisco Meraki/Viptela, F5 BIG-IP WAF/LTM, VMware Velocloud, Check Point Quantum)',
       'Sanallaştırma Çözümleri : SDDC, SD Server/Storage/Network & VDI, Private/Public Cloud. (VMware vSphere/vSAN/NSX-T, Nutanix Cloud Infrastructure, Microsoft Azure Stack HCI, Red Hat OpenShift/OpenStack, AWS Outposts, Cisco HyperFlex)'
+    ],
+    specsEn: [
+      '24/7 Managed NOC & SOC Operations (Solutions & Services : <br>Proactive network performance monitoring, traffic shaping, and incident response teams.)',
+      'HPC Compute Clusters (GPU / TPU / NPU) (Manufacturer & Product Solutions : <br>NVIDIA H100 / B200 Grace Hopper, AMD EPYC / Instinct MI300X, Intel Xeon 6 compute clusters.)',
+      'Data Protection & DR Backup Services (Manufacturer & Product Solutions : <br>Veeam Data Platform, Commvault Cloud, Cohesity DataProtect, Rubrik Security Cloud.)',
+      'SD-WAN, WAF & Cloud Virtualization (Manufacturer & Product Solutions : <br>Fortinet SD-WAN, Palo Alto Prisma, F5 BIG-IP WAF, VMware vSphere / vSAN / NSX-T.)'
     ]
   },
   e_b4: {
@@ -1465,6 +1676,12 @@ const SERVICES_DATA = {
       'Enerji İzleme & Güç: Güç tüketimi, PUE (Güç Kullanımı Etkinliği) canlı izleme, akıllı PDU ve yedekli A+B enerji mimarisi. (APC AP8959 Managed PDU, Vertiv Geist GU2 PDU, Eaton EATS Transfer Switch, Socomec Masterys UPS, Janitza UMG Power Monitor)',
       'DCIM & Güvenlik: Veri Merkezi Altyapı Yönetimi (DCIM) yazılımları, biyometrik geçiş kontrolü, CCTV ve erken uyarı yangın algılama. (Schneider EcoStruxure IT DCIM, Vertiv Trellis Platform, Sunbird DCIM, Honeywell Pro-Watch, Axis Communications IP CCTV, Xtralis VESDA Early Fire Detection)',
       'Kapsayıcı Sistemler: Modüler & konteyner tipi taşınabilir DRS veri merkezleri, ISO konteyner ve Shell&Core kabinet ünite tasarımları. (Schneider EcoStruxure Modular Data Center, Vertiv SmartMod, Huawei FusionModule2000, Rittal RiMatrix Micro Data Center)'
+    ],
+    specsEn: [
+      'Server Rack Containment & Busbars (Manufacturer & Product Solutions : <br>APC NetShelter SX, Vertiv VR Racks, EAE Busbar trunking, Cisco Nexus ToR switches.)',
+      'In-Row & Direct Liquid Cooling (Manufacturer & Product Solutions : <br>Vertiv Liebert CRV, Schneider Uniflair, CoolIT direct liquid cooling loops maintaining target PUE < 1.15.)',
+      'Smart Managed PDUs & Power Monitoring (Manufacturer & Product Solutions : <br>APC Managed PDUs, Vertiv Geist GU2, Janitza power quality meters for real-time kWh tracking.)',
+      'DCIM Software & Biometric Access (Manufacturer & Product Solutions : <br>Schneider EcoStruxure IT DCIM, Sunbird DCIM, Honeywell biometric access, and VESDA early fire detection.)'
     ]
   },
 };
@@ -1482,13 +1699,15 @@ function openServiceModal(id) {
   track.innerHTML = '';
   indicators.innerHTML = '';
 
-  // Build spec slides array: ALWAYS use data.specs for text content to ensure formatted Üretici & Ürün / Çözüm ve Hizmetler render on all cards, while pulling custom images from data.slides
+  // Build spec slides array: Use specsEn if currentLang === 'en' and specsEn is present, else fall back to data.specs
+  const isEn = currentLang === 'en';
+  const activeSpecs = (isEn && data.specsEn && data.specsEn.length > 0) ? data.specsEn : data.specs;
   let specSlides = [];
-  if (data.specs && data.specs.length > 0) {
-    specSlides = data.specs.map((specText, idx) => {
+  if (activeSpecs && activeSpecs.length > 0) {
+    specSlides = activeSpecs.map((specText, idx) => {
       let img = data.cover;
       if (data.slides && data.slides.length > 0) {
-        if (data.slides.length === data.specs.length + 1 && data.slides[idx + 1] && data.slides[idx + 1].image) {
+        if (data.slides.length === activeSpecs.length + 1 && data.slides[idx + 1] && data.slides[idx + 1].image) {
           img = data.slides[idx + 1].image;
         } else if (data.slides[idx] && data.slides[idx].image) {
           img = data.slides[idx].image;
@@ -1507,7 +1726,6 @@ function openServiceModal(id) {
   currentSvcSlideIndex = 0;
 
   // ── Slide 0: Overview ──────────────────────────────────────────────
-  const isEn = currentLang === 'en';
   const t = TRANSLATIONS[currentLang] || {};
   const modalTitle = (isEn && t[id + '_title']) ? t[id + '_title'] : data.title;
   const modalDesc = (isEn && t[id + '_desc']) ? t[id + '_desc'] : data.desc;
