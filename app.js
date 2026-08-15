@@ -1494,6 +1494,107 @@ function navigateLightbox(dir) {
   }
 }
 
+
+// ── Energy Product References Modal ──────────────────────────────────────
+const energyProducts = [
+  {
+    src: 'assets/images/energy_ref_smart_bess.jpg',
+    tag: 'BIPV SOLAR & BESS MOBILE APP',
+    title: 'Akıllı Ev BESS & Şarj İstasyonu Entegrasyonu',
+    caption: 'Canlı Mobil Durum Ekranı ile 7.2 kW Solar Üretim, %68 Şarjlı Ev Tipi LFP Batarya, 1.3 kW EV Araç Şarj Yönetimi ve Şebeke Akıllı Otomasyonu.',
+    specs: [
+      { label: 'Güneş Üretimi', val: '7.2 kW BIPV Çatı PV' },
+      { label: 'Batarya Depolama', val: '%68 LFP Akıllı Depolama (13.8 kWh)' },
+      { label: 'EV Şarj Yönetimi', val: '1.3 kW Smart EV Charger' },
+      { label: 'Yazılım', val: 'Canlı Mobil Takip & Otonom Şarj' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_luxury_solar.jpg',
+    tag: 'LUXURY RESIDENTIAL BIPV',
+    title: 'Lüks Konut & Otel BIPV Solar & Konteyner Depolama Tesisi',
+    caption: 'Deniz manzaralı lüks kompleks projesinde çatı entegre PV solar cam kaplaması ve ahşap mimari giydirmeli gizli BESS batarya konteyner odası.',
+    specs: [
+      { label: 'Lokasyon', val: 'Ege Kıyısı Lüks Kompleks' },
+      { label: 'Solar Altyapı', val: 'BIPV Fotovoltaik Cam Çatı' },
+      { label: 'Depolama', val: 'Ahşap Giydirmeli Konteyner BESS' },
+      { label: 'Sürdürülebilirlik', val: 'Net Zero Carbon Hizaması' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_bess_container.jpg',
+    tag: 'INDUSTRIAL BESS',
+    title: 'Konteyner Tipi Endüstriyel BESS Batarya Santrali',
+    caption: 'MW ölçeğinde outdoor iklimlendirmeli LFP batarya konteynerleri, çift yönlü PCS invertörler ve Akıllı Peak Shaving şebeke entegrasyonu.',
+    specs: [
+      { label: 'Depolama Kapasitesi', val: '10 MWh LFP Batarya' },
+      { label: 'Güç Dönüştürme', val: 'PCS Çift Yönlü Çevirici' },
+      { label: 'Kullanım', val: 'Peak Shaving & Şebeke Dengeleme' },
+      { label: 'Emniyet', val: 'FM200 Gazlı Söndürme & BMS' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_solar_ges_50mw.jpg',
+    tag: 'UTILITY SOLAR',
+    title: '50 MWp Endüstriyel Çatı & Arazi GES EPC Projesi',
+    caption: 'Arazi ve endüstriyel tesis çatılarında yüksek verimli monokristal Bifacial PV paneller ve On-Grid santral entegrasyonu.',
+    specs: [
+      { label: 'Kurulu Güç', val: '50 MWp Toplam Güç' },
+      { label: 'Panel Tipi', val: 'Bifacial Monokristal PERC' },
+      { label: 'Kapsam', val: 'Anahtar Teslim EPC' },
+      { label: 'Katkı', val: '65.000 Ton CO₂ Tasarrufu' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_wind_res_100mw.jpg',
+    tag: 'WIND POWER',
+    title: '100 MW RES & WPP Rüzgar Santrali Türbin Entegrasyonu',
+    caption: 'Yüksek irtifa türbin altyapı mühendisliği, türbin montajı, şebeke bağlantısı ve periyodik SCADA izleme hizmetleri.',
+    specs: [
+      { label: 'Kapasite', val: '100 MW Rüzgar Santrali' },
+      { label: 'Altyapı', val: 'Ağır Mühendislik & Temeller' },
+      { label: 'Şebeke Entegrasyonu', val: '154 kV Yüksek Gerilim' },
+      { label: 'İzleme', val: '7/24 SCADA Uzaktan Kontrol' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_scada_room.jpg',
+    tag: 'AUTOMATION & SCADA',
+    title: 'Merkezi SCADA Otomasyon & Şebeke İzleme Kontrol',
+    caption: 'Elektrik santralleri, su arıtma ve sanayi tesisleri için canlı sensör verisi toplama, alarm yönetimi ve uzaktan otomasyon.',
+    specs: [
+      { label: 'Yazılım Altyapısı', val: 'SCADA & Canlı Telemetri' },
+      { label: 'Protokol', val: 'Modbus, IEC 60870, DNP3' },
+      { label: 'Ekran Mimarisi', val: 'Merkezi Video Wall & Otomasyon' },
+      { label: 'Güvenlik', val: 'Yedekli Redundant Server' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_soc_cyber.jpg',
+    tag: 'CYBERSECURITY SOC',
+    title: 'OT / IT Siber Güvenlik Operations Center (SOC) Merkezi',
+    caption: 'Kritik altyapılar için IT ve OT siber güvenlik danışmanlığı, 7/24 SOC izleme, penetrasyon testleri ve ISO 27001 denetimleri.',
+    specs: [
+      { label: 'Mühendislik', val: 'ICS / OT Siber Güvenlik Mimarisi' },
+      { label: 'İzleme', val: '7/24 Canlı SOC Tehdit Avcılığı' },
+      { label: 'Test', val: 'Penetrasyon ve Sızma Testleri' },
+      { label: 'Uyum', val: 'ISO 27001 & IEC 62443 Standardı' }
+    ]
+  },
+  {
+    src: 'assets/images/energy_ref_dc_cooling.jpg',
+    tag: 'DC MEP & COOLING',
+    title: 'Veri Merkezi Hassas Sıvı Soğutma & MEP Tesisatı',
+    caption: 'Tier IV standartlarında veri merkezleri ve hassas iklimlendirme odaları için sıvı soğutma, CRAH/CRAC ve MEP tesisat projelendirmesi.',
+    specs: [
+      { label: 'Soğutma Teknolojisi', val: 'Hassas Sıvı & In-Row Soğutma' },
+      { label: 'Yedeklilik', val: 'N+2 Redundant Chiller & Kuleler' },
+      { label: 'PUE Oranı', val: '< 1.15 PUE Verimlilik' },
+      { label: 'Tesisat', val: 'MEP Paslanmaz Borulama' }
+    ]
+  }
+];
+
 function openEnergyProductModal(idx) {
   activeLightboxMode = 'energy';
   activeLightboxIdx = idx;
