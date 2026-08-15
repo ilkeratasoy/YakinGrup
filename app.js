@@ -1299,6 +1299,10 @@ function openServiceModal(id) {
         <div class="svc-spec-counter">TEKNİK ÖZELLİK ${idx + 1} / ${specSlides.length}</div>
         <h4 class="svc-spec-title">${cleanTitleHtml}</h4>
         ${descHtml}
+        <div class="svc-vcard-row" style="margin-top: 1.2rem;">
+          <button class="svc-vcard-btn primary" onclick="showVCard('ilker')">📋 Direct Lead vCard — İlker ATASOY</button>
+          <button class="svc-vcard-btn secondary" onclick="showVCard('eylul')">📋 Architecture vCard — Eylül YILMAZ</button>
+        </div>
       </div>
     `;
     track.appendChild(specSlide);
