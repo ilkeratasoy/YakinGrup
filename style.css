@@ -1948,9 +1948,18 @@ img { max-width: 100%; height: auto; display: block; }
    14. FOOTER
    ========================================================================== */
 .global-footer {
-  background: var(--color-dark);
+  background: linear-gradient(180deg, #0a192f 0%, #071324 60%, #040c18 100%);
   color: #94a3b8;
-  border-top: 1px solid var(--color-border-dark);
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+.global-footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #38bdf8 35%, #60a5fa 65%, transparent 100%);
 }
 .footer-grid {
   display: grid;
@@ -1959,36 +1968,57 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 4.5rem 0;
 }
 .global-footer .logo { color: var(--color-white); margin-bottom: 1.25rem; display: inline-flex; }
-.brand-desc { font-size: 0.88rem; line-height: 1.65; margin-bottom: 1.5rem; max-width: 270px; }
-.social-links { display: flex; gap: 0.75rem; }
+.brand-desc { font-size: 0.88rem; line-height: 1.65; margin-bottom: 1.5rem; max-width: 280px; color: #94a3b8; }
+.social-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .social-links a {
-  background: rgba(255,255,255,0.04);
-  color: var(--color-white);
-  width: 36px; height: 36px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.82rem;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  border: 1px solid var(--color-border-dark);
-  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-.social-links a:hover { background: var(--c-primary); border-color: var(--c-primary); transform: translateY(-2px); }
+.social-links a svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  transition: transform 0.25s ease;
+}
+.social-links a:hover {
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #0f172a;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+}
+.social-links a:hover svg {
+  transform: scale(1.1);
+}
 .footer-grid h4 {
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-white);
+  letter-spacing: 0.12em;
+  color: #f8fafc;
   margin-bottom: 1.5rem;
 }
 .footer-links { display: flex; flex-direction: column; gap: 0.65rem; }
-.footer-links a { font-size: 0.88rem; transition: var(--transition-fast); }
-.footer-links a:hover { color: var(--color-white); padding-left: 4px; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.04); padding: 1.5rem 0; text-align: center; }
-.copyright { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-align: center; }
-.copyright span { display: block; margin-top: 0.3rem; font-size: 0.72rem; color: rgba(255,255,255,0.22); }
+.footer-links a { font-size: 0.88rem; color: #94a3b8; transition: all 0.2s ease; }
+.footer-links a:hover { color: #38bdf8; padding-left: 5px; }
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(4, 12, 24, 0.6);
+  padding: 1.6rem 0;
+  text-align: center;
+}
+.copyright { font-size: 0.8rem; color: #64748b; text-align: center; }
+.copyright span { display: block; margin-top: 0.35rem; font-size: 0.74rem; color: #475569; }
 
 /* ==========================================================================
    15. MODALS
