@@ -2298,46 +2298,82 @@ function openCapitalModal(idx) {
 const techServices = [
   {
     tag: 'DİJİTAL HAKEDİŞ',
+    tagEn: 'DIGITAL PROGRESS PAYMENTS',
     title: 'Dijital Hakediş & İş Akışları',
+    titleEn: 'Digital Progress Payments & Workflows',
     caption: 'Karmaşık taşeron ve malzeme süreçlerini otomatize ederek sıfır hata ile anlık, şeffaf hakediş onay ve ödeme altyapıları sunuyoruz.',
+    captionEn: 'We automate complex subcontractor and procurement workflows, delivering instant, transparent progress payment approvals with zero error.',
     specs: [
       { label: 'Süreç Otomasyonu', val: 'Taşeron & Tedarik Hakedişleri' },
       { label: 'Hata Oranı', val: 'Sıfır Hata Şeffaf Onay' },
       { label: 'Entegrasyon', val: 'ERP & Muhasebe Bağlantısı' },
       { label: 'Hız', val: 'Anlık Onay & Canlı Raporlama' }
+    ],
+    specsEn: [
+      { label: 'Process Automation', val: 'Subcontractor & Procurement Billing' },
+      { label: 'Error Rate', val: 'Zero-Error Transparent Approval' },
+      { label: 'Integration', val: 'ERP & Accounting Connectivity' },
+      { label: 'Speed', val: 'Instant Approval & Live Reporting' }
     ]
   },
   {
     tag: 'YAPAY ZEKÂ',
+    tagEn: 'ARTIFICIAL INTELLIGENCE',
     title: 'Yapay Zekâ & Kestirimci Analiz',
+    titleEn: 'Artificial Intelligence & Predictive Analytics',
     caption: 'Şantiye verimliliğini makine öğrenmesi ile analiz ediyor, iş güvenliği risklerini ve olası maliyet artışlarını önceden tespit ediyoruz.',
+    captionEn: 'We analyze construction site productivity using machine learning, pre-emptively detecting HSE safety risks and potential budget overruns.',
     specs: [
       { label: 'Analiz Tipi', val: 'Kestirimci Yapay Zekâ' },
       { label: 'Risk Tahmini', val: 'İSG & Bütçe Aşım Önleme' },
       { label: 'Veri Kaynağı', val: 'Canlı Saha Telemetrisi' },
       { label: 'Raporlama', val: 'Otonom AI Yönetici Özetleri' }
+    ],
+    specsEn: [
+      { label: 'Analytics Type', val: 'Predictive Artificial Intelligence' },
+      { label: 'Risk Forecasting', val: 'HSE Safety & Cost Overrun Prevention' },
+      { label: 'Data Source', val: 'Live Site Telemetry' },
+      { label: 'Reporting', val: 'Autonomous AI Executive Summaries' }
     ]
   },
   {
     tag: 'BIM 5D',
+    tagEn: 'BIM 5D',
     title: 'BIM 5D Entegrasyonu & Dijital İkiz',
+    titleEn: 'BIM 5D Integration & Digital Twin',
     caption: '5D dijital ikizler oluşturarak yapı ömrü boyunca kusursuz veri yönetimi, çakışma tespiti ve disiplinler arası proje koordinasyonu.',
+    captionEn: 'We build 5D digital twins ensuring flawless data management, automated clash detection, and interdisciplinary project coordination throughout building lifecycle.',
     specs: [
       { label: 'LOD Standardı', val: 'LOD 400 Uygulama Detayı' },
       { label: 'Model Tipi', val: '5D BIM & Canlı Dijital İkiz' },
       { label: 'Çakışma Tespiti', val: 'Otomatik Clash Detection' },
       { label: 'Standart', val: 'ISO 19650 BIM Standardı' }
+    ],
+    specsEn: [
+      { label: 'LOD Standard', val: 'LOD 400 Construction Detail' },
+      { label: 'Model Type', val: '5D BIM & Live Digital Twin' },
+      { label: 'Clash Detection', val: 'Automated 3D Clash Detection' },
+      { label: 'Standard', val: 'ISO 19650 BIM Standard' }
     ]
   },
   {
     tag: 'YAKIN PLATFORM',
+    tagEn: 'YAKIN PLATFORM',
     title: 'Yakın Platform SaaS & Saha Koordinasyonu',
+    titleEn: 'Yakın Platform SaaS & Site Coordination',
     caption: 'İleri seviye proje yönetim yazılımımız ile tüm mühendislik, satınalma, bütçe ve saha koordinasyonu tek ekranda.',
+    captionEn: 'Our advanced project management platform brings all engineering, procurement, budgeting, and field coordination onto a single screen.',
     specs: [
       { label: 'Erişim', val: 'Web & Mobil Saha Uygulaması' },
       { label: 'Modüller', val: 'Mühendislik, Satınalma, Saha' },
       { label: 'IoT Bağlantısı', val: 'Canlı Sensör & Telemetri' },
       { label: 'Güvenlik', val: 'Yedekli Bulut Altyapısı' }
+    ],
+    specsEn: [
+      { label: 'Access', val: 'Web & Mobile Field App' },
+      { label: 'Modules', val: 'Engineering, Procurement, Field' },
+      { label: 'IoT Connectivity', val: 'Live Sensors & Telemetry' },
+      { label: 'Security', val: 'Redundant Cloud Infrastructure' }
     ]
   }
 ];
@@ -2348,25 +2384,10 @@ function openTechModal(idx) {
   const item = techServices[activeLightboxIdx];
   if (!item) return;
 
-  document.getElementById('lightbox-img').src = 'assets/images/civil_engineering_bim_1785010076530.png';
-  document.getElementById('lightbox-tag').textContent = item.tag;
-  document.getElementById('lightbox-title').textContent = item.title;
-  document.getElementById('lightbox-caption').textContent = item.caption;
-
-  const specsGrid = document.getElementById('lightbox-specs-grid');
-  if (specsGrid) {
-    specsGrid.innerHTML = '';
-    item.specs.forEach(s => {
-      const div = document.createElement('div');
-      div.className = 'lb-detail-item';
-      div.innerHTML = `
-        <span class="lb-detail-label">${s.label}</span>
-        <span class="lb-detail-value">${s.val}</span>
-      `;
-      specsGrid.appendChild(div);
-    });
-  }
-
+  renderLightboxContent({
+    src: 'assets/images/civil_engineering_bim_1785010076530.png',
+    ...item
+  });
   document.getElementById('lightbox-dialog').showModal();
 }
 
