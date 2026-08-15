@@ -92,7 +92,7 @@ const TRANSLATIONS = {
     footer_presentation: 'Yatırımcı Sunumu',
     tag_construction_short: 'Yakın İnşaat', tag_energy_short: 'Yakın Enerji',
     footer_lic_note: 'Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.',
-        nav_partners: 'İş Ortaklarımız', nav_marketplace: 'Marketplace',
+        nav_services: 'Hizmetlerimiz', nav_partners: 'İş Ortaklarımız', nav_marketplace: 'Marketplace',
     cap_c1_title: 'Finansman ve Kredi',
     cap_c1_i1: 'Banka proje finansmanı',
     cap_c1_i2: 'Leasing organizasyonu',
@@ -229,7 +229,7 @@ const TRANSLATIONS = {
     footer_presentation: 'Investor Presentation',
     tag_construction_short: 'Yakın Construction', tag_energy_short: 'Yakın Energy',
     footer_lic_note: 'Brand logos are used for promotional purposes only; ownership rights belong to registered trademark holders.',
-        nav_partners: 'Partners', nav_marketplace: 'Marketplace',
+        nav_services: 'OUR SERVICES', nav_partners: 'Partners', nav_marketplace: 'Marketplace',
     cap_c1_title: 'Financing & Credit',
     cap_c1_i1: 'Bank project financing',
     cap_c1_i2: 'Leasing organization',
@@ -1558,16 +1558,18 @@ let activeLightboxIdx = 0;
 
 function renderLightboxContent(item) {
   if (!item) return;
+  const isEn = currentLang === 'en';
   document.getElementById('lightbox-img').src = item.src;
-  document.getElementById('lightbox-tag').textContent = item.tag || 'PROJE GALERİSİ';
-  document.getElementById('lightbox-title').textContent = item.title;
-  document.getElementById('lightbox-caption').textContent = item.caption;
+  document.getElementById('lightbox-tag').textContent = (isEn && item.tagEn) ? item.tagEn : (item.tag || (isEn ? 'PROJECT GALLERY' : 'PROJE GALERİSİ'));
+  document.getElementById('lightbox-title').textContent = (isEn && item.titleEn) ? item.titleEn : item.title;
+  document.getElementById('lightbox-caption').textContent = (isEn && item.captionEn) ? item.captionEn : item.caption;
 
+  const specs = (isEn && item.specsEn) ? item.specsEn : item.specs;
   const specsGrid = document.getElementById('lightbox-specs-grid');
   if (specsGrid) {
     specsGrid.innerHTML = '';
-    if (item.specs && item.specs.length > 0) {
-      item.specs.forEach(s => {
+    if (specs && specs.length > 0) {
+      specs.forEach(s => {
         const div = document.createElement('div');
         div.className = 'lb-detail-item';
         div.innerHTML = `
@@ -1613,97 +1615,169 @@ const energyProducts = [
   {
     src: 'assets/images/energy_ref_smart_bess.jpg',
     tag: 'BIPV SOLAR & BESS MOBILE APP',
+    tagEn: 'BIPV SOLAR & BESS MOBILE APP',
     title: 'Akıllı Ev BESS & Şarj İstasyonu Entegrasyonu',
+    titleEn: 'Smart Home BESS & EV Charger Integration',
     caption: 'Canlı Mobil Durum Ekranı ile 7.2 kW Solar Üretim, %68 Şarjlı Ev Tipi LFP Batarya, 1.3 kW EV Araç Şarj Yönetimi ve Şebeke Akıllı Otomasyonu.',
+    captionEn: 'Live Mobile Dashboard with 7.2 kW Solar Generation, 68% Charged Home LFP Battery, 1.3 kW EV Charger Management, and Smart Grid Automation.',
     specs: [
       { label: 'Güneş Üretimi', val: '7.2 kW BIPV Çatı PV' },
       { label: 'Batarya Depolama', val: '%68 LFP Akıllı Depolama (13.8 kWh)' },
       { label: 'EV Şarj Yönetimi', val: '1.3 kW Smart EV Charger' },
       { label: 'Yazılım', val: 'Canlı Mobil Takip & Otonom Şarj' }
+    ],
+    specsEn: [
+      { label: 'Solar Generation', val: '7.2 kW BIPV Roof PV' },
+      { label: 'Battery Storage', val: '68% LFP Smart Storage (13.8 kWh)' },
+      { label: 'EV Charger Control', val: '1.3 kW Smart EV Charger' },
+      { label: 'Software', val: 'Live Mobile Tracking & Autonomous Charging' }
     ]
   },
   {
     src: 'assets/images/energy_ref_luxury_solar.jpg',
     tag: 'LUXURY RESIDENTIAL BIPV',
+    tagEn: 'LUXURY RESIDENTIAL BIPV',
     title: 'Lüks Konut & Otel BIPV Solar & Konteyner Depolama Tesisi',
-    caption: 'Deniz manzaralı lüks kompleks projesinde çatı entegre PV solar cam kaplaması ve ahşap mimari giydirmeli gizli BESS batarya konteyner odası.',
+    titleEn: 'Luxury Residential & Hotel BIPV Solar & BESS Plant',
+    caption: 'Deniz manzaralı lüks kompleks projesinde çatı entegration PV solar cam kaplaması ve ahşap mimari giydirmeli gizli BESS batarya konteyner odası.',
+    captionEn: 'Roof-integrated PV solar glass cladding and wooden-clad concealed BESS battery container room for luxury seaside complex.',
     specs: [
       { label: 'Lokasyon', val: 'Ege Kıyısı Lüks Kompleks' },
       { label: 'Solar Altyapı', val: 'BIPV Fotovoltaik Cam Çatı' },
       { label: 'Depolama', val: 'Ahşap Giydirmeli Konteyner BESS' },
       { label: 'Sürdürülebilirlik', val: 'Net Zero Carbon Hizaması' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Aegean Coast Luxury Complex' },
+      { label: 'Solar Infrastructure', val: 'BIPV Photovoltaic Glass Roof' },
+      { label: 'Storage', val: 'Wooden-Clad Container BESS' },
+      { label: 'Sustainability', val: 'Net Zero Carbon Alignment' }
     ]
   },
   {
     src: 'assets/images/energy_ref_bess_container.jpg',
     tag: 'INDUSTRIAL BESS',
+    tagEn: 'INDUSTRIAL BESS',
     title: 'Konteyner Tipi Endüstriyel BESS Batarya Santrali',
+    titleEn: 'Containerized Industrial BESS Energy Storage Plant',
     caption: 'MW ölçeğinde outdoor iklimlendirmeli LFP batarya konteynerleri, çift yönlü PCS invertörler ve Akıllı Peak Shaving şebeke entegrasyonu.',
+    captionEn: 'MW-scale outdoor climate-controlled LFP battery containers, bi-directional PCS inverters, and Smart Peak Shaving grid integration.',
     specs: [
       { label: 'Depolama Kapasitesi', val: '10 MWh LFP Batarya' },
       { label: 'Güç Dönüştürme', val: 'PCS Çift Yönlü Çevirici' },
       { label: 'Kullanım', val: 'Peak Shaving & Şebeke Dengeleme' },
       { label: 'Emniyet', val: 'FM200 Gazlı Söndürme & BMS' }
+    ],
+    specsEn: [
+      { label: 'Storage Capacity', val: '10 MWh LFP Battery' },
+      { label: 'Power Conversion', val: 'PCS Bi-Directional Inverter' },
+      { label: 'Application', val: 'Peak Shaving & Grid Balancing' },
+      { label: 'Safety', val: 'FM200 Gas Suppression & BMS' }
     ]
   },
   {
     src: 'assets/images/energy_ref_solar_ges_50mw.jpg',
     tag: 'UTILITY SOLAR',
+    tagEn: 'UTILITY SOLAR',
     title: '50 MWp Endüstriyel Çatı & Arazi GES EPC Projesi',
+    titleEn: '50 MWp Industrial Rooftop & Ground Solar EPC Project',
     caption: 'Arazi ve endüstriyel tesis çatılarında yüksek verimli monokristal Bifacial PV paneller ve On-Grid santral entegrasyonu.',
+    captionEn: 'High-efficiency monocrystalline Bifacial PV panels on ground and industrial roofs with On-Grid power plant integration.',
     specs: [
       { label: 'Kurulu Güç', val: '50 MWp Toplam Güç' },
       { label: 'Panel Tipi', val: 'Bifacial Monokristal PERC' },
       { label: 'Kapsam', val: 'Anahtar Teslim EPC' },
       { label: 'Katkı', val: '65.000 Ton CO₂ Tasarrufu' }
+    ],
+    specsEn: [
+      { label: 'Installed Capacity', val: '50 MWp Total Capacity' },
+      { label: 'Panel Type', val: 'Bifacial Monocrystalline PERC' },
+      { label: 'Scope', val: 'Turnkey EPC Contracting' },
+      { label: 'Impact', val: '65,000 Tons CO₂ Offsetting' }
     ]
   },
   {
     src: 'assets/images/energy_ref_wind_res_100mw.jpg',
     tag: 'WIND POWER',
+    tagEn: 'WIND POWER',
     title: '100 MW RES & WPP Rüzgar Santrali Türbin Entegrasyonu',
+    titleEn: '100 MW Wind Power Plant (WPP) Turbine Integration',
     caption: 'Yüksek irtifa türbin altyapı mühendisliği, türbin montajı, şebeke bağlantısı ve periyodik SCADA izleme hizmetleri.',
+    captionEn: 'High-altitude turbine foundation engineering, turbine erection, substation grid connection, and 24/7 SCADA monitoring.',
     specs: [
       { label: 'Kapasite', val: '100 MW Rüzgar Santrali' },
       { label: 'Altyapı', val: 'Ağır Mühendislik & Temeller' },
       { label: 'Şebeke Entegrasyonu', val: '154 kV Yüksek Gerilim' },
       { label: 'İzleme', val: '7/24 SCADA Uzaktan Kontrol' }
+    ],
+    specsEn: [
+      { label: 'Capacity', val: '100 MW Wind Power Plant' },
+      { label: 'Infrastructure', val: 'Heavy Civil & Foundations' },
+      { label: 'Grid Interconnection', val: '154 kV High Voltage' },
+      { label: 'Monitoring', val: '24/7 Remote SCADA Control' }
     ]
   },
   {
     src: 'assets/images/energy_ref_scada_room.jpg',
     tag: 'AUTOMATION & SCADA',
+    tagEn: 'AUTOMATION & SCADA',
     title: 'Merkezi SCADA Otomasyon & Şebeke İzleme Kontrol',
+    titleEn: 'Central SCADA Automation & Grid Control Center',
     caption: 'Elektrik santralleri, su arıtma ve sanayi tesisleri için canlı sensör verisi toplama, alarm yönetimi ve uzaktan otomasyon.',
+    captionEn: 'Real-time sensor data acquisition, alarm management, and remote automation for power plants, water treatment, and industrial facilities.',
     specs: [
       { label: 'Yazılım Altyapısı', val: 'SCADA & Canlı Telemetri' },
       { label: 'Protokol', val: 'Modbus, IEC 60870, DNP3' },
       { label: 'Ekran Mimarisi', val: 'Merkezi Video Wall & Otomasyon' },
       { label: 'Güvenlik', val: 'Yedekli Redundant Server' }
+    ],
+    specsEn: [
+      { label: 'Software Stack', val: 'SCADA & Live Telemetry' },
+      { label: 'Protocol', val: 'Modbus, IEC 60870, DNP3' },
+      { label: 'Display Architecture', val: 'Central Video Wall & Automation' },
+      { label: 'Security', val: 'Redundant High-Availability Server' }
     ]
   },
   {
     src: 'assets/images/energy_ref_soc_cyber.jpg',
     tag: 'CYBERSECURITY SOC',
+    tagEn: 'CYBERSECURITY SOC',
     title: 'OT / IT Siber Güvenlik Operations Center (SOC) Merkezi',
+    titleEn: 'OT / IT Cybersecurity Security Operations Center (SOC)',
     caption: 'Kritik altyapılar için IT ve OT siber güvenlik danışmanlığı, 7/24 SOC izleme, penetrasyon testleri ve ISO 27001 denetimleri.',
+    captionEn: 'IT & OT cybersecurity consulting, 24/7 SOC threat monitoring, penetration testing, and ISO 27001 / IEC 62443 compliance for critical infrastructure.',
     specs: [
       { label: 'Mühendislik', val: 'ICS / OT Siber Güvenlik Mimarisi' },
       { label: 'İzleme', val: '7/24 Canlı SOC Tehdit Avcılığı' },
       { label: 'Test', val: 'Penetrasyon ve Sızma Testleri' },
       { label: 'Uyum', val: 'ISO 27001 & IEC 62443 Standardı' }
+    ],
+    specsEn: [
+      { label: 'Engineering', val: 'ICS / OT Cybersecurity Architecture' },
+      { label: 'Monitoring', val: '24/7 Live Threat Hunting SOC' },
+      { label: 'Testing', val: 'Penetration & Vulnerability Testing' },
+      { label: 'Compliance', val: 'ISO 27001 & IEC 62443 Standard' }
     ]
   },
   {
     src: 'assets/images/energy_ref_dc_cooling.jpg',
     tag: 'DC MEP & COOLING',
+    tagEn: 'DC MEP & COOLING',
     title: 'Veri Merkezi Hassas Sıvı Soğutma & MEP Tesisatı',
+    titleEn: 'Data Center Precision Liquid Cooling & MEP Installation',
     caption: 'Tier IV standartlarında veri merkezleri ve hassas iklimlendirme odaları için sıvı soğutma, CRAH/CRAC ve MEP tesisat projelendirmesi.',
+    captionEn: 'Direct liquid cooling, CRAH/CRAC units, and MEP piping design for Tier IV mission-critical data centers and computer rooms.',
     specs: [
       { label: 'Soğutma Teknolojisi', val: 'Hassas Sıvı & In-Row Soğutma' },
       { label: 'Yedeklilik', val: 'N+2 Redundant Chiller & Kuleler' },
       { label: 'PUE Oranı', val: '< 1.15 PUE Verimlilik' },
       { label: 'Tesisat', val: 'MEP Paslanmaz Borulama' }
+    ],
+    specsEn: [
+      { label: 'Cooling Technology', val: 'Precision Liquid & In-Row Cooling' },
+      { label: 'Redundancy', val: 'N+2 Redundant Chillers & Towers' },
+      { label: 'PUE Efficiency', val: '< 1.15 PUE Target' },
+      { label: 'Installation', val: 'MEP Stainless Steel Piping' }
     ]
   }
 ];
