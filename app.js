@@ -1327,6 +1327,11 @@ function openServiceModal(id) {
   currentSvcSlideIndex = 0;
 
   // ── Slide 0: Overview ──────────────────────────────────────────────
+  const isEn = currentLang === 'en';
+  const t = TRANSLATIONS[currentLang] || {};
+  const modalTitle = (isEn && t[id + '_title']) ? t[id + '_title'] : data.title;
+  const modalDesc = (isEn && t[id + '_desc']) ? t[id + '_desc'] : data.desc;
+
   const overviewSlide = document.createElement('div');
   overviewSlide.className = 'svc-slide svc-slide--overview';
   overviewSlide.innerHTML = `
@@ -1334,8 +1339,8 @@ function openServiceModal(id) {
     <div class="svc-slide-overlay"></div>
     <div class="svc-slide-overview-body">
       <span class="svc-overview-badge">${data.badge}</span>
-      <h3 class="svc-overview-title">${data.title}</h3>
-      <p class="svc-overview-desc">${data.desc}</p>
+      <h3 class="svc-overview-title">${modalTitle}</h3>
+      <p class="svc-overview-desc">${modalDesc}</p>
       <div class="svc-overview-divider"></div>
       <div class="svc-vcard-row">
         <button class="svc-vcard-btn primary" onclick="showVCard('ilker')">📋 Direct Lead vCard — İlker ATASOY</button>
@@ -1896,14 +1901,16 @@ let activeVCard = null;
 function showVCard(id) {
   activeVCard = id;
   const c = VCARDS[id];
+  if (!c) return;
+  const isEn = currentLang === 'en';
   document.getElementById('modal-card-avatar').textContent = c.avatar;
   document.getElementById('modal-card-name').textContent = c.name;
-  document.getElementById('modal-card-title').textContent = currentLang === 'tr' ? c.titleTr : c.titleEn;
+  document.getElementById('modal-card-title').textContent = isEn ? c.titleEn : c.titleTr;
   const phoneEl = document.getElementById('modal-card-phone');
   phoneEl.textContent = c.phone; phoneEl.href = c.phoneHref;
   const emailEl = document.getElementById('modal-card-email');
   emailEl.textContent = c.email; emailEl.href = 'mailto:' + c.email;
-  document.getElementById('modal-card-office').textContent = c.office;
+  document.getElementById('modal-card-office').textContent = isEn ? (c.officeEn || c.office) : c.office;
   const liEl = document.getElementById('modal-card-linkedin');
   liEl.textContent = c.linkedin; liEl.href = c.linkedinHref;
   document.getElementById('vcard-dialog').showModal();
@@ -1927,7 +1934,7 @@ function shareCard() {
     navigator.share({ title: c.name, text: `${c.name} — ${c.email}`, url: window.location.href });
   } else {
     navigator.clipboard.writeText(`${c.name}\n${c.email}\n${c.phone}`);
-    alert('Kart bilgileri panoya kopyalandı.');
+    alert(currentLang === 'tr' ? 'Kart bilgileri panoya kopyalandı.' : 'Contact card details copied to clipboard.');
   }
 }
 
