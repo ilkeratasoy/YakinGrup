@@ -1485,7 +1485,10 @@ function closeLightboxDialog() {
 }
 
 function navigateLightbox(dir) {
-  if (activeLightboxMode === 'capital') {
+  if (activeLightboxMode === 'technology') {
+    activeLightboxIdx = (activeLightboxIdx + dir + techServices.length) % techServices.length;
+    openTechModal(activeLightboxIdx);
+  } else if (activeLightboxMode === 'capital') {
     activeLightboxIdx = (activeLightboxIdx + dir + capitalServices.length) % capitalServices.length;
     openCapitalModal(activeLightboxIdx);
   } else if (activeLightboxMode === 'energy') {
@@ -1643,6 +1646,83 @@ function openCapitalModal(idx) {
   if (!item) return;
 
   document.getElementById('lightbox-img').src = 'assets/images/investment_finance_real_estate_1785010111511.png';
+  document.getElementById('lightbox-tag').textContent = item.tag;
+  document.getElementById('lightbox-title').textContent = item.title;
+  document.getElementById('lightbox-caption').textContent = item.caption;
+
+  const specsGrid = document.getElementById('lightbox-specs-grid');
+  if (specsGrid) {
+    specsGrid.innerHTML = '';
+    item.specs.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'lb-detail-item';
+      div.innerHTML = `
+        <span class="lb-detail-label">${s.label}</span>
+        <span class="lb-detail-value">${s.val}</span>
+      `;
+      specsGrid.appendChild(div);
+    });
+  }
+
+  document.getElementById('lightbox-dialog').showModal();
+}
+
+
+// ── Technology Services Modal ──────────────────────────────────────────────
+const techServices = [
+  {
+    tag: 'DİJİTAL HAKEDİŞ',
+    title: 'Dijital Hakediş & İş Akışları',
+    caption: 'Karmaşık taşeron ve malzeme süreçlerini otomatize ederek sıfır hata ile anlık, şeffaf hakediş onay ve ödeme altyapıları sunuyoruz.',
+    specs: [
+      { label: 'Süreç Otomasyonu', val: 'Taşeron & Tedarik Hakedişleri' },
+      { label: 'Hata Oranı', val: 'Sıfır Hata Şeffaf Onay' },
+      { label: 'Entegrasyon', val: 'ERP & Muhasebe Bağlantısı' },
+      { label: 'Hız', val: 'Anlık Onay & Canlı Raporlama' }
+    ]
+  },
+  {
+    tag: 'YAPAY ZEKÂ',
+    title: 'Yapay Zekâ & Kestirimci Analiz',
+    caption: 'Şantiye verimliliğini makine öğrenmesi ile analiz ediyor, iş güvenliği risklerini ve olası maliyet artışlarını önceden tespit ediyoruz.',
+    specs: [
+      { label: 'Analiz Tipi', val: 'Kestirimci Yapay Zekâ' },
+      { label: 'Risk Tahmini', val: 'İSG & Bütçe Aşım Önleme' },
+      { label: 'Veri Kaynağı', val: 'Canlı Saha Telemetrisi' },
+      { label: 'Raporlama', val: 'Otonom AI Yönetici Özetleri' }
+    ]
+  },
+  {
+    tag: 'BIM 5D',
+    title: 'BIM 5D Entegrasyonu & Dijital İkiz',
+    caption: '5D dijital ikizler oluşturarak yapı ömrü boyunca kusursuz veri yönetimi, çakışma tespiti ve disiplinler arası proje koordinasyonu.',
+    specs: [
+      { label: 'LOD Standardı', val: 'LOD 400 Uygulama Detayı' },
+      { label: 'Model Tipi', val: '5D BIM & Canlı Dijital İkiz' },
+      { label: 'Çakışma Tespiti', val: 'Otomatik Clash Detection' },
+      { label: 'Standart', val: 'ISO 19650 BIM Standardı' }
+    ]
+  },
+  {
+    tag: 'YAKIN PLATFORM',
+    title: 'Yakın Platform SaaS & Saha Koordinasyonu',
+    caption: 'İleri seviye proje yönetim yazılımımız ile tüm mühendislik, satınalma, bütçe ve saha koordinasyonu tek ekranda.',
+    specs: [
+      { label: 'Erişim', val: 'Web & Mobil Saha Uygulaması' },
+      { label: 'Modüller', val: 'Mühendislik, Satınalma, Saha' },
+      { label: 'IoT Bağlantısı', val: 'Canlı Sensör & Telemetri' },
+      { label: 'Güvenlik', val: 'Yedekli Bulut Altyapısı' }
+    ]
+  }
+];
+
+function openTechModal(idx) {
+  activeLightboxMode = 'technology';
+  activeLightboxIdx = idx;
+  const item = techServices[activeLightboxIdx];
+  if (!item) return;
+
+  document.getElementById('lightbox-img').src = 'assets/images/civil_engineering_bim_1785010076530.png';
   document.getElementById('lightbox-tag').textContent = item.tag;
   document.getElementById('lightbox-title').textContent = item.title;
   document.getElementById('lightbox-caption').textContent = item.caption;
