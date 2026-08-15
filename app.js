@@ -1485,7 +1485,10 @@ function closeLightboxDialog() {
 }
 
 function navigateLightbox(dir) {
-  if (activeLightboxMode === 'energy') {
+  if (activeLightboxMode === 'capital') {
+    activeLightboxIdx = (activeLightboxIdx + dir + capitalServices.length) % capitalServices.length;
+    openCapitalModal(activeLightboxIdx);
+  } else if (activeLightboxMode === 'energy') {
     activeLightboxIdx = (activeLightboxIdx + dir + energyProducts.length) % energyProducts.length;
     renderLightboxContent(energyProducts[activeLightboxIdx]);
   } else {
@@ -1634,7 +1637,9 @@ const capitalServices = [
 ];
 
 function openCapitalModal(idx) {
-  const item = capitalServices[idx];
+  activeLightboxMode = 'capital';
+  activeLightboxIdx = idx;
+  const item = capitalServices[activeLightboxIdx];
   if (!item) return;
 
   document.getElementById('lightbox-img').src = 'assets/images/investment_finance_real_estate_1785010111511.png';
