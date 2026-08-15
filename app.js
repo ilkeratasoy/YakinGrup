@@ -92,7 +92,58 @@ const TRANSLATIONS = {
     footer_presentation: 'Yatırımcı Sunumu',
     tag_construction_short: 'Yakın İnşaat', tag_energy_short: 'Yakın Enerji',
     footer_lic_note: 'Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.',
-    nav_partners: 'İş Ortaklarımız', nav_marketplace: 'Marketplace',
+        nav_partners: 'İş Ortaklarımız', nav_marketplace: 'Marketplace',
+    cap_c1_title: 'Finansman ve Kredi',
+    cap_c1_i1: 'Banka proje finansmanı',
+    cap_c1_i2: 'Leasing organizasyonu',
+    cap_c1_i3: 'Hakediş bazlı finansman modelleri',
+    cap_c2_title: 'Yatırım ve Yapılandırma',
+    cap_c2_i1: 'GYO iş birlikleri',
+    cap_c2_i2: 'Girişim sermayesi ilişkileri',
+    cap_c2_i3: 'SPV (Özel Amaçlı Şirket) kurulumu',
+    cap_c3_title: 'Risk ve Danışmanlık',
+    cap_c3_i1: 'Nakit akışı modelleme',
+    cap_c3_i2: 'Sigorta ve teminat çözümleri',
+    cap_c3_i3: 'Finansal fizibilite danışmanlığı',
+    cap_phase1_title: 'Bugün — Stratejik İş Birlikleri',
+    cap_phase1_desc: 'Bankalar, leasing şirketleri ve sigorta kuruluşlarıyla çerçeve anlaşmalar.',
+    cap_phase2_title: 'Advisory — Danışmanlık',
+    cap_phase2_desc: 'Proje finansmanı danışmanlığı, finansal modelleme ve risk yönetimi.',
+    cap_phase3_title: 'Fund — Yatırım Fonu',
+    cap_phase3_desc: 'Gayrimenkul yatırım fonları ve yabancı yatırımcı katılımıyla proje bazlı platform.',
+    cap_vcard_box_title: 'Başvuru ve İletişim için Kurumsal vCard Kartvizitlerimiz',
+    cap_vcard_box_desc: 'Proje finansmanı, leasing veya yatırım danışmanlığı başvurularınız için yöneticilerimize direkt ulaşabilirsiniz.',
+    
+    tech_t1_title: 'Dijital Hakediş',
+    tech_t1_i1: 'Anlık ve şeffaf hakediş onay altyapıları',
+    tech_t1_i2: 'Taşeron ve malzeme süreç otomasyonu',
+    tech_t1_i3: 'Sıfır hata ile finansal onay & ödemeler',
+    tech_t2_title: 'Yapay Zekâ',
+    tech_t2_i1: 'Makine öğrenmesi ile şantiye verimlilik analizi',
+    tech_t2_i2: 'İSG risklerini ve maliyet artışlarını öngörme',
+    tech_t2_i3: 'Yapay zekâ destekli otonom veri raporlama',
+    tech_t3_title: 'BIM Entegrasyonu',
+    tech_t3_i1: '5D BIM dijital ikiz model entegrasyonu',
+    tech_t3_i2: 'Yapı ömrü boyunca kusursuz veri yönetimi',
+    tech_t3_i3: 'LOD 400 uygulama detay koordinasyonu',
+    tech_t4_title: 'Yakın Platform',
+    tech_t4_i1: 'Mühendislik, satınalma & saha tek ekranda',
+    tech_t4_i2: 'Canlı mobil durum takibi & anlık telemetri',
+    tech_t4_i3: 'IoT sensör ve bulut sistem entegrasyonu',
+    tech_phase1_title: 'Bugün — SaaS & Mobil Saha Takibi',
+    tech_phase1_desc: 'Yakın Platform ile anlık saha, satınalma ve mühendislik verisi entegrasyonu.',
+    tech_phase2_title: 'AI & BIM Entegrasyonu — 5D Dijital İkiz',
+    tech_phase2_desc: 'Yapay zekâ kestirimci analiz, otomatik çakışma tespiti ve LOD 400 BIM yönetimi.',
+    tech_phase3_title: 'Otonom Şantiye & IoT — Geleceğin Altyapısı',
+    tech_phase3_desc: 'IoT sensörler, canlı telemetri ve otonom iş güvenliği yönetim ekosistemi.',
+    tech_vcard_box_title: 'Başvuru ve İletişim için Kurumsal vCard Kartvizitlerimiz',
+    tech_vcard_box_desc: 'Teknoloji çözümlerimiz, BIM 5D entegrasyonu veya Yakın Platform SaaS demo talepleriniz için yöneticilerimize direkt ulaşabilirsiniz.',
+    
+    cluster_iot_label: 'IOT & OTOMASYON SİSTEMLERİ',
+    tag_references: 'REFERANSLAR',
+    energy_ref_subtitle: 'Uygulamasını gerçekleştirdiğimiz yenilenebilir enerji, depolama, akıllı ev otomasyonu ve veri merkezi çözümlerimiz.',
+    portfolio_subtitle: 'Tüm projelerimizin detaylarını görsellere tıklayarak inceleyebilirsiniz.',
+    btn_vcard_inspect: 'vCard & Detaylı İncele',
   },
   en: {
     nav_about: 'Corporate', nav_construction: 'Construction', nav_energy: 'Energy',
@@ -178,7 +229,58 @@ const TRANSLATIONS = {
     footer_presentation: 'Investor Presentation',
     tag_construction_short: 'Yakın Construction', tag_energy_short: 'Yakın Energy',
     footer_lic_note: 'Brand logos are used for promotional purposes only; ownership rights belong to registered trademark holders.',
-    nav_partners: 'Partners', nav_marketplace: 'Marketplace',
+        nav_partners: 'Partners', nav_marketplace: 'Marketplace',
+    cap_c1_title: 'Financing & Credit',
+    cap_c1_i1: 'Bank project financing',
+    cap_c1_i2: 'Leasing organization',
+    cap_c1_i3: 'Progress payment-based financing models',
+    cap_c2_title: 'Investment & Structuring',
+    cap_c2_i1: 'REIT partnerships',
+    cap_c2_i2: 'Venture capital relations',
+    cap_c2_i3: 'SPV (Special Purpose Vehicle) setup',
+    cap_c3_title: 'Risk & Advisory',
+    cap_c3_i1: 'Cash flow modeling',
+    cap_c3_i2: 'Insurance & guarantee solutions',
+    cap_c3_i3: 'Financial feasibility consulting',
+    cap_phase1_title: 'Today — Strategic Partnerships',
+    cap_phase1_desc: 'Framework agreements with banks, leasing companies and insurance institutions.',
+    cap_phase2_title: 'Advisory — Consulting',
+    cap_phase2_desc: 'Project finance advisory, financial modeling and risk management.',
+    cap_phase3_title: 'Fund — Investment Fund',
+    cap_phase3_desc: 'Project-based platform with real estate investment funds and foreign investor participation.',
+    cap_vcard_box_title: 'Corporate vCard Contact Cards for Applications',
+    cap_vcard_box_desc: 'You can reach our executives directly for project financing, leasing or investment advisory applications.',
+    
+    tech_t1_title: 'Digital Progress Payments',
+    tech_t1_i1: 'Instant & transparent progress payment approval infrastructure',
+    tech_t1_i2: 'Subcontractor & material process automation',
+    tech_t1_i3: 'Financial approval & payments with zero error',
+    tech_t2_title: 'Artificial Intelligence',
+    tech_t2_i1: 'Construction site efficiency analysis via machine learning',
+    tech_t2_i2: 'Predicting HSE risks and cost overruns',
+    tech_t2_i3: 'AI-supported autonomous data reporting',
+    tech_t3_title: 'BIM Integration',
+    tech_t3_i1: '5D BIM digital twin model integration',
+    tech_t3_i2: 'Seamless data management throughout building lifecycle',
+    tech_t3_i3: 'LOD 400 construction detail coordination',
+    tech_t4_title: 'Yakın Platform',
+    tech_t4_i1: 'Engineering, procurement & field on a single screen',
+    tech_t4_i2: 'Live mobile tracking & real-time telemetry',
+    tech_t4_i3: 'IoT sensor and cloud system integration',
+    tech_phase1_title: 'Today — SaaS & Mobile Field Tracking',
+    tech_phase1_desc: 'Real-time field, procurement and engineering data integration via Yakın Platform.',
+    tech_phase2_title: 'AI & BIM Integration — 5D Digital Twin',
+    tech_phase2_desc: 'AI predictive analytics, automated clash detection and LOD 400 BIM management.',
+    tech_phase3_title: 'Autonomous Site & IoT — Infrastructure of the Future',
+    tech_phase3_desc: 'IoT sensors, live telemetry and autonomous occupational safety management ecosystem.',
+    tech_vcard_box_title: 'Corporate vCard Contact Cards for Applications',
+    tech_vcard_box_desc: 'Reach our executives directly for technology solutions, BIM 5D integration, or Yakın Platform SaaS demo requests.',
+    
+    cluster_iot_label: 'IOT & AUTOMATION SYSTEMS',
+    tag_references: 'REFERENCES',
+    energy_ref_subtitle: 'Our completed renewable energy, storage, smart home automation and data center solutions.',
+    portfolio_subtitle: 'Click on images to inspect full details of all our completed projects.',
+    btn_vcard_inspect: 'vCard & View Details',
   }
 };
 
@@ -1240,7 +1342,7 @@ function openServiceModal(id) {
         <button class="svc-vcard-btn secondary" onclick="showVCard('eylul')">📋 Architecture vCard — Eylül YILMAZ</button>
       </div>
     </div>
-    ${specSlides.length > 0 ? '<div class="svc-swipe-hint">Teknik Özellikler ❯</div>' : ''}
+    ${specSlides.length > 0 ? `<div class="svc-swipe-hint">${currentLang === 'en' ? 'Technical Specifications ❯' : 'Teknik Özellikler ❯'}</div>` : ''}
   `;
   track.appendChild(overviewSlide);
 
@@ -1275,13 +1377,13 @@ function openServiceModal(id) {
       }
     }
 
-    let labelName = 'Üretici & Ürün Çözümleri:';
+    let labelName = currentLang === 'en' ? 'Manufacturer & Product Solutions:' : 'Üretici & Ürün Çözümleri:';
     if (vendorText) {
-      if (vendorText.includes('Çözüm ve Hizmetler')) {
-        labelName = 'Çözüm ve Hizmetler :';
-        vendorText = vendorText.replace(/Çözüm ve Hizmetler\s*:/g, '').trim();
+      if (vendorText.includes('Çözüm ve Hizmetler') || vendorText.includes('Solutions & Services')) {
+        labelName = currentLang === 'en' ? 'Solutions & Services:' : 'Çözüm ve Hizmetler :';
+        vendorText = vendorText.replace(/(?:Çözüm ve Hizmetler|Solutions & Services)\s*:/g, '').trim();
       } else {
-        vendorText = vendorText.replace(/Üretici & Ürün Çözümleri\s*:/g, '').trim();
+        vendorText = vendorText.replace(/(?:Üretici & Ürün Çözümleri|Manufacturer & Product Solutions)\s*:/g, '').trim();
       }
       // Remove any leading numbers like 1., 2., 1-, 2- from vendor text lines
       vendorText = vendorText.replace(/(?:<br\s*\/?>|\n|^)\s*\d+[\.\-\)]\s*/gi, '<br>').replace(/^(?:<br\s*\/?>|\s)+/i, '').trim();
@@ -1296,7 +1398,7 @@ function openServiceModal(id) {
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
       <div class="svc-slide-overlay"></div>
       <div class="svc-slide-spec-body">
-        <div class="svc-spec-counter">TEKNİK ÖZELLİK ${idx + 1} / ${specSlides.length}</div>
+        <div class="svc-spec-counter">${currentLang === 'en' ? 'TECHNICAL SPECIFICATION' : 'TEKNİK ÖZELLİK'} ${idx + 1} / ${specSlides.length}</div>
         <h4 class="svc-spec-title">${cleanTitleHtml}</h4>
         ${descHtml}
         <div class="svc-vcard-row" style="margin-top: 1.2rem;">
