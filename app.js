@@ -1,3 +1,93 @@
+
+function translateSpecTextToEN(str) {
+  if (!str) return str;
+  let s = str;
+
+  const dict = [
+    [/Üretici & Ürün Çözümleri/g, 'Manufacturer & Product Solutions'],
+    [/Çözüm ve Hizmetler/g, 'Solutions & Services'],
+    [/Anahtar Teslim/gi, 'Turnkey'],
+    [/Anahtar teslim/gi, 'Turnkey'],
+    [/Veri Merkezi/gi, 'Data Center'],
+    [/Veri merkezleri/gi, 'Data centers'],
+    [/İnşaatı/gi, 'Construction'],
+    [/İnşaat/gi, 'Construction'],
+    [/Taahhüdü/gi, 'Contracting'],
+    [/Taahhüt/gi, 'Contracting'],
+    [/Entegrasyonu/gi, 'Integration'],
+    [/Entegrasyon/gi, 'Integration'],
+    [/Mühendisliği/gi, 'Engineering'],
+    [/Mühendislik/gi, 'Engineering'],
+    [/Tasarımı/gi, 'Design'],
+    [/Tasarım/gi, 'Design'],
+    [/Yönetimi/gi, 'Management'],
+    [/Güvenliği/gi, 'Safety & Security'],
+    [/Güvenlik/gi, 'Security'],
+    [/Raporlaması/gi, 'Reporting'],
+    [/Raporlama/gi, 'Reporting'],
+    [/Hizmetleri/gi, 'Services'],
+    [/Çözümleri/gi, 'Solutions'],
+    [/Güneş Enerjisi Sistemleri \(GES\)/gi, 'Solar Power Systems (PV)'],
+    [/Güneş Enerjisi/gi, 'Solar Power'],
+    [/Rüzgar Enerjisi Santrali \(RES\)/gi, 'Wind Power Plant (WPP)'],
+    [/Rüzgar Enerjisi/gi, 'Wind Energy'],
+    [/Batarya Depolama & Hibrit Enerji/gi, 'Battery Storage & Hybrid Energy'],
+    [/Elektrikli Araç Şarj İstasyonu/gi, 'EV Charging Station'],
+    [/Elektrik & Mekanik Taahhüt/gi, 'Electrical & Mechanical Contracting'],
+    [/Zayıf Akım Çözümleri/gi, 'Low Voltage (ELV) Solutions'],
+    [/Alçak Gerilim Sistemleri \(AG\)/gi, 'Low Voltage Systems (LV)'],
+    [/Orta Gerilim Sistemleri \(OG\)/gi, 'Medium Voltage Systems (MV)'],
+    [/Yüksek Gerilim Sistemleri \(YG\)/gi, 'High Voltage Systems (HV)'],
+    [/Proje Mühendislik & Onay Hizmetleri/gi, 'Engineering & Approval Services'],
+    [/Bakım Çözüm Hizmetleri/gi, 'Maintenance Solution Services'],
+    [/Altyapı & Kurulum/gi, 'Infrastructure & Installation'],
+    [/Bina İçi Kapsama/gi, 'In-Building Coverage (IBS)'],
+    [/Mobil Baz İstasyonu/gi, 'Mobile Base Station (COW)'],
+    [/Telsiz Haberleşme/gi, 'Radio Communications (TETRA)'],
+    [/Dizayn, Planlama, Optimizasyon/gi, 'Design, Planning, Optimization'],
+    [/Dalga Boyu Çoklama/gi, 'Wavelength Division Multiplexing (WDM)'],
+    [/Telekom İnşaat İşleri/gi, 'Telecom Construction Works'],
+    [/Denetim Hizmetleri/gi, 'Audit Services'],
+    [/Alçak Gerilim Beslemeler/gi, 'Low Voltage Power Supplies'],
+    [/Altyapı Donanım Bileşenleri Tedariği/gi, 'Hardware Supply & Infrastructure'],
+    [/Bulut & Network & Sanallaştırma Çözümleri/gi, 'Cloud, Network & Virtualization Solutions'],
+    [/Beyaz Alan/gi, 'White Space'],
+    [/Siber Güvenlik & SOC/gi, 'Cybersecurity & SOC'],
+    [/Sızma Testleri & Zafiyet Tarama/gi, 'Penetration Testing & Vulnerability Scanning'],
+    [/Uyum & Standartlar Danışmanlığı/gi, 'Compliance & Standards Consulting'],
+    [/Akıllı Sensörler/gi, 'Smart Sensors'],
+    [/Aktüatörler \(Eyleyiciler\)/gi, 'Actuators'],
+    [/Ağ Geçitleri \(Gateways\)/gi, 'Network Gateways'],
+    [/Bulut ve Yazılım/gi, 'Cloud and Software'],
+    [/Endüstri ve Üretim \(IIoT\)/gi, 'Industry & Manufacturing (IIoT)'],
+    [/Sağlık Sektörü/gi, 'Healthcare Sector (IoMT)'],
+    [/Tarım ve Hayvancılık/gi, 'Smart Agriculture & AgTech'],
+    [/Akıllı Şehirler ve Ulaşım/gi, 'Smart Cities & Mobility'],
+    [/Ağır Sanayi Tesisleri/gi, 'Heavy Industry Facilities'],
+    [/Konut & Yaşam Projeleri/gi, 'Residential & Living Projects'],
+    [/Yapı Mühendisliği/gi, 'Structural Engineering'],
+    [/Havalimanı & Ulaşım/gi, 'Airport & Transportation'],
+    [/Kentsel Dönüşüm/gi, 'Urban Renewal'],
+    [/Bugün — Stratejik İş Birlikleri/gi, 'Today — Strategic Partnerships'],
+    [/Advisory — Danışmanlık/gi, 'Advisory — Consulting'],
+    [/Fund — Yatırım Fonu/gi, 'Fund — Investment Fund'],
+    [/Bugün — SaaS & Mobil Saha Takibi/gi, 'Today — SaaS & Mobile Field Tracking'],
+    [/AI & BIM Entegrasyonu — 5D Dijital İkiz/gi, 'AI & BIM Integration — 5D Digital Twin'],
+    [/Otonom Şantiye & IoT — Geleceğin Altyapısı/gi, 'Autonomous Site & IoT — Infrastructure of Future'],
+    [/Bugün — Erken Erişim & Katalog Hazırlığı/gi, 'Today — Early Access & Catalog Prep'],
+    [/B2B Portal & Online Şartname — Dijital Satınalma/gi, 'B2B Portal & Online RFP — Digital Procurement'],
+    [/E-Ticaret & Global Lojistik — Tam Otomasyon/gi, 'E-Commerce & Global Logistics — Full Automation'],
+    [/Teknik Özellikler/gi, 'Technical Specifications'],
+    [/Teknik Özellik/gi, 'Technical Specification'],
+    [/Kart bilgileri panoya kopyalandı\./gi, 'Contact card details copied to clipboard.']
+  ];
+
+  dict.forEach(([regex, val]) => {
+    s = s.replace(regex, val);
+  });
+  return s;
+}
+
 /* ==========================================================================
    YAKIN GRUP — SINGLE PAGE APP JS
    ========================================================================== */
@@ -1358,7 +1448,8 @@ function openServiceModal(id) {
     const specSlide = document.createElement('div');
     specSlide.className = 'svc-slide svc-slide--spec';
 
-    let titleHtml = slide.title;
+    let rawTitle = currentLang === 'en' ? translateSpecTextToEN(slide.title) : slide.title;
+    let titleHtml = rawTitle;
     if (slide.title && slide.title.includes(':')) {
       const colonIndex = slide.title.indexOf(':');
       const prefix = slide.title.substring(0, colonIndex + 1);
@@ -1400,7 +1491,11 @@ function openServiceModal(id) {
     // Remove leading numbers from cleanTitleHtml if any remain
     cleanTitleHtml = cleanTitleHtml.replace(/^\s*\d+[\.\-\)]\s*/, '');
 
-    const descHtml = finalDesc ? `<p class="svc-spec-desc">${finalDesc}</p>` : '';
+    let translatedFinalDesc = finalDesc;
+    if (currentLang === 'en' && finalDesc) {
+      translatedFinalDesc = translateSpecTextToEN(finalDesc);
+    }
+    const descHtml = translatedFinalDesc ? `<p class="svc-spec-desc">${translatedFinalDesc}</p>` : '';
     specSlide.innerHTML = `
       <div class="svc-slide-bg" style="background-image:url('${slide.image}')"></div>
       <div class="svc-slide-overlay"></div>
