@@ -939,7 +939,7 @@
     </div>
   </section>
 
-  <!-- ===== YAKIN CAPITAL ===== -->
+    <!-- ===== YAKIN CAPITAL ===== -->
   <section id="capital" class="company-section theme-capital">
     <div class="company-section-hero" style="background-image: url('assets/images/investment_finance_real_estate_1785010111511.png');">
       <div class="company-hero-overlay"></div>
@@ -951,47 +951,55 @@
     </div>
 
     <div class="container py-large">
-      <div class="capital-layout">
-        <div class="capital-info reveal">
-          <div class="section-badge theme-cap" data-i18n="tag_cap_advisory">CAPITAL ADVISORY</div>
-          <h3 class="section-heading" data-i18n="cap_heading">Sermaye Yapılandırması & Proje Finansmanı</h3>
-          <p class="about-body" data-i18n="cap_body">Vizyonumuz; inşaat, enerji ve altyapı projelerimizin sadece fiziksel inşasını yapmak değil; bankalar, GYO'lar, leasing şirketleri, sigorta kurumları ve yatırımcılar ile entegre şeffaf finansman ve risk modelleri sunmaktır.</p>
-          <p class="legal-note" data-i18n="cap_legal">* Yakın Capital, lisans gerektiren portföy yönetimi veya finansal aracılık faaliyetleri yürütmez. Odak noktamız "Proje Finansmanı Danışmanlığı ve Yapılandırma"dır.</p>
+      <!-- Centered Header Block -->
+      <div class="text-center mb-large">
+        <div class="section-badge theme-cap" data-i18n="tag_cap_advisory">CAPITAL ADVISORY</div>
+        <h3 class="section-heading" data-i18n="cap_heading" style="margin-top:0.5rem; margin-bottom:1rem;">Sermaye Yapılandırması & Proje Finansmanı</h3>
+        <p class="about-body text-center" style="max-width: 840px; margin: 0 auto 1.5rem auto; font-size: 1rem; line-height: 1.7;" data-i18n="cap_body">Vizyonumuz; inşaat, enerji ve altyapı projelerimizin sadece fiziksel inşasını yapmak değil; bankalar, GYO'lar, leasing şirketleri, sigorta kurumları ve yatırımcılar ile entegre şeffaf finansman ve risk modelleri sunmaktır.</p>
+        <p class="legal-note text-center" style="max-width: 780px; margin: 0 auto;" data-i18n="cap_legal">* Yakın Capital, lisans gerektiren portföy yönetimi veya finansal aracılık faaliyetleri yürütmez. Odak noktamız "Proje Finansmanı Danışmanlığı ve Yapılandırma"dır.</p>
+      </div>
+
+      <!-- 3 Centered Navy Blue Cards (NO ICONS, Clickable for vCard & Specs Detail Modal) -->
+      <div class="capital-cards-navy-row reveal">
+        <div class="capital-navy-card" onclick="openCapitalModal(0)">
+          <h4 data-i18n="cap_c1_title">Finansman ve Kredi</h4>
+          <ul class="cap-list">
+            <li data-i18n="cap_c1_i1">Banka proje finansmanı</li>
+            <li data-i18n="cap_c1_i2">Leasing organizasyonu</li>
+            <li data-i18n="cap_c1_i3">Hakediş bazlı finansman modelleri</li>
+          </ul>
+          <div class="cap-card-cta">
+            <span>vCard & Detaylı İncele</span> ❯
+          </div>
         </div>
 
-        <div class="capital-services-grid">
-          <div class="capital-card reveal">
-            <div class="cap-card-icon">🏦</div>
-            <h4 data-i18n="cap_c1_title">Finansman ve Kredi</h4>
-            <ul class="cap-list">
-              <li data-i18n="cap_c1_i1">Banka proje finansmanı</li>
-              <li data-i18n="cap_c1_i2">Leasing organizasyonu</li>
-              <li data-i18n="cap_c1_i3">Hakediş bazlı finansman modelleri</li>
-            </ul>
+        <div class="capital-navy-card" onclick="openCapitalModal(1)">
+          <h4 data-i18n="cap_c2_title">Yatırım ve Yapılandırma</h4>
+          <ul class="cap-list">
+            <li data-i18n="cap_c2_i1">GYO iş birlikleri</li>
+            <li data-i18n="cap_c2_i2">Girişim sermayesi ilişkileri</li>
+            <li data-i18n="cap_c2_i3">SPV (Özel Amaçlı Şirket) kurulumu</li>
+          </ul>
+          <div class="cap-card-cta">
+            <span>vCard & Detaylı İncele</span> ❯
           </div>
-          <div class="capital-card reveal">
-            <div class="cap-card-icon">📈</div>
-            <h4 data-i18n="cap_c2_title">Yatırım ve Yapılandırma</h4>
-            <ul class="cap-list">
-              <li data-i18n="cap_c2_i1">GYO iş birlikleri</li>
-              <li data-i18n="cap_c2_i2">Girişim sermayesi ilişkileri</li>
-              <li data-i18n="cap_c2_i3">SPV (Özel Amaçlı Şirket) kurulumu</li>
-            </ul>
-          </div>
-          <div class="capital-card reveal">
-            <div class="cap-card-icon">🛡️</div>
-            <h4 data-i18n="cap_c3_title">Risk ve Danışmanlık</h4>
-            <ul class="cap-list">
-              <li data-i18n="cap_c3_i1">Nakit akışı modelleme</li>
-              <li data-i18n="cap_c3_i2">Sigorta ve teminat çözümleri</li>
-              <li data-i18n="cap_c3_i3">Finansal fizibilite danışmanlığı</li>
-            </ul>
+        </div>
+
+        <div class="capital-navy-card" onclick="openCapitalModal(2)">
+          <h4 data-i18n="cap_c3_title">Risk ve Danışmanlık</h4>
+          <ul class="cap-list">
+            <li data-i18n="cap_c3_i1">Nakit akışı modelleme</li>
+            <li data-i18n="cap_c3_i2">Sigorta ve teminat çözümleri</li>
+            <li data-i18n="cap_c3_i3">Finansal fizibilite danışmanlığı</li>
+          </ul>
+          <div class="cap-card-cta">
+            <span>vCard & Detaylı İncele</span> ❯
           </div>
         </div>
       </div>
 
-      <!-- Roadmap -->
-      <div class="capital-roadmap reveal">
+      <!-- Roadmap (01, 02, 03) -->
+      <div class="capital-roadmap reveal mt-large">
         <div class="roadmap-step active">
           <div class="step-num">01</div>
           <h5 data-i18n="cap_phase1_title">Bugün — Stratejik İş Birlikleri</h5>
@@ -1010,10 +1018,22 @@
           <p data-i18n="cap_phase3_desc">Gayrimenkul yatırım fonları ve yabancı yatırımcı katılımıyla proje bazlı platform.</p>
         </div>
       </div>
+
+      <!-- vCard Application & Contact Bar -->
+      <div class="capital-vcard-contact-box reveal">
+        <div class="cap-contact-text">
+          <strong>Başvuru ve İletişim için Kurumsal vCard Kartvizitlerimiz</strong>
+          <p>Proje finansmanı, leasing veya yatırım danışmanlığı başvurularınız için yöneticilerimize direkt ulaşabilirsiniz.</p>
+        </div>
+        <div class="cap-vcard-btns">
+          <button class="lb-vcard-btn primary" onclick="showVCard('ilker');">📋 Direct Lead vCard — İlker ATASOY</button>
+          <button class="lb-vcard-btn secondary" onclick="showVCard('eylul');">📋 Architecture vCard — Eylül YILMAZ</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== YAKIN TEKNOLOJİ ===== -->
+<!-- ===== YAKIN TEKNOLOJİ ===== -->
   <section id="teknoloji" class="company-section theme-technology bg-dark-section">
     <div class="company-section-hero" style="background-image: url('assets/images/civil_engineering_bim_1785010076530.png');">
       <div class="company-hero-overlay"></div>

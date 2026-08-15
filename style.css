@@ -1588,62 +1588,129 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ==========================================================================
-   9. CAPITAL
+   9. CAPITAL (Centered & Deep Navy Design)
    ========================================================================== */
-#capital { background: var(--color-white); }
-.capital-layout {
+#capital { background: #ffffff; }
+
+/* Capital Navy Cards Layout */
+.capital-cards-navy-row {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 4rem;
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin: 2.5rem 0;
 }
-.legal-note {
-  font-size: 0.8rem;
-  color: #94a3b8;
-  line-height: 1.5;
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #f8fafc;
-  border-radius: var(--radius-sm);
-  border-left: 3px solid var(--cap-light);
-}
-.capital-services-grid {
+.capital-navy-card {
+  background: linear-gradient(145deg, #0a192f 0%, #0d2137 60%, #081225 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: var(--radius-md);
+  padding: 2.2rem 1.8rem;
+  color: #e2e8f0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
 }
-.capital-card {
-  background: #f8fafc;
-  border-radius: var(--radius-md);
-  padding: 1.75rem;
-  border: 1px solid var(--color-border);
-  transition: var(--transition-fast);
+.capital-navy-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #38bdf8, #60a5fa, #fbbf24);
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
 }
-.capital-card:hover { border-color: var(--cap-light); box-shadow: 0 8px 24px var(--cap-glow); }
-.cap-card-icon { font-size: 1.75rem; margin-bottom: 0.85rem; }
-.capital-card h4 {
+.capital-navy-card:hover {
+  transform: translateY(-5px);
+  border-color: #38bdf8;
+  box-shadow: 0 18px 45px rgba(56, 189, 248, 0.25);
+}
+.capital-navy-card:hover::before {
+  opacity: 1;
+}
+.capital-navy-card h4 {
   font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-dark);
-  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+  line-height: 1.3;
 }
-.cap-list { display: flex; flex-direction: column; gap: 0.4rem; }
-.cap-list li {
-  font-size: 0.88rem;
-  color: #4a5568;
-  padding-left: 1rem;
+.capital-navy-card .cap-list { display: flex; flex-direction: column; gap: 0.55rem; }
+.capital-navy-card .cap-list li {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding-left: 1.25rem;
   position: relative;
 }
-.cap-list li::before { content: '✔'; position: absolute; left: 0; color: var(--cap-light); font-size: 0.75rem; }
+.capital-navy-card .cap-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #38bdf8;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+.cap-card-cta {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.2s ease;
+}
+.capital-navy-card:hover .cap-card-cta {
+  color: #fbbf24;
+}
+
+/* Capital vCard Contact Box */
+.capital-vcard-contact-box {
+  margin-top: 3.5rem;
+  background: linear-gradient(135deg, #071324 0%, #0a192f 100%);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+.cap-contact-text strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+.cap-contact-text p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
+}
+.cap-vcard-btns {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
 
 /* Roadmap */
 .capital-roadmap {
   display: flex;
   align-items: flex-start;
   gap: 0;
-  margin-top: 4rem;
-  padding: 2.5rem;
+  margin-top: 3.5rem;
+  padding: 2.5rem 2rem;
   background: #f8fafc;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
@@ -1653,37 +1720,49 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 0 1.5rem;
   position: relative;
 }
-.roadmap-step.active .step-num { background: var(--cap-primary); color: var(--color-white); }
+.roadmap-step.active .step-num { background: #0b3c6b; color: var(--color-white); }
 .step-num {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px; height: 42px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: var(--color-border);
-  color: #64748b;
+  background: rgba(11, 60, 107, 0.12);
+  color: #0b3c6b;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
 }
 .roadmap-step h5 {
   font-family: var(--font-heading);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-dark);
   margin-bottom: 0.5rem;
 }
-.roadmap-step p { font-size: 0.85rem; color: #64748b; line-height: 1.55; }
-.roadmap-connector {
-  width: 2px;
-  height: 42px;
-  background: var(--color-border);
-  flex-shrink: 0;
-  margin-top: 0;
-  align-self: flex-start;
-  margin-top: 10px;
+.roadmap-step p {
+  font-size: 0.84rem;
+  color: #64748b;
+  line-height: 1.5;
 }
+.roadmap-connector {
+  width: 60px;
+  height: 2px;
+  background: var(--color-border);
+  margin-top: 1.3rem;
+}
+
+@media (max-width: 992px) {
+  .capital-cards-navy-row { grid-template-columns: 1fr; gap: 1.25rem; }
+  .capital-vcard-contact-box { flex-direction: column; text-align: center; gap: 1.25rem; }
+  .cap-vcard-btns { flex-direction: column; width: 100%; }
+  .capital-roadmap { flex-direction: column; gap: 2rem; }
+  .roadmap-connector { display: none; }
+}
+
 
 /* ==========================================================================
    10. TEKNOLOJİ

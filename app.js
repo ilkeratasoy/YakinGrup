@@ -1595,6 +1595,70 @@ const energyProducts = [
   }
 ];
 
+
+// ── Capital Services Modal ──────────────────────────────────────────────────
+const capitalServices = [
+  {
+    tag: 'FİNANSMAN & KREDİ',
+    title: 'Finansman ve Kredi Yapılandırması',
+    caption: 'Banka proje finansmanı organizasyonu, leasing ve hakediş bazlı finansman modelleri ile projelerinizin sermaye ve borç yapısını optimize ediyoruz.',
+    specs: [
+      { label: 'Banka Finansmanı', val: 'Proje Kredisi & Sendikasyon' },
+      { label: 'Leasing Organizasyonu', val: 'GES, RES, BESS & Ağır Ekipman' },
+      { label: 'Hakediş Modeli', val: 'Nakit Akış & Performans Odaklı' },
+      { label: 'Danışmanlık', val: 'Uçtan Uca Finansal Mimari' }
+    ]
+  },
+  {
+    tag: 'YATIRIM & SPV',
+    title: 'Yatırım ve Yapılandırma',
+    caption: 'GYO iş birlikleri, girişim sermayesi ilişkileri ve projenize özel SPV (Özel Amaçlı Şirket) kurulumu ile güvenli yatırım platformu sunuyoruz.',
+    specs: [
+      { label: 'GYO Entegrasyonu', val: 'Gayrimenkul Yatırım Ortaklıkları' },
+      { label: 'Girişim Sermayesi', val: 'GSYF & Fon Entegrasyonu' },
+      { label: 'SPV Kurulumu', val: 'Proje Bazlı Şirket Mimarisi' },
+      { label: 'Yatırımcı İlişkileri', val: 'Şeffaf Raporlama & Gelir Paylaşımı' }
+    ]
+  },
+  {
+    tag: 'RİSK & DANIŞMANLIK',
+    title: 'Risk ve Danışmanlık',
+    caption: 'Nakit akışı modelleme, sigorta & teminat çözümleri ve finansal fizibilite danışmanlığı ile projelerinizin risk skorunu kontrol altına alıyoruz.',
+    specs: [
+      { label: 'Nakit Akışı', val: 'Duyarlılık & Risk Simülasyonu' },
+      { label: 'Sigorta & Teminat', val: 'CAR, EAR & Kefalet Senedi (Surety)' },
+      { label: 'Fizibilite', val: 'Finansal Modelleme & ROI' },
+      { label: 'Uyum', val: 'Uluslararası Risk Standartları' }
+    ]
+  }
+];
+
+function openCapitalModal(idx) {
+  const item = capitalServices[idx];
+  if (!item) return;
+
+  document.getElementById('lightbox-img').src = 'assets/images/investment_finance_real_estate_1785010111511.png';
+  document.getElementById('lightbox-tag').textContent = item.tag;
+  document.getElementById('lightbox-title').textContent = item.title;
+  document.getElementById('lightbox-caption').textContent = item.caption;
+
+  const specsGrid = document.getElementById('lightbox-specs-grid');
+  if (specsGrid) {
+    specsGrid.innerHTML = '';
+    item.specs.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'lb-detail-item';
+      div.innerHTML = `
+        <span class="lb-detail-label">${s.label}</span>
+        <span class="lb-detail-value">${s.val}</span>
+      `;
+      specsGrid.appendChild(div);
+    });
+  }
+
+  document.getElementById('lightbox-dialog').showModal();
+}
+
 function openEnergyProductModal(idx) {
   activeLightboxMode = 'energy';
   activeLightboxIdx = idx;
