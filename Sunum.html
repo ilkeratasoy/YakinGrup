@@ -1,0 +1,2974 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Yakın Grup — Yatırımcı & Müşteri Vizyon Sunumu | Investor & Client Pitch Deck</title>
+  <meta name="description" content="Yakın Grup Yatırımcı ve Müşteri Sunumu: İnşaat & Taahhüt, Yenilenebilir Enerji & BESS, Telekom & Veri Merkezleri, Siber Güvenlik ve Proje Finansmanı alanlarında uçtan uca kurumsal vizyon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
+
+  <!-- QRCode.js for Realtime Presentation Room Sharing -->
+  <script src="assets/js/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --primary-green: #3d6e30;
+      --accent-green: #528e40;
+      --light-green: #78be5e;
+      --dark-green: #152b10;
+      --deep-forest: #091308;
+      --gold: #d4af37;
+      --gold-light: #f5d77f;
+      --gold-dark: #9a7610;
+      --navy: #0b2545;
+      --cyan: #06b6d4;
+      --rose: #f43f5e;
+      
+      --bg-deck: #0a0f0d;
+      --surface-1: #111a14;
+      --surface-2: #16241b;
+      --surface-card: rgba(22, 36, 27, 0.88);
+      --surface-card-hover: rgba(30, 48, 36, 0.95);
+      --border-subtle: rgba(120, 190, 94, 0.18);
+      --border-strong: rgba(212, 175, 55, 0.35);
+      --border-glow: rgba(120, 190, 94, 0.4);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --font-brand: 'Cinzel', serif;
+      --font-heading: 'Manrope', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      --deck-max-width: 1440px;
+      --header-height: 64px;
+      --footer-height: 60px;
+      --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-deck);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      user-select: none;
+    }
+
+    /* Background Ambient Glow */
+    .ambient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .ambient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      animation: floatAmbient 20s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      top: -10%;
+      left: 10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, #3d6e30, transparent);
+    }
+    .blob-2 {
+      bottom: -10%;
+      right: 10%;
+      width: 45vw;
+      height: 45vw;
+      background: radial-gradient(circle, #d4af37, transparent);
+      animation-delay: -7s;
+    }
+    .blob-3 {
+      top: 40%;
+      right: 30%;
+      width: 35vw;
+      height: 35vw;
+      background: radial-gradient(circle, #0b3c6b, transparent);
+      animation-delay: -12s;
+    }
+    @keyframes floatAmbient {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, -30px) scale(1.08); }
+      100% { transform: translate(-30px, 40px) scale(0.95); }
+    }
+
+    /* TOP HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background: rgba(9, 19, 8, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .brand-emblem-wrap {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(61, 110, 48, 0.2);
+      border: 1px solid rgba(120, 190, 94, 0.35);
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .brand-emblem-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title-main {
+      font-family: var(--font-brand);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .brand-title-main span {
+      color: var(--light-green);
+    }
+    .brand-tagline {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mode-pill {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 3px;
+      border-radius: 24px;
+      border: 1px solid var(--border-subtle);
+    }
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .mode-btn.active {
+      background: linear-gradient(135deg, var(--primary-green), var(--accent-green));
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(61, 110, 48, 0.4);
+    }
+
+    /* Live WebSocket Status Badge */
+    .ws-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ws-status-badge.disconnected {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #fb7185;
+    }
+    .ws-status-badge.mesh {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: var(--gold-light);
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hdr-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .hdr-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--light-green);
+      transform: translateY(-1px);
+    }
+    .hdr-btn-gold {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(170, 130, 10, 0.3));
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .hdr-btn-gold:hover {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(170, 130, 10, 0.45));
+      border-color: #ffd700;
+    }
+    .lang-toggle-btn {
+      padding: 6px 10px;
+      font-weight: 800;
+      color: #ffffff;
+      background: rgba(61, 110, 48, 0.35);
+      border: 1px solid var(--accent-green);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* MAIN PRESENTATION STAGE */
+    #presentation-app {
+      position: absolute;
+      top: var(--header-height);
+      bottom: var(--footer-height);
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    /* SLIDE CONTAINER */
+    .deck-viewport {
+      width: 100%;
+      height: 100%;
+      max-width: var(--deck-max-width);
+      position: relative;
+      perspective: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+    }
+
+    .slide {
+      position: absolute;
+      width: calc(100% - 3rem);
+      height: calc(100% - 2rem);
+      max-height: 840px;
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 2.2rem 2.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(30px) scale(0.98);
+      transition: opacity 0.5s var(--transition-smooth), transform 0.5s var(--transition-smooth);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-green) transparent;
+    }
+    .slide::-webkit-scrollbar {
+      width: 4px;
+    }
+    .slide::-webkit-scrollbar-thumb {
+      background: var(--primary-green);
+      border-radius: 4px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+      z-index: 20;
+    }
+    .slide.prev {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.98);
+    }
+    .slide.next {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+    }
+
+    /* SLIDE HEADER & LABELS */
+    .slide-meta-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.8rem;
+    }
+    .slide-badge-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light-green);
+      background: rgba(61, 110, 48, 0.22);
+      border: 1px solid rgba(120, 190, 94, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .slide-badge-category.gold {
+      color: var(--gold-light);
+      background: rgba(212, 175, 55, 0.18);
+      border-color: rgba(212, 175, 55, 0.35);
+    }
+    .slide-badge-category.blue {
+      color: #60a5fa;
+      background: rgba(37, 99, 235, 0.18);
+      border-color: rgba(37, 99, 235, 0.35);
+    }
+    .slide-badge-category.cyan {
+      color: #38bdf8;
+      background: rgba(6, 182, 212, 0.18);
+      border-color: rgba(6, 182, 212, 0.35);
+    }
+    .slide-brand-watermark {
+      font-family: var(--font-brand);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-title-wrap {
+      margin-bottom: 1.5rem;
+    }
+    .slide-heading {
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+    .slide-heading .highlight-green {
+      color: var(--light-green);
+      background: linear-gradient(135deg, #a7f3d0, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .slide-heading .highlight-gold {
+      color: var(--gold-light);
+      background: linear-gradient(135deg, #fef08a, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .slide-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      max-width: 860px;
+    }
+
+    /* SLIDE 1: HERO COVER */
+    .hero-slide-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      align-items: center;
+      height: 100%;
+    }
+    .hero-pitch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), rgba(61, 110, 48, 0.2));
+      border: 1px solid var(--border-strong);
+      color: var(--gold-light);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero-pitch-title {
+      font-family: var(--font-brand);
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      margin-bottom: 1.2rem;
+    }
+    .hero-pitch-title span {
+      color: var(--light-green);
+    }
+    .hero-pitch-desc {
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .hero-cta-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-action-hero {
+      padding: 0.85rem 1.8rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      border: none;
+      text-decoration: none;
+    }
+    .btn-action-hero.primary {
+      background: linear-gradient(135deg, var(--primary-green), var(--accent-green));
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(61, 110, 48, 0.45);
+    }
+    .btn-action-hero.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(61, 110, 48, 0.6);
+    }
+    .btn-action-hero.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+    }
+    .btn-action-hero.secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--gold);
+    }
+
+    /* Key KPI Cards */
+    .hero-kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .kpi-card {
+      background: rgba(17, 26, 20, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .kpi-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-green), var(--gold));
+      opacity: 0.7;
+    }
+    .kpi-num {
+      font-family: var(--font-heading);
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+    }
+    .kpi-num small {
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+    .kpi-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--light-green);
+      margin-top: 6px;
+    }
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 3px;
+    }
+
+    /* INFOGRAPHIC: 4-PILLAR RADIAL ECOSYSTEM (SLIDE 2) */
+    .ecosystem-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      height: calc(100% - 90px);
+    }
+    .ecosystem-cards-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .eco-pillar-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.2rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .eco-pillar-card:hover, .eco-pillar-card.active-pillar {
+      border-color: var(--light-green);
+      background: rgba(30, 48, 36, 0.95);
+      box-shadow: 0 8px 24px rgba(61, 110, 48, 0.25);
+    }
+    .eco-pillar-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .eco-pillar-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .eco-pillar-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .eco-pillar-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--gold-light);
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    /* SVG Ecosystem Diagram */
+    .ecosystem-visual-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .eco-svg-diagram {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+    }
+
+    /* INFOGRAPHIC: 3-COL / 4-COL SERVICE GRIDS (SLIDES 3-7) */
+    .services-presentation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      height: calc(100% - 90px);
+      align-content: stretch;
+    }
+    .services-presentation-grid.grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .services-presentation-grid.grid-2x3 {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    }
+
+    .service-deck-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .service-deck-card:hover {
+      border-color: var(--light-green);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    .service-deck-img-wrap {
+      width: 100%;
+      height: 130px;
+      position: relative;
+      overflow: hidden;
+      background: #091308;
+    }
+    .service-deck-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .service-deck-card:hover .service-deck-img {
+      transform: scale(1.06);
+    }
+    .service-deck-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      background: rgba(9, 19, 8, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--light-green);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .service-deck-body {
+      padding: 1.1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .service-deck-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .service-deck-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+    .service-deck-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .deck-mini-pill {
+      font-size: 0.66rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* PROCESS FLOW INFOGRAPHIC (SLIDE 8) */
+    .process-pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      position: relative;
+      margin-top: 1.5rem;
+    }
+    .process-pipeline::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-green), var(--gold), var(--cyan));
+      z-index: 1;
+    }
+    .process-step-node {
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.4rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    .process-step-node:hover {
+      border-color: var(--light-green);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(61, 110, 48, 0.2);
+    }
+    .step-circle-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #091308;
+      border: 2px solid var(--light-green);
+      color: var(--gold-light);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      box-shadow: 0 0 15px rgba(120, 190, 94, 0.3);
+    }
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* INTERACTIVE ROI / PROJECT CALCULATOR (SLIDE 9) */
+    .calculator-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.8rem;
+      height: calc(100% - 90px);
+      align-items: center;
+    }
+    .calc-inputs-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .calc-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .calc-field-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .calc-select, .calc-range {
+      width: 100%;
+      background: #091308;
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .calc-select:focus {
+      border-color: var(--light-green);
+    }
+    .calc-range {
+      accent-color: var(--light-green);
+      cursor: pointer;
+      padding: 0;
+    }
+    .calc-output-pane {
+      background: #091308;
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+    .calc-kpi-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .calc-out-box {
+      background: var(--surface-1);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .calc-out-val {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+    .calc-out-lbl {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--light-green);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    /* ESG & CERTIFICATIONS (SLIDE 10) */
+    .esg-standards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 1rem;
+    }
+    .iso-card-item {
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .iso-card-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+    .iso-code {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+    .iso-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .iso-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* LEADERSHIP & CONTACT (SLIDES 12-13) */
+    .exec-team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .exec-person-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.6rem;
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+    }
+    .exec-avatar-box {
+      width: 100px;
+      height: 100px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid var(--border-strong);
+      flex-shrink: 0;
+    }
+    .exec-avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .exec-info-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .exec-name {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .exec-role {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--light-green);
+    }
+    .exec-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .exec-links {
+      display: flex;
+      gap: 8px;
+    }
+    .exec-mini-btn {
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .exec-mini-btn:hover {
+      background: var(--primary-green);
+      border-color: var(--light-green);
+    }
+
+    /* FOOTER CONTROLS */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--footer-height);
+      background: rgba(9, 19, 8, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border-subtle);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-counter-badge {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+    .slide-counter-badge span {
+      color: var(--light-green);
+    }
+
+    /* Progress Bar */
+    .presentation-progress-track {
+      width: 240px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .presentation-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-green), var(--gold));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .footer-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-arrow-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+    }
+    .nav-arrow-btn:hover {
+      background: var(--primary-green);
+      border-color: var(--light-green);
+      transform: scale(1.05);
+    }
+    .nav-arrow-btn:active {
+      transform: scale(0.95);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .tool-icon-btn:hover, .tool-icon-btn.active {
+      background: rgba(61, 110, 48, 0.3);
+      border-color: var(--light-green);
+      color: #ffffff;
+    }
+
+    /* PRESENTER NOTES DRAWER */
+    .notes-drawer {
+      position: fixed;
+      bottom: var(--footer-height);
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      width: min(800px, 94vw);
+      background: rgba(17, 26, 20, 0.96);
+      border: 1px solid var(--border-strong);
+      border-bottom: none;
+      border-radius: 16px 16px 0 0;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+      padding: 1.2rem 1.6rem;
+      z-index: 900;
+      transition: transform 0.4s var(--transition-smooth);
+    }
+    .notes-drawer.open {
+      transform: translateX(-50%) translateY(0);
+    }
+    .notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .notes-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+    .notes-content {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    /* SLIDE OVERVIEW GRID MODAL */
+    .overview-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .overview-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .overview-thumb-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 130px;
+    }
+    .overview-thumb-card:hover, .overview-thumb-card.current {
+      border-color: var(--light-green);
+      background: var(--surface-2);
+      transform: scale(1.03);
+    }
+    .overview-thumb-num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+    .overview-thumb-title {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    /* WEBSOCKET / REMOTE CONTROL MODAL */
+    .ws-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .ws-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ws-modal-box {
+      background: var(--surface-1);
+      border: 1px solid var(--border-strong);
+      border-radius: 20px;
+      width: min(520px, 92vw);
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    }
+    .ws-qr-box {
+      width: 160px;
+      height: 160px;
+      margin: 1.2rem auto;
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ws-qr-box img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* REALTIME LASER POINTER */
+    .laser-pointer {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #f43f5e;
+      box-shadow: 0 0 16px #f43f5e, 0 0 32px #f43f5e;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+    .laser-pointer.active {
+      display: block;
+    }
+
+    /* LIVE AUDIENCE REACTIONS FLOAT */
+    .reaction-emitter-tray {
+      position: fixed;
+      right: 20px;
+      bottom: calc(var(--footer-height) + 15px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 100;
+    }
+    .reaction-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(22, 36, 27, 0.85);
+      border: 1px solid var(--border-subtle);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reaction-btn:hover {
+      transform: scale(1.2);
+      border-color: var(--gold);
+    }
+    .floating-emoji {
+      position: fixed;
+      bottom: calc(var(--footer-height) + 20px);
+      right: 40px;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: floatUpEmoji 2.2s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
+      z-index: 9999;
+    }
+    @keyframes floatUpEmoji {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      15% { opacity: 1; transform: translateY(-30px) scale(1.2); }
+      100% { opacity: 0; transform: translateY(-240px) scale(1); }
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 1024px) {
+      .hero-slide-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .ecosystem-container {
+        grid-template-columns: 1fr;
+      }
+      .services-presentation-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .process-pipeline {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .process-pipeline::before {
+        display: none;
+      }
+      .calculator-layout {
+        grid-template-columns: 1fr;
+      }
+      .esg-standards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .slide {
+        padding: 1.5rem;
+      }
+      .slide-heading {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 0 0.8rem;
+      }
+      .brand-tagline, .mode-pill {
+        display: none;
+      }
+      .presentation-progress-track {
+        width: 100px;
+      }
+      .services-presentation-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+      .exec-team-grid {
+        grid-template-columns: 1fr;
+      }
+      .slide-heading {
+        font-size: 1.35rem;
+      }
+    }
+
+    /* PRINT / PDF STYLES */
+    @media print {
+      body {
+        overflow: visible;
+        background: #ffffff;
+        color: #000000;
+      }
+      header, footer, .ambient-bg, .notes-drawer, .reaction-emitter-tray {
+        display: none !important;
+      }
+      #presentation-app {
+        position: static;
+        display: block;
+      }
+      .deck-viewport {
+        max-width: 100%;
+        padding: 0;
+        display: block;
+      }
+      .slide {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: none !important;
+        margin-bottom: 2rem;
+      }
+      .slide-heading, .kpi-num, .eco-pillar-title, .service-deck-title, .exec-name {
+        color: #0f172a !important;
+      }
+      .slide-subtitle, .eco-pillar-desc, .service-deck-desc, .step-desc, .kpi-sub {
+        color: #475569 !important;
+      }
+      .kpi-card, .eco-pillar-card, .service-deck-card, .process-step-node, .iso-card-item, .exec-person-card {
+        background: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow -->
+  <div class="ambient-bg">
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+  </div>
+
+  <!-- Realtime Laser Pointer -->
+  <div id="laser-pointer" class="laser-pointer"></div>
+
+  <!-- ===== TOP HEADER ===== -->
+  <header>
+    <a href="/" class="brand-area" title="Yakın Grup Ana Sayfa">
+      <div class="brand-emblem-wrap">
+        <img src="assets/images/brand-emblem.png" alt="Yakın Grup">
+      </div>
+      <div class="brand-text-block">
+        <span class="brand-title-main">YAKIN <span>GRUP</span></span>
+        <span class="brand-tagline" data-tr="MÜHENDİSLİK & YATIRIM HOLDİNG" data-en="ENGINEERING & INVESTMENT HOLDING">MÜHENDİSLİK & YATIRIM HOLDİNG</span>
+      </div>
+    </a>
+
+    <!-- Center Presentation Controls -->
+    <div class="header-nav">
+      <div class="mode-pill">
+        <button class="mode-btn active" id="btn-mode-deck" onclick="switchPresentationMode('deck')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          <span data-tr="Slayt Modu" data-en="Slide Deck">Slayt Modu</span>
+        </button>
+        <button class="mode-btn" id="btn-mode-doc" onclick="switchPresentationMode('doc')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span data-tr="Rapor Modu" data-en="Doc Mode">Rapor Modu</span>
+        </button>
+      </div>
+
+      <!-- WebSocket Live Broadcast Status -->
+      <div class="ws-status-badge mesh" id="ws-status-badge" onclick="openWsModal()" title="Canlı Sunum & Yayın Durumu">
+        <span class="status-dot"></span>
+        <span id="ws-status-text">Lokal Canlı Mesh</span>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button class="hdr-btn hdr-btn-gold" onclick="openWsModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        <span data-tr="Canlı Yayın / Kumanda" data-en="Live Sync / Remote">Canlı Yayın / Kumanda</span>
+      </button>
+
+      <a href="teklif.html" class="hdr-btn" target="_blank" title="Hızlı Şartname & Teklif Stüdyosu">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <span data-tr="Şartname & Teklif" data-en="Estimate & Specs">Şartname & Teklif</span>
+      </a>
+
+      <button class="lang-toggle-btn" id="lang-btn" onclick="toggleDeckLanguage()">EN</button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN PRESENTATION STAGE ===== -->
+  <main id="presentation-app">
+    <div class="deck-viewport" id="deck-viewport">
+
+      <!-- SLIDE 1: VİZYON & YÖNETİCİ ÖZETİ (EXECUTIVE COVER) -->
+      <section class="slide active" data-slide-index="0" data-notes-tr="Yakın Grup'un 20+ yıllık multidisipliner mühendislik, enerji, taahhüt ve teknoloji birikimini özetleyen vizyon kapağı. 4 ana holding şirketi ve 500+ MW enerji kapasitesi ile küresel yatırımcılara ve kurumsal müşterilere güven verir." data-notes-en="Vision cover summarizing Yakın Grup's 20+ years of multidisciplinary engineering, energy, contracting, and technology heritage. Instills investor confidence across 4 holding companies and 500+ MW capacity.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category gold" data-tr="YATIRIMCI & MÜŞTERİ VİZYONU 2026+" data-en="INVESTOR & CLIENT VISION 2026+">YATIRIMCI & MÜŞTERİ VİZYONU 2026+</span>
+          <span class="slide-brand-watermark">YAKIN GRUP HOLDING</span>
+        </div>
+
+        <div class="hero-slide-grid">
+          <div class="hero-text-col">
+            <div class="hero-pitch-badge" data-tr="★ MULTİDİSİPLİNER MÜHENDİSLİK & YATIRIM GÜCÜ" data-en="★ MULTIDISCIPLINARY ENGINEERING & INVESTMENT POWER">
+              ★ MULTİDİSİPLİNER MÜHENDİSLİK & YATIRIM GÜCÜ
+            </div>
+            <h1 class="hero-pitch-title">
+              Geleceği İnşa Eden, Enerjiyi Yöneten <span>Güç</span>
+            </h1>
+            <p class="hero-pitch-desc" data-tr="Yakın Grup; inşaat taahhüt, yenilenebilir enerji & BESS depolama, veri merkezleri, telekom altyapıları, siber güvenlik ve proje finansmanı alanlarında uçtan uca anahtar teslim çözümler sunan entegre bir mühendislik holdingidir." data-en="Yakın Grup is an integrated engineering holding delivering end-to-end turnkey solutions across EPC construction, renewable energy & BESS storage, mission-critical data centers, telecom infrastructure, cybersecurity, and project finance.">
+              Yakın Grup; inşaat taahhüt, yenilenebilir enerji & BESS depolama, veri merkezleri, telekom altyapıları, siber güvenlik ve proje finansmanı alanlarında uçtan uca anahtar teslim çözümler sunan entegre bir mühendislik holdingidir.
+            </p>
+            <div class="hero-cta-group">
+              <button class="btn-action-hero primary" onclick="nextSlide()">
+                <span data-tr="Sunumu Keşfet" data-en="Explore Presentation">Sunumu Keşfet</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+              <button class="btn-action-hero secondary" onclick="goToSlide(7)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span data-tr="Yatırım ROI Simülatörü" data-en="Investment ROI Simulator">Yatırım ROI Simülatörü</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="hero-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-num">20<small>+</small></div>
+              <div class="kpi-label" data-tr="Yıllık Sektörel Tecrübe" data-en="Years of Proven Track Record">Yıllık Sektörel Tecrübe</div>
+              <div class="kpi-sub" data-tr="Köklü mühendislik birikimi" data-en="Deep engineering heritage">Köklü mühendislik birikimi</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-num">500<small>+ MW</small></div>
+              <div class="kpi-label" data-tr="Enerji & Altyapı Kapasitesi" data-en="Energy & Grid Capacity">Enerji & Altyapı Kapasitesi</div>
+              <div class="kpi-sub" data-tr="GES, RES, BESS & Trafo Şebekesi" data-en="Solar, Wind, BESS & Substations">GES, RES, BESS & Trafo Şebekesi</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-num">4<small> Şirket</small></div>
+              <div class="kpi-label" data-tr="Entegre Ekosistem" data-en="Integrated Ecosystem">Entegre Ekosistem</div>
+              <div class="kpi-sub" data-tr="İnşaat, Enerji, Teknoloji, Finans" data-en="Construction, Energy, Tech, Capital">İnşaat, Enerji, Teknoloji, Finans</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-num">98.4<small>%</small></div>
+              <div class="kpi-label" data-tr="Zamanında Teslim Oranı" data-en="On-Time Delivery Rate">Zamanında Teslim Oranı</div>
+              <div class="kpi-sub" data-tr="FIDIC & ISO standartlarında EPC" data-en="FIDIC & ISO compliant EPC">FIDIC & ISO standartlarında EPC</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: EKOSİSTEM VE SİNERJİ INFOGRAFİĞİ -->
+      <section class="slide" data-slide-index="1" data-notes-tr="Grup şirketlerinin birbirini besleyen dairesel sinerjisi. Yatırımcı bir projeye başladığında, finansmanından inşaatına, enerji ihtiyacından siber güvenlik ve IT omurgasına kadar tek muhatapla uçtan uca anahtar teslim hizmet alır." data-notes-en="Synergistic circular model of Yakın Grup companies. Investors benefit from a single accountable conglomerate handling financing, EPC construction, clean energy, and cyber/IT spine under one roof.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category" data-tr="HOLDİNG EKOSİSTEMİ" data-en="HOLDING ECOSYSTEM">HOLDİNG EKOSİSTEMİ</span>
+          <span class="slide-brand-watermark">360° TURNKEY SYNERGY</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="4 Stratejik Sütun, Tek <span class='highlight-green'>Entegre Güç</span>" data-en="4 Strategic Pillars, One <span class='highlight-green'>Integrated Power</span>">
+            4 Stratejik Sütun, Tek <span class="highlight-green">Entegre Güç</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Yakın Grup ekosistemi, projenin ilk fizibilite ve finansmanından anahtar teslim inşaatına, enerji üretiminden dijital altyapısına kadar kusursuz bir değer zinciri sunar." data-en="Yakın Grup ecosystem delivers a seamless value chain from initial feasibility and project finance to turnkey EPC, clean power generation, and digital IT infrastructure.">
+            Yakın Grup ekosistemi, projenin ilk fizibilite ve finansmanından anahtar teslim inşaatına, enerji üretiminden dijital altyapısına kadar kusursuz bir değer zinciri sunar.
+          </p>
+        </div>
+
+        <div class="ecosystem-container">
+          <div class="ecosystem-cards-list">
+            <div class="eco-pillar-card active-pillar">
+              <div class="eco-pillar-icon" style="background: rgba(11, 60, 107, 0.3); color: #60a5fa;">🏗️</div>
+              <div class="eco-pillar-title" data-tr="Yakın İnşaat" data-en="Yakın Construction">Yakın İnşaat</div>
+              <div class="eco-pillar-desc" data-tr="Mission-critical veri merkezleri, ağır sanayi tesisleri, lüks konutlar, 5D BIM ve sismik güçlendirme." data-en="Tier III/IV data centers, heavy industrial facilities, luxury residential, 5D BIM and seismic retrofitting.">
+                Mission-critical veri merkezleri, ağır sanayi tesisleri, lüks konutlar, 5D BIM ve sismik güçlendirme.
+              </div>
+              <span class="eco-pillar-tag" data-tr="EPC & TAAHHÜT" data-en="EPC & CONTRACTING">EPC & TAAHHÜT</span>
+            </div>
+
+            <div class="eco-pillar-card">
+              <div class="eco-pillar-icon" style="background: rgba(61, 110, 48, 0.3); color: #4ade80;">⚡</div>
+              <div class="eco-pillar-title" data-tr="Yakın Enerji" data-en="Yakın Energy">Yakın Enerji</div>
+              <div class="eco-pillar-desc" data-tr="Güneş GES, Rüzgar RES, BESS batarya depolama, EV şarj ağları, YG/OG/AG şalt ve trafo merkezleri." data-en="Solar PV, Wind, BESS storage, EV charging hubs, HV/MV/LV substations, and SCADA grid automation.">
+                Güneş GES, Rüzgar RES, BESS batarya depolama, EV şarj ağları, YG/OG/AG şalt ve trafo merkezleri.
+              </div>
+              <span class="eco-pillar-tag" data-tr="TEMİZ ENERJİ & ŞEBEKE" data-en="CLEAN POWER & GRID">TEMİZ ENERJİ & ŞEBEKE</span>
+            </div>
+
+            <div class="eco-pillar-card">
+              <div class="eco-pillar-icon" style="background: rgba(6, 182, 212, 0.3); color: #38bdf8;">🌐</div>
+              <div class="eco-pillar-title" data-tr="Yakın Teknoloji" data-en="Yakın Technology">Yakın Teknoloji</div>
+              <div class="eco-pillar-desc" data-tr="Telekom 5G/FTTX, SOC siber güvenlik operasyonları, veri merkezi beyaz alan donanımı, IIoT ve zayıf akım (ELV)." data-en="Telecom 5G/FTTX, 24/7 SOC cybersecurity, data center whitespace hardware, IIoT, and ELV security.">
+                Telekom 5G/FTTX, SOC siber güvenlik operasyonları, veri merkezi beyaz alan donanımı, IIoT ve zayıf akım (ELV).
+              </div>
+              <span class="eco-pillar-tag" data-tr="DİJİTAL ALTYAPI & SİBER" data-en="DIGITAL INFRA & CYBER">DİJİTAL ALTYAPI & SİBER</span>
+            </div>
+
+            <div class="eco-pillar-card">
+              <div class="eco-pillar-icon" style="background: rgba(212, 175, 55, 0.3); color: #facc15;">💼</div>
+              <div class="eco-pillar-title" data-tr="Yakın Finans & Capital" data-en="Yakın Capital & Advisory">Yakın Finans & Capital</div>
+              <div class="eco-pillar-desc" data-tr="Proje finansmanı, SPV yatırım yönetimi, gayrimenkul yatırım fonları (GYF), FIDIC sözleşme danışmanlığı." data-en="Project finance structuring, SPV asset management, real estate investment funds (REIF), and FIDIC contract advisory.">
+                Proje finansmanı, SPV yatırım yönetimi, gayrimenkul yatırım fonları (GYF), FIDIC sözleşme danışmanlığı.
+              </div>
+              <span class="eco-pillar-tag" data-tr="STRATEJİK YATIRIM" data-en="STRATEGIC INVESTMENT">STRATEJİK YATIRIM</span>
+            </div>
+          </div>
+
+          <div class="ecosystem-visual-wrap">
+            <svg class="eco-svg-diagram" viewBox="0 0 400 400" fill="none">
+              <!-- Outer Orbit Circles -->
+              <circle cx="200" cy="200" r="160" stroke="rgba(120, 190, 94, 0.2)" stroke-width="1.5" stroke-dasharray="6 6"/>
+              <circle cx="200" cy="200" r="110" stroke="rgba(212, 175, 55, 0.25)" stroke-width="1.5"/>
+              
+              <!-- Center Hub -->
+              <circle cx="200" cy="200" r="55" fill="#091308" stroke="#3d6e30" stroke-width="3"/>
+              <text x="200" y="195" text-anchor="middle" fill="#ffffff" font-family="Cinzel" font-weight="800" font-size="14">YAKIN</text>
+              <text x="200" y="212" text-anchor="middle" fill="#78be5e" font-family="Cinzel" font-weight="800" font-size="14">GRUP</text>
+              <text x="200" y="226" text-anchor="middle" fill="#d4af37" font-size="8" font-weight="700">HOLDİNG</text>
+
+              <!-- Connected Satellite Nodes -->
+              <!-- Construction -->
+              <line x1="200" y1="145" x2="200" y2="50" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="200" cy="50" r="34" fill="#0b2545" stroke="#3b82f6" stroke-width="2"/>
+              <text x="200" y="47" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">İNŞAAT</text>
+              <text x="200" y="60" text-anchor="middle" fill="#93c5fd" font-size="8">EPC & BIM</text>
+
+              <!-- Energy -->
+              <line x1="255" y1="200" x2="345" y2="200" stroke="#4ade80" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="345" cy="200" r="34" fill="#152b10" stroke="#22c55e" stroke-width="2"/>
+              <text x="345" y="197" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">ENERJİ</text>
+              <text x="345" y="210" text-anchor="middle" fill="#86efac" font-size="8">GES / BESS</text>
+
+              <!-- Capital -->
+              <line x1="200" y1="255" x2="200" y2="350" stroke="#facc15" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="200" cy="350" r="34" fill="#2d2208" stroke="#eab308" stroke-width="2"/>
+              <text x="200" y="347" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">CAPITAL</text>
+              <text x="200" y="360" text-anchor="middle" fill="#fef08a" font-size="8">FINANCE</text>
+
+              <!-- Tech -->
+              <line x1="145" y1="200" x2="55" y2="200" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="55" cy="200" r="34" fill="#082f49" stroke="#06b6d4" stroke-width="2"/>
+              <text x="55" y="197" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">TEKNO</text>
+              <text x="55" y="210" text-anchor="middle" fill="#7dd3fc" font-size="8">TELCO & CYBER</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: YAKIN İNŞAAT — EPC & MISSION-CRITICAL ALTYAPI -->
+      <section class="slide" data-slide-index="2" data-notes-tr="Yakın İnşaat'ın endüstriyel, kritik veri merkezi ve konut alanındaki mühendislik taahhüt yetkinlikleri. Tier III ve IV standartlarında veri merkezi inşaatı ve 5D BIM modelleme gücümüz vurgulanmalı." data-notes-en="Yakın Construction's core EPC capabilities covering industrial facilities, Tier III/IV data centers, and luxury residential projects. Emphasize 5D BIM engineering and seismic retrofitting mastery.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category blue" data-tr="YAKIN İNŞAAT & TAAHHÜT" data-en="YAKIN CONSTRUCTION & EPC">YAKIN İNŞAAT & TAAHHÜT</span>
+          <span class="slide-brand-watermark">HEAVY INDUSTRY & DATA CENTERS</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Mission-Critical Veri Merkezleri & <span class='highlight-green'>Endüstriyel EPC</span>" data-en="Mission-Critical Data Centers & <span class='highlight-green'>Industrial EPC</span>">
+            Mission-Critical Veri Merkezleri & <span class="highlight-green">Endüstriyel EPC</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Tier III & Tier IV standartlarında veri merkezlerinden ağır sanayi fabrikalarına, deprem sismik güçlendirmesinden 5D BIM mühendisliğine uçtan uca anahtar teslim taahhüt." data-en="End-to-end EPC contracting from Tier III/IV mission-critical data centers to heavy industrial plants, seismic retrofitting, and 5D BIM civil engineering.">
+            Tier III & Tier IV standartlarında veri merkezlerinden ağır sanayi fabrikalarına, deprem sismik güçlendirmesinden 5D BIM mühendisliğine uçtan uca anahtar teslim taahhüt.
+          </p>
+        </div>
+
+        <div class="services-presentation-grid">
+          <!-- Item 1 -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/data_center_construction_1785092614608.png" alt="Veri Merkezi İnşaatı" class="service-deck-img">
+              <span class="service-deck-badge">MISSION CRITICAL</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="Veri Merkezi İnşaatı" data-en="Data Center Construction">Veri Merkezi İnşaatı</h3>
+                <p class="service-deck-desc" data-tr="Tier III ve Tier IV sertifikasyonuna tam uyumlu, yedekli güç ve soğutma altyapısına sahip anahtar teslim veri merkezleri." data-en="Turnkey data center facilities fully compliant with Tier III & IV certifications, redundant power, and precision cooling.">
+                  Tier III ve Tier IV sertifikasyonuna tam uyumlu, yedekli güç ve soğutma altyapısına sahip anahtar teslim veri merkezleri.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">Tier III/IV</span>
+                <span class="deck-mini-pill">N+1 / 2N</span>
+                <span class="deck-mini-pill">PUE &lt; 1.25</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/heavy_industry_clean_1785012805596.png" alt="Ağır Sanayi Tesisleri" class="service-deck-img">
+              <span class="service-deck-badge">HEAVY INDUSTRY</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="Ağır Sanayi & Fabrikalar" data-en="Heavy Industry & Factories">Ağır Sanayi & Fabrikalar</h3>
+                <p class="service-deck-desc" data-tr="Endüstriyel dökümhaneler, kimya ve otomotiv üretim tesisleri, lojistik depolar ve çelik konstrüksiyon yapılar." data-en="Heavy industrial foundries, chemical & automotive plants, logistics warehouses, and mega steel structures.">
+                  Endüstriyel dökümhaneler, kimya ve otomotiv üretim tesisleri, lojistik depolar ve çelik konstrüksiyon yapılar.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">Endüstriyel EPC</span>
+                <span class="deck-mini-pill">Çelik Konstrüksiyon</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/civil_engineering_bim_1785010076530.png" alt="5D BIM & Sismik Güçlendirme" class="service-deck-img">
+              <span class="service-deck-badge">5D BIM & SEISMIC</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="5D BIM & Sismik Mühendislik" data-en="5D BIM & Seismic Engineering">5D BIM & Sismik Mühendislik</h3>
+                <p class="service-deck-desc" data-tr="Dijital ikiz (Digital Twin), maliyet ve zaman simülasyonları, karbon elyaf ve çelik mantolama ile deprem güçlendirme." data-en="Digital Twin lifecycle modeling, 5D cost-schedule integration, carbon fiber & steel retrofitting for seismic resilience.">
+                  Dijital ikiz (Digital Twin), maliyet ve zaman simülasyonları, karbon elyaf ve çelik mantolama ile deprem güçlendirme.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">Digital Twin</span>
+                <span class="deck-mini-pill">Karbon Elyaf Güçlendirme</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: YAKIN ENERJİ — GES, RES, BESS & AKILLI ŞEBEKE -->
+      <section class="slide" data-slide-index="3" data-notes-tr="Yakın Enerji'nin yenilenebilir enerji üretiminden batarya depolama sistemlerine (BESS) ve EV şarj istasyonu ağlarına kadar anahtar teslim enerji portföyü. TEDAŞ/TEİAŞ onay ve kabul süreçlerindeki tam yetkinliğimiz vurgulanmalı." data-notes-en="Yakın Energy's full-spectrum clean energy portfolio: Solar EPC, Wind, BESS container storage, EV high-power charging hubs, and grid substation commissioning with full TEDAŞ/TEİAŞ regulatory approvals.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category" data-tr="YAKIN ENERJİ & TEMİZ GELECEK" data-en="YAKIN ENERGY & CLEAN POWER">YAKIN ENERJİ & TEMİZ GELECEK</span>
+          <span class="slide-brand-watermark">500+ MW INSTALLED & PIPELINE</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Güneş, Rüzgar, <span class='highlight-green'>BESS Depolama</span> & EV Hubs" data-en="Solar, Wind, <span class='highlight-green'>BESS Storage</span> & EV Hubs">
+            Güneş, Rüzgar, <span class="highlight-green">BESS Depolama</span> & EV Hubs
+          </h2>
+          <p class="slide-subtitle" data-tr="Arazi ve çatı GES santrallerinden şebeke ölçekli BESS konteyner bataryalara, yüksek hızlı DC şarj istasyonlarından YG/OG trafo merkezlerine anahtar teslim enerji EPC çözümleri." data-en="Turnkey energy EPC solutions from utility-scale & rooftop solar PV to grid-scale containerized BESS, ultra-fast DC charging hubs, and HV/MV transformer substations.">
+            Arazi ve çatı GES santrallerinden şebeke ölçekli BESS konteyner bataryalara, yüksek hızlı DC şarj istasyonlarından YG/OG trafo merkezlerine anahtar teslim enerji EPC çözümleri.
+          </p>
+        </div>
+
+        <div class="services-presentation-grid">
+          <!-- Item 1: Solar GES & BIPV -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/energy_solar_ges.jpg" alt="Güneş Enerjisi Santralleri" class="service-deck-img">
+              <span class="service-deck-badge">SOLAR PV & BIPV</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="Güneş GES & Çatı EPC" data-en="Solar PV & Rooftop EPC">Güneş GES & Çatı EPC</h3>
+                <p class="service-deck-desc" data-tr="Endüstriyel çatı ve arazi tipi güneş santralleri, Bifacial paneller, string inverter mimarisi ve TEDAŞ onaylı projeler." data-en="Industrial rooftop & ground utility solar plants, bifacial modules, smart string inverters, and TEDAŞ grid approvals.">
+                  Endüstriyel çatı ve arazi tipi güneş santralleri, Bifacial paneller, string inverter mimarisi ve TEDAŞ onaylı projeler.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">Bifacial PV</span>
+                <span class="deck-mini-pill">TEDAŞ Onayı</span>
+                <span class="deck-mini-pill">Öztüketim</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: BESS Battery Storage -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/bess_main_cover_user.jpg" alt="BESS Batarya Depolama" class="service-deck-img">
+              <span class="service-deck-badge">BESS STORAGE</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="BESS Batarya Depolama" data-en="BESS Battery Storage">BESS Batarya Depolama</h3>
+                <p class="service-deck-desc" data-tr="Konteyner tipi LiFePO4 batarya sistemleri, Peak Shaving, frekans regülasyonu ve hibrit GES+Depolama entegrasyonu." data-en="Containerized LiFePO4 battery systems, peak shaving, frequency regulation, and integrated hybrid Solar+BESS microgrids.">
+                  Konteyner tipi LiFePO4 batarya sistemleri, Peak Shaving, frekans regülasyonu ve hibrit GES+Depolama entegrasyonu.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">LiFePO4 Container</span>
+                <span class="deck-mini-pill">Peak Shaving</span>
+                <span class="deck-mini-pill">BMS/EMS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: EV Charging & Substations -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/ev_siemens_chargers_lineup_user.png" alt="EV Şarj İstasyonları" class="service-deck-img">
+              <span class="service-deck-badge">EV HUBS & GRID</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="EV Şarj Ağları & Şalt Şebekesi" data-en="EV Charging & Substation Grid">EV Şarj Ağları & Şalt Şebekesi</h3>
+                <p class="service-deck-desc" data-tr="Yüksek güçlü 360 kW DC ultra hızlı şarj hub'ları, YG/OG trafo merkezleri, gaz izoleli şalt ve SCADA otomasyonu." data-en="High-power 360 kW DC ultra-fast charging hubs, HV/MV transformer substations, GIS switchgear, and SCADA automation.">
+                  Yüksek güçlü 360 kW DC ultra hızlı şarj hub'ları, YG/OG trafo merkezleri, gaz izoleli şalt ve SCADA otomasyonu.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">360 kW High-Power DC</span>
+                <span class="deck-mini-pill">YG/OG Trafo</span>
+                <span class="deck-mini-pill">SCADA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: YAKIN TEKNOLOJİ — TELEKOM, SİBER GÜVENLİK & IT OMURGASI -->
+      <section class="slide" data-slide-index="4" data-notes-tr="Telekom operatörlerine sunulan 5G ve fiber altyapı hizmetleri, 7/24 SOC siber güvenlik operasyon merkezi, veri merkezi beyaz alan donanımı ve zayıf akım sistemleri." data-notes-en="Telecom carrier infrastructure (5G/FTTX), 24/7 SOC cybersecurity defense, mission-critical whitespace hardware, and intelligent building ELV engineering.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category cyan" data-tr="YAKIN TEKNOLOJİ & TELEKOM" data-en="YAKIN TECHNOLOGY & TELECOM">YAKIN TEKNOLOJİ & TELEKOM</span>
+          <span class="slide-brand-watermark">CARRIER GRADE & 24/7 SOC</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="5G Telekom Altyapısı & <span class='highlight-green'>7/24 SOC Siber Savunma</span>" data-en="5G Telecom Infra & <span class='highlight-green'>24/7 SOC Cyber Defense</span>">
+            5G Telekom Altyapısı & <span class="highlight-green">7/24 SOC Siber Savunma</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="GSM baz istasyonlarından FTTX fiber omurgaya, 7/24 SOC izleme ve sızma testlerinden akıllı bina zayıf akım (ELV) sistemlerine kritik dijital teknolojiler." data-en="Critical digital technology solutions from 5G cellular towers & FTTX fiber backbones to 24/7 SOC threat monitoring, penetration testing, and ELV security.">
+            GSM baz istasyonlarından FTTX fiber omurgaya, 7/24 SOC izleme ve sızma testlerinden akıllı bina zayıf akım (ELV) sistemlerine kritik dijital teknolojiler.
+          </p>
+        </div>
+
+        <div class="services-presentation-grid">
+          <!-- Item 1: Telecom 5G & FTTX -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/telecom_5g_infra.jpg" alt="Telekom & 5G Altyapısı" class="service-deck-img">
+              <span class="service-deck-badge">5G & FTTX FIBER</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="Telekom 5G & Fiber Altyapı" data-en="Telecom 5G & Fiber Networks">Telekom 5G & Fiber Altyapı</h3>
+                <p class="service-deck-desc" data-tr="GSM baz istasyonları, mikrodalga radyolink, FTTX fiber döşeme, kule denetimi ve operatör saha yönetim taahhüdü." data-en="Cellular base stations, microwave backhaul, FTTX optical cabling, tower structural audits, and telecom field operations.">
+                  GSM baz istasyonları, mikrodalga radyolink, FTTX fiber döşeme, kule denetimi ve operatör saha yönetim taahhüdü.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">5G / LTE</span>
+                <span class="deck-mini-pill">FTTX Fiber</span>
+                <span class="deck-mini-pill">Kule EPC</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2: Cybersecurity & SOC -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/pentest_security_audit.jpg" alt="Siber Güvenlik & Pentest" class="service-deck-img">
+              <span class="service-deck-badge">SOC & CYBER DEFENSE</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="7/24 SOC & Sızma Testleri" data-en="24/7 SOC & Cyber Pentesting">7/24 SOC & Sızma Testleri</h3>
+                <p class="service-deck-desc" data-tr="Siber Olay Müdahale (CSIRT), zafiyet tarama, kırmızı takım testleri, ISO 27001 ve KVKK/GDPR uyumluluk danışmanlığı." data-en="Incident Response (CSIRT), penetration testing, Red Teaming, ISO 27001, and regulatory compliance advisory.">
+                  Siber Olay Müdahale (CSIRT), zafiyet tarama, kırmızı takım testleri, ISO 27001 ve KVKK/GDPR uyumluluk danışmanlığı.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">7/24 SOC</span>
+                <span class="deck-mini-pill">Pentest</span>
+                <span class="deck-mini-pill">ISO 27001</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: ELV & Smart Building -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/elv_fire_detection_user.png" alt="Zayıf Akım & Yangın Algılama" class="service-deck-img">
+              <span class="service-deck-badge">ELV & SMART AUTOMATION</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="Zayıf Akım (ELV) & Otomasyon" data-en="ELV Systems & Automation">Zayıf Akım (ELV) & Otomasyon</h3>
+                <p class="service-deck-desc" data-tr="IP CCTV izleme, biyometrik kartlı geçiş, adresli yangın algılama, gazlı söndürme ve bina yönetim sistemleri (BMS)." data-en="IP CCTV surveillance, biometric access control, addressable fire detection, gas suppression, and BMS automation.">
+                  IP CCTV izleme, biyometrik kartlı geçiş, adresli yangın algılama, gazlı söndürme ve bina yönetim sistemleri (BMS).
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">Yangın Algılama</span>
+                <span class="deck-mini-pill">Biyometrik Geçiş</span>
+                <span class="deck-mini-pill">BMS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: YAKIN FİNANS & CAPITAL — PROJE FİNANSMANI & YATIRIM YÖNETİMİ -->
+      <section class="slide" data-slide-index="5" data-notes-tr="Yakın Capital ve proje finansmanı birimi. Büyük ölçekli altyapı, enerji ve gayrimenkul projelerinin uluslararası banka ve fonlar nezdinde modellenmesi, FIDIC sözleşmeleri ve SPV şirket yönetimi." data-notes-en="Yakın Capital & Project Finance unit. Structuring bankable infrastructure, energy, and real estate investments with international funds, FIDIC contracting, and SPV lifecycle management.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category gold" data-tr="YAKIN CAPITAL & YATIRIM" data-en="YAKIN CAPITAL & INVESTMENT">YAKIN CAPITAL & YATIRIM</span>
+          <span class="slide-brand-watermark">BANKABLE FINANCIAL STRUCTURING</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Proje Finansmanı, <span class='highlight-gold'>SPV Yönetimi</span> & GYF Fonları" data-en="Project Finance, <span class='highlight-gold'>SPV Asset Mgmt</span> & REIF">
+            Proje Finansmanı, <span class="highlight-gold">SPV Yönetimi</span> & GYF Fonları
+          </h2>
+          <p class="slide-subtitle" data-tr="Büyük ölçekli enerji ve inşaat yatırımlarında uluslararası standartlarda finansal modelleme, sendikasyon kredileri, FIDIC sözleşme yönetimi ve varlık optimizasyonu." data-en="Bankable financial modeling for mega-scale energy & construction projects, syndicated loans, FIDIC contract management, and asset yield optimization.">
+            Büyük ölçekli enerji ve inşaat yatırımlarında uluslararası standartlarda finansal modelleme, sendikasyon kredileri, FIDIC sözleşme yönetimi ve varlık optimizasyonu.
+          </p>
+        </div>
+
+        <div class="services-presentation-grid">
+          <!-- Item 1 -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/investment_finance_real_estate_1785010111511.png" alt="Proje Finansmanı" class="service-deck-img">
+              <span class="service-deck-badge">PROJECT FINANCE</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="Proje Finansmanı & Kredilendirme" data-en="Project Finance & Syndication">Proje Finansmanı & Kredilendirme</h3>
+                <p class="service-deck-desc" data-tr="EBRD, IFC ve yerel banka standartlarında fizibilite, nakit akış modellemesi, borç yapılandırma ve sendikasyon." data-en="Bankable feasibility, DSCR cash flow modeling, debt restructuring, and syndicate loan facilitation with international DFIs.">
+                  EBRD, IFC ve yerel banka standartlarında fizibilite, nakit akış modellemesi, borç yapılandırma ve sendikasyon.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">Bankable Feasibility</span>
+                <span class="deck-mini-pill">EBRD/IFC Uyum</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/tender_contract_management_1785010026255.png" alt="FIDIC Sözleşme Yönetimi" class="service-deck-img">
+              <span class="service-deck-badge">FIDIC & CONTRACTS</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="FIDIC & İhale Danışmanlığı" data-en="FIDIC & Tender Advisory">FIDIC & İhale Danışmanlığı</h3>
+                <p class="service-deck-desc" data-tr="Kırmızı, Sarı ve Gümüş Kitap FIDIC sözleşme yönetimi, hak talepleri (claims), risk matrisleri ve ihale şartnameleri." data-en="FIDIC Red, Yellow, and Silver Book administration, claims management, risk allocation matrices, and tender specifications.">
+                  Kırmızı, Sarı ve Gümüş Kitap FIDIC sözleşme yönetimi, hak talepleri (claims), risk matrisleri ve ihale şartnameleri.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">FIDIC Silver/Yellow</span>
+                <span class="deck-mini-pill">Risk Analizi</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="service-deck-card">
+            <div class="service-deck-img-wrap">
+              <img src="assets/images/energy_regulation_advisory.jpg" alt="SPV ve Varlık Yönetimi" class="service-deck-img">
+              <span class="service-deck-badge">SPV & ASSET OPTIMIZATION</span>
+            </div>
+            <div class="service-deck-body">
+              <div>
+                <h3 class="service-deck-title" data-tr="SPV & Yenilenebilir Varlık Yönetimi" data-en="SPV & Clean Asset Management">SPV & Yenilenebilir Varlık Yönetimi</h3>
+                <p class="service-deck-desc" data-tr="YEKDEM gelir optimizasyonu, karbon kredisi (I-REC) ticareti, Gayrimenkul Yatırım Fonları (GYF) ve portföy getiri artışı." data-en="YEKDEM revenue maximization, I-REC carbon credit trading, Real Estate Investment Funds (REIF), and portfolio yield scaling.">
+                  YEKDEM gelir optimizasyonu, karbon kredisi (I-REC) ticareti, Gayrimenkul Yatırım Fonları (GYF) ve portföy getiri artışı.
+                </p>
+              </div>
+              <div class="service-deck-tags">
+                <span class="deck-mini-pill">I-REC Karbon</span>
+                <span class="deck-mini-pill">GYF Fonları</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: UÇTAN UCA TESLİMAT SÜRECİ (TURNKEY DELIVERY PIPELINE) -->
+      <section class="slide" data-slide-index="6" data-notes-tr="Fikir aşamasından 7/24 işletme ve bakıma kadar 5 adımlı mühendislik teslimat boru hattımız. Müşteri ve yatırımcıya tek elden eksiksiz şeffaflık ve güven sunar." data-notes-en="Our 5-step engineering delivery pipeline from initial concept to 24/7 O&M lifecycle operations. Delivers single-source accountability and radical transparency to clients and investors.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category" data-tr="OPERASYONEL MÜKEMMELLİK" data-en="OPERATIONAL EXCELLENCE">OPERASYONEL MÜKEMMELLİK</span>
+          <span class="slide-brand-watermark">TURNKEY EPC LIFECYCLE</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Uçtan Uca <span class='highlight-green'>5 Aşamalı Teslimat Modeli</span>" data-en="End-to-End <span class='highlight-green'>5-Stage Delivery Framework</span>">
+            Uçtan Uca <span class="highlight-green">5 Aşamalı Teslimat Modeli</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="İlk saha fizibilitesinden devreye almaya, mevzuat izinlerinden 7/24 dijital işletme & bakıma (O&M) kusursuz entegrasyon." data-en="Seamless execution from initial site feasibility to commissioning, regulatory permits, and 24/7 digital operations & maintenance (O&M).">
+            İlk saha fizibilitesinden devreye almaya, mevzuat izinlerinden 7/24 dijital işletme & bakıma (O&M) kusursuz entegrasyon.
+          </p>
+        </div>
+
+        <div class="process-pipeline">
+          <!-- Step 1 -->
+          <div class="process-step-node">
+            <div class="step-circle-num">01</div>
+            <div class="step-title" data-tr="Fizibilite & 5D BIM" data-en="Feasibility & BIM">Fizibilite & 5D BIM</div>
+            <p class="step-desc" data-tr="Zemin etüdü, topoğrafik LiDAR haritalama, güneş/rüzgar simülasyonu ve BIM 5D modelleme." data-en="Geotechnical survey, LiDAR mapping, solar/wind yields, and 5D digital BIM design.">
+              Zemin etüdü, topoğrafik LiDAR haritalama, güneş/rüzgar simülasyonu ve BIM 5D modelleme.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="process-step-node">
+            <div class="step-circle-num">02</div>
+            <div class="step-title" data-tr="Finans & İzinler" data-en="Finance & Permits">Finans & İzinler</div>
+            <p class="step-desc" data-tr="Banka fizibilitesi, DSCR modelleri, ÇED raporlaması, TEDAŞ/TEİAŞ çağrı mektubu izinleri." data-en="Bankable DSCR modeling, EIA reports, TEDAŞ/TEİAŞ interconnection permits.">
+              Banka fizibilitesi, DSCR modelleri, ÇED raporlaması, TEDAŞ/TEİAŞ çağrı mektubu izinleri.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="process-step-node">
+            <div class="step-circle-num">03</div>
+            <div class="step-title" data-tr="EPC & Tedarik" data-en="EPC & Procurement">EPC & Tedarik</div>
+            <p class="step-desc" data-tr="Tier-1 küresel ekipman tedariği, sismik çelik konstrüksiyon, trafo ve mekanik MEP montajı." data-en="Tier-1 procurement, seismic structural fabrication, transformer, and MEP installation.">
+              Tier-1 küresel ekipman tedariği, sismik çelik konstrüksiyon, trafo ve mekanik MEP montajı.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="process-step-node">
+            <div class="step-circle-num">04</div>
+            <div class="step-title" data-tr="Test & Kabul" data-en="Testing & Acceptance">Test & Kabul</div>
+            <p class="step-desc" data-tr="Röle koruma testleri, SCADA entegrasyonu, TEDAŞ geçici kabulü ve Tier III/IV devreye alma." data-en="Relay secondary injection, SCADA integration, official TEDAŞ acceptance, Tier commissioning.">
+              Röle koruma testleri, SCADA entegrasyonu, TEDAŞ geçici kabulü ve Tier III/IV devreye alma.
+            </p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="process-step-node">
+            <div class="step-circle-num">05</div>
+            <div class="step-title" data-tr="7/24 O&M & İzleme" data-en="24/7 O&M Monitoring">7/24 O&M & İzleme</div>
+            <p class="step-desc" data-tr="Yapay zeka kestirimci bakım, termal drone denetimleri, SCADA performans optimizasyonu." data-en="AI predictive maintenance, aerial thermal drone scans, and continuous SCADA yield optimization.">
+              Yapay zeka kestirimci bakım, termal drone denetimleri, SCADA performans optimizasyonu.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: İNTERAKTİF YATIRIM & ROI SİMÜLATÖRÜ (INVESTMENT CALCULATOR) -->
+      <section class="slide" data-slide-index="7" data-notes-tr="Yatırımcıların canlı olarak proje tipini, kapasitesini seçip tahmini CAPEX, geri dönüş süresi (ROI), yıllık temiz enerji üretimi ve karbon tasarrufunu görebileceği interaktif araç." data-notes-en="Interactive widget allowing investors to select sector, adjust capacity, and view estimated CAPEX, ROI payback duration, annual clean generation, and carbon offset in real-time.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category gold" data-tr="YATIRIMCI FİNANSAL ARACI" data-en="INVESTOR FINANCIAL TOOL">YATIRIMCI FİNANSAL ARACI</span>
+          <span class="slide-brand-watermark">REAL-TIME ROI CALCULATOR</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="İnteraktif Proje <span class='highlight-gold'>ROI & Getiri Simülatörü</span>" data-en="Interactive Project <span class='highlight-gold'>ROI & Yield Simulator</span>">
+            İnteraktif Proje <span class="highlight-gold">ROI & Getiri Simülatörü</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Proje sektörünü ve kapasitesini belirleyin; Yakın Grup EPC standartlarında tahmini maliyet, amortisman süresi ve karbon kazanımlarını anında hesaplayın." data-en="Select project sector and scale to instantly compute estimated CAPEX, payback timeline, and ESG carbon offsets under Yakın Grup EPC standards.">
+            Proje sektörünü ve kapasitesini belirleyin; Yakın Grup EPC standartlarında tahmini maliyet, amortisman süresi ve karbon kazanımlarını anında hesaplayın.
+          </p>
+        </div>
+
+        <div class="calculator-layout">
+          <div class="calc-inputs-pane">
+            <div class="calc-field-group">
+              <label class="calc-field-label" data-tr="1. Yatırım Sektörü" data-en="1. Investment Sector">1. Yatırım Sektörü</label>
+              <select id="sim-sector" class="calc-select" onchange="recalcDeckSim()">
+                <option value="ges" data-tr="Güneş Enerjisi Santrali (Arazi / Çatı GES)" data-en="Solar PV Plant (Ground / Rooftop)">Güneş Enerjisi Santrali (Arazi / Çatı GES)</option>
+                <option value="bess" data-tr="BESS Konteyner Batarya Depolama" data-en="BESS Containerized Battery Storage">BESS Konteyner Batarya Depolama</option>
+                <option value="dc" data-tr="Tier III/IV Mission Critical Veri Merkezi" data-en="Tier III/IV Mission Critical Data Center">Tier III/IV Mission Critical Veri Merkezi</option>
+                <option value="ev" data-tr="Yüksek Hızlı Ultra DC EV Şarj Hub'ı" data-en="Ultra-Fast High Power DC EV Charging Hub">Yüksek Hızlı Ultra DC EV Şarj Hub'ı</option>
+                <option value="fac" data-tr="Ağır Sanayi Fabrika & Çelik EPC" data-en="Heavy Industrial Factory & Steel EPC">Ağır Sanayi Fabrika & Çelik EPC</option>
+              </select>
+            </div>
+
+            <div class="calc-field-group">
+              <div class="calc-field-label">
+                <span data-tr="2. Proje Ölçeği / Kapasite" data-en="2. Project Scale / Capacity">2. Proje Ölçeği / Kapasite</span>
+                <span id="sim-scale-label" style="color: var(--gold-light); font-weight: 800;">10 MWp</span>
+              </div>
+              <input type="range" id="sim-scale-slider" class="calc-range" min="1" max="100" value="10" oninput="recalcDeckSim()">
+            </div>
+
+            <div class="calc-field-group">
+              <label class="calc-field-label" data-tr="3. Finansman Yapısı" data-en="3. Financing Structure">3. Finansman Yapısı</label>
+              <select id="sim-finance" class="calc-select" onchange="recalcDeckSim()">
+                <option value="equity" data-tr="100% Özkaynak Yatırımı" data-en="100% Equity Funded">100% Özkaynak Yatırımı</option>
+                <option value="project_loan" selected data-tr="70% Proje Kredisi / 30% Özkaynak" data-en="70% Project Loan / 30% Equity">70% Proje Kredisi / 30% Özkaynak</option>
+                <option value="bot" data-tr="PPP / Gelir Paylaşımlı Model" data-en="PPP / Revenue Share Model">PPP / Gelir Paylaşımlı Model</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="calc-output-pane">
+            <div class="calc-kpi-row">
+              <div class="calc-out-box">
+                <div class="calc-out-val" id="out-capex">$ 6.8 M</div>
+                <div class="calc-out-lbl" data-tr="Tahmini Yatırım (CAPEX)" data-en="Estimated CAPEX">Tahmini Yatırım (CAPEX)</div>
+              </div>
+              <div class="calc-out-box">
+                <div class="calc-out-val" id="out-roi" style="color: #4ade80;">3.8 Yıl</div>
+                <div class="calc-out-lbl" data-tr="Amortisman / Payback" data-en="Payback Duration">Amortisman / Payback</div>
+              </div>
+            </div>
+
+            <div class="calc-kpi-row">
+              <div class="calc-out-box">
+                <div class="calc-out-val" id="out-yield">16,200 MWh</div>
+                <div class="calc-out-lbl" data-tr="Yıllık Üretim / Çıktı" data-en="Annual Yield / Output">Yıllık Üretim / Çıktı</div>
+              </div>
+              <div class="calc-out-box">
+                <div class="calc-out-val" id="out-carbon" style="color: #38bdf8;">8,400 Ton</div>
+                <div class="calc-out-lbl" data-tr="Yıllık CO2 Tasarrufu" data-en="Annual CO2 Offset">Yıllık CO2 Tasarrufu</div>
+              </div>
+            </div>
+
+            <button class="btn-action-hero primary" style="width: 100%; justify-content: center;" onclick="window.open('teklif.html', '_blank')">
+              <span data-tr="Detaylı Şartname & Teklif Çıkar ›" data-en="Generate Formal Spec & Estimate ›">Detaylı Şartname & Teklif Çıkar ›</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: KALİTE, İSG, ESG VE SİBER GÜVENLİK STANDARTLARI -->
+      <section class="slide" data-slide-index="8" data-notes-tr="Holdingimizin uluslararası sertifikasyonları: ISO 9001 Kalite, ISO 14001 Çevre, ISO 45001 İş Sağlığı ve ISO 27001 Siber Güvenlik standartları. Sıfır iş kazası hedefi ve sürdürülebilirlik ilkelerimiz." data-notes-en="Holding certifications: ISO 9001 Quality, ISO 14001 Environmental, ISO 45001 Occupational Safety, and ISO 27001 Information Security. Emphasize zero-accident HSE culture and carbon neutrality.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category" data-tr="ULUSLARARASI AKREDİTASYON" data-en="GLOBAL ACCREDITATION">ULUSLARARASI AKREDİTASYON</span>
+          <span class="slide-brand-watermark">ESG & ISO COMPLIANCE</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Küresel Sertifikasyonlar & <span class='highlight-green'>ESG Mükemmelliği</span>" data-en="Global Certifications & <span class='highlight-green'>ESG Excellence</span>">
+            Küresel Sertifikasyonlar & <span class="highlight-green">ESG Mükemmelliği</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Tüm şantiye, enerji santrali ve veri merkezi operasyonlarımızda sıfır iş kazası prensibi ve en yüksek uluslararası kalite & bilgi güvenliği yönetimi." data-en="Zero-accident HSE culture, robust environmental stewardship, and rigorous information security across all construction sites and power plants.">
+            Tüm şantiye, enerji santrali ve veri merkezi operasyonlarımızda sıfır iş kazası prensibi ve en yüksek uluslararası kalite & bilgi güvenliği yönetimi.
+          </p>
+        </div>
+
+        <div class="esg-standards-grid">
+          <!-- ISO 9001 -->
+          <div class="iso-card-item">
+            <div class="iso-code">ISO 9001</div>
+            <div class="iso-name" data-tr="Kalite Yönetim Sistemi" data-en="Quality Management">Kalite Yönetim Sistemi</div>
+            <p class="iso-desc" data-tr="Mühendislik, tedarik ve taahhütte dünya standartlarında hatasız süreç yönetimi." data-en="Flawless process quality control across engineering, procurement, and EPC execution.">
+              Mühendislik, tedarik ve taahhütte dünya standartlarında hatasız süreç yönetimi.
+            </p>
+          </div>
+
+          <!-- ISO 14001 -->
+          <div class="iso-card-item">
+            <div class="iso-code" style="color: #4ade80;">ISO 14001</div>
+            <div class="iso-name" data-tr="Çevre Yönetim Sistemi" data-en="Environmental Management">Çevre Yönetim Sistemi</div>
+            <p class="iso-desc" data-tr="Karbon ayak izi azaltımı, yeşil bina (LEED/BREEAM) standartları ve döngüsel ekonomi." data-en="Carbon footprint reduction, green building standards, and circular resource efficiency.">
+              Karbon ayak izi azaltımı, yeşil bina (LEED/BREEAM) standartları ve döngüsel ekonomi.
+            </p>
+          </div>
+
+          <!-- ISO 45001 -->
+          <div class="iso-card-item">
+            <div class="iso-code" style="color: #f87171;">ISO 45001</div>
+            <div class="iso-name" data-tr="İş Sağlığı ve Güvenliği" data-en="Occupational Health & Safety">İş Sağlığı ve Güvenliği</div>
+            <p class="iso-desc" data-tr="Tüm saha ve santrallerde tavizsiz sıfır kaza hedefi ve proaktif risk yönetimi." data-en="Uncompromising zero-incident HSE culture and proactive hazard mitigation on all job sites.">
+              Tüm saha ve santrallerde tavizsiz sıfır kaza hedefi ve proaktif risk yönetimi.
+            </p>
+          </div>
+
+          <!-- ISO 27001 -->
+          <div class="iso-card-item">
+            <div class="iso-code" style="color: #60a5fa;">ISO 27001</div>
+            <div class="iso-name" data-tr="Bilgi Güvenliği Sistemi" data-en="Information Security">Bilgi Güvenliği Sistemi</div>
+            <p class="iso-desc" data-tr="Veri merkezi, telekom ve SCADA şebekelerinde uçtan uca siber veri gizliliği." data-en="End-to-end cyber confidentiality across data centers, telecom assets, and SCADA grids.">
+              Veri merkezi, telekom ve SCADA şebekelerinde uçtan uca siber veri gizliliği.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: LİDERLİK, YÖNETİM VE STRATEJİK VİZYON -->
+      <section class="slide" data-slide-index="9" data-notes-tr="Grup liderlik ekibimiz ve kurumsal yönetim kadromuz. Dijital vCard QR profilleri ile yatırımcıların doğrudan yöneticilerle hızlı temas kurabilmesi sağlanır." data-notes-en="Holding executive leadership. Direct digital vCard QR links empower investors and corporate clients to connect instantly with decision-makers.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category gold" data-tr="KURUMSAL YÖNETİM & LİDERLİK" data-en="EXECUTIVE LEADERSHIP">KURUMSAL YÖNETİM & LİDERLİK</span>
+          <span class="slide-brand-watermark">VISIONARY GOVERNANCE</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Deneyimli Liderlik, <span class='highlight-gold'>Stratejik İcra</span>" data-en="Visionary Leadership, <span class='highlight-gold'>Strategic Execution</span>">
+            Deneyimli Liderlik, <span class="highlight-gold">Stratejik İcra</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Mühendislik, enerji finansmanı ve ileri teknolojide onlarca yıllık uluslararası tecrübeye sahip yönetim kurulumuz." data-en="Executive leadership with decades of multidisciplinary engineering, energy finance, and digital infrastructure experience.">
+            Mühendislik, enerji finansmanı ve ileri teknolojide onlarca yıllık uluslararası tecrübeye sahip yönetim kurulumuz.
+          </p>
+        </div>
+
+        <div class="exec-team-grid">
+          <!-- İlker Atasoy -->
+          <div class="exec-person-card">
+            <div class="exec-avatar-box">
+              <img src="assets/images/ilker_atasoy_modal_1784810580028.png" alt="İlker Atasoy">
+            </div>
+            <div class="exec-info-box">
+              <h3 class="exec-name">İlker Atasoy</h3>
+              <div class="exec-role" data-tr="Yönetim Kurulu Başkanı / CEO" data-en="Chairman of the Board / CEO">Yönetim Kurulu Başkanı / CEO</div>
+              <div class="exec-sub" data-tr="Mühendislik, Altyapı & Enerji Yatırımları" data-en="Engineering, Infrastructure & Energy Strategy">Mühendislik, Altyapı & Enerji Yatırımları</div>
+              <div class="exec-links">
+                <a href="vcard.html?id=ilker" class="exec-mini-btn" target="_blank">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span>vCard</span>
+                </a>
+                <a href="mailto:ilker.atasoy@yakingrup.net" class="exec-mini-btn">
+                  <span>E-Posta</span>
+                </a>
+                <a href="imza-ilker.html" class="exec-mini-btn" target="_blank">
+                  <span>İmza</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Eylül Yılmaz -->
+          <div class="exec-person-card">
+            <div class="exec-avatar-box">
+              <img src="assets/images/eylul_yilmaz_modal_1784810622841.png" alt="Eylül Yılmaz">
+            </div>
+            <div class="exec-info-box">
+              <h3 class="exec-name">Eylül Yılmaz</h3>
+              <div class="exec-role" data-tr="İş Geliştirme & Kurumsal İlişkiler Direktörü" data-en="Head of Business Development & Relations">İş Geliştirme & Kurumsal İlişkiler Direktörü</div>
+              <div class="exec-sub" data-tr="Proje Finansmanı & Yatırımcı İlişkileri" data-en="Project Finance & Investor Relations">Proje Finansmanı & Yatırımcı İlişkileri</div>
+              <div class="exec-links">
+                <a href="vcard.html?id=eylul" class="exec-mini-btn" target="_blank">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span>vCard</span>
+                </a>
+                <a href="mailto:eylul.yilmaz@yakingrup.net" class="exec-mini-btn">
+                  <span>E-Posta</span>
+                </a>
+                <a href="imza-eylul.html" class="exec-mini-btn" target="_blank">
+                  <span>İmza</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: İLETİŞİM & ORTAKLIK ÇAĞRISI (CALL TO ACTION) -->
+      <section class="slide" data-slide-index="10" data-notes-tr="Kapanış slaytı. Yatırımcılar ve müşterilerle ortaklık başlatma, şartname ve teklif çıkarma, vCard ve dijital kartvizit ekosistemi ile tam temas sağlama." data-notes-en="Closing slide. Partnership call to action with direct links to specs, fast proposals, vCard contact profiles, and headquarters reachability.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category gold" data-tr="YATIRIM & İŞ BİRLİĞİ" data-en="PARTNERSHIP & INVESTMENT">YATIRIM & İŞ BİRLİĞİ</span>
+          <span class="slide-brand-watermark">GLOBAL EXPANSION</span>
+        </div>
+
+        <div class="hero-slide-grid" style="align-items: center;">
+          <div class="hero-text-col">
+            <h2 class="hero-pitch-title">
+              Geleceğin Projelerini <br><span>Birlikte İnşa Edelim</span>
+            </h2>
+            <p class="hero-pitch-desc" data-tr="Yatırımcılarımız ve kurumsal müşterilerimiz için en yüksek mühendislik standartları, optimize finansman modelleri ve kesintisiz anahtar teslim başarı." data-en="Highest engineering standards, optimized financial structuring, and uncompromising turnkey delivery for our investors and corporate clients.">
+              Yatırımcılarımız ve kurumsal müşterilerimiz için en yüksek mühendislik standartları, optimize finansman modelleri ve kesintisiz anahtar teslim başarı.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="teklif.html" class="btn-action-hero primary" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                <span data-tr="Şartname & Teklif Stüdyosu" data-en="Fast Spec & Estimate Studio">Şartname & Teklif Stüdyosu</span>
+              </a>
+              <a href="kartvizit.html" class="btn-action-hero secondary" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                <span data-tr="Kurumsal Kartvizitler" data-en="Business Cards Studio">Kurumsal Kartvizitler</span>
+              </a>
+              <a href="vcard.html" class="btn-action-hero secondary" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span data-tr="vCard Rehberi" data-en="vCard Directory">vCard Rehberi</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="kpi-card" style="padding: 2rem; background: rgba(17, 26, 20, 0.95); border: 1px solid var(--border-strong);">
+            <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #ffffff; margin-bottom: 1rem;" data-tr="Yakın Grup Holding Genel Merkez" data-en="Yakın Grup Holding Headquarters">
+              Yakın Grup Holding Genel Merkez
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              📍 <strong>İstanbul, Türkiye:</strong> Maslak Finans & Teknoloji Vadisi<br>
+              📞 <strong>Telefon:</strong> +90 (212) 555 0199<br>
+              ✉️ <strong>Kurumsal İletişim:</strong> info@yakingrup.net<br>
+              🌐 <strong>Web Portal:</strong> www.yakingrup.net
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--gold-light); font-weight: 700;">ISO 9001 / 14001 / 45001 / 27001</span>
+              <a href="/" style="color: var(--light-green); text-decoration: none; font-weight: 700; font-size: 0.85rem;" data-tr="Ana Sayfaya Dön ›" data-en="Back to Main Site ›">Ana Sayfaya Dön ›</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER NAVIGATION CONTROLS ===== -->
+  <footer>
+    <div class="footer-left">
+      <div class="slide-counter-badge">
+        <span id="current-slide-num">01</span> / <span id="total-slides-num">11</span>
+      </div>
+
+      <!-- Slide Progress Bar -->
+      <div class="presentation-progress-track">
+        <div class="presentation-progress-fill" id="presentation-progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="footer-center">
+      <button class="nav-arrow-btn" onclick="prevSlide()" title="Önceki Slayt (Sol Ok / Sol Tuş)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <button class="nav-arrow-btn" onclick="openOverviewModal()" title="Slayt Genel Bakış Matrisi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </button>
+
+      <button class="nav-arrow-btn" onclick="nextSlide()" title="Sonraki Slayt (Sağ Ok / Boşluk)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <div class="footer-right">
+      <button class="tool-icon-btn" id="btn-toggle-laser" onclick="toggleLaserPointer()" title="Lazer İşaretçi (L)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+
+      <button class="tool-icon-btn" id="btn-toggle-notes" onclick="togglePresenterNotes()" title="Konuşmacı Notları (N)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </button>
+
+      <button class="tool-icon-btn" onclick="exportDeckPdf()" title="PDF / Yazdır (Ctrl+P)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+
+      <button class="tool-icon-btn" onclick="toggleDeckFullscreen()" title="Tam Ekran (F)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ===== PRESENTER SPEAKER NOTES DRAWER ===== -->
+  <div class="notes-drawer" id="speaker-notes-drawer">
+    <div class="notes-header">
+      <span class="notes-title" data-tr="🎙️ KONUŞMACI & SUNUCU NOTLARI" data-en="🎙️ PRESENTER & SPEAKER NOTES">🎙️ KONUŞMACI & SUNUCU NOTLARI</span>
+      <button style="background: none; border: none; color: var(--text-muted); cursor: pointer;" onclick="togglePresenterNotes()">✕</button>
+    </div>
+    <div class="notes-content" id="speaker-notes-body">
+      Yakın Grup vizyon sunumu notları burada görüntülenir.
+    </div>
+  </div>
+
+  <!-- ===== SLIDE OVERVIEW GRID MODAL ===== -->
+  <div class="overview-modal" id="overview-modal" onclick="if(event.target===this) closeOverviewModal()">
+    <div class="overview-header">
+      <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #ffffff;" data-tr="Tüm Slaytlar & Bölümler" data-en="All Slides & Sections">
+        Tüm Slaytlar & Bölümler
+      </div>
+      <button style="background: rgba(255,255,255,0.1); border: none; color: #ffffff; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-weight: 800;" onclick="closeOverviewModal()">✕</button>
+    </div>
+    <div class="overview-grid" id="overview-grid-container">
+      <!-- Generated dynamically in JS -->
+    </div>
+  </div>
+
+  <!-- ===== WEBSOCKET / REMOTE BROADCAST MODAL ===== -->
+  <div class="ws-modal" id="ws-modal" onclick="if(event.target===this) closeWsModal()">
+    <div class="ws-modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #ffffff;" data-tr="Canlı Sunum Senkronizasyonu" data-en="Live Presentation Sync">
+          Canlı Sunum Senkronizasyonu
+        </h3>
+        <button style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem;" onclick="closeWsModal()">✕</button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" data-tr="Katılımcıların mobil telefonlarından sunumu gerçek zamanlı takip edebilmesi için QR kodu okutun veya aynı oda koduyla bağlanın." data-en="Scan QR code from mobile devices to follow the presentation live in real-time or connect with the room ID.">
+        Katılımcıların mobil telefonlarından sunumu gerçek zamanlı takip edebilmesi için QR kodu okutun veya aynı oda koduyla bağlanın.
+      </p>
+
+      <div class="ws-qr-box" id="ws-qrcode-container"></div>
+
+      <div style="display: flex; gap: 8px; margin-bottom: 1rem;">
+        <input type="text" id="ws-room-input" style="flex: 1; background: #091308; border: 1px solid var(--border-subtle); color: #ffffff; padding: 0.6rem; border-radius: 8px; font-weight: 700; text-align: center;" value="YAKIN-VIP-2026">
+        <button class="btn-action-hero primary" style="padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem;" onclick="generateNewRoomCode()">
+          <span data-tr="Yeni Oda" data-en="New Room">Yeni Oda</span>
+        </button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-2); padding: 0.8rem 1rem; border-radius: 10px; font-size: 0.82rem;">
+        <span data-tr="Sunucu / Yayın Rolü:" data-en="Broadcaster Role:">Sunucu / Yayın Rolü:</span>
+        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 700; color: var(--light-green);">
+          <input type="checkbox" id="ws-is-presenter-chk" checked onchange="togglePresenterRole()">
+          <span data-tr="Sunucu (Kontrol Bende)" data-en="Host (Controller)">Sunucu (Kontrol Bende)</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LIVE EMOJI REACTION TRAY ===== -->
+  <div class="reaction-emitter-tray">
+    <button class="reaction-btn" onclick="emitLiveReaction('👏')" title="Alkış">👏</button>
+    <button class="reaction-btn" onclick="emitLiveReaction('🚀')" title="Roket">🚀</button>
+    <button class="reaction-btn" onclick="emitLiveReaction('💡')" title="Fikir">💡</button>
+    <button class="reaction-btn" onclick="emitLiveReaction('🔥')" title="Harika">🔥</button>
+  </div>
+
+  <!-- ===== PRESENTATION ENGINE SCRIPT ===== -->
+  <script>
+    // Global State
+    let currentSlide = 0;
+    let totalSlides = 0;
+    let currentLang = 'tr';
+    let isPresenter = true;
+    let roomId = 'YAKIN-VIP-2026';
+    let isLaserActive = false;
+    let isNotesOpen = false;
+
+    // WebSocket Client
+    let ws = null;
+    function initWebSocketConnection() {
+      try {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.hostname || 'localhost';
+        const wsUrl = `${protocol}//${host}:8080`;
+        
+        ws = new WebSocket(wsUrl);
+        ws.onopen = () => {
+          console.log('[WS] Connected to live relay server');
+          const badge = document.getElementById('ws-status-badge');
+          const text = document.getElementById('ws-status-text');
+          badge.className = 'ws-status-badge';
+          text.textContent = 'Canlı WS Bağlı';
+        };
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            handleIncomingSync(data);
+          } catch (e) {}
+        };
+        ws.onerror = () => {
+          // Fallback to mesh mode
+          const badge = document.getElementById('ws-status-badge');
+          const text = document.getElementById('ws-status-text');
+          badge.className = 'ws-status-badge mesh';
+          text.textContent = 'Lokal Canlı Mesh';
+        };
+      } catch (e) {
+        console.warn('WS Init failed, mesh fallback active');
+      }
+    }
+
+    // BroadcastChannel for instant local mesh multi-tab sync without external server
+    let bc = null;
+    try {
+      bc = new BroadcastChannel('yakin_presentation_sync');
+      bc.onmessage = (event) => {
+        handleIncomingSync(event.data);
+      };
+    } catch (e) {
+      console.warn('BroadcastChannel not supported, falling back to localStorage');
+    }
+
+    // LocalStorage Sync Fallback
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'yakin_deck_sync_payload' && e.newValue) {
+        try {
+          const payload = JSON.parse(e.newValue);
+          handleIncomingSync(payload);
+        } catch (err) {}
+      }
+    });
+
+    // Initialize Presentation
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.slide');
+      totalSlides = slides.length;
+      document.getElementById('total-slides-num').textContent = String(totalSlides).padStart(2, '0');
+
+      // Check URL parameters for slide, lang, room, presenter
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('slide')) {
+        currentSlide = parseInt(params.get('slide'), 10) || 0;
+      }
+      if (params.has('lang')) {
+        currentLang = params.get('lang') === 'en' ? 'en' : 'tr';
+      }
+      if (params.has('room')) {
+        roomId = params.get('room');
+        document.getElementById('ws-room-input').value = roomId;
+      }
+      if (params.has('role')) {
+        isPresenter = params.get('role') === 'host';
+        document.getElementById('ws-is-presenter-chk').checked = isPresenter;
+      }
+
+      applyDeckLanguage(currentLang);
+      updateSlideView();
+      renderOverviewGrid();
+      recalcDeckSim();
+      initQRCode();
+      initWebSocketConnection();
+
+      // Keyboard Listeners
+      window.addEventListener('keydown', handleKeyboardNav);
+
+      // Touch Swipe for Mobile / Tablet
+      initTouchGestures();
+
+      // Mouse Move for Laser Pointer
+      window.addEventListener('mousemove', handleLaserMouseMove);
+    });
+
+    // Slide Navigation
+    function goToSlide(index, broadcast = true) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+      currentSlide = index;
+      updateSlideView();
+
+      if (broadcast && isPresenter) {
+        broadcastSyncMessage({
+          type: 'SLIDE_CHANGE',
+          slideIndex: currentSlide,
+          roomId: roomId
+        });
+      }
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    function updateSlideView() {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((slide, idx) => {
+        slide.classList.remove('active', 'prev', 'next');
+        if (idx === currentSlide) {
+          slide.classList.add('active');
+        } else if (idx < currentSlide) {
+          slide.classList.add('prev');
+        } else {
+          slide.classList.add('next');
+        }
+      });
+
+      // Update Counter & Progress
+      document.getElementById('current-slide-num').textContent = String(currentSlide + 1).padStart(2, '0');
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('presentation-progress-bar').style.width = `${progressPercent}%`;
+
+      // Update Notes
+      updateSpeakerNotes();
+
+      // Update overview active highlight
+      const thumbCards = document.querySelectorAll('.overview-thumb-card');
+      thumbCards.forEach((card, idx) => {
+        if (idx === currentSlide) card.classList.add('current');
+        else card.classList.remove('current');
+      });
+    }
+
+    // Keyboard Navigation
+    function handleKeyboardNav(e) {
+      if (['input', 'textarea', 'select'].includes(document.activeElement.tagName.toLowerCase())) {
+        return;
+      }
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case ' ':
+        case 'PageDown':
+          e.preventDefault();
+          nextSlide();
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'PageUp':
+          e.preventDefault();
+          prevSlide();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides - 1);
+          break;
+        case 'f':
+        case 'F':
+          toggleDeckFullscreen();
+          break;
+        case 'n':
+        case 'N':
+          togglePresenterNotes();
+          break;
+        case 'l':
+        case 'L':
+          toggleLaserPointer();
+          break;
+        case 'o':
+        case 'O':
+        case 'Tab':
+          e.preventDefault();
+          openOverviewModal();
+          break;
+        case 'Escape':
+          closeOverviewModal();
+          closeWsModal();
+          if (isNotesOpen) togglePresenterNotes();
+          break;
+      }
+    }
+
+    // Touch Swipe Gestures
+    function initTouchGestures() {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+          if (diffX < 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+    }
+
+    // Speaker Notes
+    function togglePresenterNotes() {
+      const drawer = document.getElementById('speaker-notes-drawer');
+      const btn = document.getElementById('btn-toggle-notes');
+      isNotesOpen = !isNotesOpen;
+      if (isNotesOpen) {
+        drawer.classList.add('open');
+        btn.classList.add('active');
+      } else {
+        drawer.classList.remove('open');
+        btn.classList.remove('active');
+      }
+    }
+
+    function updateSpeakerNotes() {
+      const activeSlide = document.querySelector('.slide.active');
+      const notesBody = document.getElementById('speaker-notes-body');
+      if (!activeSlide || !notesBody) return;
+
+      const noteText = currentLang === 'en' 
+        ? (activeSlide.getAttribute('data-notes-en') || activeSlide.getAttribute('data-notes-tr'))
+        : activeSlide.getAttribute('data-notes-tr');
+
+      notesBody.textContent = noteText || (currentLang === 'en' ? 'No notes available for this slide.' : 'Bu slayt için konuşmacı notu bulunmuyor.');
+    }
+
+    // Language Toggle (TR / EN)
+    function toggleDeckLanguage() {
+      currentLang = currentLang === 'tr' ? 'en' : 'tr';
+      applyDeckLanguage(currentLang);
+
+      if (isPresenter) {
+        broadcastSyncMessage({
+          type: 'LANG_CHANGE',
+          lang: currentLang,
+          roomId: roomId
+        });
+      }
+    }
+
+    function applyDeckLanguage(lang) {
+      document.getElementById('lang-btn').textContent = lang === 'tr' ? 'EN' : 'TR';
+      
+      const elements = document.querySelectorAll('[data-tr], [data-en]');
+      elements.forEach(el => {
+        const text = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-tr');
+        if (text) {
+          if (text.includes('<') && text.includes('>')) {
+            el.innerHTML = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+
+      updateSpeakerNotes();
+    }
+
+    // Presentation Mode Switch (Deck vs Doc)
+    function switchPresentationMode(mode) {
+      const app = document.getElementById('presentation-app');
+      const btnDeck = document.getElementById('btn-mode-deck');
+      const btnDoc = document.getElementById('btn-mode-doc');
+
+      if (mode === 'doc') {
+        app.style.position = 'relative';
+        app.style.top = '0';
+        app.style.bottom = 'auto';
+        app.style.paddingTop = '80px';
+        app.style.paddingBottom = '80px';
+        app.style.overflow = 'visible';
+        app.style.height = 'auto';
+        document.body.style.overflow = 'auto';
+
+        document.querySelectorAll('.slide').forEach(s => {
+          s.style.position = 'relative';
+          s.style.opacity = '1';
+          s.style.transform = 'none';
+          s.style.marginBottom = '2.5rem';
+          s.style.pointerEvents = 'auto';
+        });
+
+        btnDoc.classList.add('active');
+        btnDeck.classList.remove('active');
+      } else {
+        app.style.position = 'absolute';
+        app.style.top = 'var(--header-height)';
+        app.style.bottom = 'var(--footer-height)';
+        app.style.paddingTop = '0';
+        app.style.paddingBottom = '0';
+        app.style.overflow = 'hidden';
+        app.style.height = 'auto';
+        document.body.style.overflow = 'hidden';
+
+        document.querySelectorAll('.slide').forEach(s => {
+          s.style.position = '';
+          s.style.marginBottom = '';
+          s.style.pointerEvents = '';
+        });
+
+        btnDeck.classList.add('active');
+        btnDoc.classList.remove('active');
+        updateSlideView();
+      }
+    }
+
+    // Laser Pointer Logic
+    function toggleLaserPointer() {
+      isLaserActive = !isLaserActive;
+      const laser = document.getElementById('laser-pointer');
+      const btn = document.getElementById('btn-toggle-laser');
+
+      if (isLaserActive) {
+        laser.classList.add('active');
+        btn.classList.add('active');
+      } else {
+        laser.classList.remove('active');
+        btn.classList.remove('active');
+      }
+    }
+
+    function handleLaserMouseMove(e) {
+      if (!isLaserActive) return;
+      const laser = document.getElementById('laser-pointer');
+      laser.style.left = `${e.clientX}px`;
+      laser.style.top = `${e.clientY}px`;
+
+      if (isPresenter) {
+        broadcastSyncMessage({
+          type: 'LASER_MOVE',
+          xPercent: (e.clientX / window.innerWidth).toFixed(3),
+          yPercent: (e.clientY / window.innerHeight).toFixed(3),
+          roomId: roomId
+        });
+      }
+    }
+
+    // Overview Grid Modal
+    function openOverviewModal() {
+      renderOverviewGrid();
+      document.getElementById('overview-modal').classList.add('open');
+    }
+
+    function closeOverviewModal() {
+      document.getElementById('overview-modal').classList.remove('open');
+    }
+
+    function renderOverviewGrid() {
+      const container = document.getElementById('overview-grid-container');
+      container.innerHTML = '';
+
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((slide, idx) => {
+        const heading = slide.querySelector('.slide-heading, .hero-pitch-title');
+        const titleText = heading ? heading.textContent.trim() : `Slayt ${idx + 1}`;
+
+        const card = document.createElement('div');
+        card.className = `overview-thumb-card ${idx === currentSlide ? 'current' : ''}`;
+        card.innerHTML = `
+          <span class="overview-thumb-num">SLAYT ${String(idx + 1).padStart(2, '0')}</span>
+          <div class="overview-thumb-title">${titleText.substring(0, 50)}...</div>
+          <span style="font-size: 0.68rem; color: var(--light-green);">Görüntüle ›</span>
+        `;
+        card.onclick = () => {
+          goToSlide(idx);
+          closeOverviewModal();
+        };
+        container.appendChild(card);
+      });
+    }
+
+    // Live Emoji Reactions
+    function emitLiveReaction(emoji) {
+      createFloatingEmoji(emoji);
+      broadcastSyncMessage({
+        type: 'REACTION',
+        emoji: emoji,
+        roomId: roomId
+      });
+    }
+
+    function createFloatingEmoji(emoji) {
+      const el = document.createElement('div');
+      el.className = 'floating-emoji';
+      el.textContent = emoji;
+      el.style.right = `${30 + Math.random() * 50}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2200);
+    }
+
+    // Realtime WebSocket & Local Mesh Sync
+    function broadcastSyncMessage(msg) {
+      const payload = {
+        ...msg,
+        _timestamp: Date.now()
+      };
+
+      // 1. Dedicated WebSocket
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(payload));
+      }
+
+      // 2. BroadcastChannel (Multi-tab)
+      if (bc) bc.postMessage(payload);
+
+      // 3. LocalStorage Event (Cross-window)
+      localStorage.setItem('yakin_deck_sync_payload', JSON.stringify(payload));
+    }
+
+    function handleIncomingSync(data) {
+      if (!data || data.roomId !== roomId) return;
+
+      if (data.type === 'SLIDE_CHANGE') {
+        if (!isPresenter) {
+          goToSlide(data.slideIndex, false);
+        }
+      } else if (data.type === 'LANG_CHANGE') {
+        currentLang = data.lang;
+        applyDeckLanguage(currentLang);
+      } else if (data.type === 'REACTION') {
+        createFloatingEmoji(data.emoji);
+      } else if (data.type === 'LASER_MOVE') {
+        if (!isPresenter) {
+          const laser = document.getElementById('laser-pointer');
+          laser.classList.add('active');
+          laser.style.left = `${data.xPercent * window.innerWidth}px`;
+          laser.style.top = `${data.yPercent * window.innerHeight}px`;
+        }
+      }
+    }
+
+    // WebSocket / Broadcast Modal Management
+    function openWsModal() {
+      initQRCode();
+      document.getElementById('ws-modal').classList.add('open');
+    }
+
+    function closeWsModal() {
+      document.getElementById('ws-modal').classList.remove('open');
+    }
+
+    function togglePresenterRole() {
+      isPresenter = document.getElementById('ws-is-presenter-chk').checked;
+    }
+
+    function generateNewRoomCode() {
+      const rand = Math.floor(1000 + Math.random() * 9000);
+      roomId = `YAKIN-${rand}`;
+      document.getElementById('ws-room-input').value = roomId;
+      initQRCode();
+    }
+
+    function initQRCode() {
+      const qrContainer = document.getElementById('ws-qrcode-container');
+      if (!qrContainer) return;
+      qrContainer.innerHTML = '';
+
+      const targetUrl = `${window.location.origin}${window.location.pathname}?room=${roomId}&role=audience`;
+
+      if (typeof QRCode !== 'undefined') {
+        new QRCode(qrContainer, {
+          text: targetUrl,
+          width: 140,
+          height: 140,
+          colorDark: '#091308',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      } else {
+        qrContainer.innerHTML = `<div style="font-size:0.75rem; text-align:center; color:#000;">${targetUrl}</div>`;
+      }
+    }
+
+    // Interactive ROI Calculator Logic (Slide 8)
+    function recalcDeckSim() {
+      const sector = document.getElementById('sim-sector').value;
+      const scale = parseInt(document.getElementById('sim-scale-slider').value, 10);
+      const scaleLabel = document.getElementById('sim-scale-label');
+
+      let capex = 0;
+      let roiYears = 0;
+      let yieldVal = '';
+      let co2Val = '';
+
+      if (sector === 'ges') {
+        scaleLabel.textContent = `${scale} MWp`;
+        capex = scale * 0.68;
+        roiYears = 3.8;
+        yieldVal = `${(scale * 1620).toLocaleString()} MWh`;
+        co2Val = `${(scale * 840).toLocaleString()} Ton`;
+      } else if (sector === 'bess') {
+        scaleLabel.textContent = `${scale * 2} MWh (BESS)`;
+        capex = scale * 0.85;
+        roiYears = 4.2;
+        yieldVal = `${(scale * 2400).toLocaleString()} MWh Cycle`;
+        co2Val = `${(scale * 980).toLocaleString()} Ton`;
+      } else if (sector === 'dc') {
+        scaleLabel.textContent = `${scale * 500} m² / ${scale * 2} MW IT`;
+        capex = scale * 2.8;
+        roiYears = 4.6;
+        yieldVal = `Tier III+ 99.982%`;
+        co2Val = `${(scale * 1200).toLocaleString()} Ton NetZero`;
+      } else if (sector === 'ev') {
+        scaleLabel.textContent = `${scale * 4} Soket DC Ultra Fast`;
+        capex = scale * 0.22;
+        roiYears = 2.9;
+        yieldVal = `${(scale * 850).toLocaleString()} Araç/Ay`;
+        co2Val = `${(scale * 420).toLocaleString()} Ton`;
+      } else if (sector === 'fac') {
+        scaleLabel.textContent = `${scale * 1000} m² Fabrika Alanı`;
+        capex = scale * 0.95;
+        roiYears = 5.2;
+        yieldVal = `5D BIM Anahtar Teslim`;
+        co2Val = `LEED Gold Standart`;
+      }
+
+      document.getElementById('out-capex').textContent = `$ ${capex.toFixed(1)} M`;
+      document.getElementById('out-roi').textContent = `${roiYears.toFixed(1)} ${currentLang === 'en' ? 'Years' : 'Yıl'}`;
+      document.getElementById('out-yield').textContent = yieldVal;
+      document.getElementById('out-carbon').textContent = co2Val;
+    }
+
+    // Fullscreen Toggle
+    function toggleDeckFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // PDF Export / Print
+    function exportDeckPdf() {
+      switchPresentationMode('doc');
+      setTimeout(() => {
+        window.print();
+      }, 300);
+    }
+  </script>
+</body>
+</html>
