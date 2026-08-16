@@ -844,7 +844,9 @@
           <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 8px;">
             <tr>
               <td style="vertical-align: middle; padding-right: 12px;">
-                <img src="${personPhotoUrl}" alt="${name}" width="48" height="48" style="display: block; border-radius: 50%; width: 48px; height: 48px; border: 2px solid #3d6e30; object-fit: cover;">
+                <a href="https://www.yakingrup.net/vcard?id=${vcardProfileId}" target="_blank" style="display: block; text-decoration: none;">
+                  <img src="${personPhotoUrl}" alt="${name}" width="48" height="48" style="display: block; border-radius: 50%; width: 48px; height: 48px; border: 2px solid #3d6e30; object-fit: cover;">
+                </a>
               </td>
               <td style="vertical-align: middle; text-align: ${textAlign};">
                 ${personBlockHTML}
@@ -889,9 +891,11 @@
             </a>
           </td>
           ${showHeaderImg ? `
-          <!-- Sağ Görsel -->
+          <!-- Sağ Görsel (Tıklanabilir) -->
           <td width="56%" style="padding: 0; vertical-align: top;">
-            <img src="https://www.yakingrup.net/assets/mail/header-building.jpg" alt="Yakın Grup Projeler" width="364" style="display: block; border: 0; width: 100%; height: auto;">
+            <a href="https://www.yakingrup.net" target="_blank" style="text-decoration: none; display: block; line-height: 0;">
+              <img src="https://www.yakingrup.net/assets/mail/header-building.jpg" alt="Yakın Grup Projeler" width="364" style="display: block; border: 0; width: 100%; height: auto;">
+            </a>
           </td>` : ''}
         </tr>
       </table>
@@ -919,7 +923,9 @@
             </div>
             ${showFeatureIcons ? `
             <div style="margin-top: 10px;">
-              <img src="https://www.yakingrup.net/assets/mail/feature-icons.png" alt="Sürdürülebilirlik" width="170" style="display: block; border: 0; width: 100%; max-width: 170px; height: auto;">
+              <a href="https://www.yakingrup.net" target="_blank" style="text-decoration: none; display: block; line-height: 0;">
+                <img src="https://www.yakingrup.net/assets/mail/feature-icons.png" alt="Sürdürülebilirlik" width="170" style="display: block; border: 0; width: 100%; max-width: 170px; height: auto;">
+              </a>
             </div>` : ''}
           </td>
 
@@ -990,10 +996,12 @@
   </tr>
 
   ${showFooterBanner ? `
-  <!-- 3. ALT BANNER GÖRSELİ -->
+  <!-- 3. ALT BANNER GÖRSELİ (TIKLANABİLİR) -->
   <tr>
     <td style="padding: 0; line-height: 0;">
-      <img src="https://www.yakingrup.net/assets/mail/footer-banner.jpg" alt="Doğaya Saygılı, Geleceğe Değer Katıyoruz" width="650" style="display: block; border: 0; width: 100%; height: auto;">
+      <a href="https://www.yakingrup.net" target="_blank" style="text-decoration: none; display: block; line-height: 0;">
+        <img src="https://www.yakingrup.net/assets/mail/footer-banner.jpg" alt="Doğaya Saygılı, Geleceğe Değer Katıyoruz" width="650" style="display: block; border: 0; width: 100%; height: auto;">
+      </a>
     </td>
   </tr>` : ''}
 
