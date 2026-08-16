@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:ATASOY;İlker;;;
+FN:İlker ATASOY
+ORG:Yakın Grup
+TITLE:Yönetim Kurulu Başkanı / CXO
+TEL;TYPE=CELL,VOICE;VALUE=uri:tel:+905428973446
+TEL;TYPE=WORK,VOICE:+905428973446
+EMAIL;TYPE=WORK,INTERNET:ilker.atasoy@yakingrup.net
+ADR;TYPE=WORK:;;Maslak Sun Plaza Kat: 12;Şişli;İstanbul;34398;Türkiye
+URL:https://www.yakingrup.net
+NOTE:Yakın Grup Holding | İnşaat • Enerji • Capital • Teknoloji
+END:VCARD

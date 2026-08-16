@@ -910,9 +910,11 @@
         <div class="form-group">
           <label>QR Kod Hedefi</label>
           <select id="inp-qr-target" class="form-control" onchange="updateCardPreview()">
-            <option value="vcard">Dijital vCard İletişim Kartı (Doğrudan Rehbere Ekle)</option>
-            <option value="web">Kurumsal Web Sitesi (www.yakingrup.net)</option>
-            <option value="linkedin">LinkedIn Şirket Profili</option>
+            <option value="web-vcard" selected>🌐 Akıllı Dijital vCard Sayfası (Kameradan Doğrudan Aç & Kaydet)</option>
+            <option value="vcard">📱 Doğrudan vCard 3.0 Kamera Kaydı (Raw Contact)</option>
+            <option value="vcf-file">💾 .VCF Dosya İndirme Bağlantısı</option>
+            <option value="web">🏢 Kurumsal Web Sitesi (www.yakingrup.net)</option>
+            <option value="linkedin">💼 LinkedIn Şirket Profili</option>
           </select>
         </div>
       </div>
@@ -1654,9 +1656,18 @@
 
     function generateQRCode(type, data) {
       let qrContent = '';
-      if (type === 'vcard') {
+      const isEylul = data.name.toLowerCase().includes('eyl');
+      const isIlker = data.name.toLowerCase().includes('ilker');
+      const profileId = isEylul ? 'eylul' : (isIlker ? 'ilker' : 'ilker');
+
+      if (type === 'web-vcard') {
+        // Live Published Web vCard on domain
+        qrContent = `https://www.yakingrup.net/vcard.html?id=${profileId}`;
+      } else if (type === 'vcard') {
         // Industry-Standard UTF-8 vCard 3.0 compatible with iOS & Android Cameras
         qrContent = `BEGIN:VCARD\nVERSION:3.0\nN:${data.name};;;\nFN:${data.name}\nORG:Yakın Grup\nTITLE:${data.title}\nTEL;TYPE=CELL,VOICE:${data.phone.replace(/\\s+/g, '')}\nEMAIL;TYPE=WORK,INTERNET:${data.email}\nADR;TYPE=WORK:;;${data.address};;;;\nURL:https://${data.web}\nEND:VCARD`;
+      } else if (type === 'vcf-file') {
+        qrContent = `https://www.yakingrup.net/vcard-${profileId}.vcf`;
       } else if (type === 'web') {
         qrContent = `https://${data.web}`;
       } else if (type === 'linkedin') {
