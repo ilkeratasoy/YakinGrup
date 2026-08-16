@@ -828,14 +828,15 @@
         </div>
       </div>
 
-      <!-- Layout Order Toggle -->
+      <!-- Layout Order Toggle (Ünvan Altta / Üstte / Ortada) -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>İsim & Ünvan Sıralaması</span>
+          <span>İsim & Ünvan Yerleşimi</span>
         </div>
-        <div class="quick-profiles">
-          <button class="profile-pill active" id="btn-order-name-first" onclick="setPersonOrder('name-first')">İsim Üstte / Ünvan Altta (Seçili)</button>
-          <button class="profile-pill" id="btn-order-title-first" onclick="setPersonOrder('title-first')">Ünvan Üstte</button>
+        <div class="company-select-grid">
+          <div class="comp-pill active" id="btn-order-name-first" onclick="setPersonOrder('name-first')">Ünvan Altta (İsim Üstte)</div>
+          <div class="comp-pill" id="btn-order-title-top" onclick="setPersonOrder('title-top')">Ünvan Üstte (İsim Altta)</div>
+          <div class="comp-pill" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">Ünvan Ortada (Merkezli)</div>
         </div>
       </div>
 
@@ -1518,31 +1519,57 @@
       const personBox = document.getElementById('card-person-box');
       const titleEl = document.getElementById('card-title');
       const nameEl = document.getElementById('card-name');
-      const btnTitle = document.getElementById('btn-order-title-first');
-      const btnName = document.getElementById('btn-order-name-first');
+      
+      const btnNameFirst = document.getElementById('btn-order-name-first');
+      const btnTitleTop = document.getElementById('btn-order-title-top');
+      const btnTitleMiddle = document.getElementById('btn-order-title-middle');
+
+      [btnNameFirst, btnTitleTop, btnTitleMiddle].forEach(b => b && b.classList.remove('active'));
+
+      personBox.innerHTML = '';
 
       if (order === 'name-first') {
-        btnName.classList.add('active');
-        btnTitle.classList.remove('active');
-        personBox.innerHTML = '';
-        personBox.appendChild(nameEl);
-        personBox.appendChild(titleEl);
+        if (btnNameFirst) btnNameFirst.classList.add('active');
+        personBox.style.alignItems = 'flex-start';
+        personBox.style.textAlign = 'left';
+        personBox.style.margin = 'auto 0';
+        nameEl.style.textAlign = 'left';
+        titleEl.style.textAlign = 'left';
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.78rem';
         titleEl.style.letterSpacing = '0.08em';
         titleEl.style.fontWeight = '700';
-      } else {
-        btnTitle.classList.add('active');
-        btnName.classList.remove('active');
-        personBox.innerHTML = '';
-        personBox.appendChild(titleEl);
         personBox.appendChild(nameEl);
+        personBox.appendChild(titleEl);
+      } else if (order === 'title-top') {
+        if (btnTitleTop) btnTitleTop.classList.add('active');
+        personBox.style.alignItems = 'flex-start';
+        personBox.style.textAlign = 'left';
+        personBox.style.margin = 'auto 0';
+        nameEl.style.textAlign = 'left';
+        titleEl.style.textAlign = 'left';
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.74rem';
         titleEl.style.letterSpacing = '0.12em';
         titleEl.style.fontWeight = '700';
+        personBox.appendChild(titleEl);
+        personBox.appendChild(nameEl);
+      } else if (order === 'title-middle') {
+        if (btnTitleMiddle) btnTitleMiddle.classList.add('active');
+        personBox.style.alignItems = 'center';
+        personBox.style.textAlign = 'center';
+        personBox.style.margin = 'auto auto';
+        nameEl.style.textAlign = 'center';
+        titleEl.style.textAlign = 'center';
+        titleEl.style.color = 'var(--primary-green)';
+        titleEl.style.textTransform = 'uppercase';
+        titleEl.style.fontSize = '0.76rem';
+        titleEl.style.letterSpacing = '0.1em';
+        titleEl.style.fontWeight = '700';
+        personBox.appendChild(nameEl);
+        personBox.appendChild(titleEl);
       }
       updateCardPreview();
     }
