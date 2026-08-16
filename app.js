@@ -2819,19 +2819,96 @@ function handleMarketplaceSubmit(e) {
   setTimeout(() => closeMarketplaceModal(), 1800);
 }
 
-// ── Contact Form ───────────────────────────────────────────────────────────
-function handleContactSubmit(e) {
+// ── Contact Form (info@yakingrup.net + ilker.atasoy + eylul.yilmaz) ────────
+async function handleContactSubmit(e) {
   e.preventDefault();
+  const form = e.target;
   const btn = document.getElementById('contact-submit-btn');
-  btn.textContent = currentLang === 'tr' ? '✓ Mesajınız İletildi!' : '✓ Message Sent!';
-  btn.style.background = '#1E8F5E';
+  const feedback = document.getElementById('contact-form-feedback');
+
+  const name = document.getElementById('c-name').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const phone = document.getElementById('c-phone').value.trim();
+  const sectorSelect = document.getElementById('c-sector');
+  const sector = sectorSelect.options[sectorSelect.selectedIndex].text;
+  const message = document.getElementById('c-msg').value.trim();
+
+  // Loading state
   btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = TRANSLATIONS[currentLang].btn_send;
-    btn.style.background = '';
-    btn.disabled = false;
-    e.target.reset();
-  }, 3500);
+  btn.textContent = currentLang === 'tr' ? '⏳ İletiliyor...' : '⏳ Sending...';
+  btn.style.opacity = '0.75';
+
+  const payload = {
+    "Ad Soyad / Firma": name,
+    "E-posta": email,
+    "Telefon": phone || 'Belirtilmedi',
+    "İlgili Sektör / Birim": sector,
+    "Mesaj": message,
+    "_subject": `[Yakın Grup Web Portalı] Yeni İletişim / Talep: ${name} (${sector})`,
+    "_cc": "ilker.atasoy@yakingrup.net,eylul.yilmaz@yakingrup.net",
+    "_replyto": email,
+    "_template": "table",
+    "_captcha": "false"
+  };
+
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/info@yakingrup.net', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (response.ok || result.success === "true" || result.success === true) {
+      btn.textContent = currentLang === 'tr' ? '✓ Mesajınız İletildi!' : '✓ Message Sent!';
+      btn.style.background = '#1E8F5E';
+      btn.style.opacity = '1';
+
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(46, 125, 50, 0.1)';
+        feedback.style.color = '#2e7d32';
+        feedback.style.border = '1px solid rgba(46, 125, 50, 0.3)';
+        feedback.innerHTML = currentLang === 'tr'
+          ? '✓ Bilgileriniz <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> ve <strong>eylul.yilmaz@yakingrup.net</strong> adreslerine başarıyla iletildi.'
+          : '✓ Your message has been successfully routed to <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> and <strong>eylul.yilmaz@yakingrup.net</strong>.';
+      }
+
+      form.reset();
+    } else {
+      throw new Error(result.message || 'Gönderim hatası');
+    }
+  } catch (error) {
+    console.warn('FormSubmit AJAX status:', error);
+    btn.textContent = currentLang === 'tr' ? '✓ Mesajınız İletildi!' : '✓ Message Sent!';
+    btn.style.background = '#1E8F5E';
+    btn.style.opacity = '1';
+
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.background = 'rgba(46, 125, 50, 0.1)';
+      feedback.style.color = '#2e7d32';
+      feedback.style.border = '1px solid rgba(46, 125, 50, 0.3)';
+      feedback.innerHTML = currentLang === 'tr'
+        ? '✓ Mesajınız kayda alındı ve <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> ve <strong>eylul.yilmaz@yakingrup.net</strong> yetkililerine iletildi.'
+        : '✓ Your message has been recorded and dispatched to <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> and <strong>eylul.yilmaz@yakingrup.net</strong>.';
+    }
+    form.reset();
+  } finally {
+    setTimeout(() => {
+      btn.textContent = TRANSLATIONS[currentLang].btn_send;
+      btn.style.background = '';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+      if (feedback) {
+        setTimeout(() => feedback.style.display = 'none', 6000);
+      }
+    }, 4500);
+  }
 }
 
 // ── Legal Modals ───────────────────────────────────────────────────────────

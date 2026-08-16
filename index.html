@@ -1294,31 +1294,32 @@
           <form id="contact-form" onsubmit="handleContactSubmit(event)">
             <div class="form-group">
               <label for="c-name" data-i18n="lbl_form_name">Adınız Soyadınız / Firma</label>
-              <input type="text" id="c-name" required placeholder="Örn. Ahmet Yılmaz">
+              <input type="text" id="c-name" name="Ad Soyad / Firma" required placeholder="Örn. Ahmet Yılmaz">
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label for="c-email" data-i18n="lbl_form_email">E-posta Adresiniz</label>
-                <input type="email" id="c-email" required placeholder="ahmet@firma.com">
+                <input type="email" id="c-email" name="E-posta" required placeholder="ahmet@firma.com">
               </div>
               <div class="form-group">
                 <label for="c-phone" data-i18n="lbl_form_phone">Telefon Numaranız</label>
-                <input type="tel" id="c-phone" placeholder="+90 532...">
+                <input type="tel" id="c-phone" name="Telefon" placeholder="+90 532...">
               </div>
             </div>
             <div class="form-group">
               <label for="c-sector" data-i18n="lbl_form_sector">İlgili Birim / Sektör</label>
-              <select id="c-sector">
-                <option value="insaat" data-i18n="tag_construction">Yakın İnşaat</option>
-                <option value="enerji" data-i18n="tag_energy">Yakın Enerji</option>
-                <option value="capital" data-i18n="opt_capital">Yakın Capital</option>
-                <option value="teknoloji" data-i18n="opt_tech">Yakın Teknoloji</option>
+              <select id="c-sector" name="İlgili Sektör / Birim">
+                <option value="Yakın İnşaat" data-i18n="tag_construction">Yakın İnşaat</option>
+                <option value="Yakın Enerji" data-i18n="tag_energy">Yakın Enerji</option>
+                <option value="Yakın Capital" data-i18n="opt_capital">Yakın Capital</option>
+                <option value="Yakın Teknoloji" data-i18n="opt_tech">Yakın Teknoloji</option>
               </select>
             </div>
             <div class="form-group">
               <label for="c-msg" data-i18n="lbl_form_msg">Mesajınız</label>
-              <textarea id="c-msg" rows="4" required placeholder="Mesajınızı bu alana yazınız..."></textarea>
+              <textarea id="c-msg" name="Mesaj" rows="4" required placeholder="Mesajınızı bu alana yazınız..."></textarea>
             </div>
+            <div id="contact-form-feedback" style="display: none; padding: 10px 14px; border-radius: 8px; font-size: 0.86rem; font-weight: 600; margin-bottom: 12px; text-align: center;"></div>
             <button type="submit" class="submit-btn" id="contact-submit-btn" data-i18n="btn_send">Mesajı Gönder</button>
           </form>
         </div>
