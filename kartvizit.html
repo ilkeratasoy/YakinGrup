@@ -587,8 +587,8 @@
 
     /* QR Code Container on Card */
     .card-qr-wrap {
-      width: 66px;
-      height: 66px;
+      width: 68px;
+      height: 68px;
       padding: 4px;
       border-radius: 8px;
       background: #ffffff;
@@ -598,12 +598,16 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      overflow: hidden;
     }
 
+    .card-qr-wrap canvas,
+    .card-qr-wrap img,
     .card-qr-wrap svg {
       width: 100% !important;
       height: 100% !important;
-      display: block;
+      display: block !important;
+      object-fit: contain;
     }
 
     /* BACK SIDE DESIGN (Beyaz Fonlu Arka Yüz) */
@@ -1069,7 +1073,8 @@
 
   </div>
 
-  <!-- Pure JS Self-Contained QR Code Generator (Zero Dependency, Full UTF-8 & SVG Vector Output) -->
+  <!-- High-Precision Universal QR Code Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     // Embedded Lightweight QR Code & vCard Engine
     (function(window) {
@@ -1674,11 +1679,27 @@
         qrContent = 'https://tr.linkedin.com/company/yakingrupnet';
       }
 
-      try {
+      const qrContainer = document.getElementById('card-qr-box');
+      qrContainer.innerHTML = '';
+
+      if (typeof QRCode !== 'undefined') {
+        try {
+          new QRCode(qrContainer, {
+            text: qrContent,
+            width: 140,
+            height: 140,
+            colorDark: "#0f172a",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+          });
+        } catch (e) {
+          console.error("QRCode library error, using SVG fallback", e);
+          const svg = generatePureSVGQRCode(qrContent);
+          qrContainer.innerHTML = svg;
+        }
+      } else {
         const svg = generatePureSVGQRCode(qrContent);
-        document.getElementById('card-qr-box').innerHTML = svg;
-      } catch (err) {
-        console.error('QR code generation error', err);
+        qrContainer.innerHTML = svg;
       }
     }
 
