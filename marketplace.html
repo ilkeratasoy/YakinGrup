@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yakın Grup Marketplace — Endüstriyel B2B & Bireysel B2C Enerji & Teknoloji Ticaret Portalı</title>
+  <meta name="description" content="Yakın Grup Marketplace: Endüstriyel güneş enerjisi (GES), batarya depolama (ESS), DC hızlı şarj istasyonları, veri merkezi ve konut tipi tak-çalıştır solar çözümleri için B2B & B2C tedarik platformu.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
+  <link rel="stylesheet" href="marketplace.css?v=20260817_1">
+</head>
+<body class="mode-b2b">
+
+  <!-- ===== 1. TOP ANNOUNCEMENT & SYSTEM BAR ===== -->
+  <div class="market-topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span class="topbar-tag">MÜHENDİSLİK & TİCARET</span>
+        <a href="index.html" class="topbar-link">🏛️ Yakın Grup Holding</a>
+        <a href="teklif.html" class="topbar-link">📐 Şartname & Teklif Stüdyosu</a>
+        <a href="Sunum.html" class="topbar-link">📊 Yatırımcı Sunumu</a>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-link" style="color: #cbd5e1;">📞 Kurumsal Destek: +90 (212) 345 67 89</span>
+        <button onclick="openSupplierModal()" style="background: rgba(212, 175, 55, 0.15); color: #d4af37; border: 1px solid rgba(212, 175, 55, 0.4); padding: 2px 10px; border-radius: 4px; font-size: 0.76rem; font-weight: 700; cursor: pointer;">
+          🤝 Tedarikçi Ol
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2. MAIN HEADER & CONTROLS ===== -->
+  <header class="market-header">
+    <div class="container">
+      
+      <!-- Brand & Mode Switcher -->
+      <div class="brand-section">
+        <a href="marketplace.html" class="brand-logo">
+          <img src="assets/images/brand-emblem.png" alt="Yakın Grup" width="34" height="34">
+          <span class="brand-text">YAKIN <span>GRUP</span></span>
+          <span class="brand-badge">MARKETPLACE</span>
+        </a>
+
+        <!-- Dual Mode Pill Toggle (B2B vs B2C) -->
+        <div class="mode-switcher" title="Mod Değiştir (Kurumsal / Bireysel)">
+          <button class="mode-btn active" data-mode="b2b" onclick="setMarketMode('b2b')">
+            🏢 Kurumsal (B2B)
+          </button>
+          <button class="mode-btn" data-mode="b2c" onclick="setMarketMode('b2c')">
+            🏠 Bireysel (B2C)
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input-field" class="search-input" placeholder="Ürün, model, marka veya teknik şartname ara...">
+        </div>
+      </div>
+
+      <!-- Action Controls: Currency, Language & Cart -->
+      <div class="header-controls">
+        
+        <!-- Currency Selector -->
+        <div class="ctrl-btn" title="Para Birimi">
+          <span>💱</span>
+          <select class="currency-select" onchange="setCurrency(this.value)">
+            <option value="TRY">TRY (₺)</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+          </select>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="ctrl-btn" title="Dil">
+          <span>🌐</span>
+          <select class="lang-select" onchange="setLanguage(this.value)">
+            <option value="tr">TR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+
+        <!-- Cart & RFQ Button -->
+        <button class="cart-trigger-btn" onclick="openCartDrawer()">
+          <span>🛒</span>
+          <span id="header-cart-btn-label">Sepet / Teklif</span>
+          <span class="cart-count-badge" id="cart-count-display">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===== 3. HERO & PROMOTIONAL VITRINE ===== -->
+  <section class="market-hero">
+    <div class="container">
+      <div class="hero-banner-card">
+        
+        <div class="hero-content">
+          <div class="hero-badge-row">
+            <span class="hero-badge" id="hero-badge-text">ENDÜSTRİYEL TOPTAN & ŞARTNAMELİ TEDARİK</span>
+            <span style="font-size: 0.8rem; color: #d4af37; font-weight: 700;">★ Yakın Grup Ekosistemi</span>
+          </div>
+
+          <h1 class="hero-title" id="hero-title-text">
+            Endüstriyel Güç, Enerji & Veri Merkezi Tedarik Platformu
+          </h1>
+
+          <p class="hero-subtitle" id="hero-sub-text">
+            Tier-1 Solar PV modülleri, DC yüksek hızlı şarj istasyonları, modüler sunucu kabinleri ve transformatörlerde doğrudan üretici fiyatları, kademeli iskonto ve şartnameli RFQ altyapısı.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#catalog" class="btn-primary" id="hero-cta1">Toptan Kataloğu Keşfet</a>
+            <button class="btn-secondary-white" id="hero-cta2" onclick="openRFQModal()">BOM / Şartname Teklifi Al</button>
+          </div>
+        </div>
+
+        <!-- Right: Stats Grid -->
+        <div class="hero-stats-grid">
+          <div class="hero-stat-card">
+            <span class="hero-stat-number" id="stat-1-val">250+ MW</span>
+            <span class="hero-stat-label" id="stat-1-lbl">Tedarik Gücü</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-number" id="stat-2-val">%100</span>
+            <span class="hero-stat-label" id="stat-2-lbl">Tier-1 Standart</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-number" id="stat-3-val">48 Saat</span>
+            <span class="hero-stat-label" id="stat-3-lbl">RFQ Teklif Süresi</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-number" id="stat-4-val">Cari & Leasing</span>
+            <span class="hero-stat-label" id="stat-4-lbl">Yakın Capital Finansmanı</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. CATEGORIES QUICK NAV BAR ===== -->
+  <section class="categories-nav-section">
+    <div class="container">
+      <div class="categories-bar" id="categories-nav-bar">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. MAIN CATALOG WITH SIDEBAR FILTERS & PRODUCT GRID ===== -->
+  <main class="catalog-section" id="catalog">
+    <div class="container">
+      <div class="catalog-layout">
+        
+        <!-- Left: Filters Sidebar -->
+        <aside class="sidebar-filters">
+          <div class="filter-header">
+            <h3>Filtreler</h3>
+            <button class="filter-reset-btn" onclick="resetAllFilters()">Temizle</button>
+          </div>
+
+          <!-- Availability Filter -->
+          <div class="filter-group">
+            <div class="filter-group-title">Teslimat & Stok</div>
+            <label class="filter-option-label">
+              <input type="checkbox" id="filter-stock-checkbox">
+              <span>Sadece Hemen Teslim Stoklar</span>
+            </label>
+          </div>
+
+          <!-- Brand / Partner Filter -->
+          <div class="filter-group">
+            <div class="filter-group-title">Üretici & Partner</div>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" checked onclick="resetAllFilters()">
+              <span>Tüm Markalar</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Huawei'; renderProducts();">
+              <span>Huawei Smart PV</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Longi'; renderProducts();">
+              <span>Longi Solar</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='CATL'; renderProducts();">
+              <span>CATL ESS Storage</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Yakın'; renderProducts();">
+              <span>Yakın Teknoloji / Volt</span>
+            </label>
+          </div>
+
+          <!-- Sidebar Callout -->
+          <div class="sidebar-rfq-banner">
+            <h4>📋 Proje Şartnamesi</h4>
+            <p>Mühendislik ekibimiz şartnamenize göre özel marka-model eşleştirmesi ve fiyatlandırma yapar.</p>
+            <button class="btn-sidebar-action" onclick="openRFQModal()">Şartname Yükle</button>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-light); font-size: 0.8rem; color: var(--text-muted);">
+            💳 <strong>Ödeme & Finansman:</strong> Kredi kartı, kurumsal DBS, akreditif ve Yakın Capital proje leasingi desteklenmektedir.
+          </div>
+        </aside>
+
+        <!-- Right: Products Area -->
+        <div class="products-main-col">
+          
+          <!-- Top Bar: Result Count & Sorter -->
+          <div class="products-topbar">
+            <div class="results-count">
+              Toplam <strong id="results-count-number">0</strong> ürün listeleniyor
+            </div>
+            <div class="sort-wrapper">
+              <span>Sırala:</span>
+              <select id="sort-by-select" class="sort-select">
+                <option value="featured">Öne Çıkanlar</option>
+                <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          <div class="products-grid" id="products-grid-container">
+            <!-- Rendered dynamically by marketplace.js -->
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== 6. INTERACTIVE ENERGY & SOLAR SIMULATOR ===== -->
+  <section class="tools-section" id="simulator">
+    <div class="container">
+      
+      <div class="section-header-centered">
+        <span class="section-badge-pill">ENERJİ & TASARRUF SİMÜLATÖRÜ</span>
+        <h2 class="section-title-large">Güneş Enerjisi & Şarj İhtiyacınızı Hesaplayın</h2>
+        <p class="section-desc-sub">
+          Aylık elektrik faturanızı ve tesis tipinizi seçin, optimum GES gücünü, yıllık üretim kapasitenizi ve amortisman sürenizi anında hesaplayalım.
+        </p>
+      </div>
+
+      <div class="calc-widget-card">
+        
+        <!-- Inputs Column -->
+        <div class="calc-inputs-col">
+          <div class="calc-field-group">
+            <label for="calc-usage-type">Kullanım Alanı / Tesis Türü</label>
+            <select id="calc-usage-type">
+              <option value="villa">🏡 Müstakil Villa / Konut Çatısı</option>
+              <option value="commercial">🏭 Ticari İşletme / Fabrika / Sanayi Çatısı</option>
+              <option value="farm">🚜 Tarımsal Sulama / Arazi GES</option>
+            </select>
+          </div>
+
+          <div class="calc-field-group">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
+              <label for="calc-bill-slider">Aylık Ortalama Elektrik Faturası</label>
+              <span class="range-val-badge" id="calc-bill-val">₺15.000</span>
+            </div>
+            <div class="range-slider-wrapper">
+              <input type="range" id="calc-bill-slider" min="1500" max="250000" step="1000" value="15000">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+                <span>₺1.500 (Bireysel)</span>
+                <span>₺250.000+ (Endüstriyel)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-field-group">
+            <label for="calc-region-select">Tesis Lokasyonu (Güneşlenme Süresi)</label>
+            <select id="calc-region-select">
+              <option value="marmara">Marmara & Ege Bölgesi (Yüksek Verim — 1.550 kWh/kWp/Yıl)</option>
+              <option value="akdeniz">Akdeniz & Güneydoğu Anadolu (Maksimum Verim — 1.780 kWh/kWp/Yıl)</option>
+              <option value="anadolu">İç Anadolu & Karadeniz (Standart Verim — 1.420 kWh/kWp/Yıl)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Results Column -->
+        <div class="calc-results-panel">
+          <div class="calc-res-row">
+            <span class="calc-res-label">Önerilen Sistem Gücü</span>
+            <span class="calc-res-val" id="calc-res-power-val">8.2 kWp</span>
+          </div>
+          <div class="calc-res-row">
+            <span class="calc-res-label">Tahmini Yıllık Üretim</span>
+            <span class="calc-res-val" id="calc-res-gen-val">12.850 kWh / Yıl</span>
+          </div>
+          <div class="calc-res-row">
+            <span class="calc-res-label">Yıllık Fatura Tasarrufu</span>
+            <span class="calc-res-val" id="calc-res-savings-val">₺180.000 / Yıl</span>
+          </div>
+          <div class="calc-res-row">
+            <span class="calc-res-label">Tahmini Amortisman Süresi</span>
+            <span class="calc-res-val" id="calc-res-payback-val">3.4 Yıl</span>
+          </div>
+
+          <div class="calc-recommended-package">
+            <div class="calc-package-title">📦 Anahtar Teslim Mühendislik Paketi</div>
+            <div class="calc-package-desc">Statik proje onayı, dağıtım şirketi çağrı mektubu süreçleri, Tier-1 paneller ve 10 yıl Yakın Grup garantisi dahil.</div>
+            <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="openB2CCheckoutModal()">
+              🎯 Ücretsiz Keşif & Proje Randevusu Al
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 7. B2B BOM / RFQ & SUPPLIER ECOSYSTEM ===== -->
+  <section class="b2b-rfq-section">
+    <div class="container">
+      <div class="rfq-box-grid">
+        
+        <!-- B2B RFQ Box -->
+        <div class="rfq-card">
+          <div class="rfq-card-icon">📑</div>
+          <h3>Toplu BOM & Şartname Teklifi İste (B2B)</h3>
+          <p>
+            Büyük ölçekli santral, veri merkezi ve inşaat projeleriniz için malzeme listenizi (Excel / PDF) yükleyin; mühendislik onaylı kademeli proforma teklifinizi 24 saatte iletelim.
+          </p>
+          <button class="btn-primary" onclick="openRFQModal()">Şartname / BOM Yükle</button>
+        </div>
+
+        <!-- Supplier Application Box -->
+        <div class="rfq-card">
+          <div class="rfq-card-icon">🤝</div>
+          <h3>Yakın Grup Tedarikçi Ekosistemi</h3>
+          <p>
+            Tier-1 güneş paneli, invertör, trafo, kablo veya şarj üniteleri üreticisiyseniz; Yakın Grup Holding ulusal ve uluslararası pazaryeri ağında onaylı tedarikçimiz olun.
+          </p>
+          <button class="btn-secondary-white" style="color: #0f172a; border-color: #cbd5e1; background: #f8fafc;" onclick="openSupplierModal()">
+            Tedarikçi Başvuru Formu
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. SLIDE-OVER CART / RFQ DRAWER ===== -->
+  <div class="drawer-backdrop" id="drawer-backdrop-overlay" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cart-drawer-panel">
+    
+    <div class="drawer-header">
+      <h3 id="drawer-title-text">Kurumsal RFQ & Teklif Sepeti</h3>
+      <button class="drawer-close-btn" onclick="closeCartDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-body" id="drawer-items-body">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <div class="drawer-footer" id="drawer-footer-panel">
+      <div class="drawer-summary-row">
+        <span>Ara Toplam (Net):</span>
+        <span id="drawer-subtotal-val">₺0</span>
+      </div>
+      <div class="drawer-summary-row">
+        <span>KDV (%20):</span>
+        <span id="drawer-vat-val">₺0</span>
+      </div>
+      <div class="drawer-total-row">
+        <span>Genel Toplam:</span>
+        <span id="drawer-grandtotal-val" style="color: var(--primary);">₺0</span>
+      </div>
+      <button class="btn-drawer-checkout" onclick="handleDrawerCheckout()">
+        <span id="drawer-checkout-btn-text">Proforma Fatura & Teklif Oluştur</span> ➔
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ===== 9. MODALS ===== -->
+
+  <!-- Modal A: Product Details & Specs -->
+  <div class="market-modal" id="product-detail-modal">
+    <div class="modal-content-card">
+      <div class="modal-header-bar">
+        <h3>Ürün & Şartname Detayı</h3>
+        <button class="drawer-close-btn" onclick="closeProductDetailModal()">✕</button>
+      </div>
+      <div class="modal-inner-body" id="product-detail-modal-body">
+        <!-- Dynamically injected -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal B: B2B RFQ & BOM Submit -->
+  <div class="market-modal" id="rfq-modal">
+    <div class="modal-content-card">
+      <div class="modal-header-bar">
+        <h3>📋 B2B Şartname & Proforma Teklif Talebi</h3>
+        <button class="drawer-close-btn" onclick="closeRFQModal()">✕</button>
+      </div>
+      <div class="modal-inner-body">
+        <form onsubmit="handleRFQSubmit(event)">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Şirket Ünvanı *</label>
+              <input type="text" required placeholder="Örn: ABC Enerji Taahhüt A.Ş.">
+            </div>
+            <div class="form-group">
+              <label>Vergi Kimlik No (VKN) / Vergi Dairesi *</label>
+              <input type="text" required placeholder="1234567890 / Maslak V.D.">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Yetkili Adı Soyadı *</label>
+              <input type="text" required placeholder="Yetkili Mühendis / Satın Alma Müdürü">
+            </div>
+            <div class="form-group">
+              <label>Kurumsal E-Posta *</label>
+              <input type="email" required placeholder="satin-alma@sirket.com">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Telefon Numarası *</label>
+              <input type="tel" required placeholder="+90 (5xx) xxx xx xx">
+            </div>
+            <div class="form-group">
+              <label>Ödeme / Finansman Tercihi</label>
+              <select>
+                <option>Nakit / Banka Havalesi (Toptan İskonto)</option>
+                <option>Yakın Capital Proje Leasingi / Vadeli Alım</option>
+                <option>Doğrudan Borçlandırma Sistemi (DBS)</option>
+                <option>Akreditifli Uluslararası Sevkiyat</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Proje Yeri ve Şartname Açıklaması</label>
+            <textarea rows="3" placeholder="Proje kapasitesi (MW/kW), montaj yeri, teslimat termin tarihi ve özel teknik şartname notlarınız..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>BOM / Malzeme Listesi Dosyası (İsteğe Bağlı - Excel / PDF)</label>
+            <input type="file" accept=".pdf,.xls,.xlsx,.csv">
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem;">
+            🚀 Proforma Teklifi Talep Et (24 Saatte Yanıt)
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal C: Supplier Application -->
+  <div class="market-modal" id="supplier-modal">
+    <div class="modal-content-card">
+      <div class="modal-header-bar">
+        <h3>🤝 Tedarikçi & Üretici Başvuru Formu</h3>
+        <button class="drawer-close-btn" onclick="closeSupplierModal()">✕</button>
+      </div>
+      <div class="modal-inner-body">
+        <form onsubmit="handleSupplierSubmit(event)">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Üretici / Tedarikçi Firma *</label>
+              <input type="text" required placeholder="Firma Adı">
+            </div>
+            <div class="form-group">
+              <label>Üretim / Tedarik Kategorisi *</label>
+              <select required>
+                <option>Güneş PV Modülleri & BIPV</option>
+                <option>Dizi & Merkezi İnvertörler</option>
+                <option>Endüstriyel Batarya & ESS</option>
+                <option>DC Hızlı EV Şarj İstasyonları</option>
+                <option>Transformatör & Şalt Malzemeleri</option>
+                <option>Veri Merkezi & Yapısal Kablolama</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Yetkili Kişi *</label>
+              <input type="text" required placeholder="Ad Soyad">
+            </div>
+            <div class="form-group">
+              <label>E-Posta & Telefon *</label>
+              <input type="text" required placeholder="info@firma.com / +90 5xx">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Ürün Portföyü & Sertifikalar (TSE, IEC, CE, ISO)</label>
+            <textarea rows="3" placeholder="Ürün gamınız, yıllık üretim kapasiteniz ve sahip olduğunuz uluslararası kalite sertifikaları..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem;">
+            Tedarikçi Ağımıza Katıl
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal D: B2C Checkout & Free Site Survey -->
+  <div class="market-modal" id="b2c-checkout-modal">
+    <div class="modal-content-card">
+      <div class="modal-header-bar">
+        <h3>🏠 Bireysel Sipariş & Ücretsiz Keşif Randevusu</h3>
+        <button class="drawer-close-btn" onclick="closeB2CCheckoutModal()">✕</button>
+      </div>
+      <div class="modal-inner-body">
+        <form onsubmit="handleB2CCheckoutSubmit(event)">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Adınız Soyadınız *</label>
+              <input type="text" required placeholder="Ad Soyad">
+            </div>
+            <div class="form-group">
+              <label>Telefon Numaranız *</label>
+              <input type="tel" required placeholder="+90 (5xx) xxx xx xx">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>İl / İlçe *</label>
+              <input type="text" required placeholder="Örn: Muğla / Bodrum">
+            </div>
+            <div class="form-group">
+              <label>Montaj / Teslimat Tercihi *</label>
+              <select>
+                <option>Anahtar Teslim Montaj + Keşif İstiyorum</option>
+                <option>Sadece Ürün Teslimatı (Kendim Kuracağım)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Açık Adres & Çatı Bilgisi</label>
+            <textarea rows="2" placeholder="Konut açık adresi ve çatı tipi (Kiremit / Düz Teras / Sandviç Panel vb.)..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Ödeme Seçeneği</label>
+            <select>
+              <option>Kredi Kartı ile 12 Taksit (%0 Vade Farkı)</option>
+              <option>Havale / EFT ile %5 İndirimli Ödeme</option>
+              <option>Kapıda / Keşif Sırasında Ödeme</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem;">
+            ✓ Randevuyu & Siparişi Onayla
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 10. FOOTER ===== -->
+  <footer class="market-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <h4>YAKIN GRUP MARKETPLACE</h4>
+          <p>
+            Mühendislik taahhüdü, yenilenebilir enerji altyapısı ve ileri teknoloji ekipmanlarında Türkiye'nin ve bölgenin entegre B2B & B2C ticaret platformu.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Kurumsal B2B</h5>
+          <ul class="footer-links">
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('solar');">Endüstriyel Güneş & PV</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('storage');">ESS Batarya Depolama</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ev');">DC Hızlı Şarj İstasyonları</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('datacenter');">Modüler Veri Merkezi</a></li>
+            <li><a href="#" onclick="openRFQModal()">BOM / Şartname Yükleme</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Bireysel B2C</h5>
+          <ul class="footer-links">
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('residential');">Villa Çatı GES Paketleri</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('residential');">Balkon Tak-Çalıştır Solar</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('ev');">Ev Tipi Wallbox Şarj</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('storage');">Portatif Güç İstasyonları</a></li>
+            <li><a href="#simulator">Güneş Enerjisi Hesaplayıcı</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Holding Ekosistemi</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Yakın Grup Kurumsal</a></li>
+            <li><a href="teklif.html">Şartname & Teklif Stüdyosu</a></li>
+            <li><a href="Sunum.html">Yatırımcı Sunumu</a></li>
+            <li><a href="#" onclick="openSupplierModal()">Tedarikçi Ol</a></li>
+            <li><a href="index.html#iletisim">Maslak Merkez Ofis İletişim</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 Yakın Grup Holding A.Ş. Tüm hakları saklıdır.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#">KVKK Aydınlatma Metni</a>
+          <a href="#">Mesafeli Satış Sözleşmesi</a>
+          <a href="#">Garanti & İade Koşulları</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="marketplace.js?v=20260817_1"></script>
+</body>
+</html>
