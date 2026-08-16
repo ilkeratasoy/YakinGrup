@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Yakın Grup — Yatırımcı & Müşteri Vizyon Sunumu | Investor & Client Pitch Deck</title>
-  <meta name="description" content="Yakın Grup Yatırımcı ve Müşteri Sunumu: İnşaat Taahhüt, Yenilenebilir Enerji, BESS Depolama, Telekom, Siber Güvenlik ve Proje Finansmanında uçtan uca kurumsal vizyon.">
+  <meta name="description" content="Yakın Grup Yatırımcı ve Müşteri Sunumu: İnşaat Taahhüt, Yenilenebilir Enerji, BESS Depolama, Veri Merkezi Sistemleri, Endüstriyel IoT Otomasyon, Telekom, Siber Güvenlik ve Proje Finansmanında uçtan uca kurumsal vizyon.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 
   <style>
     :root {
-      /* Brand Color Palette - Deep Navy Blue, Forest Green & Refined Gold on Crisp White */
+      /* Brand Color Palette - Deep Navy Blue, Forest Green, Tech Indigo & Refined Gold on Crisp White */
       --navy-deep: #0b2545;
       --navy-primary: #0b3c6b;
       --navy-light: #1e3a8a;
@@ -35,6 +35,10 @@
       --gold-soft: #fefce8;
       --gold-badge: #fef9c3;
       
+      --tech-indigo: #4338ca;
+      --tech-soft: #eef2ff;
+      --tech-badge: #e0e7ff;
+      
       --bg-page: #f8fafc;
       --bg-white: #ffffff;
       --bg-card: #ffffff;
@@ -51,6 +55,7 @@
       --border-navy: rgba(11, 60, 107, 0.2);
       --border-green: rgba(61, 110, 48, 0.25);
       --border-gold: rgba(180, 140, 20, 0.35);
+      --border-tech: rgba(67, 56, 202, 0.25);
       
       --shadow-sm: 0 1px 3px rgba(11, 37, 69, 0.05);
       --shadow-md: 0 4px 16px rgba(11, 37, 69, 0.06);
@@ -420,9 +425,9 @@
       border-color: #bfdbfe;
     }
     .slide-badge-category.tech {
-      color: #4338ca;
-      background: #eef2ff;
-      border-color: #c7d2fe;
+      color: var(--tech-indigo);
+      background: var(--tech-soft);
+      border-color: var(--border-tech);
     }
     .slide-brand-watermark {
       font-family: var(--font-brand);
@@ -454,6 +459,9 @@
     }
     .slide-heading .highlight-gold {
       color: var(--gold-dark);
+    }
+    .slide-heading .highlight-tech {
+      color: var(--tech-indigo);
     }
     .slide-subtitle {
       font-size: 0.98rem;
@@ -688,7 +696,7 @@
       filter: drop-shadow(0 8px 20px rgba(11, 37, 69, 0.08));
     }
 
-    /* INFOGRAPHIC: 3-COL / 4-COL SERVICE GRIDS (SLIDES 3-7) */
+    /* INFOGRAPHIC: 3-COL / 4-COL SERVICE GRIDS */
     .services-presentation-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -778,7 +786,56 @@
       border-radius: 4px;
     }
 
-    /* PROCESS FLOW INFOGRAPHIC (SLIDE 8) */
+    /* 4-GRID FEATURE CARDS (SLIDES 6 & 7) */
+    .quad-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      height: calc(100% - 90px);
+      align-content: stretch;
+    }
+    .quad-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s ease;
+    }
+    .quad-card:hover {
+      border-color: var(--navy-primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .quad-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      background: var(--blue-soft);
+      color: var(--navy-primary);
+    }
+    .quad-title {
+      font-family: var(--font-heading);
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--navy-deep);
+      margin-bottom: 6px;
+    }
+    .quad-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    /* PROCESS FLOW INFOGRAPHIC (SLIDE 9) */
     .process-pipeline {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -844,7 +901,7 @@
       line-height: 1.45;
     }
 
-    /* INTERACTIVE ROI / PROJECT CALCULATOR (SLIDE 9) */
+    /* INTERACTIVE ROI / PROJECT CALCULATOR (SLIDE 10) */
     .calculator-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -935,7 +992,7 @@
       margin-top: 4px;
     }
 
-    /* ESG & CERTIFICATIONS (SLIDE 10) */
+    /* ESG & CERTIFICATIONS (SLIDE 11) */
     .esg-standards-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1397,6 +1454,9 @@
       .services-presentation-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      .quad-feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
       .process-pipeline {
         grid-template-columns: 1fr;
         gap: 10px;
@@ -1428,7 +1488,7 @@
       .presentation-progress-track {
         width: 90px;
       }
-      .services-presentation-grid {
+      .services-presentation-grid, .quad-feature-grid {
         grid-template-columns: 1fr;
       }
       .hero-kpi-grid {
@@ -1556,15 +1616,15 @@
             <h1 class="hero-pitch-title">
               Geleceği İnşa Eden, Enerjiyi Yöneten <span>Güç</span>
             </h1>
-            <p class="hero-pitch-desc" data-tr="Yakın Grup; inşaat taahhüt, yenilenebilir enerji & BESS depolama, veri merkezleri, telekom altyapıları, siber güvenlik ve proje finansmanı alanlarında uçtan uca anahtar teslim çözümler sunan entegre bir mühendislik holdingidir." data-en="Yakın Grup is an integrated engineering holding delivering end-to-end turnkey solutions across EPC construction, renewable energy & BESS storage, mission-critical data centers, telecom infrastructure, cybersecurity, and project finance.">
-              Yakın Grup; inşaat taahhüt, yenilenebilir enerji & BESS depolama, veri merkezleri, telekom altyapıları, siber güvenlik ve proje finansmanı alanlarında uçtan uca anahtar teslim çözümler sunan entegre bir mühendislik holdingidir.
+            <p class="hero-pitch-desc" data-tr="Yakın Grup; inşaat taahhüt, yenilenebilir enerji & BESS depolama, veri merkezleri, telekom altyapıları, endüstriyel IoT otomasyon, siber güvenlik ve proje finansmanı alanlarında uçtan uca anahtar teslim çözümler sunan entegre bir mühendislik holdingidir." data-en="Yakın Grup is an integrated engineering holding delivering end-to-end turnkey solutions across EPC construction, renewable energy & BESS storage, data center systems, industrial IoT automation, telecom infrastructure, cybersecurity, and project finance.">
+              Yakın Grup; inşaat taahhüt, yenilenebilir enerji & BESS depolama, veri merkezleri, telekom altyapıları, endüstriyel IoT otomasyon, siber güvenlik ve proje finansmanı alanlarında uçtan uca anahtar teslim çözümler sunan entegre bir mühendislik holdingidir.
             </p>
             <div class="hero-cta-group">
               <button class="btn-action-hero primary" onclick="nextSlide()">
                 <span data-tr="Sunumu Keşfet" data-en="Explore Presentation">Sunumu Keşfet</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
-              <button class="btn-action-hero secondary" onclick="goToSlide(7)">
+              <button class="btn-action-hero secondary" onclick="goToSlide(9)">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                 <span data-tr="Yatırım ROI Simülatörü" data-en="Investment ROI Simulator">Yatırım ROI Simülatörü</span>
               </button>
@@ -1642,15 +1702,15 @@
 
             <div class="eco-pillar-card">
               <div class="eco-pillar-header">
-                <div class="eco-pillar-svg-icon" style="background: #eef2ff; color: #4338ca;">
+                <div class="eco-pillar-svg-icon" style="background: var(--tech-soft); color: var(--tech-indigo);">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
                 </div>
                 <div class="eco-pillar-title" data-tr="Yakın Teknoloji" data-en="Yakın Technology">Yakın Teknoloji</div>
               </div>
-              <div class="eco-pillar-desc" data-tr="Telekom 5G/FTTX, SOC siber güvenlik operasyonları, veri merkezi beyaz alan donanımı, IIoT ve zayıf akım (ELV)." data-en="Telecom 5G/FTTX, 24/7 SOC cybersecurity, data center whitespace hardware, IIoT, and ELV security.">
-                Telekom 5G/FTTX, SOC siber güvenlik operasyonları, veri merkezi beyaz alan donanımı, IIoT ve zayıf akım (ELV).
+              <div class="eco-pillar-desc" data-tr="Veri merkezi sistemleri, IIoT & SCADA otomasyon, 5G telekom, 7/24 SOC siber güvenlik ve zayıf akım (ELV)." data-en="Data center systems, IIoT & SCADA automation, 5G telecom, 24/7 SOC cybersecurity, and ELV building engineering.">
+                Veri merkezi sistemleri, IIoT & SCADA otomasyon, 5G telekom, 7/24 SOC siber güvenlik ve zayıf akım (ELV).
               </div>
-              <span class="eco-pillar-tag" style="background: #eef2ff; color: #4338ca;" data-tr="DİJİTAL ALTYAPI & SİBER" data-en="DIGITAL INFRA & CYBER">DİJİTAL ALTYAPI & SİBER</span>
+              <span class="eco-pillar-tag" style="background: var(--tech-soft); color: var(--tech-indigo);" data-tr="VERİ MERKEZİ & IOT" data-en="DATA CENTER & IOT">VERİ MERKEZİ & IOT</span>
             </div>
 
             <div class="eco-pillar-card">
@@ -1702,7 +1762,7 @@
               <line x1="144" y1="200" x2="52" y2="200" stroke="#4338ca" stroke-width="2" stroke-dasharray="4 4"/>
               <circle cx="52" cy="200" r="34" fill="#ffffff" stroke="#4338ca" stroke-width="2.5"/>
               <text x="52" y="197" text-anchor="middle" fill="#1e1b4b" font-weight="800" font-size="10">TEKNO</text>
-              <text x="52" y="210" text-anchor="middle" fill="#4338ca" font-size="8" font-weight="700">TELCO / SOC</text>
+              <text x="52" y="210" text-anchor="middle" fill="#4338ca" font-size="8" font-weight="700">DC / IOT</text>
             </svg>
           </div>
         </div>
@@ -1870,7 +1930,7 @@
         </div>
       </section>
 
-      <!-- SLIDE 5: YAKIN TEKNOLOJİ — TELEKOM, SİBER GÜVENLİK & IT OMURGASI -->
+      <!-- SLIDE 5: YAKIN TEKNOLOJİ — TELEKOM & SİBER GÜVENLİK (CARRIER GRADE & 24/7 SOC) -->
       <section class="slide" data-slide-index="4" data-notes-tr="Telekom operatörlerine sunulan 5G ve fiber altyapı hizmetleri, 7/24 SOC siber güvenlik operasyon merkezi, veri merkezi beyaz alan donanımı ve zayıf akım sistemleri." data-notes-en="Telecom carrier infrastructure (5G/FTTX), 24/7 SOC cybersecurity defense, mission-critical whitespace hardware, and intelligent building ELV engineering.">
         <div class="slide-meta-top">
           <span class="slide-badge-category tech" data-tr="YAKIN TEKNOLOJİ & TELEKOM" data-en="YAKIN TECHNOLOGY & TELECOM">YAKIN TEKNOLOJİ & TELEKOM</span>
@@ -1937,7 +1997,7 @@
             </div>
             <div class="service-deck-body">
               <div>
-                <h3 class="service-deck-title" data-tr="Zayıf Akım (ELV) & Otomasyon" data-en="ELV Systems & Automation">Zayıf Akım (ELV) & Otomasyon</h3>
+                <h3 class="service-deck-title" data-tr="Zayıf Akım (ELV) & Güvenlik" data-en="ELV Security & Fire Systems">Zayıf Akım (ELV) & Güvenlik</h3>
                 <p class="service-deck-desc" data-tr="IP CCTV izleme, biyometrik kartlı geçiş, adresli yangın algılama, gazlı söndürme ve bina yönetim sistemleri (BMS)." data-en="IP CCTV surveillance, biometric access control, addressable fire detection, gas suppression, and BMS automation.">
                   IP CCTV izleme, biyometrik kartlı geçiş, adresli yangın algılama, gazlı söndürme ve bina yönetim sistemleri (BMS).
                 </p>
@@ -1952,8 +2012,182 @@
         </div>
       </section>
 
-      <!-- SLIDE 6: YAKIN FİNANS & CAPITAL — PROJE FİNANSMANI & YATIRIM YÖNETİMİ -->
-      <section class="slide" data-slide-index="5" data-notes-tr="Yakın Capital ve proje finansmanı birimi. Büyük ölçekli altyapı, enerji ve gayrimenkul projelerinin uluslararası banka ve fonlar nezdinde modellenmesi, FIDIC sözleşmeleri ve SPV şirket yönetimi." data-notes-en="Yakın Capital & Project Finance unit. Structuring bankable infrastructure, energy, and real estate investments with international funds, FIDIC contracting, and SPV lifecycle management.">
+      <!-- SLIDE 6: YAKIN TEKNOLOJİ — VERİ MERKEZİ SİSTEMLERİ & BEYAZ ALAN MİMARİSİ (NEW DEDICATED SLIDE) -->
+      <section class="slide" data-slide-index="5" data-notes-tr="Veri merkezi beyaz alan mühendisliği, Tier III/IV standartlarında yedekli 2N UPS güç dağıtımı, hassas In-Row iklimlendirme ve daldırma sıvı soğutma entegrasyonu, DCIM yazılımı ve PUE < 1.22 hedefi." data-notes-en="Data center white space engineering: Tier III/IV 2N modular UPS power distribution, precision In-Row HVAC & immersion liquid cooling, real-time DCIM software telemetry, and PUE < 1.22 efficiency benchmark.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category tech" data-tr="VERİ MERKEZİ TEKNOLOJİLERİ" data-en="DATA CENTER SYSTEMS">VERİ MERKEZİ TEKNOLOJİLERİ</span>
+          <span class="slide-brand-watermark">TIER III / IV WHITE SPACE & DCIM</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Veri Merkezi Sistemleri & <span class='highlight-tech'>Beyaz Alan Mimarisi</span>" data-en="Data Center Systems & <span class='highlight-tech'>White Space Architecture</span>">
+            Veri Merkezi Sistemleri & <span class="highlight-tech">Beyaz Alan Mimarisi</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Yüksek yoğunluklu sunucu kabinetlerinden 2N yedekli modüler güç omurgasına, hassas In-Row iklimlendirmeden DCIM izleme ve Novec 1230 gazlı yangın korumasına anahtar teslim beyaz alan mühendisliği." data-en="Turnkey white space engineering from high-density server rack containments and 2N modular power buses to precision In-Row cooling, real-time DCIM monitoring, and Novec 1230 clean gas fire suppression.">
+            Yüksek yoğunluklu sunucu kabinetlerinden 2N yedekli modüler güç omurgasına, hassas In-Row iklimlendirmeden DCIM izleme ve Novec 1230 gazlı yangın korumasına anahtar teslim beyaz alan mühendisliği.
+          </p>
+        </div>
+
+        <div class="quad-feature-grid">
+          <!-- Card 1: 2N UPS & Power Distribution -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/><path d="M12 2v4"/><path d="M12 18v4"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="2N Modüler Güç & Busbar" data-en="2N Modular Power & Busway">2N Modüler Güç & Busbar</h3>
+              <p class="quad-desc" data-tr="Çift yollu (Dual-Bus) STS statik transfer anahtarları, modüler UPS akü grupları ve kabinet üstü Plug-in Busbar dağıtımı ile sıfır kesinti." data-en="Dual-Bus STS static transfer switches, modular high-efficiency UPS strings, and overhead plug-in busway power delivery.">
+                Çift yollu (Dual-Bus) STS statik transfer anahtarları, modüler UPS akü grupları ve kabinet üstü Plug-in Busbar dağıtımı ile sıfır kesinti.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">2N Yedeklilik</span>
+              <span class="deck-mini-pill">Dual-Bus STS</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Precision Cooling & Liquid Cooling -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box" style="background: var(--blue-soft); color: var(--navy-primary);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><circle cx="12" cy="12" r="9"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="Hassas İklimlendirme & Sıvı Soğutma" data-en="Precision & Liquid Cooling">Hassas İklimlendirme & Sıvı Soğutma</h3>
+              <p class="quad-desc" data-tr="Sıcak/Soğuk koridor kapatma (CAC/HAC), In-Row EC fanlı klima üniteleri, Free-Cooling ve yüksek yoğunluklu AI sunucuları için daldırma (Immersion) sıvı soğutma." data-en="Hot/Cold aisle containment, In-Row EC fan precision cooling, free-cooling chillers, and direct liquid/immersion cooling ready for AI racks.">
+                Sıcak/Soğuk koridor kapatma (CAC/HAC), In-Row EC fanlı klima üniteleri, Free-Cooling ve yüksek yoğunluklu AI sunucuları için daldırma (Immersion) sıvı soğutma.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">In-Row EC</span>
+              <span class="deck-mini-pill">Free Cooling</span>
+            </div>
+          </div>
+
+          <!-- Card 3: DCIM & PUE Optimization -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box" style="background: var(--green-soft); color: var(--green-primary);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="DCIM & PUE &lt; 1.22 İzleme" data-en="DCIM & PUE &lt; 1.22 Telemetry">DCIM & PUE &lt; 1.22 İzleme</h3>
+              <p class="quad-desc" data-tr="Veri Merkezi Altyapı Yönetimi (DCIM) yazılımı ile rack bazında gerçek zamanlı enerji tüketimi, termal ısı haritalama ve kapasite optimizasyonu." data-en="Data Center Infrastructure Management (DCIM) platform providing rack-level telemetry, thermal heat mapping, and PUE optimization.">
+                Veri Merkezi Altyapı Yönetimi (DCIM) yazılımı ile rack bazında gerçek zamanlı enerji tüketimi, termal ısı haritalama ve kapasite optimizasyonu.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">PUE &lt; 1.22</span>
+              <span class="deck-mini-pill">Isı Haritalama</span>
+            </div>
+          </div>
+
+          <!-- Card 4: High-Speed Optical & Fire Safety -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box" style="background: #fef2f2; color: #dc2626;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="400G Optik & Novec 1230" data-en="400G Fiber & Novec 1230">400G Optik & Novec 1230</h3>
+              <p class="quad-desc" data-tr="MPO/MTP OM5 çok modlu fiber omurga, VESDA çok erken duman algılama ve elektronik donanımlara zarar vermeyen Novec 1230 gazlı yangın söndürme." data-en="MPO/MTP OM5 fiber backbone (400G/800G ready), VESDA aspirating smoke detection, and residue-free Novec 1230 gas suppression.">
+                MPO/MTP OM5 çok modlu fiber omurga, VESDA çok erken duman algılama ve elektronik donanımlara zarar vermeyen Novec 1230 gazlı yangın söndürme.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">400G/800G OM5</span>
+              <span class="deck-mini-pill">VESDA & Novec</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: YAKIN TEKNOLOJİ — ENDÜSTRİYEL IOT (IIoT), SCADA & AKILLI TESİS OTOMASYONU (NEW DEDICATED SLIDE) -->
+      <section class="slide" data-slide-index="6" data-notes-tr="Endüstriyel IoT (IIoT) sensör ağları, SCADA ve Bina Otomasyon Sistemleri (BMS). Yapay zeka kestirimci bakım, fabrikalarda ve enerji santrallerinde enerji verimliliği ve otonom arıza tespiti." data-notes-en="Industrial IoT (IIoT) telemetry, SCADA, and Building Management Systems (BMS). AI-driven predictive maintenance, autonomous anomaly detection, and energy management for heavy industry and smart buildings.">
+        <div class="slide-meta-top">
+          <span class="slide-badge-category tech" data-tr="ENDÜSTRİYEL IOT & OTOMASYON" data-en="INDUSTRIAL IOT & AUTOMATION">ENDÜSTRİYEL IOT & OTOMASYON</span>
+          <span class="slide-brand-watermark">SCADA, IIOT & AI PREDICTIVE</span>
+        </div>
+
+        <div class="slide-title-wrap">
+          <h2 class="slide-heading" data-tr="Endüstriyel IoT (IIoT), SCADA & <span class='highlight-tech'>Akıllı Tesis Otomasyonu</span>" data-en="Industrial IoT (IIoT), SCADA & <span class='highlight-tech'>Smart Facility Automation</span>">
+            Endüstriyel IoT (IIoT), SCADA & <span class="highlight-tech">Akıllı Tesis Otomasyonu</span>
+          </h2>
+          <p class="slide-subtitle" data-tr="Fabrikalar, enerji santralleri ve ticari binalar için kablosuz sensör telemetrisi, SCADA & BMS entegrasyonu, yapay zeka destekli kestirimci bakım ve akıllı mikroşebeke enerji yönetimi." data-en="Wireless sensor telemetry, unified SCADA & BMS orchestration, AI-driven predictive maintenance, and smart microgrid energy management for industrial plants and smart facilities.">
+            Fabrikalar, enerji santralleri ve ticari binalar için kablosuz sensör telemetrisi, SCADA & BMS entegrasyonu, yapay zeka destekli kestirimci bakım ve akıllı mikroşebeke enerji yönetimi.
+          </p>
+        </div>
+
+        <div class="quad-feature-grid">
+          <!-- Card 1: IIoT Sensor & Edge Gateway -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="IIoT Sensör Ağı & Edge Gateway" data-en="IIoT Sensors & Edge Gateways">IIoT Sensör Ağı & Edge Gateway</h3>
+              <p class="quad-desc" data-tr="Titreşim, sıcaklık, basınç, akım ve debi sensörlerinden LoRaWAN/NB-IoT ve endüstriyel Ethernet üzerinden milisaniyelik telemetri toplama." data-en="Sub-second data acquisition of vibration, temperature, pressure, and power telemetry via LoRaWAN, NB-IoT, and industrial Ethernet.">
+                Titreşim, sıcaklık, basınç, akım ve debi sensörlerinden LoRaWAN/NB-IoT ve endüstriyel Ethernet üzerinden milisaniyelik telemetri toplama.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">LoRaWAN / NB-IoT</span>
+              <span class="deck-mini-pill">Edge Gateway</span>
+            </div>
+          </div>
+
+          <!-- Card 2: SCADA & Multi-Protocol BMS -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box" style="background: var(--blue-soft); color: var(--navy-primary);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="SCADA & Protokol Entegrasyonu" data-en="SCADA & Multi-Protocol BMS">SCADA & Protokol Entegrasyonu</h3>
+              <p class="quad-desc" data-tr="Modbus TCP, BACnet/IP, MQTT ve OPC-UA protokolleriyle santral, trafo ve bina alt sistemlerini tek bir merkezi kontrol panelinde birleştirme." data-en="Unified orchestration of plant, substation, and HVAC subsystems across Modbus TCP, BACnet/IP, MQTT, and OPC-UA protocols.">
+                Modbus TCP, BACnet/IP, MQTT ve OPC-UA protokolleriyle santral, trafo ve bina alt sistemlerini tek bir merkezi kontrol panelinde birleştirme.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">OPC-UA / MQTT</span>
+              <span class="deck-mini-pill">BACnet / Modbus</span>
+            </div>
+          </div>
+
+          <!-- Card 3: AI Predictive Maintenance -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box" style="background: var(--tech-soft); color: var(--tech-indigo);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="Yapay Zeka Kestirimci Bakım" data-en="AI Predictive Maintenance">Yapay Zeka Kestirimci Bakım</h3>
+              <p class="quad-desc" data-tr="Motor, pompa ve jeneratörlerde oluşabilecek rulman ve mekanik aşınmaları arıza gerçekleşmeden 3-6 hafta önce tespit eden yapay zeka modelleri." data-en="Machine learning anomaly detection identifying bearing wear, mechanical drift, and thermal hotspots 3-6 weeks prior to failure.">
+                Motor, pompa ve jeneratörlerde oluşabilecek rulman ve mekanik aşınmaları arıza gerçekleşmeden 3-6 hafta önce tespit eden yapay zeka modelleri.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">Anomali Tespiti</span>
+              <span class="deck-mini-pill">%40 Duruş Azaltımı</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Smart EMS & Peak Shaving -->
+          <div class="quad-card">
+            <div>
+              <div class="quad-icon-box" style="background: var(--green-soft); color: var(--green-primary);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <h3 class="quad-title" data-tr="Akıllı Mikroşebeke & EMS" data-en="Smart Microgrid & EMS">Akıllı Mikroşebeke & EMS</h3>
+              <p class="quad-desc" data-tr="Enerji Yönetim Sistemi (EMS) ile GES üretimi, BESS batarya şarj/deşarjı ve tesis yükünü dinamik optimize ederek elektrik maliyetlerini minimize etme." data-en="Dynamic Energy Management System (EMS) balancing solar generation, BESS battery dispatch, and peak demand shaving.">
+                Enerji Yönetim Sistemi (EMS) ile GES üretimi, BESS batarya şarj/deşarjı ve tesis yükünü dinamik optimize ederek elektrik maliyetlerini minimize etme.
+              </p>
+            </div>
+            <div class="service-deck-tags">
+              <span class="deck-mini-pill">Peak Shaving</span>
+              <span class="deck-mini-pill">Dinamik Yük Kontrolü</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: YAKIN FİNANS & CAPITAL — PROJE FİNANSMANI & YATIRIM YÖNETİMİ -->
+      <section class="slide" data-slide-index="7" data-notes-tr="Yakın Capital ve proje finansmanı birimi. Büyük ölçekli altyapı, enerji ve gayrimenkul projelerinin uluslararası banka ve fonlar nezdinde modellenmesi, FIDIC sözleşmeleri ve SPV şirket yönetimi." data-notes-en="Yakın Capital & Project Finance unit. Structuring bankable infrastructure, energy, and real estate investments with international funds, FIDIC contracting, and SPV lifecycle management.">
         <div class="slide-meta-top">
           <span class="slide-badge-category gold" data-tr="YAKIN CAPITAL & YATIRIM" data-en="YAKIN CAPITAL & INVESTMENT">YAKIN CAPITAL & YATIRIM</span>
           <span class="slide-brand-watermark">BANKABLE FINANCIAL STRUCTURING</span>
@@ -2031,8 +2265,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 7: UÇTAN UCA TESLİMAT SÜRECİ (TURNKEY DELIVERY PIPELINE) -->
-      <section class="slide" data-slide-index="6" data-notes-tr="Fikir aşamasından 7/24 işletme ve bakıma kadar 5 adımlı mühendislik teslimat boru hattımız. Müşteri ve yatırımcıya tek elden eksiksiz şeffaflık ve güven sunar." data-notes-en="Our 5-step engineering delivery pipeline from initial concept to 24/7 O&M lifecycle operations. Delivers single-source accountability and radical transparency to clients and investors.">
+      <!-- SLIDE 9: UÇTAN UCA TESLİMAT SÜRECİ (TURNKEY DELIVERY PIPELINE) -->
+      <section class="slide" data-slide-index="8" data-notes-tr="Fikir aşamasından 7/24 işletme ve bakıma kadar 5 adımlı mühendislik teslimat boru hattımız. Müşteri ve yatırımcıya tek elden eksiksiz şeffaflık ve güven sunar." data-notes-en="Our 5-step engineering delivery pipeline from initial concept to 24/7 O&M lifecycle operations. Delivers single-source accountability and radical transparency to clients and investors.">
         <div class="slide-meta-top">
           <span class="slide-badge-category blue" data-tr="OPERASYONEL MÜKEMMELLİK" data-en="OPERATIONAL EXCELLENCE">OPERASYONEL MÜKEMMELLİK</span>
           <span class="slide-brand-watermark">TURNKEY EPC LIFECYCLE</span>
@@ -2095,8 +2329,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 8: İNTERAKTİF YATIRIM & ROI SİMÜLATÖRÜ (INVESTMENT CALCULATOR) -->
-      <section class="slide" data-slide-index="7" data-notes-tr="Yatırımcıların canlı olarak proje tipini, kapasitesini seçip tahmini CAPEX, geri dönüş süresi (ROI), yıllık temiz enerji üretimi ve karbon tasarrufunu görebileceği interaktif araç." data-notes-en="Interactive widget allowing investors to select sector, adjust capacity, and view estimated CAPEX, ROI payback duration, annual clean generation, and carbon offset in real-time.">
+      <!-- SLIDE 10: İNTERAKTİF YATIRIM & ROI SİMÜLATÖRÜ (INVESTMENT CALCULATOR) -->
+      <section class="slide" data-slide-index="9" data-notes-tr="Yatırımcıların canlı olarak proje tipini, kapasitesini seçip tahmini CAPEX, geri dönüş süresi (ROI), yıllık temiz enerji üretimi ve karbon tasarrufunu görebileceği interaktif araç." data-notes-en="Interactive widget allowing investors to select sector, adjust capacity, and view estimated CAPEX, ROI payback duration, annual clean generation, and carbon offset in real-time.">
         <div class="slide-meta-top">
           <span class="slide-badge-category gold" data-tr="YATIRIMCI FİNANSAL ARACI" data-en="INVESTOR FINANCIAL TOOL">YATIRIMCI FİNANSAL ARACI</span>
           <span class="slide-brand-watermark">REAL-TIME ROI CALCULATOR</span>
@@ -2172,8 +2406,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 9: KALİTE, İSG, ESG VE SİBER GÜVENLİK STANDARTLARI -->
-      <section class="slide" data-slide-index="8" data-notes-tr="Holdingimizin uluslararası sertifikasyonları: ISO 9001 Kalite, ISO 14001 Çevre, ISO 45001 İş Sağlığı ve ISO 27001 Siber Güvenlik standartları. Sıfır iş kazası hedefi ve sürdürülebilirlik ilkelerimiz." data-notes-en="Holding certifications: ISO 9001 Quality, ISO 14001 Environmental, ISO 45001 Occupational Safety, and ISO 27001 Information Security. Emphasize zero-accident HSE culture and carbon neutrality.">
+      <!-- SLIDE 11: KALİTE, İSG, ESG VE SİBER GÜVENLİK STANDARTLARI -->
+      <section class="slide" data-slide-index="10" data-notes-tr="Holdingimizin uluslararası sertifikasyonları: ISO 9001 Kalite, ISO 14001 Çevre, ISO 45001 İş Sağlığı ve ISO 27001 Siber Güvenlik standartları. Sıfır iş kazası hedefi ve sürdürülebilirlik ilkelerimiz." data-notes-en="Holding certifications: ISO 9001 Quality, ISO 14001 Environmental, ISO 45001 Occupational Safety, and ISO 27001 Information Security. Emphasize zero-accident HSE culture and carbon neutrality.">
         <div class="slide-meta-top">
           <span class="slide-badge-category blue" data-tr="ULUSLARARASI AKREDİTASYON" data-en="GLOBAL ACCREDITATION">ULUSLARARASI AKREDİTASYON</span>
           <span class="slide-brand-watermark">ESG & ISO COMPLIANCE</span>
@@ -2227,10 +2461,10 @@
 
           <!-- ISO 27001 -->
           <div class="iso-card-item">
-            <div class="iso-badge-icon" style="background: #eef2ff; color: #4338ca;">
+            <div class="iso-badge-icon" style="background: var(--tech-soft); color: var(--tech-indigo);">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
-            <div class="iso-code" style="color: #4338ca;">ISO 27001</div>
+            <div class="iso-code" style="color: var(--tech-indigo);">ISO 27001</div>
             <div class="iso-name" data-tr="Bilgi Güvenliği Sistemi" data-en="Information Security">Bilgi Güvenliği Sistemi</div>
             <p class="iso-desc" data-tr="Veri merkezi, telekom ve SCADA şebekelerinde uçtan uca siber veri gizliliği." data-en="End-to-end cyber confidentiality across data centers, telecom assets, and SCADA grids.">
               Veri merkezi, telekom ve SCADA şebekelerinde uçtan uca siber veri gizliliği.
@@ -2239,8 +2473,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 10: LİDERLİK, YÖNETİM VE STRATEJİK VİZYON -->
-      <section class="slide" data-slide-index="9" data-notes-tr="Grup liderlik ekibimiz ve kurumsal yönetim kadromuz. Dijital vCard QR profilleri ile yatırımcıların doğrudan yöneticilerle hızlı temas kurabilmesi sağlanır." data-notes-en="Holding executive leadership. Direct digital vCard QR links empower investors and corporate clients to connect instantly with decision-makers.">
+      <!-- SLIDE 12: LİDERLİK, YÖNETİM VE STRATEJİK VİZYON -->
+      <section class="slide" data-slide-index="11" data-notes-tr="Grup liderlik ekibimiz ve kurumsal yönetim kadromuz. Dijital vCard QR profilleri ile yatırımcıların doğrudan yöneticilerle hızlı temas kurabilmesi sağlanır." data-notes-en="Holding executive leadership. Direct digital vCard QR links empower investors and corporate clients to connect instantly with decision-makers.">
         <div class="slide-meta-top">
           <span class="slide-badge-category gold" data-tr="KURUMSAL YÖNETİM & LİDERLİK" data-en="EXECUTIVE LEADERSHIP">KURUMSAL YÖNETİM & LİDERLİK</span>
           <span class="slide-brand-watermark">VISIONARY GOVERNANCE</span>
@@ -2310,8 +2544,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 11: İLETİŞİM & ORTAKLIK ÇAĞRISI (CALL TO ACTION) -->
-      <section class="slide" data-slide-index="10" data-notes-tr="Kapanış slaytı. Yatırımcılar ve müşterilerle ortaklık başlatma, şartname ve teklif çıkarma, vCard ve dijital kartvizit ekosistemi ile tam temas sağlama." data-notes-en="Closing slide. Partnership call to action with direct links to specs, fast proposals, vCard contact profiles, and headquarters reachability.">
+      <!-- SLIDE 13: İLETİŞİM & ORTAKLIK ÇAĞRISI (CALL TO ACTION) -->
+      <section class="slide" data-slide-index="12" data-notes-tr="Kapanış slaytı. Yatırımcılar ve müşterilerle ortaklık başlatma, şartname ve teklif çıkarma, vCard ve dijital kartvizit ekosistemi ile tam temas sağlama." data-notes-en="Closing slide. Partnership call to action with direct links to specs, fast proposals, vCard contact profiles, and headquarters reachability.">
         <div class="slide-meta-top">
           <span class="slide-badge-category gold" data-tr="YATIRIM & İŞ BİRLİĞİ" data-en="PARTNERSHIP & INVESTMENT">YATIRIM & İŞ BİRLİĞİ</span>
           <span class="slide-brand-watermark">GLOBAL EXPANSION</span>
@@ -2367,7 +2601,7 @@
   <footer>
     <div class="footer-left">
       <div class="slide-counter-badge">
-        <span id="current-slide-num">01</span> / <span id="total-slides-num">11</span>
+        <span id="current-slide-num">01</span> / <span id="total-slides-num">13</span>
       </div>
 
       <!-- Slide Progress Bar -->
@@ -2978,7 +3212,7 @@
       }
     }
 
-    // Interactive ROI Calculator Logic (Slide 8)
+    // Interactive ROI Calculator Logic
     function recalcDeckSim() {
       const sector = document.getElementById('sim-sector').value;
       const scale = parseInt(document.getElementById('sim-scale-slider').value, 10);
