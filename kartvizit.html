@@ -1666,10 +1666,8 @@
       const profileId = isEylul ? 'eylul' : (isIlker ? 'ilker' : 'ilker');
 
       if (type === 'web-vcard') {
-        // Live Published Web vCard on domain
-        qrContent = `https://www.yakingrup.net/vcard.html?id=${profileId}`;
+        qrContent = `https://www.yakingrup.net/vcard?id=${profileId}`;
       } else if (type === 'vcard') {
-        // Industry-Standard UTF-8 vCard 3.0 compatible with iOS & Android Cameras
         qrContent = `BEGIN:VCARD\nVERSION:3.0\nN:${data.name};;;\nFN:${data.name}\nORG:Yakın Grup\nTITLE:${data.title}\nTEL;TYPE=CELL,VOICE:${data.phone.replace(/\\s+/g, '')}\nEMAIL;TYPE=WORK,INTERNET:${data.email}\nADR;TYPE=WORK:;;${data.address};;;;\nURL:https://${data.web}\nEND:VCARD`;
       } else if (type === 'vcf-file') {
         qrContent = `https://www.yakingrup.net/vcard-${profileId}.vcf`;
@@ -1680,26 +1678,22 @@
       }
 
       const qrContainer = document.getElementById('card-qr-box');
-      qrContainer.innerHTML = '';
 
-      if (typeof QRCode !== 'undefined') {
-        try {
-          new QRCode(qrContainer, {
-            text: qrContent,
-            width: 140,
-            height: 140,
-            colorDark: "#0f172a",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.M
-          });
-        } catch (e) {
-          console.error("QRCode library error, using SVG fallback", e);
-          const svg = generatePureSVGQRCode(qrContent);
-          qrContainer.innerHTML = svg;
-        }
+      if (typeof QRCode !== 'undefined' && typeof QRCode.toString === 'function') {
+        QRCode.toString(qrContent, {
+          type: 'svg',
+          errorCorrectionLevel: 'M',
+          margin: 2,
+          color: { dark: '#0f172a', light: '#ffffff' }
+        }, function(err, svgString) {
+          if (!err && svgString) {
+            qrContainer.innerHTML = svgString;
+          } else {
+            qrContainer.innerHTML = `<img src="assets/images/qr-vcard-${profileId}.svg" alt="vCard QR" style="width:100%;height:100%;">`;
+          }
+        });
       } else {
-        const svg = generatePureSVGQRCode(qrContent);
-        qrContainer.innerHTML = svg;
+        qrContainer.innerHTML = `<img src="assets/images/qr-vcard-${profileId}.svg" alt="vCard QR" style="width:100%;height:100%;">`;
       }
     }
 

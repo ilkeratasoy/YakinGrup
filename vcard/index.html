@@ -487,6 +487,19 @@
       </a>
     </div>
 
+    <!-- Scannable QR Code Card -->
+    <div class="profile-card" style="padding: 24px 20px; text-align: center;">
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px; color: #ffffff; letter-spacing: 0.05em; text-transform: uppercase;">📲 Profil QR Kodu</h3>
+      <div style="background: #ffffff; padding: 12px; border-radius: 16px; display: inline-block; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
+        <img id="qr-preview-img" src="../assets/images/qr-vcard-ilker.svg" alt="vCard QR Kod" style="width: 170px; height: 170px; display: block;">
+      </div>
+      <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 12px; line-height: 1.4;">Bu QR kodu telefon kamerasıyla okutarak doğrudan bu sayfaya ve rehbere ulaşabilirsiniz.</p>
+      <div style="display: flex; gap: 10px; justify-content: center; margin-top: 14px;">
+        <a id="btn-download-qr-svg" href="../assets/images/qr-vcard-ilker.svg" download class="sector-pill" style="text-decoration:none; padding: 7px 14px; color: #ffffff; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); font-weight:700;">⬇️ SVG İndir</a>
+        <a id="btn-download-qr-png" href="../assets/images/qr-vcard-ilker.png" download class="sector-pill" style="text-decoration:none; padding: 7px 14px; color: #ffffff; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); font-weight:700;">⬇️ PNG İndir</a>
+      </div>
+    </div>
+
     <!-- Footer -->
     <div class="vcard-footer">
       <p>© 2026 Yakın Grup Holding. Tüm Hakları Saklıdır.</p>
@@ -538,6 +551,11 @@
       document.getElementById('btn-action-mail').href = 'mailto:' + data.email;
       document.getElementById('row-phone').href = 'tel:' + data.rawPhone;
       document.getElementById('row-email').href = 'mailto:' + data.email;
+
+      const profileKey = (id === 'eylul') ? 'eylul' : 'ilker';
+      document.getElementById('qr-preview-img').src = '../assets/images/qr-vcard-' + profileKey + '.svg';
+      document.getElementById('btn-download-qr-svg').href = '../assets/images/qr-vcard-' + profileKey + '.svg';
+      document.getElementById('btn-download-qr-png').href = '../assets/images/qr-vcard-' + profileKey + '.png';
 
       document.title = data.name + ' - Yakın Grup vCard';
     }
