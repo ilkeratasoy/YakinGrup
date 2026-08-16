@@ -30,7 +30,7 @@
         <a href="#iletisim" data-i18n="nav_contact">İletişim</a>
       </nav>
       <div class="header-actions">
-        <a href="#marketplace" class="presentation-header-link" style="color: #3d6e30; font-weight: 700; text-decoration: none; font-size: 0.82rem; padding: 6px 12px; border: 1px solid rgba(61,110,48,0.35); border-radius: 8px; background: rgba(61,110,48,0.08); display: inline-flex; align-items: center; gap: 5px;" data-i18n="nav_deck">🛒 Marketplace</a>
+        <a href="marketplace.html" class="presentation-header-link" style="color: #3d6e30; font-weight: 700; text-decoration: none; font-size: 0.82rem; padding: 6px 12px; border: 1px solid rgba(61,110,48,0.35); border-radius: 8px; background: rgba(61,110,48,0.08); display: inline-flex; align-items: center; gap: 5px;" data-i18n="nav_deck">🛒 Marketplace</a>
         <button class="lang-btn" id="header-lang-btn" onclick="toggleLanguage()">EN</button>
         <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
           <span></span><span></span><span></span>
@@ -1196,16 +1196,16 @@
       </div>
       <div class="market-cards-grid">
         <div class="market-promo-card reveal">
-          <div class="badge-soon" data-i18n="badge_soon">ÇOK YAKINDA</div>
+          <div class="badge-soon" style="background: rgba(61,110,48,0.15); color: #2e5924;" data-i18n="badge_active">CANLI PLATFORM</div>
           <h3 data-i18n="market_b2b_title">B2B Kurumsal Alım Portalı</h3>
-          <p data-i18n="market_b2b_desc">Anlaşmalı tedarikçilerimiz ve bayilerimiz için toptan sipariş, özel vergi indirimleri, şartnamelere uygun teklif toplama paneli.</p>
-          <button class="market-cta-btn secondary" onclick="openMarketplaceModal()" data-i18n="btn_market_register">Bekleme Listesine Katıl</button>
+          <p data-i18n="market_b2b_desc">Anlaşmalı tedarikçilerimiz ve bayilerimiz için toptan sipariş, Tier-1 solar modül & transformatör tedariği ve şartnameli RFQ paneli.</p>
+          <a href="marketplace.html?mode=b2b" class="market-cta-btn secondary" style="text-align: center; text-decoration: none; display: inline-block;">🏢 B2B Portala Giriş Yap</a>
         </div>
         <div class="market-promo-card reveal">
-          <div class="badge-soon" data-i18n="badge_soon">ÇOK YAKINDA</div>
-          <h3 data-i18n="market_b2c_title">B2C Bireysel Sipariş</h3>
-          <p data-i18n="market_b2c_desc">Güneş PV camları, ev tipi şarj cihazları ve bina solar panelleri için doğrudan perakende satış ve montaj başvuru kanalları.</p>
-          <button class="market-cta-btn" onclick="openMarketplaceModal()" data-i18n="btn_market_browse">Kataloğu İncele</button>
+          <div class="badge-soon" style="background: rgba(2,132,199,0.15); color: #0284c7;" data-i18n="badge_active">CANLI PLATFORM</div>
+          <h3 data-i18n="market_b2c_title">B2C Bireysel Sipariş & Keşif</h3>
+          <p data-i18n="market_b2c_desc">Villa çatı GES paketleri, balkon tipi tak-çalıştır güneş kitleri ve ev tipi Wallbox şarj cihazlarında anahtar teslim mühendislik ve montaj.</p>
+          <a href="marketplace.html?mode=b2c" class="market-cta-btn" style="text-align: center; text-decoration: none; display: inline-block;">🏠 B2C Mağazayı İncele</a>
         </div>
       </div>
     </div>
@@ -1499,24 +1499,29 @@
       <form id="market-signup-form" onsubmit="handleMarketplaceSubmit(event)">
         <div class="form-group">
           <label for="m-name" data-i18n="lbl_form_name">İsim veya Firma Ünvanı</label>
-          <input type="text" id="m-name" required placeholder="Örn. ABC Mühendislik">
+          <input type="text" id="m-name" name="İsim veya Firma Ünvanı" required placeholder="Örn. ABC Mühendislik">
         </div>
         <div class="form-group">
           <label for="m-email" data-i18n="lbl_form_email">E-posta Adresi</label>
-          <input type="email" id="m-email" required placeholder="isim@firma.com">
+          <input type="email" id="m-email" name="E-posta Adresi" required placeholder="isim@firma.com">
+        </div>
+        <div class="form-group">
+          <label for="m-phone" data-i18n="lbl_form_phone">Telefon Numarası</label>
+          <input type="tel" id="m-phone" name="Telefon Numarası" placeholder="+90 532...">
         </div>
         <div class="form-group">
           <label for="m-client" data-i18n="lbl_form_type">Müşteri Türü</label>
-          <select id="m-client">
-            <option value="b2b" data-i18n="market_b2b_opt">Kurumsal / B2B Bayi Alıcısı</option>
-            <option value="b2c" data-i18n="market_b2c_opt">Bireysel / B2C Satış Talebi</option>
+          <select id="m-client" name="Müşteri Türü">
+            <option value="Kurumsal / B2B Bayi Alıcısı" data-i18n="market_b2b_opt">Kurumsal / B2B Bayi Alıcısı</option>
+            <option value="Bireysel / B2C Satış Talebi" data-i18n="market_b2c_opt">Bireysel / B2C Satış Talebi</option>
           </select>
         </div>
         <div class="form-group checkbox-group">
-          <input type="checkbox" id="m-kvkk" required>
+          <input type="checkbox" id="m-kvkk" name="KVKK Onayı" required checked>
           <label for="m-kvkk" class="checkbox-label"><a href="#" data-i18n="market_kvkk_note">KVKK İletişim izni şartlarını okudum ve kabul ediyorum.</a></label>
         </div>
-        <button type="submit" class="submit-btn" data-i18n="btn_market_join">Beni Listeye Ekle</button>
+        <div id="market-form-feedback" style="display: none; padding: 10px 12px; border-radius: 8px; font-size: 0.84rem; font-weight: 600; margin-bottom: 12px; text-align: center;"></div>
+        <button type="submit" class="submit-btn" id="market-submit-btn" data-i18n="btn_market_join">Beni Listeye Ekle</button>
       </form>
     </div>
   </dialog>

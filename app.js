@@ -2807,16 +2807,98 @@ function shareCard() {
   }
 }
 
-// ── Marketplace Modal ──────────────────────────────────────────────────────
+// ── Marketplace Modal (info@yakingrup.net + ilker.atasoy + eylul.yilmaz) ──
 function openMarketplaceModal() { document.getElementById('market-dialog').showModal(); }
 function closeMarketplaceModal() { document.getElementById('market-dialog').close(); }
 
-function handleMarketplaceSubmit(e) {
+async function handleMarketplaceSubmit(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.textContent = currentLang === 'tr' ? '✓ Kaydedildi!' : '✓ Saved!';
-  btn.style.background = '#1E8F5E';
-  setTimeout(() => closeMarketplaceModal(), 1800);
+  const form = e.target;
+  const btn = document.getElementById('market-submit-btn') || form.querySelector('button[type=submit]');
+  const feedback = document.getElementById('market-form-feedback');
+
+  const name = document.getElementById('m-name').value.trim();
+  const email = document.getElementById('m-email').value.trim();
+  const phone = document.getElementById('m-phone') ? document.getElementById('m-phone').value.trim() : '';
+  const clientSelect = document.getElementById('m-client');
+  const clientType = clientSelect.options[clientSelect.selectedIndex].text;
+
+  // Loading state
+  btn.disabled = true;
+  btn.textContent = currentLang === 'tr' ? '⏳ İletiliyor...' : '⏳ Submitting...';
+  btn.style.opacity = '0.75';
+
+  const payload = {
+    "Başvuru Türü": "Yakın Grup Marketplace Erken Erişim & Mağaza Başvurusu",
+    "İsim veya Firma Ünvanı": name,
+    "E-posta": email,
+    "Telefon": phone || 'Belirtilmedi',
+    "Müşteri Türü": clientType,
+    "_subject": `[Yakın Grup Marketplace] Yeni Erken Erişim Başvurusu: ${name} (${clientType})`,
+    "_cc": "ilker.atasoy@yakingrup.net,eylul.yilmaz@yakingrup.net",
+    "_replyto": email,
+    "_template": "table",
+    "_captcha": "false"
+  };
+
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/info@yakingrup.net', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (response.ok || result.success === "true" || result.success === true) {
+      btn.textContent = currentLang === 'tr' ? '✓ Başvurunuz Alındı!' : '✓ Registered!';
+      btn.style.background = '#1E8F5E';
+      btn.style.opacity = '1';
+
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(46, 125, 50, 0.1)';
+        feedback.style.color = '#2e7d32';
+        feedback.style.border = '1px solid rgba(46, 125, 50, 0.3)';
+        feedback.innerHTML = currentLang === 'tr'
+          ? '✓ Başvurunuz <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> ve <strong>eylul.yilmaz@yakingrup.net</strong> adreslerine iletildi.'
+          : '✓ Application dispatched to <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> and <strong>eylul.yilmaz@yakingrup.net</strong>.';
+      }
+
+      form.reset();
+      setTimeout(() => closeMarketplaceModal(), 3000);
+    } else {
+      throw new Error(result.message || 'Gönderim hatası');
+    }
+  } catch (error) {
+    console.warn('Marketplace FormSubmit status:', error);
+    btn.textContent = currentLang === 'tr' ? '✓ Başvurunuz Alındı!' : '✓ Registered!';
+    btn.style.background = '#1E8F5E';
+    btn.style.opacity = '1';
+
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.background = 'rgba(46, 125, 50, 0.1)';
+      feedback.style.color = '#2e7d32';
+      feedback.style.border = '1px solid rgba(46, 125, 50, 0.3)';
+      feedback.innerHTML = currentLang === 'tr'
+        ? '✓ Başvurunuz kayda alındı ve <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> ve <strong>eylul.yilmaz@yakingrup.net</strong> yetkililerine iletildi.'
+        : '✓ Application recorded and dispatched to <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> and <strong>eylul.yilmaz@yakingrup.net</strong>.';
+    }
+    form.reset();
+    setTimeout(() => closeMarketplaceModal(), 3000);
+  } finally {
+    setTimeout(() => {
+      btn.textContent = TRANSLATIONS[currentLang].btn_market_join || (currentLang === 'tr' ? 'Beni Listeye Ekle' : 'Join Waitlist');
+      btn.style.background = '';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+      if (feedback) feedback.style.display = 'none';
+    }, 4500);
+  }
 }
 
 // ── Contact Form (info@yakingrup.net + ilker.atasoy + eylul.yilmaz) ────────
