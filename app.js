@@ -2133,97 +2133,169 @@ const galleryImages = [
   {
     src: 'assets/images/gallery_datacenter_v2.jpg',
     tag: 'ANKARA / TÜRKİYE — VERİ MERKEZİ',
+    tagEn: 'ANKARA / TURKEY — DATA CENTER',
     title: 'T-3 Veri Merkezi Yapımı',
+    titleEn: 'T-3 Data Center Construction & Infrastructure',
     caption: 'Tier III sertifikasyonuna uygun mission-critical veri merkezi inşası, N+2 yedekli güç ve hassas iklimlendirme altyapısı.',
+    captionEn: 'Mission-critical Tier III certified data center construction, N+2 redundant power architecture, and precision cooling infrastructure.',
     specs: [
       { label: 'Lokasyon', val: 'Ankara, Türkiye' },
       { label: 'Kapasite', val: '12 MW BT Yükü / Tier III' },
       { label: 'Kapsam', val: 'EPC Anahtar Teslim' },
       { label: 'Yıl', val: '2025' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Ankara, Turkey' },
+      { label: 'Capacity', val: '12 MW IT Load / Tier III' },
+      { label: 'Scope', val: 'Turnkey EPC Contracting' },
+      { label: 'Year', val: '2025' }
     ]
   },
   {
     src: 'assets/images/gallery_factory_v2.jpg',
     tag: 'İZMİR / TÜRKİYE — AĞIR SANAYİ',
+    tagEn: 'IZMIR / TURKEY — HEAVY INDUSTRY',
     title: 'Ağır Sanayi & Üretim Tesisleri',
+    titleEn: 'Heavy Industry & Manufacturing Facilities',
     caption: '120.000 m² kapalı alana sahip yüksek teknolojili ağır sanayi üretim tesisi, otomasyon altyapısı ve imalat hatları.',
+    captionEn: 'High-tech heavy industrial manufacturing facility with 120,000 m² enclosed area, industrial automation, and robotic production lines.',
     specs: [
       { label: 'Lokasyon', val: 'İzmir, Türkiye' },
-      { label: 'Kapalı Alan', val: '000 m²' },
+      { label: 'Kapalı Alan', val: '120.000 m²' },
       { label: 'Kapsam', val: 'Ağır Sanayi & Fabrika İnşaatı' },
       { label: 'Yıl', val: '2025' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Izmir, Turkey' },
+      { label: 'Enclosed Area', val: '120,000 m²' },
+      { label: 'Scope', val: 'Heavy Industry & Factory EPC' },
+      { label: 'Year', val: '2025' }
     ]
   },
   {
     src: 'assets/images/gallery_residential_v2.jpg',
     tag: 'İSTANBUL / TÜRKİYE — LÜKS KONUT',
+    tagEn: 'ISTANBUL / TURKEY — LUXURY RESIDENTIAL',
     title: 'Vadi Konakları Yaşam Kompleksi',
+    titleEn: 'Vadi Mansions Living Complex',
     caption: 'Akıllı ev otomasyonu, yenilenebilir enerji entegrasyonlu 450 bağımsız konut ünitesi ve sosyal yaşam alanları projelendirmesi.',
+    captionEn: 'Smart home automation, renewable energy integrated 450 residential units, and comprehensive social living amenities.',
     specs: [
       { label: 'Lokasyon', val: 'İstanbul, Türkiye' },
       { label: 'Bağımsız Bölüm', val: '450 Konut & Ticari' },
       { label: 'Sertifika', val: 'LEED Gold Adayı' },
       { label: 'Yıl', val: '2024' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Istanbul, Turkey' },
+      { label: 'Units', val: '450 Residential & Commercial' },
+      { label: 'Certification', val: 'LEED Gold Candidate' },
+      { label: 'Year', val: '2024' }
     ]
   },
   {
     src: 'assets/images/gallery_skytower_v2.jpg',
     tag: 'İSTANBUL / TÜRKİYE — İŞ KULESİ',
+    tagEn: 'ISTANBUL / TURKEY — COMMERCIAL TOWER',
     title: 'Sky Tower İş Kulesi & Sismik Tasarım',
+    titleEn: 'Sky Tower Commercial Tower & Seismic Engineering',
     caption: 'Taban izolatörlü ve yüksek mukavemetli sismik kolon yapısıyla depreme tam dayanıklı 42 katlı iş kulesi inşası.',
+    captionEn: '42-story commercial skyscraper engineered with base seismic isolators and high-strength reinforced columns.',
     specs: [
       { label: 'Lokasyon', val: 'İstanbul (Ataşehir)' },
       { label: 'Kat Sayısı', val: '42 Kat / 185m Yükseklik' },
       { label: 'Teknoloji', val: 'Sismik Taban İzolatörü' },
       { label: 'Yıl', val: '2024' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Istanbul (Ataşehir)' },
+      { label: 'Floors', val: '42 Floors / 185m Height' },
+      { label: 'Technology', val: 'Seismic Base Isolation' },
+      { label: 'Year', val: '2024' }
     ]
   },
   {
     src: 'assets/images/gallery_petrochemical_v2.jpg',
     tag: 'KOCAELİ / TÜRKİYE — PETROKİMYA',
+    tagEn: 'KOCAELI / TURKEY — PETROCHEMICAL',
     title: 'Petrokimya & Enerji Santral Kompleksi',
+    titleEn: 'Petrochemical & Power Plant Complex',
     caption: 'Ağır endüstriyel proses borulamaları, yüksek basınçlı depolama tankları ve türbin binası ağır mühendislik taahhüdü.',
+    captionEn: 'Heavy industrial process piping, high-pressure storage tank farms, and turbine hall heavy engineering EPC contracting.',
     specs: [
       { label: 'Lokasyon', val: 'Kocaeli (Dilovası)' },
-      { label: 'Kapasite', val: '000 Ton/Yıl İşleme' },
+      { label: 'Kapasite', val: '450.000 Ton/Yıl İşleme' },
       { label: 'Yapı Tipi', val: 'Ağır Çelik & Tank Çiftliği' },
       { label: 'Yıl', val: '2024' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Kocaeli (Dilovası)' },
+      { label: 'Capacity', val: '450,000 Tons/Year Processing' },
+      { label: 'Structure', val: 'Heavy Steel & Tank Farm' },
+      { label: 'Year', val: '2024' }
     ]
   },
   {
     src: 'assets/images/gallery_mixeduse_v2.jpg',
     tag: 'İSTANBUL / TÜRKİYE — KARMA PROJE',
+    tagEn: 'ISTANBUL / TURKEY — MIXED-USE',
     title: 'Park Terrace Karma Yaşam & Ofis Projesi',
+    titleEn: 'Park Terrace Mixed-Use Living & Office Project',
     caption: 'Alışveriş bulvarı, lüks rezidans blokları ve A+ ofis katlarını bir araya getiren prestijli karma kullanım projesi.',
+    captionEn: 'Prestigious mixed-use project uniting a shopping boulevard, luxury residential blocks, and A+ premium corporate offices.',
     specs: [
       { label: 'Lokasyon', val: 'İstanbul (Maslak)' },
-      { label: 'İnşaat Alanı', val: '000 m²' },
+      { label: 'İnşaat Alanı', val: '180.000 m²' },
       { label: 'Karma Konsept', val: 'Rezidans + A+ Ofis + Retail' },
       { label: 'Yıl', val: '2025' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Istanbul (Maslak)' },
+      { label: 'Construction Area', val: '180,000 m²' },
+      { label: 'Concept', val: 'Residence + A+ Office + Retail' },
+      { label: 'Year', val: '2025' }
     ]
   },
   {
     src: 'assets/images/gallery_foundry_1785092866525.png',
     tag: 'BURSA / TÜRKİYE — AĞIR SANAYİ',
+    tagEn: 'BURSA / TURKEY — HEAVY FOUNDRY',
     title: 'Ağır Sanayi Dökümhane Kompleksi',
+    titleEn: 'Heavy Industry Foundry Complex',
     caption: 'Yüksek sıcaklık fırınları, özel havalandırma-baca arıtma sistemleri ve ağır yük zeminleri içeren endüstriyel döküm tesisi.',
+    captionEn: 'Industrial casting and smelting facility equipped with high-temperature furnaces, dedicated flue-gas filtration, and heavy-duty load floors.',
     specs: [
       { label: 'Lokasyon', val: 'Bursa, Türkiye' },
-      { label: 'Kapasite', val: '000 Ton/Yıl Döküm' },
+      { label: 'Kapasite', val: '85.000 Ton/Yıl Döküm' },
       { label: 'Altyapı', val: 'Özel Deprem & Isı İzolasyonu' },
       { label: 'Yıl', val: '2023' }
+    ],
+    specsEn: [
+      { label: 'Location', val: 'Bursa, Turkey' },
+      { label: 'Capacity', val: '85,000 Tons/Year Casting' },
+      { label: 'Infrastructure', val: 'Thermal & Seismic Isolation' },
+      { label: 'Year', val: '2023' }
     ]
   },
   {
     src: 'assets/images/civil_engineering_bim_1785010076530.png',
     tag: 'İSTANBUL / TÜRKİYE — DİJİTAL İKİZ & BIM',
+    tagEn: 'ISTANBUL / TURKEY — DIGITAL TWIN & BIM',
     title: '5D BIM Projelendirme & İhale Yönetimi',
+    titleEn: '5D BIM Design & Tender Management',
     caption: 'Tüm disiplinlerin (Mimari, Statik, Mekanik, Elektrik) çakışma analizi, 5D maliyet simülasyonu ve şartname yönetimi.',
+    captionEn: 'Multi-disciplinary clash detection (Architectural, Structural, MEP), 5D cost simulation, and digital twin building lifecycle management.',
     specs: [
       { label: 'Yazılım', val: 'Revit, Navisworks, BIM 360' },
       { label: 'Kapsam', val: '5D Cost & Clash Detection' },
       { label: 'LOD Standardı', val: 'LOD 400 Uygulama Detayı' },
       { label: 'Standart', val: 'ISO 19650 BIM Standardı' }
+    ],
+    specsEn: [
+      { label: 'Software', val: 'Revit, Navisworks, BIM 360' },
+      { label: 'Scope', val: '5D Cost & Clash Detection' },
+      { label: 'LOD Standard', val: 'LOD 400 Construction Detail' },
+      { label: 'Standard', val: 'ISO 19650 BIM Standard' }
     ]
   }
 ];
