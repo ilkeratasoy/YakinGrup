@@ -474,15 +474,14 @@
       vertical-align: middle;
     }
 
-    /* Person Info Middle: KARTVİZİTİN TAM ORTASINDA / MERKEZDE */
+    /* Person Info Middle & Layout Modifiers */
     .front-person {
       margin: auto 0;
       display: flex;
       flex-direction: column;
-      align-items: center !important;
-      text-align: center !important;
       gap: 4px;
       width: 100%;
+      transition: all 0.2s ease;
     }
 
     .front-name {
@@ -494,7 +493,6 @@
       color: #0f172a;
       margin: 0;
       padding: 0;
-      text-align: center !important;
       display: block;
       width: 100%;
     }
@@ -507,10 +505,49 @@
       color: var(--primary-green);
       margin: 0;
       padding: 0;
-      text-align: center !important;
       line-height: 1.25;
       display: block;
       width: 100%;
+    }
+
+    /* Layout: Center (Ortada) */
+    .front-person.layout-center {
+      align-items: center !important;
+      text-align: center !important;
+    }
+    .front-person.layout-center .front-name,
+    .front-person.layout-center .front-title {
+      text-align: center !important;
+    }
+
+    /* Layout: Left (Solda Hizalı - Standart) */
+    .front-person.layout-left {
+      align-items: flex-start !important;
+      text-align: left !important;
+    }
+    .front-person.layout-left .front-name,
+    .front-person.layout-left .front-title {
+      text-align: left !important;
+    }
+
+    /* Layout: Title Top (Ünvan Üstte - Sol) */
+    .front-person.layout-title-top {
+      align-items: flex-start !important;
+      text-align: left !important;
+    }
+    .front-person.layout-title-top .front-name,
+    .front-person.layout-title-top .front-title {
+      text-align: left !important;
+    }
+
+    /* Layout: Right (Sağda Hizalı - Modern) */
+    .front-person.layout-right {
+      align-items: flex-end !important;
+      text-align: right !important;
+    }
+    .front-person.layout-right .front-name,
+    .front-person.layout-right .front-title {
+      text-align: right !important;
     }
 
     /* Front Bottom Contact Details & QR: KESİN SOLA HİZALI */
@@ -927,8 +964,8 @@
                   </div>
                 </div>
 
-                <!-- Front Person Info: İsim Üstte Büyük, Ünvan Altta Sol Baştan -->
-                <div class="front-person" id="card-person-box">
+                <!-- Front Person Info: İsim Üstte Büyük, Ünvan Altta -->
+                <div class="front-person layout-center" id="card-person-box">
                   <div class="front-name" id="card-name">İlker ATASOY</div>
                   <div class="front-title" id="card-title">YÖNETİM KURULU BAŞKANI / CXO</div>
                 </div>
@@ -1528,15 +1565,12 @@
 
       [btnNameFirst, btnTitleTop, btnTitleMiddle, btnRightAlign].forEach(b => b && b.classList.remove('active'));
 
+      personBox.className = 'front-person';
       personBox.innerHTML = '';
 
       if (order === 'name-first') {
         if (btnNameFirst) btnNameFirst.classList.add('active');
-        personBox.style.alignItems = 'flex-start';
-        personBox.style.textAlign = 'left';
-        personBox.style.margin = 'auto 0';
-        nameEl.style.textAlign = 'left';
-        titleEl.style.textAlign = 'left';
+        personBox.classList.add('layout-left');
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.78rem';
@@ -1546,11 +1580,7 @@
         personBox.appendChild(titleEl);
       } else if (order === 'title-top') {
         if (btnTitleTop) btnTitleTop.classList.add('active');
-        personBox.style.alignItems = 'flex-start';
-        personBox.style.textAlign = 'left';
-        personBox.style.margin = 'auto 0';
-        nameEl.style.textAlign = 'left';
-        titleEl.style.textAlign = 'left';
+        personBox.classList.add('layout-title-top');
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.74rem';
@@ -1560,11 +1590,7 @@
         personBox.appendChild(nameEl);
       } else if (order === 'title-middle') {
         if (btnTitleMiddle) btnTitleMiddle.classList.add('active');
-        personBox.style.alignItems = 'center';
-        personBox.style.textAlign = 'center';
-        personBox.style.margin = 'auto auto';
-        nameEl.style.textAlign = 'center';
-        titleEl.style.textAlign = 'center';
+        personBox.classList.add('layout-center');
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.78rem';
@@ -1574,11 +1600,7 @@
         personBox.appendChild(titleEl);
       } else if (order === 'right-align') {
         if (btnRightAlign) btnRightAlign.classList.add('active');
-        personBox.style.alignItems = 'flex-end';
-        personBox.style.textAlign = 'right';
-        personBox.style.margin = 'auto 0';
-        nameEl.style.textAlign = 'right';
-        titleEl.style.textAlign = 'right';
+        personBox.classList.add('layout-right');
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.78rem';
