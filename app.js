@@ -317,6 +317,10 @@ const TRANSLATIONS = {
     footer_tagline: 'Mühendislik temelli yaklaşımlarla altyapı ve enerjinin birleşimi.',
     footer_col_services: 'Sektör Çözümleri',
     footer_col_corporate: 'Kurumsal Bilgiler',
+    footer_corporate: 'Kurumsal',
+    footer_partners: 'İş Ortaklarımız',
+    footer_presentation_2026: 'YATIRIMCI & MÜŞTERİ Sunumu 2026',
+    footer_design_files: 'Tasarım Dosyaları 🔒',
     footer_col_legal: 'Yasal Mevzuat',
     footer_kvkk: 'KVKK & Data Privacy Notice',
     footer_cookies: 'Çerez Politikası',
@@ -644,6 +648,10 @@ const TRANSLATIONS = {
     footer_tagline: 'The intersection of infrastructure and energy through an engineering-led approach.',
     footer_col_services: 'Sector Solutions',
     footer_col_corporate: 'Corporate Info',
+    footer_corporate: 'Corporate',
+    footer_partners: 'Our Partners',
+    footer_presentation_2026: 'Pitch Deck 2026',
+    footer_design_files: 'Design Files 🔒',
     footer_col_legal: 'Legal',
     footer_kvkk: 'KVKK & Data Privacy Notice',
     footer_cookies: 'Cookie Policy',
@@ -2847,6 +2855,72 @@ function openLegalModal(type) {
   document.getElementById('legal-modal-title').textContent = data.title;
   document.getElementById('legal-modal-body').innerHTML = data.body;
   document.getElementById('legal-dialog').showModal();
+}
+
+// ── Tasarım Dosyaları & Studio Authentication ───────────────────────────────
+const STUDIO_AUTH_USER = 'Admin';
+const STUDIO_AUTH_PASS = 'Yakin2026.!';
+
+function isStudioAuthenticated() {
+  return sessionStorage.getItem('yg_studio_auth') === 'true' || localStorage.getItem('yg_studio_auth') === 'true';
+}
+
+function openDesignFilesModal() {
+  const dialog = document.getElementById('design-files-dialog');
+  if (!dialog) return;
+  
+  if (isStudioAuthenticated()) {
+    document.getElementById('df-login-pane').style.display = 'none';
+    document.getElementById('df-hub-pane').style.display = 'block';
+  } else {
+    document.getElementById('df-login-pane').style.display = 'block';
+    document.getElementById('df-hub-pane').style.display = 'none';
+    const err = document.getElementById('df-err-msg');
+    if (err) err.style.display = 'none';
+    const u = document.getElementById('df-user');
+    const p = document.getElementById('df-pass');
+    if (u) u.value = '';
+    if (p) p.value = '';
+  }
+  dialog.showModal();
+}
+
+function closeDesignFilesModal() {
+  const dialog = document.getElementById('design-files-dialog');
+  if (dialog) dialog.close();
+}
+
+function handleDesignFilesLogin(e) {
+  e.preventDefault();
+  const u = document.getElementById('df-user').value.trim();
+  const p = document.getElementById('df-pass').value.trim();
+  const err = document.getElementById('df-err-msg');
+
+  if (u.toLowerCase() === STUDIO_AUTH_USER.toLowerCase() && p === STUDIO_AUTH_PASS) {
+    sessionStorage.setItem('yg_studio_auth', 'true');
+    localStorage.setItem('yg_studio_auth', 'true');
+    if (err) err.style.display = 'none';
+    document.getElementById('df-login-pane').style.display = 'none';
+    document.getElementById('df-hub-pane').style.display = 'block';
+  } else {
+    if (err) err.style.display = 'block';
+    const formBox = document.getElementById('df-login-form');
+    if (formBox) {
+      formBox.style.animation = 'none';
+      setTimeout(() => formBox.style.animation = 'shake 0.5s ease', 10);
+    }
+  }
+}
+
+function handleStudioLogout() {
+  sessionStorage.removeItem('yg_studio_auth');
+  localStorage.removeItem('yg_studio_auth');
+  document.getElementById('df-login-pane').style.display = 'block';
+  document.getElementById('df-hub-pane').style.display = 'none';
+  const u = document.getElementById('df-user');
+  const p = document.getElementById('df-pass');
+  if (u) u.value = '';
+  if (p) p.value = '';
 }
 
 // Close dialogs on backdrop click

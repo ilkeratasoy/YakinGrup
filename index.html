@@ -1365,12 +1365,11 @@
       <div>
         <h4 data-i18n="footer_col_corporate">Kurumsal Bilgiler</h4>
         <ul class="footer-links">
-          <li><a href="#hakkimizda" data-i18n="nav_about">Hakkımızda</a></li>
-          <li><a href="kartvizit.html" target="_blank">Dijital Kartvizit Stüdyosu</a></li>
-          <li><a href="imza.html" target="_blank">Kurumsal İmza Stüdyosu</a></li>
-          <li><a href="teklif.html" target="_blank">Hızlı Şartname & Teklif Stüdyosu</a></li>
+          <li><a href="#hakkimizda" data-i18n="footer_corporate">Kurumsal</a></li>
+          <li><a href="#ortaklar" data-i18n="footer_partners">İş Ortaklarımız</a></li>
           <li><a href="#marketplace" data-i18n="nav_marketplace">Marketplace</a></li>
-          <li><a href="assets/docs/presentation_tr.pdf" target="_blank" data-i18n="footer_presentation">Yatırımcı Sunumu</a></li>
+          <li><a href="Sunum.html" target="_blank" data-i18n="footer_presentation_2026">YATIRIMCI & MÜŞTERİ Sunumu 2026</a></li>
+          <li><a href="#" onclick="openDesignFilesModal(); return false;" data-i18n="footer_design_files">Tasarım Dosyaları 🔒</a></li>
         </ul>
       </div>
       <div>
@@ -1529,6 +1528,91 @@
         <h3 id="legal-modal-title">KVKK Aydınlatma Metni</h3>
       </div>
       <div id="legal-modal-body" style="max-height:55vh;overflow-y:auto;color:#4a5568;font-size:0.92rem;line-height:1.8;padding:1rem 0;"></div>
+    </div>
+  </dialog>
+
+  <!-- DIALOG: Tasarım Dosyaları & Studio Hub (Şifre Korumalı) -->
+  <dialog id="design-files-dialog" class="market-modal" style="max-width: 520px; width: 92vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.35); background: #ffffff;">
+    <button class="modal-close-btn" onclick="closeDesignFilesModal()">×</button>
+    
+    <!-- 1. GİRİŞ PANELİ (Yetkilendirme) -->
+    <div id="df-login-pane" style="text-align: center;">
+      <div style="width: 58px; height: 58px; border-radius: 50%; background: #e0f2fe; border: 2px solid #0284c7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: #0369a1; font-size: 1.6rem;">
+        🔐
+      </div>
+      <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #0b2545; margin-bottom: 0.4rem;">
+        Tasarım Dosyaları & Stüdyo Girişi
+      </h3>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.5;">
+        Bu alandaki dijital araçlara ve kurumsal şablonlara erişim yetkili yöneticilerle sınırlandırılmıştır.
+      </p>
+
+      <form id="df-login-form" onsubmit="handleDesignFilesLogin(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Kullanıcı Adı</label>
+          <input type="text" id="df-user" required placeholder="Admin" autocomplete="username" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Şifre</label>
+          <input type="password" id="df-pass" required placeholder="••••••••" autocomplete="current-password" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+        </div>
+
+        <div id="df-err-msg" style="display: none; background: #fee2e2; border: 1px solid #f87171; color: #b91c1c; font-size: 0.82rem; padding: 8px 12px; border-radius: 6px; font-weight: 600; text-align: center;">
+          ⚠️ Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyiniz.
+        </div>
+
+        <button type="submit" style="width: 100%; margin-top: 8px; padding: 0.85rem; background: linear-gradient(135deg, #0b2545, #0b3c6b); color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(11,37,69,0.25);">
+          🔓 Güvenli Giriş Yap
+        </button>
+      </form>
+    </div>
+
+    <!-- 2. STÜDYO HUB PANELİ (Giriş Başarılı) -->
+    <div id="df-hub-pane" style="display: none;">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.9rem; margin-bottom: 1.2rem;">
+        <div>
+          <span style="font-size: 0.7rem; font-weight: 800; color: #3d6e30; letter-spacing: 0.1em; text-transform: uppercase;">YÖNETİCİ PORTALI</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #0b2545; margin: 2px 0 0 0;">Tasarım Dosyaları & Stüdyolar</h3>
+        </div>
+        <button onclick="handleStudioLogout()" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 10px; font-size: 0.76rem; font-weight: 700; color: #64748b; cursor: pointer;">
+          Çıkış Yap 🚪
+        </button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <a href="kartvizit.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
+            📇
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Dijital Kartvizit Stüdyosu</div>
+            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Baskı ve QR vCard profilleri, çift taraflı canlı tasarım</div>
+          </div>
+          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
+        </a>
+
+        <a href="imza.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
+            ✉️
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Kurumsal İmza Stüdyosu</div>
+            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Gmail & Outlook uyumlu, fotoğraflı ve butonlu e-posta imzası</div>
+          </div>
+          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
+        </a>
+
+        <a href="teklif.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
+            📑
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Hızlı Şartname & Teklif Stüdyosu</div>
+            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Proje şartnamesi oluşturma, interaktif maliyet ve PDF teklif alma</div>
+          </div>
+          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
+        </a>
+      </div>
     </div>
   </dialog>
 
