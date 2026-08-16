@@ -2533,35 +2533,62 @@ const energyProducts = [
 const capitalServices = [
   {
     tag: 'FİNANSMAN & KREDİ',
+    tagEn: 'FINANCING & CREDIT',
     title: 'Finansman ve Kredi Yapılandırması',
+    titleEn: 'Financing & Credit Structuring',
     caption: 'Banka proje finansmanı organizasyonu, leasing ve hakediş bazlı finansman modelleri ile projelerinizin sermaye ve borç yapısını optimize ediyoruz.',
+    captionEn: 'We optimize project capital and debt structures through bank project finance syndication, equipment/energy leasing, and progress-payment-backed financing models.',
     specs: [
       { label: 'Banka Finansmanı', val: 'Proje Kredisi & Sendikasyon' },
       { label: 'Leasing Organizasyonu', val: 'GES, RES, BESS & Ağır Ekipman' },
       { label: 'Hakediş Modeli', val: 'Nakit Akış & Performans Odaklı' },
       { label: 'Danışmanlık', val: 'Uçtan Uca Finansal Mimari' }
+    ],
+    specsEn: [
+      { label: 'Bank Financing', val: 'Project Debt & Syndication' },
+      { label: 'Leasing Structuring', val: 'Solar, Wind, BESS & Heavy Equipment' },
+      { label: 'Payment Model', val: 'Cash Flow & Milestone Based' },
+      { label: 'Advisory', val: 'End-to-End Financial Architecture' }
     ]
   },
   {
     tag: 'YATIRIM & SPV',
+    tagEn: 'INVESTMENT & SPV',
     title: 'Yatırım ve Yapılandırma',
+    titleEn: 'Investment & Structuring',
     caption: 'GYO iş birlikleri, girişim sermayesi ilişkileri ve projenize özel SPV (Özel Amaçlı Şirket) kurulumu ile güvenli yatırım platformu sunuyoruz.',
+    captionEn: 'We provide a secure investment platform with REIT partnerships, private equity fund relations, and dedicated project-specific Special Purpose Vehicle (SPV) formation.',
     specs: [
       { label: 'GYO Entegrasyonu', val: 'Gayrimenkul Yatırım Ortaklıkları' },
       { label: 'Girişim Sermayesi', val: 'GSYF & Fon Entegrasyonu' },
       { label: 'SPV Kurulumu', val: 'Proje Bazlı Şirket Mimarisi' },
       { label: 'Yatırımcı İlişkileri', val: 'Şeffaf Raporlama & Gelir Paylaşımı' }
+    ],
+    specsEn: [
+      { label: 'REIT Integration', val: 'Real Estate Investment Trusts' },
+      { label: 'Venture / PE Capital', val: 'Investment Funds & PE Network' },
+      { label: 'SPV Formation', val: 'Project-Specific SPV Entity' },
+      { label: 'Investor Relations', val: 'Transparent Governance & Revenue Sharing' }
     ]
   },
   {
     tag: 'RİSK & DANIŞMANLIK',
+    tagEn: 'RISK & ADVISORY',
     title: 'Risk ve Danışmanlık',
+    titleEn: 'Risk Management & Advisory',
     caption: 'Nakit akışı modelleme, sigorta & teminat çözümleri ve finansal fizibilite danışmanlığı ile projelerinizin risk skorunu kontrol altına alıyoruz.',
+    captionEn: 'We mitigate project risk exposure through dynamic cash flow modeling, comprehensive construction insurance/guarantees, and bankable ROI feasibility advisory.',
     specs: [
       { label: 'Nakit Akışı', val: 'Duyarlılık & Risk Simülasyonu' },
       { label: 'Sigorta & Teminat', val: 'CAR, EAR & Kefalet Senedi (Surety)' },
       { label: 'Fizibilite', val: 'Finansal Modelleme & ROI' },
       { label: 'Uyum', val: 'Uluslararası Risk Standartları' }
+    ],
+    specsEn: [
+      { label: 'Cash Flow Modeling', val: 'Sensitivity & Risk Simulation' },
+      { label: 'Insurance & Surety', val: 'CAR, EAR & Surety Bonds' },
+      { label: 'Feasibility', val: 'Bankable Financial Modeling & ROI' },
+      { label: 'Compliance', val: 'International Risk Standards' }
     ]
   }
 ];
@@ -2572,25 +2599,10 @@ function openCapitalModal(idx) {
   const item = capitalServices[activeLightboxIdx];
   if (!item) return;
 
-  document.getElementById('lightbox-img').src = 'assets/images/investment_finance_real_estate_1785010111511.png';
-  document.getElementById('lightbox-tag').textContent = item.tag;
-  document.getElementById('lightbox-title').textContent = item.title;
-  document.getElementById('lightbox-caption').textContent = item.caption;
-
-  const specsGrid = document.getElementById('lightbox-specs-grid');
-  if (specsGrid) {
-    specsGrid.innerHTML = '';
-    item.specs.forEach(s => {
-      const div = document.createElement('div');
-      div.className = 'lb-detail-item';
-      div.innerHTML = `
-        <span class="lb-detail-label">${s.label}</span>
-        <span class="lb-detail-value">${s.val}</span>
-      `;
-      specsGrid.appendChild(div);
-    });
-  }
-
+  renderLightboxContent({
+    src: 'assets/images/investment_finance_real_estate_1785010111511.png',
+    ...item
+  });
   document.getElementById('lightbox-dialog').showModal();
 }
 
