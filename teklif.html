@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yakın Grup — Hızlı Kurumsal Teklif & Maliyet Hesaplama Stüdyosu (Yakın Teklif)</title>
-  <meta name="description" content="Yakın Grup Hızlı Teklif Stüdyosu: İnşaat, Enerji, Finans ve Teknoloji projeleri için saniyeler içinde kurumsal teklif, maliyet tahmini ve resmi PDF hazırlama platformu.">
+  <title>Yakın Grup — Hızlı Şartname & Kurumsal Teklif Stüdyosu (Yakın Şartname)</title>
+  <meta name="description" content="Yakın Grup Hızlı Şartname & Teklif Stüdyosu: İnşaat, Enerji, Teknoloji ve Finans projeleri için teknik şartname, idari şartname ve kurumsal teklif hazırlama platformu.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@
     header {
       background: #ffffff;
       border-bottom: 1px solid var(--border-light);
-      padding: 0.8rem 1.8rem;
+      padding: 0.75rem 1.8rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -63,9 +63,9 @@
       color: var(--text-main);
     }
 
-    .brand-title svg, .brand-title img {
-      width: 34px;
-      height: 34px;
+    .brand-title svg {
+      width: 36px;
+      height: 36px;
       object-fit: contain;
     }
 
@@ -73,13 +73,13 @@
       font-family: var(--font-heading);
       font-size: 1.18rem;
       font-weight: 800;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
     }
 
     .brand-title h1 span {
       color: var(--primary-green);
       font-weight: 600;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       margin-left: 6px;
       padding-left: 8px;
       border-left: 1.5px solid var(--border-light);
@@ -96,9 +96,9 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 0.55rem 1.05rem;
+      padding: 0.52rem 1rem;
       border-radius: 8px;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -162,16 +162,16 @@
 
     /* Left Control Sidebar */
     .controls-panel {
-      width: 480px;
-      min-width: 440px;
-      max-width: 520px;
+      width: 500px;
+      min-width: 450px;
+      max-width: 540px;
       background: var(--sidebar-bg);
       border-right: 1px solid var(--border-light);
       overflow-y: auto;
-      padding: 1.5rem;
+      padding: 1.4rem;
       display: flex;
       flex-direction: column;
-      gap: 1.35rem;
+      gap: 1.25rem;
       box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
     }
 
@@ -259,18 +259,18 @@
 
     textarea {
       resize: vertical;
-      min-height: 55px;
+      min-height: 60px;
     }
 
     /* Preset & Pill Selectors */
     .pills-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 6px;
     }
 
     .pill-btn {
-      padding: 0.5rem 0.65rem;
+      padding: 0.55rem 0.65rem;
       border-radius: 7px;
       border: 1px solid var(--border-light);
       background: #f8fafc;
@@ -306,7 +306,7 @@
     }
 
     .template-card {
-      padding: 0.6rem 0.8rem;
+      padding: 0.65rem 0.85rem;
       border: 1px solid var(--border-light);
       border-radius: 8px;
       background: #f8fafc;
@@ -344,14 +344,8 @@
       color: #475569;
     }
 
-    /* Line Items Management */
-    .items-container {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .item-row {
+    /* Clause & Items Cards */
+    .clause-row, .item-row {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 8px;
@@ -363,19 +357,19 @@
       transition: all 0.2s;
     }
 
-    .item-row:hover {
+    .clause-row:hover, .item-row:hover {
       border-color: #cbd5e1;
       background: #ffffff;
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
-    .item-row-header {
+    .clause-header, .item-row-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .item-num {
+    .clause-badge, .item-num {
       font-size: 0.72rem;
       font-weight: 700;
       color: var(--primary-green);
@@ -384,7 +378,7 @@
       border-radius: 4px;
     }
 
-    .btn-delete-item {
+    .btn-action-sm {
       background: none;
       border: none;
       color: #ef4444;
@@ -395,13 +389,35 @@
       transition: background 0.15s;
     }
 
-    .btn-delete-item:hover {
+    .btn-action-sm:hover {
       background: #fee2e2;
+    }
+
+    .btn-add-dashed {
+      padding: 0.55rem;
+      background: #edf7eb;
+      border: 1.5px dashed #3d6e30;
+      border-radius: 8px;
+      color: #1e3a17;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .btn-add-dashed:hover {
+      background: #e2f0e0;
+      transform: translateY(-1px);
     }
 
     .item-inputs-grid {
       display: grid;
-      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
       gap: 6px;
       align-items: center;
     }
@@ -419,33 +435,12 @@
       padding-right: 4px;
     }
 
-    .btn-add-item {
-      padding: 0.55rem;
-      background: #edf7eb;
-      border: 1.5px dashed #3d6e30;
-      border-radius: 8px;
-      color: #1e3a17;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .btn-add-item:hover {
-      background: #e2f0e0;
-      transform: translateY(-1px);
-    }
-
     /* Right Preview Stage */
     .preview-stage {
       flex: 1;
       background: var(--stage-bg);
       overflow-y: auto;
-      padding: 2.5rem 2rem;
+      padding: 2.2rem 1.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -458,7 +453,7 @@
       align-items: center;
       gap: 12px;
       background: #ffffff;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 1.1rem;
       border-radius: 30px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       border: 1px solid var(--border-light);
@@ -481,13 +476,13 @@
     }
 
     /* A4 Document Sheet */
-    .proposal-sheet {
+    .doc-sheet {
       width: 210mm;
       min-height: 297mm;
       background: #ffffff;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0,0,0,0.06);
       border-radius: 3px;
-      padding: 18mm 18mm 18mm 18mm;
+      padding: 16mm 18mm 16mm 18mm;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -499,7 +494,7 @@
     }
 
     /* Watermark */
-    .proposal-watermark {
+    .doc-watermark {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -516,8 +511,8 @@
       justify-content: space-between;
       align-items: flex-start;
       border-bottom: 2.5px solid var(--primary-green);
-      padding-bottom: 14px;
-      margin-bottom: 16px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .doc-brand {
@@ -527,16 +522,16 @@
     }
 
     .doc-brand-logo {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
     }
 
     .doc-brand-text h2 {
       font-family: var(--font-heading);
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 900;
       color: #0f172a;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       line-height: 1.1;
     }
 
@@ -545,10 +540,10 @@
     }
 
     .doc-brand-text .company-sub {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: #64748b;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-top: 2px;
     }
@@ -562,15 +557,15 @@
 
     .doc-badge-title {
       font-family: var(--font-heading);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--primary-green);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
     }
 
     .doc-meta-item {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #475569;
     }
 
@@ -583,78 +578,124 @@
     .doc-parties-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 14px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .info-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 6px;
-      padding: 10px 12px;
+      padding: 9px 11px;
     }
 
     .info-card-title {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 800;
       color: var(--primary-green);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
       border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 3px;
+      padding-bottom: 2px;
       display: flex;
       justify-content: space-between;
     }
 
     .info-card-body {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #334155;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
 
     .info-card-body strong {
       color: #0f172a;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
     /* Executive Subject & Intro */
     .doc-subject-bar {
       background: #edf7eb;
       border-left: 4px solid var(--primary-green);
-      padding: 8px 12px;
+      padding: 7px 11px;
       border-radius: 0 6px 6px 0;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .doc-subject-text {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #1e3a17;
     }
 
     .doc-subject-meta {
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: #475569;
     }
 
     .doc-intro-text {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #334155;
-      line-height: 1.5;
-      margin-bottom: 14px;
+      line-height: 1.45;
+      margin-bottom: 12px;
       text-align: justify;
+    }
+
+    /* Specification Clauses Block */
+    .doc-clauses-container {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .doc-clause-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 11px;
+      background: #ffffff;
+    }
+
+    .doc-clause-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 4px;
+    }
+
+    .doc-clause-num {
+      font-family: var(--font-heading);
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--primary-green);
+      background: #edf7eb;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .doc-clause-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 0.01em;
+    }
+
+    .doc-clause-body {
+      font-size: 0.75rem;
+      color: #334155;
+      line-height: 1.45;
+      white-space: pre-line;
     }
 
     /* Line Items Table */
     .doc-table-container {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       border: 1px solid #cbd5e1;
       border-radius: 6px;
       overflow: hidden;
@@ -663,7 +704,7 @@
     .doc-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-align: left;
     }
 
@@ -671,15 +712,15 @@
       background: #f1f5f9;
       color: #1e293b;
       font-weight: 800;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      padding: 7px 10px;
+      padding: 6px 9px;
       border-bottom: 1.5px solid #cbd5e1;
     }
 
     .doc-table td {
-      padding: 8px 10px;
+      padding: 7px 9px;
       border-bottom: 1px solid #e2e8f0;
       color: #334155;
       vertical-align: top;
@@ -689,48 +730,39 @@
       background: #fafafa;
     }
 
-    .doc-table tr:hover td {
-      background: #f4fbf3;
-    }
-
     .item-cell-title {
       font-weight: 700;
       color: #0f172a;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
 
     .item-cell-desc {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: #64748b;
-      margin-top: 2px;
-      line-height: 1.35;
+      margin-top: 1px;
+      line-height: 1.3;
     }
 
     .item-cell-tag {
       display: inline-block;
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       font-weight: 600;
       background: #edf7eb;
       color: #1e3a17;
-      padding: 1px 5px;
+      padding: 1px 4px;
       border-radius: 3px;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
-    .text-right {
-      text-align: right;
-    }
-
-    .text-center {
-      text-align: center;
-    }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
 
     /* Totals Summary Section */
     .doc-bottom-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 14px;
-      margin-bottom: 16px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+      margin-bottom: 14px;
       align-items: flex-start;
     }
 
@@ -738,15 +770,15 @@
       border: 1px solid #e2e8f0;
       border-radius: 6px;
       background: #ffffff;
-      padding: 8px 10px;
+      padding: 7px 9px;
     }
 
     .doc-terms-title {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 800;
       color: var(--primary-green);
       text-transform: uppercase;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       border-bottom: 1px solid #f1f5f9;
       padding-bottom: 2px;
     }
@@ -755,15 +787,15 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      font-size: 0.72rem;
+      gap: 3px;
+      font-size: 0.71rem;
       color: #475569;
       line-height: 1.35;
     }
 
     .doc-terms-list li {
       display: flex;
-      gap: 5px;
+      gap: 4px;
     }
 
     .doc-terms-list li::before {
@@ -782,8 +814,8 @@
     .totals-row {
       display: flex;
       justify-content: space-between;
-      padding: 6px 10px;
-      font-size: 0.78rem;
+      padding: 5px 9px;
+      font-size: 0.76rem;
       border-bottom: 1px solid #e2e8f0;
       color: #475569;
     }
@@ -792,20 +824,20 @@
       background: #1e3a17;
       color: #ffffff;
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       border-bottom: none;
-      padding: 9px 10px;
+      padding: 8px 9px;
     }
 
     .totals-row.grand-total span:last-child {
       color: #bbf7d0;
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
 
     .in-words-box {
-      padding: 5px 10px;
+      padding: 4px 9px;
       background: #edf7eb;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       color: #1e3a17;
       font-style: italic;
       border-top: 1px dashed #bbf7d0;
@@ -815,9 +847,9 @@
     .doc-signatures-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 16px;
       margin-top: auto;
-      padding-top: 10px;
+      padding-top: 8px;
       border-top: 1px solid #e2e8f0;
     }
 
@@ -830,7 +862,7 @@
     }
 
     .signature-card .role-title {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
@@ -838,19 +870,19 @@
     }
 
     .signature-card .person-name {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 800;
       color: #0f172a;
       margin-top: 2px;
     }
 
     .signature-space {
-      height: 48px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
-      margin: 4px 0;
+      margin: 3px 0;
     }
 
     .signature-line {
@@ -861,24 +893,24 @@
     .official-stamp {
       border: 1.5px solid #3d6e30;
       border-radius: 6px;
-      padding: 3px 8px;
-      font-size: 0.65rem;
+      padding: 2px 7px;
+      font-size: 0.63rem;
       font-weight: 700;
       color: #3d6e30;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       display: inline-block;
     }
 
     /* Footer */
     .doc-footer {
-      margin-top: 14px;
-      padding-top: 10px;
+      margin-top: 10px;
+      padding-top: 8px;
       border-top: 1.5px solid var(--border-light);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       color: #64748b;
     }
 
@@ -890,14 +922,14 @@
 
     .doc-footer-badges {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .doc-footer-badge {
       font-weight: 700;
       color: #475569;
       background: #f1f5f9;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 3px;
     }
 
@@ -906,17 +938,18 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #0f172a;
+      background: #1e293b;
       color: #ffffff;
-      padding: 0.8rem 1.4rem;
-      border-radius: 10px;
-      font-size: 0.88rem;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
       font-weight: 600;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      z-index: 9999;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+      z-index: 1000;
       opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      pointer-events: none;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -927,42 +960,40 @@
       transform: translateY(0);
     }
 
-    /* Print CSS Optimization */
+    /* Print Optimizations */
     @media print {
       body {
-        background: #ffffff !important;
-        color: #000000 !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        background: #ffffff;
+        color: #000000;
       }
       header, .controls-panel, .stage-toolbar, .toast {
         display: none !important;
       }
       .studio-container {
-        display: block !important;
-        height: auto !important;
+        height: auto;
+        overflow: visible;
+        display: block;
       }
       .preview-stage {
-        padding: 0 !important;
-        background: transparent !important;
+        padding: 0;
+        background: none;
+        overflow: visible;
       }
-      .proposal-sheet {
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        padding: 12mm 15mm !important;
-        width: 100% !important;
-        min-height: auto !important;
+      .doc-sheet {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        min-height: auto;
+        padding: 0;
         transform: none !important;
-        page-break-after: always;
       }
       @page {
-        size: A4 portrait;
-        margin: 0;
+        size: A4;
+        margin: 15mm 15mm 15mm 15mm;
       }
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 1100px) {
+    @media (max-width: 1024px) {
       .studio-container {
         flex-direction: column;
         height: auto;
@@ -971,145 +1002,162 @@
       .controls-panel {
         width: 100%;
         max-width: 100%;
-        min-width: unset;
-        border-right: none;
-        border-bottom: 1px solid var(--border-light);
+        min-width: 100%;
+        height: auto;
       }
-      .proposal-sheet {
+      .preview-stage {
+        overflow: visible;
+        padding: 1.5rem 1rem;
+      }
+      .doc-sheet {
         width: 100%;
-        max-width: 800px;
         min-height: auto;
-        padding: 1.5rem;
+        padding: 1rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
+  <!-- Top Header Navigation -->
   <header>
     <a href="index.html" class="brand-title">
-      <!-- Yakın Emblem SVG -->
       <svg viewBox="0 0 120 120">
         <path d="M 52 105 C 50 85, 30 65, 18 48 C 14 42, 12 30, 18 20 C 24 10, 36 8, 45 14 C 58 22, 64 45, 60 70 C 58 85, 54 98, 52 105 Z" fill="#3d6e30"/>
         <path d="M 28 32 C 38 48, 48 68, 52 92" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
         <path d="M 56 105 C 57 82, 68 55, 84 35 C 92 25, 102 18, 110 24 C 117 30, 115 42, 108 52 C 98 67, 80 86, 60 102 C 58 104, 56 105, 56 105 Z" fill="#528e40"/>
         <path d="M 96 38 C 84 56, 72 76, 62 96" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
       </svg>
-      <h1>YAKIN GRUP <span>Hızlı Teklif & Maliyet Stüdyosu</span></h1>
+      <div>
+        <h1>YAKIN GRUP <span>Hızlı Şartname & Teklif Stüdyosu</span></h1>
+      </div>
     </a>
 
     <div class="header-actions">
-      <button class="btn btn-outline" onclick="toggleLanguage()" id="btn-lang">🇬🇧 English</button>
       <a href="kartvizit.html" class="btn btn-outline">📇 Kartvizit</a>
-      <a href="imza.html" class="btn btn-outline">✉️ E-Posta İmza</a>
-      <button class="btn btn-outline" onclick="copyProposalSummary()">📋 Teklifi Kopyala</button>
+      <a href="imza.html" class="btn btn-outline">✉️ İmza</a>
+      <button class="btn btn-outline" onclick="copyDocumentText()">📋 Metni Kopyala</button>
+      <button class="btn btn-outline" onclick="exportToWordDoc()">📄 Word (.doc) İndir</button>
       <button class="btn btn-whatsapp" onclick="shareWhatsApp()">💬 WhatsApp</button>
-      <button class="btn btn-gold" onclick="window.print()">🖨️ PDF / Yazdır</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨️ PDF / Yazdır</button>
     </div>
   </header>
 
-  <!-- Workspace Container -->
+  <!-- Studio Workspace -->
   <div class="studio-container">
-
-    <!-- Left Controls Panel -->
+    
+    <!-- Left Configuration Sidebar -->
     <aside class="controls-panel">
-
-      <!-- 1. Şirket & Branş Seçimi -->
+      
+      <!-- 1. Belge Modu & Şirket Seçimi -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>🏢 1. Şirket & Faaliyet Alanı</span>
-          <span class="badge-pill" id="selected-branch-badge">Yakın Grup</span>
+          <span>📑 1. Belge Modu & Antet</span>
+          <span class="badge-pill" id="badge-doc-type">Teknik Şartname</span>
         </div>
-        <div class="pills-grid">
-          <button class="pill-btn active" onclick="setCompanyBranch('holding', this)">🏛️ Yakın Grup</button>
-          <button class="pill-btn" onclick="setCompanyBranch('insaat', this)">🏗️ Yakın İnşaat</button>
-          <button class="pill-btn" onclick="setCompanyBranch('enerji', this)">⚡ Yakın Enerji</button>
-          <button class="pill-btn" onclick="setCompanyBranch('capital', this)">📈 Yakın Capital</button>
-          <button class="pill-btn" onclick="setCompanyBranch('teknoloji', this)">💻 Yakın Teknoloji</button>
-          <button class="pill-btn" onclick="setCompanyBranch('epc', this)">🌐 EPC & Altyapı</button>
+
+        <div class="form-group">
+          <label>Belge Formatı / Çalışma Modu</label>
+          <div class="pills-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+            <button class="pill-btn active" id="btn-mode-spec" onclick="setDocMode('spec')">📑 Şartname</button>
+            <button class="pill-btn" id="btn-mode-prop" onclick="setDocMode('prop')">💰 Fiyat Teklifi</button>
+            <button class="pill-btn" id="btn-mode-hybrid" onclick="setDocMode('hybrid')">💎 Birleşik Paket</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Yakın Grup Şirketi / Sektör Anteti</label>
+          <div class="pills-grid">
+            <button class="pill-btn active" onclick="setCompany('group')">🏢 Yakın Holding</button>
+            <button class="pill-btn" onclick="setCompany('enerji')">☀️ Yakın Enerji</button>
+            <button class="pill-btn" onclick="setCompany('insaat')">🏗️ Yakın İnşaat</button>
+            <button class="pill-btn" onclick="setCompany('teknoloji')">💻 Yakın Teknoloji</button>
+            <button class="pill-btn" onclick="setCompany('capital')">📈 Yakın Capital</button>
+          </div>
         </div>
       </div>
 
-      <!-- 2. Hazır Sektörel Teklif Paketleri (Quick Presets) -->
+      <!-- 2. Sektörel Hazır Şablonlar -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>⚡ 2. Hızlı Teklif Paketleri (1-Tık)</span>
-          <span class="badge-pill">Şablonlar</span>
+          <span>⚡ 2. Hazır Sektörel Şablonlar</span>
+          <span style="font-size: 0.72rem; color: #64748b;">1-Tıkla Yükle</span>
         </div>
+
         <div class="template-card-list">
-          <div class="template-card" onclick="loadPreset('ges')">
+          <div class="template-card" onclick="loadTemplate('ges')">
             <div>
-              <h4>☀️ 1 MWp Endüstriyel GES Çatı Projesi</h4>
-              <p>Paneller, invertör, montaj konstrüksiyonu, SCADA</p>
+              <h4>☀️ 1 MWp Endüstriyel Çatı GES Şartnamesi & Teklifi</h4>
+              <p>Tier-1 Panel, String İnvertör, Statik Konstrüksiyon, TEDAŞ Kabul</p>
             </div>
-            <span class="badge">Enerji</span>
+            <span class="badge">Enerji EPC</span>
           </div>
 
-          <div class="template-card" onclick="loadPreset('datacenter')">
+          <div class="template-card" onclick="loadTemplate('datacenter')">
             <div>
-              <h4>🏢 Tier-III Veri Merkezi Beyaz Alan</h4>
-              <p>Hassas klima, UPS, Busbar, FM200 yangın söndürme</p>
+              <h4>🏢 Tier-III Veri Merkezi & Endüstriyel Tesis Şartnamesi</h4>
+              <p>N+1 Hassas Soğutma, FM200 Gazlı Söndürme, 2N Pano Altyapısı</p>
             </div>
-            <span class="badge">İnşaat</span>
+            <span class="badge">İnşaat / MEP</span>
           </div>
 
-          <div class="template-card" onclick="loadPreset('bim')">
+          <div class="template-card" onclick="loadTemplate('bim')">
             <div>
-              <h4>📐 BIM 5D & Dijital İkiz Modelleme</h4>
-              <p>LOD 400 mimari/MEP modelleme, 4D/5D simülasyon</p>
+              <h4>💻 BIM 5D & Dijital İkiz Modelleme Şartnamesi</h4>
+              <p>LOD 400 As-Built BIM, Çakışma Yönetimi, CDE Bulut Ortamı</p>
             </div>
             <span class="badge">Teknoloji</span>
           </div>
 
-          <div class="template-card" onclick="loadPreset('finance')">
+          <div class="template-card" onclick="loadTemplate('cyber')">
             <div>
-              <h4>📊 Proje Finansmanı & Fizibilite Dosyası</h4>
-              <p>Finansal modelleme, banka sunumu, teşvik danışmanlığı</p>
+              <h4>🔒 Kurumsal Siber Güvenlik, SOC & Pentest Şartnamesi</h4>
+              <p>ISO 27001 Uyum, Dış/İç Penetrasyon Testi, 7/24 SIEM & SLA</p>
             </div>
-            <span class="badge">Capital</span>
+            <span class="badge">Siber Güvenlik</span>
           </div>
 
-          <div class="template-card" onclick="loadPreset('pentest')">
+          <div class="template-card" onclick="loadTemplate('finance')">
             <div>
-              <h4>🛡️ Kurumsal Siber Güvenlik & Pentest</h4>
-              <p>Sızma testi, zafiyet tarama, ISO 27001 denetimi</p>
+              <h4>📈 Proje Finansmanı & Fizibilite Şartnamesi</h4>
+              <p>Banka Kredi Dosyası, DSCR Modeli, Bağımsız Mühendis Raporu</p>
             </div>
-            <span class="badge">Siber</span>
+            <span class="badge">Capital</span>
           </div>
         </div>
       </div>
 
-      <!-- 3. Teklif & Müşteri Bilgileri -->
+      <!-- 3. Proje & Muhatap Bilgileri -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>📋 3. Teklif & Müşteri Bilgileri</span>
+          <span>📋 3. Proje & Kurum Bilgileri</span>
         </div>
-        
+
         <div class="form-row">
           <div class="form-group">
-            <label>Teklif No</label>
-            <input type="text" id="prop-number" value="YKN-2026-0816" oninput="renderProposal()">
+            <label>Belge No</label>
+            <input type="text" id="inp-doc-no" value="YKN-SRT-2026-0816" oninput="renderApp()">
           </div>
           <div class="form-group">
-            <label>Teklif Tarihi</label>
-            <input type="date" id="prop-date" onchange="renderProposal()">
+            <label>Tarih</label>
+            <input type="date" id="inp-doc-date" oninput="renderApp()">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>Geçerlilik Süresi</label>
-            <select id="prop-validity" onchange="renderProposal()">
+            <select id="inp-validity" onchange="renderApp()">
               <option value="15">15 Gün</option>
               <option value="30" selected>30 Gün</option>
               <option value="60">60 Gün</option>
               <option value="90">90 Gün</option>
+              <option value="180">6 Ay</option>
             </select>
           </div>
           <div class="form-group">
             <label>Para Birimi</label>
-            <select id="prop-currency" onchange="renderProposal()">
+            <select id="inp-currency" onchange="renderApp()">
               <option value="TRY" selected>₺ Türk Lirası (TRY)</option>
               <option value="USD">$ Amerikan Doları (USD)</option>
               <option value="EUR">€ Euro (EUR)</option>
@@ -1119,61 +1167,90 @@
 
         <div class="form-group">
           <label>Müşteri / Kurum Adı</label>
-          <input type="text" id="client-company" value="Atlas Holding A.Ş." placeholder="Firma / Kurum Adı" oninput="renderProposal()">
+          <input type="text" id="inp-client-company" value="Atlas Holding A.Ş." placeholder="Kurum Adı" oninput="renderApp()">
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Yetkili Kişi & Unvan</label>
-            <input type="text" id="client-name" value="Sayın Ahmet Yılmaz — Yatırımlar Direktörü" placeholder="İsim & Unvan" oninput="renderProposal()">
+            <label>Muhatap / Yetkili</label>
+            <input type="text" id="inp-client-name" value="Sayın Ahmet Yılmaz — Yatırımlar Direktörü" oninput="renderApp()">
           </div>
           <div class="form-group">
-            <label>Proje Konumu / Şehir</label>
-            <input type="text" id="client-location" value="Kocaeli Dilovası OSB / Türkiye" placeholder="Lokasyon" oninput="renderProposal()">
+            <label>Proje Lokasyonu</label>
+            <input type="text" id="inp-client-location" value="Kocaeli Dilovası OSB / Türkiye" oninput="renderApp()">
           </div>
         </div>
 
         <div class="form-group">
-          <label>Proje / Teklif Konusu</label>
-          <input type="text" id="prop-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu" placeholder="Teklif Konusu" oninput="renderProposal()">
+          <label>Proje / Şartname Başlığı</label>
+          <input type="text" id="inp-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi" oninput="renderApp()">
         </div>
 
         <div class="form-group">
-          <label>Giriş / Yönetici Özeti Metni</label>
-          <textarea id="prop-intro" rows="2" oninput="renderProposal()">Yakın Grup olarak, kurumunuzun enerji ve sürdürülebilirlik hedefleri doğrultusunda planlanan projenin mühendislik, satınalma, montaj, devreye alma ve yasal kabul süreçlerini kapsayan anahtar teslim teklifimizi bilgilerinize sunarız.</textarea>
+          <label>Giriş & Yönetici Özeti</label>
+          <textarea id="inp-intro" rows="3" oninput="renderApp()">İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.</textarea>
         </div>
       </div>
 
-      <!-- 4. Kalem & Maliyet Yönetimi (Line Items) -->
-      <div class="panel-section">
+      <!-- 4. Şartname Madde Editörü (Specification Clauses) -->
+      <div class="panel-section" id="panel-spec-clauses">
         <div class="panel-title">
-          <span>📦 4. Teklif Kalemleri</span>
-          <button class="btn-delete-item" style="color: #64748b;" onclick="resetAllItems()">Sıfırla</button>
+          <span>📜 4. Şartname Maddeleri</span>
+          <button class="btn-action-sm" style="color: #64748b;" onclick="resetClauses()">Sıfırla</button>
         </div>
 
-        <div class="items-container" id="items-editor-container">
-          <!-- Dynamically populated rows -->
+        <div class="form-group">
+          <label>Hızlı Standart Madde Ekle</label>
+          <select id="select-quick-clause" onchange="addQuickClause(this.value); this.value='';">
+            <option value="">-- Hazır Şartname Maddesi Seçin --</option>
+            <option value="isg">İş Sağlığı, Güvenliği (İSG) ve Çevre Standartları</option>
+            <option value="garanti">Garanti, SLA ve Periyodik Bakım Şartları</option>
+            <option value="kabul">Geçici Kabul ve Kesin Kabul Kriterleri</option>
+            <option value="ceza">Gecikme Cezası ve Mücbir Sebep Koşulları</option>
+            <option value="gizlilik">Gizlilik, KVKK ve Fikri Mülkiyet Taahhüdü</option>
+            <option value="odeme">Hakediş Onayı ve Ödeme Planı Şartı</option>
+          </select>
         </div>
 
-        <button class="btn-add-item" onclick="addNewItem()">
-          <span>➕ Yeni Kalem Ekle</span>
+        <div id="clauses-editor-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Dynamically populated clauses -->
+        </div>
+
+        <button class="btn-add-dashed" onclick="addNewClause()">
+          <span>➕ Yeni Şartname Maddesi Ekle</span>
         </button>
       </div>
 
-      <!-- 5. İskonto, KDV ve Finansal Ayarlar -->
-      <div class="panel-section">
+      <!-- 5. Teklif Kalemleri (Financial Items) -->
+      <div class="panel-section" id="panel-prop-items">
         <div class="panel-title">
-          <span>💰 5. İskonto, Vergi & Toplamlar</span>
+          <span>📦 5. Fiyat Teklifi & Keşif Kalemleri</span>
+          <button class="btn-action-sm" style="color: #64748b;" onclick="resetItems()">Sıfırla</button>
+        </div>
+
+        <div id="items-editor-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Dynamically populated items -->
+        </div>
+
+        <button class="btn-add-dashed" onclick="addNewItem()">
+          <span>➕ Yeni Fiyat Kalemi Ekle</span>
+        </button>
+      </div>
+
+      <!-- 6. Finansal Oranlar, İmza & Banka -->
+      <div class="panel-section" id="panel-financial-settings">
+        <div class="panel-title">
+          <span>💰 6. Finans, İskonto & Yetkili İmza</span>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>İskonto / İndirim (%)</label>
-            <input type="number" id="prop-discount-percent" value="5" min="0" max="100" step="0.5" oninput="renderProposal()">
+            <label>İskonto (%)</label>
+            <input type="number" id="inp-discount" value="5" min="0" max="100" step="0.5" oninput="renderApp()">
           </div>
           <div class="form-group">
             <label>KDV Oranı (%)</label>
-            <select id="prop-vat-percent" onchange="renderProposal()">
+            <select id="inp-vat" onchange="renderApp()">
               <option value="20" selected>%20 (Standart KDV)</option>
               <option value="10">%10</option>
               <option value="0">%0 (KDV Muaf / Yatırım Teşvikli)</option>
@@ -1183,52 +1260,28 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>Hazırlayan Yetkili</label>
-            <select id="prop-author" onchange="renderProposal()">
+            <label>Hazırlayan / Yetkili</label>
+            <select id="inp-author" onchange="renderApp()">
               <option value="ilker" selected>İlker ATASOY (CXO / Yönetici Ortak)</option>
               <option value="eylul">Eylül YILMAZ (CEO & Baş Mimar)</option>
-              <option value="custom">Özel Yetkili Girişi</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Kaşe & İmza Alanı</label>
-            <select id="prop-stamp-visible" onchange="renderProposal()">
-              <option value="yes" selected>Göster (Resmi Kaşe)</option>
+            <label>Resmi Mühür & Kaşe</label>
+            <select id="inp-stamp" onchange="renderApp()">
+              <option value="yes" selected>Göster (Resmi Onaylı)</option>
               <option value="no">Gizle</option>
             </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6. Teslimat, Garanti & Banka Bilgileri -->
-      <div class="panel-section">
-        <div class="panel-title">
-          <span>📜 6. Şartlar, Ödeme & Banka</span>
-        </div>
-
-        <div class="form-group">
-          <label>Ödeme Planı & Koşulları</label>
-          <input type="text" id="prop-payment-terms" value="%30 Sözleşme İmzasında Avans, %50 Saha Teslimatı & Montaj, %20 Geçici Kabul ve Tedaş Onayında" oninput="renderProposal()">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Teslim / İş Süresi</label>
-            <input type="text" id="prop-delivery-time" value="60 İş Günü" oninput="renderProposal()">
-          </div>
-          <div class="form-group">
-            <label>Garanti Kapsamı</label>
-            <input type="text" id="prop-warranty" value="2 Yıl Sistem & 10 Yıl Panel Performans Garantisi" oninput="renderProposal()">
           </div>
         </div>
 
         <div class="form-group">
           <label>Banka Hesap Bilgisi (IBAN)</label>
-          <select id="prop-bank-select" onchange="renderProposal()">
+          <select id="inp-bank" onchange="renderApp()">
             <option value="ziraat" selected>Ziraat Bankası (TR92 0001 0000 0000 0000 0000 01)</option>
             <option value="garanti">Garanti BBVA (TR66 0006 2000 0000 0000 0000 02)</option>
             <option value="isbank">Türkiye İş Bankası (TR44 0006 4000 0000 0000 0000 03)</option>
-            <option value="none">Teklifte Banka Gösterme</option>
+            <option value="none">Belgede Banka Gösterme</option>
           </select>
         </div>
       </div>
@@ -1240,17 +1293,17 @@
       
       <!-- Stage Toolbar -->
       <div class="stage-toolbar">
-        <span style="font-size: 0.8rem; font-weight: 700; color: #1e3a17;">📄 Canlı A4 Teklif Önizleme</span>
+        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">📄 Canlı A4 Şartname & Teklif Önizleme</span>
         <button class="zoom-btn" onclick="setZoom(0.85)">85%</button>
         <button class="zoom-btn" onclick="setZoom(1)">100%</button>
         <button class="zoom-btn" onclick="setZoom(1.15)">115%</button>
       </div>
 
       <!-- A4 Sheet Container -->
-      <div class="proposal-sheet" id="proposal-sheet">
+      <div class="doc-sheet" id="doc-sheet">
         
         <!-- Watermark -->
-        <svg class="proposal-watermark" viewBox="0 0 120 120">
+        <svg class="doc-watermark" viewBox="0 0 120 120">
           <path d="M 52 105 C 50 85, 30 65, 18 48 C 14 42, 12 30, 18 20 C 24 10, 36 8, 45 14 C 58 22, 64 45, 60 70 C 58 85, 54 98, 52 105 Z" fill="#3d6e30"/>
           <path d="M 56 105 C 57 82, 68 55, 84 35 C 92 25, 102 18, 110 24 C 117 30, 115 42, 108 52 C 98 67, 80 86, 60 102 C 58 104, 56 105, 56 105 Z" fill="#528e40"/>
         </svg>
@@ -1271,10 +1324,10 @@
           </div>
 
           <div class="doc-meta-box">
-            <div class="doc-badge-title">FİYAT TEKLİFİ</div>
-            <div class="doc-meta-item">Teklif No: <strong id="sheet-prop-no">YKN-2026-0816</strong></div>
-            <div class="doc-meta-item">Tarih: <strong id="sheet-prop-date">16.08.2026</strong></div>
-            <div class="doc-meta-item">Geçerlilik: <strong id="sheet-prop-validity">15.09.2026 (30 Gün)</strong></div>
+            <div class="doc-badge-title" id="sheet-badge-title">TEKNİK ŞARTNAME</div>
+            <div class="doc-meta-item">Doküman No: <strong id="sheet-doc-no">YKN-SRT-2026-0816</strong></div>
+            <div class="doc-meta-item">Tarih: <strong id="sheet-doc-date">16.08.2026</strong></div>
+            <div class="doc-meta-item">Geçerlilik: <strong id="sheet-doc-validity">15.09.2026 (30 Gün)</strong></div>
           </div>
         </div>
 
@@ -1296,11 +1349,11 @@
           <!-- Provider Card -->
           <div class="info-card">
             <div class="info-card-title">
-              <span>TEKLİF VEREN</span>
+              <span>TAAHHÜT EDEN / YÜKLENİCİ</span>
               <span>YAKIN GRUP</span>
             </div>
             <div class="info-card-body">
-              <strong id="sheet-provider-name">Yakın Grup A.Ş.</strong>
+              <strong id="sheet-provider-name">Yakın Grup Sanayi İnşaat Enerji Yatırım A.Ş.</strong>
               <div>Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul</div>
               <div>Tel: +90 212 909 00 00 • E-Posta: info@yakingrup.net</div>
             </div>
@@ -1309,17 +1362,22 @@
 
         <!-- Subject Bar -->
         <div class="doc-subject-bar">
-          <div class="doc-subject-text" id="sheet-subject">1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu</div>
+          <div class="doc-subject-text" id="sheet-subject">1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Teknik ve İdari Şartnamesi</div>
           <div class="doc-subject-meta" id="sheet-currency-badge">TRY (₺)</div>
         </div>
 
         <!-- Executive Intro -->
         <div class="doc-intro-text" id="sheet-intro">
-          Yakın Grup olarak, kurumunuzun enerji ve sürdürülebilirlik hedefleri doğrultusunda planlanan projenin mühendislik, satınalma, montaj, devreye alma ve yasal kabul süreçlerini kapsayan anahtar teslim teklifimizi bilgilerinize sunarız.
+          İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.
         </div>
 
-        <!-- Line Items Table -->
-        <div class="doc-table-container">
+        <!-- Specification Clauses Section (Shown in Spec & Hybrid Mode) -->
+        <div class="doc-clauses-container" id="sheet-clauses-section">
+          <!-- Dynamically populated clauses -->
+        </div>
+
+        <!-- Line Items Table (Shown in Prop & Hybrid Mode) -->
+        <div class="doc-table-container" id="sheet-table-section">
           <table class="doc-table">
             <thead>
               <tr>
@@ -1337,16 +1395,16 @@
           </table>
         </div>
 
-        <!-- Bottom Grid: Terms & Totals -->
-        <div class="doc-bottom-grid">
+        <!-- Totals & Terms Section (Shown in Prop & Hybrid Mode) -->
+        <div class="doc-bottom-grid" id="sheet-totals-section">
           <!-- Terms and Payment Details -->
           <div class="doc-terms-box">
-            <div class="doc-terms-title">TİCARİ KOŞULLAR & PROJE ŞARTLARI</div>
+            <div class="doc-terms-title">TİCARİ KOŞULLAR & HAKEDİŞ ESASLARI</div>
             <ul class="doc-terms-list">
-              <li><strong>Ödeme Koşulları:</strong> <span id="sheet-payment-terms">%30 Sözleşmede, %50 Montajda, %20 Kabulde</span></li>
+              <li><strong>Ödeme Koşulları:</strong> <span id="sheet-payment-terms">%30 Sözleşmede, %50 Montajda, %20 Geçici Kabulde</span></li>
               <li><strong>Teslim Süresi:</strong> <span id="sheet-delivery-time">60 İş Günü</span></li>
-              <li><strong>Garanti:</strong> <span id="sheet-warranty">2 Yıl Sistem Garantisi</span></li>
-              <li id="sheet-bank-row"><strong>Banka:</strong> <span id="sheet-bank-info">Ziraat Bankası IBAN: TR92 0001 0000 0000 0000 0000 01</span></li>
+              <li><strong>Garanti / SLA:</strong> <span id="sheet-warranty">2 Yıl Sistem & 25 Yıl Lineer Performans Garantisi</span></li>
+              <li id="sheet-bank-row"><strong>Banka (IBAN):</strong> <span id="sheet-bank-info">Ziraat Bankası IBAN: TR92 0001 0000 0000 0000 0000 01</span></li>
             </ul>
           </div>
 
@@ -1377,77 +1435,113 @@
         <!-- Signatures & Official Stamp Block -->
         <div class="doc-signatures-grid" id="sheet-signatures-container">
           <div class="signature-card">
-            <div class="role-title">MÜŞTERİ ONAYI / ACCEPTANCE</div>
+            <div class="role-title">MÜŞTERİ / İŞVEREN ONAYI</div>
             <div class="signature-space">
               <div class="signature-line"></div>
             </div>
             <div class="person-name" id="sheet-client-sig-name">Atlas Holding A.Ş. Yetkilisi</div>
-            <div style="font-size: 0.68rem; color: #64748b;">İmza & Kaşe</div>
+            <div style="font-size: 0.66rem; color: #64748b;">Yetkili İmza & Kaşe</div>
           </div>
 
           <div class="signature-card">
             <div class="role-title">YAKIN GRUP YETKİLİSİ</div>
             <div class="signature-space">
-              <div class="official-stamp" id="sheet-stamp-box">YAKIN GRUP A.Ş. • ONAYLANMIŞTIR</div>
+              <div class="official-stamp" id="sheet-stamp-box">YAKIN GRUP A.Ş. • RESMİ ONAY</div>
             </div>
             <div class="person-name" id="sheet-author-name">İlker ATASOY</div>
-            <div style="font-size: 0.68rem; color: #64748b;" id="sheet-author-title">CXO / Yönetici Ortak</div>
+            <div style="font-size: 0.66rem; color: #64748b;" id="sheet-author-title">CXO / Yönetici Ortak</div>
           </div>
         </div>
 
         <!-- Document Footer -->
         <div class="doc-footer">
           <div class="doc-footer-left">
-            <div><strong>Yakın Grup Mühendislik, Enerji ve Yatırım A.Ş.</strong> • www.yakingrup.net</div>
-            <div>Mersis: 0928045612300001 • Maslak V.D. 928 045 6123 • info@yakingrup.net</div>
+            <span>Yakın Grup Sanayi İnşaat Enerji Teknoloji Yatırım A.Ş. • MERSİS: 0924089201900001</span>
+            <span>www.yakingrup.net • info@yakingrup.net • Maslak Sun Plaza Kat:12 İstanbul</span>
           </div>
           <div class="doc-footer-badges">
             <span class="doc-footer-badge">ISO 9001</span>
-            <span class="doc-footer-badge">ISO 14001</span>
-            <span class="doc-footer-badge">ISO 45001</span>
             <span class="doc-footer-badge">ISO 27001</span>
+            <span class="doc-footer-badge">ISO 14001</span>
+            <span class="doc-footer-badge">CE</span>
           </div>
         </div>
 
       </div>
-
     </main>
 
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast-msg">İşlem başarıyla gerçekleştirildi!</div>
+  <!-- Toast Element -->
+  <div class="toast" id="toast-msg">
+    <span>✅ İşlem başarıyla gerçekleştirildi.</span>
+  </div>
 
+  <!-- Logic & Scripts -->
   <script>
-    // State management
-    let currentLang = 'TR';
-    let currentBranch = 'holding';
-    let currentZoom = 1;
-
-    let proposalData = {
-      number: 'YKN-2026-0816',
+    // State Store
+    const appState = {
+      mode: 'spec', // 'spec', 'prop', 'hybrid'
+      company: 'group',
+      docNo: 'YKN-SRT-2026-0816',
       date: new Date().toISOString().split('T')[0],
       validityDays: 30,
       currency: 'TRY',
       clientCompany: 'Atlas Holding A.Ş.',
       clientName: 'Sayın Ahmet Yılmaz — Yatırımlar Direktörü',
       clientLocation: 'Kocaeli Dilovası OSB / Türkiye',
-      subject: '1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu',
-      intro: 'Yakın Grup olarak, kurumunuzun enerji ve sürdürülebilirlik hedefleri doğrultusunda planlanan projenin mühendislik, satınalma, montaj, devreye alma ve yasal kabul süreçlerini kapsayan anahtar teslim teklifimizi bilgilerinize sunarız.',
-      discountPercent: 5,
-      vatPercent: 20,
+      subject: '1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi',
+      intro: 'İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.',
+      discountRate: 5,
+      vatRate: 20,
       author: 'ilker',
-      showStamp: true,
-      paymentTerms: '%30 Sözleşme İmzasında Avans, %50 Saha Teslimatı & Montaj, %20 Geçici Kabul ve Tedaş Onayında',
+      stampVisible: true,
+      bankKey: 'ziraat',
+      paymentTerms: '%30 Sözleşmede Avans, %50 Saha Montajı, %20 Geçici Kabul ve Tedaş Onayında',
       deliveryTime: '60 İş Günü',
-      warranty: '2 Yıl Sistem & 10 Yıl Panel Performans Garantisi',
-      bank: 'ziraat',
+      warranty: '2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi',
+      
+      // Specification Clauses
+      clauses: [
+        {
+          id: 1,
+          title: 'Amaç ve Kapsam',
+          body: 'Bu teknik şartname, İşveren mülkiyetindeki tesis çatısına kurulacak olan 1.2 MWp kapasiteli Güneş Enerji Santrali (GES) projesinin statik analizleri, mühendislik onayları, malzeme temini, montaj, elektriksel bağlantı, test-devreye alma ve geçici kabul süreçlerini eksiksiz kapsar.'
+        },
+        {
+          id: 2,
+          title: 'Geçerli Standartlar ve Kalite Uygunluğu',
+          body: 'Tüm ekipman ve işçilikler; TSE, IEC (IEC 61215, IEC 61730, IEC 62109), CE ve yürürlükteki Elektrik Piyasasında Lisanssız Elektrik Üretim Yönetmeliği ile TEDAŞ şartnamelerine tam uyumlu olacaktır.'
+        },
+        {
+          id: 3,
+          title: 'Fotovoltaik Modül ve Dizi İnvertör Teknik Standartları',
+          body: 'Paneller Tier-1 sınıfı, minimum 580Wp N-Type TopCon veya Monokristal Half-Cut hücre teknolojisine sahip olacaktır. İnvertörler IP66 koruma sınıfında, dahili DC/AC Type-II parafudrlu, çoklu MPPT ve AFCI ark koruma özellikli olacaktır.'
+        },
+        {
+          id: 4,
+          title: 'Taşıyıcı Konstrüksiyon ve Montaj Şartları',
+          body: 'Çatı konstrüksiyonu yüksek dayanımlı eloksallı alüminyum ve paslanmaz çelik (A2/A4) bağlantı elemanlarından oluşacaktır. Bölgenin kar ve rüzgar yükü hesaplarına göre statik mühendislik onay raporu hazırlanacaktır.'
+        },
+        {
+          id: 5,
+          title: 'Test, Devreye Alma ve Geçici Kabul',
+          body: 'Montaj tamamlandıktan sonra termal kamera analizi, IV Curve eğri ölçümleri, izolasyon direnci ve topraklama testleri yapılacaktır. TEDAŞ heyeti nezaretinde geçici kabul tutanağı tanzim edilecektir.'
+        },
+        {
+          id: 6,
+          title: 'Garanti, Bakım ve SLA Taahhüdü',
+          body: 'Sistemin genel işçilik ve montaj garantisi 2 (iki) yıldır. PV paneller için 12 yıl ürün, 25 yıl %84.8 lineer güç çıkış garantisi; invertörler için 5 yıl üretici garantisi verilecektir. Olası arızalara 24 saat içinde müdahale edilecektir.'
+        }
+      ],
+
+      // Financial Line Items
       items: [
         {
           id: 1,
-          name: 'Tier-1 Monokristal Fotovoltaik Solar Panel Tedariği (580Wp N-Type TopCon)',
-          desc: 'Yüksek verimli bifacial fotovoltaik güneş panelleri, IEC sertifikalı, 25 yıl performans garantili.',
-          category: 'Ekipman / Malzeme',
+          name: 'Tier-1 580Wp N-Type TopCon Fotovoltaik Solar Panel Grubu',
+          desc: 'Yüksek verimli, PID-Free, %22.4 üzeri modül verimliliği, 25 yıl lineer performans garantili.',
+          category: 'Ekipman',
           qty: 2070,
           unit: 'Adet',
           price: 3600
@@ -1456,7 +1550,7 @@
           id: 2,
           name: 'Endüstriyel Dizi İnvertör Grubu (100kW - 125kW On-Grid)',
           desc: 'Çoklu MPPT destekli, IP66 koruma sınıflı, dahili AFCI ark korumalı string inverterler.',
-          category: 'Ekipman / Malzeme',
+          category: 'Ekipman',
           qty: 10,
           unit: 'Adet',
           price: 115000
@@ -1483,13 +1577,471 @@
           id: 5,
           name: 'Statik & Elektrik Mühendislik, Çağrı Mektubu, Tedaş Onay & Geçici Kabul',
           desc: 'Proje mühendislik onayları, resmi kurum bağlantı süreçleri yönetimi ve devreye alma.',
-          category: 'Mühendislik & EPC',
+          category: 'EPC & Hizmet',
           qty: 1,
           unit: 'Paket',
           price: 420000
         }
       ]
     };
+
+    // Ready Clauses Library
+    const standardClauses = {
+      isg: {
+        title: 'İş Sağlığı, Güvenliği (İSG) ve Çevre Standartları',
+        body: 'Yüklenici, çalışma alanında 6331 sayılı İSG Kanunu ve ilgili mevzuat uyarınca her türlü emniyet tedbirini almakla yükümlüdür. Tüm personel yüksekte çalışma eğitimi ve sertifikalı KKD (Kişisel Koruyucu Donanım) ile çalışacaktır.'
+      },
+      garanti: {
+        title: 'Garanti, SLA ve Periyodik Bakım Şartları',
+        body: 'Taahhüt edilen sistem işçilik ve montaj hatalarına karşı 2 (iki) yıl süreyle Yüklenici garantisi altındadır. İşletme süresince 7/24 çağrı merkezi desteği ve kritik arızalara 12-24 saat içinde müdahale SLA taahhüdü sağlanacaktır.'
+      },
+      kabul: {
+        title: 'Test, Muayene ve Geçici / Kesin Kabul Kriterleri',
+        body: 'Fiziksel montajın tamamlanmasını müteakip fonksiyonel saha testleri ve ölçümler Yüklenici ve İşveren teknik heyetince gerçekleştirilerek Geçici Kabul Protokolü imzalanacaktır. 12 aylık sorunsuz işletme sonrasında Kesin Kabul yapılacaktır.'
+      },
+      ceza: {
+        title: 'Gecikme Cezası ve Mücbir Sebepler',
+        body: 'Yüklenicinin kusurundan kaynaklanan gecikmelerde her takvim günü için sözleşme bedelinin binde 1\'i (%0.1) oranında gecikme cezası uygulanır. Resmi makamlarca onaylanan mücbir sebeplerde süre uzatımı verilir.'
+      },
+      gizlilik: {
+        title: 'Gizlilik, KVKK ve Fikri Mülkiyet Taahhüdü',
+        body: 'Taraflar, proje kapsamında birbirlerine aktardıkları tüm teknik, finansal ve ticari bilgileri gizli tutacak, 6698 sayılı KVKK mevzuatına tam uyum sağlayacak ve 3. şahıslarla paylaşmayacaktır.'
+      },
+      odeme: {
+        title: 'Hakediş Onayı ve Ödeme Planı Şartı',
+        body: 'Ödemeler belirlenen iş aşamaları tamamlandığında düzenlenecek ara hakediş raporu ve teknik onay doğrultusunda 7 iş günü içinde ilgili banka hesabına havale/EFT yoluyla ödenecektir.'
+      }
+    };
+
+    // Predefined Sector Templates
+    const templates = {
+      ges: {
+        subject: '1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Teknik ve İdari Şartnamesi',
+        intro: 'İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.',
+        company: 'enerji',
+        currency: 'TRY',
+        deliveryTime: '60 İş Günü',
+        warranty: '2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi',
+        clauses: [
+          {
+            id: 1,
+            title: 'Proje Amacı ve Kapsamı',
+            body: 'Bu şartname, İşveren mülkiyetindeki tesis çatısına kurulacak 1.2 MWp kurulu gücündeki GES projesinin anahtar teslim EPC mühendislik, malzeme temini, mekanik/elektriksel montaj ve TEDAŞ onaylarını kapsar.'
+          },
+          {
+            id: 2,
+            title: 'Fotovoltaik Panel ve İnvertör Standartları',
+            body: 'Fotovoltaik modüller Tier-1 sınıfı, minimum 580Wp N-Type TopCon veya Monokristal Half-Cut teknolojili olacaktır. İnvertörler IP66 koruma sınıfında, dahili DC/AC Type-II parafudrlu ve çoklu MPPT destekli olacaktır.'
+          },
+          {
+            id: 3,
+            title: 'Statik Taşıyıcı Konstrüksiyon ve Sızdırmazlık',
+            body: 'Konstrüksiyon rayları eloksallı alüminyum (6063-T6) ve cıvatalar paslanmaz çelik (A2-70) olacaktır. Çatı delinmeden özel kenet veya sandviç panel kelepçeleriyle montaj yapılacak, su sızdırmazlık garantisi korunacaktır.'
+          },
+          {
+            id: 4,
+            title: 'Test, Kabul ve TEDAŞ Onayları',
+            body: 'Sistem kurulumu bitiminde IV Curve testleri, topraklama ölçümleri ve termal kamera incelemeleri tamamlanarak TEDAŞ heyetine sunulacak, kabul işlemleri Yüklenici tarafından sonuçlandırılacaktır.'
+          },
+          {
+            id: 5,
+            title: 'Garanti ve Performans Taahhüdü',
+            body: 'Sistem genel işçilik ve montaj garantisi 2 yıldır. Paneller için 12 yıl ürün, 25 yıl %84.8 lineer güç garantisi; invertörler için 5 yıl üretici garantisi sağlanacaktır.'
+          }
+        ],
+        items: [
+          { id: 1, name: 'Tier-1 580Wp N-Type TopCon Solar Panel Grubu', desc: 'PID-Free, %22.4 verimli, 25 yıl lineer güç garantili.', category: 'Ekipman', qty: 2070, unit: 'Adet', price: 3600 },
+          { id: 2, name: 'Endüstriyel Dizi İnvertör Grubu (100kW - 125kW On-Grid)', desc: 'Çoklu MPPT, IP66, AFCI ark korumalı string inverter.', category: 'Ekipman', qty: 10, unit: 'Adet', price: 115000 },
+          { id: 3, name: 'Alüminyum & Paslanmaz Çatı Montaj Konstrüksiyon Sistemi', desc: 'Statik hesap onaylı özel kenet/sandviç çatı ray ve kelepçe seti.', category: 'Konstrüksiyon', qty: 1200, unit: 'kWp', price: 450 },
+          { id: 4, name: 'Elektromekanik AG/OG Altyapı, Kablolama & SCADA', desc: 'Solar kablo, koruma panoları, uzaktan izleme SCADA istasyonu.', category: 'Elektromekanik', qty: 1, unit: 'Paket', price: 850000 },
+          { id: 5, name: 'Statik & Elektrik Mühendislik, TEDAŞ Onay & Kabul', desc: 'Resmi kurum bağlantı süreçleri yönetimi ve devreye alma.', category: 'EPC & Hizmet', qty: 1, unit: 'Paket', price: 420000 }
+        ]
+      },
+      datacenter: {
+        subject: 'Tier-III Veri Merkezi & Endüstriyel Tesis Elektromekanik Altyapı Teknik Şartnamesi',
+        intro: 'Yakın İnşaat güvencesiyle hayata geçirilecek Tier-III sertifikasyon standartlarına tam uyumlu modüler beyaz alan, hassas klima soğutma, 2N UPS enerji altyapısı ve yangın söndürme şartnamesidir.',
+        company: 'insaat',
+        currency: 'USD',
+        deliveryTime: '90 İş Günü',
+        warranty: '3 Yıl Sistem & 7/24 Kesintisiz SLA Bakım Garantisi',
+        clauses: [
+          {
+            id: 1,
+            title: 'Kapsam ve Mimari Tasarım Kriterleri',
+            body: 'Proje, 500 m² beyaz alan üzerinde 60 adet sunucu kabini barındıracak Tier-III Uptime Institute standartlarına tam uyumlu modüler veri merkezinin elektromekanik yapımını kapsar.'
+          },
+          {
+            id: 2,
+            title: 'Hassas Kontrollü İklimlendirme (InRow Cooling)',
+            body: 'Soğutma sistemi N+1 yedekli InRow soğutucu üniteler ve sıcak/soğuk koridor kapama mimarisi ile tasarlanacaktır. PUE hedefi < 1.25 olacaktır.'
+          },
+          {
+            id: 3,
+            title: 'Kesintisiz Güç Kaynağı (UPS) ve Jeneratör Altyapısı',
+            body: '2N tam bağımsız A+B enerji dağıtım baraları, 2x 400kVA Modüler Li-Ion akülü UPS sistemi ve otomatik transfer panolu jeneratör seti kurulacaktır.'
+          },
+          {
+            id: 4,
+            title: 'Yangın Algılama, Gazlı Söndürme ve Güvenlik',
+            body: 'Çok erken uyarı hava emişli duman algılama (VESDA) ve insan sağlığına zararsız Novec 1230 / FM200 otomatik gazlı yangın söndürme sistemi entegre edilecektir.'
+          },
+          {
+            id: 5,
+            title: 'Kabul, Entegre Sistem Testleri (IST) ve Devreye Alma',
+            body: 'Yük bankaları ile tam kapasite IST testleri, 72 saatlik kesintisiz yük denemesi ve Tier-III sertifikasyon denetim desteği sağlanacaktır.'
+          }
+        ],
+        items: [
+          { id: 1, name: '2N Modüler Li-Ion UPS & Dağıtım Panoları (2x 400kVA)', desc: 'Yüksek verimli, modüler ölçeklenebilir, akıllı izleme modüllü.', category: 'Enerji & UPS', qty: 2, unit: 'Set', price: 145000 },
+          { id: 2, name: 'N+1 InRow Hassas Kontrollü Soğutma & Koridor Kapama', desc: 'EC fanlı, değişken hızlı kompresörlü, sıcak koridor muhafazalı.', category: 'HVAC Soğutma', qty: 6, unit: 'Adet', price: 28500 },
+          { id: 3, name: 'Novec 1230 / FM200 Gazlı Söndürme & VESDA Lazer Dedektör', desc: 'Otomatik yangın söndürme tüp grubu ve erken algılama istasyonu.', category: 'Yangın Güvenlik', qty: 1, unit: 'Paket', price: 62000 },
+          { id: 4, name: 'Antistatik Yükseltilmiş Taban & Sismik Sunucu Kabinleri', desc: 'Ağır yük sınıfı kalsiyum sülfat zemin ve 42U akıllı PDU\'lu kabinler.', category: 'Beyaz Alan', qty: 60, unit: 'Adet', price: 1850 },
+          { id: 5, name: 'BMS Bina Yönetim, DCIM Yazılımı & Devreye Alma', desc: 'Çevre izleme, PUE ölçümü, alarm yönetimi ve entegre sistem testleri.', category: 'Otomasyon', qty: 1, unit: 'Paket', price: 48000 }
+        ]
+      },
+      bim: {
+        subject: 'Kurumsal BIM 5D & Dijital İkiz Modelleme Hizmet Şartnamesi',
+        intro: 'Yakın Teknoloji tarafından projelerinizin tasarım, statik, MEP ve saha uygulama fazlarının LOD 400 seviyesinde modellenmesi, çakışma tespiti ve 5D maliyet simülasyonu şartnamesidir.',
+        company: 'teknoloji',
+        currency: 'USD',
+        deliveryTime: '45 İş Günü',
+        warranty: '1 Yıl Proje Revizyon ve CDE Teknik Destek SLA',
+        clauses: [
+          {
+            id: 1,
+            title: 'Kapsam ve Modelleme Detay Seviyesi (LOD)',
+            body: 'Tüm mimari, statik, mekanik ve elektrik disiplinleri LOD 400 detay seviyesinde BIM ortamında modellenecek ve parametrik imalat verileri işlenecektir.'
+          },
+          {
+            id: 2,
+            title: 'Çakışma Analizi (Clash Detection) ve Koordinasyon',
+            body: 'Navisworks ve BIMCollab ortamında disiplinler arası çakışma testleri yapılacak, haftalık koordinasyon raporları ve BCF formatında revizyon listeleri üretilecektir.'
+          },
+          {
+            id: 3,
+            title: '4D Zaman Planlaması ve 5D Maliyet Simülasyonu',
+            body: 'BIM modeli Primavera P6 / MS Project iş programına (4D) ve metraj-keşif maliyet kalemlerine (5D) bağlanarak hakediş kontrol altyapısı kurulacaktır.'
+          },
+          {
+            id: 4,
+            title: 'Ortak Veri Ortamı (CDE) ve Bulut Entegrasyonu',
+            body: 'ISO 19650 uyumlu bulut tabanlı CDE ortamı kurulacak, tüm paydaşların mobil ve web üzerinden canlı modele erişimi sağlanacaktır.'
+          }
+        ],
+        items: [
+          { id: 1, name: 'LOD 400 Mimari & Statik BIM Modellemesi (100.000 m²)', desc: 'Parametrik Revit modelleri, metraj tabloları ve donatı detayları.', category: 'Modelleme', qty: 100000, unit: 'm²', price: 0.85 },
+          { id: 2, name: 'MEP Elektromekanik BIM Modellemesi & Çakışma Yönetimi', desc: 'Boru, kanal, tava çakışma testleri ve as-built revizyon koordinasyonu.', category: 'MEP BIM', qty: 100000, unit: 'm²', price: 0.95 },
+          { id: 3, name: '4D Zaman Simülasyonu & 5D Maliyet Entegrasyonu', desc: 'İş programı ve hakediş keşif kodlarının modele bağlanması.', category: '5D Simülasyon', qty: 1, unit: 'Paket', price: 32000 },
+          { id: 4, name: 'ISO 19650 CDE Bulut Ortamı Kurulumu & Yönetimi', desc: 'Ortak veri ortamı yetkilendirme, yedekleme ve BIM danışmanlığı.', category: 'Danışmanlık', qty: 6, unit: 'Adam/Ay', price: 7500 }
+        ]
+      },
+      cyber: {
+        subject: 'Kurumsal Siber Güvenlik, SOC İzleme ve Sızma Testi (Pentest) Şartnamesi',
+        intro: 'Yakın Teknoloji siber güvenlik ekibi tarafından kurumunuzun sunucu, ağ, bulut ve web altyapılarının ISO 27001 uyumlu analizi, sızma testleri ve 7/24 SOC izleme hizmet şartnamesidir.',
+        company: 'teknoloji',
+        currency: 'TRY',
+        deliveryTime: 'Yıllık Hizmet (12 Ay)',
+        warranty: '7/24 Kesintisiz SOC & 15 Dakika Olay Müdahale SLA',
+        clauses: [
+          {
+            id: 1,
+            title: 'Kapsam ve Güvenlik Seviyesi',
+            body: 'Kurumun dış IP blokları, iç network sunucuları, web uygulamaları ve mobil servisleri üzerinde Black-Box ve Grey-Box sızma testleri gerçekleştirilecektir.'
+          },
+          {
+            id: 2,
+            title: '7/24 SOC (Security Operations Center) ve SIEM Yönetimi',
+            body: 'Güvenlik olayları yapay zeka destekli SIEM/XDR sistemleri ile 7/24 izlenecek, kritik tehdit durumlarında 15 dakika içinde aksiyon alınacaktır.'
+          },
+          {
+            id: 3,
+            title: 'KVKK, ISO 27001 ve BDDK/EPDK Mevzuat Uyumu',
+            body: 'Yapılan tüm denetim ve taramalar yasal mevzuatlara uygun olarak raporlanacak, iyileştirme yol haritası sunulacaktır.'
+          },
+          {
+            id: 4,
+            title: 'Olay Müdahale (Incident Response) ve Adli Bilişim',
+            body: 'Olası bir siber saldırı durumunda kıdemli siber uzmanlar tarafından anında izolasyon, kök neden analizi ve delil toplama yapılacaktır.'
+          }
+        ],
+        items: [
+          { id: 1, name: 'Kapsamlı İç ve Dış Ağ Sızma Testi (Pentest Paketi)', desc: 'Web, mobil, API ve network zaafiyet taraması ve raporlaması.', category: 'Denetim', qty: 2, unit: 'Paket', price: 95000 },
+          { id: 2, name: '7/24 Yönetilen SOC & SIEM/XDR İzleme Hizmeti', desc: 'Yapay zeka destekli tehdit avcılığı ve anlık olay müdahalesi.', category: 'SOC Hizmeti', qty: 12, unit: 'Ay', price: 45000 },
+          { id: 3, name: 'Sosyal Mühendislik & Oltalama (Phishing) Simülasyonu', desc: 'Personel farkındalık testleri ve interaktif eğitim modülleri.', category: 'Eğitim', qty: 4, unit: 'Paket', price: 28000 },
+          { id: 4, name: 'ISO 27001 & KVKK Teknik Uyum Danışmanlığı', desc: 'Güvenlik politikaları, risk analizi ve regülasyon denetim hazırlığı.', category: 'Danışmanlık', qty: 1, unit: 'Paket', price: 120000 }
+        ]
+      },
+      finance: {
+        subject: 'Yenilenebilir Enerji ve Sanayi Proje Finansmanı & Fizibilite Şartnamesi',
+        intro: 'Yakın Capital uzman kadrosu tarafından hazırlanan; yatırım projelerinin teknik, finansal, hukuki fizibilitesi, banka kredi dosyası ve nakit akış modellemesi şartnamesidir.',
+        company: 'capital',
+        currency: 'EUR',
+        deliveryTime: '30 İş Günü',
+        warranty: 'Banka ve Finans Kurumu Onay Süreci Danışmanlık Desteği',
+        clauses: [
+          {
+            id: 1,
+            title: 'Proje Amacı ve Finansal Modelleme Kapsamı',
+            body: 'Yatırımın 15 yıllık nakit akış (DCF), IRR, NPV ve DSCR analizleri uluslararası bankacılık standartlarında dinamik finansal model olarak hazırlanacaktır.'
+          },
+          {
+            id: 2,
+            title: 'Bağımsız Mühendislik (Owner\'s Engineering) Değerlendirmesi',
+            body: 'Tesisin teknik ekipman seçimi, üretim simülasyonları (P50/P90), CAPEX/OPEX bütçeleri ve risk matrisleri bağımsız teknik gözle doğrulanacaktır.'
+          },
+          {
+            id: 3,
+            title: 'Banka Kredi Dosyası ve Yatırımcı Sunumu',
+            body: 'Yerli ve yabancı kalkınma bankaları (EBRD, IFC, TSKB, vb.) ile ticari bankalar için resmi kredi başvuru dosyası ve executive sunum seti tanzim edilecektir.'
+          },
+          {
+            id: 4,
+            title: 'Vergi ve Teşvik Danışmanlığı',
+            body: 'Yatırım Teşvik Belgesi (KDV muafiyeti, gümrük vergisi muafiyeti, vergi indirimi) süreçleri uçtan uca yönetilecektir.'
+          }
+        ],
+        items: [
+          { id: 1, name: 'Dinamik Finansal Modelleme & DSCR/IRR Fizibilite Raporu', desc: '15 yıllık nakit akış, duyarlılık analizleri ve banka formatı rapor.', category: 'Finansal Model', qty: 1, unit: 'Paket', price: 28000 },
+          { id: 2, name: 'Bağımsız Teknik İnceleme (Technical Due Diligence)', desc: 'Üretim simülasyonu, CAPEX doğrulama ve risk analizi.', category: 'Teknik Rapor', qty: 1, unit: 'Paket', price: 22000 },
+          { id: 3, name: 'Banka Kredi Başvuru Dosyası & Term Sheet Müzakeresi', desc: 'Finansman sağlama ve kredi sözleşmesi teknik danışmanlığı.', category: 'Danışmanlık', qty: 1, unit: 'Paket', price: 35000 },
+          { id: 4, name: 'Yatırım Teşvik Belgesi Çıkarımı & Yönetimi', desc: 'Bakanlık teşvik sistemi (E-TUYS) başvuru ve kapama işlemleri.', category: 'Teşvik', qty: 1, unit: 'Paket', price: 15000 }
+        ]
+      }
+    };
+
+    // Subsidiary Company Meta
+    const companies = {
+      group: {
+        name: 'Yakın Grup Holding A.Ş.',
+        fullName: 'Yakın Grup Sanayi İnşaat Enerji Teknoloji Yatırım A.Ş.',
+        sub: 'MÜHENDİSLİK, ENERJİ & YATIRIM HOLDİNG',
+        address: 'Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul',
+        stamp: 'YAKIN GRUP A.Ş. • RESMİ ONAY'
+      },
+      enerji: {
+        name: 'Yakın Enerji A.Ş.',
+        fullName: 'Yakın Enerji Üretim ve Teknolojileri A.Ş.',
+        sub: 'GES, RES & ENERJİ DEPOLAMA EPC ÇÖZÜMLERİ',
+        address: 'Maslak Sun Plaza Kat: 12 Şişli / İstanbul',
+        stamp: 'YAKIN ENERJİ A.Ş. • PROJE ONAY'
+      },
+      insaat: {
+        name: 'Yakın İnşaat A.Ş.',
+        fullName: 'Yakın İnşaat Mühendislik ve Taahhüt A.Ş.',
+        sub: 'VERİ MERKEZİ, ENDÜSTRİYEL YAPI & MEP TAAHHÜT',
+        address: 'Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul',
+        stamp: 'YAKIN İNŞAAT A.Ş. • ŞANTİYE & TEKNİK ONAY'
+      },
+      teknoloji: {
+        name: 'Yakın Teknoloji A.Ş.',
+        fullName: 'Yakın Teknoloji ve Bilişim Sistemleri A.Ş.',
+        sub: 'BIM 5D, DİJİTAL İKİZ & SİBER GÜVENLİK',
+        address: 'Maslak Sun Plaza Kat: 12 Şişli / İstanbul',
+        stamp: 'YAKIN TEKNOLOJİ A.Ş. • AR-GE & TEKNİK ONAY'
+      },
+      capital: {
+        name: 'Yakın Capital A.Ş.',
+        fullName: 'Yakın Capital Proje Finansmanı ve Girişim Yatırım A.Ş.',
+        sub: 'PROJE FİNANSMANI, FİZİBİLİTE & YATIRIM DANIŞMANLIĞI',
+        address: 'Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul',
+        stamp: 'YAKIN CAPITAL A.Ş. • YÖNETİM ONAY'
+      }
+    };
+
+    // Set Document Mode ('spec', 'prop', 'hybrid')
+    function setDocMode(mode) {
+      appState.mode = mode;
+      
+      document.getElementById('btn-mode-spec').classList.toggle('active', mode === 'spec');
+      document.getElementById('btn-mode-prop').classList.toggle('active', mode === 'prop');
+      document.getElementById('btn-mode-hybrid').classList.toggle('active', mode === 'hybrid');
+
+      const badge = document.getElementById('badge-doc-type');
+      const panelSpec = document.getElementById('panel-spec-clauses');
+      const panelProp = document.getElementById('panel-prop-items');
+      const panelFin = document.getElementById('panel-financial-settings');
+
+      const sheetClauses = document.getElementById('sheet-clauses-section');
+      const sheetTable = document.getElementById('sheet-table-section');
+      const sheetTotals = document.getElementById('sheet-totals-section');
+      const sheetBadge = document.getElementById('sheet-badge-title');
+
+      if (mode === 'spec') {
+        badge.innerText = 'Teknik & İdari Şartname';
+        sheetBadge.innerText = 'TEKNİK VE İDARİ ŞARTNAME';
+        panelSpec.style.display = 'flex';
+        panelProp.style.display = 'none';
+        panelFin.style.display = 'flex';
+        sheetClauses.style.display = 'flex';
+        sheetTable.style.display = 'none';
+        sheetTotals.style.display = 'none';
+      } else if (mode === 'prop') {
+        badge.innerText = 'Fiyat Teklifi & Keşif';
+        sheetBadge.innerText = 'FİYAT TEKLİFİ & KEŞİF TABLOSU';
+        panelSpec.style.display = 'none';
+        panelProp.style.display = 'flex';
+        panelFin.style.display = 'flex';
+        sheetClauses.style.display = 'none';
+        sheetTable.style.display = 'block';
+        sheetTotals.style.display = 'grid';
+      } else {
+        badge.innerText = 'Birleşik İhale & Teklif Dosyası';
+        sheetBadge.innerText = 'ŞARTNAME VE FİYAT TEKLİF DOSYASI';
+        panelSpec.style.display = 'flex';
+        panelProp.style.display = 'flex';
+        panelFin.style.display = 'flex';
+        sheetClauses.style.display = 'flex';
+        sheetTable.style.display = 'block';
+        sheetTotals.style.display = 'grid';
+      }
+
+      renderApp();
+      showToast(badge.innerText + ' moduna geçildi');
+    }
+
+    // Set Company Subsidiary
+    function setCompany(key) {
+      appState.company = key;
+      const btns = document.querySelectorAll('.pills-grid button');
+      btns.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderApp();
+      showToast('Kurumsal antet: ' + companies[key].name);
+    }
+
+    // Load Predefined Template
+    function loadTemplate(key) {
+      const t = templates[key];
+      if (!t) return;
+
+      appState.subject = t.subject;
+      appState.intro = t.intro;
+      appState.company = t.company;
+      appState.currency = t.currency;
+      appState.deliveryTime = t.deliveryTime;
+      appState.warranty = t.warranty;
+      appState.clauses = JSON.parse(JSON.stringify(t.clauses));
+      appState.items = JSON.parse(JSON.stringify(t.items));
+
+      // Sync form controls
+      document.getElementById('inp-subject').value = t.subject;
+      document.getElementById('inp-intro').value = t.intro;
+      document.getElementById('inp-currency').value = t.currency;
+
+      renderClausesEditor();
+      renderItemsEditor();
+      renderApp();
+      showToast('Şablon yüklendi: ' + t.subject.substring(0, 35) + '...');
+    }
+
+    // Add Clause from Quick Standard List
+    function addQuickClause(key) {
+      if (!key || !standardClauses[key]) return;
+      const c = standardClauses[key];
+      appState.clauses.push({
+        id: Date.now(),
+        title: c.title,
+        body: c.body
+      });
+      renderClausesEditor();
+      renderApp();
+      showToast('Madde eklendi: ' + c.title);
+    }
+
+    function addNewClause() {
+      appState.clauses.push({
+        id: Date.now(),
+        title: 'Yeni Şartname Maddesi',
+        body: 'Maddenin detaylı teknik gereksinimleri, standartları ve ifa koşulları buraya yazılacaktır.'
+      });
+      renderClausesEditor();
+      renderApp();
+      showToast('Yeni şartname maddesi eklendi');
+    }
+
+    function deleteClause(id) {
+      if (appState.clauses.length <= 1) {
+        showToast('En az 1 şartname maddesi bulunmalıdır');
+        return;
+      }
+      appState.clauses = appState.clauses.filter(c => c.id !== id);
+      renderClausesEditor();
+      renderApp();
+      showToast('Madde silindi');
+    }
+
+    function updateClauseField(id, field, value) {
+      const c = appState.clauses.find(item => item.id === id);
+      if (c) {
+        c[field] = value;
+        renderApp();
+      }
+    }
+
+    function resetClauses() {
+      appState.clauses = [
+        {
+          id: 1,
+          title: 'Genel Taahhüt ve Mühendislik Şartları',
+          body: 'Yüklenici, işbu sözleşme konusu tüm mühendislik, imalat ve montaj hizmetlerini fen ve sanat kurallarına uygun olarak ifa edecektir.'
+        }
+      ];
+      renderClausesEditor();
+      renderApp();
+      showToast('Şartname maddeleri sıfırlandı');
+    }
+
+    // Line Items Operations
+    function addNewItem() {
+      appState.items.push({
+        id: Date.now(),
+        name: 'Yeni Malzeme / Hizmet Kalemi',
+        desc: 'Standart mühendislik ve uygulama kapsamı.',
+        category: 'Hizmet',
+        qty: 1,
+        unit: 'Adet',
+        price: 10000
+      });
+      renderItemsEditor();
+      renderApp();
+      showToast('Yeni fiyat kalemi eklendi');
+    }
+
+    function deleteItem(id) {
+      if (appState.items.length <= 1) {
+        showToast('En az 1 fiyat kalemi bulunmalıdır');
+        return;
+      }
+      appState.items = appState.items.filter(i => i.id !== id);
+      renderItemsEditor();
+      renderApp();
+      showToast('Kalem silindi');
+    }
+
+    function updateItemField(id, field, value) {
+      const item = appState.items.find(i => i.id === id);
+      if (item) {
+        item[field] = value;
+        renderApp();
+      }
+    }
+
+    function resetItems() {
+      appState.items = [
+        {
+          id: 1,
+          name: 'Genel Mühendislik & Danışmanlık Hizmeti',
+          desc: 'Uçtan uca teknik koordinasyon ve raporlama.',
+          category: 'Mühendislik',
+          qty: 1,
+          unit: 'Paket',
+          price: 50000
+        }
+      ];
+      renderItemsEditor();
+      renderApp();
+      showToast('Kalemler sıfırlandı');
+    }
 
     // Currency Formatter
     function formatCurrency(amount, curr) {
@@ -1504,7 +2056,7 @@
     }
 
     // Number to words converter (TR)
-    function numberToWordsTR(num) {
+    function numberToWordsTR(num, curr) {
       if (isNaN(num) || num === 0) return 'Sıfır';
       
       const birler = ['', 'Bir', 'İki', 'Üç', 'Dört', 'Beş', 'Altı', 'Yedi', 'Sekiz', 'Dokuz'];
@@ -1551,8 +2103,8 @@
       }
 
       let sonuc = parcalar.join(' ');
-      let currName = proposalData.currency === 'USD' ? 'Amerikan Doları' : (proposalData.currency === 'EUR' ? 'Euro' : 'Türk Lirası');
-      let kurusName = proposalData.currency === 'TRY' ? 'Kuruş' : 'Cent';
+      let currName = curr === 'USD' ? 'Amerikan Doları' : (curr === 'EUR' ? 'Euro' : 'Türk Lirası');
+      let kurusName = curr === 'TRY' ? 'Kuruş' : 'Cent';
 
       if (kurus > 0) {
         return `${sonuc} ${currName} ${kurus} ${kurusName}`;
@@ -1560,24 +2112,47 @@
       return `${sonuc} ${currName}`;
     }
 
-    // Initialize Items Editor
+    // Render Editors in Sidebar
+    function renderClausesEditor() {
+      const container = document.getElementById('clauses-editor-container');
+      container.innerHTML = '';
+
+      appState.clauses.forEach((c, index) => {
+        const card = document.createElement('div');
+        card.className = 'clause-row';
+        card.innerHTML = `
+          <div class="clause-header">
+            <span class="clause-badge">Madde ${index + 1}</span>
+            <button class="btn-action-sm" onclick="deleteClause(${c.id})">🗑️ Sil</button>
+          </div>
+          <div class="form-group">
+            <input type="text" value="${c.title}" placeholder="Madde Başlığı" oninput="updateClauseField(${c.id}, 'title', this.value)">
+          </div>
+          <div class="form-group">
+            <textarea rows="3" placeholder="Madde Metni & Detayları" oninput="updateClauseField(${c.id}, 'body', this.value)">${c.body}</textarea>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
     function renderItemsEditor() {
       const container = document.getElementById('items-editor-container');
       container.innerHTML = '';
 
-      proposalData.items.forEach((item, index) => {
+      appState.items.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'item-row';
         row.innerHTML = `
           <div class="item-row-header">
             <span class="item-num">Kalem #${index + 1}</span>
-            <button class="btn-delete-item" onclick="deleteItem(${item.id})">🗑️ Sil</button>
+            <button class="btn-action-sm" onclick="deleteItem(${item.id})">🗑️ Sil</button>
           </div>
           <div class="form-group">
-            <input type="text" value="${item.name}" placeholder="Kalem Adı / Başlığı" oninput="updateItemField(${item.id}, 'name', this.value)">
+            <input type="text" value="${item.name}" placeholder="Kalem Adı / Hizmet" oninput="updateItemField(${item.id}, 'name', this.value)">
           </div>
           <div class="form-group">
-            <input type="text" value="${item.desc || ''}" placeholder="Açıklama / Kapsam Detayı" oninput="updateItemField(${item.id}, 'desc', this.value)">
+            <input type="text" value="${item.desc || ''}" placeholder="Açıklama / Kapsam" oninput="updateItemField(${item.id}, 'desc', this.value)">
           </div>
           <div class="item-inputs-grid">
             <input type="text" value="${item.category || ''}" placeholder="Kategori" oninput="updateItemField(${item.id}, 'category', this.value)">
@@ -1585,557 +2160,270 @@
             <select onchange="updateItemField(${item.id}, 'unit', this.value)">
               <option value="Adet" ${item.unit === 'Adet' ? 'selected' : ''}>Adet</option>
               <option value="Paket" ${item.unit === 'Paket' ? 'selected' : ''}>Paket</option>
+              <option value="Set" ${item.unit === 'Set' ? 'selected' : ''}>Set</option>
               <option value="m²" ${item.unit === 'm²' ? 'selected' : ''}>m²</option>
               <option value="kWp" ${item.unit === 'kWp' ? 'selected' : ''}>kWp</option>
               <option value="MW" ${item.unit === 'MW' ? 'selected' : ''}>MW</option>
               <option value="Adam/Ay" ${item.unit === 'Adam/Ay' ? 'selected' : ''}>Adam/Ay</option>
+              <option value="Ay" ${item.unit === 'Ay' ? 'selected' : ''}>Ay</option>
               <option value="Ton" ${item.unit === 'Ton' ? 'selected' : ''}>Ton</option>
-              <option value="Saat" ${item.unit === 'Saat' ? 'selected' : ''}>Saat</option>
             </select>
             <input type="number" value="${item.price}" min="0" step="any" placeholder="Birim Fiyat" oninput="updateItemField(${item.id}, 'price', parseFloat(this.value) || 0)">
           </div>
           <div class="item-total-preview">
-            Tutar: ${formatCurrency(item.qty * item.price, proposalData.currency)}
+            Tutar: ${formatCurrency(item.qty * item.price, appState.currency)}
           </div>
         `;
         container.appendChild(row);
       });
     }
 
-    function addNewItem() {
-      const newId = Date.now();
-      proposalData.items.push({
-        id: newId,
-        name: 'Yeni Hizmet / Malzeme Kalemi',
-        desc: 'Standart mühendislik ve uygulama kapsamı.',
-        category: 'Hizmet',
-        qty: 1,
-        unit: 'Adet',
-        price: 10000
-      });
-      renderItemsEditor();
-      renderProposal();
-      showToast('Yeni teklif kalemi eklendi');
-    }
+    // Main App Renderer (Syncs to Live A4 Sheet)
+    function renderApp() {
+      // Read sidebar input fields
+      appState.docNo = document.getElementById('inp-doc-no').value;
+      appState.validityDays = parseInt(document.getElementById('inp-validity').value) || 30;
+      appState.currency = document.getElementById('inp-currency').value;
+      appState.clientCompany = document.getElementById('inp-client-company').value;
+      appState.clientName = document.getElementById('inp-client-name').value;
+      appState.clientLocation = document.getElementById('inp-client-location').value;
+      appState.subject = document.getElementById('inp-subject').value;
+      appState.intro = document.getElementById('inp-intro').value;
+      appState.discountRate = parseFloat(document.getElementById('inp-discount').value) || 0;
+      appState.vatRate = parseFloat(document.getElementById('inp-vat').value) || 0;
+      appState.author = document.getElementById('inp-author').value;
+      appState.stampVisible = document.getElementById('inp-stamp').value === 'yes';
+      appState.bankKey = document.getElementById('inp-bank').value;
 
-    function deleteItem(id) {
-      if (proposalData.items.length <= 1) {
-        showToast('En az 1 teklif kalemi bulunmalıdır');
-        return;
-      }
-      proposalData.items = proposalData.items.filter(item => item.id !== id);
-      renderItemsEditor();
-      renderProposal();
-      showToast('Kalem silindi');
-    }
+      const comp = companies[appState.company] || companies.group;
 
-    function updateItemField(id, field, value) {
-      const item = proposalData.items.find(i => i.id === id);
-      if (item) {
-        item[field] = value;
-        renderProposal();
-      }
-    }
-
-    function resetAllItems() {
-      proposalData.items = [
-        {
-          id: 1,
-          name: 'Genel Mühendislik & Danışmanlık Hizmeti',
-          desc: 'Uçtan uca teknik koordinasyon ve raporlama.',
-          category: 'Mühendislik',
-          qty: 1,
-          unit: 'Paket',
-          price: 50000
-        }
-      ];
-      renderItemsEditor();
-      renderProposal();
-      showToast('Kalemler sıfırlandı');
-    }
-
-    // Render Proposal Live Sheet
-    function renderProposal() {
-      // Collect input values
-      proposalData.number = document.getElementById('prop-number').value || 'YKN-2026-0816';
-      proposalData.date = document.getElementById('prop-date').value || new Date().toISOString().split('T')[0];
-      proposalData.validityDays = parseInt(document.getElementById('prop-validity').value) || 30;
-      proposalData.currency = document.getElementById('prop-currency').value || 'TRY';
-      proposalData.clientCompany = document.getElementById('client-company').value || 'Müşteri Firma A.Ş.';
-      proposalData.clientName = document.getElementById('client-name').value || 'Yetkili Kişi';
-      proposalData.clientLocation = document.getElementById('client-location').value || 'Türkiye';
-      proposalData.subject = document.getElementById('prop-subject').value || 'Proje Fiyat Teklifi';
-      proposalData.intro = document.getElementById('prop-intro').value || '';
-      proposalData.discountPercent = parseFloat(document.getElementById('prop-discount-percent').value) || 0;
-      proposalData.vatPercent = parseFloat(document.getElementById('prop-vat-percent').value) || 0;
-      proposalData.author = document.getElementById('prop-author').value;
-      proposalData.showStamp = document.getElementById('prop-stamp-visible').value === 'yes';
-      proposalData.paymentTerms = document.getElementById('prop-payment-terms').value;
-      proposalData.deliveryTime = document.getElementById('prop-delivery-time').value;
-      proposalData.warranty = document.getElementById('prop-warranty').value;
-      proposalData.bank = document.getElementById('prop-bank-select').value;
-
-      // Update Top Meta
-      document.getElementById('sheet-prop-no').innerText = proposalData.number;
+      // Update Live Sheet Header & Meta
+      document.getElementById('sheet-company-sub').innerText = comp.sub;
+      document.getElementById('sheet-doc-no').innerText = appState.docNo;
       
-      const dateParts = proposalData.date.split('-');
-      const formattedDate = dateParts.length === 3 ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}` : proposalData.date;
-      document.getElementById('sheet-prop-date').innerText = formattedDate;
+      const dateVal = document.getElementById('inp-doc-date').value || appState.date;
+      const parts = dateVal.split('-');
+      const formattedDate = parts.length === 3 ? `${parts[2]}.${parts[1]}.${parts[0]}` : dateVal;
+      document.getElementById('sheet-doc-date').innerText = formattedDate;
 
-      const dateObj = new Date(proposalData.date);
-      dateObj.setDate(dateObj.getDate() + proposalData.validityDays);
-      const valDay = String(dateObj.getDate()).padStart(2, '0');
-      const valMonth = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const valYear = dateObj.getFullYear();
-      document.getElementById('sheet-prop-validity').innerText = `${valDay}.${valMonth}.${valYear} (${proposalData.validityDays} Gün)`;
+      // Validity calc
+      const validDate = new Date(dateVal || Date.now());
+      validDate.setDate(validDate.getDate() + appState.validityDays);
+      const validDay = String(validDate.getDate()).padStart(2, '0');
+      const validMonth = String(validDate.getMonth() + 1).padStart(2, '0');
+      const validYear = validDate.getFullYear();
+      document.getElementById('sheet-doc-validity').innerText = `${validDay}.${validMonth}.${validYear} (${appState.validityDays} Gün)`;
 
-      // Client & Intro
-      document.getElementById('sheet-client-company').innerText = proposalData.clientCompany;
-      document.getElementById('sheet-client-name').innerText = proposalData.clientName;
-      document.getElementById('sheet-client-location').innerText = proposalData.clientLocation;
-      document.getElementById('sheet-client-sig-name').innerText = proposalData.clientCompany;
-      document.getElementById('sheet-subject').innerText = proposalData.subject;
-      document.getElementById('sheet-currency-badge').innerText = proposalData.currency + ' (' + (proposalData.currency === 'TRY' ? '₺' : (proposalData.currency === 'USD' ? '$' : '€')) + ')';
-      document.getElementById('sheet-intro').innerText = proposalData.intro;
+      // Parties
+      document.getElementById('sheet-client-company').innerText = appState.clientCompany;
+      document.getElementById('sheet-client-name').innerText = appState.clientName;
+      document.getElementById('sheet-client-location').innerText = appState.clientLocation;
+      document.getElementById('sheet-client-sig-name').innerText = appState.clientCompany + ' Yetkilisi';
+      document.getElementById('sheet-provider-name').innerText = comp.fullName;
 
-      // Line Items Table
-      const tableBody = document.getElementById('sheet-table-body');
-      tableBody.innerHTML = '';
+      // Subject & Intro
+      document.getElementById('sheet-subject').innerText = appState.subject;
+      document.getElementById('sheet-currency-badge').innerText = appState.currency + ' (' + (appState.currency === 'USD' ? '$' : (appState.currency === 'EUR' ? '€' : '₺')) + ')';
+      document.getElementById('sheet-intro').innerText = appState.intro;
+
+      // Render Clauses in Sheet
+      const sheetClausesContainer = document.getElementById('sheet-clauses-section');
+      sheetClausesContainer.innerHTML = '';
+      appState.clauses.forEach((c, idx) => {
+        const el = document.createElement('div');
+        el.className = 'doc-clause-card';
+        el.innerHTML = `
+          <div class="doc-clause-header">
+            <span class="doc-clause-num">MADDE ${idx + 1}</span>
+            <span class="doc-clause-title">${c.title}</span>
+          </div>
+          <div class="doc-clause-body">${c.body}</div>
+        `;
+        sheetClausesContainer.appendChild(el);
+      });
+
+      // Render Line Items in Sheet & Calculate Totals
+      const tbody = document.getElementById('sheet-table-body');
+      tbody.innerHTML = '';
 
       let subtotal = 0;
-
-      proposalData.items.forEach((item, index) => {
-        const itemTotal = (item.qty || 0) * (item.price || 0);
+      appState.items.forEach((item, index) => {
+        const itemTotal = item.qty * item.price;
         subtotal += itemTotal;
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="text-center" style="font-weight: 700; color: var(--primary-green);">${index + 1}</td>
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center" style="font-weight: 700; color: #64748b;">${index + 1}</td>
           <td>
             <div class="item-cell-title">${item.name}</div>
             ${item.desc ? `<div class="item-cell-desc">${item.desc}</div>` : ''}
             ${item.category ? `<span class="item-cell-tag">${item.category}</span>` : ''}
           </td>
-          <td class="text-center" style="font-weight: 700;">${new Intl.NumberFormat('tr-TR').format(item.qty)}</td>
+          <td class="text-center" style="font-weight: 600;">${new Intl.NumberFormat('tr-TR').format(item.qty)}</td>
           <td class="text-center" style="color: #64748b;">${item.unit}</td>
-          <td class="text-right">${formatCurrency(item.price, proposalData.currency)}</td>
-          <td class="text-right" style="font-weight: 700; color: #0f172a;">${formatCurrency(itemTotal, proposalData.currency)}</td>
+          <td class="text-right" style="font-weight: 600;">${formatCurrency(item.price, appState.currency)}</td>
+          <td class="text-right" style="font-weight: 700; color: #0f172a;">${formatCurrency(itemTotal, appState.currency)}</td>
         `;
-        tableBody.appendChild(row);
+        tbody.appendChild(tr);
       });
 
-      // Calculations
-      const discountAmount = (subtotal * proposalData.discountPercent) / 100;
+      // Totals Calculations
+      const discountAmount = subtotal * (appState.discountRate / 100);
       const discountedSubtotal = subtotal - discountAmount;
-      const vatAmount = (discountedSubtotal * proposalData.vatPercent) / 100;
+      const vatAmount = discountedSubtotal * (appState.vatRate / 100);
       const grandTotal = discountedSubtotal + vatAmount;
 
-      document.getElementById('sheet-subtotal').innerText = formatCurrency(subtotal, proposalData.currency);
-      
-      const discountRow = document.getElementById('sheet-discount-row');
-      if (proposalData.discountPercent > 0) {
-        discountRow.style.display = 'flex';
-        document.getElementById('sheet-discount-rate').innerText = proposalData.discountPercent;
-        document.getElementById('sheet-discount-amount').innerText = '-' + formatCurrency(discountAmount, proposalData.currency);
-      } else {
-        discountRow.style.display = 'none';
-      }
+      document.getElementById('sheet-subtotal').innerText = formatCurrency(subtotal, appState.currency);
+      document.getElementById('sheet-discount-rate').innerText = appState.discountRate;
+      document.getElementById('sheet-discount-amount').innerText = '-' + formatCurrency(discountAmount, appState.currency);
+      document.getElementById('sheet-vat-rate').innerText = appState.vatRate;
+      document.getElementById('sheet-vat-amount').innerText = formatCurrency(vatAmount, appState.currency);
+      document.getElementById('sheet-grand-total').innerText = formatCurrency(grandTotal, appState.currency);
+      document.getElementById('sheet-in-words').innerText = 'Yalnız: ' + numberToWordsTR(grandTotal, appState.currency);
 
-      document.getElementById('sheet-vat-rate').innerText = proposalData.vatPercent;
-      document.getElementById('sheet-vat-amount').innerText = formatCurrency(vatAmount, proposalData.currency);
-      document.getElementById('sheet-grand-total').innerText = formatCurrency(grandTotal, proposalData.currency);
-      document.getElementById('sheet-in-words').innerText = 'Yalnız: ' + numberToWordsTR(grandTotal);
+      // Terms
+      document.getElementById('sheet-payment-terms').innerText = appState.paymentTerms;
+      document.getElementById('sheet-delivery-time').innerText = appState.deliveryTime;
+      document.getElementById('sheet-warranty').innerText = appState.warranty;
 
-      // Terms & Conditions
-      document.getElementById('sheet-payment-terms').innerText = proposalData.paymentTerms;
-      document.getElementById('sheet-delivery-time').innerText = proposalData.deliveryTime;
-      document.getElementById('sheet-warranty').innerText = proposalData.warranty;
-
+      // Bank
       const bankRow = document.getElementById('sheet-bank-row');
-      if (proposalData.bank === 'ziraat') {
-        bankRow.style.display = 'flex';
-        document.getElementById('sheet-bank-info').innerText = 'Ziraat Bankası A.Ş. — IBAN: TR92 0001 0000 0000 0000 0000 01 (TL/USD/EUR)';
-      } else if (proposalData.bank === 'garanti') {
-        bankRow.style.display = 'flex';
-        document.getElementById('sheet-bank-info').innerText = 'Garanti BBVA — IBAN: TR66 0006 2000 0000 0000 0000 02 (TL/USD/EUR)';
-      } else if (proposalData.bank === 'isbank') {
-        bankRow.style.display = 'flex';
-        document.getElementById('sheet-bank-info').innerText = 'Türkiye İş Bankası — IBAN: TR44 0006 4000 0000 0000 0000 03 (TL/USD/EUR)';
-      } else {
+      const bankInfo = document.getElementById('sheet-bank-info');
+      if (appState.bankKey === 'none') {
         bankRow.style.display = 'none';
+      } else {
+        bankRow.style.display = 'flex';
+        if (appState.bankKey === 'ziraat') bankInfo.innerText = 'Ziraat Bankası IBAN: TR92 0001 0000 0000 0000 0000 01';
+        if (appState.bankKey === 'garanti') bankInfo.innerText = 'Garanti BBVA IBAN: TR66 0006 2000 0000 0000 0000 02';
+        if (appState.bankKey === 'isbank') bankInfo.innerText = 'Türkiye İş Bankası IBAN: TR44 0006 4000 0000 0000 0000 03';
       }
 
-      // Author & Signature
-      const authorNameEl = document.getElementById('sheet-author-name');
-      const authorTitleEl = document.getElementById('sheet-author-title');
+      // Author & Stamp
+      if (appState.author === 'ilker') {
+        document.getElementById('sheet-author-name').innerText = 'İlker ATASOY';
+        document.getElementById('sheet-author-title').innerText = 'CXO / Yönetici Ortak';
+      } else {
+        document.getElementById('sheet-author-name').innerText = 'Eylül YILMAZ';
+        document.getElementById('sheet-author-title').innerText = 'CEO & Baş Mimar';
+      }
+
       const stampBox = document.getElementById('sheet-stamp-box');
-
-      if (proposalData.author === 'ilker') {
-        authorNameEl.innerText = 'İlker ATASOY';
-        authorTitleEl.innerText = 'CXO / Yönetici Ortak & İcra Kurulu Üyesi';
-      } else if (proposalData.author === 'eylul') {
-        authorNameEl.innerText = 'Eylül YILMAZ';
-        authorTitleEl.innerText = 'CEO & Baş Mimar';
-      } else {
-        authorNameEl.innerText = 'Yetkili İmzası';
-        authorTitleEl.innerText = 'Proje & Teklif Yöneticisi';
-      }
-
-      stampBox.style.display = proposalData.showStamp ? 'inline-block' : 'none';
-    }
-
-    // Company & Branch Switcher
-    function setCompanyBranch(branch, btn) {
-      currentBranch = branch;
-      document.querySelectorAll('.pills-grid .pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const badge = document.getElementById('selected-branch-badge');
-      const subTitle = document.getElementById('sheet-company-sub');
-      const providerName = document.getElementById('sheet-provider-name');
-
-      if (branch === 'insaat') {
-        badge.innerText = 'Yakın İnşaat';
-        subTitle.innerText = 'YAKIN İNŞAAT VE TAAHHÜT A.Ş. — VERİ MERKEZİ & ENDÜSTRİYEL YAPI';
-        providerName.innerText = 'Yakın İnşaat Taahhüt A.Ş.';
-      } else if (branch === 'enerji') {
-        badge.innerText = 'Yakın Enerji';
-        subTitle.innerText = 'YAKIN ENERJİ VE ALTYAPI A.Ş. — GES, RES & ENERJİ DEPOLAMA';
-        providerName.innerText = 'Yakın Enerji ve Altyapı A.Ş.';
-      } else if (branch === 'capital') {
-        badge.innerText = 'Yakın Capital';
-        subTitle.innerText = 'YAKIN CAPITAL — PROJE FİNANSMANI & YATIRIM DANIŞMANLIĞI';
-        providerName.innerText = 'Yakın Capital Danışmanlık A.Ş.';
-      } else if (branch === 'teknoloji') {
-        badge.innerText = 'Yakın Teknoloji';
-        subTitle.innerText = 'YAKIN TEKNOLOJİ — BIM 5D, DİJİTAL İKİZ & SİBER GÜVENLİK';
-        providerName.innerText = 'Yakın Teknoloji Çözümleri A.Ş.';
-      } else if (branch === 'epc') {
-        badge.innerText = 'EPC & Altyapı';
-        subTitle.innerText = 'YAKIN EPC & ALTYAPI MÜHENDİSLİK HİZMETLERİ';
-        providerName.innerText = 'Yakın EPC Mühendislik A.Ş.';
-      } else {
-        badge.innerText = 'Yakın Grup';
-        subTitle.innerText = 'MÜHENDİSLİK, ENERJİ & YATIRIM HOLDİNG';
-        providerName.innerText = 'Yakın Grup A.Ş.';
-      }
-
-      showToast(`${badge.innerText} anteti uygulandı`);
-      renderProposal();
-    }
-
-    // Preset Loader
-    function loadPreset(presetKey) {
-      if (presetKey === 'ges') {
-        setCompanyBranch('enerji', document.querySelectorAll('.pills-grid .pill-btn')[2]);
-        document.getElementById('prop-subject').value = '1.0 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Kurulumu';
-        document.getElementById('prop-currency').value = 'USD';
-        document.getElementById('prop-discount-percent').value = '3';
-        document.getElementById('prop-delivery-time').value = '45 İş Günü';
-        document.getElementById('prop-warranty').value = '2 Yıl Genel Sistem & 10 Yıl Panel Üretim Garantisi';
-        proposalData.items = [
-          {
-            id: 101,
-            name: 'Tier-1 TopCon N-Type 580W Bifacial Solar Paneller',
-            desc: 'A-Grade yüksek verimli monokristal solar modüller.',
-            category: 'Ekipman',
-            qty: 1724,
-            unit: 'Adet',
-            price: 95
-          },
-          {
-            id: 102,
-            name: '100kW On-Grid Dizi İnvertör Grubu & Akıllı Güç Üniteleri',
-            desc: 'AFCI ark emniyetli, dahili DC şalterli inverter seti.',
-            category: 'Ekipman',
-            qty: 10,
-            unit: 'Adet',
-            price: 3200
-          },
-          {
-            id: 103,
-            name: 'Alüminyum Konstrüksiyon, AG/OG Kablolama & Pano Dağıtımı',
-            desc: 'Sertifikalı alüminyum ray kelepçe ve solar kablolama.',
-            category: 'Montaj & Altyapı',
-            qty: 1000,
-            unit: 'kWp',
-            price: 65
-          },
-          {
-            id: 104,
-            name: 'Statik & Elektrik Projelendirme, Çağrı Mektubu & Tedaş Onay',
-            desc: 'Yasal süreç yönetimi, SCADA kurulumu ve kesin kabul.',
-            category: 'Mühendislik',
-            qty: 1,
-            unit: 'Paket',
-            price: 18000
-          }
-        ];
-      } else if (presetKey === 'datacenter') {
-        setCompanyBranch('insaat', document.querySelectorAll('.pills-grid .pill-btn')[1]);
-        document.getElementById('prop-subject').value = 'Tier-III Veri Merkezi (Data Center) Beyaz Alan & Elektromekanik İnşaat EPC';
-        document.getElementById('prop-currency').value = 'EUR';
-        document.getElementById('prop-discount-percent').value = '4';
-        document.getElementById('prop-delivery-time').value = '90 Takvim Günü';
-        document.getElementById('prop-warranty').value = '3 Yıl 7/24 Kesintisiz Müdahale & Bakım Garantisi';
-        proposalData.items = [
-          {
-            id: 201,
-            name: 'Modüler Yedekli Kesintisiz Güç Kaynağı (UPS) Sistemi (2N Yedeklilik)',
-            desc: 'Yüksek verimli lityum-iyon akü grubu ve statik baypas üniteleri.',
-            category: 'Elektromekanik',
-            qty: 2,
-            unit: 'Adet',
-            price: 85000
-          },
-          {
-            id: 202,
-            name: 'In-Row Hassas Kontrollü Soğutma (CRAC / InRow Chiller)',
-            desc: 'Sıcak/soğuk koridor kapatma mimarisi ve EC fanlı soğutucular.',
-            category: 'İklimlendirme',
-            qty: 6,
-            unit: 'Adet',
-            price: 24000
-          },
-          {
-            id: 203,
-            name: 'Antistatik Yükseltilmiş Taban & Yangına Dayanıklı Bölücü Duvarlar',
-            desc: 'Heavy-duty 1200kg/m² taşıma kapasiteli taban ve REI120 paneller.',
-            category: 'İnşaat / Fit-out',
-            qty: 350,
-            unit: 'm²',
-            price: 180
-          },
-          {
-            id: 204,
-            name: 'NOVEC 1230 Gazlı Yangın Söndürme & VESDA Erken Algılama',
-            desc: 'Hassas hava örneklemeli duman dedeksiyonu ve otomatik gaz boşaltma.',
-            category: 'Yangın Güvenliği',
-            qty: 1,
-            unit: 'Paket',
-            price: 45000
-          }
-        ];
-      } else if (presetKey === 'bim') {
-        setCompanyBranch('teknoloji', document.querySelectorAll('.pills-grid .pill-btn')[4]);
-        document.getElementById('prop-subject').value = 'LOD 400 BIM Modelleme, Çakışma Yönetimi & 5D Dijital İkiz Entegrasyonu';
-        document.getElementById('prop-currency').value = 'USD';
-        document.getElementById('prop-discount-percent').value = '5';
-        document.getElementById('prop-delivery-time').value = '30 İş Günü';
-        document.getElementById('prop-warranty').value = 'Sözleşme Süresince Sınırsız Revizyon & Koordinasyon';
-        proposalData.items = [
-          {
-            id: 301,
-            name: 'Mimari & Statik LOD 400 Parametrik BIM Modeli Oluşturulması',
-            desc: 'Revit & IFC tabanlı imalat detaylı 3D modelleme.',
-            category: 'BIM Modelleme',
-            qty: 45000,
-            unit: 'm²',
-            price: 0.85
-          },
-          {
-            id: 302,
-            name: 'MEP Mekanik-Elektrik Koordinasyon & Navisworks Çakışma Tespiti',
-            desc: 'Tüm tesisat disiplinlerinin çakışmasız 3D uzlaşımı (Clash Detection).',
-            category: 'Koordinasyon',
-            qty: 1,
-            unit: 'Paket',
-            price: 12500
-          },
-          {
-            id: 303,
-            name: '4D Zaman Çizelgesi & 5D Maliyet/Hakediş Simülasyon Entegrasyonu',
-            desc: 'İş programı ve metraj listelerinin dinamik modelle eşleştirilmesi.',
-            category: 'Dijital İkiz',
-            qty: 1,
-            unit: 'Paket',
-            price: 9000
-          }
-        ];
-      } else if (presetKey === 'finance') {
-        setCompanyBranch('capital', document.querySelectorAll('.pills-grid .pill-btn')[3]);
-        document.getElementById('prop-subject').value = 'Yatırım Fizibilitesi, Proje Finansmanı Modellemesi ve Banka Kredi Dosyası';
-        document.getElementById('prop-currency').value = 'USD';
-        document.getElementById('prop-discount-percent').value = '0';
-        document.getElementById('prop-delivery-time').value = '25 İş Günü';
-        document.getElementById('prop-warranty').value = 'Finansman Kapanışına Kadar Danışmanlık Desteği';
-        proposalData.items = [
-          {
-            id: 401,
-            name: 'Kapsamlı Finansal Modelleme, IRR, NPV & Duyarlılık Analizi Raporu',
-            desc: 'Uluslararası bankacılık standartlarında 10 yıllık nakit akış projeksiyonu.',
-            category: 'Finansal Model',
-            qty: 1,
-            unit: 'Paket',
-            price: 15000
-          },
-          {
-            id: 402,
-            name: 'Banka Bilgi Notu (Information Memorandum) & Kredi Yapılandırma',
-            desc: 'Kalkınma ve ticari bankalar için resmi kredi başvuru dosyasının hazırlanması.',
-            category: 'Yapılandırma',
-            qty: 1,
-            unit: 'Paket',
-            price: 18000
-          },
-          {
-            id: 403,
-            name: 'Yatırım Teşvik Belgesi & Vergi Avantajı Süreç Yönetimi',
-            desc: 'KDV istisnası, gümrük vergisi muafiyeti ve faiz desteği başvurusu.',
-            category: 'Teşvik & Hibe',
-            qty: 1,
-            unit: 'Paket',
-            price: 8000
-          }
-        ];
-      } else if (presetKey === 'pentest') {
-        setCompanyBranch('teknoloji', document.querySelectorAll('.pills-grid .pill-btn')[4]);
-        document.getElementById('prop-subject').value = 'Kurumsal Ağ, Web Uygulaması ve Bulut Altyapısı Sızma Testi (Pentest)';
-        document.getElementById('prop-currency').value = 'TRY';
-        document.getElementById('prop-discount-percent').value = '10';
-        document.getElementById('prop-delivery-time').value = '15 İş Günü';
-        document.getElementById('prop-warranty').value = 'Doğrulama Taraması (Re-Test) Ücretsiz Dahildir';
-        proposalData.items = [
-          {
-            id: 501,
-            name: 'Dış Ağ (External Network) ve Sunucu Zafiyet & Sızma Taraması',
-            desc: 'Firewall, VPN, mail ve DMZ sunucuları derinlemesine sızma denetimi.',
-            category: 'Siber Güvenlik',
-            qty: 1,
-            unit: 'Paket',
-            price: 85000
-          },
-          {
-            id: 502,
-            name: 'Web & Mobil Uygulama Güvenlik Denetimi (OWASP Top 10)',
-            desc: 'SQLi, XSS, CSRF, kimlik doğrulama zafiyetleri ve API güvenlik testleri.',
-            category: 'Uygulama Güvenliği',
-            qty: 2,
-            unit: 'Adet',
-            price: 55000
-          },
-          {
-            id: 503,
-            name: 'Sosyal Mühendislik & Oltalama (Phishing) Simülasyon Testi',
-            desc: 'Kurum personeline yönelik sahte e-posta senaryosu ve farkındalık raporu.',
-            category: 'Güvenlik Eğitimi',
-            qty: 1,
-            unit: 'Paket',
-            price: 35000
-          }
-        ];
-      }
-
-      renderItemsEditor();
-      renderProposal();
-      showToast('Şablon başarıyla yüklendi!');
+      stampBox.innerText = comp.stamp;
+      stampBox.style.display = appState.stampVisible ? 'inline-block' : 'none';
     }
 
     // Zoom Controls
     function setZoom(scale) {
-      currentZoom = scale;
-      document.getElementById('proposal-sheet').style.transform = `scale(${scale})`;
-      document.getElementById('proposal-sheet').style.transformOrigin = 'top center';
+      const sheet = document.getElementById('doc-sheet');
+      sheet.style.transform = `scale(${scale})`;
+      sheet.style.transformOrigin = 'top center';
+      showToast(`Önizleme boyutu: %${Math.round(scale * 100)}`);
     }
 
-    // Language Toggle
-    function toggleLanguage() {
-      currentLang = currentLang === 'TR' ? 'EN' : 'TR';
-      const btn = document.getElementById('btn-lang');
-
-      if (currentLang === 'EN') {
-        btn.innerText = '🇹🇷 Türkçe';
-        document.querySelector('.brand-title h1 span').innerText = 'Quick Proposal & Estimation Studio';
-        document.querySelector('.doc-badge-title').innerText = 'PROPOSAL & ESTIMATE';
-        document.querySelector('.doc-subject-meta').innerText = proposalData.currency;
-        showToast('Switched to English interface');
-      } else {
-        btn.innerText = '🇬🇧 English';
-        document.querySelector('.brand-title h1 span').innerText = 'Hızlı Teklif & Maliyet Stüdyosu';
-        document.querySelector('.doc-badge-title').innerText = 'FİYAT TEKLİFİ';
-        showToast('Türkçe arayüze geçildi');
-      }
-      renderProposal();
+    // Toast Message Trigger
+    function showToast(msg) {
+      const t = document.getElementById('toast-msg');
+      t.querySelector('span').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    // Copy formatted text
-    function copyProposalSummary() {
-      let subtotal = 0;
-      proposalData.items.forEach(i => subtotal += (i.qty * i.price));
-      const discountAmount = (subtotal * proposalData.discountPercent) / 100;
-      const discountedSubtotal = subtotal - discountAmount;
-      const vatAmount = (discountedSubtotal * proposalData.vatPercent) / 100;
-      const grandTotal = discountedSubtotal + vatAmount;
+    // Copy Clean Formatted Text for Email / Agreement
+    function copyDocumentText() {
+      let text = `YAKIN GRUP — ${document.getElementById('sheet-badge-title').innerText}\n`;
+      text += `Doküman No: ${appState.docNo} | Tarih: ${document.getElementById('sheet-doc-date').innerText}\n`;
+      text += `Müşteri: ${appState.clientCompany} (${appState.clientName})\n`;
+      text += `Konu: ${appState.subject}\n\n`;
+      text += `ÖZET / GİRİŞ:\n${appState.intro}\n\n`;
 
-      let text = `YAKIN GRUP — KURUMSAL FİYAT TEKLİFİ\n`;
-      text += `Teklif No: ${proposalData.number}\n`;
-      text += `Tarih: ${proposalData.date} (Geçerlilik: ${proposalData.validityDays} Gün)\n`;
-      text += `Müşteri: ${proposalData.clientCompany} (${proposalData.clientName})\n`;
-      text += `Proje Konusu: ${proposalData.subject}\n\n`;
-      text += `TEKLİF KALEMLERİ:\n`;
-
-      proposalData.items.forEach((item, index) => {
-        text += `${index + 1}. ${item.name} — ${item.qty} ${item.unit} x ${formatCurrency(item.price, proposalData.currency)} = ${formatCurrency(item.qty * item.price, proposalData.currency)}\n`;
-      });
-
-      text += `\nAra Toplam: ${formatCurrency(subtotal, proposalData.currency)}\n`;
-      if (proposalData.discountPercent > 0) {
-        text += `İskonto (%${proposalData.discountPercent}): -${formatCurrency(discountAmount, proposalData.currency)}\n`;
+      if (appState.mode === 'spec' || appState.mode === 'hybrid') {
+        text += `========================================\n`;
+        text += `ŞARTNAME MADDELERİ:\n`;
+        text += `========================================\n`;
+        appState.clauses.forEach((c, idx) => {
+          text += `MADDE ${idx + 1}: ${c.title}\n${c.body}\n\n`;
+        });
       }
-      text += `KDV (%${proposalData.vatPercent}): ${formatCurrency(vatAmount, proposalData.currency)}\n`;
-      text += `GENEL TOPLAM: ${formatCurrency(grandTotal, proposalData.currency)}\n`;
-      text += `\nÖdeme Koşulları: ${proposalData.paymentTerms}\n`;
-      text += `Teslim Süresi: ${proposalData.deliveryTime}\n`;
-      text += `Yakın Grup A.Ş. • www.yakingrup.net • info@yakingrup.net`;
+
+      if (appState.mode === 'prop' || appState.mode === 'hybrid') {
+        text += `========================================\n`;
+        text += `FİYAT TEKLİFİ & KEŞİF KALEMLERİ:\n`;
+        text += `========================================\n`;
+        appState.items.forEach((item, idx) => {
+          text += `${idx + 1}. ${item.name} (${item.qty} ${item.unit}) x ${formatCurrency(item.price, appState.currency)} = ${formatCurrency(item.qty * item.price, appState.currency)}\n`;
+        });
+        text += `\nAra Toplam: ${document.getElementById('sheet-subtotal').innerText}\n`;
+        text += `İskonto (%${appState.discountRate}): ${document.getElementById('sheet-discount-amount').innerText}\n`;
+        text += `KDV (%${appState.vatRate}): ${document.getElementById('sheet-vat-amount').innerText}\n`;
+        text += `GENEL TOPLAM: ${document.getElementById('sheet-grand-total').innerText}\n`;
+        text += `(${document.getElementById('sheet-in-words').innerText})\n\n`;
+      }
+
+      text += `Ticari Koşullar:\n• Ödeme: ${appState.paymentTerms}\n• Teslimat: ${appState.deliveryTime}\n• Garanti: ${appState.warranty}\n\nYakın Grup Sanayi İnşaat Enerji Teknoloji Yatırım A.Ş.\nWeb: https://yakingrup.net/teklif`;
 
       navigator.clipboard.writeText(text).then(() => {
-        showToast('✅ Teklif özeti panoya kopyalandı!');
+        showToast('📋 Doküman metni panoya kopyalandı!');
       }).catch(() => {
-        showToast('Kopyalama başarısız oldu.');
+        showToast('Kopyalama başarısız oldu');
       });
     }
 
-    // Share via WhatsApp
+    // Export to Microsoft Word (.doc)
+    function exportToWordDoc() {
+      const sheetContent = document.getElementById('doc-sheet').innerHTML;
+      const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head><meta charset='utf-8'><title>${appState.subject}</title>
+      <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10pt; line-height: 1.4; color: #111; }
+        .doc-header { border-bottom: 2px solid #3d6e30; padding-bottom: 10px; margin-bottom: 15px; }
+        .doc-badge-title { font-size: 14pt; font-weight: bold; color: #3d6e30; }
+        .info-card { background: #f8fafc; border: 1px solid #ddd; padding: 8px; margin-bottom: 10px; }
+        .doc-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .doc-table th { background: #f1f5f9; border: 1px solid #ccc; padding: 6px; font-weight: bold; }
+        .doc-table td { border: 1px solid #ccc; padding: 6px; }
+        .doc-clause-card { border: 1px solid #e2e8f0; padding: 8px; margin-bottom: 8px; background: #fff; }
+        .doc-clause-num { font-weight: bold; color: #3d6e30; }
+        .doc-totals-card { background: #f8fafc; border: 1px solid #ccc; padding: 8px; margin-top: 10px; }
+      </style></head><body>`;
+      const footer = "</body></html>";
+      const sourceHTML = header + sheetContent + footer;
+
+      const blob = new Blob(['\ufeff' + sourceHTML], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${appState.docNo}_Yakin_Grup_Sartname_Teklif.doc`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('📄 Word (.doc) şartname dosyası indirildi!');
+    }
+
+    // Share Summary on WhatsApp
     function shareWhatsApp() {
-      let subtotal = 0;
-      proposalData.items.forEach(i => subtotal += (i.qty * i.price));
-      const discountAmount = (subtotal * proposalData.discountPercent) / 100;
-      const discountedSubtotal = subtotal - discountAmount;
-      const vatAmount = (discountedSubtotal * proposalData.vatPercent) / 100;
-      const grandTotal = discountedSubtotal + vatAmount;
+      const grandTotal = document.getElementById('sheet-grand-total').innerText;
+      let msg = `*YAKIN GRUP — ${document.getElementById('sheet-badge-title').innerText}*\n\n`;
+      msg += `📁 *Doküman No:* ${appState.docNo}\n`;
+      msg += `🏢 *Kurum:* ${appState.clientCompany}\n`;
+      msg += `📋 *Proje:* ${appState.subject}\n`;
+      if (appState.mode !== 'spec') {
+        msg += `💰 *Toplam Tutar:* ${grandTotal}\n`;
+      }
+      msg += `⏱️ *Teslim Süresi:* ${appState.deliveryTime}\n`;
+      msg += `🛡️ *Garanti / SLA:* ${appState.warranty}\n\n`;
+      msg += `Resmi şartname ve teklif detayını incelemek için: https://yakingrup.net/teklif`;
 
-      let msg = `*YAKIN GRUP — RESMİ FİYAT TEKLİFİ*\n\n`;
-      msg += `*Teklif No:* ${proposalData.number}\n`;
-      msg += `*Sayın:* ${proposalData.clientName} (${proposalData.clientCompany})\n`;
-      msg += `*Konu:* ${proposalData.subject}\n\n`;
-      msg += `*Teklif Tutarı:* ${formatCurrency(grandTotal, proposalData.currency)} (KDV Dahil)\n`;
-      msg += `*Geçerlilik:* ${proposalData.validityDays} Gün\n`;
-      msg += `*Teslim:* ${proposalData.deliveryTime}\n\n`;
-      msg += `Teklif detayları ve resmi onay belgesi ekte sunulmuştur.\n`;
-      msg += `Saygılarımızla,\n*Yakın Grup* • https://www.yakingrup.net`;
-
-      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
+      const encoded = encodeURIComponent(msg);
+      window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
-    // Toast Utility
-    function showToast(message) {
-      const toast = document.getElementById('toast-msg');
-      toast.innerText = message;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
-    }
-
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', () => {
-      // Set today's date in input
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('prop-date').value = today;
-      
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('inp-doc-date').value = appState.date;
+      renderClausesEditor();
       renderItemsEditor();
-      renderProposal();
+      setDocMode('spec');
     });
   </script>
 </body>
