@@ -308,7 +308,7 @@ const TRANSLATIONS = {
     field_phone: 'Telefon',
     field_email: 'E-posta',
     field_office: 'Ofis Adresi',
-    vc_ilker_title: 'Yönetim Kurulu Başkanı / CxO (Mühendis)',
+    vc_ilker_title: 'Yönetim Kurulu Başkanı / CXO (Mühendis)',
     vc_eylul_title: 'Yönetim Kurulu Başkanı / CEO (Mimar)',
     vc_btn_ilker: '📋 Direct Lead vCard — İlker ATASOY',
     vc_btn_eylul: '📋 Architecture vCard — Eylül YILMAZ',
@@ -632,7 +632,7 @@ const TRANSLATIONS = {
     lbl_form_sector: 'Related Division / Sector',
     lbl_form_msg: 'Your Message',
     lbl_form_type: 'Customer Type',
-    vc_ilker_title: 'Chairman / CxO (Engineer)',
+    vc_ilker_title: 'Chairman / CXO (Engineer)',
     vc_eylul_title: 'Chairman / CEO (Architect)',
     field_phone: 'Phone',
     field_email: 'Email',
@@ -2728,14 +2728,14 @@ document.addEventListener('click', (e) => {
 const VCARDS = {
   ilker: {
     avatar: 'İA', name: 'İlker ATASOY',
-    titleTr: 'Yönetim Kurulu Başkanı / CxO (Mühendis)',
-    titleEn: 'Chairman / CxO (Engineer)',
+    titleTr: 'Yönetim Kurulu Başkanı / CXO (Mühendis)',
+    titleEn: 'Chairman / CXO (Engineer)',
     phone: '+90 542 897 34 46', phoneHref: 'tel:+905428973446',
     email: 'ilker.atasoy@yakingrup.net',
     office: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
     linkedin: 'tr.linkedin.com/company/yakingrupnet',
     linkedinHref: 'https://tr.linkedin.com/company/yakingrupnet',
-    vcf: 'BEGIN:VCARD\nVERSION:3.0\nFN:İlker Atasoy\nORG:Yakın Grup\nTITLE:Chairman / CxO\nTEL:+905428973446\nEMAIL:ilker.atasoy@yakingrup.net\nADR:;;Maslak Sun Plaza Kat:12;İstanbul;;;\nURL:https://www.yakingrup.net\nEND:VCARD'
+    vcf: 'BEGIN:VCARD\nVERSION:3.0\nFN:İlker Atasoy\nORG:Yakın Grup\nTITLE:Chairman / CXO\nTEL:+905428973446\nEMAIL:ilker.atasoy@yakingrup.net\nADR:;;Maslak Sun Plaza Kat:12;İstanbul;;;\nURL:https://www.yakingrup.net\nEND:VCARD'
   },
   eylul: {
     avatar: 'EY', name: 'Eylül YILMAZ',
