@@ -2741,12 +2741,12 @@ const VCARDS = {
     avatar: 'EY', name: 'Eylül YILMAZ',
     titleTr: 'Yönetim Kurulu Başkanı / CEO (Mimar)',
     titleEn: 'Chairman / CEO (Architect)',
-    phone: '+90 (212) 555 0101', phoneHref: 'tel:+902125550101',
+    phone: '+90 544 224 95 84', phoneHref: 'tel:+905442249584',
     email: 'eylul.yilmaz@yakingrup.net',
     office: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
     linkedin: 'tr.linkedin.com/company/yakingrupnet',
     linkedinHref: 'https://tr.linkedin.com/company/yakingrupnet',
-    vcf: 'BEGIN:VCARD\nVERSION:3.0\nFN:Eylül Yılmaz\nORG:Yakın Grup\nTITLE:Chairman / CEO\nTEL:+902125550101\nEMAIL:eylul.yilmaz@yakingrup.net\nADR:;;Maslak Sun Plaza Kat:12;İstanbul;;;\nURL:https://www.yakingrup.net\nEND:VCARD'
+    vcf: 'BEGIN:VCARD\nVERSION:3.0\nFN:Eylül Yılmaz\nORG:Yakın Grup\nTITLE:Chairman / CEO\nTEL:+905442249584\nEMAIL:eylul.yilmaz@yakingrup.net\nADR:;;Maslak Sun Plaza Kat:12;İstanbul;;;\nURL:https://www.yakingrup.net\nEND:VCARD'
   }
 };
 let activeVCard = null;
