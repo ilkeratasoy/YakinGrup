@@ -828,15 +828,16 @@
         </div>
       </div>
 
-      <!-- Layout Order Toggle (Ünvan Altta / Üstte / Ortada) -->
+      <!-- Layout Order Toggle (Ortada / Solda / Üstte / Sağda) -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>İsim & Ünvan Yerleşimi</span>
+          <span>İsim & Ünvan Yerleşim Planı</span>
         </div>
         <div class="company-select-grid">
-          <div class="comp-pill active" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">Ünvan Ortada (Merkezde)</div>
-          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first')">Ünvan Altta (İsim Üstte)</div>
-          <div class="comp-pill" id="btn-order-title-top" onclick="setPersonOrder('title-top')">Ünvan Üstte (İsim Altta)</div>
+          <div class="comp-pill active" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">🎯 Ortada (Merkezli)</div>
+          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first')">⬅️ Solda Hizalı (Standart)</div>
+          <div class="comp-pill" id="btn-order-title-top" onclick="setPersonOrder('title-top')">⬆️ Ünvan Üstte (Sol)</div>
+          <div class="comp-pill" id="btn-order-right-align" onclick="setPersonOrder('right-align')">➡️ Sağda Hizalı (Modern)</div>
         </div>
       </div>
 
@@ -1523,8 +1524,9 @@
       const btnNameFirst = document.getElementById('btn-order-name-first');
       const btnTitleTop = document.getElementById('btn-order-title-top');
       const btnTitleMiddle = document.getElementById('btn-order-title-middle');
+      const btnRightAlign = document.getElementById('btn-order-right-align');
 
-      [btnNameFirst, btnTitleTop, btnTitleMiddle].forEach(b => b && b.classList.remove('active'));
+      [btnNameFirst, btnTitleTop, btnTitleMiddle, btnRightAlign].forEach(b => b && b.classList.remove('active'));
 
       personBox.innerHTML = '';
 
@@ -1567,6 +1569,20 @@
         titleEl.style.textTransform = 'uppercase';
         titleEl.style.fontSize = '0.78rem';
         titleEl.style.letterSpacing = '0.1em';
+        titleEl.style.fontWeight = '700';
+        personBox.appendChild(nameEl);
+        personBox.appendChild(titleEl);
+      } else if (order === 'right-align') {
+        if (btnRightAlign) btnRightAlign.classList.add('active');
+        personBox.style.alignItems = 'flex-end';
+        personBox.style.textAlign = 'right';
+        personBox.style.margin = 'auto 0';
+        nameEl.style.textAlign = 'right';
+        titleEl.style.textAlign = 'right';
+        titleEl.style.color = 'var(--primary-green)';
+        titleEl.style.textTransform = 'uppercase';
+        titleEl.style.fontSize = '0.78rem';
+        titleEl.style.letterSpacing = '0.08em';
         titleEl.style.fontWeight = '700';
         personBox.appendChild(nameEl);
         personBox.appendChild(titleEl);
