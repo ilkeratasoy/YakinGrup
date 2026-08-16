@@ -469,9 +469,29 @@
       vertical-align: middle;
     }
 
-    /* İlk Tasarım Yerleşimi: İSİM ÜSTTE BÜYÜK, ÜNVAN ALTTA */
+    /* Person Info Middle: SOL BAŞTAN SIFIR HİZALI, ÜNVAN ÜSTTE / İSİM ALTA */
     .front-person {
       margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 3px;
+      width: 100%;
+    }
+
+    .front-title {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary-green);
+      margin: 0;
+      padding: 0;
+      text-align: left;
+      line-height: 1.2;
+      display: block;
+      width: 100%;
     }
 
     .front-name {
@@ -481,17 +501,11 @@
       letter-spacing: -0.01em;
       line-height: 1.15;
       color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .front-title {
-      font-size: 0.84rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      margin-top: 4px;
-      color: #475569;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+      display: block;
+      width: 100%;
     }
 
     /* Front Bottom Contact Details & QR */
@@ -806,18 +820,29 @@
         </div>
       </div>
 
+      <!-- Layout Order Toggle -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>İsim & Ünvan Sıralaması</span>
+        </div>
+        <div class="quick-profiles">
+          <button class="profile-pill active" id="btn-order-title-first" onclick="setPersonOrder('title-first')">Ünvan Üstte (Sol Baştan)</button>
+          <button class="profile-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first')">İsim Üstte</button>
+        </div>
+      </div>
+
       <!-- Information Edit Form -->
       <div class="panel-section">
         <div class="panel-title">
           <span>Kartvizit Bilgileri</span>
         </div>
         <div class="form-group">
-          <label>Ad & Soyad</label>
-          <input type="text" id="inp-name" class="form-control" value="İlker ATASOY" oninput="updateCardPreview()">
+          <label>Ünvan / Pozisyon</label>
+          <input type="text" id="inp-title" class="form-control" value="Yönetim Kurulu Başkanı / CEO" oninput="updateCardPreview()">
         </div>
         <div class="form-group">
-          <label>Unvan / Pozisyon</label>
-          <input type="text" id="inp-title" class="form-control" value="Yönetim Kurulu Başkanı / CEO" oninput="updateCardPreview()">
+          <label>Ad & Soyad</label>
+          <input type="text" id="inp-name" class="form-control" value="İlker ATASOY" oninput="updateCardPreview()">
         </div>
         <div class="form-group">
           <label>Telefon Numarası</label>
@@ -892,10 +917,10 @@
                   </div>
                 </div>
 
-                <!-- Front Person Info: İsim Üstte Büyük, Unvan Altta -->
-                <div class="front-person">
-                  <div class="front-name" id="card-name">İlker ATASOY</div>
+                <!-- Front Person Info: Sol Baştan Sıfır Hizalı, Ünvan Üstte / İsim Altta -->
+                <div class="front-person" id="card-person-box">
                   <div class="front-title" id="card-title">Yönetim Kurulu Başkanı / CEO</div>
+                  <div class="front-name" id="card-name">İlker ATASOY</div>
                 </div>
 
                 <!-- Front Bottom Contact & QR -->
@@ -1481,6 +1506,41 @@
       element.classList.add('active');
       currentCompany = compKey;
       document.getElementById('card-company-label').innerText = compKey;
+    }
+
+    let currentPersonOrder = 'title-first';
+    function setPersonOrder(order) {
+      currentPersonOrder = order;
+      const personBox = document.getElementById('card-person-box');
+      const titleEl = document.getElementById('card-title');
+      const nameEl = document.getElementById('card-name');
+      const btnTitle = document.getElementById('btn-order-title-first');
+      const btnName = document.getElementById('btn-order-name-first');
+
+      if (order === 'title-first') {
+        btnTitle.classList.add('active');
+        btnName.classList.remove('active');
+        personBox.innerHTML = '';
+        personBox.appendChild(titleEl);
+        personBox.appendChild(nameEl);
+        titleEl.style.color = 'var(--primary-green)';
+        titleEl.style.textTransform = 'uppercase';
+        titleEl.style.fontSize = '0.74rem';
+        titleEl.style.letterSpacing = '0.12em';
+        titleEl.style.fontWeight = '700';
+      } else {
+        btnName.classList.add('active');
+        btnTitle.classList.remove('active');
+        personBox.innerHTML = '';
+        personBox.appendChild(nameEl);
+        personBox.appendChild(titleEl);
+        titleEl.style.color = '#475569';
+        titleEl.style.textTransform = 'none';
+        titleEl.style.fontSize = '0.84rem';
+        titleEl.style.letterSpacing = '0.04em';
+        titleEl.style.fontWeight = '600';
+      }
+      updateCardPreview();
     }
 
     function setViewMode(mode) {
