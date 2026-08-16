@@ -1101,11 +1101,17 @@
       border: 2px solid var(--border-navy);
       flex-shrink: 0;
       box-shadow: var(--shadow-sm);
+      background: var(--bg-card-alt);
     }
     .exec-avatar-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 15%;
+      transition: transform 0.4s ease;
+    }
+    .exec-person-card:hover .exec-avatar-box img {
+      transform: scale(1.06);
     }
     .exec-info-box {
       display: flex;
@@ -2759,7 +2765,7 @@
           <!-- İlker Atasoy -->
           <div class="exec-person-card">
             <div class="exec-avatar-box">
-              <img src="assets/images/ilker_atasoy_modal_1784810580028.png" alt="İlker Atasoy">
+              <img src="assets/images/ilker_atasoy_portrait.jpg" alt="İlker Atasoy">
             </div>
             <div class="exec-info-box">
               <h3 class="exec-name">İlker Atasoy</h3>
@@ -2785,7 +2791,7 @@
           <!-- Eylül Yılmaz -->
           <div class="exec-person-card">
             <div class="exec-avatar-box">
-              <img src="assets/images/eylul_yilmaz_modal_1784810622841.png" alt="Eylül Yılmaz">
+              <img src="assets/images/eylul_yilmaz_portrait.jpg" alt="Eylül Yılmaz">
             </div>
             <div class="exec-info-box">
               <h3 class="exec-name">Eylül Yılmaz</h3>
