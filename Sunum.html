@@ -4,45 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Yakın Grup — Yatırımcı & Müşteri Vizyon Sunumu | Investor & Client Pitch Deck</title>
-  <meta name="description" content="Yakın Grup Yatırımcı ve Müşteri Sunumu: İnşaat & Taahhüt, Yenilenebilir Enerji & BESS, Telekom & Veri Merkezleri, Siber Güvenlik ve Proje Finansmanı alanlarında uçtan uca kurumsal vizyon.">
+  <meta name="description" content="Yakın Grup Yatırımcı ve Müşteri Sunumu: İnşaat Taahhüt, Yenilenebilir Enerji, BESS Depolama, Telekom, Siber Güvenlik ve Proje Finansmanında uçtan uca kurumsal vizyon.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
 
-  <!-- QRCode.js for Realtime Presentation Room Sharing -->
+  <!-- QRCode.js for Realtime Presentation Sync -->
   <script src="assets/js/qrcode.min.js"></script>
 
   <style>
     :root {
-      --primary-green: #3d6e30;
-      --accent-green: #528e40;
-      --light-green: #78be5e;
-      --dark-green: #152b10;
-      --deep-forest: #091308;
-      --gold: #d4af37;
-      --gold-light: #f5d77f;
-      --gold-dark: #9a7610;
-      --navy: #0b2545;
-      --cyan: #06b6d4;
-      --rose: #f43f5e;
+      /* Brand Color Palette - Deep Navy Blue, Forest Green & Refined Gold on Crisp White */
+      --navy-deep: #0b2545;
+      --navy-primary: #0b3c6b;
+      --navy-light: #1e3a8a;
+      --blue-accent: #2563eb;
+      --blue-soft: #eff6ff;
+      --blue-badge: #dbeafe;
       
-      --bg-deck: #0a0f0d;
-      --surface-1: #111a14;
-      --surface-2: #16241b;
-      --surface-card: rgba(22, 36, 27, 0.88);
-      --surface-card-hover: rgba(30, 48, 36, 0.95);
-      --border-subtle: rgba(120, 190, 94, 0.18);
-      --border-strong: rgba(212, 175, 55, 0.35);
-      --border-glow: rgba(120, 190, 94, 0.4);
+      --green-primary: #3d6e30;
+      --green-dark: #244b1c;
+      --green-light: #528e40;
+      --green-soft: #f0fdf4;
+      --green-badge: #dcfce7;
       
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
+      --gold-primary: #b48c14;
+      --gold-dark: #856306;
+      --gold-light: #d4af37;
+      --gold-soft: #fefce8;
+      --gold-badge: #fef9c3;
+      
+      --bg-page: #f8fafc;
+      --bg-white: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-alt: #f1f5f9;
+      --bg-card-hover: #ffffff;
+      
+      --text-heading: #0b2545;
+      --text-body: #1e293b;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      
+      --border-light: #e2e8f0;
+      --border-medium: #cbd5e1;
+      --border-navy: rgba(11, 60, 107, 0.2);
+      --border-green: rgba(61, 110, 48, 0.25);
+      --border-gold: rgba(180, 140, 20, 0.35);
+      
+      --shadow-sm: 0 1px 3px rgba(11, 37, 69, 0.05);
+      --shadow-md: 0 4px 16px rgba(11, 37, 69, 0.06);
+      --shadow-lg: 0 12px 36px rgba(11, 37, 69, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 37, 69, 0.05), 0 1px 2px rgba(11, 37, 69, 0.03);
       
       --font-brand: 'Cinzel', serif;
       --font-heading: 'Manrope', sans-serif;
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       
       --deck-max-width: 1440px;
       --header-height: 64px;
@@ -61,16 +78,16 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: var(--bg-deck);
-      color: var(--text-main);
+      background-color: var(--bg-page);
+      color: var(--text-body);
       font-family: var(--font-body);
-      font-size: 15px;
-      line-height: 1.5;
-      user-select: none;
+      font-size: 14.5px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Background Ambient Glow */
-    .ambient-bg {
+    /* Subtly Textured Clean White Pattern Background */
+    .white-pattern-bg {
       position: fixed;
       top: 0;
       left: 0;
@@ -78,42 +95,35 @@
       height: 100vh;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
+      background-color: #ffffff;
+      background-image: 
+        radial-gradient(rgba(11, 60, 107, 0.065) 1.2px, transparent 1.2px), 
+        radial-gradient(rgba(61, 110, 48, 0.045) 1.2px, #ffffff 1.2px);
+      background-size: 28px 28px, 56px 56px;
+      background-position: 0 0, 14px 14px;
     }
-    .ambient-blob {
+
+    /* Subtle soft ambient light glow */
+    .ambient-accent {
       position: absolute;
       border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.15;
-      animation: floatAmbient 20s infinite alternate ease-in-out;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.45;
     }
-    .blob-1 {
-      top: -10%;
+    .accent-1 {
+      top: -15%;
       left: 10%;
-      width: 50vw;
-      height: 50vw;
-      background: radial-gradient(circle, #3d6e30, transparent);
-    }
-    .blob-2 {
-      bottom: -10%;
-      right: 10%;
       width: 45vw;
       height: 45vw;
-      background: radial-gradient(circle, #d4af37, transparent);
-      animation-delay: -7s;
+      background: radial-gradient(circle, rgba(11, 60, 107, 0.07), transparent);
     }
-    .blob-3 {
-      top: 40%;
-      right: 30%;
-      width: 35vw;
-      height: 35vw;
-      background: radial-gradient(circle, #0b3c6b, transparent);
-      animation-delay: -12s;
-    }
-    @keyframes floatAmbient {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(40px, -30px) scale(1.08); }
-      100% { transform: translate(-30px, 40px) scale(0.95); }
+    .accent-2 {
+      bottom: -15%;
+      right: 10%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(61, 110, 48, 0.06), transparent);
     }
 
     /* TOP HEADER */
@@ -123,15 +133,16 @@
       left: 0;
       right: 0;
       height: var(--header-height);
-      background: rgba(9, 19, 8, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
+      padding: 0 1.8rem;
+      box-shadow: var(--shadow-sm);
     }
 
     .brand-area {
@@ -139,16 +150,16 @@
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      color: #ffffff;
+      color: var(--navy-deep);
     }
     .brand-emblem-wrap {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(61, 110, 48, 0.2);
-      border: 1px solid rgba(120, 190, 94, 0.35);
+      background: var(--blue-soft);
+      border: 1px solid rgba(11, 60, 107, 0.15);
       border-radius: 10px;
       padding: 4px;
     }
@@ -163,20 +174,20 @@
     }
     .brand-title-main {
       font-family: var(--font-brand);
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
-      color: #ffffff;
+      letter-spacing: 0.05em;
+      color: var(--navy-deep);
       line-height: 1.1;
     }
     .brand-title-main span {
-      color: var(--light-green);
+      color: var(--green-primary);
     }
     .brand-tagline {
       font-size: 0.68rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.08em;
-      color: var(--gold);
+      color: var(--navy-primary);
       text-transform: uppercase;
     }
 
@@ -187,10 +198,10 @@
     }
     .mode-pill {
       display: flex;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-card-alt);
       padding: 3px;
       border-radius: 24px;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-light);
     }
     .mode-btn {
       background: transparent;
@@ -198,7 +209,7 @@
       color: var(--text-muted);
       font-size: 0.78rem;
       font-weight: 600;
-      padding: 5px 12px;
+      padding: 5px 13px;
       border-radius: 20px;
       cursor: pointer;
       display: flex;
@@ -207,9 +218,9 @@
       transition: all 0.2s ease;
     }
     .mode-btn.active {
-      background: linear-gradient(135deg, var(--primary-green), var(--accent-green));
+      background: var(--navy-deep);
       color: #ffffff;
-      box-shadow: 0 2px 8px rgba(61, 110, 48, 0.4);
+      box-shadow: 0 2px 8px rgba(11, 37, 69, 0.25);
     }
 
     /* Live WebSocket Status Badge */
@@ -217,37 +228,32 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 5px 11px;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: var(--green-soft);
+      border: 1px solid var(--border-green);
+      color: var(--green-primary);
       cursor: pointer;
       transition: all 0.2s;
     }
-    .ws-status-badge.disconnected {
-      background: rgba(244, 63, 94, 0.12);
-      border-color: rgba(244, 63, 94, 0.3);
-      color: #fb7185;
-    }
     .ws-status-badge.mesh {
-      background: rgba(212, 175, 55, 0.15);
-      border-color: rgba(212, 175, 55, 0.4);
-      color: var(--gold-light);
+      background: var(--blue-soft);
+      border-color: var(--border-navy);
+      color: var(--navy-primary);
     }
     .status-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: currentColor;
-      box-shadow: 0 0 8px currentColor;
+      box-shadow: 0 0 6px currentColor;
       animation: pulseDot 2s infinite;
     }
     @keyframes pulseDot {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.6; }
+      50% { transform: scale(1.35); opacity: 0.6; }
     }
 
     .header-actions {
@@ -256,10 +262,10 @@
       gap: 8px;
     }
     .hdr-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 6px 12px;
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      color: var(--navy-deep);
+      padding: 6px 13px;
       border-radius: 8px;
       font-size: 0.8rem;
       font-weight: 600;
@@ -269,31 +275,38 @@
       gap: 6px;
       transition: all 0.2s ease;
       text-decoration: none;
+      box-shadow: var(--shadow-sm);
     }
     .hdr-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: var(--light-green);
+      background: var(--blue-soft);
+      border-color: var(--navy-primary);
       transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
     }
     .hdr-btn-gold {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(170, 130, 10, 0.3));
-      border-color: var(--gold);
-      color: var(--gold-light);
+      background: var(--gold-soft);
+      border-color: var(--gold-primary);
+      color: var(--gold-dark);
     }
     .hdr-btn-gold:hover {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(170, 130, 10, 0.45));
-      border-color: #ffd700;
+      background: #fef08a;
+      border-color: var(--gold-dark);
     }
     .lang-toggle-btn {
-      padding: 6px 10px;
+      padding: 6px 12px;
       font-weight: 800;
       color: #ffffff;
-      background: rgba(61, 110, 48, 0.35);
-      border: 1px solid var(--accent-green);
+      background: var(--navy-deep);
+      border: 1px solid var(--navy-primary);
       border-radius: 8px;
       cursor: pointer;
       font-size: 0.78rem;
       letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .lang-toggle-btn:hover {
+      background: var(--navy-primary);
+      transform: translateY(-1px);
     }
 
     /* MAIN PRESENTATION STAGE */
@@ -320,38 +333,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem 1.5rem;
+      padding: 1.2rem 2rem;
     }
 
     .slide {
       position: absolute;
-      width: calc(100% - 3rem);
-      height: calc(100% - 2rem);
+      width: calc(100% - 4rem);
+      height: calc(100% - 2.4rem);
       max-height: 840px;
-      background: var(--surface-card);
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
       border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 2.2rem 2.8rem;
+      box-shadow: var(--shadow-lg);
+      padding: 2.2rem 3rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(30px) scale(0.98);
-      transition: opacity 0.5s var(--transition-smooth), transform 0.5s var(--transition-smooth);
+      transform: translateY(30px) scale(0.985);
+      transition: opacity 0.45s var(--transition-smooth), transform 0.45s var(--transition-smooth);
       overflow-y: auto;
       overflow-x: hidden;
       scrollbar-width: thin;
-      scrollbar-color: var(--primary-green) transparent;
+      scrollbar-color: var(--navy-primary) transparent;
     }
     .slide::-webkit-scrollbar {
       width: 4px;
     }
     .slide::-webkit-scrollbar-thumb {
-      background: var(--primary-green);
+      background: var(--navy-primary);
       border-radius: 4px;
     }
 
@@ -363,11 +374,11 @@
     }
     .slide.prev {
       opacity: 0;
-      transform: translateY(-30px) scale(0.98);
+      transform: translateY(-30px) scale(0.985);
     }
     .slide.next {
       opacity: 0;
-      transform: translateY(30px) scale(0.98);
+      transform: translateY(30px) scale(0.985);
     }
 
     /* SLIDE HEADER & LABELS */
@@ -375,84 +386,88 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1.2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 0.8rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 0.75rem;
     }
     .slide-badge-category {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--light-green);
-      background: rgba(61, 110, 48, 0.22);
-      border: 1px solid rgba(120, 190, 94, 0.3);
-      padding: 4px 10px;
+      color: var(--navy-primary);
+      background: var(--blue-soft);
+      border: 1px solid var(--border-navy);
+      padding: 4px 11px;
       border-radius: 6px;
     }
+    .slide-badge-category.green {
+      color: var(--green-primary);
+      background: var(--green-soft);
+      border-color: var(--border-green);
+    }
     .slide-badge-category.gold {
-      color: var(--gold-light);
-      background: rgba(212, 175, 55, 0.18);
-      border-color: rgba(212, 175, 55, 0.35);
+      color: var(--gold-dark);
+      background: var(--gold-soft);
+      border-color: var(--border-gold);
     }
     .slide-badge-category.blue {
-      color: #60a5fa;
-      background: rgba(37, 99, 235, 0.18);
-      border-color: rgba(37, 99, 235, 0.35);
+      color: #1d4ed8;
+      background: #eff6ff;
+      border-color: #bfdbfe;
     }
-    .slide-badge-category.cyan {
-      color: #38bdf8;
-      background: rgba(6, 182, 212, 0.18);
-      border-color: rgba(6, 182, 212, 0.35);
+    .slide-badge-category.tech {
+      color: #4338ca;
+      background: #eef2ff;
+      border-color: #c7d2fe;
     }
     .slide-brand-watermark {
       font-family: var(--font-brand);
       font-size: 0.78rem;
       letter-spacing: 0.08em;
-      color: var(--text-dim);
+      color: var(--text-light);
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
     .slide-title-wrap {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
     }
     .slide-heading {
       font-family: var(--font-heading);
       font-size: 2.1rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       line-height: 1.2;
-      color: #ffffff;
+      color: var(--navy-deep);
+    }
+    .slide-heading .highlight-navy {
+      color: var(--navy-primary);
     }
     .slide-heading .highlight-green {
-      color: var(--light-green);
-      background: linear-gradient(135deg, #a7f3d0, #34d399);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--green-primary);
     }
     .slide-heading .highlight-gold {
-      color: var(--gold-light);
-      background: linear-gradient(135deg, #fef08a, #d4af37);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--gold-dark);
     }
     .slide-subtitle {
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--text-muted);
       margin-top: 6px;
-      max-width: 860px;
+      max-width: 880px;
+      line-height: 1.5;
     }
 
     /* SLIDE 1: HERO COVER */
     .hero-slide-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 2.5rem;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 2.8rem;
       align-items: center;
       height: 100%;
     }
@@ -462,68 +477,69 @@
       gap: 8px;
       padding: 6px 14px;
       border-radius: 30px;
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), rgba(61, 110, 48, 0.2));
-      border: 1px solid var(--border-strong);
-      color: var(--gold-light);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      background: linear-gradient(90deg, var(--blue-soft), var(--green-soft));
+      border: 1px solid var(--border-navy);
+      color: var(--navy-deep);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 1.2rem;
     }
     .hero-pitch-title {
       font-family: var(--font-brand);
-      font-size: 3.2rem;
-      font-weight: 800;
-      line-height: 1.08;
+      font-size: 3.1rem;
+      font-weight: 900;
+      line-height: 1.1;
       letter-spacing: 0.02em;
-      color: #ffffff;
+      color: var(--navy-deep);
       margin-bottom: 1.2rem;
     }
     .hero-pitch-title span {
-      color: var(--light-green);
+      color: var(--green-primary);
     }
     .hero-pitch-desc {
-      font-size: 1.12rem;
-      line-height: 1.6;
+      font-size: 1.08rem;
+      line-height: 1.65;
       color: var(--text-muted);
       margin-bottom: 2rem;
     }
     .hero-cta-group {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .btn-action-hero {
       padding: 0.85rem 1.8rem;
-      border-radius: 12px;
+      border-radius: 10px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       transition: all 0.25s ease;
       border: none;
       text-decoration: none;
+      font-family: var(--font-body);
     }
     .btn-action-hero.primary {
-      background: linear-gradient(135deg, var(--primary-green), var(--accent-green));
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy-primary));
       color: #ffffff;
-      box-shadow: 0 4px 18px rgba(61, 110, 48, 0.45);
+      box-shadow: 0 4px 14px rgba(11, 37, 69, 0.25);
     }
     .btn-action-hero.primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(61, 110, 48, 0.6);
+      box-shadow: 0 6px 20px rgba(11, 37, 69, 0.35);
     }
     .btn-action-hero.secondary {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-subtle);
-      color: #ffffff;
+      background: var(--blue-soft);
+      border: 1px solid var(--border-navy);
+      color: var(--navy-deep);
     }
     .btn-action-hero.secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: var(--gold);
+      background: #e0e7ff;
+      border-color: var(--navy-deep);
     }
 
     /* Key KPI Cards */
@@ -533,21 +549,22 @@
       gap: 14px;
     }
     .kpi-card {
-      background: rgba(17, 26, 20, 0.9);
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
       padding: 1.4rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-card);
       transition: all 0.3s ease;
     }
     .kpi-card:hover {
-      border-color: var(--border-glow);
+      border-color: var(--navy-primary);
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      box-shadow: var(--shadow-lg);
     }
     .kpi-card::before {
       content: '';
@@ -556,42 +573,41 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--primary-green), var(--gold));
-      opacity: 0.7;
+      background: linear-gradient(90deg, var(--navy-primary), var(--green-primary));
     }
     .kpi-num {
       font-family: var(--font-heading);
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--navy-deep);
       line-height: 1.1;
       display: flex;
       align-items: baseline;
       gap: 3px;
     }
     .kpi-num small {
-      font-size: 1.2rem;
-      color: var(--gold);
+      font-size: 1.15rem;
+      color: var(--gold-dark);
     }
     .kpi-label {
-      font-size: 0.82rem;
-      font-weight: 700;
+      font-size: 0.8rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--light-green);
+      letter-spacing: 0.05em;
+      color: var(--navy-primary);
       margin-top: 6px;
     }
     .kpi-sub {
-      font-size: 0.78rem;
-      color: var(--text-dim);
+      font-size: 0.76rem;
+      color: var(--text-light);
       margin-top: 3px;
     }
 
     /* INFOGRAPHIC: 4-PILLAR RADIAL ECOSYSTEM (SLIDE 2) */
     .ecosystem-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.2rem;
       align-items: center;
       height: calc(100% - 90px);
     }
@@ -601,47 +617,58 @@
       gap: 14px;
     }
     .eco-pillar-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 14px;
-      padding: 1.2rem;
+      padding: 1.3rem;
       cursor: pointer;
       transition: all 0.25s ease;
+      box-shadow: var(--shadow-card);
       position: relative;
     }
     .eco-pillar-card:hover, .eco-pillar-card.active-pillar {
-      border-color: var(--light-green);
-      background: rgba(30, 48, 36, 0.95);
-      box-shadow: 0 8px 24px rgba(61, 110, 48, 0.25);
+      border-color: var(--navy-primary);
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(11, 60, 107, 0.12);
+      transform: translateY(-2px);
     }
-    .eco-pillar-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+    .eco-pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .eco-pillar-svg-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
-      font-size: 1.2rem;
+      background: var(--blue-soft);
+      color: var(--navy-primary);
+      flex-shrink: 0;
     }
     .eco-pillar-title {
       font-family: var(--font-heading);
       font-size: 1.05rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 4px;
+      font-weight: 800;
+      color: var(--navy-deep);
     }
     .eco-pillar-desc {
       font-size: 0.78rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
     .eco-pillar-tag {
       font-size: 0.68rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.05em;
-      color: var(--gold-light);
-      margin-top: 8px;
+      color: var(--navy-primary);
+      background: var(--blue-soft);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 10px;
       display: inline-block;
     }
 
@@ -658,46 +685,40 @@
       width: 100%;
       max-width: 440px;
       height: auto;
-      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+      filter: drop-shadow(0 8px 20px rgba(11, 37, 69, 0.08));
     }
 
     /* INFOGRAPHIC: 3-COL / 4-COL SERVICE GRIDS (SLIDES 3-7) */
     .services-presentation-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      gap: 18px;
       height: calc(100% - 90px);
       align-content: stretch;
     }
-    .services-presentation-grid.grid-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .services-presentation-grid.grid-2x3 {
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-    }
 
     .service-deck-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 14px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition: all 0.3s ease;
+      box-shadow: var(--shadow-card);
       position: relative;
     }
     .service-deck-card:hover {
-      border-color: var(--light-green);
+      border-color: var(--navy-primary);
       transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow-lg);
     }
     .service-deck-img-wrap {
       width: 100%;
-      height: 130px;
+      height: 135px;
       position: relative;
       overflow: hidden;
-      background: #091308;
+      background: var(--bg-card-alt);
     }
     .service-deck-img {
       width: 100%;
@@ -712,18 +733,17 @@
       position: absolute;
       bottom: 8px;
       left: 10px;
-      background: rgba(9, 19, 8, 0.85);
-      border: 1px solid var(--border-subtle);
-      color: var(--light-green);
-      font-size: 0.66rem;
+      background: rgba(11, 37, 69, 0.9);
+      color: #ffffff;
+      font-size: 0.65rem;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       padding: 3px 8px;
       border-radius: 4px;
       text-transform: uppercase;
     }
     .service-deck-body {
-      padding: 1.1rem;
+      padding: 1.2rem;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -731,29 +751,30 @@
     }
     .service-deck-title {
       font-family: var(--font-heading);
-      font-size: 1rem;
-      font-weight: 700;
-      color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--navy-deep);
       margin-bottom: 6px;
       line-height: 1.3;
     }
     .service-deck-desc {
       font-size: 0.8rem;
       color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 10px;
+      line-height: 1.5;
+      margin-bottom: 12px;
     }
     .service-deck-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 6px;
     }
     .deck-mini-pill {
-      font-size: 0.66rem;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
-      padding: 2px 7px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-light);
+      color: var(--navy-deep);
+      padding: 3px 8px;
       border-radius: 4px;
     }
 
@@ -761,7 +782,7 @@
     .process-pipeline {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+      gap: 14px;
       position: relative;
       margin-top: 1.5rem;
     }
@@ -772,34 +793,35 @@
       left: 30px;
       right: 30px;
       height: 2px;
-      background: linear-gradient(90deg, var(--primary-green), var(--gold), var(--cyan));
+      background: linear-gradient(90deg, var(--navy-primary), var(--green-primary), var(--gold-primary));
       z-index: 1;
     }
     .process-step-node {
-      background: var(--surface-2);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 14px;
-      padding: 1.4rem 1rem;
+      padding: 1.5rem 1.1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       position: relative;
       z-index: 2;
+      box-shadow: var(--shadow-card);
       transition: all 0.3s ease;
     }
     .process-step-node:hover {
-      border-color: var(--light-green);
-      transform: translateY(-6px);
-      box-shadow: 0 10px 25px rgba(61, 110, 48, 0.2);
+      border-color: var(--navy-primary);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
     .step-circle-num {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: #091308;
-      border: 2px solid var(--light-green);
-      color: var(--gold-light);
+      background: #ffffff;
+      border: 2px solid var(--navy-primary);
+      color: var(--navy-deep);
       font-family: var(--font-heading);
       font-weight: 800;
       font-size: 1.1rem;
@@ -807,37 +829,38 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 14px;
-      box-shadow: 0 0 15px rgba(120, 190, 94, 0.3);
+      box-shadow: var(--shadow-sm);
     }
     .step-title {
       font-family: var(--font-heading);
       font-size: 0.95rem;
-      font-weight: 700;
-      color: #ffffff;
+      font-weight: 800;
+      color: var(--navy-deep);
       margin-bottom: 8px;
     }
     .step-desc {
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     /* INTERACTIVE ROI / PROJECT CALCULATOR (SLIDE 9) */
     .calculator-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border-subtle);
+      gap: 2.2rem;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 16px;
-      padding: 1.8rem;
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
       height: calc(100% - 90px);
       align-items: center;
     }
     .calc-inputs-pane {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.1rem;
     }
     .calc-field-group {
       display: flex;
@@ -846,8 +869,8 @@
     }
     .calc-field-label {
       font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-muted);
+      font-weight: 800;
+      color: var(--navy-deep);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       display: flex;
@@ -855,27 +878,30 @@
     }
     .calc-select, .calc-range {
       width: 100%;
-      background: #091308;
-      border: 1px solid var(--border-subtle);
-      color: #ffffff;
+      background: var(--bg-page);
+      border: 1px solid var(--border-medium);
+      color: var(--navy-deep);
       padding: 0.65rem 0.9rem;
       border-radius: 8px;
       font-size: 0.9rem;
+      font-weight: 600;
       outline: none;
+      transition: all 0.2s;
     }
     .calc-select:focus {
-      border-color: var(--light-green);
+      border-color: var(--navy-primary);
+      background: #ffffff;
     }
     .calc-range {
-      accent-color: var(--light-green);
+      accent-color: var(--navy-primary);
       cursor: pointer;
       padding: 0;
     }
     .calc-output-pane {
-      background: #091308;
-      border: 1px solid var(--border-strong);
+      background: var(--blue-soft);
+      border: 1px solid var(--border-navy);
       border-radius: 14px;
-      padding: 1.6rem;
+      padding: 1.8rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -887,22 +913,23 @@
       gap: 12px;
     }
     .calc-out-box {
-      background: var(--surface-1);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 10px;
-      padding: 1rem;
+      padding: 1.1rem;
       text-align: center;
+      box-shadow: var(--shadow-sm);
     }
     .calc-out-val {
       font-family: var(--font-heading);
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       font-weight: 800;
-      color: var(--gold-light);
+      color: var(--navy-deep);
     }
     .calc-out-lbl {
       font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--light-green);
+      font-weight: 800;
+      color: var(--navy-primary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-top: 4px;
@@ -916,36 +943,47 @@
       margin-top: 1rem;
     }
     .iso-card-item {
-      background: var(--surface-2);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 14px;
-      padding: 1.5rem;
+      padding: 1.6rem 1.2rem;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      box-shadow: var(--shadow-card);
       transition: all 0.3s ease;
     }
     .iso-card-item:hover {
-      border-color: var(--gold);
+      border-color: var(--navy-primary);
       transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .iso-badge-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
     }
     .iso-code {
       font-family: var(--font-heading);
-      font-size: 1.6rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      color: var(--gold-light);
+      color: var(--navy-deep);
     }
     .iso-name {
       font-size: 0.85rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--navy-primary);
     }
     .iso-desc {
       font-size: 0.76rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     /* LEADERSHIP & CONTACT (SLIDES 12-13) */
@@ -956,21 +994,29 @@
       margin-top: 1rem;
     }
     .exec-person-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 16px;
       padding: 1.6rem;
       display: flex;
-      gap: 1.4rem;
+      gap: 1.5rem;
       align-items: center;
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s ease;
+    }
+    .exec-person-card:hover {
+      border-color: var(--navy-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
     }
     .exec-avatar-box {
-      width: 100px;
-      height: 100px;
+      width: 105px;
+      height: 105px;
       border-radius: 14px;
       overflow: hidden;
-      border: 2px solid var(--border-strong);
+      border: 2px solid var(--border-navy);
       flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
     }
     .exec-avatar-box img {
       width: 100%;
@@ -986,12 +1032,12 @@
       font-family: var(--font-heading);
       font-size: 1.25rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--navy-deep);
     }
     .exec-role {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
-      color: var(--light-green);
+      color: var(--green-primary);
     }
     .exec-sub {
       font-size: 0.78rem;
@@ -1001,23 +1047,26 @@
     .exec-links {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .exec-mini-btn {
       font-size: 0.74rem;
       font-weight: 600;
-      padding: 4px 10px;
+      padding: 5px 11px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-subtle);
-      color: #ffffff;
+      background: var(--blue-soft);
+      border: 1px solid var(--border-navy);
+      color: var(--navy-deep);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      transition: all 0.2s;
     }
     .exec-mini-btn:hover {
-      background: var(--primary-green);
-      border-color: var(--light-green);
+      background: var(--navy-deep);
+      color: #ffffff;
+      border-color: var(--navy-deep);
     }
 
     /* FOOTER CONTROLS */
@@ -1027,48 +1076,49 @@
       left: 0;
       right: 0;
       height: var(--footer-height);
-      background: rgba(9, 19, 8, 0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-light);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
+      padding: 0 1.8rem;
+      box-shadow: 0 -2px 10px rgba(11, 37, 69, 0.04);
     }
 
     .footer-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
     .slide-counter-badge {
       font-family: var(--font-heading);
       font-size: 0.9rem;
-      font-weight: 700;
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.06);
+      font-weight: 800;
+      color: var(--navy-deep);
+      background: var(--bg-card-alt);
       padding: 4px 12px;
       border-radius: 8px;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-light);
     }
     .slide-counter-badge span {
-      color: var(--light-green);
+      color: var(--green-primary);
     }
 
     /* Progress Bar */
     .presentation-progress-track {
       width: 240px;
       height: 6px;
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--border-light);
       border-radius: 10px;
       overflow: hidden;
       position: relative;
     }
     .presentation-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--primary-green), var(--gold));
+      background: linear-gradient(90deg, var(--navy-primary), var(--green-primary));
       width: 0%;
       transition: width 0.3s ease;
     }
@@ -1082,19 +1132,21 @@
       width: 38px;
       height: 38px;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-subtle);
-      color: #ffffff;
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      color: var(--navy-deep);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       font-size: 1.1rem;
       transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
     .nav-arrow-btn:hover {
-      background: var(--primary-green);
-      border-color: var(--light-green);
+      background: var(--navy-deep);
+      border-color: var(--navy-deep);
+      color: #ffffff;
       transform: scale(1.05);
     }
     .nav-arrow-btn:active {
@@ -1110,8 +1162,8 @@
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -1119,11 +1171,12 @@
       cursor: pointer;
       font-size: 0.9rem;
       transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
     }
     .tool-icon-btn:hover, .tool-icon-btn.active {
-      background: rgba(61, 110, 48, 0.3);
-      border-color: var(--light-green);
-      color: #ffffff;
+      background: var(--blue-soft);
+      border-color: var(--navy-primary);
+      color: var(--navy-deep);
     }
 
     /* PRESENTER NOTES DRAWER */
@@ -1133,13 +1186,12 @@
       left: 50%;
       transform: translateX(-50%) translateY(120%);
       width: min(800px, 94vw);
-      background: rgba(17, 26, 20, 0.96);
-      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
       border-bottom: none;
       border-radius: 16px 16px 0 0;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
-      padding: 1.2rem 1.6rem;
+      box-shadow: 0 -10px 40px rgba(11, 37, 69, 0.12);
+      padding: 1.4rem 1.8rem;
       z-index: 900;
       transition: transform 0.4s var(--transition-smooth);
     }
@@ -1154,27 +1206,27 @@
     }
     .notes-title {
       font-size: 0.82rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.06em;
-      color: var(--gold-light);
+      color: var(--navy-deep);
       text-transform: uppercase;
     }
     .notes-content {
-      font-size: 0.9rem;
-      color: #e2e8f0;
-      line-height: 1.5;
+      font-size: 0.92rem;
+      color: var(--text-body);
+      line-height: 1.6;
     }
 
     /* SLIDE OVERVIEW GRID MODAL */
     .overview-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(14px);
+      background: rgba(11, 37, 69, 0.6);
+      backdrop-filter: blur(8px);
       z-index: 2000;
       display: flex;
       flex-direction: column;
-      padding: 2rem;
+      padding: 2.5rem;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -1191,38 +1243,40 @@
     }
     .overview-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 16px;
       overflow-y: auto;
       padding: 10px;
     }
     .overview-thumb-card {
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 12px;
-      padding: 1rem;
+      padding: 1.2rem;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 130px;
+      height: 135px;
+      box-shadow: var(--shadow-sm);
     }
     .overview-thumb-card:hover, .overview-thumb-card.current {
-      border-color: var(--light-green);
-      background: var(--surface-2);
+      border-color: var(--navy-primary);
+      background: var(--blue-soft);
       transform: scale(1.03);
+      box-shadow: var(--shadow-md);
     }
     .overview-thumb-num {
       font-size: 0.72rem;
       font-weight: 800;
-      color: var(--gold-light);
+      color: var(--navy-primary);
     }
     .overview-thumb-title {
       font-family: var(--font-heading);
       font-size: 0.88rem;
-      font-weight: 700;
-      color: #ffffff;
+      font-weight: 800;
+      color: var(--navy-deep);
       line-height: 1.3;
     }
 
@@ -1230,8 +1284,8 @@
     .ws-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(11, 37, 69, 0.6);
+      backdrop-filter: blur(8px);
       z-index: 2000;
       display: flex;
       align-items: center;
@@ -1245,12 +1299,12 @@
       pointer-events: auto;
     }
     .ws-modal-box {
-      background: var(--surface-1);
-      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 20px;
       width: min(520px, 92vw);
-      padding: 2rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      padding: 2.2rem;
+      box-shadow: 0 20px 60px rgba(11, 37, 69, 0.25);
     }
     .ws-qr-box {
       width: 160px;
@@ -1258,10 +1312,12 @@
       margin: 1.2rem auto;
       background: #ffffff;
       padding: 10px;
+      border: 1px solid var(--border-medium);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: var(--shadow-sm);
     }
     .ws-qr-box img {
       max-width: 100%;
@@ -1296,27 +1352,29 @@
       z-index: 100;
     }
     .reaction-btn {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: rgba(22, 36, 27, 0.85);
-      border: 1px solid var(--border-subtle);
-      font-size: 1.1rem;
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      font-size: 1.15rem;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: var(--shadow-sm);
     }
     .reaction-btn:hover {
       transform: scale(1.2);
-      border-color: var(--gold);
+      border-color: var(--navy-primary);
+      box-shadow: var(--shadow-md);
     }
     .floating-emoji {
       position: fixed;
       bottom: calc(var(--footer-height) + 20px);
       right: 40px;
-      font-size: 2rem;
+      font-size: 2.2rem;
       pointer-events: none;
       animation: floatUpEmoji 2.2s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
       z-index: 9999;
@@ -1331,7 +1389,7 @@
     @media (max-width: 1024px) {
       .hero-slide-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1.8rem;
       }
       .ecosystem-container {
         grid-template-columns: 1fr;
@@ -1353,22 +1411,22 @@
         grid-template-columns: repeat(2, 1fr);
       }
       .slide {
-        padding: 1.5rem;
+        padding: 1.6rem 2rem;
       }
       .slide-heading {
-        font-size: 1.6rem;
+        font-size: 1.65rem;
       }
     }
 
     @media (max-width: 640px) {
       header {
-        padding: 0 0.8rem;
+        padding: 0 1rem;
       }
       .brand-tagline, .mode-pill {
         display: none;
       }
       .presentation-progress-track {
-        width: 100px;
+        width: 90px;
       }
       .services-presentation-grid {
         grid-template-columns: 1fr;
@@ -1389,9 +1447,9 @@
       body {
         overflow: visible;
         background: #ffffff;
-        color: #000000;
+        color: #0b2545;
       }
-      header, footer, .ambient-bg, .notes-drawer, .reaction-emitter-tray {
+      header, footer, .white-pattern-bg, .ambient-accent, .notes-drawer, .reaction-emitter-tray {
         display: none !important;
       }
       #presentation-app {
@@ -1412,31 +1470,20 @@
         transform: none !important;
         page-break-after: always;
         background: #ffffff !important;
-        color: #0f172a !important;
+        color: #0b2545 !important;
         border: 1px solid #e2e8f0 !important;
         box-shadow: none !important;
         margin-bottom: 2rem;
-      }
-      .slide-heading, .kpi-num, .eco-pillar-title, .service-deck-title, .exec-name {
-        color: #0f172a !important;
-      }
-      .slide-subtitle, .eco-pillar-desc, .service-deck-desc, .step-desc, .kpi-sub {
-        color: #475569 !important;
-      }
-      .kpi-card, .eco-pillar-card, .service-deck-card, .process-step-node, .iso-card-item, .exec-person-card {
-        background: #f8fafc !important;
-        border-color: #cbd5e1 !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Glow -->
-  <div class="ambient-bg">
-    <div class="ambient-blob blob-1"></div>
-    <div class="ambient-blob blob-2"></div>
-    <div class="ambient-blob blob-3"></div>
+  <!-- Subtle Clean White Pattern -->
+  <div class="white-pattern-bg">
+    <div class="ambient-accent accent-1"></div>
+    <div class="ambient-accent accent-2"></div>
   </div>
 
   <!-- Realtime Laser Pointer -->
@@ -1450,7 +1497,7 @@
       </div>
       <div class="brand-text-block">
         <span class="brand-title-main">YAKIN <span>GRUP</span></span>
-        <span class="brand-tagline" data-tr="MÜHENDİSLİK & YATIRIM HOLDİNG" data-en="ENGINEERING & INVESTMENT HOLDING">MÜHENDİSLİK & YATIRIM HOLDİNG</span>
+        <span class="brand-tagline" data-tr="MÜHENDİSLİK, ENERJİ & YATIRIM HOLDİNG" data-en="ENGINEERING, ENERGY & INVESTMENT HOLDING">MÜHENDİSLİK, ENERJİ & YATIRIM HOLDİNG</span>
       </div>
     </a>
 
@@ -1470,7 +1517,7 @@
       <!-- WebSocket Live Broadcast Status -->
       <div class="ws-status-badge mesh" id="ws-status-badge" onclick="openWsModal()" title="Canlı Sunum & Yayın Durumu">
         <span class="status-dot"></span>
-        <span id="ws-status-text">Lokal Canlı Mesh</span>
+        <span id="ws-status-text">Canlı Sunum Ağı</span>
       </div>
     </div>
 
@@ -1568,8 +1615,12 @@
         <div class="ecosystem-container">
           <div class="ecosystem-cards-list">
             <div class="eco-pillar-card active-pillar">
-              <div class="eco-pillar-icon" style="background: rgba(11, 60, 107, 0.3); color: #60a5fa;">🏗️</div>
-              <div class="eco-pillar-title" data-tr="Yakın İnşaat" data-en="Yakın Construction">Yakın İnşaat</div>
+              <div class="eco-pillar-header">
+                <div class="eco-pillar-svg-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="9" y1="17" x2="9" y2="17.01"/></svg>
+                </div>
+                <div class="eco-pillar-title" data-tr="Yakın İnşaat" data-en="Yakın Construction">Yakın İnşaat</div>
+              </div>
               <div class="eco-pillar-desc" data-tr="Mission-critical veri merkezleri, ağır sanayi tesisleri, lüks konutlar, 5D BIM ve sismik güçlendirme." data-en="Tier III/IV data centers, heavy industrial facilities, luxury residential, 5D BIM and seismic retrofitting.">
                 Mission-critical veri merkezleri, ağır sanayi tesisleri, lüks konutlar, 5D BIM ve sismik güçlendirme.
               </div>
@@ -1577,69 +1628,81 @@
             </div>
 
             <div class="eco-pillar-card">
-              <div class="eco-pillar-icon" style="background: rgba(61, 110, 48, 0.3); color: #4ade80;">⚡</div>
-              <div class="eco-pillar-title" data-tr="Yakın Enerji" data-en="Yakın Energy">Yakın Enerji</div>
+              <div class="eco-pillar-header">
+                <div class="eco-pillar-svg-icon" style="background: var(--green-soft); color: var(--green-primary);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div class="eco-pillar-title" data-tr="Yakın Enerji" data-en="Yakın Energy">Yakın Enerji</div>
+              </div>
               <div class="eco-pillar-desc" data-tr="Güneş GES, Rüzgar RES, BESS batarya depolama, EV şarj ağları, YG/OG/AG şalt ve trafo merkezleri." data-en="Solar PV, Wind, BESS storage, EV charging hubs, HV/MV/LV substations, and SCADA grid automation.">
                 Güneş GES, Rüzgar RES, BESS batarya depolama, EV şarj ağları, YG/OG/AG şalt ve trafo merkezleri.
               </div>
-              <span class="eco-pillar-tag" data-tr="TEMİZ ENERJİ & ŞEBEKE" data-en="CLEAN POWER & GRID">TEMİZ ENERJİ & ŞEBEKE</span>
+              <span class="eco-pillar-tag" style="background: var(--green-soft); color: var(--green-primary);" data-tr="TEMİZ ENERJİ & ŞEBEKE" data-en="CLEAN POWER & GRID">TEMİZ ENERJİ & ŞEBEKE</span>
             </div>
 
             <div class="eco-pillar-card">
-              <div class="eco-pillar-icon" style="background: rgba(6, 182, 212, 0.3); color: #38bdf8;">🌐</div>
-              <div class="eco-pillar-title" data-tr="Yakın Teknoloji" data-en="Yakın Technology">Yakın Teknoloji</div>
+              <div class="eco-pillar-header">
+                <div class="eco-pillar-svg-icon" style="background: #eef2ff; color: #4338ca;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                </div>
+                <div class="eco-pillar-title" data-tr="Yakın Teknoloji" data-en="Yakın Technology">Yakın Teknoloji</div>
+              </div>
               <div class="eco-pillar-desc" data-tr="Telekom 5G/FTTX, SOC siber güvenlik operasyonları, veri merkezi beyaz alan donanımı, IIoT ve zayıf akım (ELV)." data-en="Telecom 5G/FTTX, 24/7 SOC cybersecurity, data center whitespace hardware, IIoT, and ELV security.">
                 Telekom 5G/FTTX, SOC siber güvenlik operasyonları, veri merkezi beyaz alan donanımı, IIoT ve zayıf akım (ELV).
               </div>
-              <span class="eco-pillar-tag" data-tr="DİJİTAL ALTYAPI & SİBER" data-en="DIGITAL INFRA & CYBER">DİJİTAL ALTYAPI & SİBER</span>
+              <span class="eco-pillar-tag" style="background: #eef2ff; color: #4338ca;" data-tr="DİJİTAL ALTYAPI & SİBER" data-en="DIGITAL INFRA & CYBER">DİJİTAL ALTYAPI & SİBER</span>
             </div>
 
             <div class="eco-pillar-card">
-              <div class="eco-pillar-icon" style="background: rgba(212, 175, 55, 0.3); color: #facc15;">💼</div>
-              <div class="eco-pillar-title" data-tr="Yakın Finans & Capital" data-en="Yakın Capital & Advisory">Yakın Finans & Capital</div>
+              <div class="eco-pillar-header">
+                <div class="eco-pillar-svg-icon" style="background: var(--gold-soft); color: var(--gold-dark);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div class="eco-pillar-title" data-tr="Yakın Finans & Capital" data-en="Yakın Capital & Advisory">Yakın Finans & Capital</div>
+              </div>
               <div class="eco-pillar-desc" data-tr="Proje finansmanı, SPV yatırım yönetimi, gayrimenkul yatırım fonları (GYF), FIDIC sözleşme danışmanlığı." data-en="Project finance structuring, SPV asset management, real estate investment funds (REIF), and FIDIC contract advisory.">
                 Proje finansmanı, SPV yatırım yönetimi, gayrimenkul yatırım fonları (GYF), FIDIC sözleşme danışmanlığı.
               </div>
-              <span class="eco-pillar-tag" data-tr="STRATEJİK YATIRIM" data-en="STRATEGIC INVESTMENT">STRATEJİK YATIRIM</span>
+              <span class="eco-pillar-tag" style="background: var(--gold-soft); color: var(--gold-dark);" data-tr="STRATEJİK YATIRIM" data-en="STRATEGIC INVESTMENT">STRATEJİK YATIRIM</span>
             </div>
           </div>
 
           <div class="ecosystem-visual-wrap">
             <svg class="eco-svg-diagram" viewBox="0 0 400 400" fill="none">
               <!-- Outer Orbit Circles -->
-              <circle cx="200" cy="200" r="160" stroke="rgba(120, 190, 94, 0.2)" stroke-width="1.5" stroke-dasharray="6 6"/>
-              <circle cx="200" cy="200" r="110" stroke="rgba(212, 175, 55, 0.25)" stroke-width="1.5"/>
+              <circle cx="200" cy="200" r="160" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6 6"/>
+              <circle cx="200" cy="200" r="115" stroke="rgba(11, 60, 107, 0.2)" stroke-width="1.5"/>
               
               <!-- Center Hub -->
-              <circle cx="200" cy="200" r="55" fill="#091308" stroke="#3d6e30" stroke-width="3"/>
+              <circle cx="200" cy="200" r="56" fill="#0b2545" stroke="#3d6e30" stroke-width="3"/>
               <text x="200" y="195" text-anchor="middle" fill="#ffffff" font-family="Cinzel" font-weight="800" font-size="14">YAKIN</text>
-              <text x="200" y="212" text-anchor="middle" fill="#78be5e" font-family="Cinzel" font-weight="800" font-size="14">GRUP</text>
-              <text x="200" y="226" text-anchor="middle" fill="#d4af37" font-size="8" font-weight="700">HOLDİNG</text>
+              <text x="200" y="212" text-anchor="middle" fill="#528e40" font-family="Cinzel" font-weight="800" font-size="14">GRUP</text>
+              <text x="200" y="226" text-anchor="middle" fill="#d4af37" font-size="8.5" font-weight="800">HOLDİNG</text>
 
               <!-- Connected Satellite Nodes -->
               <!-- Construction -->
-              <line x1="200" y1="145" x2="200" y2="50" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 4"/>
-              <circle cx="200" cy="50" r="34" fill="#0b2545" stroke="#3b82f6" stroke-width="2"/>
-              <text x="200" y="47" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">İNŞAAT</text>
-              <text x="200" y="60" text-anchor="middle" fill="#93c5fd" font-size="8">EPC & BIM</text>
+              <line x1="200" y1="144" x2="200" y2="52" stroke="#0b3c6b" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="200" cy="52" r="34" fill="#ffffff" stroke="#0b3c6b" stroke-width="2.5"/>
+              <text x="200" y="49" text-anchor="middle" fill="#0b2545" font-weight="800" font-size="10">İNŞAAT</text>
+              <text x="200" y="62" text-anchor="middle" fill="#0b3c6b" font-size="8" font-weight="700">EPC & BIM</text>
 
               <!-- Energy -->
-              <line x1="255" y1="200" x2="345" y2="200" stroke="#4ade80" stroke-width="2" stroke-dasharray="4 4"/>
-              <circle cx="345" cy="200" r="34" fill="#152b10" stroke="#22c55e" stroke-width="2"/>
-              <text x="345" y="197" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">ENERJİ</text>
-              <text x="345" y="210" text-anchor="middle" fill="#86efac" font-size="8">GES / BESS</text>
+              <line x1="256" y1="200" x2="348" y2="200" stroke="#3d6e30" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="348" cy="200" r="34" fill="#ffffff" stroke="#3d6e30" stroke-width="2.5"/>
+              <text x="348" y="197" text-anchor="middle" fill="#244b1c" font-weight="800" font-size="10">ENERJİ</text>
+              <text x="348" y="210" text-anchor="middle" fill="#3d6e30" font-size="8" font-weight="700">GES / BESS</text>
 
               <!-- Capital -->
-              <line x1="200" y1="255" x2="200" y2="350" stroke="#facc15" stroke-width="2" stroke-dasharray="4 4"/>
-              <circle cx="200" cy="350" r="34" fill="#2d2208" stroke="#eab308" stroke-width="2"/>
-              <text x="200" y="347" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">CAPITAL</text>
-              <text x="200" y="360" text-anchor="middle" fill="#fef08a" font-size="8">FINANCE</text>
+              <line x1="200" y1="256" x2="200" y2="348" stroke="#b48c14" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="200" cy="348" r="34" fill="#ffffff" stroke="#b48c14" stroke-width="2.5"/>
+              <text x="200" y="345" text-anchor="middle" fill="#856306" font-weight="800" font-size="10">CAPITAL</text>
+              <text x="200" y="358" text-anchor="middle" fill="#b48c14" font-size="8" font-weight="700">FINANCE</text>
 
               <!-- Tech -->
-              <line x1="145" y1="200" x2="55" y2="200" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4"/>
-              <circle cx="55" cy="200" r="34" fill="#082f49" stroke="#06b6d4" stroke-width="2"/>
-              <text x="55" y="197" text-anchor="middle" fill="#ffffff" font-weight="800" font-size="10">TEKNO</text>
-              <text x="55" y="210" text-anchor="middle" fill="#7dd3fc" font-size="8">TELCO & CYBER</text>
+              <line x1="144" y1="200" x2="52" y2="200" stroke="#4338ca" stroke-width="2" stroke-dasharray="4 4"/>
+              <circle cx="52" cy="200" r="34" fill="#ffffff" stroke="#4338ca" stroke-width="2.5"/>
+              <text x="52" y="197" text-anchor="middle" fill="#1e1b4b" font-weight="800" font-size="10">TEKNO</text>
+              <text x="52" y="210" text-anchor="middle" fill="#4338ca" font-size="8" font-weight="700">TELCO / SOC</text>
             </svg>
           </div>
         </div>
@@ -1653,8 +1716,8 @@
         </div>
 
         <div class="slide-title-wrap">
-          <h2 class="slide-heading" data-tr="Mission-Critical Veri Merkezleri & <span class='highlight-green'>Endüstriyel EPC</span>" data-en="Mission-Critical Data Centers & <span class='highlight-green'>Industrial EPC</span>">
-            Mission-Critical Veri Merkezleri & <span class="highlight-green">Endüstriyel EPC</span>
+          <h2 class="slide-heading" data-tr="Mission-Critical Veri Merkezleri & <span class='highlight-navy'>Endüstriyel EPC</span>" data-en="Mission-Critical Data Centers & <span class='highlight-navy'>Industrial EPC</span>">
+            Mission-Critical Veri Merkezleri & <span class="highlight-navy">Endüstriyel EPC</span>
           </h2>
           <p class="slide-subtitle" data-tr="Tier III & Tier IV standartlarında veri merkezlerinden ağır sanayi fabrikalarına, deprem sismik güçlendirmesinden 5D BIM mühendisliğine uçtan uca anahtar teslim taahhüt." data-en="End-to-end EPC contracting from Tier III/IV mission-critical data centers to heavy industrial plants, seismic retrofitting, and 5D BIM civil engineering.">
             Tier III & Tier IV standartlarında veri merkezlerinden ağır sanayi fabrikalarına, deprem sismik güçlendirmesinden 5D BIM mühendisliğine uçtan uca anahtar teslim taahhüt.
@@ -1728,7 +1791,7 @@
       <!-- SLIDE 4: YAKIN ENERJİ — GES, RES, BESS & AKILLI ŞEBEKE -->
       <section class="slide" data-slide-index="3" data-notes-tr="Yakın Enerji'nin yenilenebilir enerji üretiminden batarya depolama sistemlerine (BESS) ve EV şarj istasyonu ağlarına kadar anahtar teslim enerji portföyü. TEDAŞ/TEİAŞ onay ve kabul süreçlerindeki tam yetkinliğimiz vurgulanmalı." data-notes-en="Yakın Energy's full-spectrum clean energy portfolio: Solar EPC, Wind, BESS container storage, EV high-power charging hubs, and grid substation commissioning with full TEDAŞ/TEİAŞ regulatory approvals.">
         <div class="slide-meta-top">
-          <span class="slide-badge-category" data-tr="YAKIN ENERJİ & TEMİZ GELECEK" data-en="YAKIN ENERGY & CLEAN POWER">YAKIN ENERJİ & TEMİZ GELECEK</span>
+          <span class="slide-badge-category green" data-tr="YAKIN ENERJİ & TEMİZ GELECEK" data-en="YAKIN ENERGY & CLEAN POWER">YAKIN ENERJİ & TEMİZ GELECEK</span>
           <span class="slide-brand-watermark">500+ MW INSTALLED & PIPELINE</span>
         </div>
 
@@ -1746,7 +1809,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/energy_solar_ges.jpg" alt="Güneş Enerjisi Santralleri" class="service-deck-img">
-              <span class="service-deck-badge">SOLAR PV & BIPV</span>
+              <span class="service-deck-badge" style="background: rgba(36, 75, 28, 0.9);">SOLAR PV & BIPV</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1767,7 +1830,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/bess_main_cover_user.jpg" alt="BESS Batarya Depolama" class="service-deck-img">
-              <span class="service-deck-badge">BESS STORAGE</span>
+              <span class="service-deck-badge" style="background: rgba(36, 75, 28, 0.9);">BESS STORAGE</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1788,7 +1851,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/ev_siemens_chargers_lineup_user.png" alt="EV Şarj İstasyonları" class="service-deck-img">
-              <span class="service-deck-badge">EV HUBS & GRID</span>
+              <span class="service-deck-badge" style="background: rgba(36, 75, 28, 0.9);">EV HUBS & GRID</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1810,13 +1873,13 @@
       <!-- SLIDE 5: YAKIN TEKNOLOJİ — TELEKOM, SİBER GÜVENLİK & IT OMURGASI -->
       <section class="slide" data-slide-index="4" data-notes-tr="Telekom operatörlerine sunulan 5G ve fiber altyapı hizmetleri, 7/24 SOC siber güvenlik operasyon merkezi, veri merkezi beyaz alan donanımı ve zayıf akım sistemleri." data-notes-en="Telecom carrier infrastructure (5G/FTTX), 24/7 SOC cybersecurity defense, mission-critical whitespace hardware, and intelligent building ELV engineering.">
         <div class="slide-meta-top">
-          <span class="slide-badge-category cyan" data-tr="YAKIN TEKNOLOJİ & TELEKOM" data-en="YAKIN TECHNOLOGY & TELECOM">YAKIN TEKNOLOJİ & TELEKOM</span>
+          <span class="slide-badge-category tech" data-tr="YAKIN TEKNOLOJİ & TELEKOM" data-en="YAKIN TECHNOLOGY & TELECOM">YAKIN TEKNOLOJİ & TELEKOM</span>
           <span class="slide-brand-watermark">CARRIER GRADE & 24/7 SOC</span>
         </div>
 
         <div class="slide-title-wrap">
-          <h2 class="slide-heading" data-tr="5G Telekom Altyapısı & <span class='highlight-green'>7/24 SOC Siber Savunma</span>" data-en="5G Telecom Infra & <span class='highlight-green'>24/7 SOC Cyber Defense</span>">
-            5G Telekom Altyapısı & <span class="highlight-green">7/24 SOC Siber Savunma</span>
+          <h2 class="slide-heading" data-tr="5G Telekom Altyapısı & <span class='highlight-navy'>7/24 SOC Siber Savunma</span>" data-en="5G Telecom Infra & <span class='highlight-navy'>24/7 SOC Cyber Defense</span>">
+            5G Telekom Altyapısı & <span class="highlight-navy">7/24 SOC Siber Savunma</span>
           </h2>
           <p class="slide-subtitle" data-tr="GSM baz istasyonlarından FTTX fiber omurgaya, 7/24 SOC izleme ve sızma testlerinden akıllı bina zayıf akım (ELV) sistemlerine kritik dijital teknolojiler." data-en="Critical digital technology solutions from 5G cellular towers & FTTX fiber backbones to 24/7 SOC threat monitoring, penetration testing, and ELV security.">
             GSM baz istasyonlarından FTTX fiber omurgaya, 7/24 SOC izleme ve sızma testlerinden akıllı bina zayıf akım (ELV) sistemlerine kritik dijital teknolojiler.
@@ -1828,7 +1891,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/telecom_5g_infra.jpg" alt="Telekom & 5G Altyapısı" class="service-deck-img">
-              <span class="service-deck-badge">5G & FTTX FIBER</span>
+              <span class="service-deck-badge" style="background: rgba(30, 58, 138, 0.9);">5G & FTTX FIBER</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1849,7 +1912,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/pentest_security_audit.jpg" alt="Siber Güvenlik & Pentest" class="service-deck-img">
-              <span class="service-deck-badge">SOC & CYBER DEFENSE</span>
+              <span class="service-deck-badge" style="background: rgba(30, 58, 138, 0.9);">SOC & CYBER DEFENSE</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1870,7 +1933,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/elv_fire_detection_user.png" alt="Zayıf Akım & Yangın Algılama" class="service-deck-img">
-              <span class="service-deck-badge">ELV & SMART AUTOMATION</span>
+              <span class="service-deck-badge" style="background: rgba(30, 58, 138, 0.9);">ELV & SMART AUTOMATION</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1910,7 +1973,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/investment_finance_real_estate_1785010111511.png" alt="Proje Finansmanı" class="service-deck-img">
-              <span class="service-deck-badge">PROJECT FINANCE</span>
+              <span class="service-deck-badge" style="background: rgba(133, 99, 6, 0.9);">PROJECT FINANCE</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1930,7 +1993,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/tender_contract_management_1785010026255.png" alt="FIDIC Sözleşme Yönetimi" class="service-deck-img">
-              <span class="service-deck-badge">FIDIC & CONTRACTS</span>
+              <span class="service-deck-badge" style="background: rgba(133, 99, 6, 0.9);">FIDIC & CONTRACTS</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1950,7 +2013,7 @@
           <div class="service-deck-card">
             <div class="service-deck-img-wrap">
               <img src="assets/images/energy_regulation_advisory.jpg" alt="SPV ve Varlık Yönetimi" class="service-deck-img">
-              <span class="service-deck-badge">SPV & ASSET OPTIMIZATION</span>
+              <span class="service-deck-badge" style="background: rgba(133, 99, 6, 0.9);">SPV & ASSET OPTIMIZATION</span>
             </div>
             <div class="service-deck-body">
               <div>
@@ -1971,13 +2034,13 @@
       <!-- SLIDE 7: UÇTAN UCA TESLİMAT SÜRECİ (TURNKEY DELIVERY PIPELINE) -->
       <section class="slide" data-slide-index="6" data-notes-tr="Fikir aşamasından 7/24 işletme ve bakıma kadar 5 adımlı mühendislik teslimat boru hattımız. Müşteri ve yatırımcıya tek elden eksiksiz şeffaflık ve güven sunar." data-notes-en="Our 5-step engineering delivery pipeline from initial concept to 24/7 O&M lifecycle operations. Delivers single-source accountability and radical transparency to clients and investors.">
         <div class="slide-meta-top">
-          <span class="slide-badge-category" data-tr="OPERASYONEL MÜKEMMELLİK" data-en="OPERATIONAL EXCELLENCE">OPERASYONEL MÜKEMMELLİK</span>
+          <span class="slide-badge-category blue" data-tr="OPERASYONEL MÜKEMMELLİK" data-en="OPERATIONAL EXCELLENCE">OPERASYONEL MÜKEMMELLİK</span>
           <span class="slide-brand-watermark">TURNKEY EPC LIFECYCLE</span>
         </div>
 
         <div class="slide-title-wrap">
-          <h2 class="slide-heading" data-tr="Uçtan Uca <span class='highlight-green'>5 Aşamalı Teslimat Modeli</span>" data-en="End-to-End <span class='highlight-green'>5-Stage Delivery Framework</span>">
-            Uçtan Uca <span class="highlight-green">5 Aşamalı Teslimat Modeli</span>
+          <h2 class="slide-heading" data-tr="Uçtan Uca <span class='highlight-navy'>5 Aşamalı Teslimat Modeli</span>" data-en="End-to-End <span class='highlight-navy'>5-Stage Delivery Framework</span>">
+            Uçtan Uca <span class="highlight-navy">5 Aşamalı Teslimat Modeli</span>
           </h2>
           <p class="slide-subtitle" data-tr="İlk saha fizibilitesinden devreye almaya, mevzuat izinlerinden 7/24 dijital işletme & bakıma (O&M) kusursuz entegrasyon." data-en="Seamless execution from initial site feasibility to commissioning, regulatory permits, and 24/7 digital operations & maintenance (O&M).">
             İlk saha fizibilitesinden devreye almaya, mevzuat izinlerinden 7/24 dijital işletme & bakıma (O&M) kusursuz entegrasyon.
@@ -2064,7 +2127,7 @@
             <div class="calc-field-group">
               <div class="calc-field-label">
                 <span data-tr="2. Proje Ölçeği / Kapasite" data-en="2. Project Scale / Capacity">2. Proje Ölçeği / Kapasite</span>
-                <span id="sim-scale-label" style="color: var(--gold-light); font-weight: 800;">10 MWp</span>
+                <span id="sim-scale-label" style="color: var(--navy-primary); font-weight: 800;">10 MWp</span>
               </div>
               <input type="range" id="sim-scale-slider" class="calc-range" min="1" max="100" value="10" oninput="recalcDeckSim()">
             </div>
@@ -2086,7 +2149,7 @@
                 <div class="calc-out-lbl" data-tr="Tahmini Yatırım (CAPEX)" data-en="Estimated CAPEX">Tahmini Yatırım (CAPEX)</div>
               </div>
               <div class="calc-out-box">
-                <div class="calc-out-val" id="out-roi" style="color: #4ade80;">3.8 Yıl</div>
+                <div class="calc-out-val" id="out-roi" style="color: var(--green-primary);">3.8 Yıl</div>
                 <div class="calc-out-lbl" data-tr="Amortisman / Payback" data-en="Payback Duration">Amortisman / Payback</div>
               </div>
             </div>
@@ -2097,7 +2160,7 @@
                 <div class="calc-out-lbl" data-tr="Yıllık Üretim / Çıktı" data-en="Annual Yield / Output">Yıllık Üretim / Çıktı</div>
               </div>
               <div class="calc-out-box">
-                <div class="calc-out-val" id="out-carbon" style="color: #38bdf8;">8,400 Ton</div>
+                <div class="calc-out-val" id="out-carbon" style="color: #0284c7;">8,400 Ton</div>
                 <div class="calc-out-lbl" data-tr="Yıllık CO2 Tasarrufu" data-en="Annual CO2 Offset">Yıllık CO2 Tasarrufu</div>
               </div>
             </div>
@@ -2112,13 +2175,13 @@
       <!-- SLIDE 9: KALİTE, İSG, ESG VE SİBER GÜVENLİK STANDARTLARI -->
       <section class="slide" data-slide-index="8" data-notes-tr="Holdingimizin uluslararası sertifikasyonları: ISO 9001 Kalite, ISO 14001 Çevre, ISO 45001 İş Sağlığı ve ISO 27001 Siber Güvenlik standartları. Sıfır iş kazası hedefi ve sürdürülebilirlik ilkelerimiz." data-notes-en="Holding certifications: ISO 9001 Quality, ISO 14001 Environmental, ISO 45001 Occupational Safety, and ISO 27001 Information Security. Emphasize zero-accident HSE culture and carbon neutrality.">
         <div class="slide-meta-top">
-          <span class="slide-badge-category" data-tr="ULUSLARARASI AKREDİTASYON" data-en="GLOBAL ACCREDITATION">ULUSLARARASI AKREDİTASYON</span>
+          <span class="slide-badge-category blue" data-tr="ULUSLARARASI AKREDİTASYON" data-en="GLOBAL ACCREDITATION">ULUSLARARASI AKREDİTASYON</span>
           <span class="slide-brand-watermark">ESG & ISO COMPLIANCE</span>
         </div>
 
         <div class="slide-title-wrap">
-          <h2 class="slide-heading" data-tr="Küresel Sertifikasyonlar & <span class='highlight-green'>ESG Mükemmelliği</span>" data-en="Global Certifications & <span class='highlight-green'>ESG Excellence</span>">
-            Küresel Sertifikasyonlar & <span class="highlight-green">ESG Mükemmelliği</span>
+          <h2 class="slide-heading" data-tr="Küresel Sertifikasyonlar & <span class='highlight-navy'>ESG Mükemmelliği</span>" data-en="Global Certifications & <span class='highlight-navy'>ESG Excellence</span>">
+            Küresel Sertifikasyonlar & <span class="highlight-navy">ESG Mükemmelliği</span>
           </h2>
           <p class="slide-subtitle" data-tr="Tüm şantiye, enerji santrali ve veri merkezi operasyonlarımızda sıfır iş kazası prensibi ve en yüksek uluslararası kalite & bilgi güvenliği yönetimi." data-en="Zero-accident HSE culture, robust environmental stewardship, and rigorous information security across all construction sites and power plants.">
             Tüm şantiye, enerji santrali ve veri merkezi operasyonlarımızda sıfır iş kazası prensibi ve en yüksek uluslararası kalite & bilgi güvenliği yönetimi.
@@ -2128,6 +2191,9 @@
         <div class="esg-standards-grid">
           <!-- ISO 9001 -->
           <div class="iso-card-item">
+            <div class="iso-badge-icon" style="background: var(--blue-soft); color: var(--navy-primary);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
             <div class="iso-code">ISO 9001</div>
             <div class="iso-name" data-tr="Kalite Yönetim Sistemi" data-en="Quality Management">Kalite Yönetim Sistemi</div>
             <p class="iso-desc" data-tr="Mühendislik, tedarik ve taahhütte dünya standartlarında hatasız süreç yönetimi." data-en="Flawless process quality control across engineering, procurement, and EPC execution.">
@@ -2137,7 +2203,10 @@
 
           <!-- ISO 14001 -->
           <div class="iso-card-item">
-            <div class="iso-code" style="color: #4ade80;">ISO 14001</div>
+            <div class="iso-badge-icon" style="background: var(--green-soft); color: var(--green-primary);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-7.07 17.07A10 10 0 0 0 12 22a10 10 0 0 0 7.07-2.93A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="iso-code" style="color: var(--green-primary);">ISO 14001</div>
             <div class="iso-name" data-tr="Çevre Yönetim Sistemi" data-en="Environmental Management">Çevre Yönetim Sistemi</div>
             <p class="iso-desc" data-tr="Karbon ayak izi azaltımı, yeşil bina (LEED/BREEAM) standartları ve döngüsel ekonomi." data-en="Carbon footprint reduction, green building standards, and circular resource efficiency.">
               Karbon ayak izi azaltımı, yeşil bina (LEED/BREEAM) standartları ve döngüsel ekonomi.
@@ -2146,7 +2215,10 @@
 
           <!-- ISO 45001 -->
           <div class="iso-card-item">
-            <div class="iso-code" style="color: #f87171;">ISO 45001</div>
+            <div class="iso-badge-icon" style="background: #fef2f2; color: #dc2626;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="iso-code" style="color: #dc2626;">ISO 45001</div>
             <div class="iso-name" data-tr="İş Sağlığı ve Güvenliği" data-en="Occupational Health & Safety">İş Sağlığı ve Güvenliği</div>
             <p class="iso-desc" data-tr="Tüm saha ve santrallerde tavizsiz sıfır kaza hedefi ve proaktif risk yönetimi." data-en="Uncompromising zero-incident HSE culture and proactive hazard mitigation on all job sites.">
               Tüm saha ve santrallerde tavizsiz sıfır kaza hedefi ve proaktif risk yönetimi.
@@ -2155,7 +2227,10 @@
 
           <!-- ISO 27001 -->
           <div class="iso-card-item">
-            <div class="iso-code" style="color: #60a5fa;">ISO 27001</div>
+            <div class="iso-badge-icon" style="background: #eef2ff; color: #4338ca;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="iso-code" style="color: #4338ca;">ISO 27001</div>
             <div class="iso-name" data-tr="Bilgi Güvenliği Sistemi" data-en="Information Security">Bilgi Güvenliği Sistemi</div>
             <p class="iso-desc" data-tr="Veri merkezi, telekom ve SCADA şebekelerinde uçtan uca siber veri gizliliği." data-en="End-to-end cyber confidentiality across data centers, telecom assets, and SCADA grids.">
               Veri merkezi, telekom ve SCADA şebekelerinde uçtan uca siber veri gizliliği.
@@ -2196,9 +2271,11 @@
                   <span>vCard</span>
                 </a>
                 <a href="mailto:ilker.atasoy@yakingrup.net" class="exec-mini-btn">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                   <span>E-Posta</span>
                 </a>
                 <a href="imza-ilker.html" class="exec-mini-btn" target="_blank">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                   <span>İmza</span>
                 </a>
               </div>
@@ -2220,9 +2297,11 @@
                   <span>vCard</span>
                 </a>
                 <a href="mailto:eylul.yilmaz@yakingrup.net" class="exec-mini-btn">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                   <span>E-Posta</span>
                 </a>
                 <a href="imza-eylul.html" class="exec-mini-btn" target="_blank">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                   <span>İmza</span>
                 </a>
               </div>
@@ -2263,19 +2342,19 @@
             </div>
           </div>
 
-          <div class="kpi-card" style="padding: 2rem; background: rgba(17, 26, 20, 0.95); border: 1px solid var(--border-strong);">
-            <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #ffffff; margin-bottom: 1rem;" data-tr="Yakın Grup Holding Genel Merkez" data-en="Yakın Grup Holding Headquarters">
+          <div class="kpi-card" style="padding: 2rem; background: #ffffff; border: 1px solid var(--border-navy); box-shadow: var(--shadow-lg);">
+            <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--navy-deep); margin-bottom: 1rem;" data-tr="Yakın Grup Holding Genel Merkez" data-en="Yakın Grup Holding Headquarters">
               Yakın Grup Holding Genel Merkez
             </div>
-            <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-              📍 <strong>İstanbul, Türkiye:</strong> Maslak Finans & Teknoloji Vadisi<br>
-              📞 <strong>Telefon:</strong> +90 (212) 555 0199<br>
-              ✉️ <strong>Kurumsal İletişim:</strong> info@yakingrup.net<br>
-              🌐 <strong>Web Portal:</strong> www.yakingrup.net
+            <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
+              <strong style="color: var(--navy-deep);">📍 İstanbul, Türkiye:</strong> Maslak Finans &amp; Teknoloji Vadisi<br>
+              <strong style="color: var(--navy-deep);">📞 Telefon:</strong> +90 (212) 555 0199<br>
+              <strong style="color: var(--navy-deep);">✉️ Kurumsal İletişim:</strong> info@yakingrup.net<br>
+              <strong style="color: var(--navy-deep);">🌐 Web Portal:</strong> www.yakingrup.net
             </div>
-            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 0.75rem; color: var(--gold-light); font-weight: 700;">ISO 9001 / 14001 / 45001 / 27001</span>
-              <a href="/" style="color: var(--light-green); text-decoration: none; font-weight: 700; font-size: 0.85rem;" data-tr="Ana Sayfaya Dön ›" data-en="Back to Main Site ›">Ana Sayfaya Dön ›</a>
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--gold-dark); font-weight: 800;">ISO 9001 / 14001 / 45001 / 27001</span>
+              <a href="/" style="color: var(--navy-primary); text-decoration: none; font-weight: 700; font-size: 0.85rem;" data-tr="Ana Sayfaya Dön ›" data-en="Back to Main Site ›">Ana Sayfaya Dön ›</a>
             </div>
           </div>
         </div>
@@ -2298,11 +2377,11 @@
     </div>
 
     <div class="footer-center">
-      <button class="nav-arrow-btn" onclick="prevSlide()" title="Önceki Slayt (Sol Ok / Sol Tuş)">
+      <button class="nav-arrow-btn" onclick="prevSlide()" title="Önceki Slayt (Sol Ok)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
 
-      <button class="nav-arrow-btn" onclick="openOverviewModal()" title="Slayt Genel Bakış Matrisi">
+      <button class="nav-arrow-btn" onclick="openOverviewModal()" title="Slayt Matrisi (Tab / O)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       </button>
 
@@ -2334,7 +2413,7 @@
   <div class="notes-drawer" id="speaker-notes-drawer">
     <div class="notes-header">
       <span class="notes-title" data-tr="🎙️ KONUŞMACI & SUNUCU NOTLARI" data-en="🎙️ PRESENTER & SPEAKER NOTES">🎙️ KONUŞMACI & SUNUCU NOTLARI</span>
-      <button style="background: none; border: none; color: var(--text-muted); cursor: pointer;" onclick="togglePresenterNotes()">✕</button>
+      <button style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem;" onclick="togglePresenterNotes()">✕</button>
     </div>
     <div class="notes-content" id="speaker-notes-body">
       Yakın Grup vizyon sunumu notları burada görüntülenir.
@@ -2344,10 +2423,10 @@
   <!-- ===== SLIDE OVERVIEW GRID MODAL ===== -->
   <div class="overview-modal" id="overview-modal" onclick="if(event.target===this) closeOverviewModal()">
     <div class="overview-header">
-      <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #ffffff;" data-tr="Tüm Slaytlar & Bölümler" data-en="All Slides & Sections">
+      <div style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #ffffff;" data-tr="Tüm Slaytlar & Bölümler" data-en="All Slides & Sections">
         Tüm Slaytlar & Bölümler
       </div>
-      <button style="background: rgba(255,255,255,0.1); border: none; color: #ffffff; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-weight: 800;" onclick="closeOverviewModal()">✕</button>
+      <button style="background: rgba(255,255,255,0.2); border: none; color: #ffffff; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 1.1rem;" onclick="closeOverviewModal()">✕</button>
     </div>
     <div class="overview-grid" id="overview-grid-container">
       <!-- Generated dynamically in JS -->
@@ -2358,28 +2437,28 @@
   <div class="ws-modal" id="ws-modal" onclick="if(event.target===this) closeWsModal()">
     <div class="ws-modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #ffffff;" data-tr="Canlı Sunum Senkronizasyonu" data-en="Live Presentation Sync">
+        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--navy-deep);" data-tr="Canlı Sunum Senkronizasyonu" data-en="Live Presentation Sync">
           Canlı Sunum Senkronizasyonu
         </h3>
-        <button style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem;" onclick="closeWsModal()">✕</button>
+        <button style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem;" onclick="closeWsModal()">✕</button>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" data-tr="Katılımcıların mobil telefonlarından sunumu gerçek zamanlı takip edebilmesi için QR kodu okutun veya aynı oda koduyla bağlanın." data-en="Scan QR code from mobile devices to follow the presentation live in real-time or connect with the room ID.">
+      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5;" data-tr="Katılımcıların mobil telefonlarından sunumu gerçek zamanlı takip edebilmesi için QR kodu okutun veya aynı oda koduyla bağlanın." data-en="Scan QR code from mobile devices to follow the presentation live in real-time or connect with the room ID.">
         Katılımcıların mobil telefonlarından sunumu gerçek zamanlı takip edebilmesi için QR kodu okutun veya aynı oda koduyla bağlanın.
       </p>
 
       <div class="ws-qr-box" id="ws-qrcode-container"></div>
 
       <div style="display: flex; gap: 8px; margin-bottom: 1rem;">
-        <input type="text" id="ws-room-input" style="flex: 1; background: #091308; border: 1px solid var(--border-subtle); color: #ffffff; padding: 0.6rem; border-radius: 8px; font-weight: 700; text-align: center;" value="YAKIN-VIP-2026">
-        <button class="btn-action-hero primary" style="padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem;" onclick="generateNewRoomCode()">
+        <input type="text" id="ws-room-input" style="flex: 1; background: var(--bg-card-alt); border: 1px solid var(--border-medium); color: var(--navy-deep); padding: 0.65rem; border-radius: 8px; font-weight: 800; text-align: center; font-size: 0.95rem;" value="YAKIN-VIP-2026">
+        <button class="btn-action-hero primary" style="padding: 0.65rem 1.1rem; border-radius: 8px; font-size: 0.85rem;" onclick="generateNewRoomCode()">
           <span data-tr="Yeni Oda" data-en="New Room">Yeni Oda</span>
         </button>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-2); padding: 0.8rem 1rem; border-radius: 10px; font-size: 0.82rem;">
-        <span data-tr="Sunucu / Yayın Rolü:" data-en="Broadcaster Role:">Sunucu / Yayın Rolü:</span>
-        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 700; color: var(--light-green);">
+      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--blue-soft); border: 1px solid var(--border-navy); padding: 0.85rem 1.1rem; border-radius: 10px; font-size: 0.84rem;">
+        <span style="font-weight: 700; color: var(--navy-deep);" data-tr="Sunucu / Yayın Rolü:" data-en="Broadcaster Role:">Sunucu / Yayın Rolü:</span>
+        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 800; color: var(--navy-primary);">
           <input type="checkbox" id="ws-is-presenter-chk" checked onchange="togglePresenterRole()">
           <span data-tr="Sunucu (Kontrol Bende)" data-en="Host (Controller)">Sunucu (Kontrol Bende)</span>
         </label>
@@ -2390,9 +2469,9 @@
   <!-- ===== LIVE EMOJI REACTION TRAY ===== -->
   <div class="reaction-emitter-tray">
     <button class="reaction-btn" onclick="emitLiveReaction('👏')" title="Alkış">👏</button>
-    <button class="reaction-btn" onclick="emitLiveReaction('🚀')" title="Roket">🚀</button>
-    <button class="reaction-btn" onclick="emitLiveReaction('💡')" title="Fikir">💡</button>
-    <button class="reaction-btn" onclick="emitLiveReaction('🔥')" title="Harika">🔥</button>
+    <button class="reaction-btn" onclick="emitLiveReaction('🚀')" title="Vizyon">🚀</button>
+    <button class="reaction-btn" onclick="emitLiveReaction('💡')" title="İnovasyon">💡</button>
+    <button class="reaction-btn" onclick="emitLiveReaction('⚡')" title="Enerji">⚡</button>
   </div>
 
   <!-- ===== PRESENTATION ENGINE SCRIPT ===== -->
@@ -2406,7 +2485,7 @@
     let isLaserActive = false;
     let isNotesOpen = false;
 
-    // WebSocket Client
+    // WebSocket Client Connection
     let ws = null;
     function initWebSocketConnection() {
       try {
@@ -2416,7 +2495,6 @@
         
         ws = new WebSocket(wsUrl);
         ws.onopen = () => {
-          console.log('[WS] Connected to live relay server');
           const badge = document.getElementById('ws-status-badge');
           const text = document.getElementById('ws-status-text');
           badge.className = 'ws-status-badge';
@@ -2429,14 +2507,13 @@
           } catch (e) {}
         };
         ws.onerror = () => {
-          // Fallback to mesh mode
           const badge = document.getElementById('ws-status-badge');
           const text = document.getElementById('ws-status-text');
           badge.className = 'ws-status-badge mesh';
-          text.textContent = 'Lokal Canlı Mesh';
+          text.textContent = 'Canlı Sunum Ağı';
         };
       } catch (e) {
-        console.warn('WS Init failed, mesh fallback active');
+        console.warn('WS Init mesh fallback active');
       }
     }
 
@@ -2448,7 +2525,7 @@
         handleIncomingSync(event.data);
       };
     } catch (e) {
-      console.warn('BroadcastChannel not supported, falling back to localStorage');
+      console.warn('BroadcastChannel fallback to localStorage');
     }
 
     // LocalStorage Sync Fallback
@@ -2791,8 +2868,8 @@
         card.className = `overview-thumb-card ${idx === currentSlide ? 'current' : ''}`;
         card.innerHTML = `
           <span class="overview-thumb-num">SLAYT ${String(idx + 1).padStart(2, '0')}</span>
-          <div class="overview-thumb-title">${titleText.substring(0, 50)}...</div>
-          <span style="font-size: 0.68rem; color: var(--light-green);">Görüntüle ›</span>
+          <div class="overview-thumb-title">${titleText.substring(0, 52)}...</div>
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--navy-primary);">Görüntüle ›</span>
         `;
         card.onclick = () => {
           goToSlide(idx);
@@ -2828,15 +2905,12 @@
         _timestamp: Date.now()
       };
 
-      // 1. Dedicated WebSocket
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify(payload));
       }
 
-      // 2. BroadcastChannel (Multi-tab)
       if (bc) bc.postMessage(payload);
 
-      // 3. LocalStorage Event (Cross-window)
       localStorage.setItem('yakin_deck_sync_payload', JSON.stringify(payload));
     }
 
@@ -2895,12 +2969,12 @@
           text: targetUrl,
           width: 140,
           height: 140,
-          colorDark: '#091308',
+          colorDark: '#0b2545',
           colorLight: '#ffffff',
           correctLevel: QRCode.CorrectLevel.M
         });
       } else {
-        qrContainer.innerHTML = `<div style="font-size:0.75rem; text-align:center; color:#000;">${targetUrl}</div>`;
+        qrContainer.innerHTML = `<div style="font-size:0.75rem; text-align:center; color:#0b2545;">${targetUrl}</div>`;
       }
     }
 
