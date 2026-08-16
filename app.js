@@ -122,7 +122,7 @@ const TRANSLATIONS = {
     tag_partners: 'MÜHENDİSLİK PAYDAŞLARI',
     tag_store: 'ONLINE SATIŞ & PORTAL',
     tag_digital: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
-    tag_cap_advisory: 'CAPITAL ADVISORY',
+    tag_cap_advisory: 'SERMAYE DANIŞMANLIĞI',
     cluster_a_label: 'Yenilenebilir Enerji Sistemleri',
     cluster_em_label: 'ELEKTRİK & MEKANİK TAAHHÜT',
     cluster_b_label: 'Veri Merkezi Sistemleri',
