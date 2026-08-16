@@ -308,6 +308,7 @@ const TRANSLATIONS = {
     field_phone: 'Telefon',
     field_email: 'E-posta',
     field_office: 'Ofis Adresi',
+    vcard_qr_caption: '📲 Kameranızla okutarak rehbere ekleyin',
     vc_ilker_title: 'Yönetim Kurulu Başkanı / CXO (Mühendis)',
     vc_eylul_title: 'Yönetim Kurulu Başkanı / CEO (Mimar)',
     vc_btn_ilker: '📋 Direct Lead vCard — İlker ATASOY',
@@ -637,6 +638,7 @@ const TRANSLATIONS = {
     field_phone: 'Phone',
     field_email: 'Email',
     field_office: 'Office Address',
+    vcard_qr_caption: '📲 Scan with your camera to add to contacts',
     footer_tagline: 'The intersection of infrastructure and energy through an engineering-led approach.',
     footer_col_services: 'Sector Solutions',
     footer_col_corporate: 'Corporate Info',
@@ -2766,6 +2768,10 @@ function showVCard(id) {
   document.getElementById('modal-card-office').textContent = isEn ? (c.officeEn || c.office) : c.office;
   const liEl = document.getElementById('modal-card-linkedin');
   liEl.textContent = c.linkedin; liEl.href = c.linkedinHref;
+  const qrImg = document.getElementById('modal-card-qr-img');
+  if (qrImg) {
+    qrImg.src = id === 'eylul' ? 'assets/images/qr-vcard-eylul.svg' : 'assets/images/qr-vcard-ilker.svg';
+  }
   document.getElementById('vcard-dialog').showModal();
 }
 function closeVCardDialog() { document.getElementById('vcard-dialog').close(); }

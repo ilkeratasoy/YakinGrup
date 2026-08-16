@@ -1446,10 +1446,16 @@
           </div>
         </div>
       </div>
-      <div class="modal-actions-row">
-        <button class="vcard-btn primary" onclick="downloadVCF()"><span data-i18n="btn_vcard_download">Kartviziti İndir (.vcf)</span></button>
-        <a href="kartvizit.html" target="_blank" class="vcard-btn secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;"><span>🖨️ Kartvizit Stüdyosu</span></a>
-        <button class="vcard-btn secondary" onclick="shareCard()"><span data-i18n="btn_vcard_share">Paylaş</span></button>
+      <!-- vCard Modal QR Code Box -->
+      <div class="vcard-modal-qr-section">
+        <div class="vcard-modal-qr-wrap">
+          <img id="modal-card-qr-img" src="assets/images/qr-vcard-ilker.svg" alt="vCard QR Code">
+        </div>
+        <p class="vcard-modal-qr-caption" data-i18n="vcard_qr_caption">📲 Kameranızla okutarak rehbere ekleyin</p>
+      </div>
+
+      <div class="modal-actions-row" style="grid-template-columns: 1fr;">
+        <button class="vcard-btn secondary" onclick="shareCard()" style="width: 100%;"><span data-i18n="btn_vcard_share">Paylaş</span></button>
       </div>
     </div>
   </dialog>
