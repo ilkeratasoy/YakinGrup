@@ -18,6 +18,10 @@
         window.location.replace('/vcard.html' + (search || '?id=ilker'));
       } else if (path.indexOf('kartvizit') !== -1) {
         window.location.replace('/kartvizit.html' + search);
+      } else if (path.indexOf('imza') !== -1) {
+        window.location.replace('/imza.html' + search);
+      } else if (path.indexOf('teklif') !== -1) {
+        window.location.replace('/teklif.html' + search);
       } else {
         window.location.replace('/' + search);
       }
