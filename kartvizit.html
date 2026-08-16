@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yakın Grup — Kurumsal Kartvizit Tasarım Stüdyosu & Baskı Sistemi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-green: #3d6e30;
+      --accent-green: #528e40;
+      --dark-green: #1f3e17;
+      --gold: #d4af37;
+      --gold-dark: #aa820a;
+      --bg-studio: #f8fafc;
+      --sidebar-bg: #ffffff;
+      --stage-bg: #eef2f6;
+      --card-white: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --border-focus: #3d6e30;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-heading: 'Manrope', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-studio);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar - Light Mode */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-title svg {
+      width: 34px;
+      height: 34px;
+    }
+
+    .brand-title h1 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-title h1 span {
+      color: var(--primary-green);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-left: 6px;
+      padding-left: 8px;
+      border-left: 1.5px solid var(--border-light);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3d6e30, #528e40);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(61, 110, 48, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(61, 110, 48, 0.35);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #2d6e24, #3d6e30);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(45, 110, 36, 0.25);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(45, 110, 36, 0.4);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      border-color: var(--border-light);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* Main Workspace Layout */
+    .studio-container {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      flex: 1;
+      min-height: calc(100vh - 73px);
+    }
+
+    @media (max-width: 1024px) {
+      .studio-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar Controls - Light Theme */
+    .controls-panel {
+      background: #ffffff;
+      border-right: 1px solid var(--border-light);
+      padding: 1.75rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 73px);
+    }
+
+    .panel-section {
+      margin-bottom: 2rem;
+    }
+
+    .panel-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Profile Pills */
+    .quick-profiles {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+
+    .profile-pill {
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: #f1f5f9;
+      border: 1px solid var(--border-light);
+      color: var(--text-main);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .profile-pill:hover, .profile-pill.active {
+      background: var(--primary-green);
+      color: #ffffff;
+      border-color: var(--primary-green);
+    }
+
+    /* Company Select Grid */
+    .company-select-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+
+    .comp-pill {
+      padding: 9px;
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.76rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+
+    .comp-pill.active {
+      background: rgba(61, 110, 48, 0.1);
+      border-color: var(--primary-green);
+      color: var(--primary-green);
+      font-weight: 800;
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 0.68rem 0.85rem;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 3px rgba(61, 110, 48, 0.15);
+    }
+
+    /* Stage / Interactive Card Area - Light Architectural Texture */
+    .stage-container {
+      background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
+      background-image: 
+        radial-gradient(#cbd5e1 1px, transparent 1px),
+        radial-gradient(#cbd5e1 1px, #f8fafc 1px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage-tools {
+      position: absolute;
+      top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      z-index: 10;
+    }
+
+    .tool-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tool-btn.active, .tool-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    /* 3D Card Display Wrapper */
+    .cards-display-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      perspective: 1200px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card-comparison-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .card-label-box {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .card-side-tag {
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      background: #ffffff;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Standard Card Dimensions (85mm x 55mm proportion -> 510px x 330px in screen view) */
+    .card-box {
+      width: 510px;
+      height: 330px;
+      border-radius: 12px;
+      position: relative;
+      background: #ffffff;
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.12), 0 0 0 1px #cbd5e1;
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .card-box:hover {
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.2), 0 0 0 1px #94a3b8;
+    }
+
+    /* Clean Subtle Engineering Watermark Texture on White Card */
+    .card-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 90% 10%, rgba(61, 110, 48, 0.06) 0%, transparent 45%),
+        linear-gradient(rgba(61, 110, 48, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 110, 48, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 16px 16px, 16px 16px;
+      pointer-events: none;
+    }
+
+    /* Bottom Signature Line */
+    .card-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3.5px;
+      background: linear-gradient(90deg, #3d6e30, #528e40, #d4af37);
+    }
+
+    /* Card Content Structure */
+    .card-inner {
+      padding: 32px 34px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Front Header */
+    .front-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .front-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .front-logo-svg {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+    }
+
+    .front-brand-text h2 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #0f172a;
+    }
+
+    .front-brand-text .sub-unit {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--primary-green);
+      text-transform: uppercase;
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* 4 Sectors Badge Pill */
+    .holding-sectors-badge {
+      display: flex;
+      gap: 6px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #475569;
+      background: #f8fafc;
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .sector-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      margin: 0 2px;
+      vertical-align: middle;
+    }
+
+    /* İlk Tasarım Yerleşimi: İSİM ÜSTTE BÜYÜK, ÜNVAN ALTTA */
+    .front-person {
+      margin: auto 0;
+    }
+
+    .front-name {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .front-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-top: 4px;
+      color: #475569;
+    }
+
+    /* Front Bottom Contact Details & QR */
+    .front-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.76rem;
+      line-height: 1.35;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #334155;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .contact-icon {
+      font-size: 0.8rem;
+      color: var(--primary-green);
+      width: 14px;
+      text-align: center;
+    }
+
+    /* QR Code Container on Card */
+    .card-qr-wrap {
+      width: 66px;
+      height: 66px;
+      padding: 4px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-qr-wrap svg {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    /* BACK SIDE DESIGN (Beyaz Fonlu Arka Yüz) */
+    .back-center-wrap {
+      margin: auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .back-large-emblem {
+      width: 82px;
+      height: 82px;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+    }
+
+    .back-holding-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0f172a;
+    }
+
+    .back-holding-slogan {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--primary-green);
+      text-transform: uppercase;
+    }
+
+    .back-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      font-size: 0.72rem;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 12px;
+    }
+
+    .back-iso-tags {
+      display: flex;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: #475569;
+    }
+
+    .back-web-link {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #0f172a;
+      text-decoration: none;
+    }
+
+    /* 3D Mockup Presentation Showcase */
+    .mockup-showcase-section {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 3rem;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .mockup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .mockup-header h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .mockup-img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .mockup-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+
+    .spec-item {
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .spec-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .spec-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    /* Print Specific Bleed & Margins (85mm x 55mm) */
+    @media print {
+      @page {
+        size: 85mm 55mm;
+        margin: 0;
+      }
+
+      body {
+        background: none !important;
+        color: #000 !important;
+      }
+
+      header, .controls-panel, .stage-tools, .card-side-tag, .mockup-showcase-section {
+        display: none !important;
+      }
+
+      .studio-container {
+        display: block !important;
+      }
+
+      .stage-container {
+        background: none !important;
+        padding: 0 !important;
+      }
+
+      .cards-display-wrap {
+        display: block !important;
+        perspective: none !important;
+      }
+
+      .card-comparison-row {
+        display: block !important;
+      }
+
+      .card-label-box {
+        display: block !important;
+        page-break-after: always;
+        break-after: page;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .card-box {
+        width: 85mm !important;
+        height: 55mm !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        margin: 0 !important;
+        border: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .card-inner {
+        padding: 6mm 7mm !important;
+      }
+
+      .front-logo-svg {
+        width: 10mm !important;
+        height: 10mm !important;
+      }
+
+      .card-qr-wrap {
+        width: 14mm !important;
+        height: 14mm !important;
+      }
+
+      .back-large-emblem {
+        width: 18mm !important;
+        height: 18mm !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <a href="#" class="brand-title">
+      <!-- Yakın Emblem SVG -->
+      <svg viewBox="0 0 120 120">
+        <path d="M 52 105 C 50 85, 30 65, 18 48 C 14 42, 12 30, 18 20 C 24 10, 36 8, 45 14 C 58 22, 64 45, 60 70 C 58 85, 54 98, 52 105 Z" fill="#437734"/>
+        <path d="M 28 32 C 38 48, 48 68, 52 92" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+        <path d="M 56 105 C 57 82, 68 55, 84 35 C 92 25, 102 18, 110 24 C 117 30, 115 42, 108 52 C 98 67, 80 86, 60 102 C 58 104, 56 105, 56 105 Z" fill="#528e40"/>
+        <path d="M 96 38 C 84 56, 72 76, 62 96" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+      </svg>
+      <h1>YAKIN GRUP <span>Kartvizit Stüdyosu</span></h1>
+    </a>
+
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="downloadVCard()">
+        <span>📇</span> vCard İndir (.vcf)
+      </button>
+      <button class="btn btn-gold" onclick="window.print()">
+        <span>🖨️</span> Doğrudan Baskı / PDF Kaydet
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <div class="studio-container">
+
+    <!-- Left Controls Panel -->
+    <aside class="controls-panel">
+
+      <!-- Preset Profiles -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>Hızlı Profil Seçimi</span>
+        </div>
+        <div class="quick-profiles">
+          <button class="profile-pill active" onclick="loadProfile('ilker')">İlker ATASOY (CEO)</button>
+          <button class="profile-pill" onclick="loadProfile('eylul')">Eylül YILMAZ (Mimar)</button>
+          <button class="profile-pill" onclick="loadProfile('custom')">Özel Kişi</button>
+        </div>
+      </div>
+
+      <!-- Company / Unit Selection -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>Şirket / Birim Başlığı</span>
+        </div>
+        <div class="company-select-grid">
+          <div class="comp-pill active" onclick="setCompany('HOLDİNG', this)">Yakın Grup Holding</div>
+          <div class="comp-pill" onclick="setCompany('İNŞAAT', this)">Yakın İnşaat</div>
+          <div class="comp-pill" onclick="setCompany('ENERJİ', this)">Yakın Enerji</div>
+          <div class="comp-pill" onclick="setCompany('CAPITAL', this)">Yakın Capital</div>
+          <div class="comp-pill" onclick="setCompany('TEKNOLOJİ', this)">Yakın Teknoloji</div>
+        </div>
+      </div>
+
+      <!-- Information Edit Form -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>Kartvizit Bilgileri</span>
+        </div>
+        <div class="form-group">
+          <label>Ad & Soyad</label>
+          <input type="text" id="inp-name" class="form-control" value="İlker ATASOY" oninput="updateCardPreview()">
+        </div>
+        <div class="form-group">
+          <label>Unvan / Pozisyon</label>
+          <input type="text" id="inp-title" class="form-control" value="Yönetim Kurulu Başkanı / CEO" oninput="updateCardPreview()">
+        </div>
+        <div class="form-group">
+          <label>Telefon Numarası</label>
+          <input type="text" id="inp-phone" class="form-control" value="+90 542 897 34 46" oninput="updateCardPreview()">
+        </div>
+        <div class="form-group">
+          <label>Kurumsal E-posta</label>
+          <input type="email" id="inp-email" class="form-control" value="ilker.atasoy@yakingrup.net" oninput="updateCardPreview()">
+        </div>
+        <div class="form-group">
+          <label>Ofis Adresi</label>
+          <input type="text" id="inp-address" class="form-control" value="Maslak Sun Plaza Kat: 12, Şişli / İstanbul" oninput="updateCardPreview()">
+        </div>
+        <div class="form-group">
+          <label>Web Sitesi</label>
+          <input type="text" id="inp-web" class="form-control" value="www.yakingrup.net" oninput="updateCardPreview()">
+        </div>
+        <div class="form-group">
+          <label>QR Kod Hedefi</label>
+          <select id="inp-qr-target" class="form-control" onchange="updateCardPreview()">
+            <option value="vcard">Dijital vCard İletişim Kartı (Doğrudan Rehbere Ekle)</option>
+            <option value="web">Kurumsal Web Sitesi (www.yakingrup.net)</option>
+            <option value="linkedin">LinkedIn Şirket Profili</option>
+          </select>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Right Live Preview Stage -->
+    <main class="stage-container">
+
+      <!-- View Toggles -->
+      <div class="stage-tools">
+        <button class="tool-btn active" id="btn-view-both" onclick="setViewMode('both')">Ön ve Arka Yüz</button>
+        <button class="tool-btn" id="btn-view-front" onclick="setViewMode('front')">Sadece Ön</button>
+        <button class="tool-btn" id="btn-view-back" onclick="setViewMode('back')">Sadece Arka</button>
+      </div>
+
+      <!-- Live Cards Display -->
+      <div class="cards-display-wrap">
+
+        <div class="card-comparison-row">
+          
+          <!-- FRONT CARD -->
+          <div class="card-label-box" id="front-card-container">
+            <span class="card-side-tag">ÖN YÜZ (85 × 55 mm)</span>
+            
+            <div class="card-box" id="front-card">
+              <div class="card-inner">
+                
+                <!-- Front Top -->
+                <div class="front-top">
+                  <div class="front-logo-wrap">
+                    <svg class="front-logo-svg" viewBox="0 0 120 120">
+                      <path d="M 52 105 C 50 85, 30 65, 18 48 C 14 42, 12 30, 18 20 C 24 10, 36 8, 45 14 C 58 22, 64 45, 60 70 C 58 85, 54 98, 52 105 Z" fill="#437734"/>
+                      <path d="M 28 32 C 38 48, 48 68, 52 92" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.95"/>
+                      <path d="M 56 105 C 57 82, 68 55, 84 35 C 92 25, 102 18, 110 24 C 117 30, 115 42, 108 52 C 98 67, 80 86, 60 102 C 58 104, 56 105, 56 105 Z" fill="#528e40"/>
+                      <path d="M 96 38 C 84 56, 72 76, 62 96" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.95"/>
+                    </svg>
+                    <div class="front-brand-text">
+                      <h2>YAKIN GRUP</h2>
+                      <span class="sub-unit" id="card-company-label">HOLDİNG</span>
+                    </div>
+                  </div>
+
+                  <div class="holding-sectors-badge">
+                    <span>İNŞAAT</span><span class="sector-dot"></span>
+                    <span>ENERJİ</span><span class="sector-dot"></span>
+                    <span>CAPITAL</span><span class="sector-dot"></span>
+                    <span>TEKNOLOJİ</span>
+                  </div>
+                </div>
+
+                <!-- Front Person Info: İsim Üstte Büyük, Unvan Altta -->
+                <div class="front-person">
+                  <div class="front-name" id="card-name">İlker ATASOY</div>
+                  <div class="front-title" id="card-title">Yönetim Kurulu Başkanı / CEO</div>
+                </div>
+
+                <!-- Front Bottom Contact & QR -->
+                <div class="front-bottom">
+                  <div class="contact-list">
+                    <a href="#" class="contact-item" id="card-phone-link">
+                      <span class="contact-icon">📞</span>
+                      <span id="card-phone">+90 542 897 34 46</span>
+                    </a>
+                    <a href="#" class="contact-item" id="card-email-link">
+                      <span class="contact-icon">✉️</span>
+                      <span id="card-email">ilker.atasoy@yakingrup.net</span>
+                    </a>
+                    <div class="contact-item">
+                      <span class="contact-icon">🏢</span>
+                      <span id="card-address">Maslak Sun Plaza Kat: 12, Şişli / İstanbul</span>
+                    </div>
+                    <a href="#" class="contact-item" id="card-web-link">
+                      <span class="contact-icon">🌐</span>
+                      <span id="card-web">www.yakingrup.net</span>
+                    </a>
+                  </div>
+
+                  <div class="card-qr-wrap" id="card-qr-box">
+                    <!-- Pure Vector SVG QR Code Generated Dynamically -->
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK CARD (Beyaz Fonlu Arka Yüz) -->
+          <div class="card-label-box" id="back-card-container">
+            <span class="card-side-tag">ARKA YÜZ (85 × 55 mm)</span>
+            
+            <div class="card-box" id="back-card">
+              <div class="card-inner">
+                
+                <div class="back-center-wrap">
+                  <!-- Centered Big Emblem -->
+                  <svg class="back-large-emblem" viewBox="0 0 120 120">
+                    <path d="M 52 105 C 50 85, 30 65, 18 48 C 14 42, 12 30, 18 20 C 24 10, 36 8, 45 14 C 58 22, 64 45, 60 70 C 58 85, 54 98, 52 105 Z" fill="#437734"/>
+                    <path d="M 28 32 C 38 48, 48 68, 52 92" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+                    <path d="M 56 105 C 57 82, 68 55, 84 35 C 92 25, 102 18, 110 24 C 117 30, 115 42, 108 52 C 98 67, 80 86, 60 102 C 58 104, 56 105, 56 105 Z" fill="#528e40"/>
+                    <path d="M 96 38 C 84 56, 72 76, 62 96" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+                  </svg>
+                  <div class="back-holding-title">YAKIN GRUP</div>
+                  <div class="back-holding-slogan">DOĞAYA SAYGILI, GELECEĞE DEĞER KATAN MÜHENDİSLİK</div>
+                </div>
+
+                <div class="back-footer-row">
+                  <div class="back-iso-tags">
+                    <span>ISO 9001</span>
+                    <span>ISO 14001</span>
+                    <span>ISO 45001</span>
+                    <span>ISO 27001</span>
+                  </div>
+                  <a href="https://www.yakingrup.net" target="_blank" class="back-web-link">www.yakingrup.net</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3D Mockup Presentation -->
+        <div class="mockup-showcase-section">
+          <div class="mockup-header">
+            <h3>3D Gerçekçi Baskı ve Materyal Görselleştirmesi</h3>
+            <span class="card-side-tag">Executive 400gr Dokulu Pamuklu Beyaz + Kurumsal Zümrüt Varak</span>
+          </div>
+          <div class="mockup-img-wrap">
+            <img src="/Users/iatasoy/.gemini/antigravity/brain/e98a8167-12d8-4d44-83a1-21eef882ea14/yakin_grup_white_card_mockup_1786884170868.jpg" alt="Yakın Grup Kartvizit 3D Mockup">
+          </div>
+
+          <div class="specs-grid">
+            <div class="spec-item">
+              <div class="spec-label">Standart Ölçü</div>
+              <div class="spec-val">85 × 55 mm</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Kağıt Gramajı</div>
+              <div class="spec-val">400 gr Kuşe / Pamuklu</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Özel Efektler</div>
+              <div class="spec-val">Zümrüt Varak & Gofre</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Kesim & Kros Payı</div>
+              <div class="spec-val">+3 mm Güvenli Alan</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Pure JS Self-Contained QR Code Generator (Zero Dependency, Full UTF-8 & SVG Vector Output) -->
+  <script>
+    // Embedded Lightweight QR Code & vCard Engine
+    (function(window) {
+      function QR8BitByte(data) {
+        this.mode = 4;
+        this.data = data;
+        this.parsedData = [];
+        for (var i = 0; i < this.data.length; i++) {
+          var byteArray = [];
+          var code = this.data.charCodeAt(i);
+          if (code > 0x10000) {
+            byteArray[0] = 0xF0 | ((code & 0x1C0000) >>> 18);
+            byteArray[1] = 0x80 | ((code & 0x3F000) >>> 12);
+            byteArray[2] = 0x80 | ((code & 0xFC0) >>> 6);
+            byteArray[3] = 0x80 | (code & 0x3F);
+          } else if (code > 0x800) {
+            byteArray[0] = 0xE0 | ((code & 0xF000) >>> 12);
+            byteArray[1] = 0x80 | ((code & 0xFC0) >>> 6);
+            byteArray[2] = 0x80 | (code & 0x3F);
+          } else if (code > 0x80) {
+            byteArray[0] = 0xC0 | ((code & 0x7C0) >>> 6);
+            byteArray[1] = 0x80 | (code & 0x3F);
+          } else {
+            byteArray[0] = code;
+          }
+          this.parsedData.push(byteArray);
+        }
+        this.parsedData = Array.prototype.concat.apply([], this.parsedData);
+      }
+      QR8BitByte.prototype = {
+        getLength: function() { return this.parsedData.length; },
+        write: function(buffer) {
+          for (var i = 0; i < this.parsedData.length; i++) {
+            buffer.put(this.parsedData[i], 8);
+          }
+        }
+      };
+
+      function QRCodeModel(typeNumber, errorCorrectionLevel) {
+        this.typeNumber = typeNumber;
+        this.errorCorrectionLevel = errorCorrectionLevel;
+        this.modules = null;
+        this.moduleCount = 0;
+        this.dataCache = null;
+        this.dataList = [];
+      }
+      QRCodeModel.prototype = {
+        addData: function(data) { this.dataList.push(new QR8BitByte(data)); this.dataCache = null; },
+        isDark: function(row, col) { return this.modules[row][col]; },
+        getModuleCount: function() { return this.moduleCount; },
+        make: function() {
+          if (this.typeNumber < 1) {
+            var typeNumber = 1;
+            for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+              var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectionLevel);
+              var buffer = new QRBitBuffer();
+              var totalDataCount = 0;
+              for (var i = 0; i < rsBlocks.length; i++) totalDataCount += rsBlocks[i].dataCount;
+              for (var i = 0; i < this.dataList.length; i++) {
+                var data = this.dataList[i];
+                buffer.put(data.mode, 4);
+                buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber));
+                data.write(buffer);
+              }
+              if (buffer.getLengthInBits() <= totalDataCount * 8) break;
+            }
+            this.typeNumber = typeNumber;
+          }
+          this.makeImpl(false, this.getBestMaskPattern());
+        },
+        makeImpl: function(test, maskPattern) {
+          this.moduleCount = this.typeNumber * 4 + 17;
+          this.modules = new Array(this.moduleCount);
+          for (var row = 0; row < this.moduleCount; row++) {
+            this.modules[row] = new Array(this.moduleCount);
+            for (var col = 0; col < this.moduleCount; col++) this.modules[row][col] = null;
+          }
+          this.setupPositionProbePattern(0, 0);
+          this.setupPositionProbePattern(this.moduleCount - 7, 0);
+          this.setupPositionProbePattern(0, this.moduleCount - 7);
+          this.setupPositionAdjustPattern();
+          this.setupTimingPattern();
+          this.setupTypeInfo(test, maskPattern);
+          if (this.typeNumber >= 7) this.setupTypeNumber(test);
+          if (this.dataCache == null) this.dataCache = QRCodeModel.createData(this.typeNumber, this.errorCorrectionLevel, this.dataList);
+          this.mapData(this.dataCache, maskPattern);
+        },
+        setupPositionProbePattern: function(row, col) {
+          for (var r = -1; r <= 7; r++) {
+            if (row + r <= -1 || this.moduleCount <= row + r) continue;
+            for (var c = -1; c <= 7; c++) {
+              if (col + c <= -1 || this.moduleCount <= col + c) continue;
+              if ((0 <= r && r <= 6 && (c == 0 || c == 6)) || (0 <= c && c <= 6 && (r == 0 || r == 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4)) {
+                this.modules[row + r][col + c] = true;
+              } else {
+                this.modules[row + r][col + c] = false;
+              }
+            }
+          }
+        },
+        getBestMaskPattern: function() {
+          var minLostPoint = 0, pattern = 0;
+          for (var i = 0; i < 8; i++) {
+            this.makeImpl(true, i);
+            var lostPoint = QRUtil.getLostPoint(this);
+            if (i == 0 || minLostPoint > lostPoint) { minLostPoint = lostPoint; pattern = i; }
+          }
+          return pattern;
+        },
+        setupTimingPattern: function() {
+          for (var r = 8; r < this.moduleCount - 8; r++) {
+            if (this.modules[r][6] != null) continue;
+            this.modules[r][6] = (r % 2 == 0);
+          }
+          for (var c = 8; c < this.moduleCount - 8; c++) {
+            if (this.modules[6][c] != null) continue;
+            this.modules[6][c] = (c % 2 == 0);
+          }
+        },
+        setupPositionAdjustPattern: function() {
+          var pos = QRUtil.getPatternPosition(this.typeNumber);
+          for (var i = 0; i < pos.length; i++) {
+            for (var j = 0; j < pos.length; j++) {
+              var row = pos[i], col = pos[j];
+              if (this.modules[row][col] != null) continue;
+              for (var r = -2; r <= 2; r++) {
+                for (var c = -2; c <= 2; c++) {
+                  if (r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0)) {
+                    this.modules[row + r][col + c] = true;
+                  } else {
+                    this.modules[row + r][col + c] = false;
+                  }
+                }
+              }
+            }
+          }
+        },
+        setupTypeInfo: function(test, maskPattern) {
+          var data = (QRErrorCorrectLevel.L << 3) | maskPattern;
+          var bits = QRUtil.getBCHTypeInfo(data);
+          for (var i = 0; i < 15; i++) {
+            var mod = (!test && ((bits >> i) & 1) == 1);
+            if (i < 6) this.modules[i][8] = mod;
+            else if (i < 8) this.modules[i + 1][8] = mod;
+            else this.modules[this.moduleCount - 15 + i][8] = mod;
+            if (i < 8) this.modules[8][this.moduleCount - i - 1] = mod;
+            else if (i < 9) this.modules[8][15 - i - 1 + 1] = mod;
+            else this.modules[8][15 - i - 1] = mod;
+          }
+          this.modules[this.moduleCount - 8][8] = !test;
+        },
+        setupTypeNumber: function(test) {
+          var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+          for (var i = 0; i < 18; i++) {
+            var mod = (!test && ((bits >> i) & 1) == 1);
+            this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+            this.modules[i % 3 + this.moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
+          }
+        },
+        mapData: function(data, maskPattern) {
+          var inc = -1, row = this.moduleCount - 1, bitIndex = 7, byteIndex = 0;
+          var maskFunc = QRUtil.getMaskFunction(maskPattern);
+          for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+            if (col == 6) col--;
+            while (true) {
+              for (var c = 0; c < 2; c++) {
+                if (this.modules[row][col - c] == null) {
+                  var dark = false;
+                  if (byteIndex < data.length) dark = (((data[byteIndex] >>> bitIndex) & 1) == 1);
+                  var mask = maskFunc(row, col - c);
+                  if (mask) dark = !dark;
+                  this.modules[row][col - c] = dark;
+                  bitIndex--;
+                  if (bitIndex == -1) { byteIndex++; bitIndex = 7; }
+                }
+              }
+              row += inc;
+              if (row < 0 || this.moduleCount <= row) { row -= inc; inc = -inc; break; }
+            }
+          }
+        },
+        toSVG: function(margin) {
+          margin = margin || 1;
+          var size = this.moduleCount + margin * 2;
+          var svg = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + ' ' + size + '" shape-rendering="crispEdges" width="100%" height="100%">'];
+          svg.push('<rect width="100%" height="100%" fill="#ffffff"/>');
+          for (var r = 0; r < this.moduleCount; r++) {
+            for (var c = 0; c < this.moduleCount; c++) {
+              if (this.isDark(r, c)) {
+                svg.push('<rect x="' + (c + margin) + '" y="' + (r + margin) + '" width="1" height="1" fill="#121614"/>');
+              }
+            }
+          }
+          svg.push('</svg>');
+          return svg.join('');
+        }
+      };
+
+      QRCodeModel.createData = function(typeNumber, errorCorrectionLevel, dataList) {
+        var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectionLevel);
+        var buffer = new QRBitBuffer();
+        for (var i = 0; i < dataList.length; i++) {
+          var data = dataList[i];
+          buffer.put(data.mode, 4);
+          buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber));
+          data.write(buffer);
+        }
+        var totalDataCount = 0;
+        for (var i = 0; i < rsBlocks.length; i++) totalDataCount += rsBlocks[i].dataCount;
+        if (buffer.getLengthInBits() > totalDataCount * 8) throw new Error("Code length overflow");
+        if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) buffer.put(0, 4);
+        while (buffer.getLengthInBits() % 8 != 0) buffer.putBit(false);
+        while (true) {
+          if (buffer.getLengthInBits() >= totalDataCount * 8) break;
+          buffer.put(0xEC, 8);
+          if (buffer.getLengthInBits() >= totalDataCount * 8) break;
+          buffer.put(0x11, 8);
+        }
+        return QRCodeModel.createBytes(buffer, rsBlocks);
+      };
+
+      QRCodeModel.createBytes = function(buffer, rsBlocks) {
+        var offset = 0, maxDcCount = 0, maxEcCount = 0;
+        var dcdata = new Array(rsBlocks.length), ecdata = new Array(rsBlocks.length);
+        for (var r = 0; r < rsBlocks.length; r++) {
+          var dcCount = rsBlocks[r].dataCount;
+          var ecCount = rsBlocks[r].totalCount - dcCount;
+          maxDcCount = Math.max(maxDcCount, dcCount);
+          maxEcCount = Math.max(maxEcCount, ecCount);
+          dcdata[r] = new Array(dcCount);
+          for (var i = 0; i < dcdata[r].length; i++) dcdata[r][i] = 0xFF & buffer.buffer[i + offset];
+          offset += dcCount;
+          var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+          var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+          var modPoly = rawPoly.mod(rsPoly);
+          ecdata[r] = new Array(rsPoly.getLength() - 1);
+          for (var i = 0; i < ecdata[r].length; i++) {
+            var modIndex = i + modPoly.getLength() - ecdata[r].length;
+            ecdata[r][i] = (modIndex >= 0) ? modPoly.get(modIndex) : 0;
+          }
+        }
+        var totalCodeCount = 0;
+        for (var i = 0; i < rsBlocks.length; i++) totalCodeCount += rsBlocks[i].totalCount;
+        var data = new Array(totalCodeCount), index = 0;
+        for (var i = 0; i < maxDcCount; i++) {
+          for (var r = 0; r < rsBlocks.length; r++) {
+            if (i < dcdata[r].length) data[index++] = dcdata[r][i];
+          }
+        }
+        for (var i = 0; i < maxEcCount; i++) {
+          for (var r = 0; r < rsBlocks.length; r++) {
+            if (i < ecdata[r].length) data[index++] = ecdata[r][i];
+          }
+        }
+        return data;
+      };
+
+      var QRErrorCorrectLevel = { L: 1, M: 0, Q: 3, H: 2 };
+      var QRUtil = {
+        PATTERN_POSITION_TABLE: [
+          [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50], [6, 30, 54],
+          [6, 32, 58], [6, 34, 62], [6, 26, 46, 66], [6, 26, 48, 70], [6, 26, 50, 74], [6, 30, 54, 78], [6, 30, 56, 82], [6, 30, 58, 86],
+          [6, 34, 62, 90], [6, 28, 50, 72, 94], [6, 26, 50, 74, 98], [6, 30, 54, 78, 102], [6, 28, 54, 80, 106], [6, 32, 58, 84, 110],
+          [6, 30, 58, 86, 114], [6, 34, 62, 90, 118], [6, 26, 50, 74, 98, 122], [6, 30, 54, 78, 102, 126], [6, 26, 52, 78, 104, 130],
+          [6, 30, 56, 82, 108, 134], [6, 34, 60, 86, 112, 138], [6, 30, 58, 86, 114, 142], [6, 34, 62, 90, 118, 146], [6, 30, 54, 78, 102, 126, 150]
+        ],
+        G15: (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+        G18: (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+        G15_MASK: (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1),
+        getBCHTypeInfo: function(data) {
+          var d = data << 10;
+          while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15)));
+          return ((data << 10) | d) ^ QRUtil.G15_MASK;
+        },
+        getBCHTypeNumber: function(data) {
+          var d = data << 12;
+          while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18)));
+          return (data << 12) | d;
+        },
+        getBCHDigit: function(data) {
+          var digit = 0;
+          while (data != 0) { digit++; data >>>= 1; }
+          return digit;
+        },
+        getPatternPosition: function(typeNumber) { return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1]; },
+        getMaskFunction: function(maskPattern) {
+          switch (maskPattern) {
+            case 0: return function(i, j) { return (i + j) % 2 == 0; };
+            case 1: return function(i, j) { return i % 2 == 0; };
+            case 2: return function(i, j) { return j % 3 == 0; };
+            case 3: return function(i, j) { return (i + j) % 3 == 0; };
+            case 4: return function(i, j) { return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0; };
+            case 5: return function(i, j) { return (i * j) % 2 + (i * j) % 3 == 0; };
+            case 6: return function(i, j) { return ((i * j) % 2 + (i * j) % 3) % 2 == 0; };
+            case 7: return function(i, j) { return ((i * j) % 3 + (i + j) % 2) % 2 == 0; };
+            default: throw new Error("bad maskPattern:" + maskPattern);
+          }
+        },
+        getErrorCorrectPolynomial: function(errorCorrectLength) {
+          var a = new QRPolynomial([1], 0);
+          for (var i = 0; i < errorCorrectLength; i++) a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
+          return a;
+        },
+        getLengthInBits: function(mode, type) {
+          if (1 <= type && type < 10) {
+            switch (mode) { case 1: return 10; case 2: return 9; case 4: return 8; case 8: return 8; default: throw new Error("mode:" + mode); }
+          } else if (type < 27) {
+            switch (mode) { case 1: return 12; case 2: return 11; case 4: return 16; case 8: return 10; default: throw new Error("mode:" + mode); }
+          } else if (type < 41) {
+            switch (mode) { case 1: return 14; case 2: return 13; case 4: return 16; case 8: return 12; default: throw new Error("mode:" + mode); }
+          } else { throw new Error("type:" + type); }
+        },
+        getLostPoint: function(qrCode) {
+          var moduleCount = qrCode.getModuleCount();
+          var lostPoint = 0;
+          for (var row = 0; row < moduleCount; row++) {
+            for (var col = 0; col < moduleCount; col++) {
+              var sameCount = 0;
+              var dark = qrCode.isDark(row, col);
+              for (var r = -1; r <= 1; r++) {
+                if (row + r < 0 || moduleCount <= row + r) continue;
+                for (var c = -1; c <= 1; c++) {
+                  if (col + c < 0 || moduleCount <= col + c) continue;
+                  if (r == 0 && c == 0) continue;
+                  if (dark == qrCode.isDark(row + r, col + c)) sameCount++;
+                }
+              }
+              if (sameCount > 5) lostPoint += (3 + sameCount - 5);
+            }
+          }
+          return lostPoint;
+        }
+      };
+
+      var QRMath = {
+        glog: function(n) { if (n < 1) throw new Error("glog(" + n + ")"); return QRMath.LOG_TABLE[n]; },
+        gexp: function(n) { while (n < 0) n += 255; while (n >= 256) n -= 255; return QRMath.EXP_TABLE[n]; },
+        EXP_TABLE: new Array(256),
+        LOG_TABLE: new Array(256)
+      };
+      for (var i = 0; i < 8; i++) QRMath.EXP_TABLE[i] = 1 << i;
+      for (var i = 8; i < 256; i++) QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+      for (var i = 0; i < 255; i++) QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
+
+      function QRPolynomial(num, shift) {
+        if (num.length == undefined) throw new Error(num.length + "/" + shift);
+        var offset = 0;
+        while (offset < num.length && num[offset] == 0) offset++;
+        this.num = new Array(num.length - offset + shift);
+        for (var i = 0; i < num.length - offset; i++) this.num[i] = num[i + offset];
+      }
+      QRPolynomial.prototype = {
+        get: function(index) { return this.num[index]; },
+        getLength: function() { return this.num.length; },
+        multiply: function(e) {
+          var num = new Array(this.getLength() + e.getLength() - 1);
+          for (var i = 0; i < this.getLength(); i++) {
+            for (var j = 0; j < e.getLength(); j++) num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)));
+          }
+          return new QRPolynomial(num, 0);
+        },
+        mod: function(e) {
+          if (this.getLength() - e.getLength() < 0) return this;
+          var ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
+          var num = new Array(this.getLength());
+          for (var i = 0; i < this.getLength(); i++) num[i] = this.get(i);
+          for (var i = 0; i < e.getLength(); i++) num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio);
+          return new QRPolynomial(num, 0).mod(e);
+        }
+      };
+
+      function QRRSBlock(totalCount, dataCount) {
+        this.totalCount = totalCount;
+        this.dataCount = dataCount;
+      }
+      QRRSBlock.RS_BLOCK_TABLE = [
+        [1, 26, 19], [1, 26, 16], [1, 26, 13], [1, 26, 9],
+        [1, 44, 34], [1, 44, 28], [1, 44, 22], [1, 44, 16],
+        [1, 70, 55], [1, 70, 44], [2, 35, 17], [2, 35, 13],
+        [1, 100, 80], [2, 50, 32], [2, 50, 24], [4, 25, 9],
+        [1, 134, 108], [2, 67, 43], [2, 33, 15, 2, 34, 16], [2, 33, 11, 2, 34, 12],
+        [2, 86, 68], [4, 43, 27], [4, 43, 19], [4, 43, 15],
+        [2, 98, 78], [4, 49, 31], [2, 32, 14, 4, 33, 15], [4, 39, 13, 1, 40, 14],
+        [2, 121, 97], [2, 60, 38, 2, 61, 39], [4, 40, 18, 2, 41, 19], [4, 40, 14, 2, 41, 15],
+        [2, 146, 116], [3, 58, 36, 2, 59, 37], [4, 36, 16, 4, 37, 17], [4, 36, 12, 4, 37, 13],
+        [2, 86, 68, 2, 87, 69], [4, 69, 43, 1, 70, 44], [6, 43, 19, 2, 44, 20], [6, 43, 15, 2, 44, 16]
+      ];
+      QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectionLevel) {
+        var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectionLevel);
+        if (rsBlock == undefined) throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectionLevel:" + errorCorrectionLevel);
+        var length = rsBlock.length / 3;
+        var list = [];
+        for (var i = 0; i < length; i++) {
+          var count = rsBlock[i * 3 + 0];
+          var totalCount = rsBlock[i * 3 + 1];
+          var dataCount = rsBlock[i * 3 + 2];
+          for (var j = 0; j < count; j++) list.push(new QRRSBlock(totalCount, dataCount));
+        }
+        return list;
+      };
+      QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectionLevel) {
+        switch (errorCorrectionLevel) {
+          case QRErrorCorrectLevel.L: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+          case QRErrorCorrectLevel.M: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+          case QRErrorCorrectLevel.Q: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+          case QRErrorCorrectLevel.H: return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+          default: return undefined;
+        }
+      };
+
+      function QRBitBuffer() { this.buffer = []; this.length = 0; }
+      QRBitBuffer.prototype = {
+        get: function(index) { return ((this.buffer[Math.floor(index / 8)] >>> (7 - index % 8)) & 1) == 1; },
+        put: function(num, length) { for (var i = 0; i < length; i++) this.putBit(((num >>> (length - i - 1)) & 1) == 1); },
+        getLengthInBits: function() { return this.length; },
+        putBit: function(bit) {
+          var bufIndex = Math.floor(this.length / 8);
+          if (this.buffer.length <= bufIndex) this.buffer.push(0);
+          if (bit) this.buffer[bufIndex] |= (0x80 >>> (this.length % 8));
+          this.length++;
+        }
+      };
+
+      window.generatePureSVGQRCode = function(text) {
+        var qr = new QRCodeModel(0, QRErrorCorrectLevel.M);
+        qr.addData(text);
+        qr.make();
+        return qr.toSVG(1);
+      };
+    })(window);
+
+    // State management
+    let currentCompany = 'HOLDİNG';
+    
+    const profiles = {
+      ilker: {
+        name: 'İlker ATASOY',
+        title: 'Yönetim Kurulu Başkanı / CEO',
+        phone: '+90 542 897 34 46',
+        email: 'ilker.atasoy@yakingrup.net',
+        address: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
+        web: 'www.yakingrup.net'
+      },
+      eylul: {
+        name: 'Eylül YILMAZ',
+        title: 'Mimarlık & Tasarım Direktörü',
+        phone: '+90 212 555 01 01',
+        email: 'eylul.yilmaz@yakingrup.net',
+        address: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
+        web: 'www.yakingrup.net'
+      },
+      custom: {
+        name: 'Ad Soyad',
+        title: 'Unvan / Pozisyon',
+        phone: '+90 5XX XXX XX XX',
+        email: 'isim@yakingrup.net',
+        address: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
+        web: 'www.yakingrup.net'
+      }
+    };
+
+    function loadProfile(key) {
+      document.querySelectorAll('.profile-pill').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const data = profiles[key];
+      document.getElementById('inp-name').value = data.name;
+      document.getElementById('inp-title').value = data.title;
+      document.getElementById('inp-phone').value = data.phone;
+      document.getElementById('inp-email').value = data.email;
+      document.getElementById('inp-address').value = data.address;
+      document.getElementById('inp-web').value = data.web;
+
+      updateCardPreview();
+    }
+
+    function setCompany(compKey, element) {
+      document.querySelectorAll('.comp-pill').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      currentCompany = compKey;
+      document.getElementById('card-company-label').innerText = compKey;
+    }
+
+    function setViewMode(mode) {
+      document.querySelectorAll('.tool-btn').forEach(el => el.classList.remove('active'));
+      const frontBox = document.getElementById('front-card-container');
+      const backBox = document.getElementById('back-card-container');
+
+      if (mode === 'both') {
+        document.getElementById('btn-view-both').classList.add('active');
+        frontBox.style.display = 'flex';
+        backBox.style.display = 'flex';
+      } else if (mode === 'front') {
+        document.getElementById('btn-view-front').classList.add('active');
+        frontBox.style.display = 'flex';
+        backBox.style.display = 'none';
+      } else if (mode === 'back') {
+        document.getElementById('btn-view-back').classList.add('active');
+        frontBox.style.display = 'none';
+        backBox.style.display = 'flex';
+      }
+    }
+
+    function updateCardPreview() {
+      const name = document.getElementById('inp-name').value;
+      const title = document.getElementById('inp-title').value;
+      const phone = document.getElementById('inp-phone').value;
+      const email = document.getElementById('inp-email').value;
+      const address = document.getElementById('inp-address').value;
+      const web = document.getElementById('inp-web').value;
+      const qrTarget = document.getElementById('inp-qr-target').value;
+
+      document.getElementById('card-name').innerText = name || 'Ad Soyad';
+      document.getElementById('card-title').innerText = title || 'Unvan';
+      document.getElementById('card-phone').innerText = phone || '';
+      document.getElementById('card-email').innerText = email || '';
+      document.getElementById('card-address').innerText = address || '';
+      document.getElementById('card-web').innerText = web || '';
+
+      // Generate QR Code with standard vCard
+      generateQRCode(qrTarget, { name, title, phone, email, address, web });
+    }
+
+    function generateQRCode(type, data) {
+      let qrContent = '';
+      if (type === 'vcard') {
+        // Industry-Standard UTF-8 vCard 3.0 compatible with iOS & Android Cameras
+        qrContent = `BEGIN:VCARD\nVERSION:3.0\nN:${data.name};;;\nFN:${data.name}\nORG:Yakın Grup\nTITLE:${data.title}\nTEL;TYPE=CELL,VOICE:${data.phone.replace(/\\s+/g, '')}\nEMAIL;TYPE=WORK,INTERNET:${data.email}\nADR;TYPE=WORK:;;${data.address};;;;\nURL:https://${data.web}\nEND:VCARD`;
+      } else if (type === 'web') {
+        qrContent = `https://${data.web}`;
+      } else if (type === 'linkedin') {
+        qrContent = 'https://tr.linkedin.com/company/yakingrupnet';
+      }
+
+      try {
+        const svg = generatePureSVGQRCode(qrContent);
+        document.getElementById('card-qr-box').innerHTML = svg;
+      } catch (err) {
+        console.error('QR code generation error', err);
+      }
+    }
+
+    function downloadVCard() {
+      const name = document.getElementById('inp-name').value;
+      const title = document.getElementById('inp-title').value;
+      const phone = document.getElementById('inp-phone').value;
+      const email = document.getElementById('inp-email').value;
+      const address = document.getElementById('inp-address').value;
+      const web = document.getElementById('inp-web').value;
+
+      const vcardText = `BEGIN:VCARD\nVERSION:3.0\nN:${name};;;\nFN:${name}\nORG:Yakın Grup\nTITLE:${title}\nTEL;TYPE=CELL,VOICE:${phone.replace(/\\s+/g, '')}\nEMAIL;TYPE=WORK,INTERNET:${email}\nADR;TYPE=WORK:;;${address};;;;\nURL:https://${web}\nEND:VCARD`;
+
+      const blob = new Blob([vcardText], { type: 'text/vcard;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${name.replace(/\\s+/g, '_')}_YakinGrup.vcf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Initialize on load
+    updateCardPreview();
+  </script>
+</body>
+</html>
