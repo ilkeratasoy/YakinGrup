@@ -474,41 +474,41 @@
       vertical-align: middle;
     }
 
-    /* Person Info Middle: SOL BAŞTAN SIFIR HİZALI, ÜNVAN ÜSTTE / İSİM ALTA */
+    /* Person Info Middle: KARTVİZİTİN TAM ORTASINDA / MERKEZDE */
     .front-person {
       margin: auto 0;
       display: flex;
       flex-direction: column;
-      align-items: flex-start !important;
-      text-align: left !important;
-      gap: 3px;
-      width: 100%;
-    }
-
-    .front-title {
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--primary-green);
-      margin: 0;
-      padding: 0;
-      text-align: left !important;
-      line-height: 1.2;
-      display: block;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 4px;
       width: 100%;
     }
 
     .front-name {
       font-family: var(--font-heading);
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       line-height: 1.15;
       color: #0f172a;
       margin: 0;
       padding: 0;
-      text-align: left !important;
+      text-align: center !important;
+      display: block;
+      width: 100%;
+    }
+
+    .front-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-green);
+      margin: 0;
+      padding: 0;
+      text-align: center !important;
+      line-height: 1.25;
       display: block;
       width: 100%;
     }
@@ -834,9 +834,9 @@
           <span>İsim & Ünvan Yerleşimi</span>
         </div>
         <div class="company-select-grid">
-          <div class="comp-pill active" id="btn-order-name-first" onclick="setPersonOrder('name-first')">Ünvan Altta (İsim Üstte)</div>
+          <div class="comp-pill active" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">Ünvan Ortada (Merkezde)</div>
+          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first')">Ünvan Altta (İsim Üstte)</div>
           <div class="comp-pill" id="btn-order-title-top" onclick="setPersonOrder('title-top')">Ünvan Üstte (İsim Altta)</div>
-          <div class="comp-pill" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">Ünvan Ortada (Merkezli)</div>
         </div>
       </div>
 
@@ -1513,7 +1513,7 @@
       document.getElementById('card-company-label').innerText = compKey;
     }
 
-    let currentPersonOrder = 'name-first';
+    let currentPersonOrder = 'title-middle';
     function setPersonOrder(order) {
       currentPersonOrder = order;
       const personBox = document.getElementById('card-person-box');
@@ -1565,7 +1565,7 @@
         titleEl.style.textAlign = 'center';
         titleEl.style.color = 'var(--primary-green)';
         titleEl.style.textTransform = 'uppercase';
-        titleEl.style.fontSize = '0.76rem';
+        titleEl.style.fontSize = '0.78rem';
         titleEl.style.letterSpacing = '0.1em';
         titleEl.style.fontWeight = '700';
         personBox.appendChild(nameEl);
