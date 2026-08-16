@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yakın Grup | Yönlendiriliyor...</title>
+  <script>
+    // GitHub Pages Smart SPA Route Resolver
+    (function() {
+      var path = window.location.pathname.toLowerCase();
+      var search = window.location.search;
+
+      if (path.indexOf('vcard-ilker') !== -1) {
+        window.location.replace('/vcard.html?id=ilker');
+      } else if (path.indexOf('vcard-eylul') !== -1) {
+        window.location.replace('/vcard.html?id=eylul');
+      } else if (path.indexOf('vcard') !== -1) {
+        window.location.replace('/vcard.html' + (search || '?id=ilker'));
+      } else if (path.indexOf('kartvizit') !== -1) {
+        window.location.replace('/kartvizit.html' + search);
+      } else {
+        window.location.replace('/' + search);
+      }
+    })();
+  </script>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding: 50px; background: #091308; color: #ffffff;">
+  <h2>Yakın Grup</h2>
+  <p>Yönlendiriliyorsunuz... <a href="/" style="color: #78be5e;">Ana Sayfaya Git</a></p>
+</body>
+</html>
