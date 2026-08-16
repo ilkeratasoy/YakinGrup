@@ -566,6 +566,9 @@
         <div class="panel-title">5. Görsel Modüller ve Tasarım Opsiyonları</div>
         
         <div class="toggles-grid">
+          <label class="toggle-label" style="grid-column: 1 / -1; background: rgba(61, 110, 48, 0.08); border-color: rgba(61, 110, 48, 0.3); font-weight: 700; color: #1e3a17;">
+            <input type="checkbox" id="chk-person-photo" checked onchange="updateSignaturePreview()"> 📸 Kişi Fotoğrafı / Portre Avatar (Opsiyonel)
+          </label>
           <label class="toggle-label">
             <input type="checkbox" id="chk-header-img" checked onchange="updateSignaturePreview()"> Üst Bina Görseli
           </label>
@@ -765,10 +768,14 @@
       const showSocialBar = document.getElementById('chk-social-bar').checked;
       const showVcardBtn = document.getElementById('chk-vcard-btn').checked;
       const showIsoBadge = document.getElementById('chk-iso-badge').checked;
+      const showPersonPhoto = document.getElementById('chk-person-photo').checked;
 
       const isEn = currentLang === 'en';
       const isEylul = name.toLowerCase().includes('eyl');
       const vcardProfileId = isEylul ? 'eylul' : 'ilker';
+      const personPhotoUrl = isEylul 
+        ? 'https://www.yakingrup.net/assets/images/eylul_yilmaz_portrait.jpg'
+        : 'https://www.yakingrup.net/assets/images/ilker_atasoy_portrait.jpg';
 
       let sectorSubtitle = 'İNŞAAT &bull; ENERJİ &bull; CAPİTAL &bull; TEKNOLOJİ';
       if (isEn) sectorSubtitle = 'CONSTRUCTION &bull; ENERGY &bull; CAPITAL &bull; TECH';
@@ -827,6 +834,28 @@
           </div>
           <div style="font-size: 16.5px; font-weight: 800; color: #0f172a; letter-spacing: -0.01em; margin-top: 2px;">
             ${name}
+          </div>
+        `;
+      }
+
+      let personHeaderWithPhotoHTML = '';
+      if (showPersonPhoto) {
+        personHeaderWithPhotoHTML = `
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 8px;">
+            <tr>
+              <td style="vertical-align: middle; padding-right: 12px;">
+                <img src="${personPhotoUrl}" alt="${name}" width="48" height="48" style="display: block; border-radius: 50%; width: 48px; height: 48px; border: 2px solid #3d6e30; object-fit: cover;">
+              </td>
+              <td style="vertical-align: middle; text-align: ${textAlign};">
+                ${personBlockHTML}
+              </td>
+            </tr>
+          </table>
+        `;
+      } else {
+        personHeaderWithPhotoHTML = `
+          <div style="margin-bottom: 8px; text-align: ${textAlign};">
+            ${personBlockHTML}
           </div>
         `;
       }
@@ -894,23 +923,23 @@
             </div>` : ''}
           </td>
 
-          <!-- ORTA: KİŞİ BİLGİSİ (DİNAMİK POZİSYONLAMA) -->
+          <!-- ORTA: KİŞİ BİLGİSİ (DİNAMİK FOTOĞRAF VE POZİSYONLAMA) -->
           <td width="35%" style="vertical-align: top; padding: 0 16px; text-align: ${textAlign};">
             <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="text-align: ${textAlign};">
               <tr>
-                <td style="padding-bottom: 10px; text-align: ${textAlign};">
-                  ${personBlockHTML}
+                <td style="padding-bottom: 6px; text-align: ${textAlign};">
+                  ${personHeaderWithPhotoHTML}
                 </td>
               </tr>
               <tr>
-                <td style="padding: 4px 0; font-size: 11px; text-align: ${textAlign};">
+                <td style="padding: 3px 0; font-size: 11px; text-align: ${textAlign};">
                   <a href="tel:${phone.replace(/\\s+/g, '')}" style="color: #334155; text-decoration: none; font-weight: 600;">
                     <span style="color: #3d6e30; font-weight: bold; margin-right: 3px;">📞</span> ${phone}
                   </a>
                 </td>
               </tr>
               <tr>
-                <td style="padding: 4px 0; font-size: 11px; text-align: ${textAlign};">
+                <td style="padding: 3px 0; font-size: 11px; text-align: ${textAlign};">
                   <a href="mailto:${email}" style="color: #334155; text-decoration: none; font-weight: 600;">
                     <span style="color: #3d6e30; font-weight: bold; margin-right: 3px;">✉️</span> ${email}
                   </a>
