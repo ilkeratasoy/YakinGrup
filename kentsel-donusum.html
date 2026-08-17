@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yakın Grup — Kentsel Dönüşüm Proje Karar Motoru & Teklif Platformu (2026)</title>
+  <meta name="description" content="Kentsel dönüşümde otomatik fizibilite, 2026 Yarısı Bizden (1.875.000 TL) ve Dünya Bankası İADŞP (3.000.000 TL %0,69) destekli finansman optimizasyonu ve karar motoru.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
+  <link rel="stylesheet" href="assets/css/kentsel-donusum.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER
+       ========================================================================== -->
+  <header class="engine-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-section" title="Yakın Grup Ana Sayfası">
+        <div class="brand-logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>YAKIN GRUP <span class="badge-year">2026 Mevzuat Motoru</span></h1>
+          <div class="brand-tagline">Kentsel Dönüşüm Otomatik Fizibilite, Finansman Optimizasyonu & Teklif Platformu</div>
+        </div>
+      </a>
+
+      <div class="header-center-pill">
+        <span class="pulse-dot"></span>
+        <span><strong>6306 Salt Çoğunluk</strong> • Yarısı Bizden <strong>1.875.000 TL</strong> • İADŞP <strong>3.000.000 TL %0,69</strong></span>
+      </div>
+
+      <div class="header-actions">
+        <a href="marketplace.html" class="btn btn-outline-light btn-sm" title="Marketplace">🏛️ Projeler</a>
+        <a href="teklif.html" class="btn btn-outline-light btn-sm" title="Şartname Stüdyosu">📑 Şartname Stüdyosu</a>
+        <button class="btn btn-gold btn-sm" onclick="window.print()" title="Yazdır / PDF Olarak Kaydet">
+          🖨️ PDF / Teklif Al
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       STEPPER WIZARD NAVIGATION (4 STAGES)
+       ========================================================================== -->
+  <nav class="stepper-nav no-print">
+    <div class="stepper-inner">
+      <div class="step-tab active" id="tab-step-1" onclick="switchStage(1)">
+        <div class="step-number">1</div>
+        <div class="step-info">
+          <div class="step-title">① Proje & İmar Girişi</div>
+          <div class="step-subtitle">Taşınmaz, Ada/Parsel & KAKS/TAKS</div>
+        </div>
+      </div>
+      <div class="step-tab" id="tab-step-2" onclick="switchStage(2)">
+        <div class="step-number">2</div>
+        <div class="step-info">
+          <div class="step-title">② Mimari & 2026 Maliyet</div>
+          <div class="step-subtitle">3 Senaryo & 8 Kalem Detaylı Maliyet</div>
+        </div>
+      </div>
+      <div class="step-tab" id="tab-step-3" onclick="switchStage(3)">
+        <div class="step-number">3</div>
+        <div class="step-info">
+          <div class="step-title">③ Finansman & Karar Motoru</div>
+          <div class="step-subtitle">4 Model, Hakediş & AL/ALMA Kararı</div>
+        </div>
+      </div>
+      <div class="step-tab" id="tab-step-4" onclick="switchStage(4)">
+        <div class="step-number">4</div>
+        <div class="step-info">
+          <div class="step-title">④ Malik Tablosu & Resmi Teklif</div>
+          <div class="step-subtitle">Bireysel Malik Bilançosu & Teklif Dosyası</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       MAIN APPLICATION CONTAINER
+       ========================================================================== -->
+  <main class="app-container">
+
+    <!-- PRESET SELECTION BAR -->
+    <div class="preset-bar no-print">
+      <div class="preset-title">
+        <span class="badge">HIZLI ŞABLONLAR</span>
+        <span>Gerçek Örnek Projeleri Yükleyin:</span>
+      </div>
+      <div class="preset-buttons">
+        <button class="btn-preset" onclick="loadPresetData('kadikoy')">🏢 Kadıköy (20 Daire • Yarısı Bizden)</button>
+        <button class="btn-preset" onclick="loadPresetData('besiktas')">💎 Beşiktaş (8 Daire • Butik Lüks)</button>
+        <button class="btn-preset" onclick="loadPresetData('karsiyaka')">🌊 İzmir Karşıyaka (Dünya Bankası İADŞP)</button>
+        <button class="btn-preset" onclick="loadPresetData('izmit')">🏗️ Kocaeli İzmit (Konut + Ticaret Karma)</button>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         STAGE 1: PROJE & İMAR GİRİŞ EKRANI
+         ========================================================================== -->
+    <section class="stage-view active" id="stage1">
+      <div class="layout-2col">
+        
+        <!-- A. Taşınmaz Bilgileri -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>A. Taşınmaz & Mevcut Bina Verileri</span>
+            </div>
+            <span class="card-badge gold">6306 Sayılı Kanun Kapsamı</span>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="inp-city">İl <span class="helper-tag">Destek kontrolü</span></label>
+              <select id="inp-city" class="form-select" onchange="handleInputChange('city', this.value)">
+                <option value="İstanbul">İstanbul (Yarısı Bizden + İADŞP)</option>
+                <option value="İzmir">İzmir (İADŞP Pilot İl)</option>
+                <option value="Kocaeli">Kocaeli (İADŞP Pilot İl)</option>
+                <option value="Sakarya">Sakarya (İADŞP Pilot İl)</option>
+                <option value="Manisa">Manisa (İADŞP Pilot İl)</option>
+                <option value="Tekirdağ">Tekirdağ (İADŞP Pilot İl)</option>
+                <option value="Kahramanmaraş">Kahramanmaraş (İADŞP Pilot İl)</option>
+                <option value="Ankara">Ankara (Genel Mevzuat)</option>
+                <option value="Bursa">Bursa (Genel Mevzuat)</option>
+                <option value="Antalya">Antalya (Genel Mevzuat)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-district">İlçe</label>
+              <input type="text" id="inp-district" class="form-input" value="Kadıköy" oninput="handleInputChange('district', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-neighborhood">Mahalle</label>
+              <input type="text" id="inp-neighborhood" class="form-input" value="Fenerbahçe / Caddebostan" oninput="handleInputChange('neighborhood', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Ada / Parsel</label>
+              <div style="display: flex; gap: 6px;">
+                <input type="text" id="inp-ada" class="form-input" placeholder="Ada" value="1248" oninput="handleInputChange('ada', this.value)">
+                <input type="text" id="inp-parsel" class="form-input" placeholder="Parsel" value="14" oninput="handleInputChange('parsel', this.value)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-landArea">Arsa Alanı <span class="helper-tag">Tapu m²</span></label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-landArea" class="form-input" value="850" oninput="handleInputChange('landArea', this.value)">
+                <span class="suffix-text">m²</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-unitCount">Mevcut Daire Sayısı</label>
+              <input type="number" id="inp-unitCount" class="form-input" value="20" oninput="handleInputChange('unitCount', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-shopCount">Mevcut Dükkan / Ticari</label>
+              <input type="number" id="inp-shopCount" class="form-input" value="0" oninput="handleInputChange('shopCount', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-existingAvgNet">Mevcut Daire Ort. Net m²</label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-existingAvgNet" class="form-input" value="95" oninput="handleInputChange('existingUnitAvgNet', this.value)">
+                <span class="suffix-text">m²</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-existingPriceM2">Mevcut m² Satış Değeri</label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-existingPriceM2" class="form-input" value="85000" oninput="handleInputChange('existingUnitPriceM2', this.value)">
+                <span class="suffix-text">TL/m²</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-existingRent">Mevcut Ortalama Kira</label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-existingRent" class="form-input" value="35000" oninput="handleInputChange('existingRentMonthly', this.value)">
+                <span class="suffix-text">TL/ay</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-ownerCount">Malik Sayısı</label>
+              <input type="number" id="inp-ownerCount" class="form-input" value="20" oninput="handleInputChange('ownerCount', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-majorityPct">Malik Karar Oranı (Salt Çoğunluk)</label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-majorityPct" class="form-input" value="75" min="50" max="100" oninput="handleInputChange('majorityPct', this.value)">
+                <span class="suffix-text">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- B. İmar & Hedef Proje Verileri -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span>B. İmar Parametreleri & Üretilebilir Alan Motoru</span>
+            </div>
+            <span class="card-badge green">Otomatik Hesaplama</span>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="inp-kaks">Emsal / KAKS <span class="helper-tag">Emsale esas çarpan</span></label>
+              <input type="number" step="0.05" id="inp-kaks" class="form-input" value="2.05" oninput="handleInputChange('kaks', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-taks">TAKS <span class="helper-tag">Taban Alanı Katsayısı</span></label>
+              <input type="number" step="0.05" id="inp-taks" class="form-input" value="0.35" oninput="handleInputChange('taks', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-hmax">Hmax / Kat Adedi</label>
+              <input type="text" id="inp-hmax" class="form-input" value="Z+8 Kat" oninput="handleInputChange('hmax', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-usage">Fonksiyon / Kullanım</label>
+              <select id="inp-usage" class="form-select" onchange="handleInputChange('usageType', this.value)">
+                <option value="Konut">Konut</option>
+                <option value="Karma (Konut + Ticaret)">Karma (Konut + Ticaret)</option>
+                <option value="Ticari">Ticari / Ofis</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-newPriceM2">Yeni Bina Hedef m² Satış Değeri</label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-newPriceM2" class="form-input" value="145000" oninput="handleInputChange('newUnitPriceM2', this.value)">
+                <span class="suffix-text">TL/m²</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-newRent">Yeni Daire Hedef Aylık Kira</label>
+              <div class="input-suffix-group">
+                <input type="number" id="inp-newRent" class="form-input" value="60000" oninput="handleInputChange('newRentMonthly', this.value)">
+                <span class="suffix-text">TL/ay</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-soil">Zemin Durumu / Sınıfı</label>
+              <select id="inp-soil" class="form-select" onchange="handleInputChange('soilCategory', this.value)">
+                <option value="ZF (Orta Sağlam Zemin)">ZF (Orta Sağlam Zemin)</option>
+                <option value="ZE (Sağlam Kayalık)">ZE (Sağlam Kayalık)</option>
+                <option value="ZD (Alüvyon Zemin / İyileştirme)">ZD (Alüvyon Zemin / İyileştirme)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inp-titleStatus">Tapu / Mülkiyet Durumu</label>
+              <select id="inp-titleStatus" class="form-select" onchange="handleInputChange('titleStatus', this.value)">
+                <option value="Kat Mülkiyeti">Kat Mülkiyeti (Sorunsuz)</option>
+                <option value="Kat İrtifakı">Kat İrtifakı</option>
+                <option value="Hisseli Arsa Tapusu">Hisseli Arsa Tapusu</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Canlı İmar Özeti Kutusu -->
+          <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-top: 1.25rem;">
+            <div style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--brand-primary);">📐 ANLIK İMAR & ÜRETİLEBİLİR ALAN ANALİZİ</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.75rem;">
+              <div>Taban Alanı: <strong id="lbl-quick-taban">-</strong></div>
+              <div>Emsal Alanı: <strong id="lbl-quick-emsal">-</strong></div>
+              <div>Emsal Dışı (+%30): <strong id="lbl-quick-emsaldisi">-</strong></div>
+              <div>Otopark/Sığınak: <strong id="lbl-quick-bodrum">-</strong></div>
+              <div>Toplam Yapı Alanı: <strong id="lbl-quick-toplaminsaat" style="color: var(--brand-primary);">-</strong></div>
+              <div>Satılabilir Brüt: <strong id="lbl-quick-satilabilir" style="color: var(--brand-accent-hover);">-</strong></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Stage 1 İlerleme Butonu -->
+      <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+        <button class="btn btn-primary btn-lg" onclick="switchStage(2)">
+          Otomatik Mimari & 2026 Maliyet Fizibilitesine İlerle ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STAGE 2: OTOMATİK MİMARİ SENARYOLAR & 2026 MALİYET MOTORU
+         ========================================================================== -->
+    <section class="stage-view" id="stage2">
+      
+      <!-- 3 Alternatif Mimari Senaryo -->
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+          <div class="card-header-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <span>3 Alternatif Mimari Proje Senaryosu</span>
+          </div>
+          <span class="card-badge gold">Optimum Proje Seçimi</span>
+        </div>
+
+        <div class="scenario-selector">
+          <!-- Senaryo A -->
+          <div class="scenario-card" id="card-sc-A" onclick="selectScenario('A')">
+            <div class="scenario-header">
+              <div class="scenario-icon">⚖️</div>
+              <div class="scenario-title">SENARYO A — Hak Koruyan</div>
+            </div>
+            <div class="scenario-desc">Maliklerin mevcut daire net m² haklarını birebir koruyan, dengeli kat paylaşım modeli.</div>
+            <div class="scenario-stats">
+              <div class="stat-item"><span class="label">Toplam Daire:</span><span class="val" id="scA-units">-</span></div>
+              <div class="stat-item"><span class="label">Ort. Net m²:</span><span class="val" id="scA-net">-</span></div>
+              <div class="stat-item"><span class="label">Müteahhit Daire:</span><span class="val" id="scA-cont">-</span></div>
+              <div class="stat-item"><span class="label">Toplam Değer:</span><span class="val" id="scA-val">-</span></div>
+            </div>
+          </div>
+
+          <!-- Senaryo B -->
+          <div class="scenario-card active" id="card-sc-B" onclick="selectScenario('B')">
+            <div class="scenario-header">
+              <div class="scenario-icon">⚡</div>
+              <div class="scenario-title">SENARYO B — Maksimum Ekonomik</div>
+            </div>
+            <div class="scenario-desc">Kompakt 2+1/3+1 daire miksi ile maksimum satılabilir alan ve en yüksek proje kârlılığı.</div>
+            <div class="scenario-stats">
+              <div class="stat-item"><span class="label">Toplam Daire:</span><span class="val" id="scB-units">-</span></div>
+              <div class="stat-item"><span class="label">Ort. Net m²:</span><span class="val" id="scB-net">-</span></div>
+              <div class="stat-item"><span class="label">Müteahhit Daire:</span><span class="val" id="scB-cont">-</span></div>
+              <div class="stat-item"><span class="label">Toplam Değer:</span><span class="val" id="scB-val">-</span></div>
+            </div>
+          </div>
+
+          <!-- Senaryo C -->
+          <div class="scenario-card" id="card-sc-C" onclick="selectScenario('C')">
+            <div class="scenario-header">
+              <div class="scenario-icon">👑</div>
+              <div class="scenario-title">SENARYO C — Premium Lüks</div>
+            </div>
+            <div class="scenario-desc">Geniş daireler, akıllı ev altyapısı, lüks cephe ve yüksek marka/şerefiye satış primi.</div>
+            <div class="scenario-stats">
+              <div class="stat-item"><span class="label">Toplam Daire:</span><span class="val" id="scC-units">-</span></div>
+              <div class="stat-item"><span class="label">Ort. Net m²:</span><span class="val" id="scC-net">-</span></div>
+              <div class="stat-item"><span class="label">Müteahhit Daire:</span><span class="val" id="scC-cont">-</span></div>
+              <div class="stat-item"><span class="label">Toplam Değer:</span><span class="val" id="scC-val">-</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2026 Detaylı Maliyet Motoru -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span>2026 Detaylı İnşaat & Proje Maliyet Motoru</span>
+          </div>
+          <span class="card-badge green">Bakanlık 3 Şubat 2026 Tebliği + Piyasa Benchmark</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Maliyet Kalemi</th>
+                <th>Kapsam & Açıklama</th>
+                <th>Birim Fiyat (TL/m²)</th>
+                <th>Toplam Tutar</th>
+                <th>Maliyet Payı (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>A. Yıkım & Hafriyat</strong></td>
+                <td>Riskli bina bertarafı, kontrollü yıkım, hafriyat, moloz nakliyesi ve döküm harçları</td>
+                <td id="cost-u-demo">-</td>
+                <td id="cost-t-demo"><strong>-</strong></td>
+                <td id="cost-p-demo">-</td>
+              </tr>
+              <tr>
+                <td><strong>B. Proje, Ruhsat & Harçlar</strong></td>
+                <td>Mimari, statik, MEP, zemin etüdü, yapı denetim (6306 harç muafiyeti dahil)</td>
+                <td id="cost-u-permits">-</td>
+                <td id="cost-t-permits"><strong>-</strong></td>
+                <td id="cost-p-permits">-</td>
+              </tr>
+              <tr>
+                <td><strong>C. Kaba İnşaat</strong></td>
+                <td>Hafriyat iksa, C35/40 hazır beton, nervürlü inşaat demiri, endüstriyel kalıp, çatı</td>
+                <td id="cost-u-rough">-</td>
+                <td id="cost-t-rough"><strong>-</strong></td>
+                <td id="cost-p-rough">-</td>
+              </tr>
+              <tr>
+                <td><strong>D. İnce İşler</strong></td>
+                <td>Şap, sıva, alçı/boya, granit/seramik, lamine parke, mutfak/banyo dolapları, cephe mantolama</td>
+                <td id="cost-u-finishing">-</td>
+                <td id="cost-t-finishing"><strong>-</strong></td>
+                <td id="cost-p-finishing">-</td>
+              </tr>
+              <tr>
+                <td><strong>E. Mekanik Tesisat</strong></td>
+                <td>Yerden ısıtma, pay ölçer, sıhhi tesisat, yangın sprinkler, hidrofor, doğalgaz altyapısı</td>
+                <td id="cost-u-mep">-</td>
+                <td id="cost-t-mep"><strong>-</strong></td>
+                <td id="cost-p-mep">-</td>
+              </tr>
+              <tr>
+                <td><strong>F. Elektrik & Akıllı Altyapı</strong></td>
+                <td>Kuvvetli/zayıf akım, yangın algılama, jeneratör, görüntülü interkom, otopark EV şarj</td>
+                <td id="cost-u-elec">-</td>
+                <td id="cost-t-elec"><strong>-</strong></td>
+                <td id="cost-p-elec">-</td>
+              </tr>
+              <tr>
+                <td><strong>G. Dış İşler & Altyapı</strong></td>
+                <td>Bahçe peyzajı, çevre aydınlatma, istinat duvarları, parsel içi altyapı bağlantıları</td>
+                <td id="cost-u-land">-</td>
+                <td id="cost-t-land"><strong>-</strong></td>
+                <td id="cost-p-land">-</td>
+              </tr>
+              <tr>
+                <td><strong>H. Genel Gider + Finansman + Risk</strong></td>
+                <td>Şantiye genel gideri (%8), Finansman/fiyat artış payı (%4), Beklenmeyen gider (%5)</td>
+                <td id="cost-u-overhead">-</td>
+                <td id="cost-t-overhead"><strong>-</strong></td>
+                <td id="cost-p-overhead">-</td>
+              </tr>
+              <tr class="total-row">
+                <td colspan="2"><strong>TOPLAM PROJE MALİYETİ (Tüm Kalemler Dahil)</strong></td>
+                <td id="cost-u-total"><strong>-</strong></td>
+                <td id="cost-t-total" style="color: var(--brand-primary); font-size: 1rem;"><strong>-</strong></td>
+                <td><strong>%100.0</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+        <button class="btn btn-outline" onclick="switchStage(1)">⬅ Geri: Proje Girişi</button>
+        <button class="btn btn-primary btn-lg" onclick="switchStage(3)">
+          Finansman Modelleri & AL/ALMA Karar Motoruna İlerle ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STAGE 3: FİNANSMAN MODELLERİ, HAKEDİŞ & AL/ALMA KARAR MOTORU
+         ========================================================================== -->
+    <section class="stage-view" id="stage3">
+      
+      <!-- BÜYÜK KARAR BANNERI (AL / MÜZAKERE ET / ALMA) -->
+      <div class="decision-banner" id="main-decision-banner">
+        <div class="decision-status-box">
+          <div class="decision-pill-icon" id="dec-icon">🟢</div>
+          <div>
+            <div class="decision-verdict" id="dec-text">PROJEYİ AL</div>
+            <div class="decision-subtext" id="dec-rationale">Yükleniyor...</div>
+          </div>
+        </div>
+
+        <div class="risk-meter-box">
+          <div class="risk-meter-score" id="risk-score-val">82</div>
+          <div class="risk-meter-label" id="risk-score-label">DÜŞÜK RİSK / 100</div>
+        </div>
+      </div>
+
+      <!-- 4 FİNANSMAN MODELİ KARŞILAŞTIRMA MATRİSİ -->
+      <div style="margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+          <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800;">4 Alternatif Finansman Modeli Karşılaştırması</h3>
+          <span style="font-size: 0.76rem; color: var(--text-muted);">Platform tarafından otomatik analiz edilen modeller:</span>
+        </div>
+
+        <div class="finance-comparison-grid">
+          <!-- MODEL 1: Kat Karşılığı -->
+          <div class="model-card" id="card-m1">
+            <div>
+              <div class="model-header">
+                <h4>Model 1: Kat Karşılığı</h4>
+                <p>Risk Düzeltilmiş Arsa Payı</p>
+              </div>
+              <ul class="model-metrics-list">
+                <li><span class="name">Malik Nakit Ödeme:</span><span class="value" style="color: var(--status-success);">0 TL (Nakit Çıkmaz)</span></li>
+                <li><span class="name">Müteahhit Payı:</span><span class="value" id="m1-cont-share">-</span></li>
+                <li><span class="name">Müteahhit Kârı:</span><span class="value" id="m1-cont-profit">-</span></li>
+                <li class="highlight-net"><span class="name">Müteahhit ROI:</span><span class="value" id="m1-cont-roi" style="color: var(--brand-primary);">-</span></li>
+              </ul>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
+              Müteahhit finansman ve 24 aylık piyasa riskini üstlenir; maliyet bağımsız bölüm payı ile karşılanır.
+            </div>
+          </div>
+
+          <!-- MODEL 2: Yarısı Bizden -->
+          <div class="model-card recommended" id="card-m2">
+            <div class="model-ribbon">⭐ ÖNERİLEN MODEL</div>
+            <div>
+              <div class="model-header">
+                <h4>Model 2: Yarısı Bizden</h4>
+                <p>1.875.000 TL Hibe + Kredi + Tahliye</p>
+              </div>
+              <ul class="model-metrics-list">
+                <li><span class="name">Toplam Destek:</span><span class="value" id="m2-support-total" style="color: var(--brand-accent-hover);">-</span></li>
+                <li><span class="name">Daire Başı Destek:</span><span class="value">1.875.000 TL</span></li>
+                <li><span class="name">Daire Başı Kalan Pay:</span><span class="value" id="m2-owner-pay">-</span></li>
+                <li class="highlight-net"><span class="name">Müteahhit Nakit Akışı:</span><span class="value" style="color: var(--status-success);">Hakediş Güvenceli</span></li>
+              </ul>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
+              İstanbul için geçerlidir. Hibe/kredi ödemeleri müteahhide 4 aşamalı hakedişle aktarılır.
+            </div>
+          </div>
+
+          <!-- MODEL 3: İADŞP (Dünya Bankası Kredisi) -->
+          <div class="model-card" id="card-m3">
+            <div>
+              <div class="model-header">
+                <h4>Model 3: Dünya Bankası İADŞP</h4>
+                <p>3.000.000 TL • %0,69 Faiz • 180 Ay</p>
+              </div>
+              <ul class="model-metrics-list">
+                <li><span class="name">Kredi Kapasitesi:</span><span class="value" id="m3-cap">-</span></li>
+                <li><span class="name">Aylık Faiz Oranı:</span><span class="value">Aylık %0,69</span></li>
+                <li><span class="name">Ödemesiz Dönem:</span><span class="value">İlk 12 Ay</span></li>
+                <li class="highlight-net"><span class="name">Tahmini Aylık Taksit:</span><span class="value" id="m3-installment">-</span></li>
+              </ul>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
+              7 pilot ilde geçerli, 15 yıl vadeli avantajlı kentsel dönüşüm kredisi modelidir.
+            </div>
+          </div>
+
+          <!-- MODEL 4: Özkaynak + Taahhüt -->
+          <div class="model-card" id="card-m4">
+            <div>
+              <div class="model-header">
+                <h4>Model 4: Özkaynak / Malik</h4>
+                <p>Klasik İnşaat Taahhüt Modeli</p>
+              </div>
+              <ul class="model-metrics-list">
+                <li><span class="name">Daire Başı Nakit:</span><span class="value" id="m4-owner-pay">-</span></li>
+                <li><span class="name">Müteahhit Payı:</span><span class="value">%0 (Tümü Maliklerin)</span></li>
+                <li><span class="name">Müteahhit Taahhüt Kârı:</span><span class="value" id="m4-profit">%15.0</span></li>
+                <li class="highlight-net"><span class="name">Finansman Riski:</span><span class="value">Maliklerde</span></li>
+              </ul>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
+              Tüm finansmanı malikler karşılar, müteahhit saf inşaat yapım taahhüt kârı alır.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- YARISI BİZDEN 4 AŞAMALI HAKEDİŞ NAKİT AKIŞI -->
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+          <div class="card-header-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Yarısı Bizden Hakediş & Müteahhit Nakit Akış Planı (%30 - %30 - %30 - %10)</span>
+          </div>
+          <span class="card-badge green">Bakanlık Şantiye Hakediş Sistemi</span>
+        </div>
+
+        <div class="timeline-stepper">
+          <div class="timeline-step">
+            <span class="pct-tag">%30 Hakediş</span>
+            <h5>1. Aşama: İş Başlangıcı & Ruhsat</h5>
+            <div class="amount" id="ybd-flow-1">-</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Ruhsat alımı ve şantiye mobilizasyonu ile yüklenici hesabına aktarılır.</div>
+          </div>
+          <div class="timeline-step">
+            <span class="pct-tag">%30 Hakediş</span>
+            <h5>2. Aşama: Taşıyıcı Karkas Sistem</h5>
+            <div class="amount" id="ybd-flow-2">-</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Betonarme taşıyıcı sistem ve çatı imalatlarının tamamlanması.</div>
+          </div>
+          <div class="timeline-step">
+            <span class="pct-tag">%30 Hakediş</span>
+            <h5>3. Aşama: Sıva & Dış Cephe & MEP</h5>
+            <div class="amount" id="ybd-flow-3">-</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">İç sıva, mekanik tesisat ve dış cephe kaplamasının bitimi.</div>
+          </div>
+          <div class="timeline-step">
+            <span class="pct-tag">%10 Hakediş</span>
+            <h5>4. Aşama: İskan & Teslim</h5>
+            <div class="amount" id="ybd-flow-4">-</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">Yapı kullanım izin belgesi (İskan) ve anahtar teslim aşaması.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 BOYUTLU RİSK SKORU & SÜRE ANALİZİ -->
+      <div class="layout-2col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>7 Boyutlu Proje Risk Matrisi</span>
+            </div>
+            <span class="card-badge gold">100 Puan Üzerinden</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.78rem;">
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>Hukuki Risk (Tapu / Hisseler):</span><strong id="rk-legal">20 / 20</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill green" style="width: 100%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>İmar & Terk Riski (KAKS / Hmax):</span><strong id="rk-zoning">19 / 20</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill green" style="width: 95%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>Finansman Destek Riski:</span><strong id="rk-fin">15 / 15</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill gold" style="width: 100%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>Malik Karar & Salt Çoğunluk (%50+1):</span><strong id="rk-maj">15 / 15</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill green" style="width: 100%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>Maliyet & Zemin Riski:</span><strong id="rk-cost">8 / 10</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill blue" style="width: 80%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>Bölgesel Satış & Talep Riski:</span><strong id="rk-sales">10 / 10</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill green" style="width: 100%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;"><span>Süre & Ruhsat Onay Riski:</span><strong id="rk-time">10 / 10</strong></div>
+              <div class="progress-bar-container"><div class="progress-bar-fill green" style="width: 100%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>İnşaat Süresi & Kira / Değer Artış Motoru</span>
+            </div>
+            <span class="card-badge green">Senaryo Analizi</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1rem; text-align: center;">
+            <div style="background: var(--bg-subtle); padding: 8px; border-radius: var(--radius-md);">
+              <div style="font-size: 0.68rem; color: var(--text-muted);">İyimser Süre</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: var(--status-success);">18 Ay</div>
+            </div>
+            <div style="background: #ecfdf5; border: 1px solid var(--status-success); padding: 8px; border-radius: var(--radius-md);">
+              <div style="font-size: 0.68rem; color: var(--brand-primary);">Baz Süre (Hedef)</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: var(--brand-primary);" id="lbl-target-months">22 Ay</div>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 8px; border-radius: var(--radius-md);">
+              <div style="font-size: 0.68rem; color: var(--text-muted);">Kötümser Süre</div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: var(--status-warning);">28 Ay</div>
+            </div>
+          </div>
+
+          <ul class="model-metrics-list">
+            <li><span>Arsa Bugünkü Ekonomik Değeri:</span><strong id="lbl-land-val">-</strong></li>
+            <li><span>Dönüşüm Sonrası Toplam Proje Değeri:</span><strong id="lbl-proj-val" style="color: var(--brand-primary);">-</strong></li>
+            <li><span>Yaratılan Brüt Katma Değer:</span><strong id="lbl-added-val" style="color: var(--status-success);">-</strong></li>
+            <li><span>Bölgesel Brüt Kira Getirisi (Yıllık Verim):</span><strong id="lbl-rental-yield">-</strong></li>
+            <li><span>Zaman Düzeltilmiş (Yıllıklandırılmış) ROI:</span><strong id="lbl-ann-roi" style="color: var(--brand-accent-hover);">-</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+        <button class="btn btn-outline" onclick="switchStage(2)">⬅ Geri: Mimari & Maliyet</button>
+        <button class="btn btn-primary btn-lg" onclick="switchStage(4)">
+          Malik Karar Tablosu & Resmi Teklif Çıktısına İlerle ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STAGE 4: MALİK BAZLI KARAR TABLOSU & RESMİ TEKLİF DOSYASI
+         ========================================================================== -->
+    <section class="stage-view" id="stage4">
+
+      <!-- Malikler Toplantı Ekranı / Malik Bilanço Tablosu -->
+      <div class="card no-print" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+          <div class="card-header-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Malikler Kurulu Karar & Bireysel Kazanım Tablosu</span>
+          </div>
+          <span class="card-badge gold">Malik Toplantısı Şeffaf Hesaplama</span>
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+          6306 sayılı kanun kapsamında her malikin mevcut mülk değeri, yeni daire metrekaresi, alacağı hibe/kredi tutarı ve cebinden çıkacak ek ödeme ile net değer artışı:
+        </p>
+
+        <div class="table-responsive">
+          <table class="data-table" id="owner-balance-table">
+            <thead>
+              <tr>
+                <th>Malik / Bağımsız Bölüm</th>
+                <th>Mevcut Net m²</th>
+                <th>Mevcut Değer</th>
+                <th>Yeni Net m²</th>
+                <th>Yeni Mülk Değeri</th>
+                <th>Devlet Desteği</th>
+                <th>Malik Ek Ödeme</th>
+                <th>Net Ekonomik Kazanç</th>
+                <th>Malik ROI</th>
+              </tr>
+            </thead>
+            <tbody id="owner-table-body">
+              <!-- JS ile dinamik doldurulur -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RESMİ TEKLİF VE FİZİBİLİTE DOSYASI (YAZDIRILABİLİR / PDF) -->
+      <div class="proposal-paper" id="printable-proposal">
+        
+        <div class="proposal-brand-header">
+          <div>
+            <div style="font-family: var(--font-serif); font-size: 1.4rem; font-weight: 800; color: var(--brand-primary-dark); letter-spacing: 0.05em;">
+              YAKIN GRUP
+            </div>
+            <div style="font-size: 0.75rem; color: var(--brand-accent-hover); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
+              YATIRIM, İNŞAAT & KENTSEL DÖNÜŞÜM DİREKTÖRLÜĞÜ
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: var(--brand-primary);">
+              KENTSEL DÖNÜŞÜM RESMİ FİZİBİLİTE & TEKLİF DOSYASI
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              Doküman No: YG-KD-2026/08 • Tarih: <span id="prop-date">17.08.2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="proposal-meta-box">
+          <div class="proposal-meta-item">
+            <div class="label">Taşınmaz Konumu:</div>
+            <div class="value" id="prop-location">İstanbul / Kadıköy</div>
+          </div>
+          <div class="proposal-meta-item">
+            <div class="label">Ada / Parsel:</div>
+            <div class="value" id="prop-adaparsel">1248 / 14</div>
+          </div>
+          <div class="proposal-meta-item">
+            <div class="label">Arsa / İnşaat Alanı:</div>
+            <div class="value" id="prop-areas">850 m² / 3.250 m²</div>
+          </div>
+          <div class="proposal-meta-item">
+            <div class="label">Önerilen Model:</div>
+            <div class="value" id="prop-model" style="color: var(--brand-primary);">Yarısı Bizden Destekli</div>
+          </div>
+        </div>
+
+        <!-- 20 Maddelik Yönetici Özeti -->
+        <div class="proposal-section-title">1. Proje Yönetici Özeti & Yatırımcı Kararı</div>
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-size: 0.82rem; line-height: 1.6; margin-bottom: 1.25rem;">
+          <p id="prop-executive-summary">
+            Yükleniyor...
+          </p>
+        </div>
+
+        <div class="proposal-section-title">2. İmar, Mimari Kapasite & Maliyet Dağılımı</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; font-size: 0.78rem;">
+          <table class="data-table">
+            <tr><td><strong>Arsa Alanı:</strong></td><td id="prop-t-land">-</td></tr>
+            <tr><td><strong>Emsal (KAKS) & TAKS:</strong></td><td id="prop-t-kaks">-</td></tr>
+            <tr><td><strong>Toplam İnşaat Alanı:</strong></td><td id="prop-t-gross">-</td></tr>
+            <tr><td><strong>Satılabilir Brüt Alan:</strong></td><td id="prop-t-saleable">-</td></tr>
+          </table>
+          <table class="data-table">
+            <tr><td><strong>Toplam Proje Maliyeti:</strong></td><td id="prop-t-cost" style="color: var(--brand-primary); font-weight: 800;">-</td></tr>
+            <tr><td><strong>m² Ortalama Yapım Maliyeti:</strong></td><td id="prop-t-costm2">-</td></tr>
+            <tr><td><strong>Hedef Proje Satış Hasılatı:</strong></td><td id="prop-t-revenue" style="color: var(--status-success); font-weight: 800;">-</td></tr>
+            <tr><td><strong>Hedef Proje Süresi:</strong></td><td id="prop-t-time">-</td></tr>
+          </table>
+        </div>
+
+        <div class="proposal-section-title">3. Devlet Destekleri, Finansman & Hakediş Güvencesi</div>
+        <div style="font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1rem;">
+          <div id="prop-support-text">
+            Yükleniyor...
+          </div>
+        </div>
+
+        <div class="proposal-section-title">4. Malik Hakları, 6306 Salt Çoğunluk & Uygulama Taahhüdü</div>
+        <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1.5rem;">
+          <p>
+            İşbu teklif; 6306 sayılı Afet Riski Altındaki Alanların Dönüştürülmesi Hakkında Kanun kapsamında maliklerin hisseleri oranında <strong>%50+1 salt çoğunluk</strong> kararı doğrultusunda geçerlidir. Kat karşılığı veya hakediş usulü taahhüt kapsamında maliklerin bağımsız bölüm hakları, SPK lisanslı değerleme raporu ve noter onaylı Kat Karşılığı İnşaat Sözleşmesi ile teminat altına alınır.
+          </p>
+        </div>
+
+        <!-- İmzalar -->
+        <div class="proposal-signatures">
+          <div class="signature-box">
+            <div class="sign-line"></div>
+            <div class="sign-role">YAKIN GRUP A.Ş.</div>
+            <div class="sign-name">Kentsel Dönüşüm & Yatırım Komitesi</div>
+          </div>
+          <div class="signature-box">
+            <div class="sign-line"></div>
+            <div class="sign-role">BİNA MALİKLER KURULU</div>
+            <div class="sign-name">Kat Malikleri Temsilcileri / Yönetim</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;" class="no-print">
+        <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Finansman & Karar</button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-primary" onclick="exportDataJSON()">💾 Senaryoyu Kaydet (JSON)</button>
+          <button class="btn btn-gold btn-lg" onclick="window.print()">🖨️ Teklifi Yazdır / PDF Olarak Kaydet</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       STICKY BOTTOM ACTION BAR
+       ========================================================================== -->
+  <footer class="bottom-action-bar no-print">
+    <div class="bottom-action-inner">
+      <div class="bottom-summary-quick">
+        <div class="quick-metric-item">
+          <span class="lbl">Yapı Alanı</span>
+          <span class="val" id="bar-gross-area">-</span>
+        </div>
+        <div class="quick-metric-item">
+          <span class="lbl">Toplam Maliyet</span>
+          <span class="val" id="bar-total-cost" style="color: var(--brand-primary);">-</span>
+        </div>
+        <div class="quick-metric-item">
+          <span class="lbl">Önerilen Model</span>
+          <span class="val" id="bar-rec-model" style="color: var(--brand-accent-hover);">-</span>
+        </div>
+        <div class="quick-metric-item">
+          <span class="lbl">Müteahhit ROI</span>
+          <span class="val" id="bar-roi" style="color: var(--status-success);">-</span>
+        </div>
+      </div>
+
+      <div class="nav-buttons-group">
+        <button class="btn btn-outline btn-sm" onclick="switchStage(currentStage - 1)" id="btn-prev-step" style="display: none;">⬅ Geri</button>
+        <button class="btn btn-primary btn-sm" onclick="switchStage(currentStage + 1)" id="btn-next-step">İleri ➔</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       SCRIPTS & APPLICATION CONTROLLER
+       ========================================================================== -->
+  <script src="assets/js/kentsel-donusum-engine.js"></script>
+  <script>
+    let currentStage = 1;
+
+    function switchStage(stageNum) {
+      if (stageNum < 1) stageNum = 1;
+      if (stageNum > 4) stageNum = 4;
+      currentStage = stageNum;
+
+      // Update tabs
+      for (let i = 1; i <= 4; i++) {
+        const tab = document.getElementById(`tab-step-${i}`);
+        const stage = document.getElementById(`stage${i}`);
+        if (tab && stage) {
+          if (i === stageNum) {
+            tab.classList.add('active');
+            stage.classList.add('active');
+          } else {
+            tab.classList.remove('active');
+            stage.classList.remove('active');
+            if (i < stageNum) tab.classList.add('completed');
+            else tab.classList.remove('completed');
+          }
+        }
+      }
+
+      // Update footer buttons
+      const btnPrev = document.getElementById('btn-prev-step');
+      const btnNext = document.getElementById('btn-next-step');
+      if (btnPrev) btnPrev.style.display = stageNum > 1 ? 'inline-flex' : 'none';
+      if (btnNext) {
+        if (stageNum === 4) {
+          btnNext.innerHTML = '🖨️ PDF / Teklif Al';
+          btnNext.onclick = function() { window.print(); };
+          btnNext.className = 'btn btn-gold btn-sm';
+        } else {
+          btnNext.innerHTML = 'İleri ➔';
+          btnNext.onclick = function() { switchStage(currentStage + 1); };
+          btnNext.className = 'btn btn-primary btn-sm';
+        }
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleInputChange(field, value) {
+      if (window.KDEngine) {
+        window.KDEngine.updateField(field, value);
+        renderUI();
+      }
+    }
+
+    function loadPresetData(key) {
+      if (window.KDEngine) {
+        window.KDEngine.loadPreset(key);
+        syncInputsWithState();
+        renderUI();
+      }
+    }
+
+    function selectScenario(scId) {
+      if (window.KDEngine) {
+        window.KDEngine.updateField('selectedScenario', scId);
+        document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
+        const activeCard = document.getElementById(`card-sc-${scId}`);
+        if (activeCard) activeCard.classList.add('active');
+        renderUI();
+      }
+    }
+
+    function syncInputsWithState() {
+      const s = window.KDEngine.state;
+      const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      };
+
+      setVal('inp-city', s.city);
+      setVal('inp-district', s.district);
+      setVal('inp-neighborhood', s.neighborhood);
+      setVal('inp-ada', s.ada);
+      setVal('inp-parsel', s.parsel);
+      setVal('inp-landArea', s.landArea);
+      setVal('inp-unitCount', s.unitCount);
+      setVal('inp-shopCount', s.shopCount);
+      setVal('inp-existingAvgNet', s.existingUnitAvgNet);
+      setVal('inp-existingPriceM2', s.existingUnitPriceM2);
+      setVal('inp-existingRent', s.existingRentMonthly);
+      setVal('inp-ownerCount', s.ownerCount);
+      setVal('inp-majorityPct', s.majorityPct);
+      setVal('inp-kaks', s.kaks);
+      setVal('inp-taks', s.taks);
+      setVal('inp-hmax', s.hmax);
+      setVal('inp-usage', s.usageType);
+      setVal('inp-newPriceM2', s.newUnitPriceM2);
+      setVal('inp-newRent', s.newRentMonthly);
+      setVal('inp-soil', s.soilCategory);
+      setVal('inp-titleStatus', s.titleStatus);
+
+      document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById(`card-sc-${s.selectedScenario}`);
+      if (activeCard) activeCard.classList.add('active');
+    }
+
+    function renderUI() {
+      if (!window.KDEngine) return;
+      const res = window.KDEngine.results;
+      const eng = window.KDEngine;
+
+      const setText = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      };
+
+      // Stage 1 İmar Özeti
+      setText('lbl-quick-taban', eng.formatM2(res.tabanAlani));
+      setText('lbl-quick-emsal', eng.formatM2(res.emsaleDahilAlan));
+      setText('lbl-quick-emsaldisi', eng.formatM2(res.emsalDisiAlan));
+      setText('lbl-quick-bodrum', eng.formatM2(res.bodrumOtoparkSiginak));
+      setText('lbl-quick-toplaminsaat', eng.formatM2(res.toplamInsaatAlani));
+      setText('lbl-quick-satilabilir', eng.formatM2(res.toplamSatilabilirBrutAlan));
+
+      // Stage 2 Senaryolar
+      const sc = res.scenarios;
+      setText('scA-units', `${sc.A.unitCount} Daire`);
+      setText('scA-net', `${sc.A.avgNetM2} m²`);
+      setText('scA-cont', `${sc.A.contractorUnits} Daire`);
+      setText('scA-val', eng.formatCurrency(sc.A.totalProjectValue));
+
+      setText('scB-units', `${sc.B.unitCount} Daire`);
+      setText('scB-net', `${sc.B.avgNetM2} m²`);
+      setText('scB-cont', `${sc.B.contractorUnits} Daire`);
+      setText('scB-val', eng.formatCurrency(sc.B.totalProjectValue));
+
+      setText('scC-units', `${sc.C.unitCount} Daire`);
+      setText('scC-net', `${sc.C.avgNetM2} m²`);
+      setText('scC-cont', `${sc.C.contractorUnits} Daire`);
+      setText('scC-val', eng.formatCurrency(sc.C.totalProjectValue));
+
+      // 2026 Maliyet Tablosu
+      const c = res.costs;
+      const totalArea = res.toplamInsaatAlani || 1;
+      
+      const setCostRow = (key, unitCost, totalCost) => {
+        setText(`cost-u-${key}`, Math.round(unitCost).toLocaleString('tr-TR') + ' TL');
+        setText(`cost-t-${key}`, eng.formatCurrency(totalCost));
+        setText(`cost-p-${key}`, '%' + ((totalCost / c.totalProjectCost) * 100).toFixed(1));
+      };
+
+      setCostRow('demo', UNIT_COSTS_2026.demolitionPerM2, c.demolition);
+      setCostRow('permits', UNIT_COSTS_2026.permitsAndDesignPerM2, c.permits);
+      setCostRow('rough', UNIT_COSTS_2026.roughConstructionPerM2, c.rough);
+      setCostRow('finishing', c.finishing / totalArea, c.finishing);
+      setCostRow('mep', UNIT_COSTS_2026.mepPerM2, c.mep);
+      setCostRow('elec', UNIT_COSTS_2026.electricalPerM2, c.electrical);
+      setCostRow('land', UNIT_COSTS_2026.externalAndLandscapePerM2, c.landscape);
+      setCostRow('overhead', (c.siteOverhead + c.contingency + c.financing) / totalArea, (c.siteOverhead + c.contingency + c.financing));
+
+      setText('cost-u-total', Math.round(c.costPerM2).toLocaleString('tr-TR') + ' TL/m²');
+      setText('cost-t-total', eng.formatCurrency(c.totalProjectCost));
+
+      // Stage 3 Karar Banner & Modeller
+      const dec = res.decision;
+      const decBanner = document.getElementById('main-decision-banner');
+      if (decBanner) {
+        decBanner.className = `decision-banner ${dec.badgeClass}`;
+      }
+      setText('dec-icon', dec.icon);
+      setText('dec-text', dec.text);
+      setText('dec-rationale', dec.rationale);
+
+      setText('risk-score-val', res.riskScore.total);
+      setText('risk-score-label', `${res.riskScore.level} / 100`);
+
+      // 4 Model
+      const m1 = res.models.model1_KatKarsiligi;
+      setText('m1-cont-share', `%${m1.contractorSharePct} Müteahhit`);
+      setText('m1-cont-profit', eng.formatCurrency(m1.contractorProfit));
+      setText('m1-cont-roi', eng.formatPct(m1.contractorROI));
+
+      const m2 = res.models.model2_YarisiBizden;
+      setText('m2-support-total', eng.formatCurrency(m2.totalSupport));
+      setText('m2-owner-pay', eng.formatCurrency(m2.ownerPaymentPerUnit));
+
+      const m3 = res.models.model3_IADSP;
+      setText('m3-cap', eng.formatCurrency(m3.totalCredit));
+      setText('m3-installment', Math.round(m3.monthlyInstallment).toLocaleString('tr-TR') + ' TL/ay');
+
+      const m4 = res.models.model4_Ozkaynak;
+      setText('m4-owner-pay', eng.formatCurrency(m4.ownerPaymentPerUnit));
+
+      // Hakediş Akışı
+      const ybdSteps = res.supports.ybd.hakedisSteps;
+      if (ybdSteps && ybdSteps.length >= 4) {
+        setText('ybd-flow-1', eng.formatCurrency(ybdSteps[0].amount));
+        setText('ybd-flow-2', eng.formatCurrency(ybdSteps[1].amount));
+        setText('ybd-flow-3', eng.formatCurrency(ybdSteps[2].amount));
+        setText('ybd-flow-4', eng.formatCurrency(ybdSteps[3].amount));
+      }
+
+      // Risk & Süre Detayları
+      const rk = res.riskScore.details;
+      setText('rk-legal', `${rk.legal} / 20`);
+      setText('rk-zoning', `${rk.zoning} / 20`);
+      setText('rk-fin', `${rk.financing} / 15`);
+      setText('rk-maj', `${rk.majority} / 15`);
+      setText('rk-cost', `${rk.cost} / 10`);
+      setText('rk-sales', `${rk.sales} / 10`);
+      setText('rk-time', `${rk.time} / 10`);
+
+      const fin = res.financials;
+      setText('lbl-land-val', eng.formatCurrency(fin.existingLandValue));
+      setText('lbl-proj-val', eng.formatCurrency(fin.projectTotalSalesValue));
+      setText('lbl-added-val', eng.formatCurrency(fin.grossProjectValueAdded));
+      setText('lbl-rental-yield', eng.formatPct(fin.grossRentalYieldPct));
+      setText('lbl-ann-roi', eng.formatPct(fin.annualizedROI));
+
+      // Stage 4 Malik Tablosu
+      const ownerTbody = document.getElementById('owner-table-body');
+      if (ownerTbody) {
+        ownerTbody.innerHTML = (res.ownersTable || []).map(o => `
+          <tr>
+            <td><strong>${o.name}</strong></td>
+            <td>${o.existingNetM2} m²</td>
+            <td>${eng.formatCurrency(o.existingValue)}</td>
+            <td style="color: var(--brand-primary); font-weight: 700;">${o.newNetM2} m²</td>
+            <td style="color: var(--status-success); font-weight: 700;">${eng.formatCurrency(o.newValue)}</td>
+            <td>${eng.formatCurrency(o.hibe + o.kredi + o.tahliye)}</td>
+            <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
+              ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
+            </td>
+            <td style="color: var(--brand-accent-hover); font-weight: 800;">${eng.formatCurrency(o.netGain)}</td>
+            <td><strong>${eng.formatPct(o.roiPct)}</strong></td>
+          </tr>
+        `).join('');
+      }
+
+      // Stage 4 Resmi Teklif Alanları
+      setText('prop-location', `${eng.state.city} / ${eng.state.district}`);
+      setText('prop-adaparsel', `${eng.state.ada} / ${eng.state.parsel}`);
+      setText('prop-areas', `${eng.formatM2(res.landArea)} Arsa / ${eng.formatM2(res.toplamInsaatAlani)} İnşaat`);
+      setText('prop-model', res.decision.recommendedModel);
+
+      setText('prop-t-land', eng.formatM2(res.landArea));
+      setText('prop-t-kaks', `KAKS: ${eng.state.kaks} | TAKS: ${eng.state.taks}`);
+      setText('prop-t-gross', eng.formatM2(res.toplamInsaatAlani));
+      setText('prop-t-saleable', eng.formatM2(res.toplamSatilabilirBrutAlan));
+      setText('prop-t-cost', eng.formatCurrency(res.costs.totalProjectCost));
+      setText('prop-t-costm2', Math.round(res.costs.costPerM2).toLocaleString('tr-TR') + ' TL/m²');
+      setText('prop-t-revenue', eng.formatCurrency(res.financials.projectTotalSalesValue));
+      setText('prop-t-time', `${eng.state.projectMonths} Ay (İskan Dahil)`);
+
+      const exSum = `
+        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> üretilebilir inşaat alanı ve <strong>${res.activeScenario.unitCount} adet</strong> modern bağımsız bölüm üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
+        <br><br>
+        <strong>Önerilen Stratejik Model:</strong> ${res.decision.recommendedModel}. 
+        Proje Risk Puanı <strong>${res.riskScore.total}/100 (${res.riskScore.level})</strong> olup, hedef ROI (%${m1.contractorROI.toFixed(1)}) ve salt çoğunluk oranı (%${eng.state.majorityPct}) doğrultusunda yatırım kararı <strong>${dec.text}</strong> olarak belirlenmiştir.
+      `;
+      const elExSum = document.getElementById('prop-executive-summary');
+      if (elExSum) elExSum.innerHTML = exSum;
+
+      let supportTxt = "";
+      if (res.supports.isIstanbul) {
+        supportTxt = `
+          Taşınmaz İstanbul il sınırları içerisinde yer aldığından <strong>Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi + 125.000 TL Tahliye Desteği (Toplam 1.875.000 TL)</strong> hakedişli finansman desteği sağlanabilmektedir. Proje genelinde toplam <strong>${eng.formatCurrency(res.supports.ybd.totalFinancing)}</strong> devlet finansmanı kullanılacak olup, müteahhit nakit akışına %30 Ruhsat, %30 Kaba, %30 İnce ve %10 İskan dilimleriyle aktarılacaktır.
+        `;
+      } else if (res.supports.isIADSPEligible) {
+        supportTxt = `
+          Taşınmaz Dünya Bankası finansmanlı <strong>İklim ve Afetlere Dayanıklı Şehirler Projesi (İADŞP)</strong> pilot illerinden ${eng.state.city} sınırlarında yer almaktadır. Bağımsız bölüm başına <strong>3.000.000 TL'ye kadar, aylık %0,69 faiz ve 180 ay vadeli (ilk 12 ay ödemesiz)</strong> uygun dönüşüm kredisi kullanılabilmektedir.
+        `;
+      } else {
+        supportTxt = `
+          Proje Kat Karşılığı İnşaat Sözleşmesi modeliyle %${m1.contractorSharePct} Müteahhit Payı ve %${100 - m1.contractorSharePct} Malik Payı dengesiyle finanse edilecek, maliklerden hiçbir nakit katkı talep edilmeyecektir.
+        `;
+      }
+      const elSuppTxt = document.getElementById('prop-support-text');
+      if (elSuppTxt) elSuppTxt.innerHTML = supportTxt;
+
+      // Bottom Bar
+      setText('bar-gross-area', eng.formatM2(res.toplamInsaatAlani));
+      setText('bar-total-cost', eng.formatCurrency(res.costs.totalProjectCost));
+      setText('bar-rec-model', res.decision.recommendedModel);
+      setText('bar-roi', eng.formatPct(m1.contractorROI));
+    }
+
+    function exportDataJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.KDEngine.state, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `YakinGrup_KentselDonusum_${window.KDEngine.state.district}_${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      window.KDEngine.generateDefaultOwners();
+      window.KDEngine.calculate();
+      syncInputsWithState();
+      renderUI();
+    });
+  </script>
+</body>
+</html>
