@@ -1334,9 +1334,9 @@
         <div class="form-group">
           <label>Banka Hesap Bilgisi (IBAN)</label>
           <select id="inp-bank" onchange="renderApp()">
-            <option value="ziraat" selected>Ziraat Bankası (TR92 0001 0000 0000 0000 0000 01)</option>
-            <option value="garanti">Garanti BBVA (TR66 0006 2000 0000 0000 0000 02)</option>
-            <option value="isbank">Türkiye İş Bankası (TR44 0006 4000 0000 0000 0000 03)</option>
+            <option value="yapikredi" selected>Yapı Kredi Bankası (TR92 0006 7010 0000 0317 5868 21)</option>
+            <option value="garanti">Garanti BBVA (TR35 0006 2000 4430 0006 2920 12)</option>
+            <option value="both">Tüm Bankalar (Yapı Kredi + Garanti BBVA)</option>
             <option value="none">Belgede Banka Gösterme</option>
           </select>
         </div>
@@ -1409,7 +1409,7 @@
               <span>YAKIN GRUP</span>
             </div>
             <div class="info-card-body">
-              <strong id="sheet-provider-name">Yakın Grup Sanayi İnşaat Enerji Yatırım A.Ş.</strong>
+              <strong id="sheet-provider-name">Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi</strong>
               <div>Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul</div>
               <div>Tel: +90 212 909 00 00 • E-Posta: info@yakingrup.net</div>
             </div>
@@ -1460,7 +1460,7 @@
               <li><strong>Ödeme Koşulları:</strong> <span id="sheet-payment-terms">%30 Sözleşmede, %50 Montajda, %20 Geçici Kabulde</span></li>
               <li><strong>Teslim Süresi:</strong> <span id="sheet-delivery-time">60 İş Günü</span></li>
               <li><strong>Garanti / SLA:</strong> <span id="sheet-warranty">2 Yıl Sistem & 25 Yıl Lineer Performans Garantisi</span></li>
-              <li id="sheet-bank-row"><strong>Banka (IBAN):</strong> <span id="sheet-bank-info">Ziraat Bankası IBAN: TR92 0001 0000 0000 0000 0000 01</span></li>
+              <li id="sheet-bank-row"><strong>Banka (IBAN):</strong> <span id="sheet-bank-info">Yapı Kredi Bankası IBAN: TR92 0006 7010 0000 0317 5868 21</span></li>
             </ul>
           </div>
 
@@ -1512,7 +1512,7 @@
         <!-- Document Footer -->
         <div class="doc-footer">
           <div class="doc-footer-left">
-            <span>Yakın Grup Sanayi İnşaat Enerji Teknoloji Yatırım A.Ş. • MERSİS: 0924089201900001</span>
+            <span>Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi • MERSİS: 0924089201900001</span>
             <span>www.yakingrup.net • info@yakingrup.net • Maslak Sun Plaza Kat:12 İstanbul</span>
           </div>
           <div class="doc-footer-badges">
@@ -1552,7 +1552,7 @@
       vatRate: 20,
       author: 'ilker',
       stampVisible: true,
-      bankKey: 'ziraat',
+      bankKey: 'yapikredi',
       paymentTerms: '%30 Sözleşmede Avans, %50 Saha Montajı, %20 Geçici Kabul ve Tedaş Onayında',
       deliveryTime: '60 İş Günü',
       warranty: '2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi',
@@ -1868,39 +1868,39 @@
     // Subsidiary Company Meta
     const companies = {
       group: {
-        name: 'Yakın Grup Holding A.Ş.',
-        fullName: 'Yakın Grup Sanayi İnşaat Enerji Teknoloji Yatırım A.Ş.',
-        sub: 'MÜHENDİSLİK, ENERJİ & YATIRIM HOLDİNG',
+        name: 'Yakın Grup Ltd. Şti.',
+        fullName: 'Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi',
+        sub: 'ENERJİ, GIDA, İNŞAAT VE TİCARET',
         address: 'Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul',
-        stamp: 'YAKIN GRUP A.Ş. • RESMİ ONAY'
+        stamp: 'YAKIN GRUP LTD. ŞTİ. • RESMİ ONAY'
       },
       enerji: {
-        name: 'Yakın Enerji A.Ş.',
-        fullName: 'Yakın Enerji Üretim ve Teknolojileri A.Ş.',
+        name: 'Yakın Enerji',
+        fullName: 'Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti. — Enerji Bölümü',
         sub: 'GES, RES & ENERJİ DEPOLAMA EPC ÇÖZÜMLERİ',
         address: 'Maslak Sun Plaza Kat: 12 Şişli / İstanbul',
-        stamp: 'YAKIN ENERJİ A.Ş. • PROJE ONAY'
+        stamp: 'YAKIN ENERJİ • PROJE ONAY'
       },
       insaat: {
-        name: 'Yakın İnşaat A.Ş.',
-        fullName: 'Yakın İnşaat Mühendislik ve Taahhüt A.Ş.',
+        name: 'Yakın İnşaat',
+        fullName: 'Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti. — İnşaat & Taahhüt',
         sub: 'VERİ MERKEZİ, ENDÜSTRİYEL YAPI & MEP TAAHHÜT',
         address: 'Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul',
-        stamp: 'YAKIN İNŞAAT A.Ş. • ŞANTİYE & TEKNİK ONAY'
+        stamp: 'YAKIN İNŞAAT • ŞANTİYE & TEKNİK ONAY'
       },
       teknoloji: {
-        name: 'Yakın Teknoloji A.Ş.',
-        fullName: 'Yakın Teknoloji ve Bilişim Sistemleri A.Ş.',
+        name: 'Yakın Teknoloji',
+        fullName: 'Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti. — Teknoloji Grubu',
         sub: 'BIM 5D, DİJİTAL İKİZ & SİBER GÜVENLİK',
         address: 'Maslak Sun Plaza Kat: 12 Şişli / İstanbul',
-        stamp: 'YAKIN TEKNOLOJİ A.Ş. • AR-GE & TEKNİK ONAY'
+        stamp: 'YAKIN TEKNOLOJİ • AR-GE & TEKNİK ONAY'
       },
       capital: {
-        name: 'Yakın Capital A.Ş.',
-        fullName: 'Yakın Capital Proje Finansmanı ve Girişim Yatırım A.Ş.',
+        name: 'Yakın Capital',
+        fullName: 'Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti. — Finansman Grubu',
         sub: 'PROJE FİNANSMANI, FİZİBİLİTE & YATIRIM DANIŞMANLIĞI',
         address: 'Levent 199, Büyükdere Cad. No:199 Şişli / İstanbul',
-        stamp: 'YAKIN CAPITAL A.Ş. • YÖNETİM ONAY'
+        stamp: 'YAKIN CAPITAL • YÖNETİM ONAY'
       }
     };
 
@@ -2349,9 +2349,13 @@
         bankRow.style.display = 'none';
       } else {
         bankRow.style.display = 'flex';
-        if (appState.bankKey === 'ziraat') bankInfo.innerText = 'Ziraat Bankası IBAN: TR92 0001 0000 0000 0000 0000 01';
-        if (appState.bankKey === 'garanti') bankInfo.innerText = 'Garanti BBVA IBAN: TR66 0006 2000 0000 0000 0000 02';
-        if (appState.bankKey === 'isbank') bankInfo.innerText = 'Türkiye İş Bankası IBAN: TR44 0006 4000 0000 0000 0000 03';
+        if (appState.bankKey === 'yapikredi') {
+          bankInfo.innerText = 'Yapı Kredi Bankası IBAN: TR92 0006 7010 0000 0317 5868 21';
+        } else if (appState.bankKey === 'garanti') {
+          bankInfo.innerText = 'Garanti BBVA IBAN: TR35 0006 2000 4430 0006 2920 12';
+        } else if (appState.bankKey === 'both') {
+          bankInfo.innerHTML = 'Yapı Kredi: TR92 0006 7010 0000 0317 5868 21 &nbsp;|&nbsp; Garanti BBVA: TR35 0006 2000 4430 0006 2920 12';
+        }
       }
 
       // Author & Stamp
@@ -2415,7 +2419,7 @@
         text += `(${document.getElementById('sheet-in-words').innerText})\n\n`;
       }
 
-      text += `Ticari Koşullar:\n• Ödeme: ${appState.paymentTerms}\n• Teslimat: ${appState.deliveryTime}\n• Garanti: ${appState.warranty}\n\nYakın Grup Sanayi İnşaat Enerji Teknoloji Yatırım A.Ş.\nWeb: https://yakingrup.net/teklif`;
+      text += `Ticari Koşullar:\n• Ödeme: ${appState.paymentTerms}\n• Teslimat: ${appState.deliveryTime}\n• Garanti: ${appState.warranty}\n• Yapı Kredi Bankası IBAN: TR92 0006 7010 0000 0317 5868 21\n• Garanti BBVA IBAN: TR35 0006 2000 4430 0006 2920 12\n\nYakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi\nWeb: https://yakingrup.net/teklif`;
 
       navigator.clipboard.writeText(text).then(() => {
         showToast('📋 Doküman metni panoya kopyalandı!');

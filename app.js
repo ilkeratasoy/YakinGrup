@@ -330,7 +330,7 @@ const TRANSLATIONS = {
     tag_construction_short: 'Yakın İnşaat',
     tag_energy_short: 'Yakın Enerji',
     footer_lic_note: 'Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.',
-    footer_rights: '© 2026 Yakın Grup Sanayi İnşaat Enerji Teknoloji LTD ŞTİ A.Ş. Tüm hakları saklıdır.',
+    footer_rights: '© 2026 Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi. Tüm hakları saklıdır.',
     btn_vcard_inspect: 'vCard & Detaylı İncele',
     btn_detail_arrow: 'Detay ›',
     opt_capital: 'Yakın Capital',
@@ -2998,7 +2998,7 @@ async function handleContactSubmit(e) {
 // ── Legal Modals ───────────────────────────────────────────────────────────
 const LEGAL = {
   kvkk: {
-    tr: { title: 'KVKK Aydınlatma Metni', body: '<p>Yakın Grup Sanayi İnşaat Enerji Teknoloji Ltd. Şti., kişisel verilerinizi 6698 sayılı KVKK kapsamında toplamakta ve işlemektedir. Toplanan veriler; ad-soyad, e-posta, telefon ve mesaj içeriği olup yalnızca sizinle iletişim kurmak amacıyla kullanılmaktadır. Verileriniz üçüncü taraflarla paylaşılmamakta, yasal saklama süreleri dolduktan sonra silinmektedir. Haklarınız için: info@yakingrup.net</p>' },
+    tr: { title: 'KVKK Aydınlatma Metni', body: '<p>Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi, kişisel verilerinizi 6698 sayılı KVKK kapsamında toplamakta ve işlemektedir. Toplanan veriler; ad-soyad, e-posta, telefon ve mesaj içeriği olup yalnızca sizinle iletişim kurmak amacıyla kullanılmaktadır. Verileriniz üçüncü taraflarla paylaşılmamakta, yasal saklama süreleri dolduktan sonra silinmektedir. Haklarınız için: info@yakingrup.net</p>' },
     en: { title: 'GDPR Privacy Notice', body: '<p>Yakın Group processes your personal data (name, email, phone, message) solely to respond to your inquiry. Data is not shared with third parties and is deleted after legal retention periods. For your rights: info@yakingrup.net</p>' }
   },
   cerez: {
