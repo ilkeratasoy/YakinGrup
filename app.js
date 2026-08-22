@@ -104,7 +104,7 @@ const TRANSLATIONS = {
     nav_capital: 'Capital',
     nav_technology: 'Teknoloji',
     nav_contact: 'İletişim',
-    nav_urban: 'Kentsel Dönüşüm',
+    nav_urban: 'KD',
     nav_deck: 'B2B / B2C',
     nav_services: 'HİZMETLERİMİZ',
     nav_partners: 'İş Ortaklarımız',
