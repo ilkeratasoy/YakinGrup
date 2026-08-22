@@ -847,10 +847,11 @@
     .doc-signatures-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 24px;
       margin-top: auto;
-      padding-top: 8px;
+      padding-top: 10px;
       border-top: 1px solid #e2e8f0;
+      align-items: flex-end;
     }
 
     .signature-card {
@@ -859,86 +860,115 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
+      width: 100%;
     }
 
     .signature-card .role-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #64748b;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #475569;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 3px;
+      width: 100%;
     }
 
     .signature-card .person-name {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 800;
       color: #0f172a;
-      margin-top: 2px;
+      margin-top: 3px;
+      line-height: 1.2;
+    }
+
+    .signature-card .person-title {
+      font-size: 0.68rem;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 1px;
     }
 
     .signature-space {
-      min-height: 68px;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
-      margin: 4px 0;
+      margin: 4px 0 6px 0;
+    }
+
+    .client-sign-box {
+      width: 235px;
+      height: 68px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 6px;
+      background: #fafcff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 8px;
+      box-sizing: border-box;
     }
 
     .signature-line {
-      width: 75%;
-      border-bottom: 1.5px dashed #cbd5e1;
+      width: 80%;
+      border-bottom: 1.5px solid #94a3b8;
     }
 
     .official-stamp {
-      border: 1.5px solid #1e3a8a;
+      border: 1.5px solid #1a3d7c;
       border-radius: 6px;
-      padding: 5px 10px;
+      padding: 4px 8px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #1e3a8a;
-      background: rgba(30, 58, 138, 0.02);
-      box-shadow: inset 0 0 0 1px rgba(30, 58, 138, 0.35);
+      color: #1a3d7c;
+      background: rgba(26, 61, 124, 0.02);
+      box-shadow: inset 0 0 0 1px rgba(26, 61, 124, 0.35);
       font-family: var(--font-heading), 'Arial', sans-serif;
-      transform: rotate(-1.5deg);
+      transform: none;
       user-select: none;
-      max-width: 240px;
+      width: 235px;
+      height: 68px;
+      box-sizing: border-box;
       margin: 0 auto;
     }
 
     .stamp-line-title {
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       font-weight: 900;
       letter-spacing: 0.03em;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .stamp-line-sub {
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       font-weight: 800;
       letter-spacing: 0.02em;
-      line-height: 1.2;
-      margin-bottom: 2px;
+      line-height: 1.15;
+      margin-bottom: 1px;
     }
 
     .stamp-line-addr {
-      font-size: 0.54rem;
+      font-size: 0.50rem;
       font-weight: 600;
-      line-height: 1.25;
-      color: #1e3a8a;
+      line-height: 1.2;
+      color: #1a3d7c;
       opacity: 0.95;
     }
 
     .stamp-line-tax {
-      font-size: 0.56rem;
+      font-size: 0.53rem;
       font-weight: 800;
       letter-spacing: 0.02em;
       margin-top: 2px;
       padding-top: 1px;
-      border-top: 0.5px dashed rgba(30, 58, 138, 0.45);
+      border-top: 0.5px dashed rgba(26, 61, 124, 0.45);
       width: 100%;
     }
 
@@ -957,20 +987,24 @@
     .doc-footer-left {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
+      line-height: 1.3;
     }
 
     .doc-footer-badges {
       display: flex;
-      gap: 6px;
+      gap: 5px;
+      flex-shrink: 0;
     }
 
     .doc-footer-badge {
       font-weight: 700;
-      color: #475569;
+      font-size: 0.62rem;
+      color: #334155;
       background: #f1f5f9;
-      padding: 1px 5px;
-      border-radius: 3px;
+      border: 1px solid #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
     }
 
     /* Toast Notification */
@@ -1533,10 +1567,12 @@
           <div class="signature-card">
             <div class="role-title">MÜŞTERİ / İŞVEREN ONAYI</div>
             <div class="signature-space">
-              <div class="signature-line"></div>
+              <div class="client-sign-box">
+                <div class="signature-line"></div>
+              </div>
             </div>
             <div class="person-name" id="sheet-client-sig-name">Atlas Holding A.Ş. Yetkilisi</div>
-            <div style="font-size: 0.66rem; color: #64748b;">Yetkili İmza & Kaşe</div>
+            <div class="person-title">Yetkili İmza & Kaşe</div>
           </div>
 
           <div class="signature-card">
@@ -1551,7 +1587,7 @@
               </div>
             </div>
             <div class="person-name" id="sheet-author-name">İlker ATASOY</div>
-            <div style="font-size: 0.66rem; color: #64748b;" id="sheet-author-title">CXO / Yönetici Ortak</div>
+            <div class="person-title" id="sheet-author-title">CXO / Yönetici Ortak</div>
           </div>
         </div>
 
