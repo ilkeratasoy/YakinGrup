@@ -1311,6 +1311,23 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label>Müşteri Onay İsim Formatı</label>
+            <select id="inp-client-sig-format" onchange="renderApp()">
+              <option value="company" selected>Yalnızca Kurum ("Atlas Holding A.Ş. Yetkilisi")</option>
+              <option value="both">Kurum + Yetkili ("Atlas Holding / Ahmet Yılmaz")</option>
+              <option value="person">Yalnızca Yetkili İsmi ("Sayın Ahmet Yılmaz")</option>
+              <option value="generic">Genel ("Müşteri / İşveren Yetkilisi")</option>
+              <option value="custom">Özel İsim Girişi...</option>
+            </select>
+          </div>
+          <div class="form-group" id="group-custom-client-sig" style="display: none;">
+            <label>Özel İsim / Unvan</label>
+            <input type="text" id="inp-custom-client-sig" placeholder="Örn: Satınalma Komisyonu Başkanı" oninput="renderApp()">
+          </div>
+        </div>
+
         <div class="form-group">
           <label>Proje / Şartname Başlığı</label>
           <input type="text" id="inp-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi" oninput="renderApp()">
@@ -1367,10 +1384,10 @@
         </button>
       </div>
 
-      <!-- 6. Finansal Oranlar, İmza & Banka -->
+      <!-- 6. Finansal Oranlar, Ödeme Planı & İmza -->
       <div class="panel-section" id="panel-financial-settings">
         <div class="panel-title">
-          <span>💰 6. Finans, İskonto & Yetkili İmza</span>
+          <span>💰 6. Finans, Ödeme Planı & İmza</span>
         </div>
 
         <div class="form-row">
@@ -1385,6 +1402,34 @@
               <option value="10">%10</option>
               <option value="0">%0 (KDV Muaf / Yatırım Teşvikli)</option>
             </select>
+          </div>
+        </div>
+
+        <!-- Peşinat & Ödeme Planı Seçenekleri -->
+        <div class="form-group">
+          <label>Ödeme / Peşinat Planı Şablonu</label>
+          <div class="pills-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <button type="button" class="pill-btn payment-pill-btn active" onclick="setPaymentPreset(30)">⚡ %30 Peşinat</button>
+            <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(40)">⚡ %40 Peşinat</button>
+            <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(50)">%50 Peşinat</button>
+            <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(20)">%20 Peşinat</button>
+            <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(100)">%100 Peşin</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ödeme Koşulları Metni</label>
+          <textarea id="inp-payment-terms" rows="2" oninput="appState.paymentTerms = this.value; renderApp()">%30 Sözleşme İmzasında Peşinat / Avans, %50 Saha Montajı ve Teslimatı, %20 Geçici Kabul ve Tedaş Onayında</textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Teslim / İş Süresi</label>
+            <input type="text" id="inp-delivery-time" value="60 İş Günü" oninput="appState.deliveryTime = this.value; renderApp()">
+          </div>
+          <div class="form-group">
+            <label>Garanti & SLA Kapsamı</label>
+            <input type="text" id="inp-warranty" value="2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi" oninput="appState.warranty = this.value; renderApp()">
           </div>
         </div>
 
@@ -1635,7 +1680,9 @@
       author: 'ilker',
       stampVisible: true,
       bankKey: 'yapikredi',
-      paymentTerms: '%30 Sözleşmede Avans, %50 Saha Montajı, %20 Geçici Kabul ve Tedaş Onayında',
+      clientSigFormat: 'company',
+      customClientSig: '',
+      paymentTerms: '%30 Sözleşme İmzasında Peşinat / Avans, %50 Saha Montajı ve Teslimatı, %20 Geçici Kabul ve Tedaş Onayında',
       deliveryTime: '60 İş Günü',
       warranty: '2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi',
       
@@ -2352,7 +2399,7 @@
       const validYear = validDate.getFullYear();
       document.getElementById('sheet-doc-validity').innerText = `${validDay}.${validMonth}.${validYear} (${appState.validityDays} Gün)`;
 
-      // Parties
+      // Parties & Client Signature
       document.getElementById('sheet-client-company').innerText = appState.clientCompany;
       document.getElementById('sheet-client-name').innerText = appState.clientName;
       document.getElementById('sheet-client-location').innerText = appState.clientLocation;
@@ -2361,6 +2408,33 @@
       if (addrEl) addrEl.innerText = comp.address;
       const taxEl = document.getElementById('sheet-provider-tax');
       if (taxEl) taxEl.innerText = (comp.tax || 'Kadıköy V.D. No: 929 099 6193') + ' • info@yakingrup.net';
+
+      // Dynamic Client Signature Formatting
+      const sigFormatEl = document.getElementById('inp-client-sig-format');
+      if (sigFormatEl) {
+        appState.clientSigFormat = sigFormatEl.value;
+        const customSigInput = document.getElementById('inp-custom-client-sig');
+        const customSigGroup = document.getElementById('group-custom-client-sig');
+        if (customSigGroup) {
+          customSigGroup.style.display = appState.clientSigFormat === 'custom' ? 'flex' : 'none';
+        }
+
+        let clientSigText = 'Atlas Holding A.Ş. Yetkilisi';
+        if (appState.clientSigFormat === 'company') {
+          clientSigText = (appState.clientCompany || 'Müşteri Kurum') + ' Yetkilisi';
+        } else if (appState.clientSigFormat === 'both') {
+          clientSigText = (appState.clientCompany || '') + (appState.clientCompany && appState.clientName ? ' / ' : '') + (appState.clientName || '');
+        } else if (appState.clientSigFormat === 'person') {
+          clientSigText = appState.clientName || 'Müşteri Yetkilisi';
+        } else if (appState.clientSigFormat === 'generic') {
+          clientSigText = 'Müşteri / İşveren Yetkilisi';
+        } else if (appState.clientSigFormat === 'custom') {
+          clientSigText = (customSigInput && customSigInput.value) ? customSigInput.value : ((appState.clientCompany || '') + ' Yetkilisi');
+        }
+
+        const clientSigEl = document.getElementById('sheet-client-sig-name');
+        if (clientSigEl) clientSigEl.innerText = clientSigText;
+      }
 
       // Subject & Intro
       document.getElementById('sheet-subject').innerText = appState.subject;
@@ -2465,6 +2539,32 @@
       } else {
         stampBox.style.display = 'none';
       }
+    }
+
+    // Set Payment Preset (%30, %40, %50, %20, %100)
+    function setPaymentPreset(rate) {
+      let text = '';
+      if (rate === 30) {
+        text = '%30 Sözleşme İmzasında Peşinat / Avans, %50 Saha Montajı ve Teslimatı, %20 Geçici Kabul ve Tedaş Onayında';
+      } else if (rate === 40) {
+        text = '%40 Sözleşme İmzasında Peşinat / Avans, %40 Malzeme Saha Teslimatında, %20 Geçici Kabul ve Devreye Almada';
+      } else if (rate === 50) {
+        text = '%50 Sözleşmede Peşinat, %50 İmalat & Saha Teslimatında';
+      } else if (rate === 20) {
+        text = '%20 Sözleşmede Peşinat, %60 Saha İlerleyişi & Montajda, %20 Kesin Kabulde';
+      } else if (rate === 100) {
+        text = '%100 Sipariş ve Sözleşme Onayı ile Birlikte Peşin';
+      }
+      
+      const inp = document.getElementById('inp-payment-terms');
+      if (inp) inp.value = text;
+      appState.paymentTerms = text;
+
+      document.querySelectorAll('.payment-pill-btn').forEach(b => b.classList.remove('active'));
+      if (window.event && window.event.target) window.event.target.classList.add('active');
+
+      renderApp();
+      showToast(`%${rate} peşinatlı ödeme planı uygulandı`);
     }
 
     // Zoom Controls
