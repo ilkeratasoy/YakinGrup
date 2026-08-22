@@ -737,77 +737,231 @@
       margin-top: 4px;
     }
 
-    /* Print Specific Bleed & Margins (85mm x 55mm) */
+    /* High-Precision Print Styles (A4 & 85x55mm Compatible) */
     @media print {
       @page {
-        size: 85mm 55mm;
-        margin: 0;
+        size: A4 portrait;
+        margin: 12mm 15mm;
       }
 
-      body {
-        background: none !important;
-        color: #000 !important;
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
-      header, .controls-panel, .stage-tools, .card-side-tag, .mockup-showcase-section {
+      html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'Manrope', 'Inter', -apple-system, sans-serif !important;
+      }
+
+      header, .controls-panel, .stage-tools, .mockup-showcase-section, #studio-auth-lock, .specs-box {
         display: none !important;
       }
 
       .studio-container {
         display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
       .stage-container {
+        display: block !important;
         background: none !important;
         padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
       }
 
       .cards-display-wrap {
         display: block !important;
         perspective: none !important;
+        width: 100% !important;
       }
 
       .card-comparison-row {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 18mm !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        page-break-inside: avoid !important;
       }
 
       .card-label-box {
-        display: block !important;
-        page-break-after: always;
-        break-after: page;
-        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 85mm !important;
+        margin: 0 auto !important;
         padding: 0 !important;
+        page-break-inside: avoid !important;
       }
 
+      .card-side-tag {
+        display: block !important;
+        font-size: 8pt !important;
+        font-weight: 800 !important;
+        color: #334155 !important;
+        margin-bottom: 2mm !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        text-align: center !important;
+      }
+
+      /* Exactly 85mm x 55mm Card Dimensions */
       .card-box {
         width: 85mm !important;
         height: 55mm !important;
+        min-width: 85mm !important;
+        max-width: 85mm !important;
+        min-height: 55mm !important;
+        max-height: 55mm !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         transform: none !important;
-        margin: 0 !important;
-        border: none !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        margin: 0 auto !important;
+        border: 0.35pt solid #cbd5e1 !important;
+        position: relative !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        background-color: #ffffff !important;
       }
 
       .card-inner {
-        padding: 6mm 7mm !important;
+        padding: 4mm 4.5mm !important;
+        height: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+      }
+
+      /* Proportional Typography for 85x55mm */
+      .front-top {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        margin-bottom: 0 !important;
+      }
+
+      .front-logo-wrap {
+        display: flex !important;
+        align-items: center !important;
+        gap: 2mm !important;
       }
 
       .front-logo-svg {
-        width: 10mm !important;
-        height: 10mm !important;
+        width: 7mm !important;
+        height: 7mm !important;
+      }
+
+      .front-comp-name {
+        font-size: 7pt !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.1em !important;
+        line-height: 1.1 !important;
+      }
+
+      .front-comp-sub {
+        font-size: 4pt !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.14em !important;
+      }
+
+      .front-holding-tag {
+        font-size: 5pt !important;
+        padding: 0.6mm 1.6mm !important;
+        border-radius: 1mm !important;
+      }
+
+      /* Person Details */
+      .front-person {
+        margin: auto 0 !important;
+      }
+
+      .front-name {
+        font-size: 9pt !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        margin-bottom: 0.8mm !important;
+        letter-spacing: -0.01em !important;
+      }
+
+      .front-title {
+        font-size: 5pt !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        letter-spacing: 0.06em !important;
+      }
+
+      /* Bottom Contacts & QR */
+      .front-bottom {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-end !important;
+        gap: 2mm !important;
+      }
+
+      .contact-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.8mm !important;
+        font-size: 5pt !important;
+        line-height: 1.2 !important;
+      }
+
+      .contact-item {
+        font-size: 5pt !important;
+        letter-spacing: 0 !important;
       }
 
       .card-qr-wrap {
+        width: 12mm !important;
+        height: 12mm !important;
+        padding: 0.8mm !important;
+        border-radius: 1.2mm !important;
+        box-shadow: none !important;
+        border: 0.35pt solid #cbd5e1 !important;
+        background: #ffffff !important;
+        flex-shrink: 0 !important;
+      }
+
+      .card-qr-wrap canvas,
+      .card-qr-wrap img,
+      .card-qr-wrap svg {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+      }
+
+      /* Back Side */
+      .back-center-wrap {
+        margin: auto !important;
+        text-align: center !important;
+        gap: 2.5mm !important;
+      }
+
+      .back-large-emblem {
         width: 14mm !important;
         height: 14mm !important;
       }
 
-      .back-large-emblem {
-        width: 18mm !important;
-        height: 18mm !important;
+      .back-logo-text-center {
+        font-size: 9pt !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.12em !important;
+      }
+
+      .back-logo-sub-center {
+        font-size: 5pt !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.18em !important;
       }
     }
   </style>
@@ -885,16 +1039,19 @@
         <span>📊</span> Vizyon Sunumu
       </a>
       <a href="imza.html" class="btn btn-outline">
-        <span>✉️</span> E-Posta İmza Stüdyosu
+        <span>✉️</span> E-Posta İmza
       </a>
       <a href="teklif.html" class="btn btn-outline">
-        <span>📑</span> Hızlı Şartname & Teklif
+        <span>📑</span> Şartname
       </a>
       <button class="btn btn-outline" onclick="downloadVCard()">
-        <span>📇</span> vCard İndir (.vcf)
+        <span>📇</span> vCard (.vcf)
       </button>
-      <button class="btn btn-gold" onclick="window.print()">
-        <span>🖨️</span> Doğrudan Baskı / PDF Kaydet
+      <button class="btn btn-gold" id="btn-download-pdf-direct" onclick="downloadHighResPDF()" style="box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);">
+        <span>📥</span> Vektörel PDF İndir (300 DPI)
+      </button>
+      <button class="btn btn-outline" onclick="window.print()">
+        <span>🖨️</span> A4 Baskı / Yazdır
       </button>
     </div>
   </header>
@@ -1135,6 +1292,8 @@
 
   </div>
 
+  <!-- High-Precision Standalone Vector PDF Exporter (jsPDF + html2canvas) -->
+  <script src="assets/js/pdf-bundle.min.js"></script>
   <!-- High-Precision Universal Standalone Local QR Code Engine -->
   <script src="assets/js/qrcode.min.js"></script>
   <script>
@@ -1776,6 +1935,81 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+
+    async function downloadHighResPDF() {
+      const frontEl = document.getElementById('front-card');
+      const backEl = document.getElementById('back-card');
+      const name = document.getElementById('inp-name').value || 'Kartvizit';
+      const cleanName = name.replace(/\s+/g, '_');
+      const filename = `YakinGrup_Kartvizit_${cleanName}.pdf`;
+
+      const btn = document.getElementById('btn-download-pdf-direct');
+      const origText = btn ? btn.innerHTML : '';
+      if (btn) btn.innerHTML = '<span>⏳</span> PDF Hazırlanıyor...';
+
+      try {
+        if (typeof window.html2canvas === 'undefined' || typeof window.jsPDF === 'undefined') {
+          window.print();
+          return;
+        }
+
+        // Save original styles
+        const origFrontShadow = frontEl.style.boxShadow;
+        const origBackShadow = backEl.style.boxShadow;
+        const origFrontRadius = frontEl.style.borderRadius;
+        const origBackRadius = backEl.style.borderRadius;
+
+        frontEl.style.boxShadow = 'none';
+        backEl.style.boxShadow = 'none';
+        frontEl.style.borderRadius = '0px';
+        backEl.style.borderRadius = '0px';
+
+        const captureOpts = {
+          scale: 4, // 300+ DPI Ultra High-Res
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        };
+
+        // Capture Front Side
+        const canvasFront = await window.html2canvas(frontEl, captureOpts);
+        const imgFront = canvasFront.toDataURL('image/jpeg', 0.98);
+
+        // Capture Back Side
+        const canvasBack = await window.html2canvas(backEl, captureOpts);
+        const imgBack = canvasBack.toDataURL('image/jpeg', 0.98);
+
+        // Restore styles
+        frontEl.style.boxShadow = origFrontShadow;
+        backEl.style.boxShadow = origBackShadow;
+        frontEl.style.borderRadius = origFrontRadius;
+        backEl.style.borderRadius = origBackRadius;
+
+        // Construct 85mm x 55mm PDF
+        const { jsPDF } = window;
+        const pdf = new jsPDF({
+          orientation: 'landscape',
+          unit: 'mm',
+          format: [55, 85]
+        });
+
+        // Page 1: Front Side
+        pdf.addImage(imgFront, 'JPEG', 0, 0, 85, 55, undefined, 'FAST');
+
+        // Page 2: Back Side
+        pdf.addPage([55, 85], 'landscape');
+        pdf.addImage(imgBack, 'JPEG', 0, 0, 85, 55, undefined, 'FAST');
+
+        // Trigger Download
+        pdf.save(filename);
+      } catch (err) {
+        console.error('PDF Export Error:', err);
+        // Fallback to native print
+        window.print();
+      } finally {
+        if (btn) btn.innerHTML = origText;
+      }
     }
 
     // Initialize on load
