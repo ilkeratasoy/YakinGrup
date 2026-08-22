@@ -974,37 +974,72 @@
 
     /* Footer */
     .doc-footer {
-      margin-top: 10px;
+      margin-top: 12px;
       padding-top: 8px;
-      border-top: 1.5px solid var(--border-light);
+      border-top: 1.5px solid #cbd5e1;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 0.66rem;
-      color: #64748b;
+      align-items: flex-end;
+      font-size: 0.65rem;
+      color: #475569;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .doc-footer-left {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      line-height: 1.3;
+      line-height: 1.35;
+      text-align: left;
+    }
+
+    .footer-company-name {
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 0.68rem;
+      letter-spacing: 0.01em;
+    }
+
+    .footer-company-address {
+      font-weight: 500;
+      color: #475569;
+      font-size: 0.64rem;
+    }
+
+    .footer-company-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.62rem;
+      color: #64748b;
+      font-weight: 500;
+      flex-wrap: wrap;
+    }
+
+    .meta-sep {
+      color: #cbd5e1;
+      font-weight: 300;
     }
 
     .doc-footer-badges {
       display: flex;
+      align-items: center;
       gap: 5px;
       flex-shrink: 0;
+      margin-bottom: 2px;
     }
 
     .doc-footer-badge {
       font-weight: 700;
       font-size: 0.62rem;
-      color: #334155;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      padding: 2px 6px;
+      color: #1e3a8a;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 3px 7px;
       border-radius: 4px;
+      line-height: 1;
+      letter-spacing: 0.02em;
     }
 
     /* Toast Notification */
@@ -1530,7 +1565,7 @@
             <div class="info-card-body">
               <strong id="sheet-provider-name">Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi</strong>
               <div id="sheet-provider-address">Caferağa Mah. Moda Cad. Akyol No: 36 İç Kapı No: 5 Kadıköy / İSTANBUL</div>
-              <div id="sheet-provider-tax">Kadıköy V.D. No: 929 099 6193 • E-Posta: info@yakingrup.net</div>
+              <div id="sheet-provider-tax">Kadıköy V.D. No: 929 099 6193 &nbsp;|&nbsp; info@yakingrup.net</div>
             </div>
           </div>
         </div>
@@ -1541,9 +1576,9 @@
           <div class="doc-subject-meta" id="sheet-currency-badge">TRY (₺)</div>
         </div>
 
-        <!-- Executive Intro -->
-        <div class="doc-intro-text" id="sheet-intro">
-          İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.
+        <div class="doc-intro-box" id="sheet-intro-box">
+          <div class="doc-intro-title">1. YÖNETİCİ ÖZETİ & PROJE AMACI</div>
+          <div class="doc-intro-text" id="sheet-intro">İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.</div>
         </div>
 
         <!-- Specification Clauses Section (Shown in Spec & Hybrid Mode) -->
@@ -1639,8 +1674,17 @@
         <!-- Document Footer -->
         <div class="doc-footer">
           <div class="doc-footer-left">
-            <span>Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi • Kadıköy V.D. 929 099 6193 • MERSİS: 0924089201900001</span>
-            <span>Caferağa Mah. Moda Cad. Akyol No: 36 İç Kapı No: 5 Kadıköy / İstanbul • www.yakingrup.net • info@yakingrup.net</span>
+            <div class="footer-company-name">Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi</div>
+            <div class="footer-company-address">Caferağa Mah. Moda Cad. Akyol No: 36 İç Kapı No: 5 Kadıköy / İstanbul</div>
+            <div class="footer-company-meta">
+              <span>Kadıköy V.D. 929 099 6193</span>
+              <span class="meta-sep">|</span>
+              <span>MERSİS: 0924089201900001</span>
+              <span class="meta-sep">|</span>
+              <span>info@yakingrup.net</span>
+              <span class="meta-sep">|</span>
+              <span>www.yakingrup.net</span>
+            </div>
           </div>
           <div class="doc-footer-badges">
             <span class="doc-footer-badge">ISO 9001</span>
@@ -2407,7 +2451,7 @@
       const addrEl = document.getElementById('sheet-provider-address');
       if (addrEl) addrEl.innerText = comp.address;
       const taxEl = document.getElementById('sheet-provider-tax');
-      if (taxEl) taxEl.innerText = (comp.tax || 'Kadıköy V.D. No: 929 099 6193') + ' • info@yakingrup.net';
+      if (taxEl) taxEl.innerHTML = (comp.tax || 'Kadıköy V.D. No: 929 099 6193') + ' &nbsp;|&nbsp; info@yakingrup.net';
 
       // Dynamic Client Signature Formatting
       const sigFormatEl = document.getElementById('inp-client-sig-format');
