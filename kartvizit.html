@@ -370,17 +370,9 @@
       box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.2), 0 0 0 1px #94a3b8;
     }
 
-    /* Clean Subtle Engineering Watermark Texture on White Card */
-    .card-box::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(circle at 90% 10%, rgba(61, 110, 48, 0.06) 0%, transparent 45%),
-        linear-gradient(rgba(61, 110, 48, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(61, 110, 48, 0.04) 1px, transparent 1px);
-      background-size: 100% 100%, 16px 16px, 16px 16px;
-      pointer-events: none;
+    /* Clean Pure Background for Crystal Clear Vector & Print Rendering */
+    .card-box {
+      background: #ffffff !important;
     }
 
     /* Bottom Signature Line */
@@ -1948,43 +1940,45 @@
       const origText = btn ? btn.innerHTML : '';
       if (btn) btn.innerHTML = '<span>⏳</span> PDF Hazırlanıyor...';
 
+      // Inject temporary capture style to guarantee 100% crystal clean white vector card
+      const overrideStyle = document.createElement('style');
+      overrideStyle.id = 'pdf-capture-overrides';
+      overrideStyle.innerHTML = `
+        .card-box { 
+          box-shadow: none !important; 
+          border: none !important; 
+          border-radius: 0 !important; 
+          transform: none !important;
+          background: #ffffff !important;
+          color: #0f172a !important;
+        }
+        .front-name, .front-brand-text h2, .back-logo-text-center, .contact-item {
+          color: #0f172a !important;
+        }
+      `;
+      document.head.appendChild(overrideStyle);
+
       try {
         if (typeof window.html2canvas === 'undefined' || typeof window.jsPDF === 'undefined') {
           window.print();
           return;
         }
 
-        // Save original styles
-        const origFrontShadow = frontEl.style.boxShadow;
-        const origBackShadow = backEl.style.boxShadow;
-        const origFrontRadius = frontEl.style.borderRadius;
-        const origBackRadius = backEl.style.borderRadius;
-
-        frontEl.style.boxShadow = 'none';
-        backEl.style.boxShadow = 'none';
-        frontEl.style.borderRadius = '0px';
-        backEl.style.borderRadius = '0px';
-
         const captureOpts = {
           scale: 4, // 300+ DPI Ultra High-Res
           useCORS: true,
           logging: false,
-          backgroundColor: '#ffffff'
+          backgroundColor: '#ffffff',
+          allowTaint: true
         };
 
-        // Capture Front Side
+        // Capture Front Side (Lossless PNG)
         const canvasFront = await window.html2canvas(frontEl, captureOpts);
-        const imgFront = canvasFront.toDataURL('image/jpeg', 0.98);
+        const imgFront = canvasFront.toDataURL('image/png');
 
-        // Capture Back Side
+        // Capture Back Side (Lossless PNG)
         const canvasBack = await window.html2canvas(backEl, captureOpts);
-        const imgBack = canvasBack.toDataURL('image/jpeg', 0.98);
-
-        // Restore styles
-        frontEl.style.boxShadow = origFrontShadow;
-        backEl.style.boxShadow = origBackShadow;
-        frontEl.style.borderRadius = origFrontRadius;
-        backEl.style.borderRadius = origBackRadius;
+        const imgBack = canvasBack.toDataURL('image/png');
 
         // Construct 85mm x 55mm PDF
         const { jsPDF } = window;
@@ -1994,20 +1988,21 @@
           format: [55, 85]
         });
 
-        // Page 1: Front Side
-        pdf.addImage(imgFront, 'JPEG', 0, 0, 85, 55, undefined, 'FAST');
+        // Page 1: Front Side (85x55mm)
+        pdf.addImage(imgFront, 'PNG', 0, 0, 85, 55, '', 'FAST');
 
-        // Page 2: Back Side
+        // Page 2: Back Side (85x55mm)
         pdf.addPage([55, 85], 'landscape');
-        pdf.addImage(imgBack, 'JPEG', 0, 0, 85, 55, undefined, 'FAST');
+        pdf.addImage(imgBack, 'PNG', 0, 0, 85, 55, '', 'FAST');
 
         // Trigger Download
         pdf.save(filename);
       } catch (err) {
         console.error('PDF Export Error:', err);
-        // Fallback to native print
         window.print();
       } finally {
+        const injected = document.getElementById('pdf-capture-overrides');
+        if (injected) injected.remove();
         if (btn) btn.innerHTML = origText;
       }
     }
