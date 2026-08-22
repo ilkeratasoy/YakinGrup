@@ -444,16 +444,18 @@
     /* 4 Sectors Badge Pill */
     .holding-sectors-badge {
       display: flex;
-      gap: 6px;
-      font-size: 0.62rem;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.58rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: #475569;
       background: #f8fafc;
-      padding: 5px 10px;
+      padding: 4px 8px;
       border-radius: 20px;
       border: 1px solid #e2e8f0;
+      white-space: nowrap;
     }
 
     .sector-dot {
@@ -733,12 +735,13 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 12mm 15mm;
+        margin: 15mm 15mm;
       }
 
       * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+        box-sizing: border-box !important;
       }
 
       html, body {
@@ -779,7 +782,7 @@
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 18mm !important;
+        gap: 16mm !important;
         width: 100% !important;
         margin: 0 auto !important;
         page-break-inside: avoid !important;
@@ -797,10 +800,10 @@
 
       .card-side-tag {
         display: block !important;
-        font-size: 8pt !important;
+        font-size: 8.5pt !important;
         font-weight: 800 !important;
         color: #334155 !important;
-        margin-bottom: 2mm !important;
+        margin-bottom: 3mm !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
         text-align: center !important;
@@ -826,7 +829,7 @@
       }
 
       .card-inner {
-        padding: 4mm 4.5mm !important;
+        padding: 4.5mm 5mm !important;
         height: 100% !important;
         box-sizing: border-box !important;
         display: flex !important;
@@ -839,57 +842,81 @@
         display: flex !important;
         align-items: flex-start !important;
         justify-content: space-between !important;
+        width: 100% !important;
         margin-bottom: 0 !important;
       }
 
       .front-logo-wrap {
         display: flex !important;
         align-items: center !important;
-        gap: 2mm !important;
+        gap: 1.8mm !important;
       }
 
       .front-logo-svg {
-        width: 7mm !important;
-        height: 7mm !important;
+        width: 7.5mm !important;
+        height: 7.5mm !important;
       }
 
-      .front-comp-name {
-        font-size: 7pt !important;
+      .front-brand-text h2 {
+        font-size: 8pt !important;
         font-weight: 800 !important;
-        letter-spacing: 0.1em !important;
+        letter-spacing: 0.06em !important;
         line-height: 1.1 !important;
+        color: #0f172a !important;
       }
 
-      .front-comp-sub {
-        font-size: 4pt !important;
-        font-weight: 600 !important;
+      .front-brand-text .sub-unit {
+        font-size: 4.4pt !important;
+        font-weight: 700 !important;
         letter-spacing: 0.14em !important;
+        color: #3d6e30 !important;
+        margin-top: 0.4mm !important;
       }
 
-      .front-holding-tag {
-        font-size: 5pt !important;
-        padding: 0.6mm 1.6mm !important;
-        border-radius: 1mm !important;
+      .holding-sectors-badge {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1mm !important;
+        font-size: 3.6pt !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.04em !important;
+        color: #475569 !important;
+        background: #f8fafc !important;
+        padding: 0.8mm 1.6mm !important;
+        border-radius: 2mm !important;
+        border: 0.3pt solid #e2e8f0 !important;
+        white-space: nowrap !important;
+      }
+
+      .sector-dot {
+        width: 0.8mm !important;
+        height: 0.8mm !important;
       }
 
       /* Person Details */
       .front-person {
         margin: auto 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.8mm !important;
+        width: 100% !important;
       }
 
       .front-name {
-        font-size: 9pt !important;
+        font-size: 10.5pt !important;
         font-weight: 800 !important;
         line-height: 1.15 !important;
-        margin-bottom: 0.8mm !important;
         letter-spacing: -0.01em !important;
+        color: #0f172a !important;
+        margin-bottom: 0.5mm !important;
       }
 
       .front-title {
-        font-size: 5pt !important;
+        font-size: 5.5pt !important;
         font-weight: 700 !important;
         line-height: 1.2 !important;
-        letter-spacing: 0.06em !important;
+        letter-spacing: 0.08em !important;
+        color: #3d6e30 !important;
       }
 
       /* Bottom Contacts & QR */
@@ -897,7 +924,8 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: flex-end !important;
-        gap: 2mm !important;
+        width: 100% !important;
+        gap: 2.5mm !important;
       }
 
       .contact-list {
@@ -905,19 +933,21 @@
         flex-direction: column !important;
         gap: 0.8mm !important;
         font-size: 5pt !important;
-        line-height: 1.2 !important;
+        line-height: 1.25 !important;
       }
 
       .contact-item {
         font-size: 5pt !important;
+        color: #334155 !important;
+        font-weight: 600 !important;
         letter-spacing: 0 !important;
       }
 
       .card-qr-wrap {
-        width: 12mm !important;
-        height: 12mm !important;
+        width: 12.5mm !important;
+        height: 12.5mm !important;
         padding: 0.8mm !important;
-        border-radius: 1.2mm !important;
+        border-radius: 1.5mm !important;
         box-shadow: none !important;
         border: 0.35pt solid #cbd5e1 !important;
         background: #ffffff !important;
@@ -936,24 +966,55 @@
       .back-center-wrap {
         margin: auto !important;
         text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
         gap: 2.5mm !important;
       }
 
       .back-large-emblem {
-        width: 14mm !important;
-        height: 14mm !important;
+        width: 15mm !important;
+        height: 15mm !important;
       }
 
-      .back-logo-text-center {
-        font-size: 9pt !important;
+      .back-holding-title {
+        font-size: 12.5pt !important;
         font-weight: 800 !important;
         letter-spacing: 0.12em !important;
+        color: #0f172a !important;
       }
 
-      .back-logo-sub-center {
+      .back-holding-slogan {
         font-size: 5pt !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.18em !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.16em !important;
+        color: #3d6e30 !important;
+        max-width: 75mm !important;
+        line-height: 1.2 !important;
+      }
+
+      .back-footer-row {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        border-top: 0.35pt solid #e2e8f0 !important;
+        padding-top: 1.5mm !important;
+      }
+
+      .back-iso-tags {
+        display: flex !important;
+        gap: 1.5mm !important;
+        font-size: 4.2pt !important;
+        color: #64748b !important;
+        font-weight: 700 !important;
+      }
+
+      .back-web-link {
+        font-size: 4.8pt !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        text-decoration: none !important;
       }
     }
   </style>
