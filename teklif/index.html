@@ -577,42 +577,52 @@
     /* Client & Info Cards */
     .doc-parties-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      align-items: stretch;
     }
 
     .info-card {
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #cbd5e1;
       border-radius: 6px;
-      padding: 9px 11px;
+      padding: 8px 11px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
     }
 
     .info-card-title {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 800;
       color: var(--primary-green);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       margin-bottom: 4px;
       border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 2px;
+      padding-bottom: 3px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     .info-card-body {
-      font-size: 0.76rem;
+      font-size: 0.73rem;
       color: #334155;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 2.5px;
+      line-height: 1.35;
+      flex: 1;
     }
 
     .info-card-body strong {
       color: #0f172a;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.25;
     }
 
     /* Executive Subject & Intro */
@@ -1692,7 +1702,7 @@
             <div class="info-card-body">
               <strong id="sheet-provider-name">Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi</strong>
               <div id="sheet-provider-address">Caferağa Mah. Moda Cad. Akyol No: 36 İç Kapı No: 5 Kadıköy / İSTANBUL</div>
-              <div id="sheet-provider-tax">Kadıköy V.D. No: 929 099 6193 &nbsp;|&nbsp; info@yakingrup.net</div>
+              <div id="sheet-provider-tax">Kadıköy V.D. No: 929 099 6193 &nbsp;&nbsp; info@yakingrup.net</div>
             </div>
           </div>
         </div>
@@ -2636,7 +2646,7 @@
       const addrEl = document.getElementById('sheet-provider-address');
       if (addrEl) addrEl.innerText = comp.address;
       const taxEl = document.getElementById('sheet-provider-tax');
-      if (taxEl) taxEl.innerHTML = (comp.tax || 'Kadıköy V.D. No: 929 099 6193') + ' &nbsp;|&nbsp; info@yakingrup.net';
+      if (taxEl) taxEl.innerHTML = (comp.tax || 'Kadıköy V.D. No: 929 099 6193') + '&nbsp;&nbsp;&nbsp;&nbsp;info@yakingrup.net';
 
       // Dynamic Client Signature Formatting
       const sigFormatEl = document.getElementById('inp-client-sig-format');
