@@ -771,6 +771,9 @@
       border-radius: 6px;
       background: #ffffff;
       padding: 7px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .doc-terms-title {
@@ -778,145 +781,146 @@
       font-weight: 800;
       color: var(--primary-green);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       border-bottom: 1px solid #f1f5f9;
       padding-bottom: 2px;
+      letter-spacing: 0.03em;
     }
 
     .doc-terms-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 3px;
-      font-size: 0.71rem;
+      gap: 2.5px;
+      font-size: 0.69rem;
       color: #475569;
       line-height: 1.35;
+      padding: 0;
+      margin: 0;
     }
 
     .doc-terms-list li {
       display: flex;
-      gap: 4px;
-    }
-
-    .doc-terms-list li::before {
-      content: "•";
-      color: var(--primary-green);
-      font-weight: bold;
-    }
-
-    /* Bank & QR Payment Card Styles */
-    .bank-qr-container {
-      margin-top: 6px;
-      display: flex;
-      flex-direction: column;
       gap: 5px;
     }
 
-    .bank-qr-card {
+    .doc-terms-list li strong {
+      color: #1e293b;
+      min-width: 90px;
+      font-weight: 700;
+    }
+
+    /* Bank Account Cards with Logo & QR Code */
+    .bank-accounts-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 3px;
+      padding-top: 4px;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .bank-item-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       background: #f8fafc;
       border: 1px solid #cbd5e1;
       border-radius: 6px;
-      padding: 6px 8px;
-      display: grid;
-      grid-template-columns: 1fr auto;
+      padding: 4px 7px;
       gap: 8px;
+    }
+
+    .bank-item-left {
+      display: flex;
       align-items: center;
+      gap: 7px;
+      flex: 1;
+      min-width: 0;
     }
 
-    .bank-qr-card.yapikredi {
-      border-left: 4px solid #002d72;
-      background: #f8fafc;
+    .bank-icon-wrap {
+      width: 26px;
+      height: 26px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .bank-qr-card.garanti {
-      border-left: 4px solid #008542;
-      background: #f8fafc;
+    .bank-icon-ykb {
+      background: #003399;
     }
 
-    .bank-card-info {
+    .bank-icon-garanti {
+      background: #008542;
+    }
+
+    .bank-item-info {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0.5px;
+      min-width: 0;
       text-align: left;
     }
 
-    .bank-card-header {
+    .bank-item-title {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #0f172a;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
+      line-height: 1.15;
     }
 
-    .bank-logo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-weight: 800;
-      font-size: 0.72rem;
-      color: #0f172a;
-    }
-
-    .bank-fast-badge {
-      font-size: 0.52rem;
-      font-weight: 800;
+    .bank-item-iban {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.63rem;
+      font-weight: 700;
       color: #1e3a8a;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      padding: 1px 4px;
-      border-radius: 3px;
       letter-spacing: 0.02em;
+      user-select: all;
+      word-break: break-all;
+      line-height: 1.15;
     }
 
-    .bank-account-title {
-      font-size: 0.58rem;
+    .bank-item-holder {
+      font-size: 0.50rem;
       color: #64748b;
-      font-weight: 600;
+      font-weight: 500;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.1;
     }
 
-    .bank-iban-val {
-      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-      font-size: 0.67rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: 0.03em;
-      background: #ffffff;
-      padding: 2px 5px;
-      border: 1px dashed #cbd5e1;
-      border-radius: 4px;
-      display: inline-block;
-      user-select: all;
-    }
-
-    .bank-qr-wrapper {
+    .bank-item-qr {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
+      gap: 1px;
       background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 5px;
       padding: 2px 3px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
       flex-shrink: 0;
-      width: 48px;
     }
 
-    .bank-qr-img {
-      width: 42px;
-      height: 42px;
+    .bank-item-qr img {
+      width: 32px;
+      height: 32px;
       display: block;
       image-rendering: pixelated;
     }
 
-    .bank-qr-label {
-      font-size: 0.46rem;
+    .bank-item-qr span {
+      font-size: 0.42rem;
       font-weight: 800;
-      color: #475569;
-      margin-top: 1px;
+      color: #0f172a;
       letter-spacing: 0.02em;
-      text-transform: uppercase;
+      line-height: 1;
     }
 
     .doc-totals-card {
@@ -1426,17 +1430,17 @@
           <div class="form-group">
             <label>Banka Hesap Bilgisi (IBAN)</label>
             <select id="inp-bank" onchange="renderApp()">
-              <option value="yapikredi" selected>Yapı Kredi Bankası (Logo & QR)</option>
-              <option value="garanti">Garanti BBVA (Logo & QR)</option>
-              <option value="both">Tüm Bankalar (Yapı Kredi + Garanti BBVA)</option>
+              <option value="yapikredi" selected>Yapı Kredi Bankası</option>
+              <option value="garanti">Garanti BBVA</option>
+              <option value="both">Tüm Bankalar (Yapı Kredi + Garanti)</option>
               <option value="none">Belgede Banka Gösterme</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Banka Logosu & Karekod (QR)</label>
-            <select id="inp-show-qr" onchange="renderApp()">
-              <option value="yes" selected>Göster (Banka Logo & QR)</option>
-              <option value="no">Yalnızca Metin IBAN</option>
+            <label>Banka QR Kodu</label>
+            <select id="inp-bank-qr" onchange="renderApp()">
+              <option value="yes" selected>QR Kod Göster (FAST/EFT)</option>
+              <option value="no">QR Kodu Gizle</option>
             </select>
           </div>
         </div>
@@ -1737,10 +1741,12 @@
               <li><strong>Ödeme Koşulları:</strong> <span id="sheet-payment-terms">%30 Sözleşmede, %50 Montajda, %20 Geçici Kabulde</span></li>
               <li><strong>Teslim Süresi:</strong> <span id="sheet-delivery-time">60 İş Günü</span></li>
               <li><strong>Garanti / SLA:</strong> <span id="sheet-warranty">2 Yıl Sistem & 25 Yıl Lineer Performans Garantisi</span></li>
-              <li id="sheet-bank-row"><strong>Banka (IBAN):</strong> <span id="sheet-bank-info">Yapı Kredi Bankası IBAN: TR92 0006 7010 0000 0317 5868 21</span></li>
             </ul>
-            <!-- Bank & FAST QR Code Container -->
-            <div id="sheet-bank-qr-container" class="bank-qr-container"></div>
+            
+            <!-- Bank Accounts with Brand Logo & FAST QR Code -->
+            <div class="bank-accounts-container" id="sheet-bank-container">
+              <!-- Dynamically Populated -->
+            </div>
           </div>
 
           <!-- Financial Calculation Card -->
@@ -1847,6 +1853,7 @@
       author: 'ilker',
       stampVisible: true,
       bankKey: 'yapikredi',
+      showBankQr: true,
       clientSigFormat: 'company',
       customClientSig: '',
       paymentTerms: '%30 Sözleşme İmzasında Peşinat / Avans, %50 Saha Montajı ve Teslimatı, %20 Geçici Kabul ve Tedaş Onayında',
@@ -2187,7 +2194,7 @@
       teknoloji: {
         name: 'Yakın Teknoloji',
         fullName: 'Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti. — Teknoloji Grubu',
-        sub: 'DİJİTAL DÖNÜŞÜM & YAPAY ZEKA',
+        sub: 'BIM 5D, DİJİTAL İKİZ & SİBER GÜVENLİK',
         address: 'Caferağa Mah. Moda Cad. Akyol No: 36 İç Kapı No: 5 Kadıköy / İSTANBUL',
         tax: 'Kadıköy V.D. No: 929 099 6193'
       },
@@ -2723,95 +2730,81 @@
       document.getElementById('sheet-delivery-time').innerText = appState.deliveryTime;
       document.getElementById('sheet-warranty').innerText = appState.warranty;
 
-      // Bank & QR Code Logic
-      const bankRow = document.getElementById('sheet-bank-row');
-      const bankInfo = document.getElementById('sheet-bank-info');
-      const bankQrContainer = document.getElementById('sheet-bank-qr-container');
-      const showQr = document.getElementById('inp-show-qr') ? document.getElementById('inp-show-qr').value === 'yes' : true;
-
-      const ykIban = 'TR92 0006 7010 0000 0317 5868 21';
-      const garIban = 'TR35 0006 2000 4430 0006 2920 12';
-      const companyTitle = 'Yakın Grup Enerji Gıda İnşaat ve Tic. Ltd. Şti.';
-
-      const ykQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=2&data=${encodeURIComponent('IBAN:TR920006701000000317586821\nAlıcı:YAKIN GRUP ENERJI GIDA INSAAT VE TICARET LTD. STI.')}`;
-      const garQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=2&data=${encodeURIComponent('IBAN:TR350006200044300006292012\nAlıcı:YAKIN GRUP ENERJI GIDA INSAAT VE TICARET LTD. STI.')}`;
-
-      const ykLogoSvg = `
-        <svg width="18" height="18" viewBox="0 0 48 48" fill="none" style="flex-shrink:0;">
-          <rect width="48" height="48" rx="8" fill="#002D72"/>
-          <path d="M14 16L24 28L34 16M24 28V36" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="24" cy="14" r="3.5" fill="#FFFFFF"/>
-        </svg>
-      `;
-
-      const garLogoSvg = `
-        <svg width="18" height="18" viewBox="0 0 48 48" fill="none" style="flex-shrink:0;">
-          <rect width="48" height="48" rx="8" fill="#008542"/>
-          <circle cx="18" cy="18" r="5.5" fill="#FFFFFF"/>
-          <circle cx="30" cy="18" r="5.5" fill="#FFFFFF"/>
-          <circle cx="18" cy="30" r="5.5" fill="#FFFFFF"/>
-          <circle cx="30" cy="30" r="5.5" fill="#FFFFFF"/>
-          <circle cx="24" cy="24" r="3.5" fill="#004481"/>
-        </svg>
-      `;
-
-      function buildBankCardHtml(type, name, iban, qrUrl, logoSvg) {
-        return `
-          <div class="bank-qr-card ${type}">
-            <div class="bank-card-info">
-              <div class="bank-card-header">
-                ${logoSvg}
-                <div class="bank-logo-badge">${name}</div>
-                <span class="bank-fast-badge">FAST / HAVALE</span>
-              </div>
-              <div class="bank-account-title">${companyTitle}</div>
-              <div><span class="bank-iban-val" title="Kopyalamak için tıklayın">${iban}</span></div>
-            </div>
-            ${showQr ? `
-              <div class="bank-qr-wrapper">
-                <img src="${qrUrl}" alt="${name} QR" class="bank-qr-img" loading="lazy" onerror="this.style.display='none'">
-                <span class="bank-qr-label">KAREKOD</span>
-              </div>
-            ` : ''}
-          </div>
-        `;
+      // Bank & QR Code Rendering
+      const qrSelect = document.getElementById('inp-bank-qr');
+      if (qrSelect) {
+        appState.showBankQr = qrSelect.value === 'yes';
       }
 
-      if (appState.bankKey === 'none') {
-        if (bankRow) bankRow.style.display = 'none';
-        if (bankQrContainer) {
-          bankQrContainer.style.display = 'none';
-          bankQrContainer.innerHTML = '';
-        }
-      } else if (showQr) {
-        if (bankRow) bankRow.style.display = 'none';
-        if (bankQrContainer) {
-          bankQrContainer.style.display = 'flex';
+      const bankContainer = document.getElementById('sheet-bank-container');
+      if (bankContainer) {
+        if (appState.bankKey === 'none') {
+          bankContainer.style.display = 'none';
+          bankContainer.innerHTML = '';
+        } else {
+          bankContainer.style.display = 'flex';
           let html = '';
+
+          const ykbCard = `
+            <div class="bank-item-card">
+              <div class="bank-item-left">
+                <div class="bank-icon-wrap bank-icon-ykb" title="Yapı Kredi">
+                  <svg viewBox="0 0 32 32" width="20" height="20" fill="none">
+                    <rect width="32" height="32" rx="6" fill="#003399"/>
+                    <path d="M 8 22 C 8 13, 15 9, 23 9 C 21 13, 18 17, 12 19 Z" fill="#ffffff"/>
+                    <path d="M 14 22 C 17 18, 20 15, 23 9" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="bank-item-info">
+                  <div class="bank-item-title">Yapı Kredi Bankası <span style="font-size:0.53rem; color:#003399; font-weight:700; background:rgba(0,51,153,0.08); padding:1px 4px; border-radius:3px;">TRY ₺</span></div>
+                  <div class="bank-item-iban">TR92 0006 7010 0000 0317 5868 21</div>
+                  <div class="bank-item-holder">Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti.</div>
+                </div>
+              </div>
+              ${appState.showBankQr ? `
+              <div class="bank-item-qr" title="Karekodla Hızlı Ödeme / FAST">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=TR920006701000000317586821" alt="Yapı Kredi FAST QR" class="bank-qr-img">
+                <span>FAST QR</span>
+              </div>` : ''}
+            </div>
+          `;
+
+          const garantiCard = `
+            <div class="bank-item-card">
+              <div class="bank-item-left">
+                <div class="bank-icon-wrap bank-icon-garanti" title="Garanti BBVA">
+                  <svg viewBox="0 0 32 32" width="20" height="20" fill="none">
+                    <rect width="32" height="32" rx="6" fill="#008542"/>
+                    <circle cx="12" cy="12" r="3.5" fill="#ffffff"/>
+                    <circle cx="20" cy="12" r="3.5" fill="#ffffff"/>
+                    <circle cx="12" cy="20" r="3.5" fill="#ffffff"/>
+                    <circle cx="20" cy="20" r="3.5" fill="#ffffff"/>
+                    <path d="M 16 16 Q 16 24 20 25" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="bank-item-info">
+                  <div class="bank-item-title">Garanti BBVA <span style="font-size:0.53rem; color:#008542; font-weight:700; background:rgba(0,133,66,0.08); padding:1px 4px; border-radius:3px;">TRY ₺</span></div>
+                  <div class="bank-item-iban">TR35 0006 2000 4430 0006 2920 12</div>
+                  <div class="bank-item-holder">Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti.</div>
+                </div>
+              </div>
+              ${appState.showBankQr ? `
+              <div class="bank-item-qr" title="Karekodla Hızlı Ödeme / FAST">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=TR350006200044300006292012" alt="Garanti BBVA FAST QR" class="bank-qr-img">
+                <span>FAST QR</span>
+              </div>` : ''}
+            </div>
+          `;
+
           if (appState.bankKey === 'yapikredi') {
-            html = buildBankCardHtml('yapikredi', 'Yapı Kredi Bankası', ykIban, ykQrUrl, ykLogoSvg);
+            html = ykbCard;
           } else if (appState.bankKey === 'garanti') {
-            html = buildBankCardHtml('garanti', 'Garanti BBVA', garIban, garQrUrl, garLogoSvg);
+            html = garantiCard;
           } else if (appState.bankKey === 'both') {
-            html = buildBankCardHtml('yapikredi', 'Yapı Kredi Bankası', ykIban, ykQrUrl, ykLogoSvg) +
-                   buildBankCardHtml('garanti', 'Garanti BBVA', garIban, garQrUrl, garLogoSvg);
+            html = ykbCard + garantiCard;
           }
-          bankQrContainer.innerHTML = html;
-        }
-      } else {
-        if (bankQrContainer) {
-          bankQrContainer.style.display = 'none';
-          bankQrContainer.innerHTML = '';
-        }
-        if (bankRow) {
-          bankRow.style.display = 'flex';
-          if (appState.bankKey === 'yapikredi') {
-            bankInfo.innerText = `Yapı Kredi Bankası IBAN: ${ykIban}`;
-          } else if (appState.bankKey === 'garanti') {
-            bankInfo.innerText = `Garanti BBVA IBAN: ${garIban}`;
-          } else if (appState.bankKey === 'both') {
-            bankInfo.innerHTML = `Yapı Kredi: ${ykIban} &nbsp;|&nbsp; Garanti BBVA: ${garIban}`;
-          }
+
+          bankContainer.innerHTML = html;
         }
       }
 
