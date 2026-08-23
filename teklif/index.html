@@ -1370,10 +1370,92 @@
         </div>
       </div>
 
-      <!-- 2. Finansal Oranlar, Ödeme Planı & İmza (2. Sıraya Taşındı) -->
+      <!-- 2. Proje & Muhatap Bilgileri (2. Sıraya Alındı) -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>📋 2. Proje & Kurum Bilgileri</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Belge No</label>
+            <input type="text" id="inp-doc-no" value="YKN-SRT-2026-0816" oninput="renderApp()">
+          </div>
+          <div class="form-group">
+            <label>Tarih</label>
+            <input type="date" id="inp-doc-date" oninput="renderApp()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Geçerlilik Süresi</label>
+            <select id="inp-validity" onchange="renderApp()">
+              <option value="15">15 Gün</option>
+              <option value="30" selected>30 Gün</option>
+              <option value="60">60 Gün</option>
+              <option value="90">90 Gün</option>
+              <option value="180">6 Ay</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Para Birimi</label>
+            <select id="inp-currency" onchange="renderApp()">
+              <option value="TRY" selected>₺ Türk Lirası (TRY)</option>
+              <option value="USD">$ Amerikan Doları (USD)</option>
+              <option value="EUR">€ Euro (EUR)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Müşteri / Kurum Adı</label>
+          <input type="text" id="inp-client-company" value="Atlas Holding A.Ş." placeholder="Kurum Adı" oninput="renderApp()">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Muhatap / Yetkili</label>
+            <input type="text" id="inp-client-name" value="Sayın Ahmet Yılmaz — Yatırımlar Direktörü" oninput="renderApp()">
+          </div>
+          <div class="form-group">
+            <label>Proje Lokasyonu</label>
+            <input type="text" id="inp-client-location" value="Kocaeli Dilovası OSB / Türkiye" oninput="renderApp()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Müşteri Onay İsim Formatı</label>
+            <select id="inp-client-sig-format" onchange="renderApp()">
+              <option value="company" selected>Yalnızca Kurum ("Atlas Holding A.Ş. Yetkilisi")</option>
+              <option value="both">Kurum + Yetkili ("Atlas Holding / Ahmet Yılmaz")</option>
+              <option value="person">Yalnızca Yetkili İsmi ("Sayın Ahmet Yılmaz")</option>
+              <option value="generic">Genel ("Müşteri / İşveren Yetkilisi")</option>
+              <option value="custom">Özel İsim Girişi...</option>
+            </select>
+          </div>
+          <div class="form-group" id="group-custom-client-sig" style="display: none;">
+            <label>Özel İsim / Unvan</label>
+            <input type="text" id="inp-custom-client-sig" placeholder="Örn: Satınalma Komisyonu Başkanı" oninput="renderApp()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label id="lbl-subject">Proje / Belge Başlığı</label>
+          <input type="text" id="inp-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi" oninput="renderApp()">
+        </div>
+
+        <div class="form-group">
+          <label>Giriş & Yönetici Özeti</label>
+          <textarea id="inp-intro" rows="3" oninput="renderApp()">İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.</textarea>
+        </div>
+      </div>
+
+      <!-- 3. Finansal Oranlar, Ödeme Planı & İmza -->
       <div class="panel-section" id="panel-financial-settings">
         <div class="panel-title">
-          <span>💰 2. Finans, Ödeme Planı & İmza</span>
+          <span>💰 3. Finans, Ödeme Planı & İmza</span>
         </div>
 
         <div class="form-row">
@@ -1456,10 +1538,10 @@
         </div>
       </div>
 
-      <!-- 3. Sektörel Hazır Şablonlar -->
+      <!-- 4. Sektörel Hazır Şablonlar -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>⚡ 3. Hazır Sektörel Şablonlar</span>
+          <span>⚡ 4. Hazır Sektörel Şablonlar</span>
           <span style="font-size: 0.72rem; color: #64748b;">1-Tıkla Yükle</span>
         </div>
 
@@ -1503,88 +1585,6 @@
             </div>
             <span class="badge">Capital</span>
           </div>
-        </div>
-      </div>
-
-      <!-- 4. Proje & Muhatap Bilgileri -->
-      <div class="panel-section">
-        <div class="panel-title">
-          <span>📋 4. Proje & Kurum Bilgileri</span>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Belge No</label>
-            <input type="text" id="inp-doc-no" value="YKN-SRT-2026-0816" oninput="renderApp()">
-          </div>
-          <div class="form-group">
-            <label>Tarih</label>
-            <input type="date" id="inp-doc-date" oninput="renderApp()">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Geçerlilik Süresi</label>
-            <select id="inp-validity" onchange="renderApp()">
-              <option value="15">15 Gün</option>
-              <option value="30" selected>30 Gün</option>
-              <option value="60">60 Gün</option>
-              <option value="90">90 Gün</option>
-              <option value="180">6 Ay</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Para Birimi</label>
-            <select id="inp-currency" onchange="renderApp()">
-              <option value="TRY" selected>₺ Türk Lirası (TRY)</option>
-              <option value="USD">$ Amerikan Doları (USD)</option>
-              <option value="EUR">€ Euro (EUR)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Müşteri / Kurum Adı</label>
-          <input type="text" id="inp-client-company" value="Atlas Holding A.Ş." placeholder="Kurum Adı" oninput="renderApp()">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Muhatap / Yetkili</label>
-            <input type="text" id="inp-client-name" value="Sayın Ahmet Yılmaz — Yatırımlar Direktörü" oninput="renderApp()">
-          </div>
-          <div class="form-group">
-            <label>Proje Lokasyonu</label>
-            <input type="text" id="inp-client-location" value="Kocaeli Dilovası OSB / Türkiye" oninput="renderApp()">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Müşteri Onay İsim Formatı</label>
-            <select id="inp-client-sig-format" onchange="renderApp()">
-              <option value="company" selected>Yalnızca Kurum ("Atlas Holding A.Ş. Yetkilisi")</option>
-              <option value="both">Kurum + Yetkili ("Atlas Holding / Ahmet Yılmaz")</option>
-              <option value="person">Yalnızca Yetkili İsmi ("Sayın Ahmet Yılmaz")</option>
-              <option value="generic">Genel ("Müşteri / İşveren Yetkilisi")</option>
-              <option value="custom">Özel İsim Girişi...</option>
-            </select>
-          </div>
-          <div class="form-group" id="group-custom-client-sig" style="display: none;">
-            <label>Özel İsim / Unvan</label>
-            <input type="text" id="inp-custom-client-sig" placeholder="Örn: Satınalma Komisyonu Başkanı" oninput="renderApp()">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label id="lbl-subject">Proje / Belge Başlığı</label>
-          <input type="text" id="inp-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi" oninput="renderApp()">
-        </div>
-
-        <div class="form-group">
-          <label>Giriş & Yönetici Özeti</label>
-          <textarea id="inp-intro" rows="3" oninput="renderApp()">İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.</textarea>
         </div>
       </div>
 
