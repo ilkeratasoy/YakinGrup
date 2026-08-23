@@ -1241,187 +1241,10 @@
         </div>
       </div>
 
-      <!-- 2. Sektörel Hazır Şablonlar -->
-      <div class="panel-section">
-        <div class="panel-title">
-          <span>⚡ 2. Hazır Sektörel Şablonlar</span>
-          <span style="font-size: 0.72rem; color: #64748b;">1-Tıkla Yükle</span>
-        </div>
-
-        <div class="template-card-list">
-          <div class="template-card" onclick="loadTemplate('ges')">
-            <div>
-              <h4>☀️ 1 MWp Endüstriyel Çatı GES Şartnamesi & Teklifi</h4>
-              <p>Tier-1 Panel, String İnvertör, Statik Konstrüksiyon, TEDAŞ Kabul</p>
-            </div>
-            <span class="badge">Enerji EPC</span>
-          </div>
-
-          <div class="template-card" onclick="loadTemplate('datacenter')">
-            <div>
-              <h4>🏢 Tier-III Veri Merkezi & Endüstriyel Tesis Şartnamesi</h4>
-              <p>N+1 Hassas Soğutma, FM200 Gazlı Söndürme, 2N Pano Altyapısı</p>
-            </div>
-            <span class="badge">İnşaat / MEP</span>
-          </div>
-
-          <div class="template-card" onclick="loadTemplate('bim')">
-            <div>
-              <h4>💻 BIM 5D & Dijital İkiz Modelleme Şartnamesi</h4>
-              <p>LOD 400 As-Built BIM, Çakışma Yönetimi, CDE Bulut Ortamı</p>
-            </div>
-            <span class="badge">Teknoloji</span>
-          </div>
-
-          <div class="template-card" onclick="loadTemplate('cyber')">
-            <div>
-              <h4>🔒 Kurumsal Siber Güvenlik, SOC & Pentest Şartnamesi</h4>
-              <p>ISO 27001 Uyum, Dış/İç Penetrasyon Testi, 7/24 SIEM & SLA</p>
-            </div>
-            <span class="badge">Siber Güvenlik</span>
-          </div>
-
-          <div class="template-card" onclick="loadTemplate('finance')">
-            <div>
-              <h4>📈 Proje Finansmanı & Fizibilite Şartnamesi</h4>
-              <p>Banka Kredi Dosyası, DSCR Modeli, Bağımsız Mühendis Raporu</p>
-            </div>
-            <span class="badge">Capital</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. Proje & Muhatap Bilgileri -->
-      <div class="panel-section">
-        <div class="panel-title">
-          <span>📋 3. Proje & Kurum Bilgileri</span>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Belge No</label>
-            <input type="text" id="inp-doc-no" value="YKN-SRT-2026-0816" oninput="renderApp()">
-          </div>
-          <div class="form-group">
-            <label>Tarih</label>
-            <input type="date" id="inp-doc-date" oninput="renderApp()">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Geçerlilik Süresi</label>
-            <select id="inp-validity" onchange="renderApp()">
-              <option value="15">15 Gün</option>
-              <option value="30" selected>30 Gün</option>
-              <option value="60">60 Gün</option>
-              <option value="90">90 Gün</option>
-              <option value="180">6 Ay</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Para Birimi</label>
-            <select id="inp-currency" onchange="renderApp()">
-              <option value="TRY" selected>₺ Türk Lirası (TRY)</option>
-              <option value="USD">$ Amerikan Doları (USD)</option>
-              <option value="EUR">€ Euro (EUR)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Müşteri / Kurum Adı</label>
-          <input type="text" id="inp-client-company" value="Atlas Holding A.Ş." placeholder="Kurum Adı" oninput="renderApp()">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Muhatap / Yetkili</label>
-            <input type="text" id="inp-client-name" value="Sayın Ahmet Yılmaz — Yatırımlar Direktörü" oninput="renderApp()">
-          </div>
-          <div class="form-group">
-            <label>Proje Lokasyonu</label>
-            <input type="text" id="inp-client-location" value="Kocaeli Dilovası OSB / Türkiye" oninput="renderApp()">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Müşteri Onay İsim Formatı</label>
-            <select id="inp-client-sig-format" onchange="renderApp()">
-              <option value="company" selected>Yalnızca Kurum ("Atlas Holding A.Ş. Yetkilisi")</option>
-              <option value="both">Kurum + Yetkili ("Atlas Holding / Ahmet Yılmaz")</option>
-              <option value="person">Yalnızca Yetkili İsmi ("Sayın Ahmet Yılmaz")</option>
-              <option value="generic">Genel ("Müşteri / İşveren Yetkilisi")</option>
-              <option value="custom">Özel İsim Girişi...</option>
-            </select>
-          </div>
-          <div class="form-group" id="group-custom-client-sig" style="display: none;">
-            <label>Özel İsim / Unvan</label>
-            <input type="text" id="inp-custom-client-sig" placeholder="Örn: Satınalma Komisyonu Başkanı" oninput="renderApp()">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Proje / Şartname Başlığı</label>
-          <input type="text" id="inp-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi" oninput="renderApp()">
-        </div>
-
-        <div class="form-group">
-          <label>Giriş & Yönetici Özeti</label>
-          <textarea id="inp-intro" rows="3" oninput="renderApp()">İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.</textarea>
-        </div>
-      </div>
-
-      <!-- 4. Şartname Madde Editörü (Specification Clauses) -->
-      <div class="panel-section" id="panel-spec-clauses">
-        <div class="panel-title">
-          <span>📜 4. Şartname Maddeleri</span>
-          <button class="btn-action-sm" style="color: #64748b;" onclick="resetClauses()">Sıfırla</button>
-        </div>
-
-        <div class="form-group">
-          <label>Hızlı Standart Madde Ekle</label>
-          <select id="select-quick-clause" onchange="addQuickClause(this.value); this.value='';">
-            <option value="">-- Hazır Şartname Maddesi Seçin --</option>
-            <option value="isg">İş Sağlığı, Güvenliği (İSG) ve Çevre Standartları</option>
-            <option value="garanti">Garanti, SLA ve Periyodik Bakım Şartları</option>
-            <option value="kabul">Geçici Kabul ve Kesin Kabul Kriterleri</option>
-            <option value="ceza">Gecikme Cezası ve Mücbir Sebep Koşulları</option>
-            <option value="gizlilik">Gizlilik, KVKK ve Fikri Mülkiyet Taahhüdü</option>
-            <option value="odeme">Hakediş Onayı ve Ödeme Planı Şartı</option>
-          </select>
-        </div>
-
-        <div id="clauses-editor-container" style="display: flex; flex-direction: column; gap: 8px;">
-          <!-- Dynamically populated clauses -->
-        </div>
-
-        <button class="btn-add-dashed" onclick="addNewClause()">
-          <span>➕ Yeni Şartname Maddesi Ekle</span>
-        </button>
-      </div>
-
-      <!-- 5. Teklif Kalemleri (Financial Items) -->
-      <div class="panel-section" id="panel-prop-items">
-        <div class="panel-title">
-          <span>📦 5. Fiyat Teklifi & Keşif Kalemleri</span>
-          <button class="btn-action-sm" style="color: #64748b;" onclick="resetItems()">Sıfırla</button>
-        </div>
-
-        <div id="items-editor-container" style="display: flex; flex-direction: column; gap: 8px;">
-          <!-- Dynamically populated items -->
-        </div>
-
-        <button class="btn-add-dashed" onclick="addNewItem()">
-          <span>➕ Yeni Fiyat Kalemi Ekle</span>
-        </button>
-      </div>
-
-      <!-- 6. Finansal Oranlar, Ödeme Planı & İmza -->
+      <!-- 2. Finansal Oranlar, Ödeme Planı & İmza (2. Sıraya Taşındı) -->
       <div class="panel-section" id="panel-financial-settings">
         <div class="panel-title">
-          <span>💰 6. Finans, Ödeme Planı & İmza</span>
+          <span>💰 2. Finans, Ödeme Planı & İmza</span>
         </div>
 
         <div class="form-row">
@@ -1493,6 +1316,183 @@
             <option value="none">Belgede Banka Gösterme</option>
           </select>
         </div>
+      </div>
+
+      <!-- 3. Sektörel Hazır Şablonlar -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>⚡ 3. Hazır Sektörel Şablonlar</span>
+          <span style="font-size: 0.72rem; color: #64748b;">1-Tıkla Yükle</span>
+        </div>
+
+        <div class="template-card-list">
+          <div class="template-card" onclick="loadTemplate('ges')">
+            <div>
+              <h4>☀️ 1 MWp Endüstriyel Çatı GES Şartnamesi & Teklifi</h4>
+              <p>Tier-1 Panel, String İnvertör, Statik Konstrüksiyon, TEDAŞ Kabul</p>
+            </div>
+            <span class="badge">Enerji EPC</span>
+          </div>
+
+          <div class="template-card" onclick="loadTemplate('datacenter')">
+            <div>
+              <h4>🏢 Tier-III Veri Merkezi & Endüstriyel Tesis Şartnamesi</h4>
+              <p>N+1 Hassas Soğutma, FM200 Gazlı Söndürme, 2N Pano Altyapısı</p>
+            </div>
+            <span class="badge">İnşaat / MEP</span>
+          </div>
+
+          <div class="template-card" onclick="loadTemplate('bim')">
+            <div>
+              <h4>💻 BIM 5D & Dijital İkiz Modelleme Şartnamesi</h4>
+              <p>LOD 400 As-Built BIM, Çakışma Yönetimi, CDE Bulut Ortamı</p>
+            </div>
+            <span class="badge">Teknoloji</span>
+          </div>
+
+          <div class="template-card" onclick="loadTemplate('cyber')">
+            <div>
+              <h4>🔒 Kurumsal Siber Güvenlik, SOC & Pentest Şartnamesi</h4>
+              <p>ISO 27001 Uyum, Dış/İç Penetrasyon Testi, 7/24 SIEM & SLA</p>
+            </div>
+            <span class="badge">Siber Güvenlik</span>
+          </div>
+
+          <div class="template-card" onclick="loadTemplate('finance')">
+            <div>
+              <h4>📈 Proje Finansmanı & Fizibilite Şartnamesi</h4>
+              <p>Banka Kredi Dosyası, DSCR Modeli, Bağımsız Mühendis Raporu</p>
+            </div>
+            <span class="badge">Capital</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Proje & Muhatap Bilgileri -->
+      <div class="panel-section">
+        <div class="panel-title">
+          <span>📋 4. Proje & Kurum Bilgileri</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Belge No</label>
+            <input type="text" id="inp-doc-no" value="YKN-SRT-2026-0816" oninput="renderApp()">
+          </div>
+          <div class="form-group">
+            <label>Tarih</label>
+            <input type="date" id="inp-doc-date" oninput="renderApp()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Geçerlilik Süresi</label>
+            <select id="inp-validity" onchange="renderApp()">
+              <option value="15">15 Gün</option>
+              <option value="30" selected>30 Gün</option>
+              <option value="60">60 Gün</option>
+              <option value="90">90 Gün</option>
+              <option value="180">6 Ay</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Para Birimi</label>
+            <select id="inp-currency" onchange="renderApp()">
+              <option value="TRY" selected>₺ Türk Lirası (TRY)</option>
+              <option value="USD">$ Amerikan Doları (USD)</option>
+              <option value="EUR">€ Euro (EUR)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Müşteri / Kurum Adı</label>
+          <input type="text" id="inp-client-company" value="Atlas Holding A.Ş." placeholder="Kurum Adı" oninput="renderApp()">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Muhatap / Yetkili</label>
+            <input type="text" id="inp-client-name" value="Sayın Ahmet Yılmaz — Yatırımlar Direktörü" oninput="renderApp()">
+          </div>
+          <div class="form-group">
+            <label>Proje Lokasyonu</label>
+            <input type="text" id="inp-client-location" value="Kocaeli Dilovası OSB / Türkiye" oninput="renderApp()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Müşteri Onay İsim Formatı</label>
+            <select id="inp-client-sig-format" onchange="renderApp()">
+              <option value="company" selected>Yalnızca Kurum ("Atlas Holding A.Ş. Yetkilisi")</option>
+              <option value="both">Kurum + Yetkili ("Atlas Holding / Ahmet Yılmaz")</option>
+              <option value="person">Yalnızca Yetkili İsmi ("Sayın Ahmet Yılmaz")</option>
+              <option value="generic">Genel ("Müşteri / İşveren Yetkilisi")</option>
+              <option value="custom">Özel İsim Girişi...</option>
+            </select>
+          </div>
+          <div class="form-group" id="group-custom-client-sig" style="display: none;">
+            <label>Özel İsim / Unvan</label>
+            <input type="text" id="inp-custom-client-sig" placeholder="Örn: Satınalma Komisyonu Başkanı" oninput="renderApp()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label id="lbl-subject">Proje / Belge Başlığı</label>
+          <input type="text" id="inp-subject" value="1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi" oninput="renderApp()">
+        </div>
+
+        <div class="form-group">
+          <label>Giriş & Yönetici Özeti</label>
+          <textarea id="inp-intro" rows="3" oninput="renderApp()">İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.</textarea>
+        </div>
+      </div>
+
+      <!-- 5. Teklif Kalemleri (Financial Items) -->
+      <div class="panel-section" id="panel-prop-items">
+        <div class="panel-title">
+          <span>📦 5. Fiyat Teklifi & Keşif Kalemleri</span>
+          <button class="btn-action-sm" style="color: #64748b;" onclick="resetItems()">Sıfırla</button>
+        </div>
+
+        <div id="items-editor-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Dynamically populated items -->
+        </div>
+
+        <button class="btn-add-dashed" onclick="addNewItem()">
+          <span>➕ Yeni Fiyat Kalemi Ekle</span>
+        </button>
+      </div>
+
+      <!-- 6. Şartname Madde Editörü (Specification Clauses) -->
+      <div class="panel-section" id="panel-spec-clauses">
+        <div class="panel-title">
+          <span>📜 6. Şartname Maddeleri</span>
+          <button class="btn-action-sm" style="color: #64748b;" onclick="resetClauses()">Sıfırla</button>
+        </div>
+
+        <div class="form-group">
+          <label>Hızlı Standart Madde Ekle</label>
+          <select id="select-quick-clause" onchange="addQuickClause(this.value); this.value='';">
+            <option value="">-- Hazır Şartname Maddesi Seçin --</option>
+            <option value="isg">İş Sağlığı, Güvenliği (İSG) ve Çevre Standartları</option>
+            <option value="garanti">Garanti, SLA ve Periyodik Bakım Şartları</option>
+            <option value="kabul">Geçici Kabul ve Kesin Kabul Kriterleri</option>
+            <option value="ceza">Gecikme Cezası ve Mücbir Sebep Koşulları</option>
+            <option value="gizlilik">Gizlilik, KVKK ve Fikri Mülkiyet Taahhüdü</option>
+            <option value="odeme">Hakediş Onayı ve Ödeme Planı Şartı</option>
+          </select>
+        </div>
+
+        <div id="clauses-editor-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Dynamically populated clauses -->
+        </div>
+
+        <button class="btn-add-dashed" onclick="addNewClause()">
+          <span>➕ Yeni Şartname Maddesi Ekle</span>
+        </button>
       </div>
 
     </aside>
@@ -2074,6 +2074,33 @@
       }
     };
 
+    // Subject Text Cleaner for Mode
+    function cleanSubjectForMode(subject, mode) {
+      if (!subject) return '';
+      if (mode === 'prop') {
+        return subject
+          .replace(/Teknik ve İdari Şartnamesi/gi, 'Fiyat Teklifi ve Keşif Tablosu')
+          .replace(/Teknik Şartnamesi/gi, 'Fiyat Teklifi')
+          .replace(/İdari Şartnamesi/gi, 'Fiyat Teklifi')
+          .replace(/Hizmet Şartnamesi/gi, 'Hizmet Fiyat Teklifi')
+          .replace(/Şartnamesi/gi, 'Fiyat Teklifi')
+          .replace(/Şartname/gi, 'Fiyat Teklifi');
+      } else if (mode === 'spec') {
+        return subject
+          .replace(/Fiyat Teklifi ve Keşif Tablosu/gi, 'Teknik ve İdari Şartnamesi')
+          .replace(/Hizmet Fiyat Teklifi/gi, 'Hizmet Şartnamesi')
+          .replace(/Fiyat Teklifi/gi, 'Teknik ve İdari Şartnamesi')
+          .replace(/Teklif/gi, 'Şartname');
+      } else if (mode === 'hybrid') {
+        return subject
+          .replace(/Teknik ve İdari Şartnamesi/gi, 'Teknik Şartname ve Fiyat Teklifi')
+          .replace(/Fiyat Teklifi ve Keşif Tablosu/gi, 'Teknik Şartname ve Fiyat Teklifi')
+          .replace(/Fiyat Teklifi/gi, 'Şartname ve Fiyat Teklifi')
+          .replace(/Şartnamesi/gi, 'Şartname ve Fiyat Teklifi');
+      }
+      return subject;
+    }
+
     // Set Document Mode ('spec', 'prop', 'hybrid')
     function setDocMode(mode) {
       appState.mode = mode;
@@ -2091,34 +2118,55 @@
       const sheetTable = document.getElementById('sheet-table-section');
       const sheetTotals = document.getElementById('sheet-totals-section');
       const sheetBadge = document.getElementById('sheet-badge-title');
+      const lblSubject = document.getElementById('lbl-subject');
+      const introTitle = document.querySelector('.doc-intro-title');
+
+      // Update subject & intro cleanly according to selected mode
+      let curSubj = document.getElementById('inp-subject').value || appState.subject;
+      curSubj = cleanSubjectForMode(curSubj, mode);
+      appState.subject = curSubj;
+      document.getElementById('inp-subject').value = curSubj;
 
       if (mode === 'spec') {
         badge.innerText = 'Teknik & İdari Şartname';
         sheetBadge.innerText = 'TEKNİK VE İDARİ ŞARTNAME';
+        if (lblSubject) lblSubject.innerText = 'Proje / Şartname Başlığı';
+        if (introTitle) introTitle.innerText = '1. YÖNETİCİ ÖZETİ & PROJE AMACI';
         panelSpec.style.display = 'flex';
         panelProp.style.display = 'none';
-        panelFin.style.display = 'flex';
         sheetClauses.style.display = 'flex';
         sheetTable.style.display = 'none';
         sheetTotals.style.display = 'none';
+        if (appState.intro.includes('fiyat teklifi')) {
+          appState.intro = 'İşbu teknik şartname dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.';
+          document.getElementById('inp-intro').value = appState.intro;
+        }
       } else if (mode === 'prop') {
         badge.innerText = 'Fiyat Teklifi & Keşif';
         sheetBadge.innerText = 'FİYAT TEKLİFİ & KEŞİF TABLOSU';
+        if (lblSubject) lblSubject.innerText = 'Proje / Fiyat Teklifi Başlığı';
+        if (introTitle) introTitle.innerText = '1. YÖNETİCİ ÖZETİ & TEKLİF KAPSAMI';
         panelSpec.style.display = 'none';
         panelProp.style.display = 'flex';
-        panelFin.style.display = 'flex';
         sheetClauses.style.display = 'none';
         sheetTable.style.display = 'block';
         sheetTotals.style.display = 'grid';
+        if (appState.intro.includes('şartname')) {
+          appState.intro = 'İşbu fiyat teklifi ve keşif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, malzeme temini, montaj, devreye alma ve anahtar teslim kurulum hizmetlerinin maliyet ve ticari esaslarını belirler.';
+          document.getElementById('inp-intro').value = appState.intro;
+        }
       } else {
         badge.innerText = 'Birleşik İhale & Teklif Dosyası';
         sheetBadge.innerText = 'ŞARTNAME VE FİYAT TEKLİF DOSYASI';
+        if (lblSubject) lblSubject.innerText = 'Proje / Şartname & Teklif Başlığı';
+        if (introTitle) introTitle.innerText = '1. YÖNETİCİ ÖZETİ & PROJE AMACI';
         panelSpec.style.display = 'flex';
         panelProp.style.display = 'flex';
-        panelFin.style.display = 'flex';
         sheetClauses.style.display = 'flex';
         sheetTable.style.display = 'block';
         sheetTotals.style.display = 'grid';
+        appState.intro = 'İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.';
+        document.getElementById('inp-intro').value = appState.intro;
       }
 
       renderApp();
@@ -2140,7 +2188,14 @@
       const t = templates[key];
       if (!t) return;
 
-      appState.subject = t.subject;
+      let subj = t.subject;
+      if (appState.mode === 'prop') {
+        subj = cleanSubjectForMode(subj, 'prop');
+      } else if (appState.mode === 'hybrid') {
+        subj = cleanSubjectForMode(subj, 'hybrid');
+      }
+
+      appState.subject = subj;
       appState.intro = t.intro;
       appState.company = t.company;
       appState.currency = t.currency;
@@ -2150,14 +2205,14 @@
       appState.items = JSON.parse(JSON.stringify(t.items));
 
       // Sync form controls
-      document.getElementById('inp-subject').value = t.subject;
+      document.getElementById('inp-subject').value = subj;
       document.getElementById('inp-intro').value = t.intro;
       document.getElementById('inp-currency').value = t.currency;
 
       renderClausesEditor();
       renderItemsEditor();
       renderApp();
-      showToast('Şablon yüklendi: ' + t.subject.substring(0, 35) + '...');
+      showToast('Şablon yüklendi: ' + subj.substring(0, 35) + '...');
     }
 
     // Add Clause from Quick Standard List
