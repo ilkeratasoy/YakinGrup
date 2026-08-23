@@ -1430,9 +1430,9 @@
           <div class="form-group">
             <label>Banka Hesap Bilgisi (IBAN)</label>
             <select id="inp-bank" onchange="renderApp()">
-              <option value="yapikredi" selected>Yapı Kredi Bankası</option>
-              <option value="garanti">Garanti BBVA</option>
-              <option value="both">Tüm Bankalar (Yapı Kredi + Garanti)</option>
+              <option value="both" selected>Tüm Bankalar (Yapı Kredi + Garanti BBVA)</option>
+              <option value="yapikredi">Yalnızca Yapı Kredi Bankası</option>
+              <option value="garanti">Yalnızca Garanti BBVA</option>
               <option value="none">Belgede Banka Gösterme</option>
             </select>
           </div>
@@ -1852,7 +1852,7 @@
       vatRate: 20,
       author: 'ilker',
       stampVisible: true,
-      bankKey: 'yapikredi',
+      bankKey: 'both',
       showBankQr: true,
       clientSigFormat: 'company',
       customClientSig: '',
