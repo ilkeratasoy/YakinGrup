@@ -440,11 +440,39 @@
       flex: 1;
       background: var(--stage-bg);
       overflow-y: auto;
-      padding: 2.2rem 1.8rem;
+      padding: 1.5rem 1.8rem 6rem 1.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .preview-stage:active {
+      cursor: grabbing;
+    }
+
+    .preview-stage .doc-sheet {
+      user-select: text;
+    }
+
+    .stage-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 0.45rem 1.1rem;
+      border-radius: 30px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      border: 1px solid var(--border-light);
+      cursor: default;
+      user-select: none;
     }
 
     .stage-toolbar {
@@ -1923,10 +1951,17 @@
       
       <!-- Stage Toolbar -->
       <div class="stage-toolbar">
-        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">📄 Canlı A4 Şartname & Teklif Önizleme</span>
-        <button class="zoom-btn" onclick="setZoom(0.85)">85%</button>
-        <button class="zoom-btn" onclick="setZoom(1)">100%</button>
-        <button class="zoom-btn" onclick="setZoom(1.15)">115%</button>
+        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">📄 Canlı A4 Önizleme</span>
+        <div style="display:flex; align-items:center; gap:4px; border-left:1px solid #cbd5e1; padding-left:8px;">
+          <button class="zoom-btn" onclick="scrollToPreviewSection('top')" title="Belgenin En Başına Git">⬆️ Baş</button>
+          <button class="zoom-btn" onclick="scrollToPreviewSection('table')" title="Fiyat & Keşif Tablosuna Git">📊 Tablo</button>
+          <button class="zoom-btn" onclick="scrollToPreviewSection('bottom')" title="Toplam Tutar, Banka & İmzalara Git">⬇️ Son</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:4px; border-left:1px solid #cbd5e1; padding-left:8px;">
+          <button class="zoom-btn" onclick="setZoom(0.85)">85%</button>
+          <button class="zoom-btn" onclick="setZoom(1)">100%</button>
+          <button class="zoom-btn" onclick="setZoom(1.15)">115%</button>
+        </div>
       </div>
 
       <!-- A4 Sheet Container -->
@@ -2843,6 +2878,7 @@
       renderClausesEditor();
       renderItemsEditor();
       setDocMode(appState.mode || 'spec');
+      initPreviewStageDrag();
       closeModal('modal-archive');
       showToast('📂 "' + p.docNo + '" stüdyoya yüklendi.');
     }
@@ -4010,6 +4046,62 @@
       window.open('https://api.whatsapp.com/send?text=' + encoded, '_blank');
     }
 
+    
+    // --- Mouse Drag / Pan & Preview Jump Engine ---
+    function scrollToPreviewSection(target) {
+      const stage = document.querySelector('.preview-stage');
+      if (!stage) return;
+      if (target === 'top') {
+        stage.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (target === 'table') {
+        const el = document.getElementById('sheet-table-section') || document.getElementById('sheet-clauses-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else if (target === 'bottom') {
+        stage.scrollTo({ top: stage.scrollHeight, behavior: 'smooth' });
+      }
+    }
+
+    function initPreviewStageDrag() {
+      const stage = document.querySelector('.preview-stage');
+      if (!stage) return;
+
+      let isDown = false;
+      let startY = 0;
+      let scrollTop = 0;
+
+      stage.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a') || e.target.closest('select')) {
+          return;
+        }
+        isDown = true;
+        startY = e.pageY - stage.offsetTop;
+        scrollTop = stage.scrollTop;
+        stage.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const y = e.pageY - stage.offsetTop;
+        const walk = (y - startY) * 1.5;
+        stage.scrollTop = scrollTop - walk;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDown) {
+          isDown = false;
+          stage.style.cursor = 'grab';
+        }
+      });
+
+      stage.addEventListener('mouseleave', () => {
+        if (isDown) {
+          isDown = false;
+          stage.style.cursor = 'grab';
+        }
+      });
+    }
+
     // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
       // Check if draft exists
@@ -4028,6 +4120,7 @@
       renderClausesEditor();
       renderItemsEditor();
       setDocMode(appState.mode || 'spec');
+      initPreviewStageDrag();
     });
   </script>
 </body>
