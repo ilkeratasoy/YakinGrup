@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
   <link rel="apple-touch-icon" sizes="64x64" href="assets/images/favicon-64.png">
-  <link rel="stylesheet" href="style.css?v=20260805_253">
+  <link rel="stylesheet" href="style.css?v=20260805_254">
 </head>
 <body>
 
@@ -1647,17 +1647,17 @@
     <form id="career-form" onsubmit="handleCareerSubmit(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
       <div class="form-group" style="margin-bottom: 0;">
         <label for="car-name" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_form_name">Adınız Soyadınız</label>
-        <input type="text" id="car-name" name="Ad Soyad" required placeholder="Örn. Ahmet Yılmaz" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+        <input type="text" id="car-name" name="Ad Soyad" required placeholder="Örn. Ahmet Yılmaz" data-i18n-placeholder="ph_car_name" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div class="form-group" style="margin-bottom: 0;">
           <label for="car-email" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_form_email">E-posta Adresiniz</label>
-          <input type="email" id="car-email" name="E-posta" required placeholder="isim@firma.com" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+          <input type="email" id="car-email" name="E-posta" required placeholder="isim@firma.com" data-i18n-placeholder="ph_car_email" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
         </div>
         <div class="form-group" style="margin-bottom: 0;">
           <label for="car-phone" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_form_phone">Telefon Numaranız</label>
-          <input type="tel" id="car-phone" name="Telefon" required placeholder="+90 532..." style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+          <input type="tel" id="car-phone" name="Telefon" required placeholder="+90 532..." data-i18n-placeholder="ph_car_phone" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
         </div>
       </div>
 
@@ -1676,12 +1676,12 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label for="car-cv" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_career_cv">LinkedIn Profil veya CV Linki (Google Drive / Dropbox)</label>
-        <input type="url" id="car-cv" name="CV Linki" placeholder="https://linkedin.com/in/... veya CV linki" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+        <input type="url" id="car-cv" name="CV Linki" placeholder="https://linkedin.com/in/... veya CV linki" data-i18n-placeholder="ph_car_cv" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
       </div>
 
       <div class="form-group" style="margin-bottom: 0;">
         <label for="car-note" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_career_note">Ön Yazı / Deneyim Özeti</label>
-        <textarea id="car-note" name="Ön Yazı" rows="3" placeholder="Tecrübeleriniz ve kendinizi tanıtan kısa not..." style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;"></textarea>
+        <textarea id="car-note" name="Ön Yazı" rows="3" placeholder="Tecrübeleriniz ve kendinizi tanıtan kısa not..." data-i18n-placeholder="ph_car_note" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;"></textarea>
       </div>
 
       <div class="form-group checkbox-group" style="margin-top: 4px; margin-bottom: 6px;">
@@ -1728,6 +1728,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260805_253"></script>
+  <script src="app.js?v=20260805_254"></script>
 </body>
 </html>

@@ -346,6 +346,11 @@ const TRANSLATIONS = {
     opt_car_pos5: 'Yazılım, AI & IoT Platform Geliştirme',
     opt_car_pos6: 'Satınalma & Tedarik Zinciri',
     opt_car_pos7: 'Genel Başvuru / Staj',
+    ph_car_name: 'Örn. Ahmet Yılmaz',
+    ph_car_email: 'isim@firma.com',
+    ph_car_phone: '+90 532...',
+    ph_car_cv: 'https://linkedin.com/in/... veya CV linki',
+    ph_car_note: 'Tecrübeleriniz ve kendinizi tanıtan kısa not...',
     contracts_modal_title: 'NDA & Örnek Şirket Sözleşmeleri',
     contracts_modal_sub: 'İş ortaklarımız, alt yüklenicilerimiz ve yatırımcılarımız için hazırlanan kurumsal çerçeve ve gizlilik sözleşme taslakları.',
     btn_contract_request: 'Özel Sözleşme Talebi İlet ➔',
@@ -698,6 +703,11 @@ const TRANSLATIONS = {
     opt_car_pos5: 'Software, AI & IoT Platform Development',
     opt_car_pos6: 'Procurement & Supply Chain Management',
     opt_car_pos7: 'General Application / Internship',
+    ph_car_name: 'e.g. John Doe',
+    ph_car_email: 'name@company.com',
+    ph_car_phone: '+1 555...',
+    ph_car_cv: 'https://linkedin.com/in/... or CV link',
+    ph_car_note: 'Your background and short cover note...',
     contracts_modal_title: 'NDA & Sample Corporate Agreements',
     contracts_modal_sub: 'Standard non-disclosure and framework agreement templates for our corporate partners, subcontractors, and investors.',
     btn_contract_request: 'Request Custom Agreement ➔',
@@ -798,6 +808,10 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const key = el.getAttribute('data-i18n-html');
     if (t[key]) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key]) el.placeholder = t[key];
   });
   document.documentElement.lang = currentLang;
   if (typeof switchContractTab === 'function') { switchContractTab(activeContractIdx); }
