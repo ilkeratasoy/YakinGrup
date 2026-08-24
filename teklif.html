@@ -1455,58 +1455,7 @@
 </head>
 <body>
 
-  <!-- Güvenlik & Yetkilendirme Kilidi (Tasarım Dosyaları) -->
-  <div id="studio-auth-lock" style="position: fixed; inset: 0; background: rgba(11, 37, 69, 0.95); backdrop-filter: blur(12px); z-index: 999999; display: none; align-items: center; justify-content: center; font-family: 'Inter', -apple-system, sans-serif;">
-    <div style="background: #ffffff; border-radius: 20px; padding: 2.2rem; max-width: 440px; width: 90vw; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.5);">
-      <div style="width: 56px; height: 56px; border-radius: 50%; background: #e0f2fe; border: 2px solid #0284c7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: #0369a1; font-size: 1.6rem;">
-        🔐
-      </div>
-      <h3 style="font-size: 1.3rem; font-weight: 800; color: #0b2545; margin-bottom: 0.3rem;">Yönetici Girişi Gerekli</h3>
-      <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 1.4rem;">Bu şartname & teklif stüdyosuna erişim için lütfen yetkili giriş bilgilerinizi giriniz.</p>
-      
-      <form onsubmit="handleStudioDirectLogin(event)" style="display: flex; flex-direction: column; gap: 11px; text-align: left;">
-        <div>
-          <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Kullanıcı Adı</label>
-          <input type="text" id="direct-auth-user" required placeholder="Admin" autocomplete="username" style="width: 100%; box-sizing: border-box; padding: 0.7rem 0.85rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.9rem;">
-        </div>
-        <div>
-          <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Şifre</label>
-          <input type="password" id="direct-auth-pass" required placeholder="••••••••" autocomplete="current-password" style="width: 100%; box-sizing: border-box; padding: 0.7rem 0.85rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.9rem;">
-        </div>
-        <div id="direct-auth-err" style="display: none; background: #fee2e2; border: 1px solid #f87171; color: #b91c1c; font-size: 0.8rem; padding: 7px 10px; border-radius: 6px; font-weight: 600; text-align: center;">
-          ⚠️ Kullanıcı adı veya şifre hatalı.
-        </div>
-        <button type="submit" style="width: 100%; margin-top: 6px; padding: 0.82rem; background: #0b2545; color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.92rem; cursor: pointer; box-shadow: 0 4px 12px rgba(11,37,69,0.3);">
-          🔓 Giriş Yap & Stüdyoyu Aç
-        </button>
-        <a href="index.html" style="text-align: center; font-size: 0.8rem; color: #64748b; text-decoration: none; margin-top: 6px;">← Ana Sayfaya Dön</a>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    function checkStudioAuth() {
-      const isAuth = sessionStorage.getItem('yg_studio_auth') === 'true' || localStorage.getItem('yg_studio_auth') === 'true';
-      const lock = document.getElementById('studio-auth-lock');
-      if (lock) {
-        lock.style.display = isAuth ? 'none' : 'flex';
-      }
-    }
-    function handleStudioDirectLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('direct-auth-user').value.trim();
-      const p = document.getElementById('direct-auth-pass').value.trim();
-      const err = document.getElementById('direct-auth-err');
-      if (u.toLowerCase() === 'admin' && p === 'Yakin2026.!') {
-        sessionStorage.setItem('yg_studio_auth', 'true');
-        localStorage.setItem('yg_studio_auth', 'true');
-        document.getElementById('studio-auth-lock').style.display = 'none';
-      } else {
-        if (err) err.style.display = 'block';
-      }
-    }
-    window.addEventListener('DOMContentLoaded', checkStudioAuth);
-  </script>
+  
 
   <!-- Top Header Navigation -->
   <header>
