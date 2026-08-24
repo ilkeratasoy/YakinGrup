@@ -440,7 +440,7 @@
       flex: 1;
       background: var(--stage-bg);
       overflow-y: auto;
-      padding: 2.2rem 1.8rem;
+      padding: 2.2rem 1.8rem 45vh 1.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -4112,7 +4112,48 @@
     let isSyncScrollEnabled = true;
     let isScrollingFromLeft = false;
     let isScrollingFromRight = false;
-    let scrollAnimFrame = null;
+
+    function syncScrollFromLeft() {
+      if (!isSyncScrollEnabled || isScrollingFromRight) return;
+      isScrollingFromLeft = true;
+
+      const leftPanel = document.querySelector('.controls-panel');
+      const rightStage = document.querySelector('.preview-stage');
+      if (!leftPanel || !rightStage) return;
+
+      const leftScrollTop = leftPanel.scrollTop;
+      const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
+      const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
+
+      if (leftMax > 0 && rightMax > 0) {
+        const ratio = leftScrollTop / leftMax;
+        rightStage.scrollTop = ratio * rightMax;
+      }
+
+      clearTimeout(window._scrollTimeoutL);
+      window._scrollTimeoutL = setTimeout(() => { isScrollingFromLeft = false; }, 60);
+    }
+
+    function syncScrollFromRight() {
+      if (!isSyncScrollEnabled || isScrollingFromLeft) return;
+      isScrollingFromRight = true;
+
+      const leftPanel = document.querySelector('.controls-panel');
+      const rightStage = document.querySelector('.preview-stage');
+      if (!leftPanel || !rightStage) return;
+
+      const rightScrollTop = rightStage.scrollTop;
+      const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
+      const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
+
+      if (leftMax > 0 && rightMax > 0) {
+        const ratio = rightScrollTop / rightMax;
+        leftPanel.scrollTop = ratio * leftMax;
+      }
+
+      clearTimeout(window._scrollTimeoutR);
+      window._scrollTimeoutR = setTimeout(() => { isScrollingFromRight = false; }, 60);
+    }
 
     function setupSynchronizedScroll() {
       const leftPanel = document.querySelector('.controls-panel');
@@ -4120,37 +4161,50 @@
 
       if (!leftPanel || !rightStage) return;
 
-      leftPanel.addEventListener('scroll', () => {
-        if (!isSyncScrollEnabled || isScrollingFromRight) return;
-        isScrollingFromLeft = true;
+      // Realtime scroll listeners
+      leftPanel.addEventListener('scroll', syncScrollFromLeft, { passive: true });
+      rightStage.addEventListener('scroll', syncScrollFromRight, { passive: true });
 
-        if (scrollAnimFrame) cancelAnimationFrame(scrollAnimFrame);
-        scrollAnimFrame = requestAnimationFrame(() => {
-          const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
-          const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
-          if (leftMax > 0 && rightMax > 0) {
-            const ratio = leftPanel.scrollTop / leftMax;
-            rightStage.scrollTop = ratio * rightMax;
-          }
-          setTimeout(() => { isScrollingFromLeft = false; }, 60);
-        });
+      // Direct Wheel listener for immediate response
+      leftPanel.addEventListener('wheel', () => {
+        if (isSyncScrollEnabled) requestAnimationFrame(syncScrollFromLeft);
       }, { passive: true });
 
-      rightStage.addEventListener('scroll', () => {
-        if (!isSyncScrollEnabled || isScrollingFromLeft) return;
-        isScrollingFromRight = true;
-
-        if (scrollAnimFrame) cancelAnimationFrame(scrollAnimFrame);
-        scrollAnimFrame = requestAnimationFrame(() => {
-          const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
-          const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
-          if (leftMax > 0 && rightMax > 0) {
-            const ratio = rightStage.scrollTop / rightMax;
-            leftPanel.scrollTop = ratio * leftMax;
-          }
-          setTimeout(() => { isScrollingFromRight = false; }, 60);
-        });
+      rightStage.addEventListener('wheel', () => {
+        if (isSyncScrollEnabled) requestAnimationFrame(syncScrollFromRight);
       }, { passive: true });
+
+      // Section-Focus Smart Alignment: When clicking inputs on left, scroll right stage to relevant section
+      document.querySelectorAll('.controls-panel .panel-section').forEach(sec => {
+        sec.addEventListener('focusin', () => {
+          if (!isSyncScrollEnabled) return;
+          const secText = sec.innerText || '';
+          if (secText.includes('2. Proje') || secText.includes('1. Belge')) {
+            rightStage.scrollTo({ top: 0, behavior: 'smooth' });
+          } else if (secText.includes('5. Fiyat')) {
+            const el = document.getElementById('sheet-table-section');
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              const stageRect = rightStage.getBoundingClientRect();
+              rightStage.scrollBy({ top: rect.top - stageRect.top - 80, behavior: 'smooth' });
+            }
+          } else if (secText.includes('3. Finans') || secText.includes('İmza')) {
+            const el = document.getElementById('sheet-totals-section');
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              const stageRect = rightStage.getBoundingClientRect();
+              rightStage.scrollBy({ top: rect.top - stageRect.top - 80, behavior: 'smooth' });
+            }
+          } else if (secText.includes('6. Şartname')) {
+            const el = document.getElementById('sheet-clauses-section');
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              const stageRect = rightStage.getBoundingClientRect();
+              rightStage.scrollBy({ top: rect.top - stageRect.top - 80, behavior: 'smooth' });
+            }
+          }
+        });
+      });
     }
 
     function toggleSyncScroll() {
@@ -4161,6 +4215,7 @@
           statusEl.innerText = 'Eşzamanlı Kaydırma: Açık';
           statusEl.style.color = '#15803d';
           showToast('🔗 Eş zamanlı kaydırma açıldı');
+          syncScrollFromLeft();
         } else {
           statusEl.innerText = 'Eşzamanlı Kaydırma: Kapalı';
           statusEl.style.color = '#64748b';
