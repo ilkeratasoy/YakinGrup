@@ -1,197 +1,261 @@
 /**
- * Yakın Grup ERP — %100 Canlı Bulut Veritabanı Motoru (Cloud-First DB)
- * Tüm Cari Kartlar, Teklif Arşivi ve Stok Takibi doğrudan merkezi bulutta saklanır.
- * Yerel hafızada veri tutulmaz; tüm bilgisayarlar ve cihazlar tek bir ortak canlı bulutu kullanır.
+ * Yakın Grup ERP — Gerçek Zamanlı Bulut & Kurumsal Veritabanı Motoru (erp-db.js)
+ * Çoklu bilgisayar, tablet ve mobil cihazlar arasında anlık canlı senkronizasyon.
+ * Müşteri Cari Kartları, Teklif Arşivi, Stok Takibi ve Yedekleme.
  */
 
 const YakinERP = (function () {
-  // Central Cloud REST API Endpoint for Yakın Grup
-  const CLOUD_ENDPOINT = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a0332f06be0c30';
+  const DB_PREFIX = 'yakin_erp_';
+  const CUSTOMERS_KEY = DB_PREFIX + 'customers';
+  const PROPOSALS_KEY = DB_PREFIX + 'proposals';
+  const INVENTORY_KEY = DB_PREFIX + 'inventory';
+  const CLOUD_URL_KEY = DB_PREFIX + 'cloud_db_url';
+  const LAST_SYNC_KEY = DB_PREFIX + 'last_sync_time';
 
-  // In-Memory Live Store (Always mirrors the online cloud)
-  let cloudStore = {
-    customers: [
-      {
-        id: 'cust-1',
-        company: 'Atlas Holding A.Ş.',
-        contactName: 'Sayın Ahmet Yılmaz — Yatırımlar Direktörü',
-        taxOffice: 'Büyük Mükellefler V.D.',
-        taxNumber: '1234567890',
-        address: 'Dilovası OSB 4. Cadde No: 12 Kocaeli / Türkiye',
-        phone: '+90 262 555 0199',
-        email: 'ahmet.yilmaz@atlasholding.com',
-        balance: 0,
-        currency: 'TRY',
-        country: 'Türkiye',
-        notes: 'Sanayi çatı GES ve enerji yatırımı projesi.'
-      },
-      {
-        id: 'cust-2',
-        company: 'Solaris Global Energy LLC',
-        contactName: 'Mr. David Miller — Procurement Director',
-        taxOffice: 'Delaware Tax Auth.',
-        taxNumber: 'US-987654321',
-        address: '1209 Orange St, Wilmington, DE 19801, USA',
-        phone: '+1 302 555 0142',
-        email: 'dmiller@solarisglobal.com',
-        balance: 145000,
-        currency: 'USD',
-        country: 'United States',
-        notes: 'Export - PV Module & Inverter Supply (Incoterm: CIF Hamburg)'
-      },
-      {
-        id: 'cust-3',
-        company: 'Ege Lojistik & Antrepo San. Tic. A.Ş.',
-        contactName: 'Mehmet Ali Kaya — Operasyon Müdürü',
-        taxOffice: 'Konak V.D.',
-        taxNumber: '3829104821',
-        address: 'Kemalpaşa OSB No: 88 İzmir / Türkiye',
-        phone: '+90 232 444 8899',
-        email: 'operasyon@egelojistik.com.tr',
-        balance: -25000,
-        currency: 'TRY',
-        country: 'Türkiye',
-        notes: 'Çatı GES ve depolama tesisi.'
-      }
-    ],
-    proposals: [],
-    inventory: [
-      {
-        id: 'inv-1',
-        code: 'STK-PV-550',
-        name: '550W Tier-1 Monokristal TOPCon Güneş Paneli',
-        category: 'Enerji & Solar',
-        unit: 'Adet',
-        unitCost: 72,
-        unitPrice: 95,
-        currency: 'USD',
-        stockQty: 2400,
-        minStock: 200,
-        gtip: '8541.43.00.00.00',
-        description: 'MBB, %22.8 Verim, 30 Yıl Lineer Performans Garantisi'
-      },
-      {
-        id: 'inv-2',
-        code: 'STK-INV-100K',
-        name: '100 kW Üç Fazlı String Solar İnvertör (10 MPPT)',
-        category: 'Enerji & Solar',
-        unit: 'Adet',
-        unitCost: 3200,
-        unitPrice: 4150,
-        currency: 'USD',
-        stockQty: 35,
-        minStock: 5,
-        gtip: '8504.40.88.00.00',
-        description: 'IP66, AFCI Ark Koruması, Wi-Fi/LAN Haberleşme Entegre'
-      },
-      {
-        id: 'inv-3',
-        code: 'STK-ALU-01',
-        name: 'Kenet/Sandviç Çatı Alüminyum Konstrüksiyon Seti',
-        category: 'Konstrüksiyon',
-        unit: 'kWp',
-        unitCost: 14,
-        unitPrice: 22,
-        currency: 'USD',
-        stockQty: 5000,
-        minStock: 500,
-        gtip: '7610.90.90.00.00',
-        description: 'EN AW-6063 T6 Eloksallı Alüminyum, Paslanmaz Civata Takımı'
-      },
-      {
-        id: 'inv-4',
-        code: 'STK-SRV-EPC',
-        name: 'Mühendislik, Statik Proje, TEDAŞ Onay & Şantiye Kurulum Hizmeti',
-        category: 'Hizmet & Mühendislik',
-        unit: 'kWp',
-        unitCost: 15,
-        unitPrice: 28,
-        currency: 'USD',
-        stockQty: 9999,
-        minStock: 0,
-        gtip: '9999.99.99.00.00',
-        description: 'Anahtar teslim EPC, test, ölçüm ve resmi kabul hizmetleri'
-      },
-      {
-        id: 'inv-5',
-        code: 'STK-CBL-SOLAR',
-        name: '1x6 mm² H1Z2Z2-K Kalaylı Bakır Solar Kablo (Kırmızı/Siyah)',
-        category: 'Kablo & Elektrik',
-        unit: 'Metre',
-        unitCost: 0.95,
-        unitPrice: 1.45,
-        currency: 'USD',
-        stockQty: 18000,
-        minStock: 2000,
-        gtip: '8541.43.00.00.00',
-        description: 'TÜV Sertifikalı, UV ve Ozon Dayanımlı, Halojensiz'
-      }
-    ],
-    updatedAt: new Date().toISOString()
-  };
+  // Default Firebase / Cloud REST DB Endpoint for Yakın Grup
+  const DEFAULT_CLOUD_URL = 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_erp.json';
 
+  // Preloaded Defaults for Initial State
+  const defaultCustomers = [
+    {
+      id: 'cust-1',
+      company: 'Atlas Holding A.Ş.',
+      contactName: 'Sayın Ahmet Yılmaz — Yatırımlar Direktörü',
+      taxOffice: 'Büyük Mükellefler V.D.',
+      taxNumber: '1234567890',
+      address: 'Dilovası OSB 4. Cadde No: 12 Kocaeli / Türkiye',
+      phone: '+90 262 555 0199',
+      email: 'ahmet.yilmaz@atlasholding.com',
+      balance: 0,
+      currency: 'TRY',
+      country: 'Türkiye',
+      notes: 'Sanayi çatı GES ve enerji yatırımı projesi.'
+    },
+    {
+      id: 'cust-2',
+      company: 'Solaris Global Energy LLC',
+      contactName: 'Mr. David Miller — Procurement Director',
+      taxOffice: 'Delaware Tax Auth.',
+      taxNumber: 'US-987654321',
+      address: '1209 Orange St, Wilmington, DE 19801, USA',
+      phone: '+1 302 555 0142',
+      email: 'dmiller@solarisglobal.com',
+      balance: 145000,
+      currency: 'USD',
+      country: 'United States',
+      notes: 'Export - PV Module & Inverter Supply (Incoterm: CIF Hamburg)'
+    },
+    {
+      id: 'cust-3',
+      company: 'Ege Lojistik & Antrepo San. Tic. A.Ş.',
+      contactName: 'Mehmet Ali Kaya — Operasyon Müdürü',
+      taxOffice: 'Konak V.D.',
+      taxNumber: '3829104821',
+      address: 'Kemalpaşa OSB No: 88 İzmir / Türkiye',
+      phone: '+90 232 444 8899',
+      email: 'operasyon@egelojistik.com.tr',
+      balance: -25000,
+      currency: 'TRY',
+      country: 'Türkiye',
+      notes: 'Çatı GES ve depolama tesisi.'
+    }
+  ];
+
+  const defaultInventory = [
+    {
+      id: 'inv-1',
+      code: 'STK-PV-550',
+      name: '550W Tier-1 Monokristal TOPCon Güneş Paneli',
+      category: 'Enerji & Solar',
+      unit: 'Adet',
+      unitCost: 72,
+      unitPrice: 95,
+      currency: 'USD',
+      stockQty: 2400,
+      minStock: 200,
+      gtip: '8541.43.00.00.00',
+      description: 'MBB, %22.8 Verim, 30 Yıl Lineer Performans Garantisi'
+    },
+    {
+      id: 'inv-2',
+      code: 'STK-INV-100K',
+      name: '100 kW Üç Fazlı String Solar İnvertör (10 MPPT)',
+      category: 'Enerji & Solar',
+      unit: 'Adet',
+      unitCost: 3200,
+      unitPrice: 4150,
+      currency: 'USD',
+      stockQty: 35,
+      minStock: 5,
+      gtip: '8504.40.88.00.00',
+      description: 'IP66, AFCI Ark Koruması, Wi-Fi/LAN Haberleşme Entegre'
+    },
+    {
+      id: 'inv-3',
+      code: 'STK-ALU-01',
+      name: 'Kenet/Sandviç Çatı Alüminyum Konstrüksiyon Seti',
+      category: 'Konstrüksiyon',
+      unit: 'kWp',
+      unitCost: 14,
+      unitPrice: 22,
+      currency: 'USD',
+      stockQty: 5000,
+      minStock: 500,
+      gtip: '7610.90.90.00.00',
+      description: 'EN AW-6063 T6 Eloksallı Alüminyum, Paslanmaz Civata Takımı'
+    },
+    {
+      id: 'inv-4',
+      code: 'STK-SRV-EPC',
+      name: 'Mühendislik, Statik Proje, TEDAŞ Onay & Şantiye Kurulum Hizmeti',
+      category: 'Hizmet & Mühendislik',
+      unit: 'kWp',
+      unitCost: 15,
+      unitPrice: 28,
+      currency: 'USD',
+      stockQty: 9999,
+      minStock: 0,
+      gtip: '9999.99.99.00.00',
+      description: 'Anahtar teslim EPC, test, ölçüm ve resmi kabul hizmetleri'
+    }
+  ];
+
+  function getCloudUrl() {
+    return localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL;
+  }
+
+  function setCloudUrl(url) {
+    if (url && url.trim()) {
+      localStorage.setItem(CLOUD_URL_KEY, url.trim());
+      syncFromCloud(true);
+      return true;
+    }
+    return false;
+  }
+
+  function getLocal(key, fallback = []) {
+    try {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  function setLocal(key, data) {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // --- Real-Time Cloud Sync Logic ---
   let isSyncing = false;
 
-  // Push in-memory data to Central Online Cloud
   async function pushToCloud() {
+    const cloudUrl = getCloudUrl();
+    if (!cloudUrl) return false;
+
     try {
       const payload = {
-        name: 'YakinGrup ERP Central Cloud Database',
-        data: {
-          updatedAt: new Date().toISOString(),
-          customers: cloudStore.customers,
-          proposals: cloudStore.proposals,
-          inventory: cloudStore.inventory
-        }
+        updatedAt: new Date().toISOString(),
+        customers: getCustomers(),
+        proposals: getAllProposals(),
+        inventory: getInventory()
       };
 
-      const res = await fetch(CLOUD_ENDPOINT, {
+      const res = await fetch(cloudUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 
       if (res.ok) {
+        localStorage.setItem(LAST_SYNC_KEY, new Date().toLocaleString('tr-TR'));
         dispatchSyncEvent();
-        return { success: true };
+        return true;
       }
     } catch (e) {
-      console.warn('Cloud write warning:', e);
+      console.warn('Cloud sync push:', e);
     }
-    return { success: false };
+    return false;
   }
 
-  // Fetch live online data from Central Cloud
   async function syncFromCloud(showToastNotice = false) {
-    if (isSyncing) return;
+    const cloudUrl = getCloudUrl();
+    if (!cloudUrl || isSyncing) return;
     isSyncing = true;
 
     try {
-      const res = await fetch(CLOUD_ENDPOINT, { method: 'GET', cache: 'no-store' });
+      const res = await fetch(cloudUrl, { method: 'GET', cache: 'no-store' });
       if (res.ok) {
-        const json = await res.json();
-        const data = json.data || {};
-        if (data.customers && Array.isArray(data.customers)) {
-          cloudStore.customers = data.customers;
-        }
-        if (data.proposals && Array.isArray(data.proposals)) {
-          cloudStore.proposals = data.proposals;
-        }
-        if (data.inventory && Array.isArray(data.inventory)) {
-          cloudStore.inventory = data.inventory;
-        }
-        if (data.updatedAt) {
-          cloudStore.updatedAt = data.updatedAt;
-        }
+        const cloudData = await res.json();
+        if (cloudData) {
+          let hasNew = false;
 
-        dispatchSyncEvent();
+          // Merge Customers
+          if (cloudData.customers && Array.isArray(cloudData.customers)) {
+            const localCust = getCustomers();
+            const mergedCust = [...localCust];
+            cloudData.customers.forEach(c => {
+              const idx = mergedCust.findIndex(m => m.id === c.id || (m.company.toLowerCase() === c.company.toLowerCase() && m.taxNumber === c.taxNumber));
+              if (idx >= 0) {
+                mergedCust[idx] = Object.assign({}, mergedCust[idx], c);
+              } else {
+                mergedCust.push(c);
+                hasNew = true;
+              }
+            });
+            setLocal(CUSTOMERS_KEY, mergedCust);
+          }
 
-        if (showToastNotice && typeof window !== 'undefined' && typeof window.showToast === 'function') {
-          window.showToast('☁️ Canlı bulut veritabanı güncellendi!');
+          // Merge Proposals
+          if (cloudData.proposals && Array.isArray(cloudData.proposals)) {
+            const localProp = getAllProposals();
+            const mergedProp = [...localProp];
+            cloudData.proposals.forEach(p => {
+              const idx = mergedProp.findIndex(m => m.id === p.id || m.docNo === p.docNo);
+              if (idx >= 0) {
+                mergedProp[idx] = Object.assign({}, mergedProp[idx], p);
+              } else {
+                mergedProp.unshift(p);
+                hasNew = true;
+              }
+            });
+            setLocal(PROPOSALS_KEY, mergedProp);
+          }
+
+          // Merge Inventory
+          if (cloudData.inventory && Array.isArray(cloudData.inventory)) {
+            const localInv = getInventory();
+            const mergedInv = [...localInv];
+            cloudData.inventory.forEach(i => {
+              const idx = mergedInv.findIndex(m => m.id === i.id || m.code === i.code);
+              if (idx >= 0) {
+                mergedInv[idx] = Object.assign({}, mergedInv[idx], i);
+              } else {
+                mergedInv.push(i);
+                hasNew = true;
+              }
+            });
+            setLocal(INVENTORY_KEY, mergedInv);
+          }
+
+          localStorage.setItem(LAST_SYNC_KEY, new Date().toLocaleString('tr-TR'));
+          dispatchSyncEvent();
+
+          if (showToastNotice && typeof window.showToast === 'function') {
+            window.showToast('☁️ Bulut veritabanı başarıyla eşitlendi!');
+          }
+
+          // Push back any local items the cloud might not have
+          pushToCloud();
         }
       }
     } catch (e) {
-      console.warn('Cloud fetch warning:', e);
+      console.warn('Cloud fetch notice:', e);
     } finally {
       isSyncing = false;
     }
@@ -203,17 +267,28 @@ const YakinERP = (function () {
     }
   }
 
-  // Initialize Cloud Connection & Continuous Polling
   function initDB() {
-    // 1. Initial live fetch
-    syncFromCloud();
+    if (!localStorage.getItem(CUSTOMERS_KEY)) {
+      setLocal(CUSTOMERS_KEY, defaultCustomers);
+    }
+    if (!localStorage.getItem(INVENTORY_KEY)) {
+      setLocal(INVENTORY_KEY, defaultInventory);
+    }
+    if (!localStorage.getItem(PROPOSALS_KEY)) {
+      setLocal(PROPOSALS_KEY, []);
+    }
 
-    // 2. Poll every 12 seconds for multi-device realtime synchronization
+    // Initial background cloud sync
+    setTimeout(() => {
+      syncFromCloud();
+    }, 400);
+
+    // Continuous polling every 20 seconds
     setInterval(() => {
       syncFromCloud();
-    }, 12000);
+    }, 20000);
 
-    // 3. Sync immediately when window/tab is focused
+    // Auto-sync when window is focused
     if (typeof window !== 'undefined') {
       window.addEventListener('focus', () => {
         syncFromCloud();
@@ -223,15 +298,15 @@ const YakinERP = (function () {
 
   // --- 1. Customers (Cari Kartlar) Management ---
   function getCustomers() {
-    return cloudStore.customers || [];
+    return getLocal(CUSTOMERS_KEY, defaultCustomers);
   }
 
   function getCustomerById(id) {
-    return (cloudStore.customers || []).find(c => c.id === id);
+    return getCustomers().find(c => c.id === id);
   }
 
   function saveCustomer(customerData) {
-    const list = cloudStore.customers || [];
+    const list = getCustomers();
     const idx = list.findIndex(c => c.id === customerData.id);
     const record = {
       id: customerData.id || 'cust-' + Date.now(),
@@ -254,30 +329,33 @@ const YakinERP = (function () {
     } else {
       list.push(record);
     }
-    cloudStore.customers = list;
-    
-    // Push directly to online cloud
+
+    setLocal(CUSTOMERS_KEY, list);
     pushToCloud();
+    dispatchSyncEvent();
     return record;
   }
 
   function deleteCustomer(id) {
-    cloudStore.customers = (cloudStore.customers || []).filter(c => c.id !== id);
+    let list = getCustomers();
+    list = list.filter(c => c.id !== id);
+    setLocal(CUSTOMERS_KEY, list);
     pushToCloud();
+    dispatchSyncEvent();
     return true;
   }
 
   // --- 2. Proposals / Documents Archive ---
   function getAllProposals() {
-    return cloudStore.proposals || [];
+    return getLocal(PROPOSALS_KEY, []);
   }
 
   function getProposalById(id) {
-    return (cloudStore.proposals || []).find(p => p.id === id || p.docNo === id);
+    return getAllProposals().find(p => p.id === id || p.docNo === id);
   }
 
   function saveProposal(proposalData) {
-    const list = cloudStore.proposals || [];
+    const list = getAllProposals();
     const existingIdx = list.findIndex(p => p.docNo === proposalData.docNo || p.id === proposalData.id);
 
     const record = {
@@ -303,40 +381,46 @@ const YakinERP = (function () {
       list.unshift(record);
     }
 
-    cloudStore.proposals = list;
+    setLocal(PROPOSALS_KEY, list);
     pushToCloud();
+    dispatchSyncEvent();
     return record;
   }
 
   function updateProposalStatus(docNo, newStatus) {
-    const list = cloudStore.proposals || [];
+    const list = getAllProposals();
     const item = list.find(p => p.docNo === docNo || p.id === docNo);
     if (item) {
       item.status = newStatus;
       item.updatedAt = new Date().toISOString();
+      setLocal(PROPOSALS_KEY, list);
       pushToCloud();
+      dispatchSyncEvent();
       return true;
     }
     return false;
   }
 
   function deleteProposal(idOrDocNo) {
-    cloudStore.proposals = (cloudStore.proposals || []).filter(p => p.id !== idOrDocNo && p.docNo !== idOrDocNo);
+    let list = getAllProposals();
+    list = list.filter(p => p.id !== idOrDocNo && p.docNo !== idOrDocNo);
+    setLocal(PROPOSALS_KEY, list);
     pushToCloud();
+    dispatchSyncEvent();
     return true;
   }
 
-  // --- 3. Inventory (Stok Yönetimi) ---
+  // --- 3. Inventory (Stok Kalemleri) Management ---
   function getInventory() {
-    return cloudStore.inventory || [];
+    return getLocal(INVENTORY_KEY, defaultInventory);
   }
 
   function getInventoryItemById(id) {
-    return (cloudStore.inventory || []).find(item => item.id === id || item.code === id);
+    return getInventory().find(i => i.id === id || i.code === id);
   }
 
   function saveInventoryItem(itemData) {
-    const list = cloudStore.inventory || [];
+    const list = getInventory();
     const idx = list.findIndex(i => i.id === itemData.id || (itemData.code && i.code === itemData.code));
     const record = {
       id: itemData.id || 'inv-' + Date.now(),
@@ -360,31 +444,36 @@ const YakinERP = (function () {
       list.push(record);
     }
 
-    cloudStore.inventory = list;
+    setLocal(INVENTORY_KEY, list);
     pushToCloud();
+    dispatchSyncEvent();
     return record;
   }
 
   function deleteInventoryItem(id) {
-    cloudStore.inventory = (cloudStore.inventory || []).filter(i => i.id !== id);
+    let list = getInventory();
+    list = list.filter(i => i.id !== id);
+    setLocal(INVENTORY_KEY, list);
     pushToCloud();
+    dispatchSyncEvent();
     return true;
   }
 
-  // --- 4. Export / Backup / Restore ---
+  // --- 4. Export & Import JSON Backup ---
   function exportFullBackupJSON() {
     const backup = {
-      version: '3.0 (Cloud-First)',
+      version: '4.0 (Enterprise Cloud)',
       exportedAt: new Date().toISOString(),
-      proposals: getAllProposals(),
+      cloudUrl: getCloudUrl(),
       customers: getCustomers(),
+      proposals: getAllProposals(),
       inventory: getInventory()
     };
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `YAKIN_GRUP_CLOUD_BACKUP_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `YAKIN_GRUP_VERITABANI_${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -392,23 +481,20 @@ const YakinERP = (function () {
   function importFullBackupJSON(jsonString) {
     try {
       const data = JSON.parse(jsonString);
-      if (data.proposals && Array.isArray(data.proposals)) cloudStore.proposals = data.proposals;
-      if (data.customers && Array.isArray(data.customers)) cloudStore.customers = data.customers;
-      if (data.inventory && Array.isArray(data.inventory)) cloudStore.inventory = data.inventory;
+      if (data.customers && Array.isArray(data.customers)) setLocal(CUSTOMERS_KEY, data.customers);
+      if (data.proposals && Array.isArray(data.proposals)) setLocal(PROPOSALS_KEY, data.proposals);
+      if (data.inventory && Array.isArray(data.inventory)) setLocal(INVENTORY_KEY, data.inventory);
+      if (data.cloudUrl) localStorage.setItem(CLOUD_URL_KEY, data.cloudUrl);
       pushToCloud();
-      return { success: true, message: 'Veritabanı başarıyla içe aktarıldı ve buluta kaydedildi!' };
+      dispatchSyncEvent();
+      return { success: true, message: 'Şirket veritabanı başarıyla içe aktarıldı ve buluta eşitlendi!' };
     } catch (e) {
       return { success: false, message: 'Geçersiz yedek dosyası: ' + e.message };
     }
   }
 
-  // Draft helper for backward compatibility
   function saveDraft(stateData) {
-    // Also save active document into proposals as Taslak in cloud
-    if (stateData && stateData.docNo) {
-      saveProposal(Object.assign({}, stateData, { status: 'Taslak' }));
-    }
-    return true;
+    return saveProposal(Object.assign({}, stateData, { status: 'Taslak' }));
   }
 
   function loadDraft() {
@@ -417,11 +503,12 @@ const YakinERP = (function () {
 
   function clearDraft() {}
 
-  // Run initial cloud fetch
   initDB();
 
   return {
     initDB,
+    getCloudUrl,
+    setCloudUrl,
     syncFromCloud,
     pushToCloud,
     getCustomers,
@@ -445,7 +532,6 @@ const YakinERP = (function () {
   };
 })();
 
-// Export globally
 if (typeof window !== 'undefined') {
   window.YakinERP = YakinERP;
 }

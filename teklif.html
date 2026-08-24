@@ -3173,7 +3173,24 @@
     }
 
     // 4. Backup & Restore Modal
+    
     function openBackupModal() {
+      openModal('modal-backup');
+      const urlInput = document.getElementById('db-cloud-url-input');
+      if (urlInput && typeof YakinERP !== 'undefined') {
+        urlInput.value = YakinERP.getCloudUrl();
+      }
+    }
+
+    function saveCustomDbUrl() {
+      const urlInput = document.getElementById('db-cloud-url-input');
+      if (urlInput && urlInput.value) {
+        YakinERP.setCloudUrl(urlInput.value.trim());
+        showToast('🌐 Bulut veritabanı adresi kaydedildi ve bağlandı!');
+      }
+    }
+
+    function _oldOpenBackup() {
       openModal('modal-backup');
     }
 
