@@ -331,6 +331,17 @@ const TRANSLATIONS = {
     footer_presentation: 'Yatırımcı Sunumu',
     tag_construction_short: 'Yakın İnşaat',
     tag_energy_short: 'Yakın Enerji',
+        footer_career: 'İş Başvuru Formu',
+    footer_contracts: 'NDA ve Örnek Sözleşmeler',
+    career_modal_title: 'Kariyer & İş Başvuru Formu',
+    career_modal_sub: 'Yakın Grup bünyesinde inşaat, enerji, yatırım ve teknoloji projelerimizde yer almak için başvurunuzu iletin.',
+    lbl_career_position: 'Başvurulan Pozisyon / Uzmanlık Alanı',
+    lbl_career_cv: 'LinkedIn Profil veya CV Linki (Google Drive / Dropbox)',
+    lbl_career_note: 'Ön Yazı / Deneyim Özeti',
+    btn_career_submit: 'Başvuruyu Gönder',
+    contracts_modal_title: 'NDA & Örnek Şirket Sözleşmeleri',
+    contracts_modal_sub: 'İş ortaklarımız, alt yüklenicilerimiz ve yatırımcılarımız için hazırlanan kurumsal çerçeve ve gizlilik sözleşme taslakları.',
+    btn_contract_request: 'Özel Sözleşme Talebi İlet ➔',
     footer_lic_note: 'Marka logoları tanıtım amaçlı olup mülkiyet hakları yetkili tescil sahiplerine aittir.',
     footer_rights: '© 2026 Yakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi. Tüm hakları saklıdır.',
     btn_vcard_inspect: 'vCard & Detaylı İncele',
@@ -665,6 +676,17 @@ const TRANSLATIONS = {
     footer_presentation: 'Investor Presentation',
     tag_construction_short: 'Yakın Construction',
     tag_energy_short: 'Yakın Energy',
+        footer_career: 'Career & Job Application',
+    footer_contracts: 'NDA & Sample Agreements',
+    career_modal_title: 'Career & Job Application Form',
+    career_modal_sub: 'Submit your application to join our construction, energy, investment, and technology projects at Yakın Group.',
+    lbl_career_position: 'Applied Position / Department',
+    lbl_career_cv: 'LinkedIn Profile or CV Link (Google Drive / Dropbox)',
+    lbl_career_note: 'Cover Letter / Experience Summary',
+    btn_career_submit: 'Submit Application',
+    contracts_modal_title: 'NDA & Sample Corporate Agreements',
+    contracts_modal_sub: 'Standard non-disclosure and framework agreement templates for our corporate partners, subcontractors, and investors.',
+    btn_contract_request: 'Request Custom Agreement ➔',
     footer_lic_note: 'Brand logos are for promotional reference; proprietary rights belong to their registered owners.',
     footer_rights: '© 2026 Yakın Group Industrial Construction Energy Technology Inc. All rights reserved.',
     btn_vcard_inspect: 'vCard & View Details',
@@ -2998,6 +3020,200 @@ async function handleContactSubmit(e) {
     }, 4500);
   }
 }
+
+
+// ── Kariyer & İş Başvuru Modal ──────────────────────────────────────────────
+function openCareerModal() {
+  const dialog = document.getElementById('career-dialog');
+  if (dialog) {
+    const feedback = document.getElementById('career-form-feedback');
+    if (feedback) feedback.style.display = 'none';
+    dialog.showModal();
+  }
+}
+
+function handleCareerSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('career-submit-btn');
+  const feedback = document.getElementById('career-form-feedback');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = currentLang === 'en' ? 'Submitting Application...' : 'Başvuru İletiliyor...';
+    btn.style.opacity = '0.7';
+  }
+
+  setTimeout(() => {
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.background = '#ecfdf5';
+      feedback.style.border = '1px solid #10b981';
+      feedback.style.color = '#047857';
+      feedback.textContent = currentLang === 'en' 
+        ? '✓ Thank you! Your job application has been successfully submitted to our HR department.' 
+        : '✓ Başvurunuz başarıyla alındı! İnsan Kaynakları departmanımız en kısa sürede sizinle iletişime geçecektir.';
+    }
+    const form = document.getElementById('career-form');
+    if (form) form.reset();
+    if (btn) {
+      btn.textContent = currentLang === 'en' ? 'Application Submitted ✓' : 'Başvuru Alındı ✓';
+      btn.style.background = '#047857';
+    }
+    setTimeout(() => {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = currentLang === 'en' ? 'Submit Application' : 'Başvuruyu Gönder';
+        btn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+        btn.style.opacity = '1';
+      }
+    }, 4000);
+  }, 1000);
+}
+
+// ── NDA & Örnek Şirket Sözleşmeleri ─────────────────────────────────────────
+const CONTRACTS_DATA = [
+  {
+    titleTr: '1. Gizlilik ve Sır Saklama Sözleşmesi (Non-Disclosure Agreement — NDA)',
+    titleEn: '1. Mutual Non-Disclosure Agreement (NDA)',
+    textTr: `<strong>GİZLİLİK VE SIR SAKLAMA SÖZLEŞMESİ (NDA)</strong><br><br>
+<strong>1. TARAFLAR:</strong><br>
+İşbu Sözleşme, bir tarafta <strong>YAKIN GRUP SANAYİ İNŞAAT ENERJİ TEKNOLOJİ A.Ş.</strong> (Maslak Sun Plaza Kat:12, Şişli/İstanbul) ile diğer tarafta sözleşmeye taraf olan gerçek/tüzel kişi ("Karşı Taraf") arasında akdedilmiştir.<br><br>
+<strong>2. KONU VE KAPSAM:</strong><br>
+Taraflar arasında yürütülecek muhtemel iş birliği, proje geliştirme, finansman yapılandırması, mühendislik çizimleri, teklif şartnameleri ve ticari süreçler kapsamında birbirlerine açıklayacakları teknik, finansal, ticari ve operasyonel her türlü bilgi "Gizli Bilgi" olarak kabul edilir.<br><br>
+<strong>3. GİZLİLİK YÜKÜMLÜLÜĞÜ:</strong><br>
+Taraflar, Gizli Bilgileri yalnızca projenin değerlendirilmesi amacıyla kullanmayı, üçüncü şahıslara ve kurumlara doğrudan veya dolaylı olarak aktarmamayı, çalışanlarını da bu gizlilik kapsamında bağlayıcı kılmayı gayrikabili rücu taahhüt eder.<br><br>
+<strong>4. SÜRE VE GEÇERLİLİK:</strong><br>
+İşbu sözleşme imza tarihinden itibaren yürürlüğe girer ve taraflar arasındaki ticari görüşmeler sona erse dahi <strong>3 (üç) yıl</strong> süreyle tam hukuki geçerliliğini korur.<br><br>
+<strong>5. UYUŞMAZLIKLARIN ÇÖZÜMÜ:</strong><br>
+Sözleşmeden doğan her türlü ihtilafta İstanbul Merkez (Çağlayan) Mahkemeleri ve İcra Daireleri yetkilidir.`,
+    textEn: `<strong>MUTUAL NON-DISCLOSURE AGREEMENT (NDA)</strong><br><br>
+<strong>1. PARTIES:</strong><br>
+This Agreement is entered into between <strong>YAKIN GROUP INDUSTRIAL CONSTRUCTION ENERGY TECHNOLOGY INC.</strong> (Maslak Sun Plaza 12th Floor, Şişli/Istanbul) and the counterparty company/individual ("Counterparty").<br><br>
+<strong>2. PURPOSE & SCOPE:</strong><br>
+All proprietary technical designs, financial models, project specifications, commercial terms, and operational data disclosed during prospective partnership, EPC contracting, or investment discussions shall constitute "Confidential Information".<br><br>
+<strong>3. OBLIGATIONS:</strong><br>
+Each party agrees to maintain strict confidentiality, protect proprietary data with reasonable care, and refrain from disclosing or utilizing information outside authorized project scope.<br><br>
+<strong>4. TERM & DURATION:</strong><br>
+This Agreement remains effective for a term of <strong>3 (three) years</strong> from the date of disclosure regardless of transaction conclusion.<br><br>
+<strong>5. JURISDICTION:</strong><br>
+Governed by Turkish Commercial Law with exclusive jurisdiction of Istanbul Central Courts.`
+  },
+  {
+    titleTr: '2. Alt Yüklenici & Taşeron EPC Çerçeve Sözleşmesi',
+    titleEn: '2. Subcontractor & EPC Master Framework Agreement',
+    textTr: `<strong>ALT YÜKLENİCİ EPC ÇERÇEVE SÖZLEŞMESİ TASLAĞI</strong><br><br>
+<strong>1. İŞİN KAPSAMI:</strong><br>
+Ana Yüklenici (Yakın Grup) tarafından ihale edilen endüstriyel inşaat, enerji santrali veya altyapı projelerinde alt yüklenicinin üstlendiği imalatların teknik şartname, 5D BIM modeli ve iş programına uygun olarak anahtar teslim icrasıdır.<br><br>
+<strong>2. İŞ SAĞLIĞI VE GÜVENLİĞİ (İSG):</strong><br>
+Alt yüklenici, 6331 sayılı İSG Kanunu ve uluslararası ISO 45001 standartlarına tam uyum sağlamakla yükümlüdür. Şantiye sahasında sıfır tolerans iş güvenliği protokolleri uygulanır.<br><br>
+<strong>3. HAKEDİŞ VE ÖDEMELER:</strong><br>
+Hakedişler, sahada fiilen yapılan ve kontrol mühendislerince onaylanan imalat metrajları üzerinden aylık periyotlarla tahakkuk ettirilir. %5 kesin teminat ve nefaset kesintisi kesin kabul tarihine kadar bloke edilir.<br><br>
+<strong>4. CEZAİ ŞARTLAR VE GECİKME:</strong><br>
+İş programında belirlenen kilometre taşlarının kusurlu gecikmesi durumunda, gecikilen her takvim günü için sözleşme bedelinin %0.2'si oranında gecikme cezası uygulanır.`,
+    textEn: `<strong>SUBCONTRACTOR EPC MASTER FRAMEWORK AGREEMENT</strong><br><br>
+<strong>1. SCOPE OF WORKS:</strong><br>
+Turnkey execution of designated civil, MEP, or energy infrastructure packages in accordance with approved 5D BIM LOD 400 details, technical specifications, and project milestones.<br><br>
+<strong>2. HSE & OCCUPATIONAL SAFETY:</strong><br>
+Full compliance with ISO 45001 safety frameworks and mandatory zero-harm site protocols.<br><br>
+<strong>3. PROGRESS PAYMENTS & RETENTION:</strong><br>
+Monthly progress billings based on verified site telemetry and engineer sign-off, subject to standard 5% performance retention until final acceptance.<br><br>
+<strong>4. LIQUIDATED DAMAGES:</strong><br>
+Unexcused project milestone delays incur liquidated damages of 0.20% per calendar day.`
+  },
+  {
+    titleTr: '3. B2B Ekipman & Malzeme Tedarik Sözleşmesi',
+    titleEn: '3. B2B Industrial Equipment & Procurement Agreement',
+    textTr: `<strong>B2B MALZEME VE ENDÜSTRİYEL EKİPMAN TEDARİK SÖZLEŞMESİ</strong><br><br>
+<strong>1. TEDARİK KAPSAMI:</strong><br>
+Tier-1 Solar PV paneller, BESS batarya konteynerleri, OG/YG transformatörler, inverterler ve yapısal çelik malzemelerin uluslararası IEC / TSE standartlarında tedarik ve teslimidir.<br><br>
+<strong>2. KALİTE VE FABRİKA KABUL TESTLERİ (FAT):</strong><br>
+Tüm ekipmanlar sevkiyat öncesinde bağımsız gözetim kuruluşu ve Yakın Grup mühendisleri nezaretinde Fabrika Kabul Testlerine (FAT) tabi tutulur.<br><br>
+<strong>3. GARANTİ VE TEKNİK DESTEK:</strong><br>
+Tedarikçi; mekanik imalat hatalarına karşı en az 5 yıl, lineer güç üretimi garantisi için 25 yıl tam üretici garantisi ve 7/24 teknik yedek parça temin taahhüdü sunar.`,
+    textEn: `<strong>B2B INDUSTRIAL EQUIPMENT PROCUREMENT AGREEMENT</strong><br><br>
+<strong>1. PROCUREMENT SCOPE:</strong><br>
+Supply and delivery of Tier-1 Solar PV modules, containerized BESS, MV/HV transformers, inverters, and structural components conforming to IEC / CE certifications.<br><br>
+<strong>2. FACTORY ACCEPTANCE TESTING (FAT):</strong><br>
+Rigorous pre-shipment inspection and FAT protocol conducted alongside certified quality inspectors.<br><br>
+<strong>3. WARRANTY & SLA:</strong><br>
+Minimum 5-year product manufacturing warranty, 25-year linear performance warranty for PV modules, and guaranteed replacement SLA.`
+  },
+  {
+    titleTr: '4. Proje Finansmanı & SPV Danışmanlık Protokolü',
+    titleEn: '4. Project Financing & SPV Structuring Protocol',
+    textTr: `<strong>PROJE FİNANSMANI VE STRATEJİK YATIRIM PROTOKOLÜ</strong><br><br>
+<strong>1. PROTOKOL AMACI:</strong><br>
+Yenilenebilir enerji, gayrimenkul ve ağır sanayi yatırımlarında banka sendikasyonu, leasing organizasyonu, GYO ortaklıkları ve Özel Amaçlı Şirket (SPV) kurulumuna yönelik danışmanlık esaslarıdır.<br><br>
+<strong>2. BAĞIMSIZ FİZİBİLİTE VE RİSK YÖNETİMİ:</strong><br>
+Projenin DSCR (Borç Servisi Karşılama Oranı), IRR (İç Verim Oranı) ve dinamik nakit akış modelleri uluslararası bağımsız derecelendirme normlarına uygun yapılandırılır.<br><br>
+<strong>3. ŞEFFAFLIK VE YASAL ÇERÇEVE:</strong><br>
+Yakın Capital lisans gerektiren portföy yönetimi yapmaz; münhasıran proje bazlı finansal mimari ve yapılandırma danışmanlığı yürütür.`,
+    textEn: `<strong>PROJECT FINANCE & SPV ADVISORY PROTOCOL</strong><br><br>
+<strong>1. OBJECTIVE:</strong><br>
+Framework for project debt syndication, leasing arrangements, REIT co-investments, and Special Purpose Vehicle (SPV) structuring across energy and infrastructure assets.<br><br>
+<strong>2. BANKABLE FEASIBILITY:</strong><br>
+Comprehensive financial engineering including DSCR, IRR modeling, and international bankability audits.<br><br>
+<strong>3. REGULATORY COMPLIANCE:</strong><br>
+Strategic project consulting focus; excludes regulated retail portfolio brokerage.`
+  }
+];
+
+let activeContractIdx = 0;
+
+function openContractsModal() {
+  const dialog = document.getElementById('contracts-dialog');
+  if (dialog) {
+    switchContractTab(0);
+    dialog.showModal();
+  }
+}
+
+function switchContractTab(idx) {
+  activeContractIdx = idx;
+  const isEn = currentLang === 'en';
+  
+  // Update buttons active style
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById('ctab-' + i);
+    if (btn) {
+      if (i === idx) {
+        btn.style.background = '#e0f2fe';
+        btn.style.borderColor = '#0284c7';
+        btn.style.color = '#0369a1';
+      } else {
+        btn.style.background = '#f8fafc';
+        btn.style.borderColor = '#cbd5e1';
+        btn.style.color = '#64748b';
+      }
+    }
+  }
+
+  const container = document.getElementById('contract-view-body');
+  if (container) {
+    const item = CONTRACTS_DATA[idx];
+    container.innerHTML = isEn ? item.textEn : item.textTr;
+  }
+}
+
+function copyContractText() {
+  const container = document.getElementById('contract-view-body');
+  const btn = document.getElementById('btn-copy-contract');
+  if (container && btn) {
+    const textToCopy = container.innerText;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      btn.textContent = currentLang === 'en' ? '✓ Copied to Clipboard!' : '✓ Metin Kopyalandı!';
+      btn.style.background = '#ecfdf5';
+      btn.style.color = '#047857';
+      btn.style.borderColor = '#10b981';
+      setTimeout(() => {
+        btn.textContent = currentLang === 'en' ? '📋 Copy Text' : '📋 Metni Kopyala';
+        btn.style.background = '#f1f5f9';
+        btn.style.color = '#334155';
+        btn.style.borderColor = '#cbd5e1';
+      }, 2500);
+    });
+  }
+}
+
 
 // ── Legal Modals ───────────────────────────────────────────────────────────
 const LEGAL = {

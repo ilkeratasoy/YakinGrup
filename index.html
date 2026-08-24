@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
   <link rel="apple-touch-icon" sizes="64x64" href="assets/images/favicon-64.png">
-  <link rel="stylesheet" href="style.css?v=20260805_251">
+  <link rel="stylesheet" href="style.css?v=20260805_252">
 </head>
 <body>
 
@@ -1363,6 +1363,8 @@
           <li><a href="#ortaklar" data-i18n="footer_partners">İş Ortaklarımız</a></li>
           <li><a href="#marketplace" data-i18n="nav_marketplace">Marketplace</a></li>
           <li><a href="Sunum.html" target="_blank" data-i18n="footer_presentation_2026">Kurumsal Sunum 2026</a></li>
+          <li><a href="#" onclick="openCareerModal(); return false;" data-i18n="footer_career">İş Başvuru Formu</a></li>
+          <li><a href="#" onclick="openContractsModal(); return false;" data-i18n="footer_contracts">NDA ve Örnek Sözleşmeler</a></li>
           <li><a href="#" onclick="openDesignFilesModal(); return false;" data-i18n="footer_design_files">Tasarım Dosyaları 🔒</a></li>
         </ul>
       </div>
@@ -1626,6 +1628,106 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260805_251"></script>
+
+  <!-- DIALOG: Kariyer & İş Başvuru Formu -->
+  <dialog id="career-dialog" class="market-modal" style="max-width: 580px; width: 92vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.35); background: #ffffff;">
+    <button class="modal-close-btn" onclick="document.getElementById('career-dialog').close()">×</button>
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <div style="width: 52px; height: 52px; border-radius: 50%; background: #ecfdf5; border: 2px solid #10b981; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; color: #059669; font-size: 1.5rem;">
+        💼
+      </div>
+      <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #0b2545; margin-bottom: 0.3rem;" data-i18n="career_modal_title">
+        Kariyer & İş Başvuru Formu
+      </h3>
+      <p style="font-size: 0.86rem; color: #64748b; line-height: 1.5; max-width: 460px; margin: 0 auto;" data-i18n="career_modal_sub">
+        Yakın Grup bünyesinde inşaat, enerji, yatırım ve teknoloji projelerimizde yer almak için başvurunuzu iletin.
+      </p>
+    </div>
+
+    <form id="career-form" onsubmit="handleCareerSubmit(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="car-name" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_form_name">Adınız Soyadınız</label>
+        <input type="text" id="car-name" name="Ad Soyad" required placeholder="Örn. Ahmet Yılmaz" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="car-email" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_form_email">E-posta Adresiniz</label>
+          <input type="email" id="car-email" name="E-posta" required placeholder="isim@firma.com" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="car-phone" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_form_phone">Telefon Numaranız</label>
+          <input type="tel" id="car-phone" name="Telefon" required placeholder="+90 532..." style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="car-position" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_career_position">Başvurulan Pozisyon / Uzmanlık Alanı</label>
+        <select id="car-position" name="Pozisyon" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem; background: #fff;">
+          <option value="İnşaat Mühendisliği / Şantiye Yönetimi">İnşaat Mühendisliği / Şantiye Yönetimi</option>
+          <option value="Elektrik & Enerji Sistemleri Mühendisliği">Elektrik & Enerji Sistemleri Mühendisliği</option>
+          <option value="Mimarlık & 5D BIM Modelleme">Mimarlık & 5D BIM Modelleme</option>
+          <option value="Proje Finansmanı & Sermaye Yapılandırma">Proje Finansmanı & Sermaye Yapılandırma</option>
+          <option value="Yazılım, AI & IoT Platform Geliştirme">Yazılım, AI & IoT Platform Geliştirme</option>
+          <option value="Satınalma & Tedarik Zinciri">Satınalma & Tedarik Zinciri</option>
+          <option value="Genel Başvuru / Staj">Genel Başvuru / Staj</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="car-cv" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_career_cv">LinkedIn Profil veya CV Linki (Google Drive / Dropbox)</label>
+        <input type="url" id="car-cv" name="CV Linki" placeholder="https://linkedin.com/in/... veya CV linki" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;">
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="car-note" style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px;" data-i18n="lbl_career_note">Ön Yazı / Deneyim Özeti</label>
+        <textarea id="car-note" name="Ön Yazı" rows="3" placeholder="Tecrübeleriniz ve kendinizi tanıtan kısa not..." style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 0.9rem;"></textarea>
+      </div>
+
+      <div class="form-group checkbox-group" style="margin-top: 4px; margin-bottom: 6px;">
+        <input type="checkbox" id="car-kvkk" required checked>
+        <label for="car-kvkk" class="checkbox-label" style="font-size: 0.78rem;"><a href="#" onclick="openLegalModal('kvkk'); return false;" data-i18n="market_kvkk_note" style="color: #059669; text-decoration: underline; cursor: pointer;">KVKK İletişim izni şartlarını okudum ve kabul ediyorum.</a></label>
+      </div>
+
+      <div id="career-form-feedback" style="display: none; padding: 10px 14px; border-radius: 8px; font-size: 0.86rem; font-weight: 600; text-align: center;"></div>
+      <button type="submit" id="career-submit-btn" style="width: 100%; padding: 0.85rem; background: linear-gradient(135deg, #059669, #047857); color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s;" data-i18n="btn_career_submit">Başvuruyu Gönder</button>
+    </form>
+  </dialog>
+
+  <!-- DIALOG: NDA ve Örnek Şirket Sözleşmeleri -->
+  <dialog id="contracts-dialog" class="market-modal" style="max-width: 720px; width: 92vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.35); background: #ffffff;">
+    <button class="modal-close-btn" onclick="document.getElementById('contracts-dialog').close()">×</button>
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <div style="width: 52px; height: 52px; border-radius: 50%; background: #e0f2fe; border: 2px solid #0284c7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; color: #0369a1; font-size: 1.5rem;">
+        📜
+      </div>
+      <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #0b2545; margin-bottom: 0.3rem;" data-i18n="contracts_modal_title">
+        NDA & Örnek Şirket Sözleşmeleri
+      </h3>
+      <p style="font-size: 0.86rem; color: #64748b; line-height: 1.5; max-width: 540px; margin: 0 auto;" data-i18n="contracts_modal_sub">
+        İş ortaklarımız, alt yüklenicilerimiz ve yatırımcılarımız için hazırlanan kurumsal çerçeve ve gizlilik sözleşme taslakları.
+      </p>
+    </div>
+
+    <!-- Contract Tabs / Selector -->
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.8rem;">
+      <button class="contract-tab-btn active" onclick="switchContractTab(0)" id="ctab-0" style="padding: 6px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; border: 1px solid #0284c7; background: #e0f2fe; color: #0369a1; cursor: pointer;">1. Gizlilik Sözleşmesi (NDA)</button>
+      <button class="contract-tab-btn" onclick="switchContractTab(1)" id="ctab-1" style="padding: 6px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; border: 1px solid #cbd5e1; background: #f8fafc; color: #64748b; cursor: pointer;">2. Alt Yüklenici EPC Sözleşmesi</button>
+      <button class="contract-tab-btn" onclick="switchContractTab(2)" id="ctab-2" style="padding: 6px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; border: 1px solid #cbd5e1; background: #f8fafc; color: #64748b; cursor: pointer;">3. B2B Malzeme Tedarik Sözleşmesi</button>
+      <button class="contract-tab-btn" onclick="switchContractTab(3)" id="ctab-3" style="padding: 6px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; border: 1px solid #cbd5e1; background: #f8fafc; color: #64748b; cursor: pointer;">4. Finansman & SPV Protokolü</button>
+    </div>
+
+    <!-- Contract Content Area -->
+    <div id="contract-view-body" style="max-height: 44vh; overflow-y: auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.2rem; font-size: 0.85rem; line-height: 1.7; color: #334155; margin-bottom: 1.2rem;">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="copyContractText()" style="padding: 0.65rem 1.2rem; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 700; font-size: 0.85rem; color: #334155; cursor: pointer;" id="btn-copy-contract">📋 Metni Kopyala</button>
+      <a href="mailto:hukuk@yakingrup.net?subject=Kurumsal%20Sozlesme%20Talebi" style="padding: 0.65rem 1.2rem; background: #0b2545; border: none; border-radius: 8px; font-weight: 700; font-size: 0.85rem; color: #ffffff; text-decoration: none; cursor: pointer;" data-i18n="btn_contract_request">Özel Sözleşme Talebi İlet ➔</a>
+    </div>
+  </dialog>
+
+  <script src="app.js?v=20260805_252"></script>
 </body>
 </html>
