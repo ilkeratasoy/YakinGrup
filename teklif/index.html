@@ -1982,6 +1982,10 @@
         <button class="zoom-btn" onclick="setZoom(0.85)">85%</button>
         <button class="zoom-btn" onclick="setZoom(1)">100%</button>
         <button class="zoom-btn" onclick="setZoom(1.15)">115%</button>
+        <button class="zoom-btn" id="btn-sync-scroll" onclick="toggleSyncScroll()" title="Eş Zamanlı Kaydırma (Senkronize Scroll)" style="display:flex; align-items:center; gap:4px; border-left:1px solid #cbd5e1; padding-left:10px;">
+          <span>🔗</span>
+          <span id="sync-scroll-status" style="color:#15803d; font-weight:700; font-size:0.75rem;">Eşzamanlı Kaydırma: Açık</span>
+        </button>
       </div>
 
       <!-- A4 Sheet Container -->
@@ -2917,6 +2921,7 @@
       renderClausesEditor();
       renderItemsEditor();
       setDocMode(appState.mode || 'spec');
+      setupSynchronizedScroll();
       closeModal('modal-archive');
       showToast('📂 "' + p.docNo + '" stüdyoya yüklendi.');
     }
@@ -4102,6 +4107,68 @@
       }
     });
 
+    
+    // --- Synchronized Scroll Engine (Eş Zamanlı Kaydırma) ---
+    let isSyncScrollEnabled = true;
+    let isScrollingFromLeft = false;
+    let isScrollingFromRight = false;
+    let scrollAnimFrame = null;
+
+    function setupSynchronizedScroll() {
+      const leftPanel = document.querySelector('.controls-panel');
+      const rightStage = document.querySelector('.preview-stage');
+
+      if (!leftPanel || !rightStage) return;
+
+      leftPanel.addEventListener('scroll', () => {
+        if (!isSyncScrollEnabled || isScrollingFromRight) return;
+        isScrollingFromLeft = true;
+
+        if (scrollAnimFrame) cancelAnimationFrame(scrollAnimFrame);
+        scrollAnimFrame = requestAnimationFrame(() => {
+          const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
+          const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
+          if (leftMax > 0 && rightMax > 0) {
+            const ratio = leftPanel.scrollTop / leftMax;
+            rightStage.scrollTop = ratio * rightMax;
+          }
+          setTimeout(() => { isScrollingFromLeft = false; }, 60);
+        });
+      }, { passive: true });
+
+      rightStage.addEventListener('scroll', () => {
+        if (!isSyncScrollEnabled || isScrollingFromLeft) return;
+        isScrollingFromRight = true;
+
+        if (scrollAnimFrame) cancelAnimationFrame(scrollAnimFrame);
+        scrollAnimFrame = requestAnimationFrame(() => {
+          const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
+          const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
+          if (leftMax > 0 && rightMax > 0) {
+            const ratio = rightStage.scrollTop / rightMax;
+            leftPanel.scrollTop = ratio * leftMax;
+          }
+          setTimeout(() => { isScrollingFromRight = false; }, 60);
+        });
+      }, { passive: true });
+    }
+
+    function toggleSyncScroll() {
+      isSyncScrollEnabled = !isSyncScrollEnabled;
+      const statusEl = document.getElementById('sync-scroll-status');
+      if (statusEl) {
+        if (isSyncScrollEnabled) {
+          statusEl.innerText = 'Eşzamanlı Kaydırma: Açık';
+          statusEl.style.color = '#15803d';
+          showToast('🔗 Eş zamanlı kaydırma açıldı');
+        } else {
+          statusEl.innerText = 'Eşzamanlı Kaydırma: Kapalı';
+          statusEl.style.color = '#64748b';
+          showToast('🔓 Bağımsız kaydırma modu aktif');
+        }
+      }
+    }
+
     // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
       // Check if draft exists
@@ -4120,6 +4187,7 @@
       renderClausesEditor();
       renderItemsEditor();
       setDocMode(appState.mode || 'spec');
+      setupSynchronizedScroll();
     });
   </script>
 </body>
