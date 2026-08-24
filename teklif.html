@@ -4011,6 +4011,24 @@
       window.open('https://api.whatsapp.com/send?text=' + encoded, '_blank');
     }
 
+    
+    // Listen for Online Cloud DB updates and dynamically refresh active screens
+    window.addEventListener('yakin_erp_synced', () => {
+      populateCustomerDropdown();
+      const custModal = document.getElementById('modal-customers');
+      if (custModal && custModal.classList.contains('active')) {
+        renderCustomersTable();
+      }
+      const archModal = document.getElementById('modal-archive');
+      if (archModal && archModal.classList.contains('active')) {
+        renderArchiveTable();
+      }
+      const invModal = document.getElementById('modal-inventory');
+      if (invModal && invModal.classList.contains('active')) {
+        renderInventoryTable();
+      }
+    });
+
     // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
       // Check if draft exists
