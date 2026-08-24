@@ -435,17 +435,38 @@
       padding-right: 4px;
     }
 
+    
+    /* Bağımsız Panel Kaydırma Çubukları */
+    .controls-panel::-webkit-scrollbar,
+    .preview-stage::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    .controls-panel::-webkit-scrollbar-track,
+    .preview-stage::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .controls-panel::-webkit-scrollbar-thumb,
+    .preview-stage::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .controls-panel::-webkit-scrollbar-thumb:hover,
+    .preview-stage::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
     /* Right Preview Stage */
     .preview-stage {
       flex: 1;
       background: var(--stage-bg);
       overflow-y: auto;
-      padding: 1.2rem 1.8rem 6rem 1.8rem;
+      padding: 1.5rem 1.8rem 3.5rem 1.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      scroll-behavior: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .stage-toolbar {
@@ -1983,14 +2004,10 @@
       
       <!-- Stage Toolbar -->
       <div class="stage-toolbar">
-        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">📄 Canlı A4 Şartname & Teklif Önizleme</span>
+        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">📄 Canlı A4 Belge Önizleme</span>
         <button class="zoom-btn" onclick="setZoom(0.85)">85%</button>
         <button class="zoom-btn" onclick="setZoom(1)">100%</button>
         <button class="zoom-btn" onclick="setZoom(1.15)">115%</button>
-        <button class="zoom-btn" id="btn-sync-scroll" onclick="toggleSyncScroll()" title="Eş Zamanlı Kaydırma (Senkronize Scroll)" style="display:flex; align-items:center; gap:4px; border-left:1px solid #cbd5e1; padding-left:10px;">
-          <span>🔗</span>
-          <span id="sync-scroll-status" style="color:#15803d; font-weight:700; font-size:0.75rem;">Eşzamanlı Kaydırma: Açık</span>
-        </button>
       </div>
 
       <!-- A4 Sheet Container -->
@@ -2927,7 +2944,7 @@
       renderClausesEditor();
       renderItemsEditor();
       setDocMode(appState.mode || 'spec');
-      setupSynchronizedScroll();
+      
       closeModal('modal-archive');
       showToast('📂 "' + p.docNo + '" stüdyoya yüklendi.');
     }
@@ -4114,103 +4131,7 @@
     });
 
     
-    // --- Synchronized Scroll Engine (Hassas & Garantili Senkronize Kaydırma) ---
-    let isSyncScrollEnabled = true;
-    let isScrollingFromLeft = false;
-    let isScrollingFromRight = false;
-
-    function syncScrollFromLeft() {
-      if (!isSyncScrollEnabled || isScrollingFromRight) return;
-      isScrollingFromLeft = true;
-
-      const leftPanel = document.querySelector('.controls-panel');
-      const rightStage = document.querySelector('.preview-stage');
-      const docSheet = document.getElementById('doc-sheet');
-      if (!leftPanel || !rightStage || !docSheet) return;
-
-      const leftScrollTop = leftPanel.scrollTop;
-      const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
-
-      if (leftMax > 0) {
-        const ratio = Math.max(0, Math.min(1.0, leftScrollTop / leftMax)); // 0.0 (top) to 1.0 (bottom)
-        
-        // Exact travel distance: from sheet top to sheet bottom
-        const sheetHeight = docSheet.offsetHeight;
-        const stageHeight = rightStage.clientHeight;
-        
-        // Max travel ensures the bottom signature block of the A4 sheet is comfortably in view at ratio=1.0
-        const maxScroll = Math.max(0, sheetHeight - stageHeight + 160);
-        const targetScrollTop = ratio * maxScroll;
-
-        rightStage.scrollTop = targetScrollTop;
-      }
-
-      clearTimeout(window._scrollTimeoutL);
-      window._scrollTimeoutL = setTimeout(() => { isScrollingFromLeft = false; }, 50);
-    }
-
-    function syncScrollFromRight() {
-      if (!isSyncScrollEnabled || isScrollingFromLeft) return;
-      isScrollingFromRight = true;
-
-      const leftPanel = document.querySelector('.controls-panel');
-      const rightStage = document.querySelector('.preview-stage');
-      const docSheet = document.getElementById('doc-sheet');
-      if (!leftPanel || !rightStage || !docSheet) return;
-
-      const rightScrollTop = rightStage.scrollTop;
-      const sheetHeight = docSheet.offsetHeight;
-      const stageHeight = rightStage.clientHeight;
-      const maxScroll = Math.max(0, sheetHeight - stageHeight + 160);
-
-      if (maxScroll > 0) {
-        const ratio = Math.max(0, Math.min(1.0, rightScrollTop / maxScroll));
-        const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
-        leftPanel.scrollTop = ratio * leftMax;
-      }
-
-      clearTimeout(window._scrollTimeoutR);
-      window._scrollTimeoutR = setTimeout(() => { isScrollingFromRight = false; }, 50);
-    }
-
-    function setupSynchronizedScroll() {
-      const leftPanel = document.querySelector('.controls-panel');
-      const rightStage = document.querySelector('.preview-stage');
-
-      if (!leftPanel || !rightStage) return;
-
-      // Scroll Event Listeners
-      leftPanel.addEventListener('scroll', syncScrollFromLeft, { passive: true });
-      rightStage.addEventListener('scroll', syncScrollFromRight, { passive: true });
-
-      // Wheel Event Listeners for immediate, buttery-smooth frame rendering
-      leftPanel.addEventListener('wheel', () => {
-        if (isSyncScrollEnabled) requestAnimationFrame(syncScrollFromLeft);
-      }, { passive: true });
-
-      rightStage.addEventListener('wheel', () => {
-        if (isSyncScrollEnabled) requestAnimationFrame(syncScrollFromRight);
-      }, { passive: true });
-
-      // Section-Focus Alignment
-      document.querySelectorAll('.controls-panel .panel-section').forEach(sec => {
-        sec.addEventListener('click', () => {
-          if (!isSyncScrollEnabled) return;
-          syncScrollFromLeft();
-        });
-      });
-    }
-
-    function toggleSyncScroll() {
-      isSyncScrollEnabled = !isSyncScrollEnabled;
-      const statusEl = document.getElementById('sync-scroll-status');
-      if (statusEl) {
-        if (isSyncScrollEnabled) {
-          statusEl.innerText = 'Eşzamanlı Kaydırma: Açık';
-          statusEl.style.color = '#15803d';
-          showToast('🔗 Eş zamanlı kaydırma açıldı');
-          syncScrollFromLeft();
-        } else {
+    // Bağımsız Çift Pencereli Kaydırma Modu (Left & Right Independent Scrolling) else {
           statusEl.innerText = 'Eşzamanlı Kaydırma: Kapalı';
           statusEl.style.color = '#64748b';
           showToast('🔓 Bağımsız kaydırma modu aktif');
@@ -4236,7 +4157,7 @@
       renderClausesEditor();
       renderItemsEditor();
       setDocMode(appState.mode || 'spec');
-      setupSynchronizedScroll();
+      
     });
   </script>
 </body>
