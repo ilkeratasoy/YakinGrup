@@ -440,22 +440,27 @@
       flex: 1;
       background: var(--stage-bg);
       overflow-y: auto;
-      padding: 2.2rem 1.8rem 45vh 1.8rem;
+      padding: 1.2rem 1.8rem 80vh 1.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
+      scroll-behavior: auto;
     }
 
     .stage-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
       margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
       gap: 12px;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
       padding: 0.5rem 1.1rem;
       border-radius: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
       border: 1px solid var(--border-light);
     }
 
@@ -2184,6 +2189,7 @@
         </div>
 
       </div>
+      <div class="stage-scroll-spacer" style="height: 60vh; width: 100%; pointer-events: none;"></div>
     </main>
 
   </div>
@@ -4108,7 +4114,7 @@
     });
 
     
-    // --- Synchronized Scroll Engine (Eş Zamanlı Kaydırma) ---
+    // --- Synchronized Scroll Engine (Gelişmiş Senkronize Kaydırma) ---
     let isSyncScrollEnabled = true;
     let isScrollingFromLeft = false;
     let isScrollingFromRight = false;
@@ -4119,19 +4125,24 @@
 
       const leftPanel = document.querySelector('.controls-panel');
       const rightStage = document.querySelector('.preview-stage');
-      if (!leftPanel || !rightStage) return;
+      const docSheet = document.getElementById('doc-sheet');
+      if (!leftPanel || !rightStage || !docSheet) return;
 
       const leftScrollTop = leftPanel.scrollTop;
       const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
-      const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
 
-      if (leftMax > 0 && rightMax > 0) {
-        const ratio = leftScrollTop / leftMax;
-        rightStage.scrollTop = ratio * rightMax;
+      if (leftMax > 0) {
+        const ratio = leftScrollTop / leftMax; // 0.0 (top) to 1.0 (bottom)
+        
+        // Calculate the maximum distance needed so the sheet bottom is fully visible at ratio=1.0
+        const sheetBottomOffset = docSheet.offsetTop + docSheet.offsetHeight;
+        const targetScrollTop = ratio * (sheetBottomOffset - (rightStage.clientHeight * 0.5));
+
+        rightStage.scrollTop = Math.max(0, targetScrollTop);
       }
 
       clearTimeout(window._scrollTimeoutL);
-      window._scrollTimeoutL = setTimeout(() => { isScrollingFromLeft = false; }, 60);
+      window._scrollTimeoutL = setTimeout(() => { isScrollingFromLeft = false; }, 50);
     }
 
     function syncScrollFromRight() {
@@ -4140,19 +4151,21 @@
 
       const leftPanel = document.querySelector('.controls-panel');
       const rightStage = document.querySelector('.preview-stage');
-      if (!leftPanel || !rightStage) return;
+      const docSheet = document.getElementById('doc-sheet');
+      if (!leftPanel || !rightStage || !docSheet) return;
 
       const rightScrollTop = rightStage.scrollTop;
-      const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
-      const rightMax = rightStage.scrollHeight - rightStage.clientHeight;
+      const sheetBottomOffset = docSheet.offsetTop + docSheet.offsetHeight;
+      const maxTarget = sheetBottomOffset - (rightStage.clientHeight * 0.5);
 
-      if (leftMax > 0 && rightMax > 0) {
-        const ratio = rightScrollTop / rightMax;
+      if (maxTarget > 0) {
+        const ratio = Math.min(1.0, rightScrollTop / maxTarget);
+        const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
         leftPanel.scrollTop = ratio * leftMax;
       }
 
       clearTimeout(window._scrollTimeoutR);
-      window._scrollTimeoutR = setTimeout(() => { isScrollingFromRight = false; }, 60);
+      window._scrollTimeoutR = setTimeout(() => { isScrollingFromRight = false; }, 50);
     }
 
     function setupSynchronizedScroll() {
@@ -4161,11 +4174,11 @@
 
       if (!leftPanel || !rightStage) return;
 
-      // Realtime scroll listeners
+      // Scroll Event Listeners
       leftPanel.addEventListener('scroll', syncScrollFromLeft, { passive: true });
       rightStage.addEventListener('scroll', syncScrollFromRight, { passive: true });
 
-      // Direct Wheel listener for immediate response
+      // Wheel Event Listeners for immediate, buttery-smooth frame rendering
       leftPanel.addEventListener('wheel', () => {
         if (isSyncScrollEnabled) requestAnimationFrame(syncScrollFromLeft);
       }, { passive: true });
@@ -4174,35 +4187,11 @@
         if (isSyncScrollEnabled) requestAnimationFrame(syncScrollFromRight);
       }, { passive: true });
 
-      // Section-Focus Smart Alignment: When clicking inputs on left, scroll right stage to relevant section
+      // Section-Focus Alignment
       document.querySelectorAll('.controls-panel .panel-section').forEach(sec => {
-        sec.addEventListener('focusin', () => {
+        sec.addEventListener('click', () => {
           if (!isSyncScrollEnabled) return;
-          const secText = sec.innerText || '';
-          if (secText.includes('2. Proje') || secText.includes('1. Belge')) {
-            rightStage.scrollTo({ top: 0, behavior: 'smooth' });
-          } else if (secText.includes('5. Fiyat')) {
-            const el = document.getElementById('sheet-table-section');
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              const stageRect = rightStage.getBoundingClientRect();
-              rightStage.scrollBy({ top: rect.top - stageRect.top - 80, behavior: 'smooth' });
-            }
-          } else if (secText.includes('3. Finans') || secText.includes('İmza')) {
-            const el = document.getElementById('sheet-totals-section');
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              const stageRect = rightStage.getBoundingClientRect();
-              rightStage.scrollBy({ top: rect.top - stageRect.top - 80, behavior: 'smooth' });
-            }
-          } else if (secText.includes('6. Şartname')) {
-            const el = document.getElementById('sheet-clauses-section');
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              const stageRect = rightStage.getBoundingClientRect();
-              rightStage.scrollBy({ top: rect.top - stageRect.top - 80, behavior: 'smooth' });
-            }
-          }
+          syncScrollFromLeft();
         });
       });
     }
