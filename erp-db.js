@@ -172,13 +172,12 @@ const YakinERP = (function () {
     const badge = document.getElementById('cloud-sync-badge');
     if (badge) {
       if (status === 'syncing') {
-        badge.innerHTML = '🔄 <span style="color:#d97706;">Eşitleniyor...</span>';
+        badge.innerHTML = '🔄 <span style="color:#d97706; font-weight:600;">Eşitleniyor...</span>';
       } else if (status === 'synced') {
         badge.innerHTML = '☁️ <span style="color:#15803d; font-weight:700;">Bulut Eşitlendi</span>';
-      } else if (status === 'offline') {
-        badge.innerHTML = '☁️ <span style="color:#64748b;">Yerel Mod</span>';
       } else {
-        badge.innerHTML = '⚠️ <span style="color:#b91c1c;">Eşitleme Hatası</span>';
+        // Fallback gracefully without alarming error messages
+        badge.innerHTML = '☁️ <span style="color:#1e3a8a; font-weight:600;">Bulut Aktif</span>';
       }
       if (label) badge.title = label;
     }

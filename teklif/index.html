@@ -440,7 +440,7 @@
       flex: 1;
       background: var(--stage-bg);
       overflow-y: auto;
-      padding: 1.2rem 1.8rem 80vh 1.8rem;
+      padding: 1.2rem 1.8rem 6rem 1.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -2189,7 +2189,7 @@
         </div>
 
       </div>
-      <div class="stage-scroll-spacer" style="height: 60vh; width: 100%; pointer-events: none;"></div>
+      
     </main>
 
   </div>
@@ -4114,7 +4114,7 @@
     });
 
     
-    // --- Synchronized Scroll Engine (Gelişmiş Senkronize Kaydırma) ---
+    // --- Synchronized Scroll Engine (Hassas & Garantili Senkronize Kaydırma) ---
     let isSyncScrollEnabled = true;
     let isScrollingFromLeft = false;
     let isScrollingFromRight = false;
@@ -4132,13 +4132,17 @@
       const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
 
       if (leftMax > 0) {
-        const ratio = leftScrollTop / leftMax; // 0.0 (top) to 1.0 (bottom)
+        const ratio = Math.max(0, Math.min(1.0, leftScrollTop / leftMax)); // 0.0 (top) to 1.0 (bottom)
         
-        // Calculate the maximum distance needed so the sheet bottom is fully visible at ratio=1.0
-        const sheetBottomOffset = docSheet.offsetTop + docSheet.offsetHeight;
-        const targetScrollTop = ratio * (sheetBottomOffset - (rightStage.clientHeight * 0.5));
+        // Exact travel distance: from sheet top to sheet bottom
+        const sheetHeight = docSheet.offsetHeight;
+        const stageHeight = rightStage.clientHeight;
+        
+        // Max travel ensures the bottom signature block of the A4 sheet is comfortably in view at ratio=1.0
+        const maxScroll = Math.max(0, sheetHeight - stageHeight + 160);
+        const targetScrollTop = ratio * maxScroll;
 
-        rightStage.scrollTop = Math.max(0, targetScrollTop);
+        rightStage.scrollTop = targetScrollTop;
       }
 
       clearTimeout(window._scrollTimeoutL);
@@ -4155,11 +4159,12 @@
       if (!leftPanel || !rightStage || !docSheet) return;
 
       const rightScrollTop = rightStage.scrollTop;
-      const sheetBottomOffset = docSheet.offsetTop + docSheet.offsetHeight;
-      const maxTarget = sheetBottomOffset - (rightStage.clientHeight * 0.5);
+      const sheetHeight = docSheet.offsetHeight;
+      const stageHeight = rightStage.clientHeight;
+      const maxScroll = Math.max(0, sheetHeight - stageHeight + 160);
 
-      if (maxTarget > 0) {
-        const ratio = Math.min(1.0, rightScrollTop / maxTarget);
+      if (maxScroll > 0) {
+        const ratio = Math.max(0, Math.min(1.0, rightScrollTop / maxScroll));
         const leftMax = leftPanel.scrollHeight - leftPanel.clientHeight;
         leftPanel.scrollTop = ratio * leftMax;
       }
