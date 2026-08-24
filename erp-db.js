@@ -1,6 +1,5 @@
 /**
- * Yakın Grup ERP & Bulut Veritabanı Motoru (erp-db.js)
- * Çoklu Bilgisayar / Cihaz Canlı Bulut Senkronizasyonu (Cloud Sync),
+ * Yakın Grup ERP & Veritabanı Motoru (erp-db.js)
  * Teklif Arşivi, Cari Hesaplar, Stok Yönetimi, Otomatik Taslak, Dış Ticaret & Fatura
  */
 
@@ -11,10 +10,6 @@ const YakinERP = (function () {
   const CUSTOMERS_KEY = DB_PREFIX + 'customers';
   const INVENTORY_KEY = DB_PREFIX + 'inventory';
   const SETTINGS_KEY = DB_PREFIX + 'settings';
-  const LAST_SYNC_KEY = DB_PREFIX + 'last_cloud_sync';
-
-  // Central Cloud Storage REST Endpoint for Yakın Grup
-  const CLOUD_ENDPOINT = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a0332f06be0c30';
 
   // Initial Preloaded Data for Customers & Inventory
   const defaultCustomers = [
@@ -156,163 +151,7 @@ const YakinERP = (function () {
     }
   }
 
-  // --- CLOUD SYNC ENGINE ---
-  let isSyncing = false;
-  let cloudStatus = 'synced'; // 'synced', 'syncing', 'offline', 'error'
-
-  function getCloudStatus() {
-    return {
-      status: cloudStatus,
-      lastSync: localStorage.getItem(LAST_SYNC_KEY) || 'Henüz Eşitlenmedi'
-    };
-  }
-
-  function updateCloudStatusUI(status, label) {
-    cloudStatus = status;
-    const badge = document.getElementById('cloud-sync-badge');
-    if (badge) {
-      if (status === 'syncing') {
-        badge.innerHTML = '🔄 <span style="color:#d97706; font-weight:600;">Eşitleniyor...</span>';
-      } else if (status === 'synced') {
-        badge.innerHTML = '☁️ <span style="color:#15803d; font-weight:700;">Bulut Eşitlendi</span>';
-      } else {
-        // Fallback gracefully without alarming error messages
-        badge.innerHTML = '☁️ <span style="color:#1e3a8a; font-weight:600;">Bulut Aktif</span>';
-      }
-      if (label) badge.title = label;
-    }
-  }
-
-  // Push Local DB to Central Cloud
-  async function pushToCloud() {
-    try {
-      updateCloudStatusUI('syncing', 'Buluta veri aktarılıyor...');
-      const payload = {
-        name: 'YakinGrup ERP Central Database',
-        data: {
-          updatedAt: new Date().toISOString(),
-          customers: getCustomers(),
-          proposals: getAllProposals(),
-          inventory: getInventory()
-        }
-      };
-
-      const res = await fetch(CLOUD_ENDPOINT, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (res.ok) {
-        localStorage.setItem(LAST_SYNC_KEY, new Date().toLocaleString('tr-TR'));
-        updateCloudStatusUI('synced', 'Son eşitleme: ' + new Date().toLocaleTimeString('tr-TR'));
-        return { success: true };
-      } else {
-        updateCloudStatusUI('error', 'Bulut sunucu yanıt vermedi');
-        return { success: false };
-      }
-    } catch (e) {
-      console.warn('Cloud Push Error (offline or blocked):', e);
-      updateCloudStatusUI('offline', 'Çevrimdışı / Yerel hafızaya kaydedildi');
-      return { success: false, error: e };
-    }
-  }
-
-  // Fetch from Central Cloud and Merge with Local DB
-  async function syncFromCloud(showToastNotification = false) {
-    if (isSyncing) return;
-    isSyncing = true;
-    updateCloudStatusUI('syncing', 'Buluttan güncellemeler çekiliyor...');
-
-    try {
-      const res = await fetch(CLOUD_ENDPOINT, { method: 'GET' });
-      if (!res.ok) throw new Error('Cloud HTTP ' + res.status);
-      const json = await res.json();
-      const cloudData = json.data || {};
-
-      let hasNewData = false;
-
-      // 1. Merge Customers
-      if (cloudData.customers && Array.isArray(cloudData.customers)) {
-        const localCustomers = getCustomers();
-        const mergedCustomers = [...localCustomers];
-
-        cloudData.customers.forEach(cloudCust => {
-          const idx = mergedCustomers.findIndex(c => c.id === cloudCust.id || (c.company.toLowerCase() === cloudCust.company.toLowerCase() && c.taxNumber === cloudCust.taxNumber));
-          if (idx >= 0) {
-            // Keep the most recently updated or cloud version
-            mergedCustomers[idx] = Object.assign({}, mergedCustomers[idx], cloudCust);
-          } else {
-            mergedCustomers.push(cloudCust);
-            hasNewData = true;
-          }
-        });
-
-        setStorage(CUSTOMERS_KEY, mergedCustomers);
-      }
-
-      // 2. Merge Proposals
-      if (cloudData.proposals && Array.isArray(cloudData.proposals)) {
-        const localProposals = getAllProposals();
-        const mergedProposals = [...localProposals];
-
-        cloudData.proposals.forEach(cloudProp => {
-          const idx = mergedProposals.findIndex(p => p.id === cloudProp.id || p.docNo === cloudProp.docNo);
-          if (idx >= 0) {
-            mergedProposals[idx] = Object.assign({}, mergedProposals[idx], cloudProp);
-          } else {
-            mergedProposals.unshift(cloudProp);
-            hasNewData = true;
-          }
-        });
-
-        setStorage(PROPOSALS_KEY, mergedProposals);
-      }
-
-      // 3. Merge Inventory
-      if (cloudData.inventory && Array.isArray(cloudData.inventory)) {
-        const localInventory = getInventory();
-        const mergedInventory = [...localInventory];
-
-        cloudData.inventory.forEach(cloudInv => {
-          const idx = mergedInventory.findIndex(i => i.id === cloudInv.id || i.code === cloudInv.code);
-          if (idx >= 0) {
-            mergedInventory[idx] = Object.assign({}, mergedInventory[idx], cloudInv);
-          } else {
-            mergedInventory.push(cloudInv);
-            hasNewData = true;
-          }
-        });
-
-        setStorage(INVENTORY_KEY, mergedInventory);
-      }
-
-      localStorage.setItem(LAST_SYNC_KEY, new Date().toLocaleString('tr-TR'));
-      updateCloudStatusUI('synced', 'Son eşitleme: ' + new Date().toLocaleTimeString('tr-TR'));
-
-      // Trigger UI updates in window
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('yakin_erp_synced', { detail: { hasNewData } }));
-      }
-
-      if (showToastNotification && typeof window.showToast === 'function') {
-        window.showToast('☁️ Bulut veritabanı başarıyla eşitlendi!');
-      }
-
-      // Also push back any local creations that cloud might have missed
-      pushToCloud();
-
-      isSyncing = false;
-      return { success: true, hasNewData };
-    } catch (e) {
-      console.warn('Cloud Sync Error (using local cache):', e);
-      updateCloudStatusUI('offline', 'Yerel hafıza aktif');
-      isSyncing = false;
-      return { success: false, error: e };
-    }
-  }
-
-  // Initialize Defaults if Empty and Trigger Initial Sync
+  // Initialize Defaults if Empty
   function initDB() {
     if (!localStorage.getItem(CUSTOMERS_KEY)) {
       setStorage(CUSTOMERS_KEY, defaultCustomers);
@@ -322,23 +161,6 @@ const YakinERP = (function () {
     }
     if (!localStorage.getItem(PROPOSALS_KEY)) {
       setStorage(PROPOSALS_KEY, []);
-    }
-
-    // Automatically sync from cloud in background
-    setTimeout(() => {
-      syncFromCloud();
-    }, 500);
-
-    // Auto-sync periodically every 60 seconds
-    setInterval(() => {
-      syncFromCloud();
-    }, 60000);
-
-    // Auto-sync when user returns to the tab
-    if (typeof window !== 'undefined') {
-      window.addEventListener('focus', () => {
-        syncFromCloud();
-      });
     }
   }
 
@@ -377,7 +199,7 @@ const YakinERP = (function () {
     const record = {
       id: proposalData.id || 'PROP-' + Date.now(),
       docNo: proposalData.docNo || 'YKN-DOC-' + Math.floor(1000 + Math.random() * 9000),
-      docType: proposalData.mode || 'spec',
+      docType: proposalData.mode || 'spec', // 'spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice'
       title: proposalData.subject || 'Başlıksız Teklif',
       clientCompany: proposalData.clientCompany || 'Müşteri',
       clientName: proposalData.clientName || '',
@@ -385,7 +207,7 @@ const YakinERP = (function () {
       grandTotal: proposalData.grandTotal || 0,
       date: proposalData.date || new Date().toISOString().split('T')[0],
       validityDays: proposalData.validityDays || 30,
-      status: proposalData.status || 'Taslak',
+      status: proposalData.status || 'Taslak', // 'Taslak', 'İletildi', 'Onaylandı', 'Faturalandı', 'İptal'
       updatedAt: new Date().toISOString(),
       createdAt: existingIdx >= 0 ? list[existingIdx].createdAt : new Date().toISOString(),
       fullState: proposalData
@@ -398,8 +220,6 @@ const YakinERP = (function () {
     }
 
     setStorage(PROPOSALS_KEY, list);
-    // Push update to Cloud
-    pushToCloud();
     return record;
   }
 
@@ -410,7 +230,6 @@ const YakinERP = (function () {
       item.status = newStatus;
       item.updatedAt = new Date().toISOString();
       setStorage(PROPOSALS_KEY, list);
-      pushToCloud();
       return true;
     }
     return false;
@@ -420,7 +239,6 @@ const YakinERP = (function () {
     let list = getAllProposals();
     list = list.filter(p => p.id !== idOrDocNo && p.docNo !== idOrDocNo);
     setStorage(PROPOSALS_KEY, list);
-    pushToCloud();
     return true;
   }
 
@@ -459,9 +277,6 @@ const YakinERP = (function () {
       list.push(record);
     }
     setStorage(CUSTOMERS_KEY, list);
-    
-    // Automatically push to cloud for multi-device sync
-    pushToCloud();
     return record;
   }
 
@@ -469,7 +284,6 @@ const YakinERP = (function () {
     let list = getCustomers();
     list = list.filter(c => c.id !== id);
     setStorage(CUSTOMERS_KEY, list);
-    pushToCloud();
     return true;
   }
 
@@ -508,7 +322,6 @@ const YakinERP = (function () {
       list.push(record);
     }
     setStorage(INVENTORY_KEY, list);
-    pushToCloud();
     return record;
   }
 
@@ -516,7 +329,6 @@ const YakinERP = (function () {
     let list = getInventory();
     list = list.filter(i => i.id !== id);
     setStorage(INVENTORY_KEY, list);
-    pushToCloud();
     return true;
   }
 
@@ -546,8 +358,7 @@ const YakinERP = (function () {
       if (data.customers && Array.isArray(data.customers)) setStorage(CUSTOMERS_KEY, data.customers);
       if (data.inventory && Array.isArray(data.inventory)) setStorage(INVENTORY_KEY, data.inventory);
       if (data.draft) setStorage(DRAFT_KEY, data.draft);
-      pushToCloud();
-      return { success: true, message: 'Veritabanı başarıyla içe aktarıldı ve buluta eşitlendi!' };
+      return { success: true, message: 'Veritabanı başarıyla içe aktarıldı!' };
     } catch (e) {
       return { success: false, message: 'Geçersiz yedek dosyası: ' + e.message };
     }
@@ -558,9 +369,6 @@ const YakinERP = (function () {
 
   return {
     initDB,
-    syncFromCloud,
-    pushToCloud,
-    getCloudStatus,
     saveDraft,
     loadDraft,
     clearDraft,
