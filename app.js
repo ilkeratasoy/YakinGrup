@@ -339,6 +339,13 @@ const TRANSLATIONS = {
     lbl_career_cv: 'LinkedIn Profil veya CV Linki (Google Drive / Dropbox)',
     lbl_career_note: 'Ön Yazı / Deneyim Özeti',
     btn_career_submit: 'Başvuruyu Gönder',
+    opt_car_pos1: 'İnşaat Mühendisliği / Şantiye Yönetimi',
+    opt_car_pos2: 'Elektrik & Enerji Sistemleri Mühendisliği',
+    opt_car_pos3: 'Mimarlık & 5D BIM Modelleme',
+    opt_car_pos4: 'Proje Finansmanı & Sermaye Yapılandırma',
+    opt_car_pos5: 'Yazılım, AI & IoT Platform Geliştirme',
+    opt_car_pos6: 'Satınalma & Tedarik Zinciri',
+    opt_car_pos7: 'Genel Başvuru / Staj',
     contracts_modal_title: 'NDA & Örnek Şirket Sözleşmeleri',
     contracts_modal_sub: 'İş ortaklarımız, alt yüklenicilerimiz ve yatırımcılarımız için hazırlanan kurumsal çerçeve ve gizlilik sözleşme taslakları.',
     btn_contract_request: 'Özel Sözleşme Talebi İlet ➔',
@@ -684,6 +691,13 @@ const TRANSLATIONS = {
     lbl_career_cv: 'LinkedIn Profile or CV Link (Google Drive / Dropbox)',
     lbl_career_note: 'Cover Letter / Experience Summary',
     btn_career_submit: 'Submit Application',
+    opt_car_pos1: 'Civil Engineering / Site Management',
+    opt_car_pos2: 'Electrical & Energy Systems Engineering',
+    opt_car_pos3: 'Architecture & 5D BIM Modeling',
+    opt_car_pos4: 'Project Finance & Capital Structuring',
+    opt_car_pos5: 'Software, AI & IoT Platform Development',
+    opt_car_pos6: 'Procurement & Supply Chain Management',
+    opt_car_pos7: 'General Application / Internship',
     contracts_modal_title: 'NDA & Sample Corporate Agreements',
     contracts_modal_sub: 'Standard non-disclosure and framework agreement templates for our corporate partners, subcontractors, and investors.',
     btn_contract_request: 'Request Custom Agreement ➔',
@@ -786,6 +800,7 @@ function applyTranslations() {
     if (t[key]) el.innerHTML = t[key];
   });
   document.documentElement.lang = currentLang;
+  if (typeof switchContractTab === 'function') { switchContractTab(activeContractIdx); }
   const btn = document.getElementById('header-lang-btn');
   if (btn) btn.textContent = currentLang === 'tr' ? 'EN' : 'TR';
 }
@@ -3072,6 +3087,8 @@ function handleCareerSubmit(e) {
 // ── NDA & Örnek Şirket Sözleşmeleri ─────────────────────────────────────────
 const CONTRACTS_DATA = [
   {
+    tabTr: '1. Gizlilik Sözleşmesi (NDA)',
+    tabEn: '1. Non-Disclosure Agreement (NDA)',
     titleTr: '1. Gizlilik ve Sır Saklama Sözleşmesi (Non-Disclosure Agreement — NDA)',
     titleEn: '1. Mutual Non-Disclosure Agreement (NDA)',
     textTr: `<strong>GİZLİLİK VE SIR SAKLAMA SÖZLEŞMESİ (NDA)</strong><br><br>
@@ -3098,6 +3115,8 @@ This Agreement remains effective for a term of <strong>3 (three) years</strong> 
 Governed by Turkish Commercial Law with exclusive jurisdiction of Istanbul Central Courts.`
   },
   {
+    tabTr: '2. Alt Yüklenici EPC Sözleşmesi',
+    tabEn: '2. Subcontractor EPC Agreement',
     titleTr: '2. Alt Yüklenici & Taşeron EPC Çerçeve Sözleşmesi',
     titleEn: '2. Subcontractor & EPC Master Framework Agreement',
     textTr: `<strong>ALT YÜKLENİCİ EPC ÇERÇEVE SÖZLEŞMESİ TASLAĞI</strong><br><br>
@@ -3120,6 +3139,8 @@ Monthly progress billings based on verified site telemetry and engineer sign-off
 Unexcused project milestone delays incur liquidated damages of 0.20% per calendar day.`
   },
   {
+    tabTr: '3. B2B Malzeme Tedarik Sözleşmesi',
+    tabEn: '3. B2B Material Procurement',
     titleTr: '3. B2B Ekipman & Malzeme Tedarik Sözleşmesi',
     titleEn: '3. B2B Industrial Equipment & Procurement Agreement',
     textTr: `<strong>B2B MALZEME VE ENDÜSTRİYEL EKİPMAN TEDARİK SÖZLEŞMESİ</strong><br><br>
@@ -3138,6 +3159,8 @@ Rigorous pre-shipment inspection and FAT protocol conducted alongside certified 
 Minimum 5-year product manufacturing warranty, 25-year linear performance warranty for PV modules, and guaranteed replacement SLA.`
   },
   {
+    tabTr: '4. Finansman & SPV Protokolü',
+    tabEn: '4. Project Finance & SPV Protocol',
     titleTr: '4. Proje Finansmanı & SPV Danışmanlık Protokolü',
     titleEn: '4. Project Financing & SPV Structuring Protocol',
     textTr: `<strong>PROJE FİNANSMANI VE STRATEJİK YATIRIM PROTOKOLÜ</strong><br><br>
@@ -3171,10 +3194,11 @@ function switchContractTab(idx) {
   activeContractIdx = idx;
   const isEn = currentLang === 'en';
   
-  // Update buttons active style
-  for (let i = 0; i < 4; i++) {
+  // Update buttons active style and label in current language
+  for (let i = 0; i < CONTRACTS_DATA.length; i++) {
     const btn = document.getElementById('ctab-' + i);
     if (btn) {
+      btn.textContent = isEn ? CONTRACTS_DATA[i].tabEn : CONTRACTS_DATA[i].tabTr;
       if (i === idx) {
         btn.style.background = '#e0f2fe';
         btn.style.borderColor = '#0284c7';
@@ -3191,6 +3215,11 @@ function switchContractTab(idx) {
   if (container) {
     const item = CONTRACTS_DATA[idx];
     container.innerHTML = isEn ? item.textEn : item.textTr;
+  }
+
+  const copyBtn = document.getElementById('btn-copy-contract');
+  if (copyBtn) {
+    copyBtn.textContent = isEn ? '📋 Copy Contract Text' : '📋 Metni Kopyala';
   }
 }
 
