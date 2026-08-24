@@ -1927,6 +1927,15 @@
         <button class="btn-add-dashed" onclick="addNewItem()">
           <span>➕ Yeni Fiyat Kalemi Ekle</span>
         </button>
+
+        <!-- Ürün & Malzeme Teknik Açıklamaları Bölümü -->
+        <div style="margin-top: 14px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <label style="font-size:0.75rem; font-weight:700; color:#1e293b; display:block;">📝 Ürün / Malzeme Açıklamaları & Notları</label>
+            <button type="button" class="btn-action-sm" onclick="autoGenerateProductSpecs()" style="font-size:0.68rem; color:#3d6e30; font-weight:700;">⚡ Otomatik Doldur</button>
+          </div>
+          <textarea id="inp-product-specs" rows="4" oninput="appState.productSpecs = this.value; renderApp()" placeholder="Teklif kalemlerine ait marka/model, menşei, teknik standart ve ürün açıklamalarını buraya yazabilirsiniz..." style="width:100%; box-sizing:border-box; font-size:0.78rem; border:1px solid #cbd5e1; border-radius:6px; padding:6px 8px; font-family:inherit; resize:vertical;"></textarea>
+        </div>
       </div>
 
       <!-- 6. Şartname Madde Editörü (Specification Clauses) -->
@@ -2065,6 +2074,14 @@
               <!-- Dynamically populated table rows -->
             </tbody>
           </table>
+
+          <!-- Ürün & Malzeme Açıklamaları Kartı (A4 Önizleme) -->
+          <div class="doc-product-specs-box" id="sheet-product-specs-box" style="margin-top:8px; margin-bottom:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:7px 11px; font-size:0.68rem; line-height:1.4;">
+            <div style="font-weight:800; color:#3d6e30; font-size:0.70rem; margin-bottom:3px; text-transform:uppercase; letter-spacing:0.02em; display:flex; align-items:center; gap:5px;">
+              <span>📋 ÜRÜN VE MALZEME TEKNİK AÇIKLAMALARI</span>
+            </div>
+            <div id="sheet-product-specs-content" style="color:#334155; white-space:pre-line;"></div>
+          </div>
         </div>
 
         <!-- Totals & Terms Section (Shown in Prop & Hybrid Mode) -->
@@ -2538,11 +2555,14 @@
         }
       ],
 
+      productSpecs: '• Güneş Panelleri: Tier-1 Bloomberg listesinde yer alan, minimum 550Wp N-Type TOPCon hücre teknolojili, 30 yıl lineer performans garantili fotovoltaik modüller.\n• İnvertörler: %98.6 maksimum verimlilik, 10 MPPT, IP66 dış ortam korumalı ve AFCI ark algılama özellikli üç fazlı string eviriciler.\n• Konstrüksiyon: EN AW-6063 T6 eloksallı alüminyum profiller ve A2-70 paslanmaz çelik bağlantı elemanları.',
+
       // Financial Items (BoQ / Price Items)
       items: [
         {
           id: 101,
           name: '550W Tier-1 Monokristal N-Type PV Panel (Tier-1 Bloomberg)',
+          desc: 'MBB, %22.8 Verim, 30 Yıl Lineer Performans Garantisi, IP68 Bağlantı Kutusu',
           gtip: '8541.43.00.00.00',
           qty: 2182,
           unit: 'Adet',
@@ -2551,6 +2571,7 @@
         {
           id: 102,
           name: '100 kW Üç Fazlı String Solar İnvertör (10 MPPT, IP66)',
+          desc: 'IP66 Koruma Sınıfı, AFCI Ark Algılama, Wi-Fi / LAN Uzaktan İzleme Entegre',
           gtip: '8504.40.88.00.00',
           qty: 10,
           unit: 'Adet',
@@ -2559,6 +2580,7 @@
         {
           id: 103,
           name: 'Kenet/Sandviç Çatı Alüminyum Konstrüksiyon Seti & Paslanmaz Civata',
+          desc: 'EN AW-6063 T6 Eloksallı Alüminyum, Su Sızdırmaz EPDM Contalı Kenet Aparatları',
           gtip: '7610.90.90.00.00',
           qty: 1200,
           unit: 'kWp',
@@ -2567,6 +2589,7 @@
         {
           id: 104,
           name: 'AC/DC Dağıtım Panosu, Parafudrlar, Şalt Malzemeleri & Kablo Altyapısı',
+          desc: 'Tip Testli Koruma Panoları, Tip-1+2 Parafudr, 1x6 mm² H1Z2Z2-K TÜV Solar Kablo',
           gtip: '8537.10.91.00.00',
           qty: 1,
           unit: 'Set',
@@ -2575,6 +2598,7 @@
         {
           id: 105,
           name: 'Mühendislik, Statik Proje, TEDAŞ Kabul & Anahtar Teslim EPC Montaj',
+          desc: 'Mekanik/Statik Projelendirme, TEDAŞ ve Dağıtım Şirketi Onayları, Şantiye Devreye Alma',
           gtip: '9999.99.99.00.00',
           qty: 1200,
           unit: 'kWp',
@@ -3168,6 +3192,7 @@
       appState.items.push({
         id: Date.now(),
         name: item.name,
+        desc: item.description || '',
         gtip: item.gtip || '8541.43.00.00.00',
         qty: 1,
         unit: item.unit || 'Adet',
@@ -3232,6 +3257,7 @@
         'inp-client-location': appState.clientLocation,
         'inp-subject': appState.subject,
         'inp-intro': appState.intro,
+        'inp-product-specs': appState.productSpecs || '',
         'inp-discount': appState.discountRate,
         'inp-vat': appState.vatRate,
         'inp-payment-terms': appState.paymentTerms,
@@ -3258,6 +3284,7 @@
         warranty: '2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi',
         subject: '1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi',
         intro: 'İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.',
+        productSpecs: '• Güneş Panelleri: Tier-1 Bloomberg listesinde yer alan, minimum 550Wp N-Type TOPCon hücre teknolojili, 30 yıl lineer performans garantili fotovoltaik modüller.\n• İnvertörler: %98.6 maksimum verimlilik, 10 MPPT, IP66 dış ortam korumalı ve AFCI ark algılama özellikli üç fazlı string eviriciler.\n• Konstrüksiyon: EN AW-6063 T6 eloksallı alüminyum profiller ve A2-70 paslanmaz çelik bağlantı elemanları.',
         clauses: [
           { id: 1, title: 'Amaç ve Kapsam', body: '1.2 MWp çatı GES projesinin statik, mekanik ve elektriksel anahtar teslim kurulumu.' },
           { id: 2, title: 'Panel ve İnvertör Standartları', body: 'Tier-1 TOPCon 550Wp paneller ve üç fazlı IP66 string invertörler kullanılacaktır.' },
@@ -3346,12 +3373,16 @@
       appState.currency = t.currency;
       appState.deliveryTime = t.deliveryTime;
       appState.warranty = t.warranty;
+      appState.productSpecs = t.productSpecs || '';
       appState.clauses = JSON.parse(JSON.stringify(t.clauses));
       appState.items = JSON.parse(JSON.stringify(t.items));
 
       document.getElementById('inp-subject').value = subj;
       document.getElementById('inp-intro').value = t.intro;
       document.getElementById('inp-currency').value = t.currency;
+      if (document.getElementById('inp-product-specs')) {
+        document.getElementById('inp-product-specs').value = appState.productSpecs;
+      }
 
       renderClausesEditor();
       renderItemsEditor();
@@ -3459,7 +3490,8 @@
     function addNewItem() {
       appState.items.push({
         id: Date.now(),
-        name: 'Yeni Kalem / Hizmet',
+        name: 'Yeni Ürün / Hizmet Kalemi',
+        desc: 'Teknik detay ve ürün açıklaması...',
         gtip: '8541.43.00.00.00',
         qty: 1,
         unit: 'Adet',
@@ -3482,6 +3514,24 @@
       renderApp();
     }
 
+    function autoGenerateProductSpecs() {
+      if (!appState.items || appState.items.length === 0) {
+        showToast('Açıklama üretmek için önce kalem ekleyiniz.');
+        return;
+      }
+      let text = '';
+      appState.items.forEach(item => {
+        if (item.name) {
+          text += '• ' + item.name + (item.desc ? ': ' + item.desc : '') + '\n';
+        }
+      });
+      appState.productSpecs = text.trim();
+      const inp = document.getElementById('inp-product-specs');
+      if (inp) inp.value = appState.productSpecs;
+      renderApp();
+      showToast('⚡ Ürün açıklamaları kalemlerden otomatik derlendi!');
+    }
+
     function renderItemsEditor() {
       const container = document.getElementById('items-editor-container');
       if (!container) return;
@@ -3489,7 +3539,7 @@
       container.innerHTML = appState.items.map((item, idx) => `
         <div class="item-card">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <input type="text" style="font-weight:700; flex:1;" value="` + item.name + `" oninput="appState.items[` + idx + `].name = this.value; renderApp();" placeholder="Kalem Tanımı">
+            <input type="text" style="font-weight:700; flex:1;" value="` + (item.name || '') + `" oninput="appState.items[` + idx + `].name = this.value; renderApp();" placeholder="Kalem / Ürün Tanımı">
             <button class="btn-action-sm btn-delete" style="margin-left:6px;" onclick="removeItem(` + item.id + `)">✕</button>
           </div>
           <div class="item-grid" style="grid-template-columns: 1fr 0.8fr 1fr 1fr; margin-top:4px;">
@@ -3509,6 +3559,10 @@
               <label style="font-size:0.65rem; color:#64748b;">GTİP / HS Code</label>
               <input type="text" value="` + (item.gtip || '') + `" oninput="appState.items[` + idx + `].gtip = this.value; renderApp();" placeholder="8541...">
             </div>
+          </div>
+          <div style="margin-top:5px;">
+            <label style="font-size:0.64rem; color:#64748b; font-weight:600;">Ürün Açıklaması & Teknik Özellikleri</label>
+            <input type="text" value="` + (item.desc || '') + `" oninput="appState.items[` + idx + `].desc = this.value; renderApp();" placeholder="Örn: MBB, %22.8 Verim, IP66, 30 Yıl Garanti" style="width:100%; box-sizing:border-box; font-size:0.74rem; padding:4px 7px; border:1px solid #cbd5e1; border-radius:4px; margin-top:2px;">
           </div>
         </div>
       `).join('');
@@ -3729,18 +3783,31 @@
           subtotal += itemTotal;
           return `
             <tr>
-              <td style="text-align:center; font-weight:700;">` + (idx + 1) + `</td>
+              <td style="text-align:center; font-weight:700; vertical-align:top;">` + (idx + 1) + `</td>
               <td>
                 <strong>` + item.name + `</strong>
-                ` + ((appState.mode === 'proforma' || appState.mode === 'invoice' || appState.mode === 'dispatch') && item.gtip ? `<br><span style="font-size:0.6rem; color:#64748b;">GTİP: ` + item.gtip + `</span>` : '') + `
+                ` + (item.desc ? `<div style="font-size:0.62rem; color:#475569; margin-top:2px; font-weight:500; line-height:1.25;">` + item.desc + `</div>` : '') + `
+                ` + ((appState.mode === 'proforma' || appState.mode === 'invoice' || appState.mode === 'dispatch') && item.gtip ? `<div style="font-size:0.58rem; color:#0284c7; margin-top:1px;">GTİP: ` + item.gtip + `</div>` : '') + `
               </td>
-              <td style="text-align:right; font-weight:700;">` + item.qty.toLocaleString('tr-TR') + `</td>
-              <td style="text-align:center;">` + item.unit + `</td>
-              <td style="text-align:right;">` + formatCurrency(item.price, appState.currency) + `</td>
-              <td style="text-align:right; font-weight:700;">` + formatCurrency(itemTotal, appState.currency) + `</td>
+              <td style="text-align:right; font-weight:700; vertical-align:top;">` + item.qty.toLocaleString('tr-TR') + `</td>
+              <td style="text-align:center; vertical-align:top;">` + item.unit + `</td>
+              <td style="text-align:right; vertical-align:top;">` + formatCurrency(item.price, appState.currency) + `</td>
+              <td style="text-align:right; font-weight:700; vertical-align:top;">` + formatCurrency(itemTotal, appState.currency) + `</td>
             </tr>
           `;
         }).join('');
+      }
+
+      // Render Product & Material Specifications Box
+      const specsBox = document.getElementById('sheet-product-specs-box');
+      const specsContent = document.getElementById('sheet-product-specs-content');
+      if (specsBox && specsContent) {
+        if (appState.productSpecs && appState.productSpecs.trim()) {
+          specsContent.innerText = appState.productSpecs.trim();
+          specsBox.style.display = 'block';
+        } else {
+          specsBox.style.display = 'none';
+        }
       }
 
       // Totals Calculations
@@ -3941,6 +4008,13 @@
         text += '(' + document.getElementById('sheet-in-words').innerText + ')\n\n';
       }
 
+      if (appState.productSpecs && appState.productSpecs.trim()) {
+        text += '========================================\n';
+        text += 'ÜRÜN & MALZEME TEKNİK AÇIKLAMALARI:\n';
+        text += '========================================\n';
+        text += appState.productSpecs.trim() + '\n\n';
+      }
+
       text += 'Ticari Koşullar:\n• Ödeme: ' + appState.paymentTerms + '\n• Teslimat: ' + appState.deliveryTime + '\n• Garanti: ' + appState.warranty + '\n• Yapı Kredi Bankası IBAN: TR92 0006 7010 0000 0317 5868 21\n• Garanti BBVA IBAN: TR35 0006 2000 4430 0006 2920 12\n\nYakın Grup Enerji Gıda İnşaat ve Ticaret Limited Şirketi\nWeb: https://yakingrup.net/teklif';
 
       navigator.clipboard.writeText(text).then(() => {
@@ -3998,6 +4072,9 @@
       }
 
       document.getElementById('inp-doc-date').value = appState.date;
+      if (document.getElementById('inp-product-specs')) {
+        document.getElementById('inp-product-specs').value = appState.productSpecs || '';
+      }
       populateCustomerDropdown();
       renderClausesEditor();
       renderItemsEditor();
