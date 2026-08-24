@@ -1523,6 +1523,7 @@
     </a>
 
     <div class="header-actions">
+      <button class="btn btn-outline" id="cloud-sync-badge" onclick="YakinERP.syncFromCloud(true)" style="border-color: #15803d; font-size: 0.76rem; padding: 6px 11px;" title="Bulut Senkronizasyonu — Başka bilgisayarlardan girilen cari kartları ve teklifleri anında eşitle">☁️ <span style="color:#15803d; font-weight:700;">Bulut Eşitlendi</span></button>
       <button class="btn btn-outline" style="border-color: #15803d; color: #15803d; font-weight: 800; background: rgba(21,128,61,0.06);" onclick="manualSaveDraft()" title="Anlık değişiklikleri yerel taslağa kaydet">💾 Taslak Kaydet</button>
       <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 700; background: rgba(29,78,216,0.06);" onclick="openArchiveModal()">📁 Teklif Arşivi</button>
       <button class="btn btn-outline" style="border-color: #b45309; color: #b45309; font-weight: 700; background: rgba(180,83,9,0.06);" onclick="openCustomersModal()">👥 Cari & Alacak</button>
@@ -1576,7 +1577,10 @@
       <div class="panel-section">
         <div class="panel-title">
           <span>📋 2. Proje & Cari Bilgileri</span>
-          <button class="btn-action-sm" onclick="openCustomersModal(); showNewCustomerForm();" style="color:#b45309; font-weight:700;">+ Yeni Cari</button>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-action-sm" onclick="YakinERP.syncFromCloud(true)" style="color:#1d4ed8; font-weight:700;" title="Başka bilgisayarlardan girilen carileri buluttan çek">🔄 Eşitle</button>
+            <button class="btn-action-sm" onclick="openCustomersModal(); showNewCustomerForm();" style="color:#b45309; font-weight:700;">+ Yeni Cari</button>
+          </div>
         </div>
 
         <div class="form-group">
@@ -2443,27 +2447,46 @@
   </div>
 
   <!-- ======================================================= -->
-  <!-- MODAL 4: Veritabanı Yedekleme & İçe Aktarma (JSON DB)   -->
+  <!-- MODAL 4: Veritabanı & Canlı Bulut Senkronizasyonu (Cloud Sync) -->
   <!-- ======================================================= -->
   <div class="modal-overlay" id="modal-backup">
-    <div class="modal-window" style="max-width:550px;">
+    <div class="modal-window" style="max-width:580px;">
       <div class="modal-header">
-        <h3>⚙️ Veritabanı Yedekleme & Geri Yükleme</h3>
+        <h3>☁️ Canlı Bulut & Çoklu Cihaz Senkronizasyonu</h3>
         <button class="modal-close-btn" onclick="closeModal('modal-backup')">✕</button>
       </div>
-      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
-        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px;">
-          <h4 style="font-size:0.88rem; margin-bottom:4px; color:#0f172a;">💾 Dışa Aktar (Yedek İndir)</h4>
-          <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">Tüm tekliflerinizi, cari kartlarınızı ve stok veritabanınızı tek bir JSON dosyası olarak bilgisayarınıza yedekleyin.</p>
-          <button class="btn-sm-action btn-primary-sm" onclick="YakinERP.exportFullBackupJSON()">📥 JSON Yedek İndir</button>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:14px;">
+        
+        <!-- Live Cloud Sync Panel -->
+        <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <h4 style="font-size:0.92rem; font-weight:800; color:#166534;">☁️ Ortak Şirket Bulut Veritabanı</h4>
+            <span style="font-size:0.7rem; background:#dcfce7; color:#15803d; padding:2px 8px; border-radius:4px; font-weight:700;">CANLI & AKTİF</span>
+          </div>
+          <p style="font-size:0.76rem; color:#374151; margin-bottom:10px; line-height:1.4;">
+            Farklı bilgisayarlardan veya mobil cihazlardan eklenen tüm <strong>Cari Kartlar</strong>, <strong>Teklifler</strong> ve <strong>Stoklar</strong> otomatik olarak bu ortak bulutta eşitlenir.
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn-sm-action btn-primary-sm" onclick="YakinERP.syncFromCloud(true)">🔄 Şimdi Buluttan Eşitle</button>
+            <button class="btn-sm-action" onclick="YakinERP.pushToCloud().then(() => showToast('☁️ Tüm veriler buluta yüklendi!'))">📤 Yerel Verileri Buluta Gönder</button>
+          </div>
         </div>
 
+        <!-- Local JSON Backup -->
         <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px;">
-          <h4 style="font-size:0.88rem; margin-bottom:4px; color:#0f172a;">📂 İçe Aktar (Geri Yükle)</h4>
-          <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">Daha önce indirdiğiniz JSON yedek dosyasını seçerek tüm arşiv ve verileri geri yükleyin.</p>
-          <input type="file" id="backup-file-input" accept=".json" style="font-size:0.8rem; margin-bottom:10px; display:block;">
-          <button class="btn-sm-action" onclick="handleBackupImport()">📤 Dosyayı Yükle & Birleştir</button>
+          <h4 style="font-size:0.88rem; margin-bottom:4px; color:#0f172a;">💾 Manuel Dosya Yedeği (JSON İndir)</h4>
+          <p style="font-size:0.75rem; color:#64748b; margin-bottom:8px;">Tüm tekliflerinizi, cari kartlarınızı ve stoklarınızı bilgisayarınıza dosya olarak indirin.</p>
+          <button class="btn-sm-action" onclick="YakinERP.exportFullBackupJSON()">📥 JSON Yedek İndir</button>
         </div>
+
+        <!-- Local JSON Restore -->
+        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px;">
+          <h4 style="font-size:0.88rem; margin-bottom:4px; color:#0f172a;">📂 Dosyadan Geri Yükle (İçe Aktar)</h4>
+          <p style="font-size:0.75rem; color:#64748b; margin-bottom:8px;">Daha önce indirdiğiniz JSON yedeğini seçerek tüm verileri geri yükleyin ve buluta aktarın.</p>
+          <input type="file" id="backup-file-input" accept=".json" style="font-size:0.8rem; margin-bottom:8px; display:block;">
+          <button class="btn-sm-action" onclick="handleBackupImport()">📤 Dosyayı Yükle & Eşitle</button>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button class="btn-sm-action" onclick="closeModal('modal-backup')">Kapat</button>
@@ -4060,6 +4083,24 @@
       const encoded = encodeURIComponent(msg);
       window.open('https://api.whatsapp.com/send?text=' + encoded, '_blank');
     }
+
+    
+    // Listen for Cloud Sync updates and refresh UI dynamically
+    window.addEventListener('yakin_erp_synced', (e) => {
+      populateCustomerDropdown();
+      const custModal = document.getElementById('modal-customers');
+      if (custModal && custModal.classList.contains('active')) {
+        renderCustomersTable();
+      }
+      const archModal = document.getElementById('modal-archive');
+      if (archModal && archModal.classList.contains('active')) {
+        renderArchiveTable();
+      }
+      const invModal = document.getElementById('modal-inventory');
+      if (invModal && invModal.classList.contains('active')) {
+        renderInventoryTable();
+      }
+    });
 
     // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
