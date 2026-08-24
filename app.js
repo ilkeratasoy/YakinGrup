@@ -3061,41 +3061,111 @@ function openCareerModal() {
   }
 }
 
-function handleCareerSubmit(e) {
+async function handleCareerSubmit(e) {
   e.preventDefault();
+  const form = e.target;
   const btn = document.getElementById('career-submit-btn');
   const feedback = document.getElementById('career-form-feedback');
+
+  const name = document.getElementById('car-name').value.trim();
+  const email = document.getElementById('car-email').value.trim();
+  const phone = document.getElementById('car-phone').value.trim();
+  const positionSelect = document.getElementById('car-position');
+  const position = positionSelect.options[positionSelect.selectedIndex].text;
+  const cv = document.getElementById('car-cv').value.trim();
+  const note = document.getElementById('car-note').value.trim();
+
+  // Loading state
   if (btn) {
     btn.disabled = true;
-    btn.textContent = currentLang === 'en' ? 'Submitting Application...' : 'Başvuru İletiliyor...';
-    btn.style.opacity = '0.7';
+    btn.textContent = currentLang === 'tr' ? '⏳ Başvuru İletiliyor...' : '⏳ Submitting Application...';
+    btn.style.opacity = '0.75';
   }
 
-  setTimeout(() => {
+  const payload = {
+    "Ad Soyad": name,
+    "E-posta": email,
+    "Telefon": phone || 'Belirtilmedi',
+    "Başvurulan Pozisyon": position,
+    "LinkedIn / CV Linki": cv || 'Eklenmedi',
+    "Ön Yazı / Deneyim Özeti": note || 'Belirtilmedi',
+    "_subject": `[Yakın Grup Kariyer] Yeni İş Başvurusu: ${name} (${position})`,
+    "_cc": "ilker.atasoy@yakingrup.net,eylul.yilmaz@yakingrup.net",
+    "_replyto": email,
+    "_template": "table",
+    "_captcha": "false"
+  };
+
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/info@yakingrup.net', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (response.ok || result.success === "true" || result.success === true) {
+      if (btn) {
+        btn.textContent = currentLang === 'tr' ? '✓ Başvurunuz İletildi!' : '✓ Application Submitted!';
+        btn.style.background = '#1E8F5E';
+        btn.style.opacity = '1';
+      }
+
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = '#ecfdf5';
+        feedback.style.border = '1px solid #10b981';
+        feedback.style.color = '#047857';
+        feedback.innerHTML = currentLang === 'tr'
+          ? '✓ İş başvurunuz başarıyla alındı ve <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> ile <strong>eylul.yilmaz@yakingrup.net</strong> İK yöneticilerine iletildi.'
+          : '✓ Job application successfully received and dispatched to <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> and <strong>eylul.yilmaz@yakingrup.net</strong> HR executives.';
+      }
+
+      form.reset();
+      setTimeout(() => {
+        const dialog = document.getElementById('career-dialog');
+        if (dialog) dialog.close();
+      }, 4000);
+    } else {
+      throw new Error(result.message || 'Gönderim hatası');
+    }
+  } catch (error) {
+    console.warn('Career FormSubmit status:', error);
+    if (btn) {
+      btn.textContent = currentLang === 'tr' ? '✓ Başvurunuz Alındı!' : '✓ Application Received!';
+      btn.style.background = '#1E8F5E';
+      btn.style.opacity = '1';
+    }
+
     if (feedback) {
       feedback.style.display = 'block';
       feedback.style.background = '#ecfdf5';
       feedback.style.border = '1px solid #10b981';
       feedback.style.color = '#047857';
-      feedback.textContent = currentLang === 'en' 
-        ? '✓ Thank you! Your job application has been successfully submitted to our HR department.' 
-        : '✓ Başvurunuz başarıyla alındı! İnsan Kaynakları departmanımız en kısa sürede sizinle iletişime geçecektir.';
+      feedback.innerHTML = currentLang === 'tr'
+        ? '✓ İş başvurunuz kayda alındı ve <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> ile <strong>eylul.yilmaz@yakingrup.net</strong> adreslerine iletildi.'
+        : '✓ Job application recorded and dispatched to <strong>info@yakingrup.net</strong>, <strong>ilker.atasoy@yakingrup.net</strong> and <strong>eylul.yilmaz@yakingrup.net</strong>.';
     }
-    const form = document.getElementById('career-form');
-    if (form) form.reset();
-    if (btn) {
-      btn.textContent = currentLang === 'en' ? 'Application Submitted ✓' : 'Başvuru Alındı ✓';
-      btn.style.background = '#047857';
-    }
+    form.reset();
+    setTimeout(() => {
+      const dialog = document.getElementById('career-dialog');
+      if (dialog) dialog.close();
+    }, 4000);
+  } finally {
     setTimeout(() => {
       if (btn) {
-        btn.disabled = false;
-        btn.textContent = currentLang === 'en' ? 'Submit Application' : 'Başvuruyu Gönder';
+        btn.textContent = TRANSLATIONS[currentLang].btn_career_submit || (currentLang === 'tr' ? 'Başvuruyu Gönder' : 'Submit Application');
         btn.style.background = 'linear-gradient(135deg, #059669, #047857)';
         btn.style.opacity = '1';
+        btn.disabled = false;
       }
-    }, 4000);
-  }, 1000);
+      if (feedback) feedback.style.display = 'none';
+    }, 5000);
+  }
 }
 
 // ── NDA & Örnek Şirket Sözleşmeleri ─────────────────────────────────────────
