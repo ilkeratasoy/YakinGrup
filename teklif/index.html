@@ -1576,7 +1576,7 @@
       <div class="panel-section">
         <div class="panel-title">
           <span>📋 2. Proje & Cari Bilgileri</span>
-          <button class="btn-action-sm" onclick="openCustomersModal()" style="color:#b45309; font-weight:700;">+ Yeni Cari</button>
+          <button class="btn-action-sm" onclick="openCustomersModal(); showNewCustomerForm();" style="color:#b45309; font-weight:700;">+ Yeni Cari</button>
         </div>
 
         <div class="form-group">
@@ -2168,6 +2168,292 @@
     <span>✅ İşlem başarıyla gerçekleştirildi.</span>
   </div>
 
+  
+  <!-- ========================================== -->
+  <!-- MODAL 1: Teklif & Belge Arşivi (Veritabanı) -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="modal-archive">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>📁 Teklif & Belge Arşivi (Veritabanı)</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-archive')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap;">
+          <input type="text" id="archive-search-input" placeholder="🔍 Teklif No, Müşteri veya Konu Ara..." oninput="renderArchiveTable()" style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          <select id="archive-filter-status" onchange="renderArchiveTable()" style="padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem;">
+            <option value="all">Tüm Durumlar</option>
+            <option value="Taslak">Taslak</option>
+            <option value="İletildi">İletildi</option>
+            <option value="Onaylandı">Onaylandı</option>
+            <option value="Faturalandı">Faturalandı</option>
+            <option value="İptal">İptal</option>
+          </select>
+          <button class="btn-sm-action btn-primary-sm" onclick="saveCurrentToArchive()">💾 Mevcut Teklifi Kaydet</button>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="erp-table">
+            <thead>
+              <tr>
+                <th>Belge No</th>
+                <th>Tür</th>
+                <th>Müşteri / Kurum</th>
+                <th>Tarih</th>
+                <th>Tutar</th>
+                <th>Durum</th>
+                <th style="text-align:right;">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="archive-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span style="font-size:0.75rem; color:#64748b;" id="archive-count-label">Toplam: 0 Kayıtlı Belge</span>
+        <button class="btn-sm-action" onclick="closeModal('modal-archive')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL 2: Müşteri Cari Kartları & Alacak/Bakiye Takibi -->
+  <!-- ==================================================== -->
+  <div class="modal-overlay" id="modal-customers">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>👥 Müşteri Cari Kartları & Alacak Takibi</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-customers')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap;">
+          <input type="text" id="customer-search-input" placeholder="🔍 Firma Unvanı, Yetkili veya VKN Ara..." oninput="renderCustomersTable()" style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          <button class="btn-sm-action btn-primary-sm" onclick="showNewCustomerForm()">➕ Yeni Cari Kart Ekle</button>
+        </div>
+
+        <!-- New/Edit Customer Inline Form -->
+        <div id="customer-form-card" style="display:none; background:#f8fafc; border:1px solid #94a3b8; border-radius:8px; padding:14px; margin-bottom:14px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h4 style="font-size:0.92rem; font-weight:800; color:#0f172a;" id="customer-form-title">Yeni Cari Kart Oluştur</h4>
+            <button class="modal-close-btn" onclick="hideCustomerForm()" style="font-size:1.1rem;">✕</button>
+          </div>
+          <input type="hidden" id="cust-form-id">
+          
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Firma / Müşteri Unvanı *</label>
+              <input type="text" id="cust-form-company" placeholder="Örn: Atlas Enerji Yatırımları A.Ş." style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group" style="flex:1.5;">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Yetkili Kişi & Unvan</label>
+              <input type="text" id="cust-form-contact" placeholder="Örn: Ahmet Bey — Yatırımlar Direktörü" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:8px;">
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Vergi Dairesi</label>
+              <input type="text" id="cust-form-tax-office" placeholder="Kadıköy V.D." style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Vergi / TC No (VKN/TCKN)</label>
+              <input type="text" id="cust-form-tax-num" placeholder="9290996193" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Cari Bakiye (Alacak/Borç ₺)</label>
+              <input type="number" id="cust-form-balance" placeholder="0" step="100" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:8px;">
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Telefon</label>
+              <input type="text" id="cust-form-phone" placeholder="+90 216 555 0000" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">E-Posta</label>
+              <input type="email" id="cust-form-email" placeholder="info@firma.com" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Ülke</label>
+              <input type="text" id="cust-form-country" value="Türkiye" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:8px;">
+            <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Açık Adres / Şantiye / Merkez Lokasyon</label>
+            <input type="text" id="cust-form-address" placeholder="Mahalle, Cadde, No, İlçe / İl" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+            <button class="btn-sm-action" onclick="hideCustomerForm()">İptal</button>
+            <button class="btn-sm-action btn-primary-sm" onclick="saveCustomerFromForm()">💾 Cariyi Kaydet & Teklife Aktar</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="erp-table">
+            <thead>
+              <tr>
+                <th>Cari Unvanı & Adres</th>
+                <th>Yetkili</th>
+                <th>Vergi Dairesi / No</th>
+                <th>İletişim</th>
+                <th>Bakiye</th>
+                <th style="text-align:right;">İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span style="font-size:0.75rem; color:#64748b;" id="customers-summary-label">Toplam Cari: 0</span>
+        <button class="btn-sm-action" onclick="closeModal('modal-customers')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 3: Stok & Keşif Kalemleri Havuzu        -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="modal-inventory">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>📦 Stok & Keşif Kalemleri Havuzu</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-inventory')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap;">
+          <input type="text" id="inventory-search-input" placeholder="🔍 Ürün Adı, Stok Kodu veya GTİP Ara..." oninput="renderInventoryTable()" style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          <button class="btn-sm-action btn-primary-sm" onclick="showNewInventoryForm()">➕ Yeni Ürün / Hizmet Ekle</button>
+        </div>
+
+        <!-- New/Edit Inventory Inline Form -->
+        <div id="inventory-form-card" style="display:none; background:#f8fafc; border:1px solid #94a3b8; border-radius:8px; padding:14px; margin-bottom:14px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h4 style="font-size:0.92rem; font-weight:800; color:#0f172a;" id="inventory-form-title">Yeni Stok Kartı Oluştur</h4>
+            <button class="modal-close-btn" onclick="hideInventoryForm()" style="font-size:1.1rem;">✕</button>
+          </div>
+          <input type="hidden" id="inv-form-id">
+          
+          <div class="form-row">
+            <div class="form-group" style="flex:1;">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Stok Kodu</label>
+              <input type="text" id="inv-form-code" placeholder="STK-001" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group" style="flex:2;">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Ürün / Hizmet Adı *</label>
+              <input type="text" id="inv-form-name" placeholder="Örn: 550W Tier-1 Güneş Paneli" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group" style="flex:1.2;">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Kategori</label>
+              <input type="text" id="inv-form-cat" placeholder="Enerji & Solar" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:8px;">
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Birim</label>
+              <input type="text" id="inv-form-unit" value="Adet" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Alış Maliyeti</label>
+              <input type="number" id="inv-form-cost" placeholder="0" step="0.5" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Satış Fiyatı</label>
+              <input type="number" id="inv-form-price" placeholder="0" step="0.5" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Para Birimi</label>
+              <select id="inv-form-curr" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="TRY">TRY (₺)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:8px;">
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Mevcut Stok Miktarı</label>
+              <input type="number" id="inv-form-qty" placeholder="100" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">Kritik Min. Stok</label>
+              <input type="number" id="inv-form-min" placeholder="10" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:3px; display:block;">GTİP / HS Code</label>
+              <input type="text" id="inv-form-gtip" placeholder="8541.43.00.00.00" style="width:100%; box-sizing:border-box; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+            <button class="btn-sm-action" onclick="hideInventoryForm()">İptal</button>
+            <button class="btn-sm-action btn-primary-sm" onclick="saveInventoryFromForm()">💾 Stok Kartını Kaydet</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="erp-table">
+            <thead>
+              <tr>
+                <th>Stok Kodu</th>
+                <th>Ürün / Hizmet Tanımı</th>
+                <th>GTİP / HS Code</th>
+                <th>Mevcut Stok</th>
+                <th>Alış / Satış</th>
+                <th style="text-align:right;">Teklife Aktar</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span style="font-size:0.75rem; color:#64748b;" id="inventory-summary-label">Toplam Kalem: 0</span>
+        <button class="btn-sm-action" onclick="closeModal('modal-inventory')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- MODAL 4: Veritabanı Yedekleme & İçe Aktarma (JSON DB)   -->
+  <!-- ======================================================= -->
+  <div class="modal-overlay" id="modal-backup">
+    <div class="modal-window" style="max-width:550px;">
+      <div class="modal-header">
+        <h3>⚙️ Veritabanı Yedekleme & Geri Yükleme</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-backup')">✕</button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px;">
+          <h4 style="font-size:0.88rem; margin-bottom:4px; color:#0f172a;">💾 Dışa Aktar (Yedek İndir)</h4>
+          <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">Tüm tekliflerinizi, cari kartlarınızı ve stok veritabanınızı tek bir JSON dosyası olarak bilgisayarınıza yedekleyin.</p>
+          <button class="btn-sm-action btn-primary-sm" onclick="YakinERP.exportFullBackupJSON()">📥 JSON Yedek İndir</button>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px;">
+          <h4 style="font-size:0.88rem; margin-bottom:4px; color:#0f172a;">📂 İçe Aktar (Geri Yükle)</h4>
+          <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">Daha önce indirdiğiniz JSON yedek dosyasını seçerek tüm arşiv ve verileri geri yükleyin.</p>
+          <input type="file" id="backup-file-input" accept=".json" style="font-size:0.8rem; margin-bottom:10px; display:block;">
+          <button class="btn-sm-action" onclick="handleBackupImport()">📤 Dosyayı Yükle & Birleştir</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-sm-action" onclick="closeModal('modal-backup')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Logic & Scripts -->
   <script>
     // Comprehensive State Store
@@ -2669,7 +2955,7 @@
     function saveCustomerFromForm() {
       const company = document.getElementById('cust-form-company').value.trim();
       if (!company) {
-        alert('Lütfen firma unvanını giriniz.');
+        alert('Lütfen firma / müşteri unvanını giriniz.');
         return;
       }
 
@@ -2682,15 +2968,19 @@
         balance: parseFloat(document.getElementById('cust-form-balance').value) || 0,
         phone: document.getElementById('cust-form-phone').value.trim(),
         email: document.getElementById('cust-form-email').value.trim(),
-        country: document.getElementById('cust-form-country').value.trim(),
+        country: document.getElementById('cust-form-country').value.trim() || 'Türkiye',
         address: document.getElementById('cust-form-address').value.trim()
       };
 
-      YakinERP.saveCustomer(data);
+      const saved = YakinERP.saveCustomer(data);
       hideCustomerForm();
       renderCustomersTable();
       populateCustomerDropdown();
-      showToast('Cari kart kaydedildi.');
+      
+      if (saved && saved.id) {
+        selectCustomerForProposal(saved.id);
+      }
+      showToast('✅ Cari kart kaydedildi ve teklife aktarıldı!');
     }
 
     function editCustomer(id) {
