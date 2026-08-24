@@ -1476,8 +1476,7 @@
     </a>
 
     <div class="header-actions">
-      <button class="btn btn-outline" style="border-color: #15803d; color: #15803d; font-weight: 800; background: rgba(21,128,61,0.06);" onclick="manualSaveDraft()" title="Anlık değişiklikleri yerel taslağa kaydet">💾 Taslak Kaydet</button>
-      <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 700; background: rgba(29,78,216,0.06);" onclick="openArchiveModal()">📁 Teklif Arşivi</button>
+      <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 800; background: rgba(29,78,216,0.08);" onclick="openArchiveModal()" title="Aktif teklifi kaydet, arşive ekle veya kayıtlı teklifleri yönet">📁 Kaydet & Arşiv</button>
       <button class="btn btn-outline" style="border-color: #b45309; color: #b45309; font-weight: 700; background: rgba(180,83,9,0.06);" onclick="openCustomersModal()">👥 Cari & Alacak</button>
       <button class="btn btn-outline" style="border-color: #4338ca; color: #4338ca; font-weight: 700; background: rgba(67,56,202,0.06);" onclick="openInventoryModal()">📦 Stok Takibi</button>
       <button class="btn btn-outline" style="border-color: #475569; color: #475569;" onclick="openBackupModal()" title="Veritabanı İçe/Dışa Aktar">⚙️ DB</button>
@@ -2140,15 +2139,30 @@
 
   
   <!-- ========================================== -->
-  <!-- MODAL 1: Teklif & Belge Arşivi (Veritabanı) -->
+  <!-- MODAL 1: Teklif & Belge Arşivi (Kaydet & Yönet) -->
   <!-- ========================================== -->
   <div class="modal-overlay" id="modal-archive">
-    <div class="modal-window">
+    <div class="modal-window" style="width: 960px;">
       <div class="modal-header">
-        <h3>📁 Teklif & Belge Arşivi (Veritabanı)</h3>
+        <h3>📁 Teklif Kaydet & Belge Arşivi</h3>
         <button class="modal-close-btn" onclick="closeModal('modal-archive')">✕</button>
       </div>
       <div class="modal-body">
+        
+        <!-- Active Proposal Quick-Save Action Card -->
+        <div style="background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%); border: 1.5px solid #93c5fd; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <div style="font-size: 0.72rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em;">Aktif Düzenlenen Belge</div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #0f172a;" id="archive-active-doc-title">YKN-DOC • Müşteri Teklifi</div>
+            <div style="font-size: 0.78rem; color: #475569;" id="archive-active-doc-info">Tutar: - | Tarih: -</div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="btn-sm-action" onclick="manualSaveDraft(); showToast('💾 Taslak geçici hafızaya kaydedildi!');" style="background:#ffffff; color:#15803d; border-color:#86efac; font-weight:700;">💾 Taslak Olarak Koru</button>
+            <button class="btn-sm-action btn-primary-sm" onclick="saveCurrentToArchive()" style="background:#1d4ed8; border-color:#1d4ed8; padding: 8px 16px; font-size: 0.85rem;">📥 Arşive & Veritabanına Kaydet</button>
+          </div>
+        </div>
+
+        <!-- Search & Filter Controls -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap;">
           <input type="text" id="archive-search-input" placeholder="🔍 Teklif No, Müşteri veya Konu Ara..." oninput="renderArchiveTable()" style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
           <select id="archive-filter-status" onchange="renderArchiveTable()" style="padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem;">
@@ -2159,9 +2173,9 @@
             <option value="Faturalandı">Faturalandı</option>
             <option value="İptal">İptal</option>
           </select>
-          <button class="btn-sm-action btn-primary-sm" onclick="saveCurrentToArchive()">💾 Mevcut Teklifi Kaydet</button>
         </div>
 
+        <!-- Archive Table -->
         <div style="overflow-x:auto;">
           <table class="erp-table">
             <thead>
