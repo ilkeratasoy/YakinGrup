@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
   <link rel="apple-touch-icon" sizes="64x64" href="assets/images/favicon-64.png">
-  <link rel="stylesheet" href="style.css?v=20260805_255">
+  <link rel="stylesheet" href="style.css?v=20260805_256">
 </head>
 <body>
 
@@ -1533,7 +1533,7 @@
   </dialog>
 
   <!-- DIALOG: Tasarım Dosyaları & Studio Hub (Şifre Korumalı) -->
-  <dialog id="design-files-dialog" class="market-modal" style="max-width: 520px; width: 92vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.35); background: #ffffff;">
+  <dialog id="design-files-dialog" class="market-modal" style="max-width: 640px; width: 94vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.35); background: #ffffff;">
     <button class="modal-close-btn" onclick="closeDesignFilesModal()">×</button>
     
     <!-- 1. GİRİŞ PANELİ (Yetkilendirme) -->
@@ -1545,7 +1545,7 @@
         Tasarım Dosyaları & Stüdyo Girişi
       </h3>
       <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.5;">
-        Bu alandaki dijital araçlara ve kurumsal şablonlara erişim yetkili yöneticilerle sınırlandırılmıştır.
+        Bu alandaki dijital araçlara, kurumsal şablonlara ve resmi şirket evraklarına erişim yetkili yöneticilerle sınırlandırılmıştır.
       </p>
 
       <form id="df-login-form" onsubmit="handleDesignFilesLogin(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
@@ -1568,62 +1568,137 @@
       </form>
     </div>
 
-    <!-- 2. STÜDYO HUB PANELİ (Giriş Başarılı) -->
-    <div id="df-hub-pane" style="display: none;">
+    <!-- 2. STÜDYO & EVRAK HUB PANELİ (Giriş Başarılı) -->
+    <div id="df-hub-pane" style="display: none; max-height: 78vh; overflow-y: auto; padding-right: 4px;">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.9rem; margin-bottom: 1.2rem;">
         <div>
           <span style="font-size: 0.7rem; font-weight: 800; color: #3d6e30; letter-spacing: 0.1em; text-transform: uppercase;">YÖNETİCİ PORTALI</span>
-          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #0b2545; margin: 2px 0 0 0;">Tasarım Dosyaları & Stüdyolar</h3>
+          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #0b2545; margin: 2px 0 0 0;">Tasarım Dosyaları & Şirket Evrakları</h3>
         </div>
         <button onclick="handleStudioLogout()" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 10px; font-size: 0.76rem; font-weight: 700; color: #64748b; cursor: pointer;">
           Çıkış Yap 🚪
         </button>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <a href="kartvizit.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-          <div style="width: 44px; height: 44px; border-radius: 10px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
-            📇
-          </div>
-          <div style="flex: 1;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Dijital Kartvizit Stüdyosu</div>
-            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Baskı ve QR vCard profilleri, çift taraflı canlı tasarım</div>
-          </div>
-          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
-        </a>
+      <!-- BÖLÜM 1: RESMİ ŞİRKET EVRAKLARI -->
+      <div style="margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+          <h4 style="font-size: 0.88rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin: 0; display: flex; align-items: center; gap: 6px;">
+            <span>📁</span> Resmi Şirket Evrakları
+          </h4>
+          <span style="font-size: 0.72rem; color: #64748b; font-weight: 600;">İndirme & Paylaşım</span>
+        </div>
 
-        <a href="imza.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-          <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
-            ✉️
-          </div>
-          <div style="flex: 1;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Kurumsal İmza Stüdyosu</div>
-            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Gmail & Outlook uyumlu, fotoğraflı ve butonlu e-posta imzası</div>
-          </div>
-          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
-        </a>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- 1. VERGİ LEVHASI -->
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 40px; height: 40px; border-radius: 8px; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                  📄
+                </div>
+                <div>
+                  <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Kurumsal Vergi Levhası (2025 - 2026)</div>
+                  <div style="font-size: 0.75rem; color: #64748b; margin-top: 1px;">Kadıköy V.D. • VKN: 9290996193 • Gelir İdaresi Bşk.</div>
+                </div>
+              </div>
+              <span style="font-size: 0.7rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 3px 8px; border-radius: 6px; border: 1px solid #10b981;">GÜNCEL</span>
+            </div>
 
-        <a href="kentsel-donusum.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-          <div style="width: 44px; height: 44px; border-radius: 10px; background: #ecfdf5; color: #1b4332; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
-            🏗️
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; pt: 4px;">
+              <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" target="_blank" style="flex: 1; min-width: 110px; text-align: center; text-decoration: none; padding: 7px 10px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.78rem; font-weight: 700;">
+                👁️ Görüntüle
+              </a>
+              <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" download="Yakin_Grup_Vergi_Levhasi.pdf" style="flex: 1; min-width: 110px; text-align: center; text-decoration: none; padding: 7px 10px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.78rem; font-weight: 700;">
+                ⬇️ PDF İndir
+              </a>
+              <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Vergi%20Levhas%C4%B1&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20vergi%20levhas%C4%B1%20ektedir.%0AVKN%3A%209290996193%20-%20Kad%C4%B1k%C3%B6y%20V.D.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 110px; text-align: center; text-decoration: none; padding: 7px 10px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.78rem; font-weight: 700;">
+                ✉️ E-Posta ile Paylaş
+              </a>
+            </div>
           </div>
-          <div style="flex: 1;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Kentsel Dönüşüm Karar Motoru</div>
-            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">2026 Yarısı Bizden (1.875M) & İADŞP (3M) fizibilite, ROI ve teklif motoru</div>
-          </div>
-          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
-        </a>
 
-        <a href="teklif.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-          <div style="width: 44px; height: 44px; border-radius: 10px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
-            📑
+          <!-- 2. TİCARET SİCİL GAZETESİ (Taslak / Eklenecek) -->
+          <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 38px; height: 38px; border-radius: 8px; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+                📰
+              </div>
+              <div>
+                <div style="font-weight: 800; font-size: 0.88rem; color: #334155;">Ticaret Sicil Gazetesi</div>
+                <div style="font-size: 0.74rem; color: #94a3b8;">Kuruluş & Son Tescil Gazete Nüshası</div>
+              </div>
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #d97706; background: #fef3c7; padding: 3px 8px; border-radius: 6px; border: 1px solid #fde68a;">⏳ Belge Bekleniyor</span>
           </div>
-          <div style="flex: 1;">
-            <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545;">Hızlı Şartname & Teklif Stüdyosu</div>
-            <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Proje şartnamesi oluşturma, interaktif maliyet ve PDF teklif alma</div>
+
+          <!-- 3. İMZA SİRKÜLERİ & YETKİ BELGESİ (Taslak / Eklenecek) -->
+          <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 38px; height: 38px; border-radius: 8px; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+                🖋️
+              </div>
+              <div>
+                <div style="font-weight: 800; font-size: 0.88rem; color: #334155;">İmza Sirküleri & Yetki Belgesi</div>
+                <div style="font-size: 0.74rem; color: #94a3b8;">Noter Onaylı Şirket Temsil ve İlzam Belgesi</div>
+              </div>
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #d97706; background: #fef3c7; padding: 3px 8px; border-radius: 6px; border: 1px solid #fde68a;">⏳ Belge Bekleniyor</span>
           </div>
-          <span style="color: #94a3b8; font-size: 1.2rem;">➔</span>
-        </a>
+        </div>
+      </div>
+
+      <!-- BÖLÜM 2: DİJİTAL STÜDYOLAR & ARAÇLAR -->
+      <div>
+        <h4 style="font-size: 0.88rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.8rem 0; display: flex; align-items: center; gap: 6px;">
+          <span>🛠️</span> Kurumsal Tasarım Stüdyoları
+        </h4>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="kartvizit.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+              📇
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Dijital Kartvizit Stüdyosu</div>
+              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Baskı ve QR vCard profilleri, çift taraflı canlı tasarım</div>
+            </div>
+            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+          </a>
+
+          <a href="imza.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+              ✉️
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Kurumsal İmza Stüdyosu</div>
+              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Gmail & Outlook uyumlu, fotoğraflı ve butonlu e-posta imzası</div>
+            </div>
+            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+          </a>
+
+          <a href="kentsel-donusum.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: #ecfdf5; color: #1b4332; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+              🏗️
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Kentsel Dönüşüm Karar Motoru</div>
+              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">2026 Yarısı Bizden & İADŞP fizibilite ve ROI teklif motoru</div>
+            </div>
+            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+          </a>
+
+          <a href="teklif.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+              📑
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Hızlı Şartname & Teklif Stüdyosu</div>
+              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Proje şartnamesi oluşturma, maliyet ve PDF teklif alma</div>
+            </div>
+            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+          </a>
+        </div>
       </div>
     </div>
   </dialog>
@@ -1728,6 +1803,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20260805_255"></script>
+  <script src="app.js?v=20260805_256"></script>
 </body>
 </html>
