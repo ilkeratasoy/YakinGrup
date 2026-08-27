@@ -650,6 +650,21 @@
         <span class="brand-badge">2026 — 2030 TÜM YILLAR İÇERİK TAKVİMİ & SENKRONİZASYON</span>
       </div>
     </div>
+    <!-- Canlı Sosyal Medya Doğrudan Erişim Butonları -->
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+      <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-top" style="background: rgba(225,48,108,0.1); color: #e1306c; border-color: rgba(225,48,108,0.3); font-weight: 700;">
+        📸 Instagram
+      </a>
+      <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-top" style="background: rgba(255,0,0,0.1); color: #ff0000; border-color: rgba(255,0,0,0.3); font-weight: 700;">
+        🔴 YouTube
+      </a>
+      <a href="https://www.linkedin.com/company/yakingrupnet" target="_blank" class="btn-top" style="background: rgba(10,102,194,0.1); color: #0a66c2; border-color: rgba(10,102,194,0.3); font-weight: 700;">
+        💼 LinkedIn
+      </a>
+      <a href="https://x.com/yakingrupnet" target="_blank" class="btn-top" style="background: rgba(0,0,0,0.05); font-weight: 700;">
+        ✖️ X
+      </a>
+    </div>
     <div class="header-links">
       <a href="index.html" class="btn-top">🏛️ Holding Ana Sayfa</a>
       <button onclick="exportAllICS()" class="btn-top sync-btn" title="Tüm yılı iPhone/Mac/Outlook/Google takviminize alarmlarıyla ekler">
@@ -2061,7 +2076,19 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
             <a href="${getGoogleCalUrl(item)}" target="_blank" class="btn-cal google">📅 Google Takvim</a>
           </div>
 
-          <div class="social-share-row">
+          <!-- AI Görsel & Video Prompt Butonları -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff;" onclick="copyAiPrompt('${item.id}')">
+              🤖 AI Görsel Promptu Kopyala
+            </button>
+            <button class="btn-act" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff;" onclick="copyVideoPrompt('${item.id}')">
+              🎬 AI Video Promptu Kopyala (Sora/Kling)
+            </button>
+          </div>
+
+          <div class="social-share-row" style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram">📸 Instagram (@yakingrupnet)</a>
+            <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube">🔴 YouTube (@yakingrup)</a>
             <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin">💼 LinkedIn</a>
             <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(item.text.substring(0, 180) + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x">✖️ X</a>
             <a href="https://www.facebook.com/sharer/sharer.php?u=https://yakingrup.net" target="_blank" class="btn-share share-facebook">🔵 Facebook</a>
@@ -2152,12 +2179,28 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
               </a>
             </div>
 
-            <div class="social-share-row">
+            <!-- AI GÖRSEL & VİDEO PLUG-IN ENTEGRASYONLARI -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px;">
+              <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 6px 8px; font-size: 0.75rem;" onclick="copyAiPrompt('${item.id}')" title="DALL-E 3 / Midjourney Görsel Promptu">
+                🤖 AI Görsel Promptu
+              </button>
+              <button class="btn-act" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; padding: 6px 8px; font-size: 0.75rem;" onclick="copyVideoPrompt('${item.id}')" title="Kling AI / Runway / Sora Video Promptu">
+                🎬 AI Video Promptu
+              </button>
+            </div>
+
+            <div class="social-share-row" style="display: flex; gap: 5px; flex-wrap: wrap;">
+              <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram" title="Instagram Profilini ve Post Alanını Aç">
+                📸 Instagram
+              </a>
+              <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube" title="YouTube Kanalını ve Topluluk Gönderisini Aç">
+                🔴 YouTube
+              </a>
               <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">
                 💼 LinkedIn
               </a>
               <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(item.text.substring(0, 180) + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x" title="X'te Paylaş">
-                ✖️ X (Tweet)
+                ✖️ X
               </a>
               <a href="https://www.facebook.com/sharer/sharer.php?u=https://yakingrup.net" target="_blank" class="btn-share share-facebook" title="Facebook'ta Paylaş">
                 🔵 Facebook
@@ -2500,6 +2543,15 @@ https://yakingrup.net`);
 ${item.hashtags}`;
       navigator.clipboard.writeText(fullText).then(() => {
         showToast('✓ Paylaşım metni ve hashtagler panoya kopyalandı!');
+      });
+    }
+
+        function copyVideoPrompt(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const videoPrompt = `Cinematic 4K hyper-realistic corporate video scene (9:16 vertical & 16:9). Seamless camera tracking shot of ${item.title}. Modern futuristic architecture and clean energy telemetry, dramatic ambient lighting with deep navy blue (#0b2545) and glowing cyan rays (#38bdf8). High-end corporate brand commercial, photorealistic, 60fps, Unreal Engine 5 aesthetic.`;
+      navigator.clipboard.writeText(videoPrompt).then(() => {
+        showToast('✓ AI Video Promptu Kopyalandı! (Kling AI, Sora, Runway Gen-3, CapCut için hazır)');
       });
     }
 
