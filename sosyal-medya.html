@@ -1956,6 +1956,13 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
         });
         const eventsContainer = cell.querySelector(`#events-${dateISO}`);
 
+        if (eventsForDay.length > 0) {
+          cell.style.cursor = 'pointer';
+          cell.onclick = () => {
+            openEventModal(eventsForDay[0].id);
+          };
+        }
+
         eventsForDay.forEach(ev => {
           const badge = document.createElement('div');
           badge.className = `cal-event-badge ${ev.eventClass || 'event-milli'}`;
@@ -2122,11 +2129,12 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       document.getElementById('event-modal').style.display = 'none';
     }
 
-    function drawModalCanvas(item) {
+    function drawModalCanvas(item, ratio) {
       const canvas = document.getElementById('modal-canvas');
-      if (!canvas) return;
+      if (!canvas || !item) return;
       const ctx = canvas.getContext('2d');
-      drawCanvasOnto(canvas, ctx, item);
+      const r = ratio || currentAspectMap[item.id] || '1:1';
+      drawCanvasOnto(canvas, ctx, item, r);
     }
 
     // ── RENDER POSTS (GRID & LIST) ──────────────────────────────────────────
