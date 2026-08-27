@@ -684,13 +684,13 @@
 
     <!-- Controls Bar -->
     <div class="controls-bar">
-      <!-- Filter Pills -->
-      <div class="filter-pills">
-        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (22 Etkinlik)</button>
-        <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar</button>
-        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı</button>
-        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel Günler</button>
-        <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini</button>
+      <!-- Filter Pills (Aktif Filtreleme) -->
+      <div class="filter-pills" id="main-filter-pills">
+        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (236 Paylaşım / Yıl)</button>
+        <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar (8 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı (4 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel (16 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini (208 Post)</button>
       </div>
 
       <!-- View Switcher -->
@@ -1861,8 +1861,12 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
           <div class="cal-day-events" id="events-${dateISO}"></div>
         `;
 
-        // Check if there are events for this day
-        const eventsForDay = CONTENT_PLAN.filter(item => item.dateISO === dateISO);
+        // Check if there are events for this day (filtered by activeCategoryFilter)
+        const eventsForDay = CONTENT_PLAN.filter(item => {
+          if (item.dateISO !== dateISO) return false;
+          if (activeCategoryFilter === 'all') return true;
+          return item.category === activeCategoryFilter;
+        });
         const eventsContainer = cell.querySelector(`#events-${dateISO}`);
 
         eventsForDay.forEach(ev => {
@@ -2367,7 +2371,8 @@ https://yakingrup.net`);
     function filterPosts(category, btn) {
       activeCategoryFilter = category;
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
+      renderMonthlyCalendar(currentYear, currentMonth);
       renderPosts(category);
     }
 
