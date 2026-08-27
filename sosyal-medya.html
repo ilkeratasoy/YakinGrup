@@ -1361,12 +1361,186 @@ Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
       }
     };
 
+    
+    // ── 4 ANA SEKTÖR HAFTALIK DÖNÜŞÜMLÜ İÇERİK HAVUZU (52 HAFTA x 4 = 208 POST/YIL) ──
+    const SECTOR_WEEKLY_THEMES = {
+      insaat: [
+        {
+          sub: 'Endüstriyel Taahhüt & Ağır Sanayi',
+          title: 'Yakın İnşaat — Ağır Sanayi ve Endüstriyel Tesis Mühendisliği',
+          headline: 'ENDÜSTRİYEL TAAHHÜTTE YÜKSEK MÜHENDİSLİK GÜCÜ',
+          subheadline: 'Ağır Sanayi Tesisleri, Lojistik Merkezleri ve Fabrika İnşaatları...',
+          icon: '🏗️',
+          prompt: 'High-tech modern industrial heavy manufacturing plant and logistics warehouse facility with structural steel frames under bright cyan sunlight. Deep navy blue background (#0b2545), 8K render.',
+          text: `Sanayi üretiminin kalbi olan fabrikalar, lojistik depolar ve ağır sanayi tesislerinde; depreme dayanıklı çelik ve betonarme çözümlerimizle anahtar teslim taahhüt sunuyoruz. 🏗️🏭`,
+          tags: '#Yakınİnşaat #AğırSanayi #EndüstriyelTaahhüt #ÇelikYapı #Fabrikaİnşaatı #EPC #YakınGrup'
+        },
+        {
+          sub: 'Veri Merkezleri (Data Center Tier-3)',
+          title: 'Yakın İnşaat — Yüksek Güvenlikli Veri Merkezleri',
+          headline: 'VERİ MERKEZLERİ İÇİN KRİTİK ALTYAPI İNŞAATI',
+          subheadline: 'Tier-3 Standartlarında Kesintisiz Enerji ve Yüksek Güvenlikli Yapılar...',
+          icon: '🏢',
+          prompt: 'State-of-the-art Tier-3 Data Center facility with glowing cyan optical fiber lines and robust architectural blast-resistant facade. Deep navy blue (#0b2545), 8K render.',
+          text: `Türkiye'nin dijital dönüşümüne güç katıyoruz. Yüksek sismik izolasyon, kesintisiz enerji ve iklimlendirme altyapısıyla Tier-3 seviyesinde veri merkezleri inşa ediyoruz. 🏢🌐`,
+          tags: '#Yakınİnşaat #DataCenter #VeriMerkezi #KritikAltyapı #Mühendislik #YakınGrup'
+        },
+        {
+          sub: 'Kentsel Dönüşüm & Rezidans',
+          title: 'Yakın İnşaat — Depreme Dayanıklı Kentsel Dönüşüm',
+          headline: 'GÜVENLİ VE MODERN YAŞAM ALANLARI İNŞA EDİYORUZ',
+          subheadline: '2026 Yarısı Bizden ve İADŞP Destekli Kentsel Dönüşüm Çözümleri...',
+          icon: '🏙️',
+          prompt: 'Modern earthquake-resilient luxury residential architecture with sustainable green balconies in Istanbul under clear sky. Deep navy blue accents (#0b2545), 8K architectural photo.',
+          text: `Deprem riski altındaki yapıları güvenli, modern ve estetik yaşam alanlarına dönüştürüyoruz. 2026 Kentsel Dönüşüm modellerimizle mülk sahiplerine değer katıyoruz. 🏙️✨`,
+          tags: '#Yakınİnşaat #KentselDönüşüm #DepremDirençli #YarısıBizden #ModernKonut #YakınGrup'
+        },
+        {
+          sub: 'Altyapı & Çevre Mühendisliği',
+          title: 'Yakın İnşaat — Mega Altyapı ve Çevre Projeleri',
+          headline: 'GELECEĞİN ŞEHİRLERİ İÇİN ALTYAPI MÜHENDİSLİĞİ',
+          subheadline: 'Kanalizasyon, İleri Arıtma ve Şebeke Tesisleri Taahhüdü...',
+          icon: '🌐',
+          prompt: 'Modern civil engineering and environmental infrastructure piping network with cyan glowing flow telemetry lines. Deep midnight navy blue (#0b2545), 8K render.',
+          text: `Şehirlerin sürdürülebilirliği altyapıdan başlar. İleri biyolojik arıtma, drenaj ve şebeke altyapı projelerimizle geleceğe temiz çevre bırakıyoruz. 🌐💧`,
+          tags: '#Yakınİnşaat #Altyapı #ÇevreMühendisliği #ArıtmaTesisleri #MegaProjeler #YakınGrup'
+        }
+      ],
+      enerji: [
+        {
+          sub: 'Tier-1 Bifacial Güneş Santralleri (GES)',
+          title: 'Yakın Enerji — Endüstriyel Çatı ve Arazi GES',
+          headline: 'GÜNEŞİN GÜCÜYLE SIFIR ELEKTRİK MALİYETİ',
+          subheadline: 'Tier-1 Çift Yüzeyli Güneş Panelleri ile Maksimum Verim...',
+          icon: '☀️',
+          prompt: 'Pristine industrial rooftop solar PV farm with gleaming Tier-1 bifacial panels reflecting sunlight with cyan energy lines. Deep navy blue sky (#0b2545), 8K render.',
+          text: `Fabrikanızın çatısını temiz enerji santraline dönüştürün! Yakın Enerji, Tier-1 bifacial paneller ve yüksek verimli invertörlerle anahtar teslim GES kurulumu gerçekleştirir. ☀️⚡`,
+          tags: '#YakınEnerji #GüneşEnerjisi #SolarEPC #ÇatıGES #TemizEnerji #SıfırKarbon #YakınGrup'
+        },
+        {
+          sub: 'BESS Batarya Enerji Depolama',
+          title: 'Yakın Enerji — BESS Batarya Depolama Sistemleri',
+          headline: 'ENERJİNİZİ DEPOLAYIN, 7/24 KESİNTİSİZ KULLANIN',
+          subheadline: 'Yüksek Kapasiteli Lityum ve BESS Depolama Çözümleri...',
+          icon: '🔋',
+          prompt: 'Futuristic industrial BESS battery energy storage container units with glowing neon cyan power indicators (#38bdf8). Deep navy blue background (#0b2545), 8K render.',
+          text: `Yenilenebilir enerjide dalgalanmalara son! BESS batarya depolama sistemlerimizle enerjinizi depoluyor, en yüksek tüketim saatlerinde şebekeden bağımsız güç sağlıyoruz. 🔋⚡`,
+          tags: '#YakınEnerji #BESS #BataryaDepolama #EnerjiDepolama #EnergyStorage #GridStability #YakınGrup'
+        },
+        {
+          sub: 'Rüzgar Santralleri (RES)',
+          title: 'Yakın Enerji — Rüzgar Enerjisi Santralleri (RES)',
+          headline: 'RÜZGARIN GÜCÜYLE YÜKSEK KAPASİTELİ ÜRETİM',
+          subheadline: 'Yüksek Türbin Verimliliği ve Hibrit Enerji Entegrasyonu...',
+          icon: '💨',
+          prompt: 'Massive modern aerodynamic wind turbines turning on green hills under dramatic cyan sunrise clouds. Deep navy blue lighting (#0b2545), 8K clean energy render.',
+          text: `Rüzgarın kinetik enerjisini temiz elektriğe dönüştürüyoruz. RES ve hibrit santral projelerimizle Türkiye'nin yenilenebilir enerji kurulu gücünü artırıyoruz. 💨⚡`,
+          tags: '#YakınEnerji #RüzgarEnerjisi #RES #WindEnergy #CleanPower #YenilenebilirEnerji #YakınGrup'
+        },
+        {
+          sub: 'Enerji Yönetimi & SCADA Telemetri',
+          title: 'Yakın Enerji — Akıllı SCADA & Enerji Telemetrisi',
+          headline: '7/24 DİJİTAL İZLEME VE ENERJİ VERİMLİLİĞİ',
+          subheadline: 'IoT Sensörler ve Yapay Zekâ ile Santral Performans Optimizasyonu...',
+          icon: '⚡',
+          prompt: 'High-tech holographic energy SCADA monitoring dashboard showing real-time solar and wind power charts with glowing cyan UI (#38bdf8). Deep navy blue (#0b2545), 8K render.',
+          text: `Santrallerinizi saniye saniye izleyin. Akıllı SCADA ve IoT telemetri sistemlerimizle arızaları önceden tespit ediyor, enerji üretim verimini %15 artırıyoruz. ⚡📊`,
+          tags: '#YakınEnerji #SCADA #EnerjiVerimliliği #IoT #SmartGrid #Telemetri #YakınGrup'
+        }
+      ],
+      capital: [
+        {
+          sub: 'SPV & Proje Finansmanı',
+          title: 'Yakın Capital — SPV Yapılandırma ve Yatırım Finansmanı',
+          headline: 'BÜYÜK ÖLÇEKLİ PROJELERDE SERMAYE VE SPV MİMARİSİ',
+          subheadline: 'Uluslararası Fonlar, SPV Güvencesi ve Finansal Mühendislik...',
+          icon: '💼',
+          prompt: 'Executive financial boardroom with glowing holographic 3D investment growth models and skyscraper views. Deep navy blue (#0b2545) with gold and cyan lighting, 8K render.',
+          text: `Büyük ölçekli altyapı ve enerji yatırımlarını doğru finansman modelleriyle hayata geçiriyoruz. SPV kurulumu ve proje finansmanı ile sermayenizi güvence altına alın. 💼🏛️`,
+          tags: '#YakınCapital #ProjeFinansmanı #SPV #SermayeYönetimi #YatırımDanışmanlığı #YakınGrup'
+        },
+        {
+          sub: 'GYO & Gayrimenkul Yatırımları',
+          title: 'Yakın Capital — GYO Ortaklıkları ve Gayrimenkul Fonları',
+          headline: 'GAYRİMENKUL YATIRIMINDA YÜKSEK GETİRİ VE GÜVEN',
+          subheadline: 'GYO Projeleri, Portföy Çeşitlendirme ve Varlık Yönetimi...',
+          icon: '📈',
+          prompt: 'Modern architectural residential high-rises with 3D glowing golden ROI charts and investment analytics. Deep navy blue background (#0b2545), 8K render.',
+          text: `Kentsel dönüşüm ve ticari gayrimenkul projelerinde GYO ortaklıkları ve fon yapılandırmasıyla yatırımcılara düzenli ve yüksek getiri sağlayan varlık modelleri sunuyoruz. 📈🏢`,
+          tags: '#YakınCapital #GYO #GayrimenkulYatırımı #PortföyYönetimi #VarlıkYönetimi #YakınGrup'
+        },
+        {
+          sub: 'Yeşil Finansman & Karbon Kredisi',
+          title: 'Yakın Capital — Yeşil Tahvil & Karbon Finansmanı',
+          headline: 'SÜRDÜRÜLEBİLİR DÖNÜŞÜM İÇİN YEŞİL FİNANSMAN',
+          subheadline: 'Karbon Kredisi, Yeşil Tahviller ve ESG Uyumlu Yatırım Mimarisi...',
+          icon: '🌱',
+          prompt: 'Glowing green leaf and gold currency coins merged with digital blockchain telemetry lines in a modern banking architecture. Deep navy blue (#0b2545), 8K render.',
+          text: `Sıfır karbon hedeflerine ulaşırken yeşil finansmandan yararlanın. Karbon kredisi ticareti ve yeşil tahvil yapılandırmasıyla sürdürülebilir yatırımlarınızı finanse ediyoruz. 🌱💶`,
+          tags: '#YakınCapital #YeşilFinansman #GreenBonds #KarbonKredisi #ESG #SürdürülebilirYatırım #YakınGrup'
+        },
+        {
+          sub: 'M&A & Şirket Ortaklıkları',
+          title: 'Yakın Capital — Birleşme & Devralma (M&A) Danışmanlığı',
+          headline: 'STRATEJİK ORTAKLIKLAR VE ŞİRKET DEVRALMALARI',
+          subheadline: 'Enerji ve İnşaat Sektörlerinde Güçlü Büyüme ve Satın Alma Modelleri...',
+          icon: '🤝',
+          prompt: 'Two business executives sealing a multi-million dollar handshake with glowing cyan corporate networks connecting globally in background. Deep navy blue (#0b2545), 8K render.',
+          text: `Şirketinizi stratejik birleşmelerle büyütün. Enerji ve taahhüt sektörlerinde şirket değerleme, M&A ve ortaklık süreçlerinde uçtan uca danışmanlık sağlıyoruz. 🤝💼`,
+          tags: '#YakınCapital #MAndA #ŞirketBirleşmesi #YatırımStratejisi #Holding #YakınGrup'
+        }
+      ],
+      teknoloji: [
+        {
+          sub: '5D BIM Modelleme & Dijital İkiz',
+          title: 'Yakın Teknoloji — 5D BIM ve Dijital İkiz Yönetimi',
+          headline: 'ŞANTİYELERDE DİJİTAL DÖNÜŞÜM: 5D BIM İLE SIFIR HATA',
+          subheadline: 'Zaman, Maliyet ve 3D Modeli Birleştiren İleri Mühendislik...',
+          icon: '💻',
+          prompt: 'Holographic 5D BIM digital twin building model floating over an architectural tablet with glowing cyan wireframe measurements. Deep navy blue atmosphere (#0b2545), 8K high-tech render.',
+          text: `İnşaatta hata payını sıfırlayın! 5D BIM ve dijital ikiz teknolojimizle projeleri sanal ortamda simüle ediyor, maliyet ve zaman aşımlarını engelliyoruz. 📐🚀`,
+          tags: '#YakınTeknoloji #5DBIM #BIM #Dijitalİkiz #PropTech #İleriMühendislik #YakınGrup'
+        },
+        {
+          sub: 'Yapay Zekâ Karar Motorları',
+          title: 'Yakın Teknoloji — Yapay Zekâ Destekli Proje Analitiği',
+          headline: 'YAPAY ZEKÂ İLE AKILLI ŞANTİYE VE VERİ YÖNETİMİ',
+          subheadline: 'Tahmine Dayalı Bakım, Risk Analizi ve Otomatik Teklif Motorları...',
+          icon: '🤖',
+          prompt: 'Futuristic AI neural network brain visualizing geometric construction and energy flow with glowing cyan light trails (#38bdf8). Deep midnight navy blue (#0b2545), 8K render.',
+          text: `Büyük veriyi akıllı kararlara dönüştürüyoruz. Yapay zekâ algoritmalarımızla riskleri önceden öngörüyor, şantiye ve santral operasyonlarını optimize ediyoruz. 🤖💡`,
+          tags: '#YakınTeknoloji #YapayZeka #AI #MakineÖğrenimi #SmartConstruction #DataAnalytics #YakınGrup'
+        },
+        {
+          sub: 'IoT Şantiye Telemetrisi',
+          title: 'Yakın Teknoloji — IoT Sensörler ve Canlı Şantiye Takibi',
+          headline: 'ŞANTİYENİZ 7/24 AVUCUNUZUN İÇİNDE',
+          subheadline: 'Drone Haritalama, IoT Sensörler ve Canlı Telemetri Ağı...',
+          icon: '📡',
+          prompt: 'Autonomous drone scanning a construction site with glowing cyan lidar measurement beams connecting to a digital tablet. Deep navy blue (#0b2545), 8K render.',
+          text: `Drone haritalama ve IoT sensörlerle şantiyelerimizi anlık takip ediyoruz. İlerleme durumu, malzeme stoğu ve iş güvenliği canlı telemetriyle ekranınızda! 📡🛰️`,
+          tags: '#YakınTeknoloji #IoT #DroneMapping #Lidar #AkıllıŞantiye #Telemetri #YakınGrup'
+        },
+        {
+          sub: 'Siber Güvenlik & Bulut Altyapı',
+          title: 'Yakın Teknoloji — Endüstriyel Siber Güvenlik ve Bulut',
+          headline: 'KRİTİK ENERJİ VE ALTYAPI SİSTEMLERİNDE SİBER GÜVENLİK',
+          subheadline: 'SCADA ve Endüstriyel Ağlar İçin Uçtan Uca Koruma Kalkanı...',
+          icon: '🔒',
+          prompt: 'Futuristic digital security shield glowing with cyan and gold binary data defending industrial infrastructure against threats. Deep navy blue (#0b2545), 8K render.',
+          text: `Endüstriyel tesisler ve enerji santrallerinde siber güvenlik hayati önem taşır. Yakın Teknoloji; SCADA, IoT ve bulut sistemlerinizi en üst düzeyde korur. 🔒🛡️`,
+          tags: '#YakınTeknoloji #SiberGüvenlik #CyberSecurity #SCADAGüvenliği #CloudInfrastructure #YakınGrup'
+        }
+      ]
+    };
+
     const MONTH_NAMES = [
       "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
       "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
     ];
 
     // GENERATE COMPLETE PLAN FOR A GIVEN YEAR (2026 - 2030)
+        // GENERATE COMPLETE PLAN FOR A GIVEN YEAR (2026 - 2030)
     function generatePlanForYear(yr) {
       const list = [];
 
@@ -1493,6 +1667,118 @@ Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiy
 Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️`,
         hashtags: '#KurbanBayramı #İyiBayramlar #KurbanBayramınızMübarekOlsun #YakınGrup #PaylaşmakGüzeldir'
       });
+
+      // 3. HAFTALIK 4 PROJE VİTRİNİ PAYLAŞIMI (52 HAFTA x 4 GÜN: SALI, ÇARŞAMBA, PERŞEMBE, CUMA)
+      let currDate = new Date(yr, 0, 1);
+      let weekCount = 1;
+
+      while (currDate.getFullYear() === yr) {
+        const dayOfWeek = currDate.getDay(); // 0 = Sun, 1 = Mon, 2 = Tue, 3 = Wed, 4 = Thu, 5 = Fri, 6 = Sat
+        const m = currDate.getMonth();
+        const d = currDate.getDate();
+        const mStr = String(m + 1).padStart(2, '0');
+        const dStr = String(d).padStart(2, '0');
+        const iso = `${yr}-${mStr}-${dStr}`;
+        const str = `${d} ${MONTH_NAMES[m]} ${yr}`;
+
+        const themeIdx = (weekCount - 1) % 4;
+
+        if (dayOfWeek === 2) { // SALI -> YAKIN İNŞAAT
+          const t = SECTOR_WEEKLY_THEMES.insaat[themeIdx];
+          list.push({
+            id: `haftalik-insaat-w${weekCount}-${yr}`,
+            category: 'proje',
+            title: t.title,
+            dateISO: iso,
+            timeStr: '11:00',
+            dateStr: str,
+            year: yr,
+            month: m,
+            day: d,
+            icon: t.icon,
+            tagText: 'YAKIN İNŞAAT',
+            tagClass: 'tag-proje',
+            eventClass: 'event-proje',
+            headline: t.headline,
+            subheadline: t.subheadline,
+            aiPrompt: t.prompt,
+            text: t.text,
+            hashtags: t.tags
+          });
+        } else if (dayOfWeek === 3) { // ÇARŞAMBA -> YAKIN ENERJİ
+          const t = SECTOR_WEEKLY_THEMES.enerji[themeIdx];
+          list.push({
+            id: `haftalik-enerji-w${weekCount}-${yr}`,
+            category: 'proje',
+            title: t.title,
+            dateISO: iso,
+            timeStr: '11:00',
+            dateStr: str,
+            year: yr,
+            month: m,
+            day: d,
+            icon: t.icon,
+            tagText: 'YAKIN ENERJİ',
+            tagClass: 'tag-proje',
+            eventClass: 'event-proje',
+            headline: t.headline,
+            subheadline: t.subheadline,
+            aiPrompt: t.prompt,
+            text: t.text,
+            hashtags: t.tags
+          });
+        } else if (dayOfWeek === 4) { // PERŞEMBE -> YAKIN CAPITAL
+          const t = SECTOR_WEEKLY_THEMES.capital[themeIdx];
+          list.push({
+            id: `haftalik-capital-w${weekCount}-${yr}`,
+            category: 'proje',
+            title: t.title,
+            dateISO: iso,
+            timeStr: '11:00',
+            dateStr: str,
+            year: yr,
+            month: m,
+            day: d,
+            icon: t.icon,
+            tagText: 'YAKIN CAPITAL',
+            tagClass: 'tag-proje',
+            eventClass: 'event-proje',
+            headline: t.headline,
+            subheadline: t.subheadline,
+            aiPrompt: t.prompt,
+            text: t.text,
+            hashtags: t.tags
+          });
+        } else if (dayOfWeek === 5) { // CUMA -> YAKIN TEKNOLOJİ
+          const t = SECTOR_WEEKLY_THEMES.teknoloji[themeIdx];
+          list.push({
+            id: `haftalik-teknoloji-w${weekCount}-${yr}`,
+            category: 'proje',
+            title: t.title,
+            dateISO: iso,
+            timeStr: '11:00',
+            dateStr: str,
+            year: yr,
+            month: m,
+            day: d,
+            icon: t.icon,
+            tagText: 'YAKIN TEKNOLOJİ',
+            tagClass: 'tag-proje',
+            eventClass: 'event-proje',
+            headline: t.headline,
+            subheadline: t.subheadline,
+            aiPrompt: t.prompt,
+            text: t.text,
+            hashtags: t.tags
+          });
+        }
+
+        if (dayOfWeek === 0) {
+          weekCount++;
+        }
+
+        currDate.setDate(currDate.getDate() + 1);
+      }
 
       // Kronolojik Sıralama
       list.sort((a, b) => new Date(a.dateISO) - new Date(b.dateISO));
