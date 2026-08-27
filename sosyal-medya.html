@@ -684,12 +684,12 @@
 
     <!-- Controls Bar -->
     <div class="controls-bar">
-      <!-- Filter Pills (Aktif Filtreleme) -->
-      <div class="filter-pills" id="main-filter-pills">
+      <!-- Filter Pills (Aktif Filtreleme & Hızlı Erişim) -->
+      <div class="filter-pills" id="main-filter-pills" style="display: flex; gap: 8px; flex-wrap: wrap;">
         <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (236 Paylaşım / Yıl)</button>
         <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar (8 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı (4 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel (16 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı (5 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel Günler (16 Gün)</button>
         <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini (208 Post)</button>
       </div>
 
@@ -2001,7 +2001,11 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       container.innerHTML = '';
       listView.innerHTML = '';
 
-      const filtered = filter === 'all' ? CONTENT_PLAN : CONTENT_PLAN.filter(d => d.category === filter);
+      const filtered = CONTENT_PLAN.filter(d => {
+        if (d.year !== currentYear) return false;
+        if (filter === 'all') return true;
+        return d.category === filter;
+      });
 
       filtered.forEach((item) => {
         // Grid Card
@@ -2368,12 +2372,34 @@ https://yakingrup.net`);
       }
     }
 
-    function filterPosts(category, btn) {
+        function filterPosts(category, btn) {
       activeCategoryFilter = category;
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
+
+      // Eğer mevcut ayda bu kategoride etkinlik yoksa, bu yıl içindeki ilk aya otomatik odaklan
+      if (category !== 'all') {
+        const eventsInYear = CONTENT_PLAN.filter(d => d.year === currentYear && d.category === category);
+        if (eventsInYear.length > 0) {
+          const hasInCurrentMonth = eventsInYear.some(d => d.month === currentMonth);
+          if (!hasInCurrentMonth) {
+            currentMonth = eventsInYear[0].month;
+          }
+        }
+      }
+
       renderMonthlyCalendar(currentYear, currentMonth);
       renderPosts(category);
+
+      // Bilgilendirme Toast
+      const categoryNames = {
+        'all': 'Tüm Etkinlikler',
+        'milli': '🇹🇷 Milli Bayramlar & Anma Günleri',
+        'dini': '🌙 Dini Günler & Yılbaşı',
+        'sektor': '⚡ Sektörel & Küresel Özel Günler',
+        'proje': '🏗️ Sektör Proje Vitrini (Haftalık Salı, Çrş, Per, Cuma)'
+      };
+      showToast(`Filtrelendi: ${categoryNames[category] || category}`);
     }
 
     function copyPostText(id) {
