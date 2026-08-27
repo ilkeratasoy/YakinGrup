@@ -2057,6 +2057,10 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       const modal = document.getElementById('event-modal');
       const body = document.getElementById('event-modal-body');
 
+      const shareLiText = safeEncode(item.text + '\n\n' + item.hashtags);
+      const shareXText = safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags);
+      const gCalUrl = getGoogleCalUrl(item);
+
       body.innerHTML = `
         <button class="modal-close" onclick="closeEventModal()">×</button>
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
@@ -2067,47 +2071,50 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
           </div>
         </div>
 
-        <div style="background:#07162c; padding:1rem; border-radius:14px; margin-bottom:1.2rem; display:flex; justify-content:center;">
+        <div style="text-align:center; margin-bottom:1rem; background:#07162c; border-radius:14px; padding:14px 12px; display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <div style="display:flex; gap:4px; flex-wrap:wrap; justify-content:center;">
+            <button class="ratio-pill active" onclick="changeAspect('${item.id}', '1:1', this); drawModalCanvas(CONTENT_PLAN.find(d=>d.id==='${item.id}'), '1:1');">1:1 Kare</button>
+            <button class="ratio-pill" onclick="changeAspect('${item.id}', '4:5', this); drawModalCanvas(CONTENT_PLAN.find(d=>d.id==='${item.id}'), '4:5');">4:5 Post</button>
+            <button class="ratio-pill" onclick="changeAspect('${item.id}', '9:16', this); drawModalCanvas(CONTENT_PLAN.find(d=>d.id==='${item.id}'), '9:16');">9:16 Story</button>
+            <button class="ratio-pill" onclick="changeAspect('${item.id}', '16:9', this); drawModalCanvas(CONTENT_PLAN.find(d=>d.id==='${item.id}'), '16:9');">16:9 X/YT</button>
+          </div>
           <canvas id="modal-canvas" class="banner-canvas" width="1080" height="1080" style="max-width:280px;"></canvas>
         </div>
 
         <div style="margin-bottom:1rem;">
-          <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px;">Paylaşım Metni</div>
-          <div class="post-text-content" style="max-height:140px;">${item.text}</div>
-          <div class="post-hashtags" style="margin-top:6px;">${item.hashtags}</div>
+          <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px;">Onaylı Paylaşım Metni</div>
+          <div style="font-size:0.88rem; line-height:1.6; color:#334155; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; white-space:pre-line; max-height:140px; overflow-y:auto;">
+            ${item.text}
+          </div>
+          <div style="font-size:0.8rem; color:var(--primary-accent); font-weight:600; margin-top:6px;">${item.hashtags}</div>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:8px;">
-          <div class="primary-actions">
+          <div style="display:flex; gap:8px;">
             <button class="btn-act btn-copy" onclick="copyPostText('${item.id}')">📋 Metni Kopyala</button>
-            <button class="btn-act btn-download" onclick="downloadBanner('${item.id}', '${item.title}')">⬇️ 1080x1080 İndir</button>
+            <button class="btn-act btn-download" onclick="downloadBanner('${item.id}', '${item.title}')">⬇️ HD Görsel İndir</button>
           </div>
 
-          <button class="btn-act" style="background:linear-gradient(135deg, #0284c7, #0369a1); color:#fff;" onclick="copyAiPrompt('${item.id}')">
-            🤖 GPT Görsel Promptunu Kopyala
-          </button>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+            <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 7px 8px; font-size: 0.75rem;" onclick="copyAiPrompt('${item.id}')">
+              🤖 AI Görsel Promptu
+            </button>
+            <button class="btn-act" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; padding: 7px 8px; font-size: 0.75rem;" onclick="copyVideoPrompt('${item.id}')">
+              🎬 AI Video Promptu
+            </button>
+          </div>
 
           <div class="cal-actions-row">
             <button class="btn-cal" onclick="downloadSingleICS('${item.id}')">📲 Takvime Ekle (.ics)</button>
-            <a href="${getGoogleCalUrl(item)}" target="_blank" class="btn-cal google">📅 Google Takvim</a>
+            <a href="${gCalUrl}" target="_blank" class="btn-cal google">📅 Google Takvim</a>
           </div>
 
-          <!-- AI Görsel & Video Prompt Butonları -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-            <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff;" onclick="copyAiPrompt('${item.id}')">
-              🤖 AI Görsel Promptu Kopyala
-            </button>
-            <button class="btn-act" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff;" onclick="copyVideoPrompt('${item.id}')">
-              🎬 AI Video Promptu Kopyala (Sora/Kling)
-            </button>
-          </div>
-
-          <div class="social-share-row" style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <div class="social-share-row" style="display:flex; gap:5px; flex-wrap:wrap;">
             <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram">Instagram</a>
             <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube">YouTube</a>
             <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-share share-facebook">Facebook</a>
-            <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin">LinkedIn</a>
-            <a href="https://twitter.com/intent/tweet?text=${safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x">X</a>
+            <a href="https://www.linkedin.com/feed/?shareActive=true&text=${shareLiText}" target="_blank" class="btn-share share-linkedin">LinkedIn</a>
+            <a href="https://twitter.com/intent/tweet?text=${shareXText}" target="_blank" class="btn-share share-x">X</a>
           </div>
         </div>
       `;
@@ -2128,9 +2135,12 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
     }
 
     // ── RENDER POSTS (GRID & LIST) ──────────────────────────────────────────
-    function renderPosts(filter = 'all') {
+        // ── RENDER POSTS (GRID & LIST GÖRÜNÜMÜ - PERFORMANS OPTİMİZE) ───────────
+        function renderPosts(filter = 'all') {
       const container = document.getElementById('posts-container');
       const listView = document.getElementById('list-view');
+      if (!container || !listView) return;
+
       container.innerHTML = '';
       listView.innerHTML = '';
 
@@ -2141,7 +2151,11 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       });
 
       filtered.forEach((item) => {
-        // Grid Card
+        const shareLiText = safeEncode(item.text + '\n\n' + item.hashtags);
+        const shareXText = safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags);
+        const gCalUrl = getGoogleCalUrl(item);
+
+        // 1. Grid Card
         const card = document.createElement('div');
         card.className = 'post-card';
         card.innerHTML = `
@@ -2163,7 +2177,7 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
               <button class="ratio-pill" onclick="changeAspect('${item.id}', '9:16', this)">9:16 Story</button>
               <button class="ratio-pill" onclick="changeAspect('${item.id}', '16:9', this)">16:9 X/YT</button>
             </div>
-            <canvas id="canvas-${item.id}" class="banner-canvas" width="1080" height="1080" style="margin-top: 24px;"></canvas>
+            <canvas id="canvas-${item.id}" class="banner-canvas" width="1080" height="1080" style="margin-top: 24px; cursor: pointer;" onclick="openEventModal('${item.id}')"></canvas>
           </div>
 
           <div class="post-card-body">
@@ -2182,19 +2196,6 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
               </button>
             </div>
 
-            <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; width: 100%; padding: 7px 10px; font-size: 0.78rem;" onclick="copyAiPrompt('${item.id}')" title="ChatGPT / Midjourney için Hazır Promptu Kopyala">
-              🤖 GPT Görsel Promptunu Kopyala
-            </button>
-
-            <div class="cal-actions-row">
-              <button class="btn-cal" onclick="downloadSingleICS('${item.id}')" title="Bu Günü Apple / Outlook / Telefona Ekle">
-                📲 Takvime Ekle (.ics)
-              </button>
-              <a href="${getGoogleCalUrl(item)}" target="_blank" class="btn-cal google" title="Google Takvim Web'de Aç">
-                📅 Google Takvim
-              </a>
-            </div>
-
             <!-- AI GÖRSEL & VİDEO PLUG-IN ENTEGRASYONLARI -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px;">
               <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 6px 8px; font-size: 0.75rem;" onclick="copyAiPrompt('${item.id}')" title="DALL-E 3 / Midjourney Görsel Promptu">
@@ -2205,20 +2206,29 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
               </button>
             </div>
 
+            <div class="cal-actions-row">
+              <button class="btn-cal" onclick="downloadSingleICS('${item.id}')" title="Bu Günü Apple / Outlook / Telefona Ekle">
+                📲 Takvime Ekle (.ics)
+              </button>
+              <a href="${gCalUrl}" target="_blank" class="btn-cal google" title="Google Takvim Web'de Aç">
+                📅 Google Takvim
+              </a>
+            </div>
+
             <div class="social-share-row" style="display: flex; gap: 5px; flex-wrap: wrap;">
-              <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram" title="Instagram Profilini ve Post Alanını Aç">
+              <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram" title="Instagram Profilini Aç">
                 Instagram
               </a>
-              <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube" title="YouTube Kanalını ve Topluluk Gönderisini Aç">
+              <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube" title="YouTube Kanalını Aç">
                 YouTube
               </a>
               <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-share share-facebook" title="Facebook Sayfasını Aç">
                 Facebook
               </a>
-              <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">
+              <a href="https://www.linkedin.com/feed/?shareActive=true&text=${shareLiText}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">
                 LinkedIn
               </a>
-              <a href="https://twitter.com/intent/tweet?text=${safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x" title="X'te Paylaş">
+              <a href="https://twitter.com/intent/tweet?text=${shareXText}" target="_blank" class="btn-share share-x" title="X'te Paylaş">
                 X
               </a>
             </div>
@@ -2226,7 +2236,7 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
         `;
         container.appendChild(card);
 
-        // List Item
+        // 2. List Item
         const listItem = document.createElement('div');
         listItem.className = 'list-item-card';
         const dateParts = item.dateStr.split(' ');
@@ -2245,13 +2255,22 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
             <button class="btn-top" onclick="openEventModal('${item.id}')">👁️ Detay</button>
             <button class="btn-top" onclick="copyPostText('${item.id}')">📋 Kopyala</button>
             <button class="btn-top" onclick="downloadSingleICS('${item.id}')">📲 Takvim (.ics)</button>
-            <a href="${getGoogleCalUrl(item)}" target="_blank" class="btn-top primary">📅 Google</a>
+            <a href="${gCalUrl}" target="_blank" class="btn-top primary">📅 Google</a>
           </div>
         `;
         listView.appendChild(listItem);
+      });
+    }
 
-        // Draw Canvas
-        setTimeout(() => drawBannerCanvas(item), 40);
+    function renderVisibleGridCanvases() {
+      const filtered = CONTENT_PLAN.filter(d => {
+        if (d.year !== currentYear) return false;
+        if (activeCategoryFilter === 'all') return true;
+        return d.category === activeCategoryFilter;
+      });
+      // Draw first 12 cards smoothly
+      filtered.slice(0, 12).forEach((item, idx) => {
+        setTimeout(() => drawBannerCanvas(item), idx * 25);
       });
     }
 
@@ -2486,7 +2505,7 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       const endHour = String(parseInt(item.timeStr.split(':')[0]) + 1).padStart(2, '0');
       const end = item.dateISO.replace(/-/g, '') + 'T' + endHour + item.timeStr.split(':')[1] + '00';
       
-      const title = encodeURIComponent(`📢 ${item.title} (Yakın Grup Paylaşım Vakti)`);
+      const title = safeEncode(`📢 ${item.title} (Yakın Grup Paylaşım Vakti)`);
       const details = encodeURIComponent(`${item.text}
 
 ${item.hashtags}
@@ -2513,6 +2532,7 @@ https://yakingrup.net`);
         cal.style.display = 'none';
         grid.style.display = 'grid';
         list.style.display = 'none';
+        renderVisibleGridCanvases();
       } else {
         document.getElementById('btn-view-list').classList.add('active');
         cal.style.display = 'none';
@@ -2644,12 +2664,45 @@ ${item.hashtags}`;
       }
     };
 
-    // Init
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAuth();
-      renderMonthlyCalendar(currentYear, currentMonth);
-      renderPosts('all');
-    });
+    
+    // Expose all functions to window for instant onclick response
+    window.selectYear = selectYear;
+    window.changeMonth = changeMonth;
+    window.resetToToday = resetToToday;
+    window.openEventModal = openEventModal;
+    window.closeEventModal = closeEventModal;
+    window.switchView = switchView;
+    window.filterPosts = filterPosts;
+    window.copyPostText = copyPostText;
+    window.copyVideoPrompt = copyVideoPrompt;
+    window.copyAiPrompt = copyAiPrompt;
+    window.changeAspect = changeAspect;
+    window.downloadBanner = downloadBanner;
+    window.exportAllICS = exportAllICS;
+    window.downloadSingleICS = downloadSingleICS;
+    window.exportAllCSV = exportAllCSV;
+    window.showToast = showToast;
+    window.drawModalCanvas = drawModalCanvas;
+    window.drawBannerCanvas = drawBannerCanvas;
+
+    function initApp() {
+      try {
+        checkAuth();
+        renderMonthlyCalendar(currentYear, currentMonth);
+        renderPosts('all');
+        console.log('✅ Yakın Grup Sosyal Medya & İçerik Takvimi v285 Başarıyla Başlatıldı!');
+      } catch (err) {
+        console.error('Init error:', err);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+    window.addEventListener('load', initApp);
+
   </script>
 </body>
 </html>
