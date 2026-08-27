@@ -794,10 +794,10 @@
     <div class="controls-bar">
       <!-- Filter Pills (Aktif Filtreleme & Hızlı Erişim) -->
       <div class="filter-pills" id="main-filter-pills" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (236 Paylaşım / Yıl)</button>
-        <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar (8 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı (5 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel Günler (16 Gün)</button>
+        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (237 Paylaşım / Yıl)</button>
+        <button class="filter-pill" onclick="filterPosts('resmi', this)">🇹🇷 Resmi & Milli Tatiller (10 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Bayramlar & Arifeler (4 Gün)</button>
+        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Mesleki Günler (15 Gün)</button>
         <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini (208 Post)</button>
       </div>
 
@@ -908,11 +908,31 @@
     // ── 1 YILLIK KAPSAMLI İÇERİK HAVUZU ──────────────────────────────────────────
         // ── 2026 - 2030 ÇOK YILLI ÖZEL GÜNLER & SEKTÖREL İÇERİK MOTORU ──────────
         // ── 2026 - 2030 TÜM RESMİ, MİLLİ, DİNİ VE SEKTÖREL ÖZEL GÜNLER HAVUZU ──
+        // ── 2026 - 2030 TÜM RESMİ, MİLLİ, DİNİ VE SEKTÖREL GÜNLER HAVUZU ──
     const RECURRING_SPECIAL_DAYS = [
-      // 🇹🇷 MİLLİ BAYRAMLAR, RESMİ GÜNLER VE ANMA GÜNLERİ
+      // 🇹🇷 RESMİ TATİLLER, MİLLİ BAYRAMLAR VE ANMA GÜNLERİ (category: 'resmi')
+      {
+        baseId: '1-ocak-yilbasi',
+        category: 'resmi',
+        title: '1 Ocak Yılbaşı (Resmi Tatil)',
+        month: 0, // Ocak
+        day: 1,
+        timeStr: '09:00',
+        icon: '🎉',
+        tagText: 'RESMİ TATİL',
+        tagClass: 'tag-milli',
+        eventClass: 'event-milli',
+        getHeadline: (yr) => `MUTLU VE BAŞARILI BİR YIL DİLERİZ!`,
+        getSubheadline: (yr) => `${yr} Yılında Yeni Yatırımlar ve Sürdürülebilir Projelerle...`,
+        aiPrompt: 'Ultra-modern luxury New Year corporate artwork (1:1 square). Glowing 3D geometric numerals crafted from crystal glass and polished steel with internal cyan LED light (#38bdf8). Deep rich navy blue backdrop (#0b2545) with delicate golden sparkles and modern skyscraper lights. 8K Unreal Engine 5 render, sophisticated, futuristic holding greeting.',
+        getText: (yr) => `Yeni yılın tüm çalışanlarımıza, iş ortaklarımıza ve ülkemize sağlık, başarı, huzur ve bereket getirmesini dileriz. 
+
+${yr} yılında da yenilenebilir enerji, modern inşaat ve ileri teknoloji projelerimizle büyümeye ve değer üretmeye devam edeceğiz. Mutlu Yıllar! 🥂🌟`,
+        hashtags: '#MutluYıllar #YeniYıl #HappyNewYear #YakınGrup #YatırımVeGelecek #ResmiTatil'
+      },
       {
         baseId: '18-mart',
-        category: 'milli',
+        category: 'resmi',
         title: '18 Mart Çanakkale Zaferi ve Şehitleri Anma Günü',
         month: 2, // Mart
         day: 18,
@@ -931,13 +951,13 @@
       },
       {
         baseId: '23-nisan',
-        category: 'milli',
-        title: '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı',
+        category: 'resmi',
+        title: '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı (Resmi Tatil)',
         month: 3, // Nisan
         day: 23,
         timeStr: '09:00',
         icon: '🎈',
-        tagText: 'MİLLİ BAYRAM',
+        tagText: 'RESMİ TATİL',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
         getHeadline: (yr) => '23 NİSAN ULUSAL EGEMENLİK VE ÇOCUK BAYRAMI KUTLU OLSUN!',
@@ -946,17 +966,36 @@
         getText: (yr) => `Türkiye Büyük Millet Meclisi'nin açılışının ${yr - 1920}. yıl dönümünde, Gazi Mustafa Kemal Atatürk'ün dünya çocuklarına armağan ettiği 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı'nı coşkuyla kutluyoruz.
 
 Çocuklarımızın güvenle, huzurla ve umutla büyüyeceği sürdürülebilir bir gelecek inşa etmek en büyük sorumluluğumuzdur. 🇹🇷✨`,
-        hashtags: '#23Nisan #UlusalEgemenlikVeÇocukBayramı #TBMM #GeleceğimizÇocuklar #YakınGrup #23NisanKutluOlsun'
+        hashtags: '#23Nisan #UlusalEgemenlikVeÇocukBayramı #TBMM #GeleceğimizÇocuklar #YakınGrup #23NisanKutluOlsun #ResmiTatil'
+      },
+      {
+        baseId: '1-mayis',
+        category: 'resmi',
+        title: '1 Mayıs Emek ve Dayanışma Günü (Resmi Tatil)',
+        month: 4, // Mayıs
+        day: 1,
+        timeStr: '09:00',
+        icon: '👷',
+        tagText: 'RESMİ TATİL',
+        tagClass: 'tag-milli',
+        eventClass: 'event-milli',
+        getHeadline: (yr) => '1 MAYIS EMEK VE DAYANIŞMA GÜNÜ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Alın Teri ve Emeğiyle Geleceği İnşa Eden Tüm Emekçilerimize...',
+        aiPrompt: 'Powerful, modern architectural tribute artwork (1:1 square). High-tech industrial construction cranes, steel engineering structures, and solar panels under a dramatic blue sunrise. Deep navy blue background (#0b2545) with glowing cyan energy arcs (#38bdf8) and warm golden safety highlights. Respectful, monumental, premium engineering holding aesthetic, 8K render.',
+        getText: (yr) => `Şantiyelerimizde, enerji santrallerimizde, üretim tesislerimizde ve ofislerimizde alın teriyle geleceği inşa eden tüm çalışma arkadaşlarımızın ve emekçilerin 1 Mayıs Emek ve Dayanışma Günü'nü kutluyoruz.
+
+En büyük gücümüz emeğimiz ve dayanışmamızdır. 🏗️⚡`,
+        hashtags: '#1Mayıs #EmekveDayanışmaGünü #İşçiBayramı #AlınTeri #YakınGrup #BirlikteGüçlüyüz #ResmiTatil'
       },
       {
         baseId: '19-mayis',
-        category: 'milli',
-        title: '19 Mayıs Atatürk’ü Anma, Gençlik ve Spor Bayramı',
+        category: 'resmi',
+        title: '19 Mayıs Atatürk’ü Anma, Gençlik ve Spor Bayramı (Resmi Tatil)',
         month: 4, // Mayıs
         day: 19,
         timeStr: '09:00',
         icon: '🏃',
-        tagText: 'MİLLİ BAYRAM',
+        tagText: 'RESMİ TATİL',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
         getHeadline: (yr) => '19 MAYIS GENÇLİK VE SPOR BAYRAMIMIZ KUTLU OLSUN!',
@@ -965,34 +1004,34 @@
         getText: (yr) => `19 Mayıs 1919'da Samsun'da yakılan bağımsızlık meşalesinin ${yr - 1919}. yılında; Gazi Mustafa Kemal Atatürk ve tüm kahramanlarımızı saygıyla anıyor, geleceğimizi omuzlayan tüm gençlerimizin bayramını kutluyoruz.
 
 Gençliğin enerjisi ve inovasyon vizyonuyla Türkiye'nin yarınlarını inşa ediyoruz! 🇹🇷⚡`,
-        hashtags: '#19Mayıs #GençlikveSporBayramı #AtatürküAnma #19Mayıs1919 #YakınGrup #İnovasyonGençlikte'
+        hashtags: '#19Mayıs #GençlikveSporBayramı #AtatürküAnma #19Mayıs1919 #YakınGrup #İnovasyonGençlikte #ResmiTatil'
       },
       {
         baseId: '15-temmuz',
-        category: 'milli',
-        title: '15 Temmuz Demokrasi ve Milli Birlik Günü',
+        category: 'resmi',
+        title: '15 Temmuz Demokrasi ve Milli Birlik Günü (Resmi Tatil)',
         month: 6, // Temmuz
         day: 15,
         timeStr: '09:00',
         icon: '🇹🇷',
-        tagText: 'MİLLİ ANMA GÜNÜ',
+        tagText: 'RESMİ TATİL',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
         getHeadline: (yr) => '15 TEMMUZ DEMOKRASİ VE MİLLİ BİRLİK GÜNÜ',
         getSubheadline: (yr) => 'Milli İrademize Sahip Çıkan Kahramanlarımızı Saygıyla Anıyoruz.',
         aiPrompt: 'Solemn and powerful national unity artwork (1:1 square). Istanbul Bosphorus Bridge and skyline under a deep midnight navy blue sky (#0b2545). Ethereal red and white Turkish flag illumination with soft cyan ambient glow (#38bdf8). Peaceful, monumental, respectful corporate memorial aesthetic. 8K resolution, cinematic lighting.',
         getText: (yr) => `15 Temmuz Demokrasi ve Milli Birlik Günü'nde; vatanı, bağımsızlığı ve milli iradesi için canını ortaya koyan tüm aziz şehitlerimizi rahmetle anıyor, kahraman gazilerimize şükranlarımızı sunuyoruz. 🇹🇷`,
-        hashtags: '#15Temmuz #DemokrasiveMilliBirlikGünü #Milliİrade #TürkiyeGeçilmez #YakınGrup'
+        hashtags: '#15Temmuz #DemokrasiveMilliBirlikGünü #Milliİrade #TürkiyeGeçilmez #YakınGrup #ResmiTatil'
       },
       {
         baseId: '30-agustos',
-        category: 'milli',
-        title: '30 Ağustos Zafer Bayramı',
+        category: 'resmi',
+        title: '30 Ağustos Zafer Bayramı (Resmi Tatil)',
         month: 7, // Ağustos
         day: 30,
         timeStr: '09:00',
         icon: '🇹🇷',
-        tagText: 'MİLLİ BAYRAM',
+        tagText: 'RESMİ TATİL',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
         getHeadline: (yr) => '30 AĞUSTOS ZAFER BAYRAMIMIZ KUTLU OLSUN!',
@@ -1001,11 +1040,11 @@ Gençliğin enerjisi ve inovasyon vizyonuyla Türkiye'nin yarınlarını inşa e
         getText: (yr) => `Tarihimizin en şanlı dönüm noktalarından biri olan Büyük Taarruz ve Başkomutanlık Meydan Muharebesi'nin zaferle taçlandığı 30 Ağustos Zafer Bayramı'nın ${yr - 1922}. yılını gururla kutluyoruz.
 
 Başta Gazi Mustafa Kemal Atatürk olmak üzere, vatanımız uğruna can veren tüm şehit ve gazilerimizi minnetle anıyoruz. 🇹🇷`,
-        hashtags: '#30Ağustos #ZaferBayramı #BüyükTaarruz #30AğustosZaferBayramı #YakınGrup #MilliBirlik'
+        hashtags: '#30Ağustos #ZaferBayramı #BüyükTaarruz #30AğustosZaferBayramı #YakınGrup #MilliBirlik #ResmiTatil'
       },
       {
         baseId: '19-eylul-gaziler',
-        category: 'milli',
+        category: 'resmi',
         title: '19 Eylül Gaziler Günü',
         month: 8, // Eylül
         day: 19,
@@ -1022,13 +1061,13 @@ Başta Gazi Mustafa Kemal Atatürk olmak üzere, vatanımız uğruna can veren t
       },
       {
         baseId: '29-ekim',
-        category: 'milli',
-        title: '29 Ekim Cumhuriyet Bayramı',
+        category: 'resmi',
+        title: '29 Ekim Cumhuriyet Bayramı (Resmi Tatil)',
         month: 9, // Ekim
         day: 29,
         timeStr: '09:00',
         icon: '🇹🇷',
-        tagText: 'MİLLİ BAYRAM',
+        tagText: 'ULUSAL BAYRAM & RESMİ TATİL',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
         getHeadline: (yr) => '29 EKİM CUMHURİYET BAYRAMIMIZ KUTLU OLSUN!',
@@ -1039,12 +1078,12 @@ Başta Gazi Mustafa Kemal Atatürk olmak üzere, vatanımız uğruna can veren t
 Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliğin gücüyle ülkemizin kalkınması ve geleceğin inşası için durmaksızın çalışmaya devam ediyoruz.
 
 29 Ekim Cumhuriyet Bayramımız kutlu olsun! 🇹🇷`,
-        hashtags: '#29Ekim #CumhuriyetBayramı #YakınGrup #MilliMühendislik #Türkiye #Geleceğinİnşası'
+        hashtags: '#29Ekim #CumhuriyetBayramı #YakınGrup #MilliMühendislik #Türkiye #Geleceğinİnşası #ResmiTatil'
       },
       {
         baseId: '10-kasim',
-        category: 'milli',
-        title: '10 Kasım Atatürk’ü Anma Günü',
+        category: 'resmi',
+        title: '10 Kasım Atatürk’ü Anma Günü (09:05)',
         month: 10, // Kasım
         day: 10,
         timeStr: '09:05',
@@ -1061,47 +1100,7 @@ Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliği
         hashtags: '#10Kasım #MustafaKemalAtatürk #GaziMustafaKemal #SonsuzaDek #YakınGrup #1881denSonsuza'
       },
 
-      // 🎉 DİNİ BAYRAMLAR & YILBAŞI
-      {
-        baseId: 'yeni-yil',
-        category: 'dini',
-        title: '1 Ocak Yeni Yıl Tebriği',
-        month: 0, // Ocak
-        day: 1,
-        timeStr: '09:00',
-        icon: '🎉',
-        tagText: 'YILBAŞI',
-        tagClass: 'tag-dini',
-        eventClass: 'event-dini',
-        getHeadline: (yr) => `MUTLU VE BAŞARILI BİR YIL DİLERİZ!`,
-        getSubheadline: (yr) => `${yr} Yılında Yeni Yatırımlar ve Sürdürülebilir Projelerle...`,
-        aiPrompt: 'Ultra-modern luxury New Year corporate artwork (1:1 square). Glowing 3D geometric numerals crafted from crystal glass and polished steel with internal cyan LED light (#38bdf8). Deep rich navy blue backdrop (#0b2545) with delicate golden sparkles and modern skyscraper lights. 8K Unreal Engine 5 render, sophisticated, futuristic holding greeting.',
-        getText: (yr) => `Yeni yılın tüm çalışanlarımıza, iş ortaklarımıza ve ülkemize sağlık, başarı, huzur ve bereket getirmesini dileriz. 
-
-${yr} yılında da yenilenebilir enerji, modern inşaat ve ileri teknoloji projelerimizle büyümeye ve değer üretmeye devam edeceğiz. Mutlu Yıllar! 🥂🌟`,
-        hashtags: '#MutluYıllar #YeniYıl #HappyNewYear #YakınGrup #YatırımVeGelecek'
-      },
-      {
-        baseId: '1-mayis',
-        category: 'dini',
-        title: '1 Mayıs Emek ve Dayanışma Günü',
-        month: 4, // Mayıs
-        day: 1,
-        timeStr: '09:00',
-        icon: '👷',
-        tagText: 'RESMİ GÜN',
-        tagClass: 'tag-dini',
-        eventClass: 'event-dini',
-        getHeadline: (yr) => '1 MAYIS EMEK VE DAYANIŞMA GÜNÜ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Alın Teri ve Emeğiyle Geleceği İnşa Eden Tüm Emekçilerimize...',
-        aiPrompt: 'Powerful, modern architectural tribute artwork (1:1 square). High-tech industrial construction cranes, steel engineering structures, and solar panels under a dramatic blue sunrise. Deep navy blue background (#0b2545) with glowing cyan energy arcs (#38bdf8) and warm golden safety highlights. Respectful, monumental, premium engineering holding aesthetic, 8K render.',
-        getText: (yr) => `Şantiyelerimizde, enerji santrallerimizde, üretim tesislerimizde ve ofislerimizde alın teriyle geleceği inşa eden tüm çalışma arkadaşlarımızın ve emekçilerin 1 Mayıs Emek ve Dayanışma Günü'nü kutluyoruz.
-
-En büyük gücümüz emeğimiz ve dayanışmamızdır. 🏗️⚡`,
-        hashtags: '#1Mayıs #EmekveDayanışmaGünü #İşçiBayramı #AlınTeri #YakınGrup #BirlikteGüçlüyüz'
-      },
-
-      // ⚙️ SEKTÖREL, MESLEKİ, İSG, MİMARLIK, ÖĞRETMENLER VE ÇEVRE GÜNLERİ
+      // ⚙️ SEKTÖREL, MESLEKİ, İSG & KÜRESEL GÜNLER (category: 'sektor')
       {
         baseId: '10-ocak-gazeteciler',
         category: 'sektor',
@@ -1362,112 +1361,68 @@ Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
         aiPrompt: 'Universal justice scales glowing with platinum silver and cyan light (#38bdf8) over a global network of connected diverse people. Deep navy blue background (#0b2545), 8K render.',
         getText: (yr) => `Tüm insanların eşit, özgür ve onurlu bir yaşam sürme hakkına sahip olduğu bilinciyle; 10 Aralık Dünya İnsan Hakları Günü'nü kutluyor, barış ve adalet dolu bir dünya diliyoruz. ⚖️🕊️`,
         hashtags: '#DünyaİnsanHaklarıGünü #10Aralık #İnsanHakları #Eşitlik #Adalet #YakınGrup'
-      },
-
-      // 🏗️ SEKTÖR PROJE VİTRİNİ
-      {
-        baseId: 'proje-insaat-datacenter',
-        category: 'proje',
-        title: 'Yakın İnşaat — Ağır Sanayi & Veri Merkezleri',
-        month: 3, // Nisan
-        day: 10,
-        timeStr: '11:00',
-        icon: '🏢',
-        tagText: 'YAKIN İNŞAAT',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        getHeadline: (yr) => 'YAKIN İNŞAAT: YÜKSEK GÜVENLİKLİ ENDÜSTRİYEL TAAHHÜT',
-        getSubheadline: (yr) => 'Veri Merkezleri, Ağır Sanayi ve Tier-3 Standartlarında İleri Mühendislik...',
-        aiPrompt: 'High-security modern Tier-3 Data Center facility with glowing cyan fiber optic server racks and precision architectural steel facade. Deep navy blue corporate aesthetic (#0b2545), 8K render.',
-        getText: (yr) => `Yüksek veri güvenliği ve kesintisiz enerji gerektiren kritik tesislerde; depreme dayanıklı betonarme ve çelik mühendisliğiyle Türkiye'nin dijital omurgasını inşa ediyoruz. 🏗️🌐`,
-        hashtags: '#Yakınİnşaat #DataCenter #VeriMerkezi #AğırSanayi #EPC #Mühendislik #YakınGrup'
-      },
-      {
-        baseId: 'proje-enerji-bess',
-        category: 'proje',
-        title: 'Yakın Enerji — Tier-1 GES & BESS Batarya Depolama',
-        month: 5, // Haziran
-        day: 18,
-        timeStr: '11:00',
-        icon: '🔋',
-        tagText: 'YAKIN ENERJİ',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        getHeadline: (yr) => 'YAKIN ENERJİ: KESİNTİSİZ GÜÇ İÇİN BESS DEPOLAMA',
-        getSubheadline: (yr) => 'Bifacial Güneş Panelleri ve Yüksek Kapasiteli Batarya Sistemleri...',
-        aiPrompt: 'High-tech industrial BESS battery energy storage containers and solar panel array with glowing cyan telemetry power lines (#38bdf8). Deep midnight navy background (#0b2545), 8K clean energy render.',
-        getText: (yr) => `Güneş enerjisinin sürekliliği, akıllı batarya depolama (BESS) sistemleriyle mümkün. Yakın Enerji, anahtar teslim EPC çözümleriyle sanayinin enerjisini garantiye alıyor. ☀️🔋`,
-        hashtags: '#YakınEnerji #BESS #BataryaDepolama #GüneşEnerjisi #SolarEPC #CleanPower #YakınGrup'
-      },
-      {
-        baseId: 'proje-capital-spv',
-        category: 'proje',
-        title: 'Yakın Capital — Proje Finansmanı & SPV Mimarisi',
-        month: 8, // Eylül
-        day: 15,
-        timeStr: '11:00',
-        icon: '📈',
-        tagText: 'YAKIN CAPITAL',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        getHeadline: (yr) => 'YAKIN CAPITAL: PROJE FİNANSMANI VE YATIRIM MİMARİSİ',
-        getSubheadline: (yr) => 'Büyük Ölçekli Altyapı, SPV Yapılandırma ve Sermaye Güvencesi...',
-        aiPrompt: 'Executive corporate financial modeling visual with 3D glowing gold and cyan investment growth charts rising above architectural skyscrapers. Deep navy blue aesthetic (#0b2545), 8K luxury render.',
-        getText: (yr) => `Doğru finansman modeli, büyük projelerin can damarıdır. Yakın Capital; SPV yapılandırma, GYO ortaklıkları ve yatırım danışmanlığı ile sermayeyi katma değere dönüştürüyor. 💼🏛️`,
-        hashtags: '#YakınCapital #ProjeFinansmanı #SPV #GYO #YatırımYönetimi #Holding #YakınGrup'
-      },
-      {
-        baseId: 'proje-teknoloji-bim',
-        category: 'proje',
-        title: 'Yakın Teknoloji — 5D BIM & AI Karar Motorları',
-        month: 10, // Kasım
-        day: 25,
-        timeStr: '11:00',
-        icon: '💻',
-        tagText: 'YAKIN TEKNOLOJİ',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        getHeadline: (yr) => 'YAKIN TEKNOLOJİ: DİJİTAL İKİZ VE 5D BIM YÖNETİMİ',
-        getSubheadline: (yr) => 'Şantiyede Sıfır Hata: Dijitalleşen İnşaat ve Enerji Süreçleri...',
-        aiPrompt: 'Holographic 5D BIM digital twin building model floating over an architectural tablet with glowing cyan wireframe measurements. Deep navy blue atmosphere (#0b2545), 8K high-tech render.',
-        getText: (yr) => `Maliyet, zaman ve kalite yönetiminde yapay zekâ destekli 5D BIM teknolojimizle şantiyelerimizde hata payını sıfırlıyoruz. Geleceğin mühendisliği bugün Yakın Teknoloji'de! 📐🚀`,
-        hashtags: '#YakınTeknoloji #BIM #5DBIM #Dijitalİkiz #PropTech #İnovasyon #YakınGrup'
       }
     ];
 
-    // 2026 - 2030 DİNİ BAYRAM VE ARİFE TARİHLERİ (Hicri Takvim Hesabı)
+    // 2026 - 2030 DİNİ BAYRAM VE ARİFE TARİHLERİ (Hicri Takvim Kesin Hesaplı)
     const ISLAMIC_HOLIDAYS_BY_YEAR = {
       2026: {
         ramazanArefe: { month: 2, day: 19, str: '19 Mart 2026', iso: '2026-03-19' },
-        ramazan: { month: 2, day: 20, str: '20 Mart 2026', iso: '2026-03-20' },
+        ramazan1: { month: 2, day: 20, str: '20 Mart 2026', iso: '2026-03-20' },
+        ramazan2: { month: 2, day: 21, str: '21 Mart 2026', iso: '2026-03-21' },
+        ramazan3: { month: 2, day: 22, str: '22 Mart 2026', iso: '2026-03-22' },
         kurbanArefe: { month: 4, day: 26, str: '26 Mayıs 2026', iso: '2026-05-26' },
-        kurban: { month: 4, day: 27, str: '27 Mayıs 2026', iso: '2026-05-27' }
+        kurban1: { month: 4, day: 27, str: '27 Mayıs 2026', iso: '2026-05-27' },
+        kurban2: { month: 4, day: 28, str: '28 Mayıs 2026', iso: '2026-05-28' },
+        kurban3: { month: 4, day: 29, str: '29 Mayıs 2026', iso: '2026-05-29' },
+        kurban4: { month: 4, day: 30, str: '30 Mayıs 2026', iso: '2026-05-30' }
       },
       2027: {
         ramazanArefe: { month: 2, day: 9, str: '9 Mart 2027', iso: '2027-03-09' },
-        ramazan: { month: 2, day: 10, str: '10 Mart 2027', iso: '2027-03-10' },
+        ramazan1: { month: 2, day: 10, str: '10 Mart 2027', iso: '2027-03-10' },
+        ramazan2: { month: 2, day: 11, str: '11 Mart 2027', iso: '2027-03-11' },
+        ramazan3: { month: 2, day: 12, str: '12 Mart 2027', iso: '2027-03-12' },
         kurbanArefe: { month: 4, day: 15, str: '15 Mayıs 2027', iso: '2027-05-15' },
-        kurban: { month: 4, day: 16, str: '16 Mayıs 2027', iso: '2027-05-16' }
+        kurban1: { month: 4, day: 16, str: '16 Mayıs 2027', iso: '2027-05-16' },
+        kurban2: { month: 4, day: 17, str: '17 Mayıs 2027', iso: '2027-05-17' },
+        kurban3: { month: 4, day: 18, str: '18 Mayıs 2027', iso: '2027-05-18' },
+        kurban4: { month: 4, day: 19, str: '19 Mayıs 2027', iso: '2027-05-19' }
       },
       2028: {
         ramazanArefe: { month: 1, day: 26, str: '26 Şubat 2028', iso: '2028-02-26' },
-        ramazan: { month: 1, day: 27, str: '27 Şubat 2028', iso: '2028-02-27' },
+        ramazan1: { month: 1, day: 27, str: '27 Şubat 2028', iso: '2028-02-27' },
+        ramazan2: { month: 1, day: 28, str: '28 Şubat 2028', iso: '2028-02-28' },
+        ramazan3: { month: 1, day: 29, str: '29 Şubat 2028', iso: '2028-02-29' },
         kurbanArefe: { month: 4, day: 4, str: '4 Mayıs 2028', iso: '2028-05-04' },
-        kurban: { month: 4, day: 5, str: '5 Mayıs 2028', iso: '2028-05-05' }
+        kurban1: { month: 4, day: 5, str: '5 Mayıs 2028', iso: '2028-05-05' },
+        kurban2: { month: 4, day: 6, str: '6 Mayıs 2028', iso: '2028-05-06' },
+        kurban3: { month: 4, day: 7, str: '7 Mayıs 2028', iso: '2028-05-07' },
+        kurban4: { month: 4, day: 8, str: '8 Mayıs 2028', iso: '2028-05-08' }
       },
       2029: {
         ramazanArefe: { month: 1, day: 14, str: '14 Şubat 2029', iso: '2029-02-14' },
-        ramazan: { month: 1, day: 15, str: '15 Şubat 2029', iso: '2029-02-15' },
+        ramazan1: { month: 1, day: 15, str: '15 Şubat 2029', iso: '2029-02-15' },
+        ramazan2: { month: 1, day: 16, str: '16 Şubat 2029', iso: '2029-02-16' },
+        ramazan3: { month: 1, day: 17, str: '17 Şubat 2029', iso: '2029-02-17' },
         kurbanArefe: { month: 3, day: 23, str: '23 Nisan 2029', iso: '2029-04-23' },
-        kurban: { month: 3, day: 24, str: '24 Nisan 2029', iso: '2029-04-24' }
+        kurban1: { month: 3, day: 24, str: '24 Nisan 2029', iso: '2029-04-24' },
+        kurban2: { month: 3, day: 25, str: '25 Nisan 2029', iso: '2029-04-25' },
+        kurban3: { month: 3, day: 26, str: '26 Nisan 2029', iso: '2029-04-26' },
+        kurban4: { month: 3, day: 27, str: '27 Nisan 2029', iso: '2029-04-27' }
       },
       2030: {
         ramazanArefe: { month: 1, day: 4, str: '4 Şubat 2030', iso: '2030-02-04' },
-        ramazan: { month: 1, day: 5, str: '5 Şubat 2030', iso: '2030-02-05' },
+        ramazan1: { month: 1, day: 5, str: '5 Şubat 2030', iso: '2030-02-05' },
+        ramazan2: { month: 1, day: 6, str: '6 Şubat 2030', iso: '2030-02-06' },
+        ramazan3: { month: 1, day: 7, str: '7 Şubat 2030', iso: '2030-02-07' },
         kurbanArefe: { month: 3, day: 12, str: '12 Nisan 2030', iso: '2030-04-12' },
-        kurban: { month: 3, day: 13, str: '13 Nisan 2030', iso: '2030-04-13' }
+        kurban1: { month: 3, day: 13, str: '13 Nisan 2030', iso: '2030-04-13' },
+        kurban2: { month: 3, day: 14, str: '14 Nisan 2030', iso: '2030-04-14' },
+        kurban3: { month: 3, day: 15, str: '15 Nisan 2030', iso: '2030-04-15' },
+        kurban4: { month: 3, day: 16, str: '16 Nisan 2030', iso: '2030-04-16' }
       }
     };
+
 
     
     // ── 4 ANA SEKTÖR HAFTALIK DÖNÜŞÜMLÜ İÇERİK HAVUZU (52 HAFTA x 4 = 208 POST/YIL) ──
@@ -1649,10 +1604,10 @@ Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
 
     // GENERATE COMPLETE PLAN FOR A GIVEN YEAR (2026 - 2030)
         // GENERATE COMPLETE PLAN FOR A GIVEN YEAR (2026 - 2030)
-    function generatePlanForYear(yr) {
+        function generatePlanForYear(yr) {
       const list = [];
 
-      // 1. Sabit Yıllık Özel Günler
+      // 1. Resmi Tatiller, Milli Bayramlar & Anma Günleri
       RECURRING_SPECIAL_DAYS.forEach(d => {
         const monthStr = String(d.month + 1).padStart(2, '0');
         const dayStr = String(d.day).padStart(2, '0');
@@ -1681,14 +1636,14 @@ Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
         });
       });
 
-      // 2. Dini Bayramlar & Arifeler (Yıla Özel Hesaplı)
+      // 2. Dini Bayramlar & Arifeler (Resmi Tatil Günleri)
       const isl = ISLAMIC_HOLIDAYS_BY_YEAR[yr] || ISLAMIC_HOLIDAYS_BY_YEAR[2026];
 
       // Ramazan Bayramı Arifesi
       list.push({
         id: `ramazan-arefe-${yr}`,
         category: 'dini',
-        title: 'Ramazan Bayramı Arifesi',
+        title: 'Ramazan Bayramı Arifesi (Resmi Yarım Gün Tatil)',
         dateISO: isl.ramazanArefe.iso,
         timeStr: '13:00',
         dateStr: isl.ramazanArefe.str,
@@ -1696,29 +1651,29 @@ Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
         month: isl.ramazanArefe.month,
         day: isl.ramazanArefe.day,
         icon: '✨',
-        tagText: 'ARİFE GÜNÜ',
+        tagText: 'RESMİ TATİL & ARİFE',
         tagClass: 'tag-dini',
         eventClass: 'event-dini',
         headline: 'RAMAZAN BAYRAMI ARİFENİZ MÜBAREK OLSUN',
         subheadline: 'Huzur, Sağlık ve Bereket Dolu Bir Bayram Temennisiyle...',
         aiPrompt: 'Spiritual sunset over modern architectural minarets and glass skyscrapers with glowing lantern light and subtle crescent moon. Deep navy blue atmosphere (#0b2545) with golden radiance, 8K render.',
         text: `Mübarek Ramazan Bayramı'nın müjdecisi olan Arife Günü'nün hanelerinize esenlik, huzur ve sağlık getirmesini dileriz. Arife gününüz mübarek olsun. 🌙✨`,
-        hashtags: '#ArifeGünü #RamazanArifesi #HayırlıBayramlar #YakınGrup'
+        hashtags: '#ArifeGünü #RamazanArifesi #HayırlıBayramlar #YakınGrup #ResmiTatil'
       });
 
-      // Ramazan Bayramı
+      // Ramazan Bayramı 1. Gün
       list.push({
-        id: `ramazan-bayrami-${yr}`,
+        id: `ramazan-bayrami-1-${yr}`,
         category: 'dini',
-        title: 'Ramazan Bayramı Tebriği',
-        dateISO: isl.ramazan.iso,
+        title: 'Ramazan Bayramı 1. Gün (Resmi Tatil)',
+        dateISO: isl.ramazan1.iso,
         timeStr: '09:00',
-        dateStr: isl.ramazan.str,
+        dateStr: isl.ramazan1.str,
         year: yr,
-        month: isl.ramazan.month,
-        day: isl.ramazan.day,
+        month: isl.ramazan1.month,
+        day: isl.ramazan1.day,
         icon: '🌙',
-        tagText: 'DİNİ BAYRAM',
+        tagText: 'RESMİ TATİL & DİNİ BAYRAM',
         tagClass: 'tag-dini',
         eventClass: 'event-dini',
         headline: 'RAMAZAN BAYRAMINIZ MÜBAREK OLSUN',
@@ -1727,14 +1682,14 @@ Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
         text: `Mübarek Ramazan Bayramı'nın milletimize, iş ortaklarımıza ve tüm insanlığa sağlık, huzur, bereket ve mutluluk getirmesini dileriz. 
 
 Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiyle. Ramazan Bayramınız Mübarek Olsun! 🌙✨`,
-        hashtags: '#RamazanBayramı #İyiBayramlar #BayramınızMübarekOlsun #YakınGrup #HuzurVeBereket'
+        hashtags: '#RamazanBayramı #İyiBayramlar #BayramınızMübarekOlsun #YakınGrup #HuzurVeBereket #ResmiTatil'
       });
 
       // Kurban Bayramı Arifesi
       list.push({
         id: `kurban-arefe-${yr}`,
         category: 'dini',
-        title: 'Kurban Bayramı Arifesi',
+        title: 'Kurban Bayramı Arifesi (Resmi Yarım Gün Tatil)',
         dateISO: isl.kurbanArefe.iso,
         timeStr: '13:00',
         dateStr: isl.kurbanArefe.str,
@@ -1742,29 +1697,29 @@ Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiy
         month: isl.kurbanArefe.month,
         day: isl.kurbanArefe.day,
         icon: '✨',
-        tagText: 'ARİFE GÜNÜ',
+        tagText: 'RESMİ TATİL & ARİFE',
         tagClass: 'tag-dini',
         eventClass: 'event-dini',
         headline: 'KURBAN BAYRAMI ARİFENİZ MÜBAREK OLSUN',
         subheadline: 'Paylaşmanın ve Kardeşliğin Bereketli Bayramına Ulaşırken...',
         aiPrompt: 'Peaceful twilight sky with glowing golden crescent moon and lantern reflections on contemporary glass architecture. Deep navy blue background (#0b2545) with warm amber light, 8K render.',
         text: `Kurban Bayramı Arifesi'nin milletimize ve tüm İslam alemine sağlık, barış ve esenlik getirmesini temenni ederiz. Arifeniz mübarek olsun. 🌙🕊️`,
-        hashtags: '#KurbanArifesi #ArifeGünü #Huzur #Bereket #YakınGrup'
+        hashtags: '#KurbanArifesi #ArifeGünü #Huzur #Bereket #YakınGrup #ResmiTatil'
       });
 
-      // Kurban Bayramı
+      // Kurban Bayramı 1. Gün
       list.push({
-        id: `kurban-bayrami-${yr}`,
+        id: `kurban-bayrami-1-${yr}`,
         category: 'dini',
-        title: 'Kurban Bayramı Tebriği',
-        dateISO: isl.kurban.iso,
+        title: 'Kurban Bayramı 1. Gün (Resmi Tatil)',
+        dateISO: isl.kurban1.iso,
         timeStr: '09:00',
-        dateStr: isl.kurban.str,
+        dateStr: isl.kurban1.str,
         year: yr,
-        month: isl.kurban.month,
-        day: isl.kurban.day,
+        month: isl.kurban1.month,
+        day: isl.kurban1.day,
         icon: '🐑',
-        tagText: 'DİNİ BAYRAM',
+        tagText: 'RESMİ TATİL & DİNİ BAYRAM',
         tagClass: 'tag-dini',
         eventClass: 'event-dini',
         headline: 'KURBAN BAYRAMINIZ MÜBAREK OLSUN',
@@ -1773,15 +1728,15 @@ Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiy
         text: `Kurban Bayramı'nın bereketinin, paylaşma ve dayanışma ruhunun hanelerinize sağlık, esenlik ve huzur getirmesini temenni ederiz. 
 
 Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️`,
-        hashtags: '#KurbanBayramı #İyiBayramlar #KurbanBayramınızMübarekOlsun #YakınGrup #PaylaşmakGüzeldir'
+        hashtags: '#KurbanBayramı #İyiBayramlar #KurbanBayramınızMübarekOlsun #YakınGrup #PaylaşmakGüzeldir #ResmiTatil'
       });
 
-      // 3. HAFTALIK 4 PROJE VİTRİNİ PAYLAŞIMI (52 HAFTA x 4 GÜN: SALI, ÇARŞAMBA, PERŞEMBE, CUMA)
+      // 3. Haftalık 4 Proje Vitrini Paylaşımı (Salı, Çarşamba, Perşembe, Cuma)
       let currDate = new Date(yr, 0, 1);
       let weekCount = 1;
 
       while (currDate.getFullYear() === yr) {
-        const dayOfWeek = currDate.getDay(); // 0 = Sun, 1 = Mon, 2 = Tue, 3 = Wed, 4 = Thu, 5 = Fri, 6 = Sat
+        const dayOfWeek = currDate.getDay();
         const m = currDate.getMonth();
         const d = currDate.getDate();
         const mStr = String(m + 1).padStart(2, '0');
@@ -1888,7 +1843,6 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
         currDate.setDate(currDate.getDate() + 1);
       }
 
-      // Kronolojik Sıralama
       list.sort((a, b) => new Date(a.dateISO) - new Date(b.dateISO));
       return list;
     }
@@ -2530,9 +2484,9 @@ https://yakingrup.net`);
       // Bilgilendirme Toast
       const categoryNames = {
         'all': 'Tüm Etkinlikler',
-        'milli': '🇹🇷 Milli Bayramlar & Anma Günleri',
-        'dini': '🌙 Dini Günler & Yılbaşı',
-        'sektor': '⚡ Sektörel & Küresel Özel Günler',
+        'resmi': '🇹🇷 Resmi Tatiller & Milli Bayramlar',
+        'dini': '🌙 Dini Bayramlar & Arifeler',
+        'sektor': '⚡ Sektörel & Mesleki Özel Günler',
         'proje': '🏗️ Sektör Proje Vitrini (Haftalık Salı, Çrş, Per, Cuma)'
       };
       showToast(`Filtrelendi: ${categoryNames[category] || category}`);
