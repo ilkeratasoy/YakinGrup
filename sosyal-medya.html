@@ -2667,12 +2667,44 @@ ${item.hashtags}`;
       }
     };
 
-    // Init
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAuth();
-      renderMonthlyCalendar(currentYear, currentMonth);
-      renderPosts('all');
-    });
+    
+    // Expose all functions to window
+    window.selectYear = selectYear;
+    window.changeMonth = changeMonth;
+    window.resetToToday = resetToToday;
+    window.openEventModal = openEventModal;
+    window.closeEventModal = closeEventModal;
+    window.switchView = switchView;
+    window.filterPosts = filterPosts;
+    window.copyPostText = copyPostText;
+    window.copyVideoPrompt = copyVideoPrompt;
+    window.copyAiPrompt = copyAiPrompt;
+    window.changeAspect = changeAspect;
+    window.downloadBanner = downloadBanner;
+    window.exportAllICS = exportAllICS;
+    window.downloadSingleICS = downloadSingleICS;
+    window.exportAllCSV = exportAllCSV;
+    window.showToast = showToast;
+
+    function initApp() {
+      try {
+        checkAuth();
+        renderMonthlyCalendar(currentYear, currentMonth);
+        renderPosts('all');
+        console.log('✅ Yakın Grup Sosyal Medya & İçerik Takvimi v282 Başarıyla Başlatıldı!');
+      } catch (err) {
+        console.error('Init error:', err);
+      }
+    }
+
+    // Run on multiple events for total reliability
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+    window.addEventListener('load', initApp);
+
   </script>
 </body>
 </html>
