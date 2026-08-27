@@ -370,6 +370,25 @@
       display: block;
     }
 
+    
+    .ratio-pill {
+      background: rgba(11, 37, 69, 0.75);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #cbd5e1;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ratio-pill:hover, .ratio-pill.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+
     /* Card Body */
     .post-card-body {
       padding: 1.2rem 1.4rem;
@@ -1337,7 +1356,13 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
           </div>
 
           <div class="post-preview-box">
-            <canvas id="canvas-${item.id}" class="banner-canvas" width="1080" height="1080"></canvas>
+            <div style="position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: center; gap: 4px; z-index: 10;">
+              <button class="ratio-pill active" onclick="changeAspect('${item.id}', '1:1', this)">1:1 Kare</button>
+              <button class="ratio-pill" onclick="changeAspect('${item.id}', '4:5', this)">4:5 Post</button>
+              <button class="ratio-pill" onclick="changeAspect('${item.id}', '9:16', this)">9:16 Story</button>
+              <button class="ratio-pill" onclick="changeAspect('${item.id}', '16:9', this)">16:9 X/YT</button>
+            </div>
+            <canvas id="canvas-${item.id}" class="banner-canvas" width="1080" height="1080" style="margin-top: 24px;"></canvas>
           </div>
 
           <div class="post-card-body">
@@ -1414,11 +1439,26 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
     }
 
     // ── DRAW CANVAS BANNER (1080x1080) ──────────────────────────────────────────
-    function drawCanvasOnto(canvas, ctx, item) {
-      const W = 1080;
-      const H = 1080;
+        // ── DRAW CANVAS BANNER (MULTI-ASPECT RATIO: 1:1, 4:5, 9:16, 16:9) ───────
+    function drawCanvasOnto(canvas, ctx, item, ratio = '1:1') {
+      let W = 1080;
+      let H = 1080;
 
-      // 1. Arka Plan (Derin Gece Mavisi & Açık Mavi Işık Hüzmesi)
+      if (ratio === '4:5') {
+        W = 1080;
+        H = 1350;
+      } else if (ratio === '9:16') {
+        W = 1080;
+        H = 1920;
+      } else if (ratio === '16:9') {
+        W = 1200;
+        H = 675;
+      }
+
+      canvas.width = W;
+      canvas.height = H;
+
+      // 1. Arka Plan
       const grad = ctx.createLinearGradient(0, 0, W, H);
       grad.addColorStop(0, '#07162c');
       grad.addColorStop(0.4, '#0b2545');
@@ -1427,7 +1467,7 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
-      const radialLight = ctx.createRadialGradient(W, 0, 50, W, 0, 750);
+      const radialLight = ctx.createRadialGradient(W, 0, 50, W, 0, H * 0.7);
       radialLight.addColorStop(0, 'rgba(56, 189, 248, 0.38)');
       radialLight.addColorStop(0.5, 'rgba(2, 132, 199, 0.15)');
       radialLight.addColorStop(1, 'rgba(11, 37, 69, 0)');
@@ -1435,58 +1475,109 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
       ctx.fillRect(0, 0, W, H);
 
       // Çerçeve
+      const pad = ratio === '16:9' ? 24 : 40;
       ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
-      ctx.lineWidth = 12;
-      ctx.strokeRect(40, 40, W - 80, H - 80);
+      ctx.lineWidth = ratio === '16:9' ? 8 : 12;
+      ctx.strokeRect(pad, pad, W - (pad * 2), H - (pad * 2));
 
       ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
       ctx.lineWidth = 2;
-      ctx.strokeRect(55, 55, W - 110, H - 110);
+      ctx.strokeRect(pad + 12, pad + 12, W - ((pad + 12) * 2), H - ((pad + 12) * 2));
 
       // Köşe Altın Vurguları
       ctx.fillStyle = '#d4af37';
-      const cornerSize = 24;
-      ctx.fillRect(34, 34, cornerSize, cornerSize);
-      ctx.fillRect(W - 34 - cornerSize, 34, cornerSize, cornerSize);
-      ctx.fillRect(34, H - 34 - cornerSize, cornerSize, cornerSize);
-      ctx.fillRect(W - 34 - cornerSize, H - 34 - cornerSize, cornerSize);
+      const cornerSize = ratio === '16:9' ? 16 : 24;
+      ctx.fillRect(pad - 6, pad - 6, cornerSize, cornerSize);
+      ctx.fillRect(W - pad + 6 - cornerSize, pad - 6, cornerSize, cornerSize);
+      ctx.fillRect(pad - 6, H - pad + 6 - cornerSize, cornerSize, cornerSize);
+      ctx.fillRect(W - pad + 6 - cornerSize, H - pad + 6 - cornerSize, cornerSize);
+
+      // Konumlandırma Hesapları
+      let iconY = H * 0.22;
+      let dateY = H * 0.36;
+      let headlineY = H * 0.44;
+      let subY = H * 0.54;
+      let logoY = H * 0.88;
+      let subLogoY = H * 0.92;
+
+      if (ratio === '16:9') {
+        iconY = 110;
+        dateY = 200;
+        headlineY = 270;
+        subY = 360;
+        logoY = 570;
+        subLogoY = 610;
+      } else if (ratio === '9:16') {
+        iconY = 380;
+        dateY = 580;
+        headlineY = 700;
+        subY = 880;
+        logoY = 1650;
+        subLogoY = 1720;
+      }
 
       // İkon Çemberi
+      const iconRadius = ratio === '16:9' ? 50 : 85;
       ctx.beginPath();
-      ctx.arc(W / 2, 225, 90, 0, Math.PI * 2);
+      ctx.arc(W / 2, iconY, iconRadius, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.fill();
       ctx.lineWidth = 4;
       ctx.strokeStyle = '#d4af37';
       ctx.stroke();
 
-      ctx.font = '80px sans-serif';
+      ctx.font = `${ratio === '16:9' ? '50px' : '75px'} sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(item.icon, W / 2, 225);
+      ctx.fillText(item.icon, W / 2, iconY);
 
       // Tarih Rozeti
-      ctx.font = '700 26px "Inter", sans-serif';
+      ctx.font = `700 ${ratio === '16:9' ? '20px' : '26px'} "Inter", sans-serif`;
       ctx.fillStyle = '#38bdf8';
       ctx.letterSpacing = '4px';
-      ctx.fillText(item.dateStr.toUpperCase(), W / 2, 375);
+      ctx.fillText(item.dateStr.toUpperCase(), W / 2, dateY);
 
       // Ana Başlık
-      ctx.font = '800 48px "Manrope", sans-serif';
+      const titleFontSize = ratio === '16:9' ? 36 : (ratio === '9:16' ? 52 : 46);
+      ctx.font = `800 ${titleFontSize}px "Manrope", sans-serif`;
       ctx.fillStyle = '#ffffff';
       ctx.letterSpacing = '-0.5px';
       
       const words = item.headline.split(' ');
       let line = '';
-      let y = 460;
+      let y = headlineY;
+      const maxW = W - (ratio === '16:9' ? 140 : 180);
+      const lineStep = titleFontSize + 14;
+
       for (let n = 0; n < words.length; n++) {
         const testLine = line + words[n] + ' ';
         const metrics = ctx.measureText(testLine);
-        if (metrics.width > W - 180 && n > 0) {
+        if (metrics.width > maxW && n > 0) {
           ctx.fillText(line.trim(), W / 2, y);
           line = words[n] + ' ';
-          y += 62;
+          y += lineStep;
         } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line.trim(), W / 2, y);
+
+      // Alt Başlık
+      ctx.font = `500 ${ratio === '16:9' ? '22px' : '26px'} "Inter", sans-serif`;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.fillText(item.subheadline, W / 2, y + (ratio === '16:9' ? 55 : 75));
+
+      // Alt Logo Alanı
+      ctx.font = `800 ${ratio === '16:9' ? '28px' : '36px'} "Cinzel", serif`;
+      ctx.fillStyle = '#ffffff';
+      ctx.letterSpacing = '6px';
+      ctx.fillText('YAKIN GRUP', W / 2, logoY);
+
+      ctx.font = `600 ${ratio === '16:9' ? '16px' : '20px'} "Inter", sans-serif`;
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.7)';
+      ctx.letterSpacing = '3px';
+      ctx.fillText('İNŞAAT • ENERJİ • CAPITAL • TEKNOLOJİ', W / 2, subLogoY);
+    } else {
           line = testLine;
         }
       }
@@ -1658,14 +1749,34 @@ ${item.hashtags}`;
       });
     }
 
-    function downloadBanner(id, title) {
-      const canvas = document.getElementById(`canvas-${id}`) || document.getElementById('modal-canvas');
+        const currentAspectMap = {};
+
+    function changeAspect(id, ratio, btn) {
+      currentAspectMap[id] = ratio;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.ratio-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const canvas = document.getElementById(`canvas-${id}`);
       if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      drawCanvasOnto(canvas, ctx, item, ratio);
+    }
+
+    function downloadBanner(id, title) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      const ratio = currentAspectMap[id] || '1:1';
+      const canvas = document.getElementById(`canvas-${id}`) || document.getElementById('modal-canvas');
+      if (!canvas || !item) return;
+
       const link = document.createElement('a');
-      link.download = `Yakin_Grup_${id}_1080x1080.png`;
+      const cleanRatio = ratio.replace(':', 'x');
+      link.download = `Yakin_Grup_${id}_${cleanRatio}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      showToast('✓ 1080x1080 HD görsel indirildi!');
+      showToast(`✓ HD Görsel (${ratio} formatında) İndirildi!`);
     }
 
     function exportAllCSV() {
