@@ -178,6 +178,23 @@
       padding-bottom: 1.2rem;
       border-bottom: 1px solid var(--border);
     }
+    
+    .year-pill {
+      border: none;
+      background: transparent;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .year-pill:hover, .year-pill.active {
+      background: #0b2545;
+      color: #ffffff;
+    }
+
     .cal-month-heading {
       font-family: var(--font-heading);
       font-size: 1.5rem;
@@ -630,13 +647,13 @@
       <img src="assets/images/brand-emblem.png" alt="Yakın Grup" class="brand-logo">
       <div>
         <div class="brand-title">YAKIN GRUP</div>
-        <span class="brand-badge">1 YILLIK İÇERİK TAKVİMİ & SENKRONİZASYON</span>
+        <span class="brand-badge">2026 — 2030 TÜM YILLAR İÇERİK TAKVİMİ & SENKRONİZASYON</span>
       </div>
     </div>
     <div class="header-links">
       <a href="index.html" class="btn-top">🏛️ Holding Ana Sayfa</a>
       <button onclick="exportAllICS()" class="btn-top sync-btn" title="Tüm yılı iPhone/Mac/Outlook/Google takviminize alarmlarıyla ekler">
-        📅 1 Yıllık Takvimi İndir (.ICS)
+        📅 2026-2030 Takvimi İndir (.ICS)
       </button>
       <button onclick="exportAllCSV()" class="btn-top primary">
         📊 Excel / CSV İndir
@@ -650,7 +667,7 @@
     <!-- Hero Banner -->
     <div class="studio-hero">
       <div class="hero-content">
-        <h1>1 Yıllık Kurumsal İçerik Takvimi & Canlı Takvim Senkronizasyonu</h1>
+        <h1>2026 — 2030 Kurumsal Özel Günler & İçerik Takvimi & Canlı Takvim Senkronizasyonu</h1>
         <p>Milli bayramlar, dini günler, sektörel farkındalık ve 4 ana sektör proje paylaşımlarını ay bazında interaktif takvimden inceleyin ve telefonunuza/bilgisayarınıza alarmlarıyla bağlayın.</p>
       </div>
 
@@ -687,9 +704,20 @@
     <!-- 1. AY BAZINDA İNTERAKTİF TAKVİM GÖRÜNÜMÜ -->
     <div id="calendar-month-view">
       <div class="cal-nav-bar">
-        <div class="cal-month-heading" id="cal-month-title">
-          📅 <span>Ekim 2026</span>
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <div class="cal-month-heading" id="cal-month-title">
+            📅 <span>Ekim 2026</span>
+          </div>
+          <!-- YIL SEÇİCİ (2026 - 2030) -->
+          <div style="display: flex; gap: 4px; background: #f1f5f9; padding: 3px; border-radius: 8px;" id="year-pills">
+            <button class="year-pill active" onclick="selectYear(2026, this)">2026</button>
+            <button class="year-pill" onclick="selectYear(2027, this)">2027</button>
+            <button class="year-pill" onclick="selectYear(2028, this)">2028</button>
+            <button class="year-pill" onclick="selectYear(2029, this)">2029</button>
+            <button class="year-pill" onclick="selectYear(2030, this)">2030</button>
+          </div>
         </div>
+
         <div class="cal-nav-arrows">
           <button class="btn-cal-nav" onclick="changeMonth(-1)">◀ Önceki Ay</button>
           <button class="btn-cal-nav" onclick="resetToToday()">Bugün / Bu Ay</button>
@@ -770,131 +798,474 @@
     }
 
     // ── 1 YILLIK KAPSAMLI İÇERİK HAVUZU ──────────────────────────────────────────
-    const CONTENT_PLAN = [
-      // MİLLİ BAYRAMLAR
+        // ── 2026 - 2030 ÇOK YILLI ÖZEL GÜNLER & SEKTÖREL İÇERİK MOTORU ──────────
+    const RECURRING_SPECIAL_DAYS = [
+      // MİLLİ BAYRAMLAR & ANMA GÜNLERİ
       {
-        id: '29-ekim',
+        baseId: '18-mart',
         category: 'milli',
-        title: '29 Ekim Cumhuriyet Bayramı',
-        dateISO: '2026-10-29',
+        title: '18 Mart Çanakkale Zaferi ve Şehitleri Anma Günü',
+        month: 2, // Mart (0-indexed)
+        day: 18,
         timeStr: '09:00',
-        dateStr: '29 Ekim 2026',
-        icon: '🇹🇷',
-        tagText: 'MİLLİ BAYRAM',
-        tagClass: 'tag-milli',
-        eventClass: 'event-milli',
-        headline: '29 EKİM CUMHURİYET BAYRAMIMIZ KUTLU OLSUN!',
-        subheadline: 'Cumhuriyetimizin Işığında, Geleceğin Altyapısını İnşa Ediyoruz.',
-        aiPrompt: 'High-end corporate 3D celebration artwork (1:1 square). An iconic, elegant Turkish Flag waving proudly with dramatic cinematic lighting over a futuristic modern glass skyline in Istanbul. Deep midnight navy blue (#0b2545) background with glowing cyan and soft light blue ambient lighting (#0284c7 / #38bdf8). Geometric construction lines, solar infrastructure glass blueprints subtly integrated in the base. Luxury holding corporate aesthetics, 8K Octane render, photorealistic, pristine professional presentation.',
-        text: `Gazi Mustafa Kemal Atatürk ve silah arkadaşlarının bizlere armağan ettiği Cumhuriyetimizin 103. yılını gurur ve coşkuyla kutluyoruz. 
-
-Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliğin gücüyle ülkemizin kalkınması ve geleceğin inşası için durmaksızın çalışmaya devam ediyoruz.
-
-29 Ekim Cumhuriyet Bayramımız kutlu olsun! 🇹🇷`,
-        hashtags: '#29Ekim #CumhuriyetBayramı #Cumhuriyet103Yaşında #YakınGrup #MilliMühendislik #Türkiye #Geleceğinİnşası'
-      },
-      {
-        id: '10-kasim',
-        category: 'milli',
-        title: '10 Kasım Atatürk’ü Anma Günü',
-        dateISO: '2026-11-10',
-        timeStr: '09:05',
-        dateStr: '10 Kasım 2026',
         icon: '🇹🇷',
         tagText: 'MİLLİ ANMA GÜNÜ',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
-        headline: 'SAYGI, SEVGİ VE MİNNETLE ANIYORUZ...',
-        subheadline: 'Büyük Önder Gazi Mustafa Kemal Atatürk (1881 - 1938)',
-        aiPrompt: 'Minimalist, solemn and deeply prestigious tribute artwork (1:1 square). A respectful silhouette profile of Mustafa Kemal Atatürk gazing toward an enlightened horizon. Deep midnight navy blue (#0b2545) atmosphere with soft platinum silver and ethereal azure backlighting (#38bdf8). Subtle geometric modernist architecture and glowing beacon light. 8K Unreal Engine 5 render, cinematic raytracing, refined corporate memorial design.',
-        text: `Cumhuriyetimizin kurucusu, vizyonu ve ilkeleriyle yolumuzu aydınlatan Büyük Önder Gazi Mustafa Kemal Atatürk'ü, ebediyete irtihalinin yıl dönümünde saygı, rahmet ve sonsuz minnetle anıyoruz.
+        getHeadline: (yr) => '18 MART ÇANAKKALE ZAFERİMİZ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Çanakkale Geçilmez: Aziz Şehitlerimizi Saygı ve Minnetle Anıyoruz.',
+        aiPrompt: 'Epic and respectful corporate memorial artwork (1:1 square). Monumental silhouette of Canakkale Martyrs Memorial with golden dramatic sunrise rays and a proud waving Turkish Flag. Deep midnight navy blue (#0b2545) atmosphere with ambient cyan highlights (#38bdf8). 8K Unreal Engine 5 render, cinematic raytracing, patriotic and prestigious corporate identity.',
+        getText: (yr) => `18 Mart Çanakkale Deniz Zaferi'nin ${yr - 1915}. yıl dönümünde; başta Gazi Mustafa Kemal Atatürk olmak üzere vatanımız uğruna can veren tüm aziz şehitlerimizi ve kahraman gazilerimizi rahmet, minnet ve saygıyla anıyoruz.
 
-"Büyük işler, önemli atılımlar ancak birlikte çalışarak başarılır." 🕊️`,
-        hashtags: '#10Kasım #MustafaKemalAtatürk #GaziMustafaKemal #SonsuzaDek #YakınGrup #1881denSonsuza'
+"Çanakkale Zaferi, milletimizin bağımsızlık ve hürriyet kararlılığının ebedi anıtıdır." 🇹🇷🕊️`,
+        hashtags: '#18Mart #ÇanakkaleZaferi #ÇanakkaleGeçilmez #18MartÇanakkaleZaferi #YakınGrup #MilliBirlik'
       },
       {
-        id: '23-nisan',
+        baseId: '23-nisan',
         category: 'milli',
         title: '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı',
-        dateISO: '2026-04-23',
+        month: 3, // Nisan
+        day: 23,
         timeStr: '09:00',
-        dateStr: '23 Nisan 2026',
         icon: '🎈',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
-        headline: '23 NİSAN ULUSAL EGEMENLİK VE ÇOCUK BAYRAMI KUTLU OLSUN!',
-        subheadline: 'Geleceğimizin Teminatı Çocuklarımıza Aydınlık Bir Yarın...',
+        getHeadline: (yr) => '23 NİSAN ULUSAL EGEMENLİK VE ÇOCUK BAYRAMI KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Geleceğimizin Teminatı Çocuklarımıza Aydınlık Bir Yarın...',
         aiPrompt: 'Inspiring and vibrant corporate holiday artwork (1:1 square). Silhouettes of joyful children looking at a bright futuristic green and smart city. Deep navy blue (#0b2545) base blending into glowing sky-blue and cyan rays (#38bdf8) with red and white celebration ribbons. Floating subtle energy particles, high-tech architectural structures in background. 8K photorealistic, uplifting and prestigious corporate brand design.',
-        text: `Türkiye Büyük Millet Meclisi'nin açılışının yıl dönümünde, Gazi Mustafa Kemal Atatürk'ün dünya çocuklarına armağan ettiği 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı'nı coşkuyla kutluyoruz.
+        getText: (yr) => `Türkiye Büyük Millet Meclisi'nin açılışının ${yr - 1920}. yıl dönümünde, Gazi Mustafa Kemal Atatürk'ün dünya çocuklarına armağan ettiği 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı'nı coşkuyla kutluyoruz.
 
 Çocuklarımızın güvenle, huzurla ve umutla büyüyeceği sürdürülebilir bir gelecek inşa etmek en büyük sorumluluğumuzdur. 🇹🇷✨`,
         hashtags: '#23Nisan #UlusalEgemenlikVeÇocukBayramı #TBMM #GeleceğimizÇocuklar #YakınGrup #23NisanKutluOlsun'
       },
       {
-        id: '19-mayis',
+        baseId: '19-mayis',
         category: 'milli',
         title: '19 Mayıs Atatürk’ü Anma, Gençlik ve Spor Bayramı',
-        dateISO: '2026-05-19',
+        month: 4, // Mayıs
+        day: 19,
         timeStr: '09:00',
-        dateStr: '19 Mayıs 2026',
         icon: '🏃',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
-        headline: '19 MAYIS GENÇLİK VE SPOR BAYRAMIMIZ KUTLU OLSUN!',
-        subheadline: 'Bağımsızlık Meşalesinin Yakıldığı İlk Günün İnancıyla...',
+        getHeadline: (yr) => '19 MAYIS GENÇLİK VE SPOR BAYRAMIMIZ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Bağımsızlık Meşalesinin Yakıldığı İlk Günün İnancıyla...',
         aiPrompt: 'Dynamic, futuristic corporate artwork (1:1 square). A glowing energy torch with cyan and electric blue flames surrounded by modern steel engineering and architectural lines. Deep navy blue background (#0b2545) with vibrant cyan-blue light beams (#0284c7 / #38bdf8). Turkish national flag motif smoothly blended in glass reflections. 8K Octane render, cinematic, innovative and prestigious holding brand identity.',
-        text: `19 Mayıs 1919'da Samsun'da yakılan bağımsızlık meşalesinin 107. yılında; Gazi Mustafa Kemal Atatürk ve tüm kahramanlarımızı saygıyla anıyor, geleceğimizi omuzlayan tüm gençlerimizin bayramını kutluyoruz.
+        getText: (yr) => `19 Mayıs 1919'da Samsun'da yakılan bağımsızlık meşalesinin ${yr - 1919}. yılında; Gazi Mustafa Kemal Atatürk ve tüm kahramanlarımızı saygıyla anıyor, geleceğimizi omuzlayan tüm gençlerimizin bayramını kutluyoruz.
 
 Gençliğin enerjisi ve inovasyon vizyonuyla Türkiye'nin yarınlarını inşa ediyoruz! 🇹🇷⚡`,
         hashtags: '#19Mayıs #GençlikveSporBayramı #AtatürküAnma #19Mayıs1919 #YakınGrup #İnovasyonGençlikte'
       },
       {
-        id: '30-agustos',
+        baseId: '15-temmuz',
+        category: 'milli',
+        title: '15 Temmuz Demokrasi ve Milli Birlik Günü',
+        month: 6, // Temmuz
+        day: 15,
+        timeStr: '09:00',
+        icon: '🇹🇷',
+        tagText: 'MİLLİ ANMA GÜNÜ',
+        tagClass: 'tag-milli',
+        eventClass: 'event-milli',
+        getHeadline: (yr) => '15 TEMMUZ DEMOKRASİ VE MİLLİ BİRLİK GÜNÜ',
+        getSubheadline: (yr) => 'Milli İrademize Sahip Çıkan Kahramanlarımızı Saygıyla Anıyoruz.',
+        aiPrompt: 'Solemn and powerful national unity artwork (1:1 square). Istanbul Bosphorus Bridge and skyline under a deep midnight navy blue sky (#0b2545). Ethereal red and white Turkish flag illumination with soft cyan ambient glow (#38bdf8). Peaceful, monumental, respectful corporate memorial aesthetic. 8K resolution, cinematic lighting.',
+        getText: (yr) => `15 Temmuz Demokrasi ve Milli Birlik Günü'nde; vatanı, bağımsızlığı ve milli iradesi için canını ortaya koyan tüm aziz şehitlerimizi rahmetle anıyor, kahraman gazilerimize şükranlarımızı sunuyoruz. 🇹🇷`,
+        hashtags: '#15Temmuz #DemokrasiveMilliBirlikGünü #Milliİrade #TürkiyeGeçilmez #YakınGrup'
+      },
+      {
+        baseId: '30-agustos',
         category: 'milli',
         title: '30 Ağustos Zafer Bayramı',
-        dateISO: '2026-08-30',
+        month: 7, // Ağustos
+        day: 30,
         timeStr: '09:00',
-        dateStr: '30 Ağustos 2026',
         icon: '🇹🇷',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
-        headline: '30 AĞUSTOS ZAFER BAYRAMIMIZ KUTLU OLSUN!',
-        subheadline: 'Milletimizin Bağımsızlık ve Kararlılık Zaferi...',
+        getHeadline: (yr) => '30 AĞUSTOS ZAFER BAYRAMIMIZ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Milletimizin Bağımsızlık ve Kararlılık Zaferi...',
         aiPrompt: 'Epic and prestigious victory celebration artwork (1:1 square). A magnificent Turkish Flag flying triumphantly over sleek modern infrastructure and industrial towers. Deep navy blue atmospheric sky (#0b2545) illuminated by golden and cyan sunrise highlights (#38bdf8). Sharp raytraced glass reflections, strong architectural foundation, 8K ultra-detailed photorealistic corporate render.',
-        text: `Tarihimizin en şanlı dönüm noktalarından biri olan Büyük Taarruz ve Başkomutanlık Meydan Muharebesi'nin zaferle taçlandığı 30 Ağustos Zafer Bayramı'nı gururla kutluyoruz.
+        getText: (yr) => `Tarihimizin en şanlı dönüm noktalarından biri olan Büyük Taarruz ve Başkomutanlık Meydan Muharebesi'nin zaferle taçlandığı 30 Ağustos Zafer Bayramı'nın ${yr - 1922}. yılını gururla kutluyoruz.
 
 Başta Gazi Mustafa Kemal Atatürk olmak üzere, vatanımız uğruna can veren tüm şehit ve gazilerimizi minnetle anıyoruz. 🇹🇷`,
         hashtags: '#30Ağustos #ZaferBayramı #BüyükTaarruz #30AğustosZaferBayramı #YakınGrup #MilliBirlik'
       },
       {
-        id: '15-temmuz',
+        baseId: '29-ekim',
         category: 'milli',
-        title: '15 Temmuz Demokrasi ve Milli Birlik Günü',
-        dateISO: '2026-07-15',
+        title: '29 Ekim Cumhuriyet Bayramı',
+        month: 9, // Ekim
+        day: 29,
         timeStr: '09:00',
-        dateStr: '15 Temmuz 2026',
+        icon: '🇹🇷',
+        tagText: 'MİLLİ BAYRAM',
+        tagClass: 'tag-milli',
+        eventClass: 'event-milli',
+        getHeadline: (yr) => '29 EKİM CUMHURİYET BAYRAMIMIZ KUTLU OLSUN!',
+        getSubheadline: (yr) => `Cumhuriyetimizin ${yr - 1923}. Yılında Geleceğin Altyapısını İnşa Ediyoruz.`,
+        aiPrompt: 'High-end corporate 3D celebration artwork (1:1 square). An iconic, elegant Turkish Flag waving proudly with dramatic cinematic lighting over a futuristic modern glass skyline in Istanbul. Deep midnight navy blue (#0b2545) background with glowing cyan and soft light blue ambient lighting (#0284c7 / #38bdf8). Geometric construction lines, solar infrastructure glass blueprints subtly integrated in the base. Luxury holding corporate aesthetics, 8K Octane render, photorealistic, pristine professional presentation.',
+        getText: (yr) => `Gazi Mustafa Kemal Atatürk ve silah arkadaşlarının bizlere armağan ettiği Cumhuriyetimizin ${yr - 1923}. yılını gurur ve coşkuyla kutluyoruz. 
+
+Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliğin gücüyle ülkemizin kalkınması ve geleceğin inşası için durmaksızın çalışmaya devam ediyoruz.
+
+29 Ekim Cumhuriyet Bayramımız kutlu olsun! 🇹🇷`,
+        hashtags: '#29Ekim #CumhuriyetBayramı #YakınGrup #MilliMühendislik #Türkiye #Geleceğinİnşası'
+      },
+      {
+        baseId: '10-kasim',
+        category: 'milli',
+        title: '10 Kasım Atatürk’ü Anma Günü',
+        month: 10, // Kasım
+        day: 10,
+        timeStr: '09:05',
         icon: '🇹🇷',
         tagText: 'MİLLİ ANMA GÜNÜ',
         tagClass: 'tag-milli',
         eventClass: 'event-milli',
-        headline: '15 TEMMUZ DEMOKRASİ VE MİLLİ BİRLİK GÜNÜ',
-        subheadline: 'Milli İrademize Sahip Çıkan Kahramanlarımızı Saygıyla Anıyoruz.',
-        aiPrompt: 'Solemn and powerful national unity artwork (1:1 square). Istanbul Bosphorus Bridge and skyline under a deep midnight navy blue sky (#0b2545). Ethereal red and white Turkish flag illumination with soft cyan ambient glow (#38bdf8). Peaceful, monumental, respectful corporate memorial aesthetic. 8K resolution, cinematic lighting.',
-        text: `15 Temmuz Demokrasi ve Milli Birlik Günü'nde; vatanı, bağımsızlığı ve milli iradesi için canını ortaya koyan tüm aziz şehitlerimizi rahmetle anıyor, kahraman gazilerimize şükranlarımızı sunuyoruz. 🇹🇷`,
-        hashtags: '#15Temmuz #DemokrasiveMilliBirlikGünü #Milliİrade #TürkiyeGeçilmez #YakınGrup'
+        getHeadline: (yr) => 'SAYGI, SEVGİ VE MİNNETLE ANIYORUZ...',
+        getSubheadline: (yr) => 'Büyük Önder Gazi Mustafa Kemal Atatürk (1881 - 1938)',
+        aiPrompt: 'Minimalist, solemn and deeply prestigious tribute artwork (1:1 square). A respectful silhouette profile of Mustafa Kemal Atatürk gazing toward an enlightened horizon. Deep midnight navy blue (#0b2545) atmosphere with soft platinum silver and ethereal azure backlighting (#38bdf8). Subtle geometric modernist architecture and glowing beacon light. 8K Unreal Engine 5 render, cinematic raytracing, refined corporate memorial design.',
+        getText: (yr) => `Cumhuriyetimizin kurucusu, vizyonu ve ilkeleriyle yolumuzu aydınlatan Büyük Önder Gazi Mustafa Kemal Atatürk'ü, ebediyete irtihalinin ${yr - 1938}. yıl dönümünde saygı, rahmet ve sonsuz minnetle anıyoruz.
+
+"Büyük işler, önemli atılımlar ancak birlikte çalışarak başarılır." 🕊️`,
+        hashtags: '#10Kasım #MustafaKemalAtatürk #GaziMustafaKemal #SonsuzaDek #YakınGrup #1881denSonsuza'
       },
 
       // DİNİ GÜNLER & YILBAŞI
       {
-        id: 'ramazan-bayrami',
+        baseId: 'yeni-yil',
+        category: 'dini',
+        title: '1 Ocak Yeni Yıl Tebriği',
+        month: 0, // Ocak
+        day: 1,
+        timeStr: '09:00',
+        icon: '🎉',
+        tagText: 'YILBAŞI',
+        tagClass: 'tag-dini',
+        eventClass: 'event-dini',
+        getHeadline: (yr) => `MUTLU VE BAŞARILI BİR YIL DİLERİZ!`,
+        getSubheadline: (yr) => `${yr} Yılında Yeni Yatırımlar ve Sürdürülebilir Projelerle...`,
+        aiPrompt: 'Ultra-modern luxury New Year corporate artwork (1:1 square). Glowing 3D geometric numerals crafted from crystal glass and polished steel with internal cyan LED light (#38bdf8). Deep rich navy blue backdrop (#0b2545) with delicate golden sparkles and modern skyscraper lights. 8K Unreal Engine 5 render, sophisticated, futuristic holding greeting.',
+        getText: (yr) => `Yeni yılın tüm çalışanlarımıza, iş ortaklarımıza ve ülkemize sağlık, başarı, huzur ve bereket getirmesini dileriz. 
+
+${yr} yılında da yenilenebilir enerji, modern inşaat ve ileri teknoloji projelerimizle büyümeye ve değer üretmeye devam edeceğiz. Mutlu Yıllar! 🥂🌟`,
+        hashtags: '#MutluYıllar #YeniYıl #HappyNewYear #YakınGrup #YatırımVeGelecek'
+      },
+      {
+        baseId: '1-mayis',
+        category: 'dini',
+        title: '1 Mayıs Emek ve Dayanışma Günü',
+        month: 4, // Mayıs
+        day: 1,
+        timeStr: '09:00',
+        icon: '👷',
+        tagText: 'RESMİ GÜN',
+        tagClass: 'tag-dini',
+        eventClass: 'event-dini',
+        getHeadline: (yr) => '1 MAYIS EMEK VE DAYANIŞMA GÜNÜ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Alın Teri ve Emeğiyle Geleceği İnşa Eden Tüm Emekçilerimize...',
+        aiPrompt: 'Powerful, modern architectural tribute artwork (1:1 square). High-tech industrial construction cranes, steel engineering structures, and solar panels under a dramatic blue sunrise. Deep navy blue background (#0b2545) with glowing cyan energy arcs (#38bdf8) and warm golden safety highlights. Respectful, monumental, premium engineering holding aesthetic, 8K render.',
+        getText: (yr) => `Şantiyelerimizde, enerji santrallerimizde, üretim tesislerimizde ve ofislerimizde alın teriyle geleceği inşa eden tüm çalışma arkadaşlarımızın ve emekçilerin 1 Mayıs Emek ve Dayanışma Günü'nü kutluyoruz.
+
+En büyük gücümüz emeğimiz ve dayanışmamızdır. 🏗️⚡`,
+        hashtags: '#1Mayıs #EmekveDayanışmaGünü #İşçiBayramı #AlınTeri #YakınGrup #BirlikteGüçlüyüz'
+      },
+
+      // MESLEKİ, MİMARLIK, ÖĞRETMENLER & MÜHENDİSLİK GÜNLERİ
+      {
+        baseId: 'ogretmenler-gunu',
+        category: 'sektor',
+        title: '24 Kasım Öğretmenler Günü',
+        month: 10, // Kasım
+        day: 24,
+        timeStr: '09:00',
+        icon: '📚',
+        tagText: 'ÖZEL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => '24 KASIM ÖĞRETMENLER GÜNÜ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Geleceği Bilgi ve Sevgiyle İnşa Eden Kıymetli Öğretmenlerimize...',
+        aiPrompt: 'Inspiring educational and mentorship corporate artwork (1:1 square). A luminous holographic open book with knowledge particles rising up into modern architectural blueprints and smart city skyscrapers. Deep navy blue background (#0b2545) with warm golden and cyan lighting (#38bdf8). Prestigious, grateful, 8K render.',
+        getText: (yr) => `Başöğretmenimiz Gazi Mustafa Kemal Atatürk'ün izinde; aklın, bilimin ve aydınlık nesillerin mimarı olan tüm saygıdeğer öğretmenlerimizin 24 Kasım Öğretmenler Günü'nü şükran ve minnetle kutluyoruz.
+
+Geleceği inşa eden en büyük güç eğitimdir! 📚✨`,
+        hashtags: '#24Kasım #ÖğretmenlerGünü #24KasımÖğretmenlerGünü #BaşöğretmenAtatürk #YakınGrup #EğitimGelecektir'
+      },
+      {
+        baseId: 'mimarlik-gunu',
+        category: 'sektor',
+        title: 'Dünya Mimarlık Günü',
+        month: 9, // Ekim (Ekim'in ilk haftası)
+        day: 5,
+        timeStr: '10:00',
+        icon: '📐',
+        tagText: 'MESLEKİ GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => 'DÜNYA MİMARLIK GÜNÜ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Estetiği, Dayanıklılığı ve Fonksiyonu Şekillendiren Mimarlarımıza...',
+        aiPrompt: 'Avant-garde architectural design visualization (1:1 square). A stunning parametric sustainable glass building designed by visionary architects with glowing cyan structural lines (#38bdf8) and biophilic vertical gardens. Deep navy blue background (#0b2545), 8K architectural photography.',
+        getText: (yr) => `Şehirlerin kimliğini, yaşam alanlarının estetiğini ve sürdürülebilir mekanların ruhunu tasarlayan; hayalleri çizgilere dönüştüren tüm mimarlarımızın Dünya Mimarlık Günü'nü kutlarız! 🏛️📐`,
+        hashtags: '#DünyaMimarlıkGünü #Mimarlık #Architecture #ModernDesign #Yakınİnşaat #YakınGrup #SürdürülebilirMimari'
+      },
+      {
+        baseId: 'muhendisler-gunu',
+        category: 'sektor',
+        title: '5 Aralık Dünya Mühendisler Günü',
+        month: 11, // Aralık
+        day: 5,
+        timeStr: '10:00',
+        icon: '⚙️',
+        tagText: 'SEKTÖREL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => 'DÜNYA MÜHENDİSLER GÜNÜ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Hayalleri Projeye, Projeleri Geleceğe Dönüştüren Zihinler...',
+        aiPrompt: 'High-tech 5D BIM and engineering innovation artwork (1:1 square). Holographic glowing cyan 3D architectural blueprints (#38bdf8) interacting with renewable energy grid diagrams in mid-air. Deep navy blue background (#0b2545) with fine precision grid lines and optic light trails. 8K raytraced, futuristic, elite engineering corporate identity.',
+        getText: (yr) => `Karmaşık problemleri çözüme, bilim ve teknolojiyi sürdürülebilir yaşama dönüştüren; inşaattan enerjiye, yazılımdan altyapıya hayatı kolaylaştıran tüm mühendislerimizin 5 Aralık Dünya Mühendisler Günü'nü kutlarız! 📐⚙️`,
+        hashtags: '#DünyaMühendislerGünü #5Aralık #Mühendislik #Engineering #YakınGrup #BIM #İnşaat #Enerji'
+      },
+      {
+        baseId: 'cevre-gunu',
+        category: 'sektor',
+        title: '5 Haziran Dünya Çevre Günü',
+        month: 5, // Haziran
+        day: 5,
+        timeStr: '10:00',
+        icon: '🌱',
+        tagText: 'SEKTÖREL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => '5 HAZİRAN DÜNYA ÇEVRE GÜNÜ',
+        getSubheadline: (yr) => 'Sıfır Karbon ve Temiz Enerjiyle Sürdürülebilir Bir Gelecek...',
+        aiPrompt: 'Futuristic sustainable green earth and clean technology visual (1:1 square). A pristine planet Earth orb enveloped by glowing cyan clean energy rings (#38bdf8) and lush green leaves, surrounded by modern solar farms and wind turbines. Deep navy blue universe background (#0b2545) with ambient light blue glow. 8K Octane render, environmental stewardship, high-end holding brand.',
+        getText: (yr) => `Güneşten aldığımız güç ve sıfır emisyon vizyonumuzla yarınlara daha yaşanabilir yeşil bir dünya bırakmak için çalışıyoruz. 
+
+Doğayı korumak, sürdürülebilir enerjiyi benimsemek ve geleceğimize sahip çıkmak hepimizin ortak görevidir. 5 Haziran Dünya Çevre Günü kutlu olsun! 🌍☀️`,
+        hashtags: '#DünyaÇevreGünü #5Haziran #Sürdürülebilirlik #GüneşEnerjisi #TemizEnerji #YakınGrup #GreenFuture'
+      },
+      {
+        baseId: 'enerji-gunu',
+        category: 'sektor',
+        title: '11 Ocak Dünya Enerji Tasarrufu & Enerji Günü',
+        month: 0, // Ocak
+        day: 11,
+        timeStr: '10:00',
+        icon: '⚡',
+        tagText: 'SEKTÖREL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => 'DÜNYA ENERJİ GÜNÜ & ENERJİ VERİMLİLİĞİ',
+        getSubheadline: (yr) => 'Geleceğin Gücü: Yenilenebilir, Akıllı ve Verimli Enerji...',
+        aiPrompt: 'Breathtaking renewable energy landscape visual (1:1 square). Large gleaming Tier-1 bifacial solar PV panels and aerodynamic wind turbines under a brilliant cyan sunrise (#38bdf8). Flowing digital neon energy pulses and battery storage telemetry lines leading into a modern smart city. Deep midnight navy blue (#0b2545), 8K ultra-realistic corporate energy holding visual.',
+        getText: (yr) => `Enerjinin verimli kullanılması ve temiz kaynaklardan üretilmesi, kalkınmanın ve bağımsızlığın temel anahtarıdır.
+
+Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çözümlerimizle enerji dönüşümüne öncülük ediyoruz. ⚡🔋`,
+        hashtags: '#DünyaEnerjiGünü #EnerjiVerimliliği #YenilenebilirEnerji #SolarEPC #YakınGrup #CleanEnergy'
+      },
+      {
+        baseId: 'kadinlar-gunu',
+        category: 'sektor',
+        title: '8 Mart Dünya Kadınlar Günü',
+        month: 2, // Mart
+        day: 8,
+        timeStr: '09:00',
+        icon: '🌸',
+        tagText: 'ÖZEL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => '8 MART DÜNYA KADINLAR GÜNÜ KUTLU OLSUN!',
+        getSubheadline: (yr) => 'Emeği, Cesareti ve İlhamıyla Dünyayı Güzelleştiren Kadınlarımıza...',
+        aiPrompt: 'Elegant, inspiring, and empowering corporate artwork (1:1 square). A stylized silhouette of a visionary female engineer/leader looking towards a modern architectural horizon. Deep navy blue background (#0b2545) blended with soft glowing cyan, light blue, and delicate gold floral accents (#38bdf8 / #d4af37). Prestigious, empowering, 8K ultra-detailed corporate design.',
+        getText: (yr) => `İş dünyasında, şantiyelerimizde, mühendislik projelerimizde ve hayatın her alanında bilgisi, vizyonu ve üretkenliğiyle geleceği şekillendiren tüm kadınların 8 Mart Dünya Kadınlar Günü'nü saygı ve minnetle kutlarız. 💐✨`,
+        hashtags: '#8Mart #DünyaKadınlarGünü #8MartDünyaKadınlarGünü #KadınMühendisler #YakınGrup #EşitlikVeGelecek'
+      },
+      {
+        baseId: 'su-gunu',
+        category: 'sektor',
+        title: '22 Mart Dünya Su Günü',
+        month: 2, // Mart
+        day: 22,
+        timeStr: '10:00',
+        icon: '💧',
+        tagText: 'KÜRESEL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => '22 MART DÜNYA SU GÜNÜ',
+        getSubheadline: (yr) => 'Her Damla Yaşamdır: Sürdürülebilir Su ve Altyapı Çözümleri...',
+        aiPrompt: 'Pristine, crystal-clear water droplet suspended in the air with glowing cyan and azure reflections (#38bdf8). In background, clean modern hydraulic engineering and sustainable green nature. Deep navy blue atmosphere (#0b2545), 8K Octane render, luxury corporate environmental visual.',
+        getText: (yr) => `Su kaynaklarımızın korunması ve verimli altyapı yönetimi geleceğimizin en hayati güvencesidir. Doğaya saygılı mühendislik ile sürdürülebilirliği destekliyoruz. 22 Mart Dünya Su Günü kutlu olsun! 💧🌍`,
+        hashtags: '#DünyaSuGünü #22Mart #SuGelecektir #Sürdürülebilirlik #YakınGrup #Mühendislik'
+      },
+      {
+        baseId: 'sehircilik-gunu',
+        category: 'sektor',
+        title: '17 Ekim Dünya Şehircilik Günü',
+        month: 9, // Ekim
+        day: 17,
+        timeStr: '10:00',
+        icon: '🏙️',
+        tagText: 'SEKTÖREL GÜN',
+        tagClass: 'tag-sektor',
+        eventClass: 'event-sektor',
+        getHeadline: (yr) => 'DÜNYA ŞEHİRCİLİK GÜNÜ',
+        getSubheadline: (yr) => 'Dirençli, Akıllı ve İnsana Değer Katan Şehirler İnşa Ediyoruz...',
+        aiPrompt: 'Ultra-modern master-planned futuristic smart city with sustainable skyscrapers, lush vertical gardens, and clean transit bridges under a cyan-blue sky. Deep navy blue corporate lighting (#0b2545), 8K architectural render.',
+        getText: (yr) => `Depreme dayanıklı, estetik ve çevreyle uyumlu yaşam alanları tasarlamak modern şehirciliğin temelidir. Kentsel dönüşüm ve mühendislik vizyonumuzla güvenli şehirler inşa ediyoruz. 🏙️✨`,
+        hashtags: '#DünyaŞehircilikGünü #KentselDönüşüm #AkıllıŞehirler #YakınGrup #ModernMimari'
+      },
+
+      // SEKTÖR PROJE VİTRİNİ (HAFTALIK / AYLIK)
+      {
+        baseId: 'proje-insaat-datacenter',
+        category: 'proje',
+        title: 'Yakın İnşaat — Ağır Sanayi & Veri Merkezleri',
+        month: 3, // Nisan
+        day: 10,
+        timeStr: '11:00',
+        icon: '🏢',
+        tagText: 'YAKIN İNŞAAT',
+        tagClass: 'tag-proje',
+        eventClass: 'event-proje',
+        getHeadline: (yr) => 'YAKIN İNŞAAT: YÜKSEK GÜVENLİKLİ ENDÜSTRİYEL TAAHHÜT',
+        getSubheadline: (yr) => 'Veri Merkezleri, Ağır Sanayi ve Tier-3 Standartlarında İleri Mühendislik...',
+        aiPrompt: 'High-security modern Tier-3 Data Center facility with glowing cyan fiber optic server racks and precision architectural steel facade. Deep navy blue corporate aesthetic (#0b2545), 8K render.',
+        getText: (yr) => `Yüksek veri güvenliği ve kesintisiz enerji gerektiren kritik tesislerde; depreme dayanıklı betonarme ve çelik mühendisliğiyle Türkiye'nin dijital omurgasını inşa ediyoruz. 🏗️🌐`,
+        hashtags: '#Yakınİnşaat #DataCenter #VeriMerkezi #AğırSanayi #EPC #Mühendislik #YakınGrup'
+      },
+      {
+        baseId: 'proje-enerji-bess',
+        category: 'proje',
+        title: 'Yakın Enerji — Tier-1 GES & BESS Batarya Depolama',
+        month: 5, // Haziran
+        day: 18,
+        timeStr: '11:00',
+        icon: '🔋',
+        tagText: 'YAKIN ENERJİ',
+        tagClass: 'tag-proje',
+        eventClass: 'event-proje',
+        getHeadline: (yr) => 'YAKIN ENERJİ: KESİNTİSİZ GÜÇ İÇİN BESS DEPOLAMA',
+        getSubheadline: (yr) => 'Bifacial Güneş Panelleri ve Yüksek Kapasiteli Batarya Sistemleri...',
+        aiPrompt: 'High-tech industrial BESS battery energy storage containers and solar panel array with glowing cyan telemetry power lines (#38bdf8). Deep midnight navy background (#0b2545), 8K clean energy render.',
+        getText: (yr) => `Güneş enerjisinin sürekliliği, akıllı batarya depolama (BESS) sistemleriyle mümkün. Yakın Enerji, anahtar teslim EPC çözümleriyle sanayinin enerjisini garantiye alıyor. ☀️🔋`,
+        hashtags: '#YakınEnerji #BESS #BataryaDepolama #GüneşEnerjisi #SolarEPC #CleanPower #YakınGrup'
+      },
+      {
+        baseId: 'proje-capital-spv',
+        category: 'proje',
+        title: 'Yakın Capital — Proje Finansmanı & SPV Mimarisi',
+        month: 8, // Eylül
+        day: 15,
+        timeStr: '11:00',
+        icon: '📈',
+        tagText: 'YAKIN CAPITAL',
+        tagClass: 'tag-proje',
+        eventClass: 'event-proje',
+        getHeadline: (yr) => 'YAKIN CAPITAL: PROJE FİNANSMANI VE YATIRIM MİMARİSİ',
+        getSubheadline: (yr) => 'Büyük Ölçekli Altyapı, SPV Yapılandırma ve Sermaye Güvencesi...',
+        aiPrompt: 'Executive corporate financial modeling visual with 3D glowing gold and cyan investment growth charts rising above architectural skyscrapers. Deep navy blue aesthetic (#0b2545), 8K luxury render.',
+        getText: (yr) => `Doğru finansman modeli, büyük projelerin can damarıdır. Yakın Capital; SPV yapılandırma, GYO ortaklıkları ve yatırım danışmanlığı ile sermayeyi katma değere dönüştürüyor. 💼🏛️`,
+        hashtags: '#YakınCapital #ProjeFinansmanı #SPV #GYO #YatırımYönetimi #Holding #YakınGrup'
+      },
+      {
+        baseId: 'proje-teknoloji-bim',
+        category: 'proje',
+        title: 'Yakın Teknoloji — 5D BIM & AI Karar Motorları',
+        month: 10, // Kasım
+        day: 25,
+        timeStr: '11:00',
+        icon: '💻',
+        tagText: 'YAKIN TEKNOLOJİ',
+        tagClass: 'tag-proje',
+        eventClass: 'event-proje',
+        getHeadline: (yr) => 'YAKIN TEKNOLOJİ: DİJİTAL İKİZ VE 5D BIM YÖNETİMİ',
+        getSubheadline: (yr) => 'Şantiyede Sıfır Hata: Dijitalleşen İnşaat ve Enerji Süreçleri...',
+        aiPrompt: 'Holographic 5D BIM digital twin building model floating over an architectural tablet with glowing cyan wireframe measurements. Deep navy blue atmosphere (#0b2545), 8K high-tech render.',
+        getText: (yr) => `Maliyet, zaman ve kalite yönetiminde yapay zekâ destekli 5D BIM teknolojimizle şantiyelerimizde hata payını sıfırlıyoruz. Geleceğin mühendisliği bugün Yakın Teknoloji'de! 📐🚀`,
+        hashtags: '#YakınTeknoloji #BIM #5DBIM #Dijitalİkiz #PropTech #İnovasyon #YakınGrup'
+      }
+    ];
+
+    // 2026 - 2030 DİNİ BAYRAM TARİHLERİ (Hicri Takvim Hesabı)
+    const ISLAMIC_HOLIDAYS_BY_YEAR = {
+      2026: {
+        ramazan: { month: 2, day: 20, str: '20 Mart 2026', iso: '2026-03-20' },
+        kurban: { month: 4, day: 27, str: '27 Mayıs 2026', iso: '2026-05-27' }
+      },
+      2027: {
+        ramazan: { month: 2, day: 10, str: '10 Mart 2027', iso: '2027-03-10' },
+        kurban: { month: 4, day: 16, str: '16 Mayıs 2027', iso: '2027-05-16' }
+      },
+      2028: {
+        ramazan: { month: 1, day: 27, str: '27 Şubat 2028', iso: '2028-02-27' },
+        kurban: { month: 4, day: 5, str: '5 Mayıs 2028', iso: '2028-05-05' }
+      },
+      2029: {
+        ramazan: { month: 1, day: 15, str: '15 Şubat 2029', iso: '2029-02-15' },
+        kurban: { month: 3, day: 24, str: '24 Nisan 2029', iso: '2029-04-24' }
+      },
+      2030: {
+        ramazan: { month: 1, day: 5, str: '5 Şubat 2030', iso: '2030-02-05' },
+        kurban: { month: 3, day: 13, str: '13 Nisan 2030', iso: '2030-04-13' }
+      }
+    };
+
+    const MONTH_NAMES = [
+      "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+      "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ];
+
+    // GENERATE COMPLETE PLAN FOR A GIVEN YEAR (2026 - 2030)
+    function generatePlanForYear(yr) {
+      const list = [];
+
+      // 1. Sabit Yıllık Özel Günler
+      RECURRING_SPECIAL_DAYS.forEach(d => {
+        const monthStr = String(d.month + 1).padStart(2, '0');
+        const dayStr = String(d.day).padStart(2, '0');
+        const dateISO = `${yr}-${monthStr}-${dayStr}`;
+        const dateStr = `${d.day} ${MONTH_NAMES[d.month]} ${yr}`;
+
+        list.push({
+          id: `${d.baseId}-${yr}`,
+          category: d.category,
+          title: d.title,
+          dateISO: dateISO,
+          timeStr: d.timeStr,
+          dateStr: dateStr,
+          year: yr,
+          month: d.month,
+          day: d.day,
+          icon: d.icon,
+          tagText: d.tagText,
+          tagClass: d.tagClass,
+          eventClass: d.eventClass,
+          headline: d.getHeadline(yr),
+          subheadline: d.getSubheadline(yr),
+          aiPrompt: d.aiPrompt,
+          text: d.getText(yr),
+          hashtags: d.hashtags
+        });
+      });
+
+      // 2. Dini Bayramlar (Yıla Özel Hesaplı)
+      const isl = ISLAMIC_HOLIDAYS_BY_YEAR[yr] || ISLAMIC_HOLIDAYS_BY_YEAR[2026];
+
+      // Ramazan Bayramı
+      list.push({
+        id: `ramazan-bayrami-${yr}`,
         category: 'dini',
         title: 'Ramazan Bayramı Tebriği',
-        dateISO: '2026-03-20',
+        dateISO: isl.ramazan.iso,
         timeStr: '09:00',
-        dateStr: '20 Mart 2026',
+        dateStr: isl.ramazan.str,
+        year: yr,
+        month: isl.ramazan.month,
+        day: isl.ramazan.day,
         icon: '🌙',
         tagText: 'DİNİ BAYRAM',
         tagClass: 'tag-dini',
@@ -906,14 +1277,19 @@ Başta Gazi Mustafa Kemal Atatürk olmak üzere, vatanımız uğruna can veren t
 
 Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiyle. Ramazan Bayramınız Mübarek Olsun! 🌙✨`,
         hashtags: '#RamazanBayramı #İyiBayramlar #BayramınızMübarekOlsun #YakınGrup #HuzurVeBereket'
-      },
-      {
-        id: 'kurban-bayrami',
+      });
+
+      // Kurban Bayramı
+      list.push({
+        id: `kurban-bayrami-${yr}`,
         category: 'dini',
         title: 'Kurban Bayramı Tebriği',
-        dateISO: '2026-05-27',
+        dateISO: isl.kurban.iso,
         timeStr: '09:00',
-        dateStr: '27 Mayıs 2026',
+        dateStr: isl.kurban.str,
+        year: yr,
+        month: isl.kurban.month,
+        day: isl.kurban.day,
         icon: '🐑',
         tagText: 'DİNİ BAYRAM',
         tagClass: 'tag-dini',
@@ -925,235 +1301,30 @@ Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiy
 
 Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️`,
         hashtags: '#KurbanBayramı #İyiBayramlar #KurbanBayramınızMübarekOlsun #YakınGrup #PaylaşmakGüzeldir'
-      },
-      {
-        id: 'yeni-yil',
-        category: 'dini',
-        title: '1 Ocak Yeni Yıl Tebriği',
-        dateISO: '2027-01-01',
-        timeStr: '09:00',
-        dateStr: '1 Ocak 2027',
-        icon: '🎉',
-        tagText: 'YILBAŞI',
-        tagClass: 'tag-dini',
-        eventClass: 'event-dini',
-        headline: 'MUTLU VE BAŞARILI BİR YIL DİLERİZ!',
-        subheadline: '2027 Yılında Yeni Yatırımlar ve Sürdürülebilir Projelerle...',
-        aiPrompt: 'Ultra-modern luxury New Year corporate artwork (1:1 square). Glowing 3D geometric 2027 numerals crafted from crystal glass and polished steel with internal cyan LED light (#38bdf8). Deep rich navy blue backdrop (#0b2545) with delicate golden sparkles and modern skyscraper lights. 8K Unreal Engine 5 render, sophisticated, futuristic holding greeting.',
-        text: `Yeni yılın tüm çalışanlarımıza, iş ortaklarımıza ve ülkemize sağlık, başarı, huzur ve bereket getirmesini dileriz. 
+      });
 
-2027 yılında da yenilenebilir enerji, modern inşaat ve ileri teknoloji projelerimizle büyümeye ve değer üretmeye devam edeceğiz. Mutlu Yıllar! 🥂🌟`,
-        hashtags: '#MutluYıllar #HoşGeldin2027 #YeniYıl #HappyNewYear #YakınGrup #YatırımVeGelecek'
-      },
-      {
-        id: '1-mayis',
-        category: 'dini',
-        title: '1 Mayıs Emek ve Dayanışma Günü',
-        dateISO: '2026-05-01',
-        timeStr: '09:00',
-        dateStr: '1 Mayıs 2026',
-        icon: '👷',
-        tagText: 'RESMİ GÜN',
-        tagClass: 'tag-dini',
-        eventClass: 'event-dini',
-        headline: '1 MAYIS EMEK VE DAYANIŞMA GÜNÜ KUTLU OLSUN!',
-        subheadline: 'Alın Teri ve Emeğiyle Geleceği İnşa Eden Tüm Emekçilerimize...',
-        aiPrompt: 'Powerful, modern architectural tribute artwork (1:1 square). High-tech industrial construction cranes, steel engineering structures, and solar panels under a dramatic blue sunrise. Deep navy blue background (#0b2545) with glowing cyan energy arcs (#38bdf8) and warm golden safety highlights. Respectful, monumental, premium engineering holding aesthetic, 8K render.',
-        text: `Şantiyelerimizde, enerji santrallerimizde, üretim tesislerimizde ve ofislerimizde alın teriyle geleceği inşa eden tüm çalışma arkadaşlarımızın ve emekçilerin 1 Mayıs Emek ve Dayanışma Günü'nü kutluyoruz.
+      // Kronolojik Sıralama
+      list.sort((a, b) => new Date(a.dateISO) - new Date(b.dateISO));
+      return list;
+    }
 
-En büyük gücümüz emeğimiz ve dayanışmamızdır. 🏗️⚡`,
-        hashtags: '#1Mayıs #EmekveDayanışmaGünü #İşçiBayramı #AlınTeri #YakınGrup #BirlikteGüçlüyüz'
-      },
-
-      // SEKTÖREL & KÜRESEL GÜNLER
-      {
-        id: 'muhendisler-gunu',
-        category: 'sektor',
-        title: '5 Aralık Dünya Mühendisler Günü',
-        dateISO: '2026-12-05',
-        timeStr: '10:00',
-        dateStr: '5 Aralık 2026',
-        icon: '⚙️',
-        tagText: 'SEKTÖREL GÜN',
-        tagClass: 'tag-sektor',
-        eventClass: 'event-sektor',
-        headline: 'DÜNYA MÜHENDİSLER GÜNÜ KUTLU OLSUN!',
-        subheadline: 'Hayalleri Projeye, Projeleri Geleceğe Dönüştüren Zihinler...',
-        aiPrompt: 'High-tech 5D BIM and engineering innovation artwork (1:1 square). Holographic glowing cyan 3D architectural blueprints (#38bdf8) interacting with renewable energy grid diagrams in mid-air. Deep navy blue background (#0b2545) with fine precision grid lines and optic light trails. 8K raytraced, futuristic, elite engineering corporate identity.',
-        text: `Karmaşık problemleri çözüme, bilim ve teknolojiyi sürdürülebilir yaşama dönüştüren; inşaattan enerjiye, yazılımdan altyapıya hayatı kolaylaştıran tüm mühendislerimizin 5 Aralık Dünya Mühendisler Günü'nü kutlarız! 📐⚙️`,
-        hashtags: '#DünyaMühendislerGünü #5Aralık #Mühendislik #Engineering #YakınGrup #BIM #İnşaat #Enerji'
-      },
-      {
-        id: 'cevre-gunu',
-        category: 'sektor',
-        title: '5 Haziran Dünya Çevre Günü',
-        dateISO: '2026-06-05',
-        timeStr: '10:00',
-        dateStr: '5 Haziran 2026',
-        icon: '🌱',
-        tagText: 'SEKTÖREL GÜN',
-        tagClass: 'tag-sektor',
-        eventClass: 'event-sektor',
-        headline: '5 HAZİRAN DÜNYA ÇEVRE GÜNÜ',
-        subheadline: 'Sıfır Karbon ve Temiz Enerjiyle Sürdürülebilir Bir Gelecek...',
-        aiPrompt: 'Futuristic sustainable green earth and clean technology visual (1:1 square). A pristine planet Earth orb enveloped by glowing cyan clean energy rings (#38bdf8) and lush green leaves, surrounded by modern solar farms and wind turbines. Deep navy blue universe background (#0b2545) with ambient light blue glow. 8K Octane render, environmental stewardship, high-end holding brand.',
-        text: `Güneşten aldığımız güç ve sıfır emisyon vizyonumuzla yarınlara daha yaşanabilir yeşil bir dünya bırakmak için çalışıyoruz. 
-
-Doğayı korumak, sürdürülebilir enerjiyi benimsemek ve geleceğimize sahip çıkmak hepimizin ortak görevidir. 5 Haziran Dünya Çevre Günü kutlu olsun! 🌍☀️`,
-        hashtags: '#DünyaÇevreGünü #5Haziran #Sürdürülebilirlik #GüneşEnerjisi #TemizEnerji #YakınGrup #GreenFuture'
-      },
-      {
-        id: 'enerji-gunu',
-        category: 'sektor',
-        title: '11 Ocak Dünya Enerji Tasarrufu & Enerji Günü',
-        dateISO: '2027-01-11',
-        timeStr: '10:00',
-        dateStr: '11 Ocak 2027',
-        icon: '⚡',
-        tagText: 'SEKTÖREL GÜN',
-        tagClass: 'tag-sektor',
-        eventClass: 'event-sektor',
-        headline: 'DÜNYA ENERJİ GÜNÜ & ENERJİ VERİMLİLİĞİ',
-        subheadline: 'Geleceğin Gücü: Yenilenebilir, Akıllı ve Verimli Enerji...',
-        aiPrompt: 'Breathtaking renewable energy landscape visual (1:1 square). Large gleaming Tier-1 bifacial solar PV panels and aerodynamic wind turbines under a brilliant cyan sunrise (#38bdf8). Flowing digital neon energy pulses and battery storage telemetry lines leading into a modern smart city. Deep midnight navy blue (#0b2545), 8K ultra-realistic corporate energy holding visual.',
-        text: `Enerjinin verimli kullanılması ve temiz kaynaklardan üretilmesi, kalkınmanın ve bağımsızlığın temel anahtarıdır.
-
-Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çözümlerimizle enerji dönüşümüne öncülük ediyoruz. ⚡🔋`,
-        hashtags: '#DünyaEnerjiGünü #EnerjiVerimliliği #YenilenebilirEnerji #SolarEPC #YakınGrup #CleanEnergy'
-      },
-      {
-        id: 'kadinlar-gunu',
-        category: 'sektor',
-        title: '8 Mart Dünya Kadınlar Günü',
-        dateISO: '2026-03-08',
-        timeStr: '09:00',
-        dateStr: '8 Mart 2026',
-        icon: '🌸',
-        tagText: 'ÖZEL GÜN',
-        tagClass: 'tag-sektor',
-        eventClass: 'event-sektor',
-        headline: '8 MART DÜNYA KADINLAR GÜNÜ KUTLU OLSUN!',
-        subheadline: 'Emeği, Cesareti ve İlhamıyla Dünyayı Güzelleştiren Kadınlarımıza...',
-        aiPrompt: 'Elegant, inspiring, and empowering corporate artwork (1:1 square). A stylized silhouette of a visionary female engineer/leader looking towards a modern architectural horizon. Deep navy blue background (#0b2545) blended with soft glowing cyan, light blue, and delicate gold floral accents (#38bdf8 / #d4af37). Prestigious, empowering, 8K ultra-detailed corporate design.',
-        text: `İş dünyasında, şantiyelerimizde, mühendislik projelerimizde ve hayatın her alanında bilgisi, vizyonu ve üretkenliğiyle geleceği şekillendiren tüm kadınların 8 Mart Dünya Kadınlar Günü'nü saygı ve minnetle kutlarız. 💐✨`,
-        hashtags: '#8Mart #DünyaKadınlarGünü #8MartDünyaKadınlarGünü #KadınMühendisler #YakınGrup #EşitlikVeGelecek'
-      },
-      {
-        id: 'su-gunu',
-        category: 'sektor',
-        title: '22 Mart Dünya Su Günü',
-        dateISO: '2026-03-22',
-        timeStr: '10:00',
-        dateStr: '22 Mart 2026',
-        icon: '💧',
-        tagText: 'KÜRESEL GÜN',
-        tagClass: 'tag-sektor',
-        eventClass: 'event-sektor',
-        headline: '22 MART DÜNYA SU GÜNÜ',
-        subheadline: 'Her Damla Yaşamdır: Sürdürülebilir Su ve Altyapı Çözümleri...',
-        aiPrompt: 'Pristine, crystal-clear water droplet suspended in the air with glowing cyan and azure reflections (#38bdf8). In background, clean modern hydraulic engineering and sustainable green nature. Deep navy blue atmosphere (#0b2545), 8K Octane render, luxury corporate environmental visual.',
-        text: `Su kaynaklarımızın korunması ve verimli altyapı yönetimi geleceğimizin en hayati güvencesidir. Doğaya saygılı mühendislik ile sürdürülebilirliği destekliyoruz. 22 Mart Dünya Su Günü kutlu olsun! 💧🌍`,
-        hashtags: '#DünyaSuGünü #22Mart #SuGelecektir #Sürdürülebilirlik #YakınGrup #Mühendislik'
-      },
-      {
-        id: 'sehircilik-gunu',
-        category: 'sektor',
-        title: '17 Ekim Dünya Şehircilik Günü',
-        dateISO: '2026-10-17',
-        timeStr: '10:00',
-        dateStr: '17 Ekim 2026',
-        icon: '🏙️',
-        tagText: 'SEKTÖREL GÜN',
-        tagClass: 'tag-sektor',
-        eventClass: 'event-sektor',
-        headline: 'DÜNYA ŞEHİRCİLİK GÜNÜ',
-        subheadline: 'Dirençli, Akıllı ve İnsana Değer Katan Şehirler İnşa Ediyoruz...',
-        aiPrompt: 'Ultra-modern master-planned futuristic smart city with sustainable skyscrapers, lush vertical gardens, and clean transit bridges under a cyan-blue sky. Deep navy blue corporate lighting (#0b2545), 8K architectural render.',
-        text: `Depreme dayanıklı, estetik ve çevreyle uyumlu yaşam alanları tasarlamak modern şehirciliğin temelidir. Kentsel dönüşüm ve mühendislik vizyonumuzla güvenli şehirler inşa ediyoruz. 🏙️✨`,
-        hashtags: '#DünyaŞehircilikGünü #KentselDönüşüm #AkıllıŞehirler #YakınGrup #ModernMimari'
-      },
-
-      // SEKTÖR PROJE VİTRİNİ (HAFTALIK / AYLIK)
-      {
-        id: 'proje-insaat-datacenter',
-        category: 'proje',
-        title: 'Yakın İnşaat — Ağır Sanayi & Veri Merkezleri',
-        dateISO: '2026-04-10',
-        timeStr: '11:00',
-        dateStr: '10 Nisan 2026',
-        icon: '🏢',
-        tagText: 'YAKIN İNŞAAT',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        headline: 'YAKIN İNŞAAT: YÜKSEK GÜVENLİKLİ ENDÜSTRİYEL TAAHHÜT',
-        subheadline: 'Veri Merkezleri, Ağır Sanayi ve Tier-3 Standartlarında İleri Mühendislik...',
-        aiPrompt: 'High-security modern Tier-3 Data Center facility with glowing cyan fiber optic server racks and precision architectural steel facade. Deep navy blue corporate aesthetic (#0b2545), 8K render.',
-        text: `Yüksek veri güvenliği ve kesintisiz enerji gerektiren kritik tesislerde; depreme dayanıklı betonarme ve çelik mühendisliğiyle Türkiye'nin dijital omurgasını inşa ediyoruz. 🏗️🌐`,
-        hashtags: '#Yakınİnşaat #DataCenter #VeriMerkezi #AğırSanayi #EPC #Mühendislik #YakınGrup'
-      },
-      {
-        id: 'proje-enerji-bess',
-        category: 'proje',
-        title: 'Yakın Enerji — Tier-1 GES & BESS Batarya Depolama',
-        dateISO: '2026-06-18',
-        timeStr: '11:00',
-        dateStr: '18 Haziran 2026',
-        icon: '🔋',
-        tagText: 'YAKIN ENERJİ',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        headline: 'YAKIN ENERJİ: KESİNTİSİZ GÜÇ İÇİN BESS DEPOLAMA',
-        subheadline: 'Bifacial Güneş Panelleri ve Yüksek Kapasiteli Batarya Sistemleri...',
-        aiPrompt: 'High-tech industrial BESS battery energy storage containers and solar panel array with glowing cyan telemetry power lines (#38bdf8). Deep midnight navy background (#0b2545), 8K clean energy render.',
-        text: `Güneş enerjisinin sürekliliği, akıllı batarya depolama (BESS) sistemleriyle mümkün. Yakın Enerji, anahtar teslim EPC çözümleriyle sanayinin enerjisini garantiye alıyor. ☀️🔋`,
-        hashtags: '#YakınEnerji #BESS #BataryaDepolama #GüneşEnerjisi #SolarEPC #CleanPower #YakınGrup'
-      },
-      {
-        id: 'proje-capital-spv',
-        category: 'proje',
-        title: 'Yakın Capital — Proje Finansmanı & SPV Mimarisi',
-        dateISO: '2026-09-15',
-        timeStr: '11:00',
-        dateStr: '15 Eylül 2026',
-        icon: '📈',
-        tagText: 'YAKIN CAPITAL',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        headline: 'YAKIN CAPITAL: PROJE FİNANSMANI VE YATIRIM MİMARİSİ',
-        subheadline: 'Büyük Ölçekli Altyapı, SPV Yapılandırma ve Sermaye Güvencesi...',
-        aiPrompt: 'Executive corporate financial modeling visual with 3D glowing gold and cyan investment growth charts rising above architectural skyscrapers. Deep navy blue aesthetic (#0b2545), 8K luxury render.',
-        text: `Doğru finansman modeli, büyük projelerin can damarıdır. Yakın Capital; SPV yapılandırma, GYO ortaklıkları ve yatırım danışmanlığı ile sermayeyi katma değere dönüştürüyor. 💼🏛️`,
-        hashtags: '#YakınCapital #ProjeFinansmanı #SPV #GYO #YatırımYönetimi #Holding #YakınGrup'
-      },
-      {
-        id: 'proje-teknoloji-bim',
-        category: 'proje',
-        title: 'Yakın Teknoloji — 5D BIM & AI Karar Motorları',
-        dateISO: '2026-11-25',
-        timeStr: '11:00',
-        dateStr: '25 Kasım 2026',
-        icon: '💻',
-        tagText: 'YAKIN TEKNOLOJİ',
-        tagClass: 'tag-proje',
-        eventClass: 'event-proje',
-        headline: 'YAKIN TEKNOLOJİ: DİJİTAL İKİZ VE 5D BIM YÖNETİMİ',
-        subheadline: 'Şantiyede Sıfır Hata: Dijitalleşen İnşaat ve Enerji Süreçleri...',
-        aiPrompt: 'Holographic 5D BIM digital twin building model floating over an architectural tablet with glowing cyan wireframe measurements. Deep navy blue atmosphere (#0b2545), 8K high-tech render.',
-        text: `Maliyet, zaman ve kalite yönetiminde yapay zekâ destekli 5D BIM teknolojimizle şantiyelerimizde hata payını sıfırlıyoruz. Geleceğin mühendisliği bugün Yakın Teknoloji'de! 📐🚀`,
-        hashtags: '#YakınTeknoloji #BIM #5DBIM #Dijitalİkiz #PropTech #İnovasyon #YakınGrup'
-      }
-    ];
-
-    const MONTH_NAMES = [
-      "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-      "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
-    ];
+    // ALL DATA FOR 2026 - 2030
+    let CONTENT_PLAN = [];
+    for (let y = 2026; y <= 2030; y++) {
+      CONTENT_PLAN = CONTENT_PLAN.concat(generatePlanForYear(y));
+    }
 
     let currentYear = 2026;
-    let currentMonth = 9; // Ekim (0-indexed: 9 = Ekim)
+    let currentMonth = 9; // Ekim 2026 başlangıç // Ekim (0-indexed: 9 = Ekim)
 
     // ── INTERACTIVE MONTHLY CALENDAR ENGINE ─────────────────────────────────────
     function renderMonthlyCalendar(year, month) {
+      // Update year pill
+      const yearPills = document.querySelectorAll('.year-pill');
+      yearPills.forEach(p => {
+        if (parseInt(p.textContent) === year) p.classList.add('active');
+        else p.classList.remove('active');
+      });
       const titleEl = document.getElementById('cal-month-title');
       titleEl.innerHTML = `📅 <span>${MONTH_NAMES[month]} ${year}</span>`;
 
@@ -1244,6 +1415,18 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
         container.appendChild(cell);
       }
     }
+
+        function selectYear(yr, btn) {
+      currentYear = yr;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.year-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      renderMonthlyCalendar(currentYear, currentMonth);
+      renderPosts(activeCategoryFilter);
+    }
+
+    let activeCategoryFilter = 'all';
 
     function changeMonth(delta) {
       currentMonth += delta;
@@ -1663,11 +1846,11 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', 'Yakin_Grup_1_Yillik_Icerik_Takvimi.ics');
+      link.setAttribute('download', 'Yakin_Grup_2026_2030_Kurumsal_Icerik_Takvimi.ics');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('✓ 1 Yıllık Takvim (.ICS) İndirildi! Çift tıklayarak telefonunuza/bilgisayarınıza ekleyebilirsiniz.');
+      showToast('✓ 2026 - 2030 Tüm Yılların Takvimi (.ICS) İndirildi! Çift tıklayarak telefonunuza/bilgisayarınıza ekleyebilirsiniz.');
     }
 
     function downloadSingleICS(id) {
@@ -1725,6 +1908,7 @@ https://yakingrup.net`);
     }
 
     function filterPosts(category, btn) {
+      activeCategoryFilter = category;
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderPosts(category);
@@ -1796,7 +1980,7 @@ ${item.hashtags}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('✓ 1 Yıllık İçerik Takvimi (CSV/Excel) İndirildi!');
+      showToast('✓ 2026 - 2030 Tüm Yılların İçerik Takvimi (CSV/Excel) İndirildi!');
     }
 
     function showToast(msg) {
