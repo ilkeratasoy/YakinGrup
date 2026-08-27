@@ -849,9 +849,20 @@
         <div class="cal-weekday">Pazar</div>
       </div>
 
-      <!-- Takvim Gün Izgarası -->
+            <!-- Takvim Gün Izgarası -->
       <div class="cal-days-grid" id="cal-days-container">
         <!-- Injected via JS -->
+      </div>
+
+      <!-- Ayın ve Seçili Kategorinin Öne Çıkan Etkinlikleri Şeridi -->
+      <div id="cal-month-events-summary" style="margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px dashed #e2e8f0;">
+        <div style="font-size: 0.84rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <span id="cal-summary-title">📌 BU AYIN PAYLAŞIMLARI VE DETAYLARI</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">(Tıklayarak afişi ve metni açabilirsiniz)</span>
+        </div>
+        <div id="cal-month-events-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
+          <!-- Injected via JS -->
+        </div>
       </div>
     </div>
 
@@ -1957,6 +1968,42 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
         cell.innerHTML = `<div class="cal-day-header"><span class="cal-day-num">${j}</span></div>`;
         container.appendChild(cell);
       }
+
+      // Populate cal-month-events-list
+      const summaryList = document.getElementById('cal-month-events-list');
+      const summaryTitle = document.getElementById('cal-summary-title');
+      if (summaryList) {
+        summaryList.innerHTML = '';
+        const monthEvents = CONTENT_PLAN.filter(item => {
+          if (item.year !== year || item.month !== month) return false;
+          if (activeCategoryFilter === 'all') return true;
+          return item.category === activeCategoryFilter;
+        });
+
+        if (summaryTitle) {
+          summaryTitle.textContent = `📌 ${MONTH_NAMES[month]} ${year} — ${activeCategoryFilter === 'all' ? 'TÜM PAYLAŞIMLAR' : 'SEÇİLİ KATEGORİ'} (${monthEvents.length} Paylaşım)`;
+        }
+
+        if (monthEvents.length === 0) {
+          summaryList.innerHTML = `<div style="grid-column: 1 / -1; color: var(--text-muted); font-size: 0.82rem; padding: 8px 0;">Bu ayda seçili kategoriye ait paylaşım bulunmamaktadır.</div>`;
+        } else {
+          monthEvents.forEach(ev => {
+            const itemEl = document.createElement('div');
+            itemEl.style = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s;';
+            itemEl.onmouseenter = () => { itemEl.style.borderColor = '#0284c7'; itemEl.style.background = '#f0f9ff'; };
+            itemEl.onmouseleave = () => { itemEl.style.borderColor = '#e2e8f0'; itemEl.style.background = '#f8fafc'; };
+            itemEl.onclick = () => openEventModal(ev.id);
+            itemEl.innerHTML = `
+              <div>
+                <div style="font-weight: 800; font-size: 0.82rem; color: var(--primary);">${ev.icon} ${ev.title}</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">📅 ${ev.dateStr} • ⏰ ${ev.timeStr}</div>
+              </div>
+              <button class="btn-top" style="padding: 4px 8px; font-size: 0.72rem;">İncele ➔</button>
+            `;
+            summaryList.appendChild(itemEl);
+          });
+        }
+      }
     }
 
         function selectYear(yr, btn) {
@@ -2463,7 +2510,7 @@ https://yakingrup.net`);
     }
 
     // ── ACTIONS & UTILS ──────────────────────────────────────────────────────
-        function switchView(view) {
+            function switchView(view) {
       document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
       const cal = document.getElementById('calendar-month-view');
       const grid = document.getElementById('posts-container');
@@ -2490,7 +2537,7 @@ https://yakingrup.net`);
       }
     }
 
-        function filterPosts(category, btn) {
+            function filterPosts(category, btn) {
       activeCategoryFilter = category;
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
@@ -2506,16 +2553,16 @@ https://yakingrup.net`);
         }
       }
 
+      // Re-render both views
       renderMonthlyCalendar(currentYear, currentMonth);
       renderPosts(category);
 
-      // Bilgilendirme Toast
       const categoryNames = {
-        'all': 'Tüm Etkinlikler',
-        'resmi': '🇹🇷 Resmi Tatiller & Milli Bayramlar',
-        'dini': '🌙 Dini Bayramlar & Arifeler',
-        'sektor': '⚡ Sektörel & Mesleki Özel Günler',
-        'proje': '🏗️ Sektör Proje Vitrini (Haftalık Salı, Çrş, Per, Cuma)'
+        'all': 'Tüm Etkinlikler (237 Paylaşım)',
+        'resmi': '🇹🇷 Resmi Tatiller & Milli Bayramlar (10 Gün)',
+        'dini': '🌙 Dini Bayramlar & Arifeler (4 Gün)',
+        'sektor': '⚡ Sektörel & Mesleki Günler (15 Gün)',
+        'proje': '🏗️ Sektör Proje Vitrini (208 Post)'
       };
       showToast(`Filtrelendi: ${categoryNames[category] || category}`);
     }
