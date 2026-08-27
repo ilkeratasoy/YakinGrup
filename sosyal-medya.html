@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yakın Grup — Sosyal Medya & Özel Günler Paylaşım Stüdyosu</title>
+  <title>Yakın Grup — 1 Yıllık İçerik Takvimi & Sosyal Medya Senkronizasyon Stüdyosu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
     :root {
       --primary: #0b2545;
       --primary-accent: #0284c7;
+      --cyan-light: #38bdf8;
       --green: #10b981;
       --green-dark: #047857;
       --gold: #d4af37;
@@ -44,53 +45,108 @@
     .brand-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: var(--primary); }
     .brand-badge { font-size: 0.72rem; font-weight: 800; background: #ecfdf5; color: var(--green-dark); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(16,185,129,0.3); }
 
-    .header-links { display: flex; gap: 10px; align-items: center; }
-    .btn-top { padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; border: 1px solid var(--border); background: #f8fafc; color: var(--text); cursor: pointer; transition: all 0.2s; }
+    .header-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .btn-top { padding: 7px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; border: 1px solid var(--border); background: #f8fafc; color: var(--text); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
     .btn-top:hover { background: #e2e8f0; }
-    .btn-top.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .btn-top.primary { background: linear-gradient(135deg, #0b2545, #0284c7); color: #fff; border: none; box-shadow: 0 4px 12px rgba(11,37,69,0.2); }
+    .btn-top.sync-btn { background: #10b981; color: #fff; border: none; font-weight: 800; }
+    .btn-top.sync-btn:hover { background: #059669; }
 
     /* Container */
-    .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; flex: 1; }
+    .container { max-width: 1320px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; flex: 1; }
 
     /* Hero Banner */
     .studio-hero {
-      background: linear-gradient(135deg, #0b2545 0%, #0f3d6e 100%);
+      background: linear-gradient(135deg, #07162c 0%, #0b2545 50%, #0f3d6e 100%);
       color: #fff;
-      border-radius: 20px;
-      padding: 2.2rem 2.5rem;
+      border-radius: 24px;
+      padding: 2.5rem;
       margin-bottom: 2rem;
-      box-shadow: 0 15px 35px rgba(11,37,69,0.15);
+      box-shadow: 0 15px 35px rgba(11,37,69,0.18);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1.8rem;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      position: relative;
+      overflow: hidden;
     }
-    .hero-content h1 { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
-    .hero-content p { font-size: 0.95rem; opacity: 0.85; max-width: 620px; line-height: 1.5; }
-    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn-hero { padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; }
-    .btn-hero-white { background: #ffffff; color: var(--primary); border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .btn-hero-white:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
-    .btn-hero-outline { background: rgba(255,255,255,0.12); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
-    .btn-hero-outline:hover { background: rgba(255,255,255,0.2); }
-
-    /* Filters Bar */
-    .filter-bar {
+    .studio-hero::after {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content h1 { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .hero-content p { font-size: 0.95rem; opacity: 0.88; max-width: 680px; line-height: 1.6; }
+    .hero-sync-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
       display: flex;
+      flex-direction: column;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 1.8rem;
-      align-items: center;
-      justify-content: space-between;
+      min-width: 300px;
+      backdrop-filter: blur(10px);
     }
+    .sync-title { font-size: 0.82rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; }
+    .btn-sync-action {
+      background: #ffffff;
+      color: #0b2545;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .btn-sync-action:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); background: #f8fafc; }
+
+    /* View Switcher & Filter Bar */
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      background: #ffffff;
+      padding: 1rem 1.4rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .view-switcher { display: flex; background: #f1f5f9; padding: 4px; border-radius: 10px; gap: 4px; }
+    .view-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .view-btn.active { background: #ffffff; color: var(--primary); font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
     .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
     .filter-pill {
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 10px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      background: #ffffff;
+      background: #f8fafc;
       border: 1px solid var(--border);
       color: var(--text-muted);
       cursor: pointer;
@@ -103,7 +159,7 @@
       box-shadow: 0 4px 12px rgba(11,37,69,0.15);
     }
 
-    /* Cards Grid */
+    /* GRID VIEW */
     .posts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -113,7 +169,7 @@
     .post-card {
       background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.04);
       display: flex;
@@ -122,13 +178,12 @@
     }
     .post-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(11,37,69,0.1);
+      box-shadow: 0 12px 30px rgba(11,37,69,0.12);
       border-color: #cbd5e1;
     }
 
-    /* Post Header */
     .post-card-header {
-      padding: 1.2rem 1.4rem;
+      padding: 1.1rem 1.4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -136,17 +191,18 @@
       background: #fafafa;
     }
     .event-meta { display: flex; align-items: center; gap: 10px; }
-    .event-icon { font-size: 1.6rem; }
-    .event-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.05rem; color: var(--primary); }
-    .event-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
-    .event-tag { font-size: 0.7rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; }
+    .event-icon { font-size: 1.5rem; }
+    .event-title { font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--primary); }
+    .event-date { font-size: 0.76rem; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .event-tag { font-size: 0.68rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; }
     .tag-milli { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
     .tag-dini { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
     .tag-sektor { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
+    .tag-proje { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
 
-    /* Post Preview Canvas Box */
+    /* Canvas Box */
     .post-preview-box {
-      background: #0f172a;
+      background: #07162c;
       padding: 1.2rem;
       display: flex;
       align-items: center;
@@ -157,12 +213,12 @@
       width: 100%;
       max-width: 340px;
       aspect-ratio: 1 / 1;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border-radius: 14px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
       display: block;
     }
 
-    /* Post Body */
+    /* Card Body */
     .post-card-body {
       padding: 1.2rem 1.4rem;
       flex: 1;
@@ -170,10 +226,10 @@
       flex-direction: column;
       gap: 10px;
     }
-    .post-text-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .post-text-label { font-size: 0.74rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
     .post-text-content {
-      font-size: 0.88rem;
-      line-height: 1.6;
+      font-size: 0.86rem;
+      line-height: 1.55;
       color: #334155;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -183,14 +239,9 @@
       overflow-y: auto;
       white-space: pre-line;
     }
-    .post-hashtags {
-      font-size: 0.8rem;
-      color: var(--primary-accent);
-      font-weight: 600;
-      line-height: 1.4;
-    }
+    .post-hashtags { font-size: 0.78rem; color: var(--primary-accent); font-weight: 600; line-height: 1.4; }
 
-    /* Post Actions */
+    /* Card Footer & Action Buttons */
     .post-card-footer {
       padding: 1rem 1.4rem 1.2rem;
       border-top: 1px solid #f1f5f9;
@@ -203,7 +254,7 @@
       flex: 1;
       padding: 8px 12px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
@@ -217,20 +268,37 @@
     }
     .btn-copy { background: #f1f5f9; color: var(--text); border: 1px solid #cbd5e1; }
     .btn-copy:hover { background: #e2e8f0; }
-    .btn-download { background: var(--green-dark); color: #fff; }
-    .btn-download:hover { background: #059669; }
+    .btn-download { background: var(--primary); color: #fff; }
+    .btn-download:hover { background: #0f3d6e; }
 
-    .social-share-row {
-      display: flex;
-      gap: 6px;
+    .cal-actions-row { display: flex; gap: 6px; }
+    .btn-cal {
+      flex: 1;
+      padding: 7px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
-      margin-top: 4px;
+      justify-content: center;
+      gap: 4px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      transition: all 0.2s;
     }
+    .btn-cal:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .btn-cal.google { color: #1a73e8; border-color: #d2e3fc; background: #f8fafd; }
+
+    .social-share-row { display: flex; gap: 6px; align-items: center; margin-top: 2px; }
     .btn-share {
       flex: 1;
       padding: 6px;
       border-radius: 6px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-decoration: none;
       text-align: center;
@@ -245,7 +313,65 @@
     .share-linkedin { background: #0a66c2; }
     .share-x { background: #000000; }
     .share-facebook { background: #1877f2; }
-    .share-meta { background: linear-gradient(135deg, #0081fb, #00c6ff); }
+
+    /* CALENDAR VIEW */
+    #calendar-view { display: none; background: #ffffff; border-radius: 20px; border: 1px solid var(--border); padding: 1.8rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+    .cal-month-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .cal-month-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+    .cal-day-name { text-align: center; font-size: 0.76rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; padding-bottom: 8px; }
+    .cal-cell {
+      min-height: 100px;
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      padding: 8px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .cal-cell:hover { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .cal-cell-num { font-size: 0.8rem; font-weight: 700; color: #64748b; }
+    .cal-event-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 6px;
+      border-radius: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border-left: 3px solid #0284c7;
+      cursor: pointer;
+      line-height: 1.3;
+    }
+    .cal-event-pill:hover { filter: brightness(0.95); }
+
+    /* LIST / TIMELINE VIEW */
+    #list-view { display: none; display: flex; flex-direction: column; gap: 12px; }
+    .list-item-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      transition: all 0.2s;
+    }
+    .list-item-card:hover { transform: translateX(4px); border-color: #94a3b8; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+    .list-date-badge {
+      min-width: 100px;
+      text-align: center;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .list-date-day { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+    .list-date-month { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
 
     /* Auth Gate */
     #auth-overlay {
@@ -276,25 +402,21 @@
       right: 24px;
       background: #0b2545;
       color: #fff;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 14px 22px;
+      border-radius: 12px;
       font-size: 0.88rem;
       font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      border-left: 4px solid var(--green);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border-left: 5px solid var(--cyan-light);
       display: none;
       z-index: 10000;
-      animation: slideUp 0.3s ease;
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
     }
 
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .posts-grid { grid-template-columns: 1fr; }
       .studio-hero { padding: 1.5rem; }
+      .controls-bar { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
@@ -305,7 +427,7 @@
     <div class="auth-box">
       <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔐</div>
       <h2 style="font-family: var(--font-heading); font-size: 1.4rem; color: #0b2545; margin-bottom: 0.4rem;">Sosyal Medya Stüdyo Girişi</h2>
-      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.5rem;">Bu alandaki kurumsal yayın araçlarına erişim yetkili yöneticilerle sınırlandırılmıştır.</p>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.5rem;">Bu alandaki kurumsal takvim ve yayın araçlarına erişim yetkili yöneticilerle sınırlandırılmıştır.</p>
       <form onsubmit="handleAuthLogin(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
         <div>
           <label style="font-size: 0.78rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Kullanıcı Adı</label>
@@ -327,12 +449,17 @@
       <img src="assets/images/brand-emblem.png" alt="Yakın Grup" class="brand-logo">
       <div>
         <div class="brand-title">YAKIN GRUP</div>
-        <span class="brand-badge">SOSYAL MEDYA & ÖZEL GÜNLER STÜDYOSU</span>
+        <span class="brand-badge">1 YILLIK İÇERİK TAKVİMİ & SENKRONİZASYON</span>
       </div>
     </div>
     <div class="header-links">
       <a href="index.html" class="btn-top">🏛️ Holding Ana Sayfa</a>
-      <button onclick="exportAllCSV()" class="btn-top primary">📥 1 Yıllık Takvimi İndir (CSV)</button>
+      <button onclick="exportAllICS()" class="btn-top sync-btn" title="Tüm yılı iPhone/Mac/Outlook/Google takviminize alarmlarıyla ekler">
+        📅 1 Yıllık Takvimi İndir (.ICS)
+      </button>
+      <button onclick="exportAllCSV()" class="btn-top primary">
+        📊 Excel / CSV İndir
+      </button>
     </div>
   </header>
 
@@ -342,39 +469,53 @@
     <!-- Hero Banner -->
     <div class="studio-hero">
       <div class="hero-content">
-        <h1>Yıllık Kurumsal Özel Günler & Paylaşım Merkezi</h1>
-        <p>Milli bayramlar, dini günler ve sektörel anma günleri için hazır tasarlanmış 1080x1080 HD kurumsal banner'lar, onaylı tebrik metinleri ve tek tıkla sosyal medya paylaşım köprüleri.</p>
+        <h1>1 Yıllık Kurumsal İçerik Takvimi & Canlı Takvim Senkronizasyonu</h1>
+        <p>Üçüncü parti paralı araçlara gerek olmadan; 2026/2027 tüm milli bayramları, dini günleri, küresel farkındalık ve 4 ana sektör proje paylaşımlarını telefonunuzun ve bilgisayarınızın takvimine alarmlarıyla bağlayın.</p>
       </div>
-      <div class="hero-actions">
-        <a href="https://business.facebook.com/latest/composer" target="_blank" class="btn-hero btn-hero-white">
-          <span>🚀</span> Meta Business Suite (Ücretsiz Zamanlayıcı)
-        </a>
-        <a href="https://www.linkedin.com/company/yakingrupnet" target="_blank" class="btn-hero btn-hero-outline">
-          <span>💼</span> LinkedIn Şirket Sayfası
-        </a>
+
+      <div class="hero-sync-box">
+        <div class="sync-title">🔔 Canlı Takvim Bildirimleri</div>
+        <button onclick="exportAllICS()" class="btn-sync-action">
+          <span>📲</span> Apple / Outlook / Telefona Senkronize Et (.ICS)
+        </button>
+        <div style="font-size: 0.75rem; opacity: 0.8; text-align: center;">
+          ✓ Sabah 09:00 otomatik alarm bildirimi<br>✓ Etkinlik içinde hazır metin & doğrudan linkler
+        </div>
       </div>
     </div>
 
-    <!-- Filters Bar -->
-    <div class="filter-bar">
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <!-- Filter Pills -->
       <div class="filter-pills">
-        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (14 Özel Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar & Anma</button>
-        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Bayramlar & Yılbaşı</button>
-        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Özel Günler</button>
+        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (22 Etkinlik)</button>
+        <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar</button>
+        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı</button>
+        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel Günler</button>
+        <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini</button>
       </div>
-      <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);" id="count-label">14 Gönderi Hazır</div>
+
+      <!-- View Switcher -->
+      <div class="view-switcher">
+        <button class="view-btn active" id="btn-view-grid" onclick="switchView('grid')">🗂️ Kartlar</button>
+        <button class="view-btn" id="btn-view-list" onclick="switchView('list')">📋 Liste</button>
+      </div>
     </div>
 
-    <!-- Posts Grid -->
+    <!-- 1. GRID VIEW (DEFAULT) -->
     <div class="posts-grid" id="posts-container">
-      <!-- Injected via JavaScript -->
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- 2. LIST VIEW -->
+    <div id="list-view" style="display: none;">
+      <!-- Injected via JS -->
     </div>
 
   </div>
 
   <!-- TOAST -->
-  <div id="toast">✓ Metin ve hashtagler panoya kopyalandı!</div>
+  <div id="toast">✓ İşlem Başarılı!</div>
 
   <script>
     const STUDIO_AUTH_USER = 'Admin';
@@ -404,19 +545,21 @@
       }
     }
 
-    // ── ÖZEL GÜNLER VERİ HAVUZU ──────────────────────────────────────────────
-        const SPECIAL_DAYS = [
+    // ── 1 YILLIK KAPSAMLI İÇERİK HAVUZU ──────────────────────────────────────────
+    const CONTENT_PLAN = [
+      // MİLLİ BAYRAMLAR
       {
         id: '29-ekim',
         category: 'milli',
         title: '29 Ekim Cumhuriyet Bayramı',
+        dateISO: '2026-10-29',
+        timeStr: '09:00',
         dateStr: '29 Ekim 2026',
         icon: '🇹🇷',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         headline: '29 EKİM CUMHURİYET BAYRAMIMIZ KUTLU OLSUN!',
         subheadline: 'Cumhuriyetimizin Işığında, Geleceğin Altyapısını İnşa Ediyoruz.',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'High-end corporate 3D celebration artwork (1:1 square). An iconic, elegant Turkish Flag waving proudly with dramatic cinematic lighting over a futuristic modern glass skyline in Istanbul. Deep midnight navy blue (#0b2545) background with glowing cyan and soft light blue ambient lighting (#0284c7 / #38bdf8). Geometric construction lines, solar infrastructure glass blueprints subtly integrated in the base. Luxury holding corporate aesthetics, 8K Octane render, photorealistic, pristine professional presentation.',
         text: `Gazi Mustafa Kemal Atatürk ve silah arkadaşlarının bizlere armağan ettiği Cumhuriyetimizin 103. yılını gurur ve coşkuyla kutluyoruz. 
 
@@ -429,13 +572,14 @@ Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliği
         id: '10-kasim',
         category: 'milli',
         title: '10 Kasım Atatürk’ü Anma Günü',
+        dateISO: '2026-11-10',
+        timeStr: '09:05',
         dateStr: '10 Kasım 2026',
         icon: '🇹🇷',
         tagText: 'MİLLİ ANMA GÜNÜ',
         tagClass: 'tag-milli',
         headline: 'SAYGI, SEVGİ VE MİNNETLE ANIYORUZ...',
         subheadline: 'Büyük Önder Gazi Mustafa Kemal Atatürk (1881 - 1938)',
-        bgTheme: 'navy-dark',
         aiPrompt: 'Minimalist, solemn and deeply prestigious tribute artwork (1:1 square). A respectful silhouette profile of Mustafa Kemal Atatürk gazing toward an enlightened horizon. Deep midnight navy blue (#0b2545) atmosphere with soft platinum silver and ethereal azure backlighting (#38bdf8). Subtle geometric modernist architecture and glowing beacon light. 8K Unreal Engine 5 render, cinematic raytracing, refined corporate memorial design.',
         text: `Cumhuriyetimizin kurucusu, vizyonu ve ilkeleriyle yolumuzu aydınlatan Büyük Önder Gazi Mustafa Kemal Atatürk'ü, ebediyete irtihalinin yıl dönümünde saygı, rahmet ve sonsuz minnetle anıyoruz.
 
@@ -446,13 +590,14 @@ Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliği
         id: '23-nisan',
         category: 'milli',
         title: '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı',
+        dateISO: '2026-04-23',
+        timeStr: '09:00',
         dateStr: '23 Nisan 2026',
         icon: '🎈',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         headline: '23 NİSAN ULUSAL EGEMENLİK VE ÇOCUK BAYRAMI KUTLU OLSUN!',
         subheadline: 'Geleceğimizin Teminatı Çocuklarımıza Aydınlık Bir Yarın...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Inspiring and vibrant corporate holiday artwork (1:1 square). Silhouettes of joyful children looking at a bright futuristic green and smart city. Deep navy blue (#0b2545) base blending into glowing sky-blue and cyan rays (#38bdf8) with red and white celebration ribbons. Floating subtle energy particles, high-tech architectural structures in background. 8K photorealistic, uplifting and prestigious corporate brand design.',
         text: `Türkiye Büyük Millet Meclisi'nin açılışının yıl dönümünde, Gazi Mustafa Kemal Atatürk'ün dünya çocuklarına armağan ettiği 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı'nı coşkuyla kutluyoruz.
 
@@ -463,13 +608,14 @@ Yakın Grup olarak; bağımsızlığımızın, üretimin ve milli mühendisliği
         id: '19-mayis',
         category: 'milli',
         title: '19 Mayıs Atatürk’ü Anma, Gençlik ve Spor Bayramı',
+        dateISO: '2026-05-19',
+        timeStr: '09:00',
         dateStr: '19 Mayıs 2026',
         icon: '🏃',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         headline: '19 MAYIS GENÇLİK VE SPOR BAYRAMIMIZ KUTLU OLSUN!',
         subheadline: 'Bağımsızlık Meşalesinin Yakıldığı İlk Günün İnancıyla...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Dynamic, futuristic corporate artwork (1:1 square). A glowing energy torch with cyan and electric blue flames surrounded by modern steel engineering and architectural lines. Deep navy blue background (#0b2545) with vibrant cyan-blue light beams (#0284c7 / #38bdf8). Turkish national flag motif smoothly blended in glass reflections. 8K Octane render, cinematic, innovative and prestigious holding brand identity.',
         text: `19 Mayıs 1919'da Samsun'da yakılan bağımsızlık meşalesinin 107. yılında; Gazi Mustafa Kemal Atatürk ve tüm kahramanlarımızı saygıyla anıyor, geleceğimizi omuzlayan tüm gençlerimizin bayramını kutluyoruz.
 
@@ -480,13 +626,14 @@ Gençliğin enerjisi ve inovasyon vizyonuyla Türkiye'nin yarınlarını inşa e
         id: '30-agustos',
         category: 'milli',
         title: '30 Ağustos Zafer Bayramı',
+        dateISO: '2026-08-30',
+        timeStr: '09:00',
         dateStr: '30 Ağustos 2026',
         icon: '🇹🇷',
         tagText: 'MİLLİ BAYRAM',
         tagClass: 'tag-milli',
         headline: '30 AĞUSTOS ZAFER BAYRAMIMIZ KUTLU OLSUN!',
         subheadline: 'Milletimizin Bağımsızlık ve Kararlılık Zaferi...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Epic and prestigious victory celebration artwork (1:1 square). A magnificent Turkish Flag flying triumphantly over sleek modern infrastructure and industrial towers. Deep navy blue atmospheric sky (#0b2545) illuminated by golden and cyan sunrise highlights (#38bdf8). Sharp raytraced glass reflections, strong architectural foundation, 8K ultra-detailed photorealistic corporate render.',
         text: `Tarihimizin en şanlı dönüm noktalarından biri olan Büyük Taarruz ve Başkomutanlık Meydan Muharebesi'nin zaferle taçlandığı 30 Ağustos Zafer Bayramı'nı gururla kutluyoruz.
 
@@ -497,28 +644,32 @@ Başta Gazi Mustafa Kemal Atatürk olmak üzere, vatanımız uğruna can veren t
         id: '15-temmuz',
         category: 'milli',
         title: '15 Temmuz Demokrasi ve Milli Birlik Günü',
+        dateISO: '2026-07-15',
+        timeStr: '09:00',
         dateStr: '15 Temmuz 2026',
         icon: '🇹🇷',
         tagText: 'MİLLİ ANMA GÜNÜ',
         tagClass: 'tag-milli',
         headline: '15 TEMMUZ DEMOKRASİ VE MİLLİ BİRLİK GÜNÜ',
         subheadline: 'Milli İrademize Sahip Çıkan Kahramanlarımızı Saygıyla Anıyoruz.',
-        bgTheme: 'navy-dark',
         aiPrompt: 'Solemn and powerful national unity artwork (1:1 square). Istanbul Bosphorus Bridge and skyline under a deep midnight navy blue sky (#0b2545). Ethereal red and white Turkish flag illumination with soft cyan ambient glow (#38bdf8). Peaceful, monumental, respectful corporate memorial aesthetic. 8K resolution, cinematic lighting.',
         text: `15 Temmuz Demokrasi ve Milli Birlik Günü'nde; vatanı, bağımsızlığı ve milli iradesi için canını ortaya koyan tüm aziz şehitlerimizi rahmetle anıyor, kahraman gazilerimize şükranlarımızı sunuyoruz. 🇹🇷`,
         hashtags: '#15Temmuz #DemokrasiveMilliBirlikGünü #Milliİrade #TürkiyeGeçilmez #YakınGrup'
       },
+
+      // DİNİ GÜNLER & YILBAŞI
       {
         id: 'ramazan-bayrami',
         category: 'dini',
         title: 'Ramazan Bayramı Tebriği',
-        dateStr: '2026 Ramazan Bayramı',
+        dateISO: '2026-03-20',
+        timeStr: '09:00',
+        dateStr: '20 Mart 2026',
         icon: '🌙',
         tagText: 'DİNİ BAYRAM',
         tagClass: 'tag-dini',
         headline: 'RAMAZAN BAYRAMINIZ MÜBAREK OLSUN',
         subheadline: 'Birlik, Beraberlik ve Huzur Dolu Nice Bayramlara...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Luxurious corporate Eid holiday greeting visual (1:1 square). A stunning 3D glowing golden crescent moon floating gracefully above modern sustainable glass skyscrapers and green rooftop solar panels. Deep midnight navy blue (#0b2545) and soft cyan-teal atmosphere (#0284c7 / #38bdf8) with subtle geometric Islamic motifs. 8K Octane render, photorealistic, pristine executive design.',
         text: `Mübarek Ramazan Bayramı'nın milletimize, iş ortaklarımıza ve tüm insanlığa sağlık, huzur, bereket ve mutluluk getirmesini dileriz. 
 
@@ -529,13 +680,14 @@ Sevdiklerinizle bir arada, neşe ve esenlik dolu bir bayram geçirmeniz dileğiy
         id: 'kurban-bayrami',
         category: 'dini',
         title: 'Kurban Bayramı Tebriği',
-        dateStr: '2026 Kurban Bayramı',
+        dateISO: '2026-05-27',
+        timeStr: '09:00',
+        dateStr: '27 Mayıs 2026',
         icon: '🐑',
         tagText: 'DİNİ BAYRAM',
         tagClass: 'tag-dini',
         headline: 'KURBAN BAYRAMINIZ MÜBAREK OLSUN',
         subheadline: 'Paylaşmanın, Dayanışmanın ve Kardeşliğin Bereketiyle...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Elegant and spiritual corporate holiday artwork (1:1 square). A radiant crescent moon and subtle golden lantern light casting serene reflections on polished modern architectural glass. Deep navy blue background (#0b2545) with soft light blue and emerald highlights (#38bdf8). Peaceful, generous, high-end corporate holding aesthetic, 8K ultra-detailed render.',
         text: `Kurban Bayramı'nın bereketinin, paylaşma ve dayanışma ruhunun hanelerinize sağlık, esenlik ve huzur getirmesini temenni ederiz. 
 
@@ -546,13 +698,14 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
         id: 'yeni-yil',
         category: 'dini',
         title: '1 Ocak Yeni Yıl Tebriği',
+        dateISO: '2027-01-01',
+        timeStr: '09:00',
         dateStr: '1 Ocak 2027',
         icon: '🎉',
         tagText: 'YILBAŞI',
         tagClass: 'tag-dini',
         headline: 'MUTLU VE BAŞARILI BİR YIL DİLERİZ!',
         subheadline: '2027 Yılında Yeni Yatırımlar ve Sürdürülebilir Projelerle...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Ultra-modern luxury New Year corporate artwork (1:1 square). Glowing 3D geometric 2027 numerals crafted from crystal glass and polished steel with internal cyan LED light (#38bdf8). Deep rich navy blue backdrop (#0b2545) with delicate golden sparkles and modern skyscraper lights. 8K Unreal Engine 5 render, sophisticated, futuristic holding greeting.',
         text: `Yeni yılın tüm çalışanlarımıza, iş ortaklarımıza ve ülkemize sağlık, başarı, huzur ve bereket getirmesini dileriz. 
 
@@ -561,32 +714,36 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       },
       {
         id: '1-mayis',
-        category: 'sektor',
+        category: 'dini',
         title: '1 Mayıs Emek ve Dayanışma Günü',
+        dateISO: '2026-05-01',
+        timeStr: '09:00',
         dateStr: '1 Mayıs 2026',
         icon: '👷',
-        tagText: 'ÖZEL GÜN',
-        tagClass: 'tag-sektor',
+        tagText: 'RESMİ GÜN',
+        tagClass: 'tag-dini',
         headline: '1 MAYIS EMEK VE DAYANIŞMA GÜNÜ KUTLU OLSUN!',
         subheadline: 'Alın Teri ve Emeğiyle Geleceği İnşa Eden Tüm Emekçilerimize...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Powerful, modern architectural tribute artwork (1:1 square). High-tech industrial construction cranes, steel engineering structures, and solar panels under a dramatic blue sunrise. Deep navy blue background (#0b2545) with glowing cyan energy arcs (#38bdf8) and warm golden safety highlights. Respectful, monumental, premium engineering holding aesthetic, 8K render.',
         text: `Şantiyelerimizde, enerji santrallerimizde, üretim tesislerimizde ve ofislerimizde alın teriyle geleceği inşa eden tüm çalışma arkadaşlarımızın ve emekçilerin 1 Mayıs Emek ve Dayanışma Günü'nü kutluyoruz.
 
 En büyük gücümüz emeğimiz ve dayanışmamızdır. 🏗️⚡`,
         hashtags: '#1Mayıs #EmekveDayanışmaGünü #İşçiBayramı #AlınTeri #YakınGrup #BirlikteGüçlüyüz'
       },
+
+      // SEKTÖREL & KÜRESEL GÜNLER
       {
         id: 'muhendisler-gunu',
         category: 'sektor',
         title: '5 Aralık Dünya Mühendisler Günü',
+        dateISO: '2026-12-05',
+        timeStr: '10:00',
         dateStr: '5 Aralık 2026',
         icon: '⚙️',
         tagText: 'SEKTÖREL GÜN',
         tagClass: 'tag-sektor',
         headline: 'DÜNYA MÜHENDİSLER GÜNÜ KUTLU OLSUN!',
         subheadline: 'Hayalleri Projeye, Projeleri Geleceğe Dönüştüren Zihinler...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'High-tech 5D BIM and engineering innovation artwork (1:1 square). Holographic glowing cyan 3D architectural blueprints (#38bdf8) interacting with renewable energy grid diagrams in mid-air. Deep navy blue background (#0b2545) with fine precision grid lines and optic light trails. 8K raytraced, futuristic, elite engineering corporate identity.',
         text: `Karmaşık problemleri çözüme, bilim ve teknolojiyi sürdürülebilir yaşama dönüştüren; inşaattan enerjiye, yazılımdan altyapıya hayatı kolaylaştıran tüm mühendislerimizin 5 Aralık Dünya Mühendisler Günü'nü kutlarız! 📐⚙️`,
         hashtags: '#DünyaMühendislerGünü #5Aralık #Mühendislik #Engineering #YakınGrup #BIM #İnşaat #Enerji'
@@ -595,13 +752,14 @@ En büyük gücümüz emeğimiz ve dayanışmamızdır. 🏗️⚡`,
         id: 'cevre-gunu',
         category: 'sektor',
         title: '5 Haziran Dünya Çevre Günü',
+        dateISO: '2026-06-05',
+        timeStr: '10:00',
         dateStr: '5 Haziran 2026',
         icon: '🌱',
         tagText: 'SEKTÖREL GÜN',
         tagClass: 'tag-sektor',
         headline: '5 HAZİRAN DÜNYA ÇEVRE GÜNÜ',
         subheadline: 'Sıfır Karbon ve Temiz Enerjiyle Sürdürülebilir Bir Gelecek...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Futuristic sustainable green earth and clean technology visual (1:1 square). A pristine planet Earth orb enveloped by glowing cyan clean energy rings (#38bdf8) and lush green leaves, surrounded by modern solar farms and wind turbines. Deep navy blue universe background (#0b2545) with ambient light blue glow. 8K Octane render, environmental stewardship, high-end holding brand.',
         text: `Güneşten aldığımız güç ve sıfır emisyon vizyonumuzla yarınlara daha yaşanabilir yeşil bir dünya bırakmak için çalışıyoruz. 
 
@@ -612,13 +770,14 @@ Doğayı korumak, sürdürülebilir enerjiyi benimsemek ve geleceğimize sahip �
         id: 'enerji-gunu',
         category: 'sektor',
         title: '11 Ocak Dünya Enerji Tasarrufu & Enerji Günü',
+        dateISO: '2027-01-11',
+        timeStr: '10:00',
         dateStr: '11 Ocak 2027',
         icon: '⚡',
         tagText: 'SEKTÖREL GÜN',
         tagClass: 'tag-sektor',
         headline: 'DÜNYA ENERJİ GÜNÜ & ENERJİ VERİMLİLİĞİ',
         subheadline: 'Geleceğin Gücü: Yenilenebilir, Akıllı ve Verimli Enerji...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Breathtaking renewable energy landscape visual (1:1 square). Large gleaming Tier-1 bifacial solar PV panels and aerodynamic wind turbines under a brilliant cyan sunrise (#38bdf8). Flowing digital neon energy pulses and battery storage telemetry lines leading into a modern smart city. Deep midnight navy blue (#0b2545), 8K ultra-realistic corporate energy holding visual.',
         text: `Enerjinin verimli kullanılması ve temiz kaynaklardan üretilmesi, kalkınmanın ve bağımsızlığın temel anahtarıdır.
 
@@ -629,28 +788,129 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
         id: 'kadinlar-gunu',
         category: 'sektor',
         title: '8 Mart Dünya Kadınlar Günü',
+        dateISO: '2026-03-08',
+        timeStr: '09:00',
         dateStr: '8 Mart 2026',
         icon: '🌸',
         tagText: 'ÖZEL GÜN',
         tagClass: 'tag-sektor',
         headline: '8 MART DÜNYA KADINLAR GÜNÜ KUTLU OLSUN!',
         subheadline: 'Emeği, Cesareti ve İlhamıyla Dünyayı Güzelleştiren Kadınlarımıza...',
-        bgTheme: 'navy-cyan',
         aiPrompt: 'Elegant, inspiring, and empowering corporate artwork (1:1 square). A stylized silhouette of a visionary female engineer/leader looking towards a modern architectural horizon. Deep navy blue background (#0b2545) blended with soft glowing cyan, light blue, and delicate gold floral accents (#38bdf8 / #d4af37). Prestigious, empowering, 8K ultra-detailed corporate design.',
         text: `İş dünyasında, şantiyelerimizde, mühendislik projelerimizde ve hayatın her alanında bilgisi, vizyonu ve üretkenliğiyle geleceği şekillendiren tüm kadınların 8 Mart Dünya Kadınlar Günü'nü saygı ve minnetle kutlarız. 💐✨`,
         hashtags: '#8Mart #DünyaKadınlarGünü #8MartDünyaKadınlarGünü #KadınMühendisler #YakınGrup #EşitlikVeGelecek'
+      },
+      {
+        id: 'su-gunu',
+        category: 'sektor',
+        title: '22 Mart Dünya Su Günü',
+        dateISO: '2026-03-22',
+        timeStr: '10:00',
+        dateStr: '22 Mart 2026',
+        icon: '💧',
+        tagText: 'KÜRESEL GÜN',
+        tagClass: 'tag-sektor',
+        headline: '22 MART DÜNYA SU GÜNÜ',
+        subheadline: 'Her Damla Yaşamdır: Sürdürülebilir Su ve Altyapı Çözümleri...',
+        aiPrompt: 'Pristine, crystal-clear water droplet suspended in the air with glowing cyan and azure reflections (#38bdf8). In background, clean modern hydraulic engineering and sustainable green nature. Deep navy blue atmosphere (#0b2545), 8K Octane render, luxury corporate environmental visual.',
+        text: `Su kaynaklarımızın korunması ve verimli altyapı yönetimi geleceğimizin en hayati güvencesidir. Doğaya saygılı mühendislik ile sürdürülebilirliği destekliyoruz. 22 Mart Dünya Su Günü kutlu olsun! 💧🌍`,
+        hashtags: '#DünyaSuGünü #22Mart #SuGelecektir #Sürdürülebilirlik #YakınGrup #Mühendislik'
+      },
+      {
+        id: 'sehircilik-gunu',
+        category: 'sektor',
+        title: '17 Ekim Dünya Şehircilik Günü',
+        dateISO: '2026-10-17',
+        timeStr: '10:00',
+        dateStr: '17 Ekim 2026',
+        icon: '🏙️',
+        tagText: 'SEKTÖREL GÜN',
+        tagClass: 'tag-sektor',
+        headline: 'DÜNYA ŞEHİRCİLİK GÜNÜ',
+        subheadline: 'Dirençli, Akıllı ve İnsana Değer Katan Şehirler İnşa Ediyoruz...',
+        aiPrompt: 'Ultra-modern master-planned futuristic smart city with sustainable skyscrapers, lush vertical gardens, and clean transit bridges under a cyan-blue sky. Deep navy blue corporate lighting (#0b2545), 8K architectural render.',
+        text: `Depreme dayanıklı, estetik ve çevreyle uyumlu yaşam alanları tasarlamak modern şehirciliğin temelidir. Kentsel dönüşüm ve mühendislik vizyonumuzla güvenli şehirler inşa ediyoruz. 🏙️✨`,
+        hashtags: '#DünyaŞehircilikGünü #KentselDönüşüm #AkıllıŞehirler #YakınGrup #ModernMimari'
+      },
+
+      // SEKTÖR PROJE VİTRİNİ (HAFTALIK / AYLIK)
+      {
+        id: 'proje-insaat-datacenter',
+        category: 'proje',
+        title: 'Yakın İnşaat — Ağır Sanayi & Veri Merkezleri',
+        dateISO: '2026-04-10',
+        timeStr: '11:00',
+        dateStr: '10 Nisan 2026',
+        icon: '🏢',
+        tagText: 'YAKIN İNŞAAT',
+        tagClass: 'tag-proje',
+        headline: 'YAKIN İNŞAAT: YÜKSEK GÜVENLİKLİ ENDÜSTRİYEL TAAHHÜT',
+        subheadline: 'Veri Merkezleri, Ağır Sanayi ve Tier-3 Standartlarında İleri Mühendislik...',
+        aiPrompt: 'High-security modern Tier-3 Data Center facility with glowing cyan fiber optic server racks and precision architectural steel facade. Deep navy blue corporate aesthetic (#0b2545), 8K render.',
+        text: `Yüksek veri güvenliği ve kesintisiz enerji gerektiren kritik tesislerde; depreme dayanıklı betonarme ve çelik mühendisliğiyle Türkiye'nin dijital omurgasını inşa ediyoruz. 🏗️🌐`,
+        hashtags: '#Yakınİnşaat #DataCenter #VeriMerkezi #AğırSanayi #EPC #Mühendislik #YakınGrup'
+      },
+      {
+        id: 'proje-enerji-bess',
+        category: 'proje',
+        title: 'Yakın Enerji — Tier-1 GES & BESS Batarya Depolama',
+        dateISO: '2026-06-18',
+        timeStr: '11:00',
+        dateStr: '18 Haziran 2026',
+        icon: '🔋',
+        tagText: 'YAKIN ENERJİ',
+        tagClass: 'tag-proje',
+        headline: 'YAKIN ENERJİ: KESİNTİSİZ GÜÇ İÇİN BESS DEPOLAMA',
+        subheadline: 'Bifacial Güneş Panelleri ve Yüksek Kapasiteli Batarya Sistemleri...',
+        aiPrompt: 'High-tech industrial BESS battery energy storage containers and solar panel array with glowing cyan telemetry power lines (#38bdf8). Deep midnight navy background (#0b2545), 8K clean energy render.',
+        text: `Güneş enerjisinin sürekliliği, akıllı batarya depolama (BESS) sistemleriyle mümkün. Yakın Enerji, anahtar teslim EPC çözümleriyle sanayinin enerjisini garantiye alıyor. ☀️🔋`,
+        hashtags: '#YakınEnerji #BESS #BataryaDepolama #GüneşEnerjisi #SolarEPC #CleanPower #YakınGrup'
+      },
+      {
+        id: 'proje-capital-spv',
+        category: 'proje',
+        title: 'Yakın Capital — Proje Finansmanı & SPV Mimarisi',
+        dateISO: '2026-09-15',
+        timeStr: '11:00',
+        dateStr: '15 Eylül 2026',
+        icon: '📈',
+        tagText: 'YAKIN CAPITAL',
+        tagClass: 'tag-proje',
+        headline: 'YAKIN CAPITAL: PROJE FİNANSMANI VE YATIRIM MİMARİSİ',
+        subheadline: 'Büyük Ölçekli Altyapı, SPV Yapılandırma ve Sermaye Güvencesi...',
+        aiPrompt: 'Executive corporate financial modeling visual with 3D glowing gold and cyan investment growth charts rising above architectural skyscrapers. Deep navy blue aesthetic (#0b2545), 8K luxury render.',
+        text: `Doğru finansman modeli, büyük projelerin can damarıdır. Yakın Capital; SPV yapılandırma, GYO ortaklıkları ve yatırım danışmanlığı ile sermayeyi katma değere dönüştürüyor. 💼🏛️`,
+        hashtags: '#YakınCapital #ProjeFinansmanı #SPV #GYO #YatırımYönetimi #Holding #YakınGrup'
+      },
+      {
+        id: 'proje-teknoloji-bim',
+        category: 'proje',
+        title: 'Yakın Teknoloji — 5D BIM & AI Karar Motorları',
+        dateISO: '2026-11-25',
+        timeStr: '11:00',
+        dateStr: '25 Kasım 2026',
+        icon: '💻',
+        tagText: 'YAKIN TEKNOLOJİ',
+        tagClass: 'tag-proje',
+        headline: 'YAKIN TEKNOLOJİ: DİJİTAL İKİZ VE 5D BIM YÖNETİMİ',
+        subheadline: 'Şantiyede Sıfır Hata: Dijitalleşen İnşaat ve Enerji Süreçleri...',
+        aiPrompt: 'Holographic 5D BIM digital twin building model floating over an architectural tablet with glowing cyan wireframe measurements. Deep navy blue atmosphere (#0b2545), 8K high-tech render.',
+        text: `Maliyet, zaman ve kalite yönetiminde yapay zekâ destekli 5D BIM teknolojimizle şantiyelerimizde hata payını sıfırlıyoruz. Geleceğin mühendisliği bugün Yakın Teknoloji'de! 📐🚀`,
+        hashtags: '#YakınTeknoloji #BIM #5DBIM #Dijitalİkiz #PropTech #İnovasyon #YakınGrup'
       }
     ];
 
-    // ── RENDER POSTS ────────────────────────────────────────────────────────
+    // ── RENDER POSTS (GRID VIEW) ─────────────────────────────────────────────
     function renderPosts(filter = 'all') {
       const container = document.getElementById('posts-container');
+      const listView = document.getElementById('list-view');
       container.innerHTML = '';
-      
-      const filtered = filter === 'all' ? SPECIAL_DAYS : SPECIAL_DAYS.filter(d => d.category === filter);
-      document.getElementById('count-label').textContent = `${filtered.length} Gönderi Hazır`;
+      listView.innerHTML = '';
 
-      filtered.forEach((item, index) => {
+      const filtered = filter === 'all' ? CONTENT_PLAN : CONTENT_PLAN.filter(d => d.category === filter);
+
+      filtered.forEach((item) => {
+        // Grid Card
         const card = document.createElement('div');
         card.className = 'post-card';
         card.innerHTML = `
@@ -659,7 +919,7 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
               <span class="event-icon">${item.icon}</span>
               <div>
                 <div class="event-title">${item.title}</div>
-                <div class="event-date">📅 ${item.dateStr}</div>
+                <div class="event-date">📅 ${item.dateStr} • ⏰ ${item.timeStr}</div>
               </div>
             </div>
             <span class="event-tag ${item.tagClass}">${item.tagText}</span>
@@ -670,23 +930,33 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
           </div>
 
           <div class="post-card-body">
-            <span class="post-text-label">Paylaşım Metni</span>
-            <div class="post-text-content" id="text-${item.id}">${item.text}</div>
-            <div class="post-hashtags" id="tags-${item.id}">${item.hashtags}</div>
+            <span class="post-text-label">Onaylı Paylaşım Metni</span>
+            <div class="post-text-content">${item.text}</div>
+            <div class="post-hashtags">${item.hashtags}</div>
           </div>
 
           <div class="post-card-footer">
             <div class="primary-actions">
-              <button class="btn-act btn-copy" onclick="copyPostText('${item.id}')" title="Sosyal Medya Metnini Kopyala">
+              <button class="btn-act btn-copy" onclick="copyPostText('${item.id}')" title="Metni ve Hashtagleri Kopyala">
                 📋 Metni Kopyala
               </button>
               <button class="btn-act btn-download" onclick="downloadBanner('${item.id}', '${item.title}')" title="1080x1080 HD Banner İndir">
                 ⬇️ HD Görsel İndir
               </button>
             </div>
-            <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; width: 100%; padding: 7px 10px; font-size: 0.8rem;" onclick="copyAiPrompt('${item.id}')" title="ChatGPT / DALL-E / Midjourney için Hazır Görsel Promptunu Kopyala">
+
+            <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; width: 100%; padding: 7px 10px; font-size: 0.78rem;" onclick="copyAiPrompt('${item.id}')" title="ChatGPT / Midjourney için Hazır Promptu Kopyala">
               🤖 GPT Görsel Promptunu Kopyala
             </button>
+
+            <div class="cal-actions-row">
+              <button class="btn-cal" onclick="downloadSingleICS('${item.id}')" title="Bu Günü Apple / Outlook / Telefona Ekle">
+                📲 Takvime Ekle (.ics)
+              </button>
+              <a href="${getGoogleCalUrl(item)}" target="_blank" class="btn-cal google" title="Google Takvim Web'de Aç">
+                📅 Google Takvim
+              </a>
+            </div>
 
             <div class="social-share-row">
               <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">
@@ -698,20 +968,40 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
               <a href="https://www.facebook.com/sharer/sharer.php?u=https://yakingrup.net" target="_blank" class="btn-share share-facebook" title="Facebook'ta Paylaş">
                 🔵 Facebook
               </a>
-              <a href="https://business.facebook.com/latest/composer" target="_blank" class="btn-share share-meta" title="Meta Business Suite ile Planla">
-                📅 Meta Planla
-              </a>
             </div>
           </div>
         `;
         container.appendChild(card);
 
-        // Draw Canvas after DOM insertion
-        setTimeout(() => drawBannerCanvas(item), 50);
+        // List Item
+        const listItem = document.createElement('div');
+        listItem.className = 'list-item-card';
+        const dateParts = item.dateStr.split(' ');
+        listItem.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 1.2rem;">
+            <div class="list-date-badge">
+              <span class="list-date-day">${dateParts[0]}</span>
+              <span class="list-date-month">${dateParts[1]}</span>
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 1rem; color: var(--primary);">${item.icon} ${item.title}</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Saat: ${item.timeStr} • <span class="event-tag ${item.tagClass}">${item.tagText}</span></div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn-top" onclick="copyPostText('${item.id}')">📋 Kopyala</button>
+            <button class="btn-top" onclick="downloadSingleICS('${item.id}')">📲 Takvim (.ics)</button>
+            <a href="${getGoogleCalUrl(item)}" target="_blank" class="btn-top primary">📅 Google</a>
+          </div>
+        `;
+        listView.appendChild(listItem);
+
+        // Draw Canvas
+        setTimeout(() => drawBannerCanvas(item), 40);
       });
     }
 
-    // ── DRAW CANVAS BANNER (1080x1080) ──────────────────────────────────────
+    // ── DRAW CANVAS BANNER (1080x1080) ──────────────────────────────────────────
     function drawBannerCanvas(item) {
       const canvas = document.getElementById(`canvas-${item.id}`);
       if (!canvas) return;
@@ -720,7 +1010,7 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
       const W = 1080;
       const H = 1080;
 
-      // 1. Arka Plan (Derin Lacivert #0b2545 ve Işıltılı Açık Mavi #0284c7 / #38bdf8 Tonları)
+      // 1. Arka Plan (Derin Gece Mavisi & Açık Mavi Işık Hüzmesi)
       const grad = ctx.createLinearGradient(0, 0, W, H);
       grad.addColorStop(0, '#07162c');
       grad.addColorStop(0.4, '#0b2545');
@@ -729,24 +1019,23 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
-      // Üst Köşe Açık Mavi / Cyan Işık Hüzmesi
-      const radialLight = ctx.createRadialGradient(W, 0, 50, W, 0, 700);
-      radialLight.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+      const radialLight = ctx.createRadialGradient(W, 0, 50, W, 0, 750);
+      radialLight.addColorStop(0, 'rgba(56, 189, 248, 0.38)');
       radialLight.addColorStop(0.5, 'rgba(2, 132, 199, 0.15)');
       radialLight.addColorStop(1, 'rgba(11, 37, 69, 0)');
       ctx.fillStyle = radialLight;
       ctx.fillRect(0, 0, W, H);
 
-      // Dekoratif Altın/Yeşil Çerçeve ve Işık Efekti
-      ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+      // Çerçeve
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
       ctx.lineWidth = 12;
       ctx.strokeRect(40, 40, W - 80, H - 80);
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
       ctx.lineWidth = 2;
       ctx.strokeRect(55, 55, W - 110, H - 110);
 
-      // Köşe Vurguları
+      // Köşe Altın Vurguları
       ctx.fillStyle = '#d4af37';
       const cornerSize = 24;
       ctx.fillRect(34, 34, cornerSize, cornerSize);
@@ -754,95 +1043,198 @@ Yakın Enerji olarak; güneş, batarya depolama ve yüksek verimli şebeke çöz
       ctx.fillRect(34, H - 34 - cornerSize, cornerSize, cornerSize);
       ctx.fillRect(W - 34 - cornerSize, H - 34 - cornerSize, cornerSize);
 
-      // İkon / Rozet Çemberi
+      // İkon Çemberi
       ctx.beginPath();
-      ctx.arc(W / 2, 230, 95, 0, Math.PI * 2);
+      ctx.arc(W / 2, 225, 90, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.fill();
       ctx.lineWidth = 4;
       ctx.strokeStyle = '#d4af37';
       ctx.stroke();
 
-      ctx.font = '85px sans-serif';
+      ctx.font = '80px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(item.icon, W / 2, 230);
+      ctx.fillText(item.icon, W / 2, 225);
 
-      // Üst Başlık (Tarih Rozeti)
-      ctx.font = '700 28px "Inter", sans-serif';
-      ctx.fillStyle = '#d4af37';
+      // Tarih Rozeti
+      ctx.font = '700 26px "Inter", sans-serif';
+      ctx.fillStyle = '#38bdf8';
       ctx.letterSpacing = '4px';
-      ctx.fillText(item.dateStr.toUpperCase(), W / 2, 380);
+      ctx.fillText(item.dateStr.toUpperCase(), W / 2, 375);
 
-      // Ana Başlık (Wrap text)
-      ctx.font = '800 52px "Manrope", sans-serif';
+      // Ana Başlık
+      ctx.font = '800 48px "Manrope", sans-serif';
       ctx.fillStyle = '#ffffff';
       ctx.letterSpacing = '-0.5px';
       
       const words = item.headline.split(' ');
       let line = '';
-      let y = 470;
+      let y = 460;
       for (let n = 0; n < words.length; n++) {
         const testLine = line + words[n] + ' ';
         const metrics = ctx.measureText(testLine);
         if (metrics.width > W - 180 && n > 0) {
           ctx.fillText(line.trim(), W / 2, y);
           line = words[n] + ' ';
-          y += 65;
+          y += 62;
         } else {
           line = testLine;
         }
       }
       ctx.fillText(line.trim(), W / 2, y);
 
-      // Alt Başlık / Vurgu
-      ctx.font = '500 30px "Inter", sans-serif';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
+      // Alt Başlık
+      ctx.font = '500 28px "Inter", sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
       ctx.fillText(item.subheadline, W / 2, y + 80);
 
-      // Dekoratif Ayırıcı Çizgi
-      ctx.strokeStyle = 'rgba(212, 175, 55, 0.6)';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(W / 2 - 120, y + 140);
-      ctx.lineTo(W / 2 + 120, y + 140);
-      ctx.stroke();
-
-      // Alt Logo Alanı (Yakın Grup İmzası)
+      // Alt Logo Alanı
       ctx.font = '800 36px "Cinzel", serif';
       ctx.fillStyle = '#ffffff';
       ctx.letterSpacing = '6px';
       ctx.fillText('YAKIN GRUP', W / 2, 940);
 
       ctx.font = '600 20px "Inter", sans-serif';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.7)';
       ctx.letterSpacing = '3px';
       ctx.fillText('İNŞAAT • ENERJİ • CAPITAL • TEKNOLOJİ', W / 2, 980);
     }
 
-    // ── ACTIONS ─────────────────────────────────────────────────────────────
+    // ── CALENDAR SYNC ENGINE (.ICS GENERATOR) ──────────────────────────────────
+    function generateICSContent(items) {
+      let ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Yakin Grup//Social Media Calendar//TR',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'X-WR-CALNAME:Yakın Grup Sosyal Medya & İçerik Takvimi',
+        'X-WR-TIMEZONE:Europe/Istanbul'
+      ];
+
+      items.forEach(item => {
+        const dateClean = item.dateISO.replace(/-/g, '');
+        const timeClean = item.timeStr.replace(':', '') + '00';
+        const startDT = `${dateClean}T${timeClean}`;
+        
+        // 30 min duration
+        const endHour = String(parseInt(item.timeStr.split(':')[0]) + 1).padStart(2, '0');
+        const endDT = `${dateClean}T${endHour}${item.timeStr.split(':')[1]}00`;
+
+        const desc = `${item.text.replace(/\n/g, '\\n')}\\n\\n${item.hashtags}\\n\\n---\\nPaylaşım Linkleri:\\nLinkedIn: https://www.linkedin.com/company/yakingrupnet\\nInstagram: https://www.instagram.com/yakingrupnet\\nX: https://x.com/yakingrupnet`;
+
+        ics.push('BEGIN:VEVENT');
+        ics.push(`UID:${item.id}-2026@yakingrup.net`);
+        ics.push(`DTSTAMP:20260101T000000Z`);
+        ics.push(`DTSTART;TZID=Europe/Istanbul:${startDT}`);
+        ics.push(`DTEND;TZID=Europe/Istanbul:${endDT}`);
+        ics.push(`SUMMARY:📢 ${item.title} (Yakın Grup Paylaşım Vakti)`);
+        ics.push(`DESCRIPTION:${desc}`);
+        ics.push(`LOCATION:Sosyal Medya Kanalları`);
+        ics.push('STATUS:CONFIRMED');
+        
+        // Alarm 1 hour before
+        ics.push('BEGIN:VALARM');
+        ics.push('TRIGGER:-PT60M');
+        ics.push('ACTION:DISPLAY');
+        ics.push(`DESCRIPTION:Yakın Grup: ${item.title} paylaşımına 1 saat kaldı!`);
+        ics.push('END:VALARM');
+
+        // Alarm at exact time
+        ics.push('BEGIN:VALARM');
+        ics.push('TRIGGER:PT0M');
+        ics.push('ACTION:DISPLAY');
+        ics.push(`DESCRIPTION:Yakın Grup: ${item.title} paylaşım vakti geldi!`);
+        ics.push('END:VALARM');
+
+        ics.push('END:VEVENT');
+      });
+
+      ics.push('END:VCALENDAR');
+      return ics.join('\r\n');
+    }
+
+    function exportAllICS() {
+      const icsData = generateICSContent(CONTENT_PLAN);
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', 'Yakin_Grup_1_Yillik_Icerik_Takvimi.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('✓ 1 Yıllık Takvim (.ICS) İndirildi! Çift tıklayarak telefonunuza/bilgisayarınıza ekleyebilirsiniz.');
+    }
+
+    function downloadSingleICS(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const icsData = generateICSContent([item]);
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `Yakin_Grup_${item.id}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast(`✓ "${item.title}" takviminize eklendi!`);
+    }
+
+    function getGoogleCalUrl(item) {
+      const start = item.dateISO.replace(/-/g, '') + 'T' + item.timeStr.replace(':', '') + '00';
+      const endHour = String(parseInt(item.timeStr.split(':')[0]) + 1).padStart(2, '0');
+      const end = item.dateISO.replace(/-/g, '') + 'T' + endHour + item.timeStr.split(':')[1] + '00';
+      
+      const title = encodeURIComponent(`📢 ${item.title} (Yakın Grup Paylaşım Vakti)`);
+      const details = encodeURIComponent(`${item.text}
+
+${item.hashtags}
+
+---
+https://yakingrup.net`);
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=Sosyal+Medya`;
+    }
+
+    // ── ACTIONS & UTILS ──────────────────────────────────────────────────────
+    function switchView(view) {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      const grid = document.getElementById('posts-container');
+      const list = document.getElementById('list-view');
+      
+      if (view === 'grid') {
+        document.getElementById('btn-view-grid').classList.add('active');
+        grid.style.display = 'grid';
+        list.style.display = 'none';
+      } else {
+        document.getElementById('btn-view-list').classList.add('active');
+        grid.style.display = 'none';
+        list.style.display = 'flex';
+      }
+    }
+
     function filterPosts(category, btn) {
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderPosts(category);
     }
 
-        function copyAiPrompt(id) {
-      const item = SPECIAL_DAYS.find(d => d.id === id);
-      if (!item || !item.aiPrompt) return;
-      navigator.clipboard.writeText(item.aiPrompt).then(() => {
-        showToast('✓ GPT / DALL-E Görsel Promptu Kopyalandı! (ChatGPT\'ye yapıştırabilirsiniz)');
-      });
-    }
-
     function copyPostText(id) {
-      const item = SPECIAL_DAYS.find(d => d.id === id);
+      const item = CONTENT_PLAN.find(d => d.id === id);
       if (!item) return;
       const fullText = `${item.text}
 
 ${item.hashtags}`;
       navigator.clipboard.writeText(fullText).then(() => {
         showToast('✓ Paylaşım metni ve hashtagler panoya kopyalandı!');
+      });
+    }
+
+    function copyAiPrompt(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item || !item.aiPrompt) return;
+      navigator.clipboard.writeText(item.aiPrompt).then(() => {
+        showToast('✓ GPT / DALL-E Görsel Promptu Kopyalandı! (ChatGPT\'ye yapıştırabilirsiniz)');
       });
     }
 
@@ -856,32 +1248,31 @@ ${item.hashtags}`;
       showToast('✓ 1080x1080 HD görsel indirildi!');
     }
 
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-
-    // ── BULK CSV EXPORT ─────────────────────────────────────────────────────
     function exportAllCSV() {
       let csvContent = "data:text/csv;charset=utf-8,﻿";
-      csvContent += "Tarih,Özel Gün / Başlık,Kategori,Paylaşım Metni,Hashtagler\n";
+      csvContent += "Tarih,Saat,Özel Gün / Başlık,Kategori,Paylaşım Metni,Hashtagler\n";
 
-      SPECIAL_DAYS.forEach(item => {
+      CONTENT_PLAN.forEach(item => {
         const cleanText = item.text.replace(/"/g, '""').replace(/\n/g, ' ');
         const cleanTags = item.hashtags.replace(/"/g, '""');
-        csvContent += `"${item.dateStr}","${item.title}","${item.category}","${cleanText}","${cleanTags}"\n`;
+        csvContent += `"${item.dateStr}","${item.timeStr}","${item.title}","${item.category}","${cleanText}","${cleanTags}"\n`;
       });
 
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Yakin_Grup_Yillik_Sosyal_Medya_Takvimi_2026.csv");
+      link.setAttribute("download", "Yakin_Grup_1_Yillik_Icerik_Takvimi_2026_2027.csv");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('✓ 1 Yıllık Sosyal Medya Takvimi (CSV) İndirildi!');
+      showToast('✓ 1 Yıllık İçerik Takvimi (CSV/Excel) İndirildi!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
     }
 
     // Init
