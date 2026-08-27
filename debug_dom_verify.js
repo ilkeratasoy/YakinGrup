@@ -1,907 +1,62 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yakın Grup — 1 Yıllık İçerik Takvimi & Sosyal Medya Senkronizasyon Stüdyosu</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #0b2545;
-      --primary-accent: #0284c7;
-      --cyan-light: #38bdf8;
-      --green: #10b981;
-      --green-dark: #047857;
-      --gold: #d4af37;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border: #e2e8f0;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --font-body: 'Inter', -apple-system, sans-serif;
-      --font-heading: 'Manrope', sans-serif;
-    }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+const elements = {};
+function getEl(id) {
+  if (!elements[id]) {
+    elements[id] = {
+      id: id,
+      style: {},
+      classList: {
+        add: function(c) { this._classes = this._classes || []; this._classes.push(c); },
+        remove: function(c) { this._classes = (this._classes || []).filter(x => x !== c); },
+        contains: function(c) { return (this._classes || []).includes(c); }
+      },
+      appendChild: function(c) { this._children = this._children || []; this._children.push(c); },
+      removeChild: function(c) { this._children = (this._children || []).filter(x => x !== c); },
+      querySelector: function(sel) {
+        if (sel.startsWith('#')) return getEl(sel.slice(1));
+        return { style: {}, classList: { add: ()=>{}, remove: ()=>{} }, appendChild: ()=>{} };
+      },
+      querySelectorAll: function(sel) { return []; },
+      innerHTML: '',
+      textContent: '',
+      setAttribute: function(k, v) { this[k] = v; },
+      getAttribute: function(k) { return this[k]; }
+    };
+  }
+  return elements[id];
+}
 
-    /* Topbar */
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
-      padding: 0.9rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    }
-    .brand-wrap { display: flex; align-items: center; gap: 12px; }
-    .brand-logo { width: 32px; height: 32px; object-fit: contain; }
-    .brand-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: var(--primary); }
-    .brand-badge { font-size: 0.72rem; font-weight: 800; background: #ecfdf5; color: var(--green-dark); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(16,185,129,0.3); }
+const document = {
+  getElementById: getEl,
+  querySelectorAll: function(sel) { return []; },
+  createElement: function(tag) {
+    return {
+      tagName: tag,
+      style: {},
+      classList: {
+        add: function(c) { this._classes = this._classes || []; this._classes.push(c); },
+        remove: function(c) { this._classes = (this._classes || []).filter(x => x !== c); }
+      },
+      appendChild: function(c) { this._children = this._children || []; this._children.push(c); },
+      querySelector: function(sel) {
+        if (sel.startsWith('#')) return getEl(sel.slice(1));
+        return { style: {}, classList: { add: ()=>{}, remove: ()=>{} }, appendChild: ()=>{} };
+      },
+      querySelectorAll: function(sel) { return []; },
+      setAttribute: function(k, v) { this[k] = v; }
+    };
+  },
+  body: getEl('body'),
+  addEventListener: function(evt, cb) { if (evt === 'DOMContentLoaded') cb(); }
+};
 
-    .header-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .btn-top { padding: 7px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; border: 1px solid var(--border); background: #f8fafc; color: var(--text); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-top:hover { background: #e2e8f0; }
-    .btn-top.primary { background: linear-gradient(135deg, #0b2545, #0284c7); color: #fff; border: none; box-shadow: 0 4px 12px rgba(11,37,69,0.2); }
-    .btn-top.sync-btn { background: #10b981; color: #fff; border: none; font-weight: 800; }
-    .btn-top.sync-btn:hover { background: #059669; }
+const window = { URL: { createObjectURL: () => '' } };
+const sessionStorage = { getItem: () => 'true', setItem: () => {} };
+const localStorage = { getItem: () => 'true', setItem: () => {} };
+const navigator = { clipboard: { writeText: () => Promise.resolve() } };
+const Blob = function() {};
 
-    /* Container */
-    .container { max-width: 1320px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; flex: 1; }
-
-    /* Hero Banner */
-    .studio-hero {
-      background: linear-gradient(135deg, #07162c 0%, #0b2545 50%, #0f3d6e 100%);
-      color: #fff;
-      border-radius: 24px;
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 15px 35px rgba(11,37,69,0.18);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.8rem;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    .studio-hero::after {
-      content: '';
-      position: absolute;
-      top: -50px; right: -50px;
-      width: 250px; height: 250px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.25), transparent 70%);
-      pointer-events: none;
-    }
-    .hero-content h1 { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-    .hero-content p { font-size: 0.95rem; opacity: 0.88; max-width: 680px; line-height: 1.6; }
-    .hero-sync-box {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 16px;
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-width: 300px;
-      backdrop-filter: blur(10px);
-    }
-    .sync-title { font-size: 0.82rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; }
-    .btn-sync-action {
-      background: #ffffff;
-      color: #0b2545;
-      font-weight: 800;
-      font-size: 0.88rem;
-      padding: 10px 16px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    }
-    .btn-sync-action:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); background: #f8fafc; }
-
-    /* View Switcher & Filter Bar */
-    .controls-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.8rem;
-      background: #ffffff;
-      padding: 1rem 1.4rem;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-    }
-    .view-switcher { display: flex; background: #f1f5f9; padding: 4px; border-radius: 10px; gap: 4px; }
-    .view-btn {
-      padding: 7px 16px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .view-btn.active { background: #0b2545; color: #ffffff; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-
-    .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    .filter-pill {
-      padding: 7px 14px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .filter-pill:hover, .filter-pill.active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(11,37,69,0.15);
-    }
-
-    /* ── AYLIK İNTERAKTİF TAKVİM ARAYÜZÜ ──────────────────────────────── */
-    #calendar-month-view {
-      background: #ffffff;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      padding: 2rem;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.04);
-      margin-bottom: 2rem;
-    }
-    .cal-nav-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.2rem;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .year-pill {
-      border: none;
-      background: transparent;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .year-pill:hover, .year-pill.active {
-      background: #0b2545;
-      color: #ffffff;
-    }
-
-    .cal-month-heading {
-      font-family: var(--font-heading);
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .cal-nav-arrows { display: flex; gap: 8px; }
-    .btn-cal-nav {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 6px 14px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      color: var(--text);
-      transition: all 0.2s;
-    }
-    .btn-cal-nav:hover { background: #e2e8f0; }
-
-    /* Hızlı Ay Seçim Şeridi */
-    .months-quick-bar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 1rem;
-      margin-bottom: 1.2rem;
-    }
-    .month-chip {
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      color: var(--text-muted);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-    .month-chip:hover, .month-chip.active {
-      background: #0284c7;
-      color: #ffffff;
-      border-color: #0284c7;
-    }
-
-    /* Takvim Izgarası (7 Gün) */
-    .cal-weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .cal-weekday {
-      text-align: center;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 6px 0;
-    }
-
-    .cal-days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-    }
-    .cal-day-cell {
-      min-height: 120px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      transition: all 0.2s;
-      position: relative;
-    }
-    .cal-day-cell:hover {
-      border-color: #0284c7;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
-      transform: translateY(-2px);
-    }
-    .cal-day-cell.other-month {
-      background: #f8fafc;
-      opacity: 0.45;
-    }
-    .cal-day-cell.today {
-      border: 2px solid #0284c7;
-      background: #f0f9ff;
-    }
-    .cal-day-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .cal-day-num {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: #334155;
-    }
-    .cal-day-cell.today .cal-day-num {
-      color: #0284c7;
-    }
-
-    /* Takvim İçi Etkinlik Rozetleri */
-    .cal-event-badge {
-      padding: 5px 8px;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1.3;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      transition: all 0.2s;
-      border-left: 3px solid;
-    }
-    .cal-event-badge:hover {
-      filter: brightness(0.92);
-      transform: scale(1.02);
-    }
-    .event-milli { background: #fee2e2; color: #991b1b; border-color: #dc2626; }
-    .event-dini { background: #fef3c7; color: #92400e; border-color: #d97706; }
-    .event-sektor { background: #e0f2fe; color: #075985; border-color: #0284c7; }
-    .event-proje { background: #ecfdf5; color: #065f46; border-color: #059669; }
-
-    /* GRID VIEW */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 1.8rem;
-    }
-
-    .post-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      display: flex;
-      flex-direction: column;
-      transition: all 0.25s ease;
-    }
-    .post-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(11,37,69,0.12);
-      border-color: #cbd5e1;
-    }
-
-    .post-card-header {
-      padding: 1.1rem 1.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #f1f5f9;
-      background: #fafafa;
-    }
-    .event-meta { display: flex; align-items: center; gap: 10px; }
-    .event-icon { font-size: 1.5rem; }
-    .event-title { font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--primary); }
-    .event-date { font-size: 0.76rem; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 4px; }
-    .event-tag { font-size: 0.68rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; }
-    .tag-milli { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
-    .tag-dini { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-    .tag-sektor { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
-    .tag-proje { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
-
-    /* Canvas Box */
-    .post-preview-box {
-      background: #07162c;
-      padding: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .banner-canvas {
-      width: 100%;
-      max-width: 340px;
-      aspect-ratio: 1 / 1;
-      border-radius: 14px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-      display: block;
-    }
-
-    
-    .ratio-pill {
-      background: rgba(11, 37, 69, 0.75);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #cbd5e1;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .ratio-pill:hover, .ratio-pill.active {
-      background: #0284c7;
-      color: #ffffff;
-      border-color: #38bdf8;
-    }
-
-    /* Card Body */
-    .post-card-body {
-      padding: 1.2rem 1.4rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .post-text-label { font-size: 0.74rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-    .post-text-content {
-      font-size: 0.86rem;
-      line-height: 1.55;
-      color: #334155;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 12px;
-      max-height: 110px;
-      overflow-y: auto;
-      white-space: pre-line;
-    }
-    .post-hashtags { font-size: 0.78rem; color: var(--primary-accent); font-weight: 600; line-height: 1.4; }
-
-    /* Card Footer & Action Buttons */
-    .post-card-footer {
-      padding: 1rem 1.4rem 1.2rem;
-      border-top: 1px solid #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .primary-actions { display: flex; gap: 8px; }
-    .btn-act {
-      flex: 1;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s;
-      border: none;
-    }
-    .btn-copy { background: #f1f5f9; color: var(--text); border: 1px solid #cbd5e1; }
-    .btn-copy:hover { background: #e2e8f0; }
-    .btn-download { background: var(--primary); color: #fff; }
-    .btn-download:hover { background: #0f3d6e; }
-
-    .cal-actions-row { display: flex; gap: 6px; }
-    .btn-cal {
-      flex: 1;
-      padding: 7px;
-      border-radius: 8px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
-      color: #334155;
-      transition: all 0.2s;
-    }
-    .btn-cal:hover { background: #f1f5f9; border-color: #94a3b8; }
-    .btn-cal.google { color: #1a73e8; border-color: #d2e3fc; background: #f8fafd; }
-
-    .social-share-row { display: flex; gap: 6px; align-items: center; margin-top: 2px; }
-    .btn-share {
-      flex: 1;
-      padding: 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-decoration: none;
-      text-align: center;
-      color: #fff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      transition: opacity 0.2s;
-    }
-    .btn-share:hover { opacity: 0.9; }
-    .share-linkedin { background: #0a66c2; }
-    .share-x { background: #000000; }
-    .share-facebook { background: #1877f2; }
-
-    /* LIST / TIMELINE VIEW */
-    #list-view { display: none; flex-direction: column; gap: 12px; }
-    .list-item-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      transition: all 0.2s;
-    }
-    .list-item-card:hover { transform: translateX(4px); border-color: #94a3b8; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
-    .list-date-badge {
-      min-width: 100px;
-      text-align: center;
-      background: #f1f5f9;
-      border-radius: 10px;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .list-date-day { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
-    .list-date-month { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-
-    /* MODAL POPUP (Etkinlik Detay) */
-    #event-modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 37, 69, 0.85);
-      backdrop-filter: blur(6px);
-      z-index: 10000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-    .modal-content-box {
-      background: #ffffff;
-      max-width: 580px;
-      width: 100%;
-      border-radius: 20px;
-      padding: 1.8rem;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-      position: relative;
-    }
-    .modal-close {
-      position: absolute;
-      top: 16px; right: 18px;
-      background: #f1f5f9;
-      border: none;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #64748b;
-    }
-    .modal-close:hover { background: #e2e8f0; color: #0f172a; }
-
-    /* Auth Gate */
-    #auth-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11,37,69,0.92);
-      backdrop-filter: blur(8px);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-    .auth-box {
-      background: #ffffff;
-      max-width: 440px;
-      width: 100%;
-      border-radius: 20px;
-      padding: 2.2rem;
-      text-align: center;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-    }
-
-    /* Toast Notification */
-    #toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: #0b2545;
-      color: #fff;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      border-left: 5px solid var(--cyan-light);
-      display: none;
-      z-index: 10000;
-    }
-
-    @media (max-width: 768px) {
-      header { padding: 0.8rem 1rem; }
-      .posts-grid { grid-template-columns: 1fr; }
-      .studio-hero { padding: 1.5rem; }
-      .controls-bar { flex-direction: column; align-items: stretch; }
-      .cal-days-grid { grid-template-columns: repeat(1, 1fr); }
-      .cal-weekdays { display: none; }
-      .cal-day-cell { min-height: auto; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- AUTH OVERLAY -->
-  <div id="auth-overlay" style="display: none;">
-    <div class="auth-box">
-      <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔐</div>
-      <h2 style="font-family: var(--font-heading); font-size: 1.4rem; color: #0b2545; margin-bottom: 0.4rem;">Sosyal Medya Stüdyo Girişi</h2>
-      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.5rem;">Bu alandaki kurumsal takvim ve yayın araçlarına erişim yetkili yöneticilerle sınırlandırılmıştır.</p>
-      <form onsubmit="handleAuthLogin(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Kullanıcı Adı</label>
-          <input type="text" id="auth-u" required placeholder="Admin" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.9rem;">
-        </div>
-        <div>
-          <label style="font-size: 0.78rem; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Şifre</label>
-          <input type="password" id="auth-p" required placeholder="••••••••" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.9rem;">
-        </div>
-        <div id="auth-err" style="display: none; background: #fee2e2; color: #b91c1c; font-size: 0.82rem; padding: 8px; border-radius: 6px; text-align: center; font-weight: 600;">Hatalı kullanıcı adı veya şifre!</div>
-        <button type="submit" style="padding: 0.85rem; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 6px;">🔓 Giriş Yap</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <header>
-    <div class="brand-wrap">
-      <img src="assets/images/brand-emblem.png" alt="Yakın Grup" class="brand-logo">
-      <div>
-        <div class="brand-title">YAKIN GRUP</div>
-        <span class="brand-badge">2026 — 2030 SOSYAL MEDYA İÇERİK TAKVİMİ</span>
-      </div>
-    </div>
-    <!-- Canlı Sosyal Medya Doğrudan Erişim Butonları (İkonsuz Sade & Kurumsal) -->
-    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-      <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-top" style="font-weight: 700; color: #e1306c; border-color: rgba(225,48,108,0.3); background: rgba(225,48,108,0.06);">
-        Instagram
-      </a>
-      <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-top" style="font-weight: 700; color: #ff0000; border-color: rgba(255,0,0,0.3); background: rgba(255,0,0,0.06);">
-        YouTube
-      </a>
-      <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-top" style="font-weight: 700; color: #1877f2; border-color: rgba(24,119,242,0.3); background: rgba(24,119,242,0.06);">
-        Facebook
-      </a>
-      <a href="https://www.linkedin.com/company/yakingrupnet" target="_blank" class="btn-top" style="font-weight: 700; color: #0a66c2; border-color: rgba(10,102,194,0.3); background: rgba(10,102,194,0.06);">
-        LinkedIn
-      </a>
-      <a href="https://x.com/yakingrupnet" target="_blank" class="btn-top" style="font-weight: 700; color: #0f172a; border-color: rgba(15,23,42,0.3); background: rgba(15,23,42,0.06);">
-        X
-      </a>
-    </div>
-    <div class="header-links">
-      <a href="index.html" class="btn-top">🏛️ Holding Ana Sayfa</a>
-      <button onclick="exportAllICS()" class="btn-top sync-btn" title="Tüm yılı iPhone/Mac/Outlook/Google takviminize alarmlarıyla ekler">
-        📅 2026-2030 Takvimi İndir (.ICS)
-      </button>
-      <button onclick="exportAllCSV()" class="btn-top primary">
-        📊 Excel / CSV İndir
-      </button>
-    </div>
-  </header>
-
-  <!-- MAIN CONTAINER -->
-  <div class="container">
-    
-    <!-- YILLIK PLAN ÖZETİ (EXECUTIVE HERO SUMMARY) -->
-    <div class="studio-hero" style="display: flex; flex-direction: column; align-items: stretch; gap: 1.4rem; padding: 2rem 2.2rem; background: linear-gradient(135deg, #07162c 0%, #0b2545 60%, #0f3d6e 100%);">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid rgba(255,255,255,0.14); padding-bottom: 1rem;">
-        <div>
-          <span style="font-size: 0.76rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.1em; text-transform: uppercase;">YILLIK KURUMSAL YAYIN & İÇERİK STRATEJİSİ</span>
-          <h1 style="font-family: var(--font-heading); font-size: 1.65rem; font-weight: 800; margin: 4px 0 0 0; color: #ffffff;">2026 — 2030 Yıllık Plan Özeti</h1>
-        </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button onclick="exportAllICS()" class="btn-sync-action" style="padding: 10px 18px; font-size: 0.86rem;">
-            <span>📲</span> 2026-2030 Takvimi İndir (.ICS)
-          </button>
-          <button onclick="exportAllCSV()" class="btn-top primary" style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 10px 18px;">
-            <span>📊</span> Excel / CSV Raporu
-          </button>
-        </div>
-      </div>
-
-            <!-- İNFOGRAFİK: YILLIK YAYIN DAĞILIMI & HAFTALIK AKIŞ MİMARİSİ -->
-      <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-          <span style="font-size: 0.8rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.08em; text-transform: uppercase;">
-            📊 YAYIN VE İÇERİK TÜRÜ DAĞILIM İNFOGRAFİĞİ (YILLIK 236 POST)
-          </span>
-          <span style="font-size: 0.76rem; color: #cbd5e1; font-weight: 600;">
-            100% Planlı & Onaylı İçerik Mimarisi
-          </span>
-        </div>
-
-        <!-- Segmented Infographic Progress Bar -->
-        <div style="display: flex; height: 16px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
-          <div style="width: 22.0%; background: #10b981;" title="Yakın İnşaat (52 Post - %22)"></div>
-          <div style="width: 22.0%; background: #0284c7;" title="Yakın Enerji (52 Post - %22)"></div>
-          <div style="width: 22.0%; background: #d4af37;" title="Yakın Capital (52 Post - %22)"></div>
-          <div style="width: 22.0%; background: #8b5cf6;" title="Yakın Teknoloji (52 Post - %22)"></div>
-          <div style="width: 6.8%; background: #f59e0b;" title="Sektörel & Küresel Günler (16 Post - %6.8)"></div>
-          <div style="width: 3.4%; background: #ef4444;" title="Milli Bayramlar (8 Post - %3.4)"></div>
-          <div style="width: 1.8%; background: #ec4899;" title="Dini Günler & Yılbaşı (4 Post - %1.8)"></div>
-        </div>
-
-        <!-- Infographic Legend & Breakdown Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; font-size: 0.76rem;">
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #10b981;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">🏢 Yakın İnşaat</div>
-              <div style="color: #cbd5e1;">52 Post • <strong>%22.0</strong></div>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #0284c7;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">⚡ Yakın Enerji</div>
-              <div style="color: #cbd5e1;">52 Post • <strong>%22.0</strong></div>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #d4af37;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">💼 Yakın Capital</div>
-              <div style="color: #cbd5e1;">52 Post • <strong>%22.0</strong></div>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #8b5cf6;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">💻 Yakın Teknoloji</div>
-              <div style="color: #cbd5e1;">52 Post • <strong>%22.0</strong></div>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #f59e0b;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">⚡ Sektörel Günler</div>
-              <div style="color: #cbd5e1;">16 Post • <strong>%6.8</strong></div>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #ef4444;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">🇹🇷 Milli Bayramlar</div>
-              <div style="color: #cbd5e1;">8 Post • <strong>%3.4</strong></div>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border-left: 4px solid #ec4899;">
-            <div>
-              <div style="font-weight: 800; color: #ffffff;">🌙 Dini & Yılbaşı</div>
-              <div style="color: #cbd5e1;">4 Post • <strong>%1.8</strong></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Haftalık Yayın Akışı Şeridi -->
-        <div style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.18); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.78rem;">
-          <span style="font-weight: 800; color: #38bdf8;">📅 HAFTALIK DÜZENLİ AKIŞ (11:00):</span>
-          <span style="color: #fff;"><strong style="color: #10b981;">Salı:</strong> 🏢 İnşaat</span>
-          <span style="color: rgba(255,255,255,0.3);">➔</span>
-          <span style="color: #fff;"><strong style="color: #0284c7;">Çarşamba:</strong> ⚡ Enerji</span>
-          <span style="color: rgba(255,255,255,0.3);">➔</span>
-          <span style="color: #fff;"><strong style="color: #d4af37;">Perşembe:</strong> 💼 Capital</span>
-          <span style="color: rgba(255,255,255,0.3);">➔</span>
-          <span style="color: #fff;"><strong style="color: #8b5cf6;">Cuma:</strong> 💻 Teknoloji</span>
-          <span style="color: #cbd5e1; font-style: italic;">(+ Özel günlerde 09:00 sabah yayını)</span>
-        </div>
-      </div>
-
-
-    </div>
-
-    <!-- Controls Bar -->
-    <div class="controls-bar">
-      <!-- Filter Pills (Aktif Filtreleme & Hızlı Erişim) -->
-      <div class="filter-pills" id="main-filter-pills" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (237 Paylaşım / Yıl)</button>
-        <button class="filter-pill" onclick="filterPosts('resmi', this)">🇹🇷 Resmi & Milli Tatiller (10 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Bayramlar & Arifeler (4 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Mesleki Günler (15 Gün)</button>
-        <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini (208 Post)</button>
-      </div>
-
-      <!-- View Switcher -->
-      <div class="view-switcher">
-        <button class="view-btn active" id="btn-view-cal" onclick="switchView('calendar')">📅 Aylık Takvim</button>
-        <button class="view-btn" id="btn-view-grid" onclick="switchView('grid')">🗂️ Kartlar</button>
-        <button class="view-btn" id="btn-view-list" onclick="switchView('list')">📋 Liste</button>
-      </div>
-    </div>
-
-    <!-- 1. AY BAZINDA İNTERAKTİF TAKVİM GÖRÜNÜMÜ -->
-    <div id="calendar-month-view">
-      <div class="cal-nav-bar">
-        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-          <div class="cal-month-heading" id="cal-month-title">
-            📅 <span>Ekim 2026</span>
-          </div>
-          <!-- YIL SEÇİCİ (2026 - 2030) -->
-          <div style="display: flex; gap: 4px; background: #f1f5f9; padding: 3px; border-radius: 8px;" id="year-pills">
-            <button class="year-pill active" onclick="selectYear(2026, this)">2026</button>
-            <button class="year-pill" onclick="selectYear(2027, this)">2027</button>
-            <button class="year-pill" onclick="selectYear(2028, this)">2028</button>
-            <button class="year-pill" onclick="selectYear(2029, this)">2029</button>
-            <button class="year-pill" onclick="selectYear(2030, this)">2030</button>
-          </div>
-        </div>
-
-        <div class="cal-nav-arrows">
-          <button class="btn-cal-nav" onclick="changeMonth(-1)">◀ Önceki Ay</button>
-          <button class="btn-cal-nav" onclick="resetToToday()">Bugün / Bu Ay</button>
-          <button class="btn-cal-nav" onclick="changeMonth(1)">Sonraki Ay ▶</button>
-        </div>
-      </div>
-
-      <!-- Hızlı Ay Seçici -->
-      <div class="months-quick-bar" id="months-chips">
-        <!-- Injected via JS -->
-      </div>
-
-      <!-- Hafta Günleri -->
-      <div class="cal-weekdays">
-        <div class="cal-weekday">Pazartesi</div>
-        <div class="cal-weekday">Salı</div>
-        <div class="cal-weekday">Çarşamba</div>
-        <div class="cal-weekday">Perşembe</div>
-        <div class="cal-weekday">Cuma</div>
-        <div class="cal-weekday">Cumartesi</div>
-        <div class="cal-weekday">Pazar</div>
-      </div>
-
-            <!-- Takvim Gün Izgarası -->
-      <div class="cal-days-grid" id="cal-days-container">
-        <!-- Injected via JS -->
-      </div>
-
-      <!-- Ayın ve Seçili Kategorinin Öne Çıkan Etkinlikleri Şeridi -->
-      <div id="cal-month-events-summary" style="margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px dashed #e2e8f0;">
-        <div style="font-size: 0.84rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
-          <span id="cal-summary-title">📌 BU AYIN PAYLAŞIMLARI VE DETAYLARI</span>
-          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">(Tıklayarak afişi ve metni açabilirsiniz)</span>
-        </div>
-        <div id="cal-month-events-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
-          <!-- Injected via JS -->
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. GRID KART GÖRÜNÜMÜ -->
-    <div class="posts-grid" id="posts-container" style="display: none;">
-      <!-- Injected via JS -->
-    </div>
-
-    <!-- 3. LIST GÖRÜNÜMÜ -->
-    <div id="list-view" style="display: none;">
-      <!-- Injected via JS -->
-    </div>
-
-  </div>
-
-  <!-- EVENT DETAIL MODAL -->
-  <div id="event-modal">
-    <div class="modal-content-box" id="event-modal-body">
-      <!-- Injected dynamically -->
-    </div>
-  </div>
-
-  <!-- TOAST -->
-  <div id="toast">✓ İşlem Başarılı!</div>
-
-  <script>
-        function safeEncode(str) {
-      if (!str) return '';
-      try {
-        return encodeURIComponent(str);
-      } catch (e) {
-        // Fallback if surrogate pair cut
-        try {
-          return encodeURIComponent(Array.from(str).slice(0, 140).join(''));
-        } catch (e2) {
-          return encodeURIComponent(str.replace(/[^ -]/g, " "));
-        }
-      }
-    }
+try {
 
     const STUDIO_AUTH_USER = 'Admin';
     const STUDIO_AUTH_PASS = 'Yakin2026.!';
@@ -2108,8 +1263,8 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
             <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram">Instagram</a>
             <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube">YouTube</a>
             <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-share share-facebook">Facebook</a>
-            <a href="https://www.linkedin.com/feed/?shareActive=true&text=${safeEncode(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin">LinkedIn</a>
-            <a href="https://twitter.com/intent/tweet?text=${safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x">X</a>
+            <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin">LinkedIn</a>
+            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(item.text.substring(0, 180) + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x">X</a>
           </div>
         </div>
       `;
@@ -2229,10 +1384,10 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
               <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-share share-facebook" title="Facebook Sayfasını Aç">
                 Facebook
               </a>
-              <a href="https://www.linkedin.com/feed/?shareActive=true&text=${safeEncode(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">
+              <a href="https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(item.text + '\n\n' + item.hashtags)}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">
                 LinkedIn
               </a>
-              <a href="https://twitter.com/intent/tweet?text=${safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x" title="X'te Paylaş">
+              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(item.text.substring(0, 180) + '... ' + item.hashtags)}" target="_blank" class="btn-share share-x" title="X'te Paylaş">
                 X
               </a>
             </div>
@@ -2511,8 +1666,13 @@ Tüm milletimizin ve İslam aleminin Kurban Bayramı mübarek olsun. 🌙🕊️
       const endHour = String(parseInt(item.timeStr.split(':')[0]) + 1).padStart(2, '0');
       const end = item.dateISO.replace(/-/g, '') + 'T' + endHour + item.timeStr.split(':')[1] + '00';
       
-      const title = safeEncode(`📢 ${item.title} (Yakın Grup Paylaşım Vakti)`);
-      const details = safeEncode(`${item.text}\n\n${item.hashtags}\n\n---\nhttps://yakingrup.net`);
+      const title = encodeURIComponent(`📢 ${item.title} (Yakın Grup Paylaşım Vakti)`);
+      const details = encodeURIComponent(`${item.text}
+
+${item.hashtags}
+
+---
+https://yakingrup.net`);
       return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=Sosyal+Medya`;
     }
 
@@ -2673,6 +1833,15 @@ ${item.hashtags}`;
       renderMonthlyCalendar(currentYear, currentMonth);
       renderPosts('all');
     });
-  </script>
-</body>
-</html>
+  
+  console.log('SUCCESS: DOM Loaded without any errors!');
+  console.log('Total Days Rendered in Grid:', (getEl('cal-days-container')._children || []).length);
+  console.log('Total Month Chips Rendered:', (getEl('months-chips')._children || []).length);
+  console.log('Total Month Summary Items:', (getEl('cal-month-events-list')._children || []).length);
+  
+  // Test filter
+  filterPosts('sektor');
+  console.log('After filter sektor, summary items count:', (getEl('cal-month-events-list')._children || []).length);
+} catch (err) {
+  console.error('RUNTIME ERROR:', err);
+}
