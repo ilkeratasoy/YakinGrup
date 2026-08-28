@@ -1750,11 +1750,11 @@
         <div class="form-row">
           <div class="form-group">
             <label>İskonto (%)</label>
-            <input type="number" id="inp-discount" value="5" min="0" max="100" step="0.5" oninput="renderApp()">
+            <input type="number" id="inp-discount" value="5" min="0" max="100" step="0.5" oninput="appState.discountRate = parseFloat(this.value) || 0; renderApp()">
           </div>
           <div class="form-group">
             <label>KDV Oranı (%)</label>
-            <select id="inp-vat" onchange="renderApp()">
+            <select id="inp-vat" onchange="appState.vatRate = parseFloat(this.value) || 0; renderApp()">
               <option value="20" selected>%20 (Standart KDV)</option>
               <option value="10">%10</option>
               <option value="0">%0 (KDV Muaf / Yatırım Teşvikli)</option>
@@ -1793,7 +1793,7 @@
         <div class="form-row">
           <div class="form-group">
             <label>Hazırlayan / Yetkili</label>
-            <select id="inp-author" onchange="renderApp()">
+            <select id="inp-author" onchange="appState.author = this.value; renderApp(); showToast(this.options[this.selectedIndex].text + ' seçildi');">
               <option value="ilker" selected>İlker ATASOY (CXO / Yönetici Ortak)</option>
               <option value="eylul">Eylül YILMAZ (CEO & Baş Mimar)</option>
             </select>
@@ -1812,7 +1812,7 @@
         <div class="form-row">
           <div class="form-group">
             <label>Banka Hesap Bilgisi (IBAN)</label>
-            <select id="inp-bank" onchange="renderApp()">
+            <select id="inp-bank" onchange="appState.bankKey = this.value; renderApp();">
               <option value="both" selected>Tüm Bankalar (Yapı Kredi + Garanti BBVA)</option>
               <option value="yapikredi">Yalnızca Yapı Kredi Bankası</option>
               <option value="garanti">Yalnızca Garanti BBVA</option>
@@ -1821,7 +1821,7 @@
           </div>
           <div class="form-group">
             <label>Banka QR Kodu</label>
-            <select id="inp-bank-qr" onchange="renderApp()">
+            <select id="inp-bank-qr" onchange="appState.showBankQr = (this.value === 'yes'); renderApp();">
               <option value="yes" selected>QR Kod Göster (FAST/EFT)</option>
               <option value="no">QR Kodu Gizle</option>
             </select>
@@ -2719,7 +2719,9 @@
         panelProp.style.display = 'none';
         sheetClauses.style.display = 'flex';
         sheetTable.style.display = 'none';
-        sheetTotals.style.display = 'none';
+        sheetTotals.style.display = 'grid'; const tc = document.querySelector('.doc-totals-card'); if (tc) tc.style.display = 'block';
+        const totalsCard = document.querySelector('.doc-totals-card');
+        if (totalsCard) totalsCard.style.display = 'none';
       } else if (mode === 'prop') {
         badge.innerText = 'Fiyat Teklifi & Keşif';
         sheetBadge.innerText = 'FİYAT TEKLİFİ & KEŞİF TABLOSU';
@@ -2729,7 +2731,7 @@
         panelProp.style.display = 'flex';
         sheetClauses.style.display = 'none';
         sheetTable.style.display = 'block';
-        sheetTotals.style.display = 'grid';
+        sheetTotals.style.display = 'grid'; const tc = document.querySelector('.doc-totals-card'); if (tc) tc.style.display = 'block';
       } else if (mode === 'proforma') {
         badge.innerText = '🌍 Proforma Fatura (Export/Import)';
         sheetBadge.innerText = 'PROFORMA INVOICE / PROFORMA FATURA';
@@ -2740,7 +2742,7 @@
         panelProp.style.display = 'flex';
         sheetClauses.style.display = 'none';
         sheetTable.style.display = 'block';
-        sheetTotals.style.display = 'grid';
+        sheetTotals.style.display = 'grid'; const tc = document.querySelector('.doc-totals-card'); if (tc) tc.style.display = 'block';
       } else if (mode === 'dispatch') {
         badge.innerText = '🚚 Sevk ve Taşıma İrsaliyesi';
         sheetBadge.innerText = 'SEVK VE TAŞIMA İRSALİYESİ';
@@ -2762,7 +2764,7 @@
         panelProp.style.display = 'flex';
         sheetClauses.style.display = 'none';
         sheetTable.style.display = 'block';
-        sheetTotals.style.display = 'grid';
+        sheetTotals.style.display = 'grid'; const tc = document.querySelector('.doc-totals-card'); if (tc) tc.style.display = 'block';
       } else {
         badge.innerText = 'Birleşik İhale & Teklif Dosyası';
         sheetBadge.innerText = 'ŞARTNAME VE FİYAT TEKLİF DOSYASI';
@@ -2772,7 +2774,7 @@
         panelProp.style.display = 'flex';
         sheetClauses.style.display = 'flex';
         sheetTable.style.display = 'block';
-        sheetTotals.style.display = 'grid';
+        sheetTotals.style.display = 'grid'; const tc = document.querySelector('.doc-totals-card'); if (tc) tc.style.display = 'block';
       }
 
       renderApp();
@@ -3646,7 +3648,55 @@
     }
 
     // Main App Renderer
-    function renderApp() {
+        function renderApp() {
+      // Synchronize DOM form controls into appState
+      const authorEl = document.getElementById('inp-author');
+      if (authorEl && authorEl.value) appState.author = authorEl.value;
+
+      const stampModeEl = document.getElementById('inp-stamp-mode');
+      if (stampModeEl) {
+        appState.stampMode = stampModeEl.value;
+        appState.stampVisible = (stampModeEl.value === 'both' || stampModeEl.value === 'stamp');
+      }
+
+      const bankEl = document.getElementById('inp-bank');
+      if (bankEl) appState.bankKey = bankEl.value;
+
+      const bankQrEl = document.getElementById('inp-bank-qr');
+      if (bankQrEl) appState.showBankQr = (bankQrEl.value === 'yes');
+
+      const discEl = document.getElementById('inp-discount');
+      if (discEl && discEl.value !== '') appState.discountRate = parseFloat(discEl.value) || 0;
+
+      const vatEl = document.getElementById('inp-vat');
+      if (vatEl) appState.vatRate = parseFloat(vatEl.value) || 0;
+
+      const subjEl = document.getElementById('inp-subject');
+      if (subjEl && subjEl.value) appState.subject = subjEl.value;
+
+      const introEl = document.getElementById('inp-intro');
+      if (introEl) appState.intro = introEl.value;
+
+      const compEl = document.getElementById('inp-client-company');
+      if (compEl) appState.clientCompany = compEl.value;
+
+      const nameEl = document.getElementById('inp-client-name');
+      if (nameEl) appState.clientName = nameEl.value;
+
+      const locEl = document.getElementById('inp-client-loc');
+      if (locEl) appState.clientLocation = locEl.value;
+
+      const dateEl = document.getElementById('inp-doc-date');
+      if (dateEl && dateEl.value) appState.date = dateEl.value;
+
+      const delivEl = document.getElementById('inp-delivery-time');
+      if (delivEl) appState.deliveryTime = delivEl.value;
+
+      const warrEl = document.getElementById('inp-warranty');
+      if (warrEl) appState.warranty = warrEl.value;
+
+      const payEl = document.getElementById('inp-payment-terms');
+      if (payEl) appState.paymentTerms = payEl.value;
       // Collect latest inputs
       appState.docNo = document.getElementById('inp-doc-no').value;
       appState.date = document.getElementById('inp-doc-date').value;
