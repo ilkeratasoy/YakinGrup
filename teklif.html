@@ -1054,15 +1054,15 @@
     
     .wet-signature-img {
       position: absolute;
-      top: 48%;
+      top: 46%;
       left: 50%;
-      transform: translate(-50%, -50%) rotate(-3.5deg);
-      width: 175px;
+      transform: translate(-50%, -50%) rotate(-2deg);
+      width: 185px;
       height: auto;
-      max-height: 82px;
+      max-height: 86px;
       pointer-events: none;
       z-index: 10;
-      filter: contrast(1.15) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.15));
+      filter: contrast(1.1) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.12));
       transition: all 0.2s ease;
     }
 
@@ -3894,13 +3894,22 @@
         }
       }
 
-      // Author & Stamp
+      // Author & Wet Signature Dynamic Switching
+      const sigImg = document.getElementById('sheet-wet-signature');
       if (appState.author === 'ilker') {
         document.getElementById('sheet-author-name').innerText = 'İlker ATASOY';
         document.getElementById('sheet-author-title').innerText = 'CXO / Yönetici Ortak';
+        if (sigImg) {
+          sigImg.src = '/assets/images/imza-ilker-atasoy.png';
+          sigImg.alt = 'İlker Atasoy Islak İmza';
+        }
       } else {
         document.getElementById('sheet-author-name').innerText = 'Eylül YILMAZ';
         document.getElementById('sheet-author-title').innerText = 'CEO & Baş Mimar';
+        if (sigImg) {
+          sigImg.src = '/assets/images/imza-eylul-yilmaz.png';
+          sigImg.alt = 'Eylül Yılmaz Islak İmza';
+        }
       }
 
       const stampBox = document.getElementById('sheet-stamp-box');
