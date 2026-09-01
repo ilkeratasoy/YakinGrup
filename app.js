@@ -2802,8 +2802,8 @@ const VCARDS = {
     phone: '+90 542 897 34 46', phoneHref: 'tel:+905428973446',
     email: 'ilker.atasoy@yakingrup.net',
     office: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
-    linkedin: 'tr.linkedin.com/company/yakingrupnet',
-    linkedinHref: 'https://tr.linkedin.com/company/yakingrupnet',
+    linkedin: 'linkedin.com/company/yakıngrup',
+    linkedinHref: 'https://www.linkedin.com/company/yakıngrup',
     vcf: 'BEGIN:VCARD\nVERSION:3.0\nFN:İlker Atasoy\nORG:Yakın Grup\nTITLE:Chairman / CXO\nTEL:+905428973446\nEMAIL:ilker.atasoy@yakingrup.net\nADR:;;Maslak Sun Plaza Kat:12;İstanbul;;;\nURL:https://www.yakingrup.net\nEND:VCARD'
   },
   eylul: {
@@ -2813,8 +2813,8 @@ const VCARDS = {
     phone: '+90 544 224 95 84', phoneHref: 'tel:+905442249584',
     email: 'eylul.yilmaz@yakingrup.net',
     office: 'Maslak Sun Plaza Kat: 12, Şişli / İstanbul',
-    linkedin: 'tr.linkedin.com/company/yakingrupnet',
-    linkedinHref: 'https://tr.linkedin.com/company/yakingrupnet',
+    linkedin: 'linkedin.com/company/yakıngrup',
+    linkedinHref: 'https://www.linkedin.com/company/yakıngrup',
     vcf: 'BEGIN:VCARD\nVERSION:3.0\nFN:Eylül Yılmaz\nORG:Yakın Grup\nTITLE:Chairman / CEO\nTEL:+905442249584\nEMAIL:eylul.yilmaz@yakingrup.net\nADR:;;Maslak Sun Plaza Kat:12;İstanbul;;;\nURL:https://www.yakingrup.net\nEND:VCARD'
   }
 };
