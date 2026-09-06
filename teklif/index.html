@@ -1023,6 +1023,7 @@
       margin-top: 1px;
     }
 
+    
     .signature-space {
       height: 72px;
       display: flex;
@@ -1030,7 +1031,25 @@
       justify-content: center;
       width: 100%;
       margin: 4px 0 6px 0;
+      position: relative;
     }
+
+    .wet-signature-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-1.5deg);
+      max-width: 135px;
+      max-height: 56px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 10;
+      filter: contrast(1.1) drop-shadow(0px 1px 1.5px rgba(0, 0, 0, 0.12));
+      transition: all 0.2s ease;
+    }
+
 
     .client-sign-box {
       width: 235px;
@@ -1741,9 +1760,7 @@
             <label>KDV Oranı (%)</label>
             <select id="inp-vat" onchange="renderApp()">
               <option value="20" selected>%20 (Standart KDV)</option>
-              <option value="18">%18</option>
               <option value="10">%10</option>
-              <option value="1">%1</option>
               <option value="0">%0 (KDV Muaf / Yatırım Teşvikli)</option>
             </select>
           </div>
@@ -1786,10 +1803,12 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Resmi Mühür & Kaşe</label>
-            <select id="inp-stamp" onchange="renderApp()">
-              <option value="yes" selected>Göster (Resmi Onaylı)</option>
-              <option value="no">Gizle</option>
+            <label>Mühür, Kaşe & Islak İmza</label>
+            <select id="inp-stamp-mode" onchange="handleStampModeChange(this.value)">
+              <option value="both" selected>Kaşe + Islak İmza (Önerilen)</option>
+              <option value="stamp">Yalnızca Resmi Kaşe</option>
+              <option value="sign">Yalnızca Islak İmza</option>
+              <option value="none">İmzasız / Boş Bırak</option>
             </select>
           </div>
         </div>
@@ -2094,7 +2113,7 @@
 
           <div class="signature-card">
             <div class="role-title">YAKIN GRUP YETKİLİSİ</div>
-            <div class="signature-space">
+            <div class="signature-space" style="position: relative;">
               <div class="official-stamp" id="sheet-stamp-box">
                 <div class="stamp-line-title">YAKIN GRUP ENERJİ GIDA</div>
                 <div class="stamp-line-sub">İNŞAAT VE TİCARET LTD. ŞTİ.</div>
@@ -2102,6 +2121,7 @@
                 <div class="stamp-line-addr">No: 36 İç Kapı No: 5 Kadıköy / İSTANBUL</div>
                 <div class="stamp-line-tax">Kadıköy V.D. No: 929 099 6193</div>
               </div>
+              <img id="sheet-wet-signature" src="/assets/images/imza-ilker-atasoy.png" alt="İlker Atasoy Islak İmza" class="wet-signature-img">
             </div>
             <div class="person-name" id="sheet-author-name">İlker ATASOY</div>
             <div class="person-title" id="sheet-author-title">CXO / Yönetici Ortak</div>
@@ -2460,6 +2480,7 @@
       vatRate: 20,
       author: 'ilker',
       stampVisible: true,
+      stampMode: 'both',
       bankKey: 'both',
       showBankQr: true,
       clientSigFormat: 'company',
@@ -3877,27 +3898,52 @@
         }
       }
 
-      // Author & Stamp
+      // Author & Compact Wet Signature Dynamic Switching
+      const stampBox = document.getElementById('sheet-stamp-box');
+      const sigImg = document.getElementById('sheet-wet-signature');
+      const mode = appState.stampMode || (appState.stampVisible ? 'both' : 'none');
+
       if (appState.author === 'ilker') {
         document.getElementById('sheet-author-name').innerText = 'İlker ATASOY';
         document.getElementById('sheet-author-title').innerText = 'CXO / Yönetici Ortak';
+        if (sigImg) {
+          sigImg.src = '/assets/images/imza-ilker-atasoy.png';
+          sigImg.alt = 'İlker Atasoy Islak İmza';
+          sigImg.style.maxWidth = '135px';
+          sigImg.style.maxHeight = '56px';
+        }
       } else {
         document.getElementById('sheet-author-name').innerText = 'Eylül YILMAZ';
         document.getElementById('sheet-author-title').innerText = 'CEO & Baş Mimar';
+        if (sigImg) {
+          sigImg.src = '/assets/images/imza-eylul-yilmaz.png';
+          sigImg.alt = 'Eylül Yılmaz Islak İmza';
+          sigImg.style.maxWidth = '135px';
+          sigImg.style.maxHeight = '56px';
+        }
       }
 
-      const stampBox = document.getElementById('sheet-stamp-box');
-      if (appState.stampVisible) {
-        stampBox.style.display = 'inline-flex';
-        stampBox.innerHTML = `
-          <div class="stamp-line-title">YAKIN GRUP ENERJİ GIDA</div>
-          <div class="stamp-line-sub">İNŞAAT VE TİCARET LTD. ŞTİ.</div>
-          <div class="stamp-line-addr">Caferağa Mah. Moda Cad. Akyol</div>
-          <div class="stamp-line-addr">No: 36 İç Kapı No: 5 Kadıköy / İSTANBUL</div>
-          <div class="stamp-line-tax">Kadıköy V.D. No: 929 099 6193</div>
-        `;
-      } else {
-        stampBox.style.display = 'none';
+      if (stampBox) {
+        if (mode === 'both' || mode === 'stamp') {
+          stampBox.style.display = 'inline-flex';
+          stampBox.innerHTML = `
+            <div class="stamp-line-title">YAKIN GRUP ENERJİ GIDA</div>
+            <div class="stamp-line-sub">İNŞAAT VE TİCARET LTD. ŞTİ.</div>
+            <div class="stamp-line-addr">Caferağa Mah. Moda Cad. Akyol</div>
+            <div class="stamp-line-addr">No: 36 İç Kapı No: 5 Kadıköy / İSTANBUL</div>
+            <div class="stamp-line-tax">Kadıköy V.D. No: 929 099 6193</div>
+          `;
+        } else {
+          stampBox.style.display = 'none';
+        }
+      }
+
+      if (sigImg) {
+        if (mode === 'both' || mode === 'sign') {
+          sigImg.style.display = 'block';
+        } else {
+          sigImg.style.display = 'none';
+        }
       }
 
       // Trigger automatic background draft save
@@ -3905,6 +3951,20 @@
     }
 
     // Payment Preset Helper
+    
+    function handleStampModeChange(val) {
+      appState.stampMode = val;
+      appState.stampVisible = (val === 'both' || val === 'stamp');
+      renderApp();
+      const labels = {
+        both: 'Resmi Kaşe + Islak İmza aktif',
+        stamp: 'Yalnızca Resmi Kaşe aktif',
+        sign: 'Yalnızca Islak İmza aktif',
+        none: 'İmza ve Kaşe gizlendi'
+      };
+      showToast(labels[val] || 'İmza ayarı güncellendi');
+    }
+
     function setPaymentPreset(rate) {
       let text = '';
       if (rate === 30) {
