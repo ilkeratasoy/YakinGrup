@@ -923,33 +923,65 @@
           <span class="card-badge gold">Malik Toplantısı Şeffaf Hesaplama</span>
         </div>
 
-        <!-- 3D Bina Dış Cephe & Tipik Daire Planı Görselleri -->
+        <!-- 3D Bina Dış Cephe & İç Cephe / Kat Planı Görselleri (Opsiyonel Lokal Yükleme) -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.25rem;">
-          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
-            <div style="position: relative; width: 100%; height: 260px; background: #1e293b; overflow: hidden;">
-              <img src="assets/images/proje-bina-render.jpg" alt="Yakın Grup 3D Bina Renderı" style="width: 100%; height: 100%; object-fit: cover;">
-              <span style="position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.85); color: #f8fafc; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(4px);">
+          
+          <!-- Dış Cephe Render Kartı -->
+          <div id="dropzone-exterior" style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: all 0.2s ease;">
+            <div style="position: relative; width: 100%; height: 270px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img id="img-exterior-preview" src="assets/images/proje-bina-render.jpg" alt="Yakın Grup 3D Dış Cephe Renderı" style="width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s;">
+              
+              <!-- Üst Rozet -->
+              <span id="badge-exterior-status" style="position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.88); color: #f8fafc; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(4px); box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                 🏢 3D Mimari Dış Cephe Renderı
               </span>
+
+              <!-- Alt Aksiyon Butonları (Lokal Yükleme) -->
+              <div style="position: absolute; bottom: 10px; right: 10px; display: flex; gap: 6px; align-items: center;">
+                <label style="background: rgba(15,23,42,0.88); color: #ffffff; padding: 6px 11px; font-size: 0.73rem; font-weight: 600; border-radius: 4px; cursor: pointer; backdrop-filter: blur(4px); display: flex; align-items: center; gap: 5px; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 2px 5px rgba(0,0,0,0.4); margin: 0; transition: background 0.2s;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>Dış Cephe Yükle</span>
+                  <input type="file" id="inp-upload-exterior" accept="image/png, image/jpeg, image/webp, image/jpg" style="display: none;">
+                </label>
+                <button type="button" id="btn-reset-exterior" onclick="resetRenderImage('exterior')" style="display: none; background: rgba(220,38,38,0.88); color: #ffffff; padding: 6px 10px; font-size: 0.73rem; font-weight: 600; border-radius: 4px; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; backdrop-filter: blur(4px); box-shadow: 0 2px 5px rgba(0,0,0,0.4);" title="Varsayılan Render Görseline Dön">
+                  🔄 Sıfırla
+                </button>
+              </div>
             </div>
-            <div style="padding: 10px 12px; font-size: 0.76rem; color: #475569; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-              <strong>YAKIN GRUP — 2026 Butik Rezidans Mimarisi</strong>
-              <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;">Taş Yünü + Sinterflex Porselen Cephe</span>
+            <div style="padding: 10px 12px; font-size: 0.76rem; color: #475569; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+              <strong id="lbl-exterior-title">YAKIN GRUP — 2026 Butik Rezidans Dış Cephe</strong>
+              <span id="lbl-exterior-subtitle" style="font-size: 0.7rem; color: #0284c7; font-weight: 700;">Taş Yünü + Sinterflex Porselen Cephe</span>
             </div>
           </div>
 
-          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
-            <div style="position: relative; width: 100%; height: 260px; background: #1e293b; overflow: hidden;">
-              <img src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Yerleşim Planı" style="width: 100%; height: 100%; object-fit: cover;">
-              <span style="position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.85); color: #f8fafc; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(4px);">
-                📐 Tipik Kat 3+1 / 2+1 Mimari Plan
+          <!-- İç Cephe / Kat Planı Render Kartı -->
+          <div id="dropzone-interior" style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: all 0.2s ease;">
+            <div style="position: relative; width: 100%; height: 270px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img id="img-interior-preview" src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Yerleşim & İç Mekan Planı" style="width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s;">
+              
+              <!-- Üst Rozet -->
+              <span id="badge-interior-status" style="position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.88); color: #f8fafc; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(4px); box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                📐 3D İç Mekan & Kat Yerleşim Planı
               </span>
+
+              <!-- Alt Aksiyon Butonları (Lokal Yükleme) -->
+              <div style="position: absolute; bottom: 10px; right: 10px; display: flex; gap: 6px; align-items: center;">
+                <label style="background: rgba(15,23,42,0.88); color: #ffffff; padding: 6px 11px; font-size: 0.73rem; font-weight: 600; border-radius: 4px; cursor: pointer; backdrop-filter: blur(4px); display: flex; align-items: center; gap: 5px; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 2px 5px rgba(0,0,0,0.4); margin: 0; transition: background 0.2s;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>İç Cephe / Plan Yükle</span>
+                  <input type="file" id="inp-upload-interior" accept="image/png, image/jpeg, image/webp, image/jpg" style="display: none;">
+                </label>
+                <button type="button" id="btn-reset-interior" onclick="resetRenderImage('interior')" style="display: none; background: rgba(220,38,38,0.88); color: #ffffff; padding: 6px 10px; font-size: 0.73rem; font-weight: 600; border-radius: 4px; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; backdrop-filter: blur(4px); box-shadow: 0 2px 5px rgba(0,0,0,0.4);" title="Varsayılan Kat Planına Dön">
+                  🔄 Sıfırla
+                </button>
+              </div>
             </div>
-            <div style="padding: 10px 12px; font-size: 0.76rem; color: #475569; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-              <strong>Geniş Salon + Ebeveyn Banyolu + Teras Balkon</strong>
-              <span style="font-size: 0.7rem; color: #16a34a; font-weight: 700;">Rehau Yerden Isıtmalı</span>
+            <div style="padding: 10px 12px; font-size: 0.76rem; color: #475569; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+              <strong id="lbl-interior-title">Tipik Kat 3+1 / 2+1 İç Mimari Planı</strong>
+              <span id="lbl-interior-subtitle" style="font-size: 0.7rem; color: #16a34a; font-weight: 700;">Rehau Yerden Isıtma + Geniş Balkon</span>
             </div>
           </div>
+
         </div>
 
         <!-- Kat Kat Bağımsız Bölüm ve Cephe Dağılım Şeması -->
@@ -1092,15 +1124,15 @@
         <!-- Bölüm 3: Mimari 3D Render & Tipik Kat Planı -->
         <div class="proposal-section-title">3. Mimari Görselleştirme & Tipik Daire Yerleşim Planı</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem;">
-          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
-            <img src="assets/images/proje-bina-render.jpg" alt="3D Mimari Bina Renderı" style="width: 100%; height: 210px; object-fit: cover; display: block;">
-            <div style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center;">
+          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #fff;">
+            <img id="prop-img-exterior" src="assets/images/proje-bina-render.jpg" alt="3D Mimari Dış Cephe Renderı" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+            <div id="prop-lbl-exterior" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center; border-top: 1px solid #f1f5f9;">
               Proje 3D Dış Cephe & Mimari Konsept Görseli
             </div>
           </div>
-          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
-            <img src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Kat Planı" style="width: 100%; height: 210px; object-fit: cover; display: block;">
-            <div style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center;">
+          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #fff;">
+            <img id="prop-img-interior" src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Kat Planı / İç Mekan" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+            <div id="prop-lbl-interior" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center; border-top: 1px solid #f1f5f9;">
               Tipik Kat 3+1 / 2+1 Mimari İç Yerleşim Planı
             </div>
           </div>
@@ -1845,8 +1877,240 @@
     }
 
     // Initialize on page load
+    
+    // =========================================================================
+    // LOCAL RENDER IMAGE UPLOAD & PERSISTENCE
+    // =========================================================================
+    const DEFAULT_EXTERIOR_IMG = 'assets/images/proje-bina-render.jpg';
+    const DEFAULT_INTERIOR_IMG = 'assets/images/tipik-daire-plani.jpg';
+
+    function initRenderUploaders() {
+      // Load saved images from localStorage if present
+      try {
+        const savedExt = localStorage.getItem('yg_custom_exterior_render');
+        const savedInt = localStorage.getItem('yg_custom_interior_render');
+
+        if (savedExt) {
+          applyRenderImage('exterior', savedExt, false);
+        }
+        if (savedInt) {
+          applyRenderImage('interior', savedInt, false);
+        }
+      } catch (e) {
+        console.error('Error loading custom renders from storage:', e);
+      }
+
+      // Exterior file input listener
+      const inpExt = document.getElementById('inp-upload-exterior');
+      if (inpExt) {
+        inpExt.addEventListener('change', function(e) {
+          handleFileSelect(e, 'exterior');
+        });
+      }
+
+      // Interior file input listener
+      const inpInt = document.getElementById('inp-upload-interior');
+      if (inpInt) {
+        inpInt.addEventListener('change', function(e) {
+          handleFileSelect(e, 'interior');
+        });
+      }
+
+      // Setup drag and drop for both dropzones
+      setupDropzone('dropzone-exterior', 'exterior');
+      setupDropzone('dropzone-interior', 'interior');
+    }
+
+    function setupDropzone(dropzoneId, type) {
+      const dropzone = document.getElementById(dropzoneId);
+      if (!dropzone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = 'var(--brand-primary)';
+          dropzone.style.boxShadow = '0 0 12px rgba(10,37,64,0.3)';
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = 'var(--border-color)';
+          dropzone.style.boxShadow = '0 2px 6px rgba(0,0,0,0.05)';
+        }, false);
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          processImageFile(files[0], type);
+        }
+      }, false);
+    }
+
+    function handleFileSelect(e, type) {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        processImageFile(file, type);
+      }
+      e.target.value = '';
+    }
+
+    function processImageFile(file, type) {
+      if (!file.type.startsWith('image/')) {
+        alert('Lütfen geçerli bir görsel dosyası seçin (PNG, JPG, WEBP).');
+        return;
+      }
+      if (file.size > 15 * 1024 * 1024) {
+        alert('Görsel boyutu 15MB\'dan küçük olmalıdır.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const base64Data = evt.target.result;
+        try {
+          localStorage.setItem(`yg_custom_${type}_render`, base64Data);
+        } catch(err) {
+          console.warn('LocalStorage limit exceeded, using in-memory render', err);
+        }
+        applyRenderImage(type, base64Data, true);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function applyRenderImage(type, srcData, showNotification) {
+      if (type === 'exterior') {
+        const imgPrev = document.getElementById('img-exterior-preview');
+        const imgProp = document.getElementById('prop-img-exterior');
+        const badge = document.getElementById('badge-exterior-status');
+        const btnReset = document.getElementById('btn-reset-exterior');
+        const lblTitle = document.getElementById('lbl-exterior-title');
+        const propLbl = document.getElementById('prop-lbl-exterior');
+
+        if (imgPrev) imgPrev.src = srcData;
+        if (imgProp) imgProp.src = srcData;
+        if (badge) {
+          badge.textContent = '🟢 Özel Dış Cephe Renderı (Yüklendi)';
+          badge.style.background = 'rgba(21,128,61,0.92)';
+        }
+        if (btnReset) btnReset.style.display = 'inline-block';
+        if (lblTitle) lblTitle.textContent = 'Özel Yüklenen 3D Proje Dış Cephe Görseli';
+        if (propLbl) propLbl.textContent = 'Özel Proje 3D Mimari Dış Cephe Renderı';
+
+        if (showNotification) {
+          showToastNotification('🏢 Dış cephe mimari renderı başarıyla yüklendi ve teklif dosyasına eklendi.');
+        }
+      } else if (type === 'interior') {
+        const imgPrev = document.getElementById('img-interior-preview');
+        const imgProp = document.getElementById('prop-img-interior');
+        const badge = document.getElementById('badge-interior-status');
+        const btnReset = document.getElementById('btn-reset-interior');
+        const lblTitle = document.getElementById('lbl-interior-title');
+        const propLbl = document.getElementById('prop-lbl-interior');
+
+        if (imgPrev) imgPrev.src = srcData;
+        if (imgProp) imgProp.src = srcData;
+        if (badge) {
+          badge.textContent = '🟢 Özel İç Cephe / Kat Planı (Yüklendi)';
+          badge.style.background = 'rgba(21,128,61,0.92)';
+        }
+        if (btnReset) btnReset.style.display = 'inline-block';
+        if (lblTitle) lblTitle.textContent = 'Özel Yüklenen Daire İç Mekan / Kat Planı';
+        if (propLbl) propLbl.textContent = 'Özel Tipik Kat İç Mimari & Daire Yerleşim Planı';
+
+        if (showNotification) {
+          showToastNotification('📐 İç cephe / kat planı görseli başarıyla yüklendi ve teklif dosyasına eklendi.');
+        }
+      }
+    }
+
+    function resetRenderImage(type) {
+      try {
+        localStorage.removeItem(`yg_custom_${type}_render`);
+      } catch (e) {}
+
+      if (type === 'exterior') {
+        const imgPrev = document.getElementById('img-exterior-preview');
+        const imgProp = document.getElementById('prop-img-exterior');
+        const badge = document.getElementById('badge-exterior-status');
+        const btnReset = document.getElementById('btn-reset-exterior');
+        const lblTitle = document.getElementById('lbl-exterior-title');
+        const propLbl = document.getElementById('prop-lbl-exterior');
+
+        if (imgPrev) imgPrev.src = DEFAULT_EXTERIOR_IMG;
+        if (imgProp) imgProp.src = DEFAULT_EXTERIOR_IMG;
+        if (badge) {
+          badge.textContent = '🏢 3D Mimari Dış Cephe Renderı';
+          badge.style.background = 'rgba(15,23,42,0.88)';
+        }
+        if (btnReset) btnReset.style.display = 'none';
+        if (lblTitle) lblTitle.textContent = 'YAKIN GRUP — 2026 Butik Rezidans Dış Cephe';
+        if (propLbl) propLbl.textContent = 'Proje 3D Dış Cephe & Mimari Konsept Görseli';
+
+        showToastNotification('🔄 Dış cephe renderı varsayılan 3D mimari görsele döndürüldü.');
+      } else if (type === 'interior') {
+        const imgPrev = document.getElementById('img-interior-preview');
+        const imgProp = document.getElementById('prop-img-interior');
+        const badge = document.getElementById('badge-interior-status');
+        const btnReset = document.getElementById('btn-reset-interior');
+        const lblTitle = document.getElementById('lbl-interior-title');
+        const propLbl = document.getElementById('prop-lbl-interior');
+
+        if (imgPrev) imgPrev.src = DEFAULT_INTERIOR_IMG;
+        if (imgProp) imgProp.src = DEFAULT_INTERIOR_IMG;
+        if (badge) {
+          badge.textContent = '📐 3D İç Mekan & Kat Yerleşim Planı';
+          badge.style.background = 'rgba(15,23,42,0.88)';
+        }
+        if (btnReset) btnReset.style.display = 'none';
+        if (lblTitle) lblTitle.textContent = 'Tipik Kat 3+1 / 2+1 İç Mimari Planı';
+        if (propLbl) propLbl.textContent = 'Tipik Kat 3+1 / 2+1 Mimari İç Yerleşim Planı';
+
+        showToastNotification('🔄 İç mekan / kat planı varsayılan mimari plana döndürüldü.');
+      }
+    }
+
+    function showToastNotification(msg) {
+      let toast = document.getElementById('yg-toast-notification');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'yg-toast-notification';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        toast.style.background = '#0f172a';
+        toast.style.color = '#ffffff';
+        toast.style.padding = '10px 22px';
+        toast.style.borderRadius = '8px';
+        toast.style.fontSize = '0.84rem';
+        toast.style.fontWeight = '600';
+        toast.style.zIndex = '999999';
+        toast.style.boxShadow = '0 8px 24px rgba(0,0,0,0.35)';
+        toast.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+        toast.style.pointerEvents = 'none';
+        toast.style.opacity = '0';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+      }, 3500);
+    }
+
+
     document.addEventListener('DOMContentLoaded', () => {
       checkStudioAuth();
+      initRenderUploaders();
       window.KDEngine.generateDefaultOwners();
       window.KDEngine.calculate();
       syncInputsWithState();
