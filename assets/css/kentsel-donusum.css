@@ -1547,43 +1547,7 @@ body {
     width: 100% !important;
   }
 
-  /* Print Page Header */
-  .print-page-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding-bottom: 8px !important;
-    margin-bottom: 12px !important;
-    border-bottom: 1.5px solid #1a3d7c !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
 
-  .print-page-header .print-header-brand {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-  }
-
-  .print-page-header .print-header-title {
-    font-size: 8.5pt !important;
-    font-weight: 800 !important;
-    color: #1a3d7c !important;
-    letter-spacing: 0.03em !important;
-  }
-
-  .print-page-header .print-header-sub {
-    font-size: 6.5pt !important;
-    color: #c5a059 !important;
-    font-weight: 700 !important;
-  }
-
-  .print-page-header .print-header-meta {
-    font-size: 7.5pt !important;
-    font-weight: 700 !important;
-    color: #64748b !important;
-    text-align: right !important;
-  }
 
   .card {
     border: 1px solid #cbd5e1 !important;
