@@ -273,14 +273,23 @@ class KentselDonusumEngine {
     const emsal = parseFloat(s.kaks) || 0;
     const taks = parseFloat(s.taks) || 0.35;
     
+    // TAKS (Taban Alanı Katsayısı) — Binanın zemin katta toprakla temas ettiği brüt taban oturumu
     const tabanAlani = landArea * taks;
     const emsaleDahilAlan = landArea * emsal;
     
-    // Emsal Dışı Alanlar (%30 yönetmelik payı: asansör, merdiven, balkon, şaftlar)
+    // Zemin Kat Net Kullanılabilir Oturum Alanı (Giriş holü, merdiven ve asansör şaftı düşülmüş ~%80 net verim)
+    const zeminKatNetAlani = Math.round(tabanAlani * 0.80);
+    
+    // Normal Katlar (İmar yönetmeliği çıkmalarıyla ~1.15x taban alanı)
+    const normalKatBrut = Math.round(tabanAlani * 1.15);
+    const normalKatNet = Math.round(normalKatBrut * 0.82);
+    const normalKatSayisi = Math.max(1, Math.round((emsaleDahilAlan - tabanAlani) / (normalKatBrut || 1)));
+    const normalKatlarNetToplam = normalKatSayisi * normalKatNet;
+
+    // Emsal Dışı Alanlar (%30 yönetmelik payı: asansör, merdiven, balkon, yangın holü, şaftlar)
     const emsalDisiAlan = emsaleDahilAlan * 0.30;
     
     // Otopark, Sığınak ve Teknik Alanlar (Bodrum katlar)
-    // Her 100m² için ~30m² otopark/sığınak hacmi
     const bodrumOtoparkSiginak = (emsaleDahilAlan * 0.32);
     
     // Toplam Yapı İnşaat Alanı (Brüt)
@@ -289,30 +298,44 @@ class KentselDonusumEngine {
     // Toplam Satılabilir/Bağımsız Bölüm Brüt Alanı
     const toplamSatilabilirBrutAlan = emsaleDahilAlan * 1.15;
     
-    // Toplam Net Kullanılabilir Alan (~%78 net-brüt verimi)
-    const toplamNetKullanilabilirAlan = toplamSatilabilirBrutAlan * 0.78;
-
-    // --- 2. MEVCUT DURUM VE 3 MİMARİ SENARYO MOTORU ---
+    // --- 2. MEVCUT DURUM VE 3 MİMARİ SENARYO MOTORU (TAKS'A TAM ORANTILI) ---
     const existingUnits = Math.max(0, parseInt(s.unitCount) || 0);
     const existingShops = Math.max(0, parseInt(s.shopCount) || 0);
     const existingTotalSections = Math.max(1, existingUnits + existingShops);
     
     const avgNet = parseFloat(s.existingUnitAvgNet) || 90;
     const existingResidentialNet = existingUnits * avgNet;
-    const existingShopNet = existingShops * (avgNet * 1.25);
+    const existingShopNet = existingShops * (avgNet * 1.10);
     const existingTotalNet = existingResidentialNet + existingShopNet;
 
-    // Zemin Kat Ticari Dükkan Kapasitesi (Eğer kullanım Karma veya mevcut dükkan varsa)
+    // Zemin Kat Ticari Dükkan Kapasitesi (TAKS Taban Alanına Tam Orantılı)
     const isCommercialAllowed = s.usageType.includes("Ticaret") || s.usageType.includes("Karma") || existingShops > 0;
-    const targetShopCount = isCommercialAllowed ? Math.max(existingShops, Math.min(6, Math.floor(tabanAlani / 120))) : 0;
-    const targetShopNetM2 = targetShopCount * 110;
-    const availableResidentialNet = Math.max(100, toplamNetKullanilabilirAlan - targetShopNetM2);
+    let targetShopCount = 0;
+    let targetShopNetTotal = 0;
+    let targetShopAvgNet = 0;
+
+    if (existingShops > 0) {
+      targetShopCount = existingShops;
+      // Dükkanların toplam net alanı zemin kat net alanını (TAKS * 0.80) ASLA aşamaz
+      targetShopNetTotal = zeminKatNetAlani;
+      targetShopAvgNet = Math.round(targetShopNetTotal / targetShopCount);
+    } else if (isCommercialAllowed) {
+      targetShopCount = Math.min(3, Math.max(1, Math.floor(zeminKatNetAlani / 70)));
+      targetShopNetTotal = zeminKatNetAlani;
+      targetShopAvgNet = Math.round(targetShopNetTotal / targetShopCount);
+    }
+
+    // Zemin Kat Konut Kapasitesi (Dükkan yoksa zemin kat konuta açılır)
+    const zeminResidentialNet = (targetShopCount === 0) ? zeminKatNetAlani : Math.max(0, zeminKatNetAlani - targetShopNetTotal);
+    
+    // Üretilebilir Toplam Konut Net Alanı
+    const availableResidentialNet = normalKatlarNetToplam + zeminResidentialNet;
 
     // Senaryo A: Hak Koruyan (Mevcut daire ve dükkan haklarını birebir koruyan düzen)
-    const scA_unitCount = existingUnits + Math.floor((availableResidentialNet - existingResidentialNet) / avgNet);
-    const scA_shopCount = Math.max(existingShops, targetShopCount);
+    const scA_avgNet = Math.min(normalKatNet, avgNet);
+    const scA_unitCount = existingUnits + Math.max(0, Math.floor((availableResidentialNet - (existingUnits * scA_avgNet)) / scA_avgNet));
+    const scA_shopCount = targetShopCount;
     const scA_totalSections = scA_unitCount + scA_shopCount;
-    const scA_avgNet = avgNet;
     const scA_contractorUnits = Math.max(0, scA_unitCount - existingUnits);
     const scA_contractorShops = Math.max(0, scA_shopCount - existingShops);
     const scA_contractorTotalSections = scA_contractorUnits + scA_contractorShops;
@@ -320,9 +343,9 @@ class KentselDonusumEngine {
     const scA_totalValue = toplamSatilabilirBrutAlan * scA_unitPrice;
 
     // Senaryo B: Maksimum Ekonomik (Optimize kompakt 2+1/3+1 daireler, maksimum satılabilir kârlılık)
-    const scB_targetAvgNet = 88; // Optimum kompakt daire boyutu
+    const scB_targetAvgNet = Math.min(95, Math.max(65, Math.round(normalKatNet / Math.max(2, Math.round(normalKatNet / 85)))));
     const scB_unitCount = Math.max(existingUnits, Math.floor(availableResidentialNet / scB_targetAvgNet));
-    const scB_shopCount = Math.max(existingShops, targetShopCount);
+    const scB_shopCount = targetShopCount;
     const scB_totalSections = scB_unitCount + scB_shopCount;
     const scB_contractorUnits = Math.max(0, scB_unitCount - existingUnits);
     const scB_contractorShops = Math.max(0, scB_shopCount - existingShops);
@@ -331,9 +354,9 @@ class KentselDonusumEngine {
     const scB_totalValue = toplamSatilabilirBrutAlan * scB_unitPrice;
 
     // Senaryo C: Premium Proje (Lüks geniş daireler, yüksek marka primi)
-    const scC_targetAvgNet = 130;
+    const scC_targetAvgNet = Math.min(160, Math.max(110, Math.round(normalKatNet / Math.max(1, Math.round(normalKatNet / 130)))));
     const scC_unitCount = Math.max(existingUnits, Math.floor(availableResidentialNet / scC_targetAvgNet));
-    const scC_shopCount = Math.max(existingShops, targetShopCount);
+    const scC_shopCount = targetShopCount;
     const scC_totalSections = scC_unitCount + scC_shopCount;
     const scC_contractorUnits = Math.max(0, scC_unitCount - existingUnits);
     const scC_contractorShops = Math.max(0, scC_shopCount - existingShops);
@@ -350,6 +373,11 @@ class KentselDonusumEngine {
         shopCount: scA_shopCount,
         totalSections: scA_totalSections,
         avgNetM2: scA_avgNet,
+        shopAvgNetM2: targetShopAvgNet,
+        shopNetTotal: targetShopNetTotal,
+        tabanAlani: tabanAlani,
+        zeminKatNetAlani: zeminKatNetAlani,
+        normalKatNet: normalKatNet,
         ownerUnits: existingUnits,
         ownerShops: existingShops,
         contractorUnits: scA_contractorUnits,
@@ -367,6 +395,11 @@ class KentselDonusumEngine {
         shopCount: scB_shopCount,
         totalSections: scB_totalSections,
         avgNetM2: scB_targetAvgNet,
+        shopAvgNetM2: targetShopAvgNet,
+        shopNetTotal: targetShopNetTotal,
+        tabanAlani: tabanAlani,
+        zeminKatNetAlani: zeminKatNetAlani,
+        normalKatNet: normalKatNet,
         ownerUnits: existingUnits,
         ownerShops: existingShops,
         contractorUnits: scB_contractorUnits,
@@ -384,6 +417,11 @@ class KentselDonusumEngine {
         shopCount: scC_shopCount,
         totalSections: scC_totalSections,
         avgNetM2: scC_targetAvgNet,
+        shopAvgNetM2: targetShopAvgNet,
+        shopNetTotal: targetShopNetTotal,
+        tabanAlani: tabanAlani,
+        zeminKatNetAlani: zeminKatNetAlani,
+        normalKatNet: normalKatNet,
         ownerUnits: existingUnits,
         ownerShops: existingShops,
         contractorUnits: scC_contractorUnits,
@@ -595,7 +633,10 @@ class KentselDonusumEngine {
       // Yeni Net m²: Seçili mimari senaryonun daire/dükkan büyüklüğü ve malikin mevcut büyüklük oranı
       let newNetM2;
       if (isShop) {
-        newNetM2 = Math.round(o.existingNetM2 * 1.05); // Ticari birimler imar kapsamında korunur
+        // Dükkanlar: Zemin katın TAKS (taban alanı) oturum sınırlarına tam orantılı net alan
+        const existingShopsTotalNet = existingShopNet || (o.existingNetM2 || 1);
+        const shopShareRatio = (existingShopsTotalNet > 0) ? (o.existingNetM2 / existingShopsTotalNet) : 1.0;
+        newNetM2 = Math.round(shopShareRatio * (activeScenario.shopNetTotal || zeminKatNetAlani));
       } else {
         const ratioToAvg = (avgNet > 0) ? (o.existingNetM2 / avgNet) : 1.0;
         newNetM2 = Math.round(ratioToAvg * (activeScenario.avgNetM2 || 95));
@@ -623,8 +664,8 @@ class KentselDonusumEngine {
       return {
         ...o,
         existingValue: existingVal,
-        newNetM2: Math.max(45, newNetM2),
-        newGrossM2: Math.max(60, newGrossM2),
+        newNetM2: Math.max(30, newNetM2),
+        newGrossM2: Math.max(40, newGrossM2),
         newValue: newVal,
         hibe: hibeShare,
         kredi: krediShare,
@@ -642,12 +683,17 @@ class KentselDonusumEngine {
       emsal,
       taks,
       tabanAlani,
+      zeminKatNetAlani,
+      normalKatBrut,
+      normalKatNet,
+      normalKatSayisi,
+      normalKatlarNetToplam,
       emsaleDahilAlan,
       emsalDisiAlan,
       bodrumOtoparkSiginak,
       toplamInsaatAlani,
       toplamSatilabilirBrutAlan,
-      toplamNetKullanilabilirAlan,
+      availableResidentialNet,
       
       existingSummary: {
         units: existingUnits,
