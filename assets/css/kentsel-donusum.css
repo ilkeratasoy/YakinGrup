@@ -1229,7 +1229,7 @@ body {
   width: 250px;
   height: 80px;
   box-sizing: border-box;
-  transform: rotate(-1.5deg);
+  transform: none;
   transition: all 0.2s ease;
 }
 
