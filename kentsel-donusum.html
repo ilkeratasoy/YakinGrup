@@ -363,6 +363,59 @@
             </div>
           </div>
 
+          <!-- Tabliye Alanları & Kat Başına Daire Parametreleri -->
+          <div style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 1.1rem; margin-top: 1.25rem;">
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+              <span>🏗️ Tabliye Metrajları & Kat Planı Dağılımı</span>
+              <span class="helper-tag" style="background: #e0f2fe; color: #0369a1; font-weight: 700;">Serbestçe Düzenlenebilir</span>
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="inp-ground-slab">Zemin Kat Brüt Tabliyesi <span class="helper-tag">TAKS Oturumu</span></label>
+                <div class="input-suffix-group">
+                  <input type="number" id="inp-ground-slab" class="form-input" value="298" oninput="handleInputChange('customGroundSlab', this.value)">
+                  <span class="suffix-text">m²</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-normal-slab">Normal Kat Tipik Tabliyesi <span class="helper-tag">Çıkmalı Brüt</span></label>
+                <div class="input-suffix-group">
+                  <input type="number" id="inp-normal-slab" class="form-input" value="342" oninput="handleInputChange('customNormalSlab', this.value)">
+                  <span class="suffix-text">m²</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-normal-floor-count">Normal Kat Sayısı <span class="helper-tag">Kat Adedi</span></label>
+                <input type="number" min="1" max="50" id="inp-normal-floor-count" class="form-input" value="8" oninput="handleInputChange('customNormalFloorCount', this.value)">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-units-per-floor">Tipik Katta Daire Sayısı <span class="helper-tag" style="color: var(--brand-accent);">Katta Kaç Daire</span></label>
+                <select id="inp-units-per-floor" class="form-select" onchange="handleInputChange('unitsPerNormalFloor', this.value)">
+                  <option value="1">1 Daire / Kat (Geniş Villa Katı)</option>
+                  <option value="2">2 Daire / Kat (İkili Tipik Kat)</option>
+                  <option value="3" selected>3 Daire / Kat (Üçlü Tipik Kat)</option>
+                  <option value="4">4 Daire / Kat (Dörtlü Kompakt Kat)</option>
+                  <option value="5">5 Daire / Kat</option>
+                  <option value="6">6 Daire / Kat</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-ground-shops">Zemin Kat Dükkan Sayısı</label>
+                <input type="number" min="0" max="20" id="inp-ground-shops" class="form-input" value="0" oninput="handleInputChange('groundFloorShopsCount', this.value)">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-ground-units">Zemin Kat Konut / Daire Sayısı</label>
+                <input type="number" min="0" max="20" id="inp-ground-units" class="form-input" value="0" oninput="handleInputChange('groundFloorUnitsCount', this.value)">
+              </div>
+            </div>
+          </div>
+
           <!-- Canlı İmar Özeti Kutusu -->
           <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-top: 1.25rem;">
             <div style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--brand-primary); display: flex; justify-content: space-between; align-items: center;">
@@ -370,10 +423,10 @@
               <span id="lbl-quick-badge-bolum" style="background: #e2e8f0; color: #1e293b; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">-</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.75rem;">
-              <div>Taban Alanı: <strong id="lbl-quick-taban">-</strong></div>
-              <div>Emsal Alanı: <strong id="lbl-quick-emsal">-</strong></div>
-              <div>Emsal Dışı (+%30): <strong id="lbl-quick-emsaldisi">-</strong></div>
-              <div>Otopark/Sığınak: <strong id="lbl-quick-bodrum">-</strong></div>
+              <div>Zemin Tabliyesi: <strong id="lbl-quick-taban">-</strong> <span id="lbl-quick-zemin-net" style="color: #64748b; font-size: 0.7rem;"></span></div>
+              <div>Normal Kat Tabliyesi: <strong id="lbl-quick-normalkat">-</strong> <span id="lbl-quick-normal-net" style="color: #64748b; font-size: 0.7rem;"></span></div>
+              <div>Kat & Daire Planı: <strong id="lbl-quick-kat-plani" style="color: var(--brand-primary);">-</strong></div>
+              <div>Daire Başı Net Alan: <strong id="lbl-quick-daire-net" style="color: var(--brand-accent-hover);">-</strong></div>
               <div>Toplam Yapı Alanı: <strong id="lbl-quick-toplaminsaat" style="color: var(--brand-primary);">-</strong></div>
               <div>Satılabilir Brüt: <strong id="lbl-quick-satilabilir" style="color: var(--brand-accent-hover);">-</strong></div>
               <div style="grid-column: span 3; border-top: 1px dashed var(--border-color); padding-top: 6px; margin-top: 4px; display: flex; justify-content: space-between;">
@@ -871,18 +924,34 @@
         </div>
 
         <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-          6306 sayılı kanun kapsamında her malikin mevcut mülk değeri, yeni daire metrekaresi, alacağı hibe/kredi tutarı ve cebinden çıkacak ek ödeme ile net değer artışı:
+          6306 sayılı kanun kapsamında her malikin mevcut mülk değeri, tahsis edilen yeni daire/dükkan kat dağılımı, net/brüt metrekaresi, devlet desteği ve net kazancı:
         </p>
+
+        <!-- Kat Kat Bağımsız Bölüm ve Daire Dağılım Şeması -->
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 8px;">
+            <div style="font-size: 0.86rem; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 6px;">
+              <span>🏢 Kat Kat Bağımsız Bölüm & Daire Dağılım Mimarisi</span>
+            </div>
+            <div id="lbl-floor-summary-badge" style="font-size: 0.75rem; font-weight: 700; color: #1e293b; background: #e2e8f0; padding: 3px 10px; border-radius: 4px;">
+              -
+            </div>
+          </div>
+          <div id="floor-schedule-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; font-size: 0.76rem;">
+            <!-- JS ile dinamik doldurulur -->
+          </div>
+        </div>
 
         <div class="table-responsive">
           <table class="data-table" id="owner-balance-table">
             <thead>
               <tr>
                 <th>Tür</th>
-                <th>Bağımsız Bölüm & Malik</th>
-                <th>Mevcut Net m²</th>
+                <th>Mevcut Malik & Bölüm</th>
+                <th>Mevcut Net</th>
                 <th>Mevcut Değer</th>
-                <th>Yeni Net m²</th>
+                <th>Tahsis Edilen Yeni Bölüm & Kat</th>
+                <th>Yeni Net / Brüt</th>
                 <th>Yeni Mülk Değeri</th>
                 <th>Devlet Desteği</th>
                 <th>Malik Ek Ödeme</th>
@@ -1229,6 +1298,12 @@
       setVal('inp-newRent', s.newRentMonthly);
       setVal('inp-soil', s.soilCategory);
       setVal('inp-titleStatus', s.titleStatus);
+      setVal('inp-ground-slab', s.customGroundSlab !== undefined ? s.customGroundSlab : Math.round(s.landArea * s.taks));
+      setVal('inp-normal-slab', s.customNormalSlab !== undefined ? s.customNormalSlab : Math.round(s.landArea * s.taks * 1.15));
+      setVal('inp-normal-floor-count', s.customNormalFloorCount !== undefined ? s.customNormalFloorCount : 8);
+      setVal('inp-units-per-floor', s.unitsPerNormalFloor !== undefined ? s.unitsPerNormalFloor : 3);
+      setVal('inp-ground-shops', s.groundFloorShopsCount !== undefined ? s.groundFloorShopsCount : s.shopCount);
+      setVal('inp-ground-units', s.groundFloorUnitsCount !== undefined ? s.groundFloorUnitsCount : 0);
 
       const chkMargin = document.getElementById('chk-contractor-margin');
       if (chkMargin) chkMargin.checked = s.applyContractorMargin !== false;
@@ -1250,18 +1325,20 @@
         if (el) el.textContent = txt;
       };
 
-      // Stage 1 İmar & Bölüm Özeti
+      // Stage 1 İmar & Tabliye & Bölüm Özeti
       setText('lbl-quick-taban', eng.formatM2(res.tabanAlani));
-      setText('lbl-quick-emsal', eng.formatM2(res.emsaleDahilAlan));
-      setText('lbl-quick-emsaldisi', eng.formatM2(res.emsalDisiAlan));
-      setText('lbl-quick-bodrum', eng.formatM2(res.bodrumOtoparkSiginak));
+      setText('lbl-quick-zemin-net', `(Net ${res.zeminKatNetAlani} m²)`);
+      setText('lbl-quick-normalkat', eng.formatM2(res.normalKatBrut));
+      setText('lbl-quick-normal-net', `(Net ${res.normalKatNet} m²)`);
+      setText('lbl-quick-kat-plani', `Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire)`);
+      setText('lbl-quick-daire-net', `~${res.normalFloorUnitNetM2} m² Net / Daire`);
       setText('lbl-quick-toplaminsaat', eng.formatM2(res.toplamInsaatAlani));
       setText('lbl-quick-satilabilir', eng.formatM2(res.toplamSatilabilirBrutAlan));
 
       const exSumm = res.existingSummary;
-      setText('lbl-quick-badge-bolum', `${exSumm.totalSections} Bağımsız Bölüm (${exSumm.units} Daire + ${exSumm.shops} Dükkan)`);
+      setText('lbl-quick-badge-bolum', `${exSumm.totalSections} Mevcut Bölüm (${exSumm.units} Daire + ${exSumm.shops} Dükkan)`);
       setText('lbl-quick-mevcut-bolum', `${exSumm.units} Daire + ${exSumm.shops} Dükkan (Toplam ${exSumm.totalSections} Bölüm)`);
-      setText('lbl-quick-yeni-bolum', `${res.activeScenario.unitCount} Daire + ${res.activeScenario.shopCount} Dükkan (Toplam ${res.activeScenario.totalSections} Bölüm)`);
+      setText('lbl-quick-yeni-bolum', `${res.totalNewResidentialUnits} Daire + ${res.groundFloorShops} Dükkan (Toplam ${res.totalNewSections} Bağımsız Bölüm)`);
 
       // Stage 2 Senaryolar
       const sc = res.scenarios;
@@ -1395,7 +1472,42 @@
       setText('lbl-rental-yield', eng.formatPct(fin.grossRentalYieldPct));
       setText('lbl-ann-roi', eng.formatPct(fin.annualizedROI));
 
-      // Stage 4 Malik Tablosu
+      // Stage 4 Kat Çizelgesi ve Malik Tablosu
+      const scheduleBox = document.getElementById('floor-schedule-cards');
+      const badgeSchedule = document.getElementById('lbl-floor-summary-badge');
+      if (badgeSchedule) {
+        badgeSchedule.textContent = `Toplam ${res.totalNewSections} Bağımsız Bölüm (${res.existingSummary.totalSections} Malik Payı + ${res.contractorTotalSections} Yüklenici Satış)`;
+      }
+      if (scheduleBox) {
+        scheduleBox.innerHTML = (res.floorSchedule || []).map(f => {
+          const isZemin = f.floorIndex === 0;
+          return `
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                <span style="font-weight: 800; color: ${isZemin ? '#b45309' : 'var(--brand-primary)'};">
+                  ${isZemin ? '🏪' : '🏢'} ${f.floorName}
+                </span>
+                <span style="font-size: 0.7rem; font-weight: 700; color: #475569; background: #f8fafc; padding: 1px 6px; border-radius: 3px;">
+                  Tabliye: ${f.slabGrossM2} m² (Net: ${f.slabNetM2} m²)
+                </span>
+              </div>
+              <div style="font-size: 0.72rem; color: #334155; margin-bottom: 4px;">
+                <strong>${f.summaryText}</strong>
+              </div>
+              ${f.unitItems ? `
+                <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px;">
+                  ${f.unitItems.map(item => `
+                    <span style="font-size: 0.68rem; padding: 2px 6px; border-radius: 3px; background: ${item.includes('Yüklenici') ? '#fef3c7; color: #92400e; font-weight: 700;' : '#f0fdf4; color: #166534;'}">
+                      ${item}
+                    </span>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+
       const ownerTbody = document.getElementById('owner-table-body');
       if (ownerTbody) {
         ownerTbody.innerHTML = (res.ownersTable || []).map(o => `
@@ -1408,7 +1520,12 @@
             <td><strong>${o.name}</strong></td>
             <td>${o.existingNetM2} m²</td>
             <td>${eng.formatCurrency(o.existingValue)}</td>
-            <td style="color: var(--brand-primary); font-weight: 700;">${o.newNetM2} m²</td>
+            <td style="color: var(--brand-primary); font-weight: 700;">
+              <strong>${o.allocatedDescription}</strong>
+            </td>
+            <td style="color: var(--brand-accent-hover); font-weight: 700;">
+              ${o.newNetM2} m² <span style="font-size: 0.7rem; color: #64748b; font-weight: normal;">(Brüt: ${o.newGrossM2} m²)</span>
+            </td>
             <td style="color: var(--status-success); font-weight: 700;">${eng.formatCurrency(o.newValue)}</td>
             <td>${eng.formatCurrency(o.totalSupport)}</td>
             <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
@@ -1436,7 +1553,7 @@
       setText('prop-t-time', `${eng.state.projectMonths} Ay (İskan Dahil)`);
 
       const exSum = `
-        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; mevcut ${res.existingSummary.units} konut ve ${res.existingSummary.shops} dükkan yerine toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> üretilebilir inşaat alanında <strong>${res.activeScenario.unitCount} konut ve ${res.activeScenario.shopCount} dükkan (Toplam ${res.activeScenario.totalSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
+        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong> ve Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong> olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
         <br><br>
         <strong>Önerilen Stratejik Model:</strong> ${res.decision.recommendedModel}. 
         Proje Risk Puanı <strong>${res.riskScore.total}/100 (${res.riskScore.level})</strong> olup, hedef ROI (%${m1.contractorROI.toFixed(1)}) ve salt çoğunluk oranı (%${eng.state.majorityPct}) doğrultusunda yatırım kararı <strong>${dec.text}</strong> olarak belirlenmiştir.
