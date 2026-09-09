@@ -13,6 +13,39 @@
 </head>
 <body>
 
+  <!-- Güvenlik & Yetkilendirme Kilidi (Admin Girişi) -->
+  <div id="studio-auth-lock" class="no-print" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: var(--font-body, 'Inter', sans-serif); padding: 1rem;">
+    <div style="background: #ffffff; border-radius: 20px; padding: 2.2rem; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.2);">
+      <div style="width: 60px; height: 60px; border-radius: 50%; background: #e0f2fe; border: 2px solid #0284c7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; font-size: 1.6rem;">
+        🔐
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 0.3rem;">
+        <img src="assets/images/brand-emblem.png" alt="Yakın Grup" width="24" height="24">
+        <span style="font-family: var(--font-serif, 'Cinzel', serif); font-size: 1.1rem; font-weight: 800; color: #1a3d7c; letter-spacing: 0.05em;">YAKIN GRUP</span>
+      </div>
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">Yönetici Girişi Gerekli</h3>
+      <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.4;">Kentsel Dönüşüm & Teklif Platformu kurumsal stüdyosuna erişmek için lütfen yetkili bilgilerinizi giriniz.</p>
+      
+      <form onsubmit="handleStudioDirectLogin(event)" style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Kullanıcı Adı</label>
+          <input type="text" id="direct-auth-user" required placeholder="admin" autocomplete="username" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.9rem; outline: none; transition: border-color 0.2s;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Yönetici Şifresi</label>
+          <input type="password" id="direct-auth-pass" required placeholder="••••••••" autocomplete="current-password" style="width: 100%; box-sizing: border-box; padding: 0.75rem 0.9rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.9rem; outline: none; transition: border-color 0.2s;">
+        </div>
+        <div id="direct-auth-err" style="display: none; background: #fee2e2; border: 1px solid #f87171; color: #b91c1c; font-size: 0.8rem; padding: 8px 10px; border-radius: 6px; font-weight: 600; text-align: center;">
+          ⚠️ Kullanıcı adı veya şifre hatalı.
+        </div>
+        <button type="submit" style="width: 100%; margin-top: 6px; padding: 0.85rem; background: #1a3d7c; color: #ffffff; border: none; border-radius: 8px; font-weight: 800; font-size: 0.92rem; cursor: pointer; box-shadow: 0 4px 12px rgba(26,61,124,0.35);">
+          🔓 Giriş Yap & Platformu Aç
+        </button>
+        <a href="index.html" style="text-align: center; font-size: 0.82rem; color: #64748b; text-decoration: none; margin-top: 8px;">← Yakın Grup Ana Sayfasına Dön</a>
+      </form>
+    </div>
+  </div>
+
   <!-- ==========================================================================
        HEADER
        ========================================================================== -->
@@ -1393,8 +1426,39 @@
       downloadAnchor.remove();
     }
 
+    // Studio Auth Handler
+    function checkStudioAuth() {
+      const isAuth = sessionStorage.getItem('yg_studio_auth') === 'true' || localStorage.getItem('yg_studio_auth') === 'true';
+      const lock = document.getElementById('studio-auth-lock');
+      if (lock) {
+        lock.style.display = isAuth ? 'none' : 'flex';
+      }
+    }
+
+    function handleStudioDirectLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('direct-auth-user').value.trim();
+      const p = document.getElementById('direct-auth-pass').value.trim();
+      const err = document.getElementById('direct-auth-err');
+      if (u.toLowerCase() === 'admin' && p === 'Yakin2026.!') {
+        sessionStorage.setItem('yg_studio_auth', 'true');
+        localStorage.setItem('yg_studio_auth', 'true');
+        const lock = document.getElementById('studio-auth-lock');
+        if (lock) lock.style.display = 'none';
+      } else {
+        if (err) err.style.display = 'block';
+      }
+    }
+
+    function handleStudioLogout() {
+      sessionStorage.removeItem('yg_studio_auth');
+      localStorage.removeItem('yg_studio_auth');
+      checkStudioAuth();
+    }
+
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
+      checkStudioAuth();
       window.KDEngine.generateDefaultOwners();
       window.KDEngine.calculate();
       syncInputsWithState();
