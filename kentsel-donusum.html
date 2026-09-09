@@ -918,36 +918,77 @@
         <div class="card-header">
           <div class="card-header-title">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            <span>Malikler Kurulu Karar & Bireysel Kazanım Tablosu</span>
+            <span>Malikler Kurulu Karar, Mimari Görseller & Bireysel Kazanım Tablosu</span>
           </div>
           <span class="card-badge gold">Malik Toplantısı Şeffaf Hesaplama</span>
         </div>
 
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-          6306 sayılı kanun kapsamında her malikin mevcut mülk değeri, tahsis edilen yeni daire/dükkan kat dağılımı, net/brüt metrekaresi, devlet desteği ve net kazancı:
-        </p>
+        <!-- 3D Bina Dış Cephe & Tipik Daire Planı Görselleri -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.25rem;">
+          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
+            <div style="position: relative; width: 100%; height: 260px; background: #1e293b; overflow: hidden;">
+              <img src="assets/images/proje-bina-render.jpg" alt="Yakın Grup 3D Bina Renderı" style="width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.85); color: #f8fafc; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(4px);">
+                🏢 3D Mimari Dış Cephe Renderı
+              </span>
+            </div>
+            <div style="padding: 10px 12px; font-size: 0.76rem; color: #475569; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+              <strong>YAKIN GRUP — 2026 Butik Rezidans Mimarisi</strong>
+              <span style="font-size: 0.7rem; color: #0284c7; font-weight: 700;">Taş Yünü + Sinterflex Porselen Cephe</span>
+            </div>
+          </div>
 
-        <!-- Kat Kat Bağımsız Bölüm ve Daire Dağılım Şeması -->
+          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
+            <div style="position: relative; width: 100%; height: 260px; background: #1e293b; overflow: hidden;">
+              <img src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Yerleşim Planı" style="width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; top: 10px; left: 10px; background: rgba(15,23,42,0.85); color: #f8fafc; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(4px);">
+                📐 Tipik Kat 3+1 / 2+1 Mimari Plan
+              </span>
+            </div>
+            <div style="padding: 10px 12px; font-size: 0.76rem; color: #475569; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+              <strong>Geniş Salon + Ebeveyn Banyolu + Teras Balkon</strong>
+              <span style="font-size: 0.7rem; color: #16a34a; font-weight: 700;">Rehau Yerden Isıtmalı</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kat Kat Bağımsız Bölüm ve Cephe Dağılım Şeması -->
         <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.25rem;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 8px;">
             <div style="font-size: 0.86rem; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 6px;">
-              <span>🏢 Kat Kat Bağımsız Bölüm & Daire Dağılım Mimarisi</span>
+              <span>🏢 Kat Kat Bağımsız Bölüm & Cephe Dağılım Mimarisi</span>
             </div>
             <div id="lbl-floor-summary-badge" style="font-size: 0.75rem; font-weight: 700; color: #1e293b; background: #e2e8f0; padding: 3px 10px; border-radius: 4px;">
               -
             </div>
           </div>
-          <div id="floor-schedule-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; font-size: 0.76rem;">
+          <div id="floor-schedule-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; font-size: 0.76rem;">
+            <!-- JS ile dinamik doldurulur -->
+          </div>
+        </div>
+
+        <!-- 2026 Kurumsal Teknik Şartname Özeti -->
+        <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+            <div style="font-size: 0.86rem; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 6px;">
+              <span>📋 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</span>
+            </div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; background: #f0f9ff; border: 1px solid #bae6fd; padding: 2px 8px; border-radius: 4px;">
+              TBDY-2018 & TSE Garantili Standartlar
+            </span>
+          </div>
+
+          <div id="technical-specs-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;">
             <!-- JS ile dinamik doldurulur -->
           </div>
         </div>
 
         <!-- Yarısı Bizden & Taşınma Desteği Bilgi Bandı -->
-        <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.78rem; color: #1e40af; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
+        <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1rem; font-size: 0.78rem; color: #1e40af; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
           <span style="font-size: 1.2rem; line-height: 1;">ℹ️</span>
           <div>
-            <strong>Yarısı Bizden Hibe & Kredi vs. Taşınma Desteği Kuralı:</strong>
-            İstanbul projelerinde konut başına <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong> inşaat yapım bedelini karşılamak üzere doğrudan <strong>müteahhit hakedişine</strong> aktarılır. Hak sahibi maliğe sağlanan <strong>125.000 TL Taşınma/Tahliye Desteği</strong> ise inşaat yapım hesabından düşülmeyip <strong>doğrudan malikin kendi banka hesabına nakit</strong> olarak ödenmektedir.
+            <strong>Yarısı Bizden Hibe & Kredi vs. Taşınma Desteği Hükmü:</strong>
+            İstanbul projelerinde konut başına <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong> doğrudan inşaat yapım maliyetini karşılamak üzere <strong>müteahhit hakedişine</strong> aktarılır. Hak sahibi maliğe sağlanan <strong>125.000 TL Taşınma Desteği</strong> ise inşaat yapım hesabından düşülmeyip <strong>doğrudan malikin kendi banka hesabına nakit</strong> olarak ödenmektedir.
           </div>
         </div>
 
@@ -959,12 +1000,13 @@
                 <th>Mevcut Malik & Bölüm</th>
                 <th>Mevcut Net</th>
                 <th>Mevcut Değer</th>
-                <th>Tahsis Edilen Yeni Bölüm & Kat</th>
+                <th>Tahsis Edilen Yeni Daire / Kat</th>
+                <th>Cephe & Oda Tipi</th>
                 <th>Yeni Net / Brüt</th>
                 <th>Yeni Mülk Değeri</th>
                 <th>İnşaat Hakediş Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0369a1;">(Hibe + Kredi Müteahhite)</span></th>
                 <th>Taşınma Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0891b2;">(Doğrudan Malike)</span></th>
-                <th>Malik Kalan Ek Ödeme</th>
+                <th>Malik Ek Ödeme</th>
                 <th>Net Kazanç</th>
                 <th>Malik ROI</th>
               </tr>
@@ -1020,7 +1062,7 @@
           </div>
         </div>
 
-        <!-- 20 Maddelik Yönetici Özeti -->
+        <!-- Bölüm 1 -->
         <div class="proposal-section-title">1. Proje Yönetici Özeti & Yatırımcı Kararı</div>
         <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-size: 0.82rem; line-height: 1.6; margin-bottom: 1.25rem;">
           <p id="prop-executive-summary">
@@ -1028,11 +1070,13 @@
           </p>
         </div>
 
-        <div class="proposal-section-title">2. İmar, Mimari Kapasite & Maliyet Dağılımı</div>
+        <!-- Bölüm 2 -->
+        <div class="proposal-section-title">2. İmar Parametreleri, Tabliye Metrajları & Maliyet Dağılımı</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; font-size: 0.78rem;">
           <table class="data-table">
             <tr><td><strong>Arsa Alanı:</strong></td><td id="prop-t-land">-</td></tr>
             <tr><td><strong>Emsal (KAKS) & TAKS:</strong></td><td id="prop-t-kaks">-</td></tr>
+            <tr><td><strong>Zemin Tabliyesi / Normal Kat:</strong></td><td id="prop-t-slabs">-</td></tr>
             <tr><td><strong>Toplam İnşaat Alanı:</strong></td><td id="prop-t-gross">-</td></tr>
             <tr><td><strong>Satılabilir Brüt Alan:</strong></td><td id="prop-t-saleable">-</td></tr>
           </table>
@@ -1041,20 +1085,72 @@
             <tr><td><strong>m² Ortalama Yapım Maliyeti:</strong></td><td id="prop-t-costm2">-</td></tr>
             <tr><td><strong>Hedef Proje Satış Hasılatı:</strong></td><td id="prop-t-revenue" style="color: var(--status-success); font-weight: 800;">-</td></tr>
             <tr><td><strong>Hedef Proje Süresi:</strong></td><td id="prop-t-time">-</td></tr>
+            <tr><td><strong>Kat & Daire Düzeni:</strong></td><td id="prop-t-layout">-</td></tr>
           </table>
         </div>
 
-        <div class="proposal-section-title">3. Devlet Destekleri, Finansman & Hakediş Güvencesi</div>
-        <div style="font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1rem;">
+        <!-- Bölüm 3: Mimari 3D Render & Tipik Kat Planı -->
+        <div class="proposal-section-title">3. Mimari Görselleştirme & Tipik Daire Yerleşim Planı</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem;">
+          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+            <img src="assets/images/proje-bina-render.jpg" alt="3D Mimari Bina Renderı" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+            <div style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center;">
+              Proje 3D Dış Cephe & Mimari Konsept Görseli
+            </div>
+          </div>
+          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+            <img src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Kat Planı" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+            <div style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center;">
+              Tipik Kat 3+1 / 2+1 Mimari İç Yerleşim Planı
+            </div>
+          </div>
+        </div>
+
+        <!-- Bölüm 4: 2026 Teknik Şartname -->
+        <div class="proposal-section-title">4. 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</div>
+        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px; margin-bottom: 1.25rem; font-size: 0.75rem; line-height: 1.5;">
+          <div id="prop-technical-specs-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <!-- JS ile dinamik doldurulur -->
+          </div>
+        </div>
+
+        <!-- Bölüm 5: Destekler & Hakediş -->
+        <div class="proposal-section-title">5. Devlet Destekleri, Yarısı Bizden & Finansman Hükümleri</div>
+        <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1rem;">
           <div id="prop-support-text">
             Yükleniyor...
           </div>
         </div>
 
-        <div class="proposal-section-title">4. Malik Hakları, 6306 Salt Çoğunluk & Uygulama Taahhüdü</div>
+        <!-- Bölüm 6: Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Tablosu -->
+        <div class="proposal-section-title">6. Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Cetveli</div>
+        <div class="table-responsive" style="margin-bottom: 1.25rem;">
+          <table class="data-table" style="font-size: 0.72rem;">
+            <thead>
+              <tr style="background: #f1f5f9;">
+                <th>Tür</th>
+                <th>Malik Adı</th>
+                <th>Mevcut Net</th>
+                <th>Tahsis Edilen Daire / Kat</th>
+                <th>Cephe & Yön</th>
+                <th>Yeni Net / Brüt</th>
+                <th>İnşaat Desteği</th>
+                <th>Taşınma Desteği</th>
+                <th>Malik Ek Ödeme</th>
+                <th>Net Kazanç</th>
+              </tr>
+            </thead>
+            <tbody id="prop-owner-table-body">
+              <!-- JS ile dinamik doldurulur -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Bölüm 7: 6306 Hukuki Dayanak & İmzalar -->
+        <div class="proposal-section-title">7. Malik Hakları, 6306 Salt Çoğunluk & Kurumsal Taahhüt</div>
         <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1.5rem;">
           <p>
-            İşbu teklif; 6306 sayılı Afet Riski Altındaki Alanların Dönüştürülmesi Hakkında Kanun kapsamında maliklerin hisseleri oranında <strong>%50+1 salt çoğunluk</strong> kararı doğrultusunda geçerlidir. Kat karşılığı veya hakediş usulü taahhüt kapsamında maliklerin bağımsız bölüm hakları, SPK lisanslı değerleme raporu ve noter onaylı Kat Karşılığı İnşaat Sözleşmesi ile teminat altına alınır.
+            İşbu fizibilite ve teklif dosyası; 6306 sayılı Afet Riski Altındaki Alanların Dönüştürülmesi Hakkında Kanun kapsamında maliklerin hisseleri oranında <strong>%50+1 salt çoğunluk</strong> kararı doğrultusunda geçerlidir. Kat karşılığı veya hakediş usulü taahhüt kapsamında maliklerin bağımsız bölüm hakları, SPK lisanslı değerleme raporu, mimari avan proje ve noter onaylı Kat Karşılığı İnşaat Sözleşmesi ile teminat altına alınır.
           </p>
         </div>
 
@@ -1097,31 +1193,28 @@
               <div style="font-size: 0.72rem; color: var(--text-muted);">Yukarıdaki resmi teklif dosyasına şirket kaşesi ve yetkili ıslak imzasını ekleyin veya özelleştirin</div>
             </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <label for="sel-signatory" style="font-size: 0.76rem; font-weight: 700;">Yetkili İmza:</label>
-              <select id="sel-signatory" class="form-select" style="padding: 4px 10px; font-size: 0.78rem;" onchange="handleSignatoryChange(this.value)">
-                <option value="ilker">İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
-                <option value="eylul">Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
-                <option value="manual">Manuel Islak İmza Alanı (Boş)</option>
-                <option value="none">İmzasız (Yalnız Kaşe)</option>
-              </select>
-            </div>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; user-select: none;">
-              <input type="checkbox" id="chk-show-stamp" checked onchange="handleStampToggle(this.checked)">
-              <span>Şirket Kaşesini Göster</span>
+          
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+              <input type="checkbox" id="chk-toggle-stamp" checked onchange="toggleStampSignature('stamp', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
+              <span>Kurumsal Kaşeyi Göster</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
+              <input type="checkbox" id="chk-toggle-signature" checked onchange="toggleStampSignature('signature', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
+              <span>Islak İmzayı Göster</span>
             </label>
           </div>
         </div>
       </div>
 
-      <!-- Action buttons -->
-      <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;" class="no-print">
-        <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Finansman & Karar</button>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="exportDataJSON()">💾 Senaryoyu Kaydet (JSON)</button>
-          <button class="btn btn-outline" onclick="printReport(4)">🖨️ Bu Teklifi PDF Al (4. Sayfa)</button>
-          <button class="btn btn-gold btn-lg" onclick="printReport('all')">📚 Tüm Dosyayı PDF Olarak Kaydet</button>
+      <!-- Stage 4 Navigasyon ve Çıktı Butonları -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Karar & Finansman</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-outline" onclick="exportDataJSON()">💾 Projeyi Kaydet (JSON)</button>
+          <button class="btn btn-gold btn-lg" onclick="printReport('all')">
+            🖨️ Kurumsal Teklif Dosyasını PDF Yazdır (Tüm Rapor) ➔
+          </button>
         </div>
       </div>
     </section>
@@ -1353,17 +1446,17 @@
       // Stage 2 Senaryolar
       const sc = res.scenarios;
       setText('scA-units', `${sc.A.unitCount} Daire + ${sc.A.shopCount} Dükkan`);
-      setText('scA-net', `${sc.A.avgNetM2} m²`);
+      setText('scA-net', `${sc.A.avgNetM2} m² (${sc.A.roomType || ''})`);
       setText('scA-cont', `${sc.A.contractorUnits} Daire + ${sc.A.contractorShops} Dükkan`);
       setText('scA-val', eng.formatCurrency(sc.A.totalProjectValue));
 
       setText('scB-units', `${sc.B.unitCount} Daire + ${sc.B.shopCount} Dükkan`);
-      setText('scB-net', `${sc.B.avgNetM2} m²`);
+      setText('scB-net', `${sc.B.avgNetM2} m² (${sc.B.roomType || ''})`);
       setText('scB-cont', `${sc.B.contractorUnits} Daire + ${sc.B.contractorShops} Dükkan`);
       setText('scB-val', eng.formatCurrency(sc.B.totalProjectValue));
 
       setText('scC-units', `${sc.C.unitCount} Daire + ${sc.C.shopCount} Dükkan`);
-      setText('scC-net', `${sc.C.avgNetM2} m²`);
+      setText('scC-net', `${sc.C.avgNetM2} m² (${sc.C.roomType || ''})`);
       setText('scC-cont', `${sc.C.contractorUnits} Daire + ${sc.C.contractorShops} Dükkan`);
       setText('scC-val', eng.formatCurrency(sc.C.totalProjectValue));
 
@@ -1446,7 +1539,7 @@
       setText('m1-cont-roi', eng.formatPct(m1.contractorROI));
 
       const m2 = res.models.model2_YarisiBizden;
-      setText('m2-support-total', eng.formatCurrency(m2.totalSupport));
+      setText('m2-support-total', eng.formatCurrency(m2.totalInsaatSupport || m2.totalSupport));
       setText('m2-owner-pay', eng.formatCurrency(m2.ownerPaymentPerUnit));
 
       const m3 = res.models.model3_IADSP;
@@ -1456,25 +1549,7 @@
       const m4 = res.models.model4_Ozkaynak;
       setText('m4-owner-pay', eng.formatCurrency(m4.ownerPaymentPerUnit));
 
-      // Hakediş Akışı
-      const ybdSteps = res.supports.ybd.hakedisSteps;
-      if (ybdSteps && ybdSteps.length >= 4) {
-        setText('ybd-flow-1', eng.formatCurrency(ybdSteps[0].amount));
-        setText('ybd-flow-2', eng.formatCurrency(ybdSteps[1].amount));
-        setText('ybd-flow-3', eng.formatCurrency(ybdSteps[2].amount));
-        setText('ybd-flow-4', eng.formatCurrency(ybdSteps[3].amount));
-      }
-
       // Risk & Süre Detayları
-      const rk = res.riskScore.details;
-      setText('rk-legal', `${rk.legal} / 20`);
-      setText('rk-zoning', `${rk.zoning} / 20`);
-      setText('rk-fin', `${rk.financing} / 15`);
-      setText('rk-maj', `${rk.majority} / 15`);
-      setText('rk-cost', `${rk.cost} / 10`);
-      setText('rk-sales', `${rk.sales} / 10`);
-      setText('rk-time', `${rk.time} / 10`);
-
       const fin = res.financials;
       setText('lbl-land-val', eng.formatCurrency(fin.existingLandValue));
       setText('lbl-proj-val', eng.formatCurrency(fin.projectTotalSalesValue));
@@ -1482,7 +1557,7 @@
       setText('lbl-rental-yield', eng.formatPct(fin.grossRentalYieldPct));
       setText('lbl-ann-roi', eng.formatPct(fin.annualizedROI));
 
-      // Stage 4 Kat Çizelgesi ve Malik Tablosu
+      // Stage 4 Kat & Cephe Çizelgesi
       const scheduleBox = document.getElementById('floor-schedule-cards');
       const badgeSchedule = document.getElementById('lbl-floor-summary-badge');
       if (badgeSchedule) {
@@ -1501,15 +1576,17 @@
                   Tabliye: ${f.slabGrossM2} m² (Net: ${f.slabNetM2} m²)
                 </span>
               </div>
-              <div style="font-size: 0.72rem; color: #334155; margin-bottom: 4px;">
+              <div style="font-size: 0.72rem; color: #334155; margin-bottom: 6px;">
                 <strong>${f.summaryText}</strong>
               </div>
-              ${f.unitItems ? `
-                <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px;">
-                  ${f.unitItems.map(item => `
-                    <span style="font-size: 0.68rem; padding: 2px 6px; border-radius: 3px; background: ${item.includes('Yüklenici') ? '#fef3c7; color: #92400e; font-weight: 700;' : '#f0fdf4; color: #166534;'}">
-                      ${item}
-                    </span>
+              ${f.units ? `
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  ${f.units.map(u => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.68rem; padding: 3px 6px; border-radius: 4px; background: ${u.isOwner ? '#f0fdf4' : '#fffbeb'}; border: 1px solid ${u.isOwner ? '#bbf7d0' : '#fde68a'};">
+                      <span><strong>D:${u.doorNo}</strong> (${u.type || u.ownerName})</span>
+                      <span style="font-weight: 700; color: #0284c7;">${u.facade || ''}</span>
+                      <span style="font-weight: 800; color: ${u.isOwner ? '#166534' : '#92400e'};">${u.ownerName}</span>
+                    </div>
                   `).join('')}
                 </div>
               ` : ''}
@@ -1518,6 +1595,26 @@
         }).join('');
       }
 
+      // Stage 4 Teknik Şartname Kartları
+      const specsBox = document.getElementById('technical-specs-cards');
+      if (specsBox && res.technicalSpecs) {
+        specsBox.innerHTML = res.technicalSpecs.map(spec => `
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+            <div style="font-size: 0.78rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>${spec.icon}</span>
+              <span>${spec.category}</span>
+            </div>
+            <div style="font-size: 0.7rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">
+              ${spec.summary}
+            </div>
+            <ul style="margin: 0; padding-left: 14px; font-size: 0.68rem; color: #334155; line-height: 1.4;">
+              ${spec.items.slice(0, 2).map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('');
+      }
+
+      // Stage 4 Malik Tablosu
       const ownerTbody = document.getElementById('owner-table-body');
       if (ownerTbody) {
         ownerTbody.innerHTML = (res.ownersTable || []).map(o => `
@@ -1532,6 +1629,10 @@
             <td>${eng.formatCurrency(o.existingValue)}</td>
             <td style="color: var(--brand-primary); font-weight: 700;">
               <strong>${o.allocatedDescription}</strong>
+            </td>
+            <td>
+              <span style="font-weight: 700; color: #0369a1;">${o.allocatedFacade}</span>
+              <div style="font-size: 0.65rem; color: #64748b;">${o.allocatedRoomType}</div>
             </td>
             <td style="color: var(--brand-accent-hover); font-weight: 700;">
               ${o.newNetM2} m² <span style="font-size: 0.7rem; color: #64748b; font-weight: normal;">(Brüt: ${o.newGrossM2} m²)</span>
@@ -1566,21 +1667,55 @@
 
       setText('prop-t-land', eng.formatM2(res.landArea));
       setText('prop-t-kaks', `KAKS: ${eng.state.kaks} | TAKS: ${eng.state.taks}`);
+      setText('prop-t-slabs', `Zemin: ${eng.formatM2(res.tabanAlani)} | Kat: ${eng.formatM2(res.normalKatBrut)}`);
       setText('prop-t-gross', eng.formatM2(res.toplamInsaatAlani));
       setText('prop-t-saleable', eng.formatM2(res.toplamSatilabilirBrutAlan));
       setText('prop-t-cost', eng.formatCurrency(res.costs.totalProjectCost));
       setText('prop-t-costm2', Math.round(res.costs.costPerM2).toLocaleString('tr-TR') + ' TL/m²');
       setText('prop-t-revenue', eng.formatCurrency(res.financials.projectTotalSalesValue));
       setText('prop-t-time', `${eng.state.projectMonths} Ay (İskan Dahil)`);
+      setText('prop-t-layout', `Z+${res.normalKatSayisi} Kat (${res.unitsPerNormalFloor} Daire/Kat • Net ~${res.normalFloorUnitNetM2} m²)`);
 
       const exSum = `
-        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong> ve Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong> olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
+        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong> ve Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong> olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire • ${res.normalFloorRoomType}) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
         <br><br>
         <strong>Önerilen Stratejik Model:</strong> ${res.decision.recommendedModel}. 
         Proje Risk Puanı <strong>${res.riskScore.total}/100 (${res.riskScore.level})</strong> olup, hedef ROI (%${m1.contractorROI.toFixed(1)}) ve salt çoğunluk oranı (%${eng.state.majorityPct}) doğrultusunda yatırım kararı <strong>${dec.text}</strong> olarak belirlenmiştir.
       `;
       const elExSum = document.getElementById('prop-executive-summary');
       if (elExSum) elExSum.innerHTML = exSum;
+
+      // Printable Proposal Technical Specs
+      const propSpecsList = document.getElementById('prop-technical-specs-list');
+      if (propSpecsList && res.technicalSpecs) {
+        propSpecsList.innerHTML = res.technicalSpecs.map(spec => `
+          <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
+            <strong style="color: var(--brand-primary);">${spec.icon} ${spec.category}</strong>
+            <div style="color: #475569; font-size: 0.72rem; margin-top: 2px;">${spec.summary}</div>
+          </div>
+        `).join('');
+      }
+
+      // Printable Proposal Owner Table
+      const propOwnerTbody = document.getElementById('prop-owner-table-body');
+      if (propOwnerTbody) {
+        propOwnerTbody.innerHTML = (res.ownersTable || []).map(o => `
+          <tr>
+            <td><strong>${o.typeLabel}</strong></td>
+            <td><strong>${o.name}</strong></td>
+            <td>${o.existingNetM2} m²</td>
+            <td style="color: var(--brand-primary); font-weight: 700;">${o.allocatedDescription}</td>
+            <td style="color: #0369a1; font-weight: 700;">${o.allocatedFacade}</td>
+            <td style="font-weight: 700;">${o.newNetM2} m² (${o.newGrossM2} m²)</td>
+            <td style="font-weight: 700; color: #0369a1;">${eng.formatCurrency(o.constructionSupport)}</td>
+            <td style="color: #0891b2; font-weight: 700;">${o.tahliyeSupportToOwner > 0 ? eng.formatCurrency(o.tahliyeSupportToOwner) : '-'}</td>
+            <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
+              ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
+            </td>
+            <td style="color: var(--brand-accent-hover); font-weight: 800;">${eng.formatCurrency(o.netGain)}</td>
+          </tr>
+        `).join('');
+      }
 
       let supportTxt = "";
       if (res.supports.isIstanbul) {

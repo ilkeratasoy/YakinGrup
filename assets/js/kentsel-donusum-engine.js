@@ -134,25 +134,111 @@ const IADSP_PILOT_CITIES = ["İstanbul", "İzmir", "Kocaeli", "Sakarya", "Manisa
 
 // 2026 Birim Maliyetleri (TL / m²)
 const UNIT_COSTS_2026 = {
-  demolitionPerM2: 850,         // Yıkım, hafriyat, moloz ve bertaraf
-  permitsAndDesignPerM2: 1250,   // Proje, ruhsat, harçlar (6306 muafiyetli)
-  roughConstructionPerM2: 10800, // Kaba inşaat (C35/40 beton, nervürlü demir, kalıp, çatı)
-  finishingStandardPerM2: 7800,  // Standart kaliteli ince işler
-  finishingPremiumPerM2: 11800,  // Lüks / Premium ince işler
-  mepPerM2: 3400,                // Mekanik tesisat (yerden ısıtma, yangın sprinkler, sıhhi)
-  electricalPerM2: 2900,         // Elektrik, zayıf akım, akıllı ev altyapısı, otopark EV şarj
-  externalAndLandscapePerM2: 1200, // Dış işler, istinat, çevre ve peyzaj
-  // Oranlar
-  siteOverheadPct: 0.08,         // %8 Şantiye genel gideri
-  contingencyRiskPct: 0.05,      // %5 Beklenmeyen gider ve risk payı
-  financingCostPct: 0.04,        // %4 Finansman / kur dalgalanma payı
-  contractorProfitTargetPct: 0.18 // %18 Müteahhit hedef brüt kârı
+  demolitionPerM2: 850,
+  permitsAndDesignPerM2: 1250,
+  roughConstructionPerM2: 10800,
+  finishingStandardPerM2: 7800,
+  finishingPremiumPerM2: 11800,
+  mepPerM2: 3400,
+  electricalPerM2: 2900,
+  externalAndLandscapePerM2: 1200,
+  siteOverheadPct: 0.08,
+  contingencyRiskPct: 0.05,
+  financingCostPct: 0.04,
+  contractorProfitTargetPct: 0.18
 };
+
+// Cephe Yönleri ve Güneş/Manzara Tanımları
+const FACADE_DIRECTIONS = [
+  { name: "Güney - Doğu", desc: "Ön / Cadde Cephesi (Sabah & Öğle Güneşi • Ferah)", view: "Cadde & Şehir Manzarası", badge: "☀️ Güney-Doğu" },
+  { name: "Güney - Batı", desc: "Köşe / Park Cephesi (Öğle & Akşam Güneşi • Sıcak)", view: "Park & Peyzaj Manzarası", badge: "☀️ Güney-Batı" },
+  { name: "Kuzey - Doğu", desc: "Bahçe Cephesi (Sabah Güneşi • Sakin & Sessiz)", view: "İç Bahçe & Peyzaj", badge: "🌤️ Kuzey-Doğu" },
+  { name: "Kuzey - Batı", desc: "Avlu Cephesi (Öğleden Sonra Güneşi • Havadar)", view: "Avlu & Şehir", badge: "🌤️ Kuzey-Batı" }
+];
+
+// Net m²'ye göre Oda Tipi Belirleme
+function getRoomType(netM2) {
+  if (netM2 >= 120) return "4+1 Lüks Daire";
+  if (netM2 >= 82) return "3+1 Konfor Daire";
+  if (netM2 >= 55) return "2+1 Fonksiyonel Daire";
+  return "1+1 Rezidans Daire";
+}
+
+// 2026 Kurumsal Teknik İmalat Şartnamesi
+const TECHNICAL_SPECIFICATIONS_2026 = [
+  {
+    category: "1. Statik Taşıyıcı Sistem & Kaba Yapı Güvenliği",
+    icon: "🏗️",
+    summary: "C35/40 Sınıfı Beton, B420C Donatı Çeliği, Radye Temel & Tam Bohçalama",
+    items: [
+      "Taşıyıcı Sistem: 2018 Türkiye Bina Deprem Yönetmeliği'ne (TBDY-2018) tam uyumlu, C35/40 hazır beton ve B420C nervürlü donatı çeliği ile inşa edilen sünek betonarme karkas sistem.",
+      "Temel ve Zemin: Lisanslı zemin etüdü onaylı, zemin sınıfına göre gerekli kuyu/fore kazık güçlendirmeleri ve statik hesaplı radye jeneral temel.",
+      "Su ve Nem Yalıtımı: Bodrum perde betonlarında ve temel altında çift kat polyester keçeli elastomerik membran ile eksiz tam bohçalama su yalıtımı.",
+      "Ses ve Darbe Yalıtımı: Daireler arası ve kat tabliyelerinde şap altı yüksek yoğunluklu ses yalıtım şiltesi ile 52 dB akustik konfor."
+    ]
+  },
+  {
+    category: "2. Dış Cephe Mimarisi & Enerji Verimliliği",
+    icon: "🏢",
+    summary: "150 kg/m³ Taş Yünü Yalıtım, Mekanik Sinterflex Porselen & Isı Konfor Cam",
+    items: [
+      "Yangın ve Isı Yalıtımı: 150 kg/m³ yoğunluklu, A1 sınıfı alev almaz taş yünü levhalar ile kesintisiz mantolama ve yangın bariyerleri.",
+      "Cephe Kaplaması: Mekanik ankrajlı sinterflex porselen seramik paneller + ahşap dokulu kompakt laminat ve antrasit alüminyum kompozit fuga detayları.",
+      "Doğrama Sistemi: Isı yalıtım bariyerli antrasit alüminyum/PVC doğrama serisi, gizli panjur kutusu ve motorlu monoblok alüminyum panjurlar.",
+      "Cam Kombinasyonu: 4+16+4 mm temperli Şişecam Konfor serisi çift cam (yazın güneş ısısını %40 engeller, kışın ısıyı %50 içeride tutar).",
+      "Balkonlar: Lamine temperli şeffaf cam korkuluklar, gizli lineer LED aydınlatmalı alüminyum küpeşteler ve su tahliye süzgeçleri."
+    ]
+  },
+  {
+    category: "3. İç Mekan, Kapılar & İnce İmalatlar",
+    icon: "🚪",
+    summary: "Parmak İzi Çelik Kapı, Özel Tasarım Lake İç Kapılar, 1. Sınıf Derzli Parke",
+    items: [
+      "Daire Giriş Kapısı: Çift kilitli, parmak izi okuyuculu / şifreli manyetik sistem, ahşap giydirmeli monoblok çelik kapı.",
+      "İç Kapılar: Masif gövdeli, manyetik kilitli ve sessiz fitilli, özel tasarım beyaz/antrasit lake boyalı mobilya kapılar.",
+      "Zemin Kaplamaları: Salon ve odalarda 1. sınıf 8 mm AC4/32 derzli laminant / lamine parke; antre, koridor ve mutfakta 60x120 cm rektifiye granit porselen seramik.",
+      "Duvar & Tavan: Alçı sıva üzeri su bazlı silinebilir antibakteriyel saten boya, salon ve antrede gizli LED/spot aydınlatmalı asma tavan bantları."
+    ]
+  },
+  {
+    category: "4. Mutfak & Banyo Özel Donanımları",
+    icon: "🍳",
+    summary: "Blum Mekanizmalı Mutfak, Kuvars Tezgah, Franke/Siemens 3'lü Ankastre, Vitra/Geberit",
+    items: [
+      "Mutfak Dolapları: Blum/Hettich frenli menteşe ve tandem ray mekanizmalı, soft-close lake veya akrilik kapaklı modüler mutfak tasarımı.",
+      "Mutfak Tezgahı: Leke ve çizilmeye dayanıklı, antibakteriyel 1. sınıf kuvars (Çimstone/Belenco) veya porselen tezgah ve tezgah arası panel.",
+      "Ankastre Set: Franke / Siemens / Bosch marka 3'lü ankastre set (dokunmatik indüksiyonlu ocak, davlumbaz, multifonksiyonlu ankastre fırın).",
+      "Banyo Donanımı: Vitra / Geberit gömme rezervuarlar ve asma klozetler, Hansgrohe / ECA termostatik ankastre banyo bataryaları, temperli füme cam duşakabin ve lake banyo mobilyası."
+    ]
+  },
+  {
+    category: "5. Isıtma, Soğutma & Mekanik Altyapı",
+    icon: "❄️",
+    summary: "Rehau/Danfoss Pay Ölçerli Yerden Isıtma, Multi-Inverter Klima, Sessiz Tesisat",
+    items: [
+      "Isıtma Sistemi: Rehau / Danfoss oksijen bariyerli borularla döşenen, her odası bağımsız dijital termostat kontrollü pay ölçerli yerden ısıtma sistemi.",
+      "İklimlendirme: Salon ve ebeveyn yatak odasında multi-inverter A+++ klima bakır borulama, drenaj ve elektrik altyapısı.",
+      "Sıhhi Tesisat: Fırat/Pimapen sessiz atık su boruları, merkezi paslanmaz çelik su deposu, frekans kontrollü hidrofor ve merkezi filtreleme ünitesi.",
+      "Yangın Güvenliği: Kapalı otoparkta ve bina kat hollerinde otomatik yangın sprinkler söndürme, duman tahliye ve yangın dolabı tesisatı."
+    ]
+  },
+  {
+    category: "6. Akıllı Ev, Elektrik & Ortak Alanlar",
+    icon: "⚡",
+    summary: "KNX Akıllı Ev, KONE Asansör, EV Şarj İstasyonu, 7/24 CCTV & Jeneratör",
+    items: [
+      "Akıllı Ev Sistemi: Aydınlatma, motorlu panjurlar, su vanası ve yerden ısıtmayı cep telefonundan uzaktan kontrol eden KNX akıllı ev altyapısı.",
+      "Elektrik Ekipmanı: Schneider / Siemens otomatik sigortalar, kaçak akım koruma röleleri, halogen-free alev iletmez kablolama ve prizler.",
+      "İnterkom & Güvenlik: Daire içi 10 inç dokunmatik IP görüntülü diafon, fiber optik internet altyapısı, bina çevresi ve otoparkta 7/24 HD CCTV kamera izleme.",
+      "Asansör: KONE / Otis marka çift hızlı, 10 kişilik, frekans kontrollü, acil kurtarma sistemli, paslanmaz lüks kabinli tam otomatik asansör.",
+      "Otopark & Enerji: Kapalı otoparkta her daireye tahsisli 1 araçlık park yeri ve elektrikli araç (EV) AC hızlı şarj altyapısı; ortak alanları ve daireleri besleyen tam güç otomatik jeneratör."
+    ]
+  }
+];
 
 class KentselDonusumEngine {
   constructor() {
     this.state = {
-      // 1. Proje Verileri
       city: "İstanbul",
       district: "Kadıköy",
       neighborhood: "Fenerbahçe",
@@ -170,7 +256,6 @@ class KentselDonusumEngine {
       majorityPct: 75,
       soilCategory: "ZF (Orta Sağlam Zemin)",
       
-      // 2. İmar Parametreleri
       kaks: 2.05,
       taks: 0.35,
       hmax: "Z+8 Kat",
@@ -178,7 +263,6 @@ class KentselDonusumEngine {
       newUnitPriceM2: 145000,
       newRentMonthly: 60000,
       
-      // 3. Tabliye & Kat Dağılım Parametreleri
       customGroundSlab: 298,
       customNormalSlab: 342,
       customNormalFloorCount: 8,
@@ -186,20 +270,12 @@ class KentselDonusumEngine {
       groundFloorShopsCount: 0,
       groundFloorUnitsCount: 0,
 
-      // Seçili Senaryo ('A', 'B', 'C')
       selectedScenario: 'B',
-      
-      // Süre Ayarı (Ay)
       projectMonths: 22,
-      
-      // Kat Karşılığı Müteahhit Payı Girişi (%)
       contractorSharePctInput: 55,
-      
-      // Opsiyonel Yüklenici Kâr Marjı (%35 Varsayılan)
       contractorMarginPct: 35,
       applyContractorMargin: true,
       
-      // Malikler Listesi (Detaylı simülasyon için)
       owners: []
     };
 
@@ -226,7 +302,6 @@ class KentselDonusumEngine {
     
     let id = 1;
 
-    // 1. Konut / Daire Malikleri
     for (let i = 1; i <= unitCount; i++) {
       const variation = (i % 3 === 0 ? 8 : (i % 3 === 1 ? -6 : 0));
       const netM2 = Math.max(45, avgNet + variation);
@@ -246,7 +321,6 @@ class KentselDonusumEngine {
       });
     }
 
-    // 2. Ticari / Dükkan Malikleri
     for (let j = 1; j <= shopCount; j++) {
       const shopNetM2 = Math.round(avgNet * 1.25);
       const brutM2 = Math.round(shopNetM2 * 1.30);
@@ -264,7 +338,6 @@ class KentselDonusumEngine {
       });
     }
 
-    // Fallback if empty
     if (list.length === 0) {
       list.push({
         id: 1,
@@ -320,56 +393,44 @@ class KentselDonusumEngine {
     this.calculate();
   }
 
-  /**
-   * Tüm motorların tek bir deterministik akışta hesaplanması
-   */
   calculate() {
     const s = this.state;
     
-    // --- 1. İMAR VE TABLİYE HESAP MOTORU ---
+    // 1. İMAR VE TABLİYE HESAPLARI
     const landArea = parseFloat(s.landArea) || 0;
     const emsal = parseFloat(s.kaks) || 0;
     const taks = parseFloat(s.taks) || 0.35;
     
-    // Taban Alanı / Zemin Tabliyesi (Kullanıcı girdisi veya Arsa * TAKS)
     const autoTabanAlani = Math.round(landArea * taks);
     const tabanAlani = (parseFloat(s.customGroundSlab) > 0) ? parseFloat(s.customGroundSlab) : autoTabanAlani;
-    
-    // Zemin Kat Net Kullanılabilir Oturum Alanı (Giriş holü, merdiven, asansör şaftı ~%80 net verim)
     const zeminKatNetAlani = Math.round(tabanAlani * 0.80);
     
-    // Normal Kat Tabliyesi Brüt (İmar çıkmalarıyla ~1.15x veya kullanıcı girdisi)
     const autoNormalKatBrut = Math.round(tabanAlani * 1.15);
     const normalKatBrut = (parseFloat(s.customNormalSlab) > 0) ? parseFloat(s.customNormalSlab) : autoNormalKatBrut;
-    const normalKatNet = Math.round(normalKatBrut * 0.82); // Kat holü ve yangın şaftları düşülmüş kat neti
+    const normalKatNet = Math.round(normalKatBrut * 0.82);
     
-    // Normal Kat Sayısı
     let autoNormalKatSayisi = 8;
     if (s.hmax) {
       const match = String(s.hmax).match(/(\d+)/);
       if (match) autoNormalKatSayisi = parseInt(match[1]);
     }
     const normalKatSayisi = (parseInt(s.customNormalFloorCount) > 0) ? parseInt(s.customNormalFloorCount) : autoNormalKatSayisi;
-
-    // Katta Daire Sayısı Parametresi (Her normal katta kaç daire olacağı)
     const unitsPerNormalFloor = (parseInt(s.unitsPerNormalFloor) > 0) ? parseInt(s.unitsPerNormalFloor) : 2;
 
-    // Normal Katta Daire Başına Düşen Net Metrekare
     const normalFloorUnitNetM2 = Math.max(25, Math.round(normalKatNet / unitsPerNormalFloor));
     const normalFloorUnitGrossM2 = Math.round(normalFloorUnitNetM2 * 1.25);
+    const normalFloorRoomType = getRoomType(normalFloorUnitNetM2);
 
-    // Normal Katlar Toplam Daire Sayısı ve Net Metraj
     const normalKatlarDaireSayisi = normalKatSayisi * unitsPerNormalFloor;
     const normalKatlarNetToplam = normalKatSayisi * normalKatNet;
 
-    // Emsal ve Toplam İnşaat Alanı
     const emsaleDahilAlan = (emsal > 0 && landArea > 0) ? (landArea * emsal) : ((normalKatSayisi * normalKatBrut) + tabanAlani);
     const emsalDisiAlan = emsaleDahilAlan * 0.30;
     const bodrumOtoparkSiginak = emsaleDahilAlan * 0.32;
     const toplamInsaatAlani = emsaleDahilAlan + emsalDisiAlan + bodrumOtoparkSiginak;
     const toplamSatilabilirBrutAlan = (normalKatSayisi * normalKatBrut) + tabanAlani;
 
-    // --- 2. MEVCUT DURUM VE ZEMİN/NORMAL KAT BAĞIMSIZ BÖLÜM DAĞILIMI ---
+    // 2. MEVCUT DURUM VE BAĞIMSIZ BÖLÜM DAĞILIMI
     const existingUnits = Math.max(0, parseInt(s.unitCount) || 0);
     const existingShops = Math.max(0, parseInt(s.shopCount) || 0);
     const existingTotalSections = Math.max(1, existingUnits + existingShops);
@@ -379,7 +440,6 @@ class KentselDonusumEngine {
     const existingShopNet = existingShops * (avgNet * 1.10);
     const existingTotalNet = existingResidentialNet + existingShopNet;
 
-    // Zemin Kat Dükkan & Konut Sayısı
     const groundFloorShops = (s.groundFloorShopsCount !== null && s.groundFloorShopsCount !== undefined && s.groundFloorShopsCount !== "")
       ? parseInt(s.groundFloorShopsCount)
       : existingShops;
@@ -388,7 +448,6 @@ class KentselDonusumEngine {
       ? parseInt(s.groundFloorUnitsCount)
       : 0;
 
-    // Zemin Kat Dükkan Metrajları (TAKS taban netine tam orantılı)
     let targetShopNetTotal = 0;
     let targetShopAvgNet = 0;
     if (groundFloorShops > 0) {
@@ -396,31 +455,40 @@ class KentselDonusumEngine {
       targetShopAvgNet = Math.round(targetShopNetTotal / groundFloorShops);
     }
 
-    // Toplam Üretilen Konut ve Bağımsız Bölüm Sayısı
     const totalNewResidentialUnits = normalKatlarDaireSayisi + groundFloorUnits;
     const totalNewSections = totalNewResidentialUnits + groundFloorShops;
 
-    // Müteahhide Kalan / Satılabilir Bağımsız Bölümler
     const contractorUnits = Math.max(0, totalNewResidentialUnits - existingUnits);
     const contractorShops = Math.max(0, groundFloorShops - existingShops);
     const contractorTotalSections = contractorUnits + contractorShops;
 
-    // Kat Kat Bağımsız Bölüm Dağılım Çizelgesi (Floor Schedule)
+    // Kat Kat Bağımsız Bölüm & Cephe Dağılım Çizelgesi (Floor & Facade Schedule)
     const floorSchedule = [];
     
-    // Zemin Kat Çizelgesi
-    const zeminDetails = [];
-    if (groundFloorShops > 0) {
-      zeminDetails.push(`${groundFloorShops} Dükkan (Net ~${targetShopAvgNet} m²)`);
+    // Zemin Kat
+    const zeminUnitsList = [];
+    for (let sIdx = 1; sIdx <= groundFloorShops; sIdx++) {
+      zeminUnitsList.push({
+        doorNo: sIdx,
+        type: "Ticari Dükkan",
+        netM2: targetShopAvgNet,
+        grossM2: Math.round(targetShopAvgNet * 1.25),
+        facade: "Cadde / Vitrin Cephesi",
+        ownerName: sIdx <= existingShops ? `Dükkan Malik ${sIdx}` : `🏷️ Yüklenici Dükkan ${sIdx - existingShops}`
+      });
     }
-    if (groundFloorUnits > 0) {
-      const zeminUnitNet = Math.round(zeminKatNetAlani / Math.max(1, groundFloorUnits));
-      zeminDetails.push(`${groundFloorUnits} Konut (Net ~${zeminUnitNet} m²)`);
+    for (let uIdx = 1; uIdx <= groundFloorUnits; uIdx++) {
+      const zNet = Math.round(zeminKatNetAlani / Math.max(1, groundFloorUnits));
+      zeminUnitsList.push({
+        doorNo: groundFloorShops + uIdx,
+        type: getRoomType(zNet),
+        netM2: zNet,
+        grossM2: Math.round(zNet * 1.25),
+        facade: "Bahçe / Zemin Cephesi",
+        ownerName: `Zemin Konut ${uIdx}`
+      });
     }
-    if (zeminDetails.length === 0) {
-      zeminDetails.push(`Bina Giriş Holü, Güvenlik, Sosyal Tesis`);
-    }
-    
+
     floorSchedule.push({
       floorIndex: 0,
       floorName: "Zemin Kat",
@@ -430,21 +498,33 @@ class KentselDonusumEngine {
       unitsCount: groundFloorUnits,
       totalFloorSections: groundFloorShops + groundFloorUnits,
       unitAvgNetM2: groundFloorShops > 0 ? targetShopAvgNet : (groundFloorUnits > 0 ? Math.round(zeminKatNetAlani / groundFloorUnits) : 0),
-      summaryText: zeminDetails.join(' + ')
+      summaryText: groundFloorShops > 0 ? `${groundFloorShops} Dükkan (Net ~${targetShopAvgNet} m²)` : `${groundFloorUnits} Konut`,
+      units: zeminUnitsList
     });
 
-    // Normal Katlar Çizelgesi (1..N Kat)
-    let runningResidentialAllocated = 0;
+    // Normal Katlar (1..N Kat)
+    let runningResidentialCounter = 0;
     for (let f = 1; f <= normalKatSayisi; f++) {
-      const floorUnitDetails = [];
+      const floorUnits = [];
       for (let u = 1; u <= unitsPerNormalFloor; u++) {
-        runningResidentialAllocated++;
-        if (runningResidentialAllocated <= existingUnits) {
-          floorUnitDetails.push(`Daire ${u}: Malik ${runningResidentialAllocated} (Net ${normalFloorUnitNetM2} m²)`);
-        } else {
-          const cNo = runningResidentialAllocated - existingUnits;
-          floorUnitDetails.push(`Daire ${u}: 🏷️ Yüklenici Satış ${cNo} (Net ${normalFloorUnitNetM2} m²)`);
-        }
+        runningResidentialCounter++;
+        const facadeObj = FACADE_DIRECTIONS[(u - 1) % FACADE_DIRECTIONS.length];
+        const isOwner = runningResidentialCounter <= existingUnits;
+        const ownerLabel = isOwner ? `Malik ${runningResidentialCounter}` : `🏷️ Yüklenici Satış ${runningResidentialCounter - existingUnits}`;
+        
+        floorUnits.push({
+          doorNo: u,
+          globalUnitNo: runningResidentialCounter,
+          type: normalFloorRoomType,
+          netM2: normalFloorUnitNetM2,
+          grossM2: normalFloorUnitGrossM2,
+          facade: facadeObj.name,
+          facadeBadge: facadeObj.badge,
+          facadeDesc: facadeObj.desc,
+          facadeView: facadeObj.view,
+          ownerName: ownerLabel,
+          isOwner: isOwner
+        });
       }
 
       floorSchedule.push({
@@ -456,13 +536,13 @@ class KentselDonusumEngine {
         unitsCount: unitsPerNormalFloor,
         totalFloorSections: unitsPerNormalFloor,
         unitAvgNetM2: normalFloorUnitNetM2,
-        summaryText: `${unitsPerNormalFloor} Daire (Daire Başı Net ~${normalFloorUnitNetM2} m²)`,
-        unitItems: floorUnitDetails
+        roomType: normalFloorRoomType,
+        summaryText: `${unitsPerNormalFloor} Daire (${normalFloorRoomType} • Net ~${normalFloorUnitNetM2} m²)`,
+        units: floorUnits
       });
     }
 
-    // --- 3. 3 MİMARİ SENARYO MOTORU ---
-    // Senaryo A: Hak Koruyan
+    // 3. MİMARİ SENARYOLAR
     const scA_avgNet = normalFloorUnitNetM2;
     const scA_unitCount = totalNewResidentialUnits;
     const scA_shopCount = groundFloorShops;
@@ -470,14 +550,12 @@ class KentselDonusumEngine {
     const scA_unitPrice = parseFloat(s.newUnitPriceM2);
     const scA_totalValue = toplamSatilabilirBrutAlan * scA_unitPrice;
 
-    // Senaryo B: Maksimum Ekonomik (Optimum Kompakt)
     const scB_unitCount = totalNewResidentialUnits;
     const scB_shopCount = groundFloorShops;
     const scB_totalSections = totalNewSections;
     const scB_unitPrice = parseFloat(s.newUnitPriceM2) * 1.03;
     const scB_totalValue = toplamSatilabilirBrutAlan * scB_unitPrice;
 
-    // Senaryo C: Premium Lüks Proje
     const scC_unitCount = totalNewResidentialUnits;
     const scC_shopCount = groundFloorShops;
     const scC_totalSections = totalNewSections;
@@ -501,6 +579,7 @@ class KentselDonusumEngine {
         normalKatNet: normalKatNet,
         normalKatSayisi: normalKatSayisi,
         unitsPerNormalFloor: unitsPerNormalFloor,
+        roomType: normalFloorRoomType,
         ownerUnits: existingUnits,
         ownerShops: existingShops,
         contractorUnits: contractorUnits,
@@ -513,7 +592,7 @@ class KentselDonusumEngine {
       B: {
         id: 'B',
         title: "Senaryo B — Maksimum Ekonomik Proje",
-        desc: `Katta ${unitsPerNormalFloor} daireli optimize yerleşim + zemin dükkanları ile maksimum satılabilir kârlılık sağlayan proje modeli.`,
+        desc: `Katta ${unitsPerNormalFloor} daireli optimize yerleşim (${normalFloorRoomType}) + zemin dükkanları ile maksimum satılabilir kârlılık modeli.`,
         unitCount: scB_unitCount,
         shopCount: scB_shopCount,
         totalSections: scB_totalSections,
@@ -526,6 +605,7 @@ class KentselDonusumEngine {
         normalKatNet: normalKatNet,
         normalKatSayisi: normalKatSayisi,
         unitsPerNormalFloor: unitsPerNormalFloor,
+        roomType: normalFloorRoomType,
         ownerUnits: existingUnits,
         ownerShops: existingShops,
         contractorUnits: contractorUnits,
@@ -551,6 +631,7 @@ class KentselDonusumEngine {
         normalKatNet: normalKatNet,
         normalKatSayisi: normalKatSayisi,
         unitsPerNormalFloor: unitsPerNormalFloor,
+        roomType: normalFloorRoomType,
         ownerUnits: existingUnits,
         ownerShops: existingShops,
         contractorUnits: contractorUnits,
@@ -564,7 +645,7 @@ class KentselDonusumEngine {
 
     const activeScenario = scenarios[s.selectedScenario] || scenarios.B;
 
-    // --- 4. 2026 DETAYLI MALİYET MOTORU ---
+    // 4. DETAYLI 2026 MALİYET MOTORU
     const isPremium = s.selectedScenario === 'C';
     const finCostM2 = isPremium ? UNIT_COSTS_2026.finishingPremiumPerM2 : UNIT_COSTS_2026.finishingStandardPerM2;
     
@@ -584,17 +665,15 @@ class KentselDonusumEngine {
 
     const baseConstructionCost = directConstructionCost + costSiteOverhead + costContingency + costFinancing;
     
-    // Opsiyonel Yüklenici Kâr Marjı (Varsayılan %35)
     const marginPct = (s.applyContractorMargin !== false) ? (parseFloat(s.contractorMarginPct) >= 0 ? parseFloat(s.contractorMarginPct) : 35) : 0;
     const costContractorMargin = baseConstructionCost * (marginPct / 100);
 
     const totalProjectCost = baseConstructionCost + costContractorMargin;
     const costPerM2Total = totalProjectCost / (toplamInsaatAlani || 1);
 
-    // --- 5. DEVLET DESTEKLERİ & FİNANSMAN MOTORLARI ---
+    // 5. DEVLET DESTEKLERİ & YARISI BİZDEN MOTORU
     const normCity = (s.city || "").replace(/İ/g, "i").replace(/I/g, "ı").toLowerCase();
     
-    // A. Yarısı Bizden Motoru (Sadece İstanbul)
     const isIstanbul = normCity.includes("istanbul");
     const eligibleYBDUnits = isIstanbul ? existingUnits : 0;
     const eligibleYBDShops = isIstanbul ? existingShops : 0;
@@ -622,7 +701,6 @@ class KentselDonusumEngine {
       { name: "4. Aşama: İskan & Yapı Kullanım İzni", pct: 10, amount: ybdInsaatHakedisToplam * 0.10, desc: "İskan alımı ve dairelerin teslimi." }
     ];
 
-    // B. Dünya Bankası İADŞP
     const isIADSPEligible = IADSP_PILOT_CITIES.some(c => {
       const normC = c.replace(/İ/g, "i").replace(/I/g, "ı").toLowerCase();
       return normCity.includes(normC);
@@ -640,15 +718,13 @@ class KentselDonusumEngine {
     
     const totalIADSPFinancing = isIADSPEligible ? (existingTotalSections * iadspMaxKrediPerUnit) : 0;
 
-    // --- 6. 4 FİNANSMAN MODELİNİN KARŞILAŞTIRILMASI ---
-    // MODEL 1: Kat Karşılığı
+    // 6. 4 FİNANSMAN MODELİ
     const requiredContractorEconomicShare = Math.min(0.85, Math.max(0.35, (totalProjectCost * 1.22) / (activeScenario.totalProjectValue || 1)));
     const model1_ContractorSharePct = Math.round(requiredContractorEconomicShare * 100);
     const model1_ContractorRevenue = activeScenario.totalProjectValue * (model1_ContractorSharePct / 100);
     const model1_ContractorNetProfit = model1_ContractorRevenue - totalProjectCost;
     const model1_ContractorROI = (model1_ContractorNetProfit / (totalProjectCost || 1)) * 100;
 
-    // MODEL 2: Yarısı Bizden + Taahhüt
     const model2_NetCostAfterSupport = Math.max(0, totalProjectCost - ybdInsaatHakedisToplam);
     const model2_OwnerPaymentPerUnit = (eligibleYBDUnits + eligibleYBDShops) > 0 
       ? (model2_NetCostAfterSupport / (eligibleYBDUnits + eligibleYBDShops)) 
@@ -657,19 +733,16 @@ class KentselDonusumEngine {
     const model2_ContractorProfit = (totalProjectCost * UNIT_COSTS_2026.contractorProfitTargetPct);
     const model2_ContractorROI = UNIT_COSTS_2026.contractorProfitTargetPct * 100;
 
-    // MODEL 3: Dünya Bankası İADŞP
     const model3_CreditUsedTotal = Math.min(totalProjectCost, totalIADSPFinancing);
     const model3_RemainingCost = Math.max(0, totalProjectCost - model3_CreditUsedTotal);
     const model3_OwnerPaymentPerUnit = isIADSPEligible ? (model3_RemainingCost / existingTotalSections) : (totalProjectCost / existingTotalSections);
     const model3_ContractorProfit = totalProjectCost * UNIT_COSTS_2026.contractorProfitTargetPct;
     const model3_ContractorROI = UNIT_COSTS_2026.contractorProfitTargetPct * 100;
 
-    // MODEL 4: Özkaynak
     const model4_OwnerPaymentPerUnit = (totalProjectCost * 1.15) / existingTotalSections;
     const model4_ContractorNetProfit = totalProjectCost * 0.15;
     const model4_ContractorROI = 15.0;
 
-    // --- 7. ARSA DEĞERİ, KİRA GETİRİSİ & ROI MOTORU ---
     const existingLandValue = landArea * (parseFloat(s.existingUnitPriceM2) || 80000) * 0.60;
     const projectTotalSalesValue = activeScenario.totalProjectValue;
     const grossProjectValueAdded = projectTotalSalesValue - totalProjectCost;
@@ -682,7 +755,6 @@ class KentselDonusumEngine {
     const months = parseInt(s.projectMonths) || 22;
     const annualizedROI = (Math.pow(1 + (model1_ContractorROI / 100), 12 / months) - 1) * 100;
 
-    // --- 8. RİSK SKORU & KARAR MOTORU ---
     let scoreLegal = s.titleStatus === "Kat Mülkiyeti" ? 20 : 15;
     let scoreZoning = (emsal <= 2.2 && taks <= 0.40) ? 19 : 14;
     let scoreFinancing = isIstanbul ? 15 : (isIADSPEligible ? 13 : 8);
@@ -739,7 +811,7 @@ class KentselDonusumEngine {
       decisionRationale = `Finansman açığı yüksek, malik çoğunluğu yetersiz (%${s.majorityPct} < %50+1) veya proje yatırım kârlılığı risk primini karşılamıyor. Şartlar iyileştirilmeden taahhüt altına girilmesi önerilmez.`;
     }
 
-    // --- 9. MALİK BAZLI DETAYLI BİLANÇO & YENİ DAİRE TAHSİS TABLOSU ---
+    // 7. MALİK BAZLI BİLANÇO & KAT/CEPHE TAHSİS TABLOSU
     let assignedResidentialCounter = 0;
     let assignedShopCounter = 0;
 
@@ -755,6 +827,9 @@ class KentselDonusumEngine {
       let newNetM2;
       let allocatedFloor = 0;
       let allocatedDoorNo = 0;
+      let allocatedRoomType = "";
+      let allocatedFacade = "";
+      let allocatedFacadeDetail = "";
       let allocatedDescription = "";
 
       if (isShop) {
@@ -762,7 +837,10 @@ class KentselDonusumEngine {
         allocatedFloor = 0;
         allocatedDoorNo = assignedShopCounter;
         newNetM2 = targetShopAvgNet || Math.round(zeminKatNetAlani / Math.max(1, groundFloorShops));
-        allocatedDescription = `Zemin Kat • Dükkan ${allocatedDoorNo} (Net ${newNetM2} m²)`;
+        allocatedRoomType = "Ticari Dükkan";
+        allocatedFacade = "Cadde / Vitrin";
+        allocatedFacadeDetail = "Zemin Kat Doğrudan Cadde Girişi (Güneş & Vitrin Alanı)";
+        allocatedDescription = `Zemin Kat • Dükkan ${allocatedDoorNo} (Net ${newNetM2} m² • Cadde Cepheli)`;
       } else {
         assignedResidentialCounter++;
         allocatedFloor = Math.min(normalKatSayisi, Math.floor((assignedResidentialCounter - 1) / unitsPerNormalFloor) + 1);
@@ -770,7 +848,12 @@ class KentselDonusumEngine {
         
         const ratioToAvg = (avgNet > 0) ? (o.existingNetM2 / avgNet) : 1.0;
         newNetM2 = Math.round(normalFloorUnitNetM2 * (0.85 + 0.15 * ratioToAvg));
-        allocatedDescription = `${allocatedFloor}. Kat • Daire ${allocatedDoorNo} (Katta ${unitsPerNormalFloor} Daire Düzeni)`;
+        allocatedRoomType = getRoomType(newNetM2);
+        
+        const facadeObj = FACADE_DIRECTIONS[(allocatedDoorNo - 1) % FACADE_DIRECTIONS.length];
+        allocatedFacade = facadeObj.name;
+        allocatedFacadeDetail = facadeObj.desc;
+        allocatedDescription = `${allocatedFloor}. Kat • Daire ${allocatedDoorNo} (${allocatedRoomType} • ${allocatedFacade})`;
       }
       
       const newGrossM2 = Math.round(newNetM2 * 1.25);
@@ -780,10 +863,7 @@ class KentselDonusumEngine {
       const krediShare = isIstanbul ? (isShop ? ybdKrediPerShop : ybdKrediPerUnit) : (isIADSPEligible ? iadspMaxKrediPerUnit : 0);
       const tahliyeShare = isIstanbul ? (isShop ? ybdTahliyePerShop : ybdTahliyePerUnit) : 0;
       
-      // İnşaat Yapımını Karşılayan Devlet Desteği (Müteahhit Hakedişine: 875k Hibe + 875k Kredi = 1.750.000 TL)
       const constructionSupport = isIstanbul ? (hibeShare + krediShare) : (isIADSPEligible ? krediShare : 0);
-      
-      // 125.000 TL Taşınma Desteği inşaat hesabından düşülmez; doğrudan malikin hesabına nakit ödenir
       const tahliyeSupportToOwner = isIstanbul ? tahliyeShare : 0;
       
       let extraPay = 0;
@@ -806,6 +886,9 @@ class KentselDonusumEngine {
         newValue: newVal,
         allocatedFloor,
         allocatedDoorNo,
+        allocatedRoomType,
+        allocatedFacade,
+        allocatedFacadeDetail,
         allocatedDescription,
         hibe: hibeShare,
         kredi: krediShare,
@@ -819,7 +902,6 @@ class KentselDonusumEngine {
       };
     });
 
-    // Sonuçları nesneye kaydet
     this.results = {
       landArea,
       emsal,
@@ -832,6 +914,7 @@ class KentselDonusumEngine {
       unitsPerNormalFloor,
       normalFloorUnitNetM2,
       normalFloorUnitGrossM2,
+      normalFloorRoomType,
       normalKatlarDaireSayisi,
       normalKatlarNetToplam,
       groundFloorShops,
@@ -844,6 +927,7 @@ class KentselDonusumEngine {
       contractorShops,
       contractorTotalSections,
       floorSchedule,
+      technicalSpecs: TECHNICAL_SPECIFICATIONS_2026,
       emsaleDahilAlan,
       emsalDisiAlan,
       bodrumOtoparkSiginak,
@@ -891,10 +975,11 @@ class KentselDonusumEngine {
           hibePerUnit: ybdHibePerUnit,
           krediPerUnit: ybdKrediPerUnit,
           tahliyePerUnit: ybdTahliyePerUnit,
-          totalPerUnit: ybdTotalPerUnit,
+          contractorInsaatSupportPerUnit: ybdHibePerUnit + ybdKrediPerUnit,
           totalHibe: totalYBDHibe,
           totalKredi: totalYBDKredi,
           totalTahliye: totalYBDTahliye,
+          totalInsaatHakedisFinancing: ybdInsaatHakedisToplam,
           totalFinancing: totalYBDFinancing,
           hakedisSteps: ybdHakedisSteps
         },
@@ -922,13 +1007,15 @@ class KentselDonusumEngine {
         },
         model2_YarisiBizden: {
           name: "Model 2: Yarısı Bizden Destekli",
+          totalInsaatSupport: ybdInsaatHakedisToplam,
           totalSupport: totalYBDFinancing,
+          totalTahliyeToOwners: totalYBDTahliye,
           netCostToShare: model2_NetCostAfterSupport,
           ownerPaymentPerUnit: model2_OwnerPaymentPerUnit,
           contractorSharePct: model2_ContractorSharePct,
           contractorProfit: model2_ContractorProfit,
           contractorROI: model2_ContractorROI,
-          desc: "İstanbul için konut başına 1.875.000 TL, dükkan başına 1.000.000 TL destek hakediş ile inşaata aktarılır."
+          desc: "Konut başına 875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL) inşaat hakedişi olarak müteahhite aktarılır. 125.000 TL Taşınma Desteği doğrudan malikin hesabına nakit ödenir."
         },
         model3_IADSP: {
           name: "Model 3: Dünya Bankası İADŞP Finansmanı",
