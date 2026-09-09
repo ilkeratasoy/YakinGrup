@@ -163,6 +163,10 @@ class KentselDonusumEngine {
       // Kat Karşılığı Müteahhit Payı Girişi (%)
       contractorSharePctInput: 55,
       
+      // Opsiyonel Yüklenici Kâr Marjı (%35 Varsayılan)
+      contractorMarginPct: 35,
+      applyContractorMargin: true,
+      
       // Malikler Listesi (Detaylı simülasyon için)
       owners: []
     };
@@ -411,7 +415,13 @@ class KentselDonusumEngine {
     const costContingency = directConstructionCost * UNIT_COSTS_2026.contingencyRiskPct;
     const costFinancing = directConstructionCost * UNIT_COSTS_2026.financingCostPct;
 
-    const totalProjectCost = directConstructionCost + costSiteOverhead + costContingency + costFinancing;
+    const baseConstructionCost = directConstructionCost + costSiteOverhead + costContingency + costFinancing;
+    
+    // Opsiyonel Yüklenici Kâr Marjı (Varsayılan %35)
+    const marginPct = (s.applyContractorMargin !== false) ? (parseFloat(s.contractorMarginPct) >= 0 ? parseFloat(s.contractorMarginPct) : 35) : 0;
+    const costContractorMargin = baseConstructionCost * (marginPct / 100);
+
+    const totalProjectCost = baseConstructionCost + costContractorMargin;
     const costPerM2Total = totalProjectCost / (toplamInsaatAlani || 1);
 
     // --- 4. DEVLET DESTEKLERİ & FİNANSMAN MOTORLARI ---
@@ -651,6 +661,10 @@ class KentselDonusumEngine {
         siteOverhead: costSiteOverhead,
         contingency: costContingency,
         financing: costFinancing,
+        baseConstructionCost: baseConstructionCost,
+        contractorMarginPct: marginPct,
+        contractorMargin: costContractorMargin,
+        isMarginActive: marginPct > 0,
         totalProjectCost: totalProjectCost,
         costPerM2: costPerM2Total
       },

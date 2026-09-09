@@ -468,6 +468,45 @@
         </div>
       </div>
 
+      <!-- Opsiyonel Yüklenici Kâr Marjı Ayar Kartı -->
+      <div class="card" style="margin-bottom: 1.25rem; background: #f8fafc; border: 1.5px solid #cbd5e1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 1.4rem;">💼</span>
+            <div>
+              <div style="font-size: 0.9rem; font-weight: 800; color: var(--text-main);">
+                Opsiyonel Yüklenici (Müteahhit) Kâr Marjı
+              </div>
+              <div style="font-size: 0.74rem; color: var(--text-muted);">
+                Proje teklifine ve maliyet hesaplamalarına yüklenici brüt kâr payını ekleyin veya yalın maliyetle hesaplayın
+              </div>
+            </div>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="chk-contractor-margin" checked onchange="handleMarginToggle(this.checked)" style="width: 18px; height: 18px; accent-color: var(--brand-primary); cursor: pointer;">
+              <span>Yüklenici Kâr Marjı Uygula</span>
+            </label>
+
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="sel-margin-pct" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary);">Marj Oranı:</label>
+              <select id="sel-margin-pct" class="form-select" style="padding: 5px 10px; font-size: 0.82rem; font-weight: 700;" onchange="handleMarginPctChange(this.value)">
+                <option value="35" selected>%35 (Önerilen Yüklenici Kârı)</option>
+                <option value="25">%25 (Orta / Dengeli Kâr)</option>
+                <option value="20">%20 (Düşük Kâr Payı)</option>
+                <option value="15">%15 (Asgari Taahhüt Kârı)</option>
+                <option value="0">%0 (Yalın İnşaat Yapım Maliyeti)</option>
+              </select>
+            </div>
+
+            <div id="badge-margin-status" style="display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 0.76rem; font-weight: 800; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0;">
+              +%35 Marj Aktif
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 2026 Detaylı Maliyet Motoru -->
       <div class="card">
         <div class="card-header">
@@ -546,10 +585,17 @@
                 <td id="cost-t-overhead"><strong>-</strong></td>
                 <td id="cost-p-overhead">-</td>
               </tr>
+              <tr id="row-cost-margin" style="background: #f0fdf4;">
+                <td><strong style="color: var(--brand-primary);">İ. Yüklenici Kâr Marjı (Opsiyonel)</strong></td>
+                <td>Yüklenici / Müteahhit brüt yapım ve taahhüt kâr marjı (<span id="lbl-margin-pct-tag">%35</span>)</td>
+                <td id="cost-u-margin" style="color: var(--brand-primary); font-weight: 700;">-</td>
+                <td id="cost-t-margin" style="color: var(--brand-primary); font-weight: 800;">-</td>
+                <td id="cost-p-margin" style="color: var(--brand-primary); font-weight: 700;">-</td>
+              </tr>
               <tr class="total-row">
-                <td colspan="2"><strong>TOPLAM PROJE MALİYETİ (Tüm Kalemler Dahil)</strong></td>
+                <td colspan="2"><strong id="cost-lbl-total">TOPLAM PROJE TEKLİF BEDELİ (%35 Yüklenici Marjı Dahil)</strong></td>
                 <td id="cost-u-total"><strong>-</strong></td>
-                <td id="cost-t-total" style="color: var(--brand-primary); font-size: 1rem;"><strong>-</strong></td>
+                <td id="cost-t-total" style="color: var(--brand-primary); font-size: 1.05rem;"><strong>-</strong></td>
                 <td><strong>%100.0</strong></td>
               </tr>
             </tbody>
@@ -1184,6 +1230,11 @@
       setVal('inp-soil', s.soilCategory);
       setVal('inp-titleStatus', s.titleStatus);
 
+      const chkMargin = document.getElementById('chk-contractor-margin');
+      if (chkMargin) chkMargin.checked = s.applyContractorMargin !== false;
+      const selMargin = document.getElementById('sel-margin-pct');
+      if (selMargin) selMargin.value = s.contractorMarginPct !== undefined ? s.contractorMarginPct : 35;
+
       document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
       const activeCard = document.getElementById(`card-sc-${s.selectedScenario}`);
       if (activeCard) activeCard.classList.add('active');
@@ -1229,7 +1280,7 @@
       setText('scC-cont', `${sc.C.contractorUnits} Daire + ${sc.C.contractorShops} Dükkan`);
       setText('scC-val', eng.formatCurrency(sc.C.totalProjectValue));
 
-      // 2026 Maliyet Tablosu
+      // 2026 Maliyet Tablosu & Yüklenici Kâr Marjı
       const c = res.costs;
       const totalArea = res.toplamInsaatAlani || 1;
       
@@ -1247,6 +1298,43 @@
       setCostRow('elec', UNIT_COSTS_2026.electricalPerM2, c.electrical);
       setCostRow('land', UNIT_COSTS_2026.externalAndLandscapePerM2, c.landscape);
       setCostRow('overhead', (c.siteOverhead + c.contingency + c.financing) / totalArea, (c.siteOverhead + c.contingency + c.financing));
+
+      // Yüklenici Kâr Marjı Satırı ve Rozeti
+      const rowMargin = document.getElementById('row-cost-margin');
+      const badgeMargin = document.getElementById('badge-margin-status');
+      const lblMarginTag = document.getElementById('lbl-margin-pct-tag');
+      const lblCostTotal = document.getElementById('cost-lbl-total');
+      
+      if (c.isMarginActive && c.contractorMargin > 0) {
+        if (rowMargin) rowMargin.style.display = '';
+        if (lblMarginTag) lblMarginTag.textContent = `%${c.contractorMarginPct}`;
+        setText('cost-u-margin', Math.round(c.contractorMargin / totalArea).toLocaleString('tr-TR') + ' TL');
+        setText('cost-t-margin', eng.formatCurrency(c.contractorMargin));
+        setText('cost-p-margin', '%' + ((c.contractorMargin / c.totalProjectCost) * 100).toFixed(1));
+        
+        if (badgeMargin) {
+          badgeMargin.style.display = 'inline-flex';
+          badgeMargin.style.background = '#ecfdf5';
+          badgeMargin.style.color = '#065f46';
+          badgeMargin.style.borderColor = '#a7f3d0';
+          badgeMargin.textContent = `+%${c.contractorMarginPct} Marj Aktif (${eng.formatCurrency(c.contractorMargin)})`;
+        }
+        if (lblCostTotal) {
+          lblCostTotal.textContent = `TOPLAM PROJE TEKLİF BEDELİ (%${c.contractorMarginPct} Yüklenici Marjı Dahil)`;
+        }
+      } else {
+        if (rowMargin) rowMargin.style.display = 'none';
+        if (badgeMargin) {
+          badgeMargin.style.display = 'inline-flex';
+          badgeMargin.style.background = '#f1f5f9';
+          badgeMargin.style.color = '#475569';
+          badgeMargin.style.borderColor = '#cbd5e1';
+          badgeMargin.textContent = 'Yalın Yapım Maliyeti (Marj %0)';
+        }
+        if (lblCostTotal) {
+          lblCostTotal.textContent = 'TOPLAM YALIN PROJE YAPIM MALİYETİ (Marj Hariç)';
+        }
+      }
 
       setText('cost-u-total', Math.round(c.costPerM2).toLocaleString('tr-TR') + ' TL/m²');
       setText('cost-t-total', eng.formatCurrency(c.totalProjectCost));
@@ -1378,6 +1466,31 @@
       setText('bar-total-cost', eng.formatCurrency(res.costs.totalProjectCost));
       setText('bar-rec-model', res.decision.recommendedModel);
       setText('bar-roi', eng.formatPct(m1.contractorROI));
+    }
+
+    function handleMarginToggle(checked) {
+      if (window.KDEngine) {
+        window.KDEngine.updateField('applyContractorMargin', checked);
+        const sel = document.getElementById('sel-margin-pct');
+        if (sel && !checked) {
+          // If disabled, keep select visible or set indicator
+        } else if (sel && checked && sel.value === '0') {
+          sel.value = '35';
+          window.KDEngine.updateField('contractorMarginPct', 35);
+        }
+        renderUI();
+      }
+    }
+
+    function handleMarginPctChange(val) {
+      if (window.KDEngine) {
+        const pct = parseFloat(val) || 0;
+        window.KDEngine.updateField('contractorMarginPct', pct);
+        window.KDEngine.updateField('applyContractorMargin', pct > 0);
+        const chk = document.getElementById('chk-contractor-margin');
+        if (chk) chk.checked = pct > 0;
+        renderUI();
+      }
     }
 
     function handleSignatoryChange(val) {
