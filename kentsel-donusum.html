@@ -897,34 +897,6 @@
         </div>
       </div>
 
-      <!-- İmza & Kaşe Kontrol Paneli -->
-      <div class="card no-print" style="margin-bottom: 1.25rem; background: #ffffff; border: 1.5px solid var(--border-color);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.3rem;">🖋️</span>
-            <div>
-              <div style="font-size: 0.86rem; font-weight: 800; color: var(--text-main);">Teklif Onay & Şirket Kaşe-İmza Ayarları</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);">Resmi teklif dosyasına şirket kaşesi ve yetkili ıslak imzasını ekleyin veya özelleştirin</div>
-            </div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <label for="sel-signatory" style="font-size: 0.76rem; font-weight: 700;">Yetkili İmza:</label>
-              <select id="sel-signatory" class="form-select" style="padding: 4px 10px; font-size: 0.78rem;" onchange="handleSignatoryChange(this.value)">
-                <option value="ilker">İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
-                <option value="eylul">Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
-                <option value="manual">Manuel Islak İmza Alanı (Boş)</option>
-                <option value="none">İmzasız (Yalnız Kaşe)</option>
-              </select>
-            </div>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; user-select: none;">
-              <input type="checkbox" id="chk-show-stamp" checked onchange="handleStampToggle(this.checked)">
-              <span>Şirket Kaşesini Göster</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
       <!-- RESMİ TEKLİF VE FİZİBİLİTE DOSYASI (YAZDIRILABİLİR / PDF) -->
       <div class="proposal-paper" id="printable-proposal">
         
@@ -1034,6 +1006,34 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- İmza & Kaşe Kontrol Paneli (Resmi Teklifin Altında) -->
+      <div class="card no-print" style="margin-top: 1.5rem; margin-bottom: 1.25rem; background: #ffffff; border: 1.5px solid var(--border-color);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.3rem;">🖋️</span>
+            <div>
+              <div style="font-size: 0.86rem; font-weight: 800; color: var(--text-main);">Teklif Onay & Şirket Kaşe-İmza Ayarları</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Yukarıdaki resmi teklif dosyasına şirket kaşesi ve yetkili ıslak imzasını ekleyin veya özelleştirin</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="sel-signatory" style="font-size: 0.76rem; font-weight: 700;">Yetkili İmza:</label>
+              <select id="sel-signatory" class="form-select" style="padding: 4px 10px; font-size: 0.78rem;" onchange="handleSignatoryChange(this.value)">
+                <option value="ilker">İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
+                <option value="eylul">Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
+                <option value="manual">Manuel Islak İmza Alanı (Boş)</option>
+                <option value="none">İmzasız (Yalnız Kaşe)</option>
+              </select>
+            </div>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="chk-show-stamp" checked onchange="handleStampToggle(this.checked)">
+              <span>Şirket Kaşesini Göster</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- Action buttons -->
