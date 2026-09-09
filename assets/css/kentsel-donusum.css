@@ -1168,34 +1168,136 @@ body {
   padding-left: 10px;
 }
 
+/* ==========================================================================
+   OFFICIAL STAMP & SIGNATURES BLOCK
+   ========================================================================== */
 .proposal-signatures {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 3rem;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1.5px solid var(--border-color);
+  page-break-inside: avoid;
 }
 
 .signature-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-.signature-box .sign-line {
-  border-bottom: 1px dashed var(--border-strong);
-  margin-bottom: 0.5rem;
-  height: 50px;
+.sign-space-client {
+  height: 90px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.sign-line-box {
+  width: 80%;
+  border-bottom: 1.5px dashed var(--border-strong);
+}
+
+.sign-space-yg {
+  height: 90px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.official-stamp-yg {
+  border: 2px solid #1a3d7c;
+  border-radius: 6px;
+  padding: 4px 8px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #1a3d7c;
+  background: rgba(26, 61, 124, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(26, 61, 124, 0.35);
+  font-family: var(--font-heading), 'Arial', sans-serif;
+  user-select: none;
+  width: 250px;
+  height: 80px;
+  box-sizing: border-box;
+  transform: rotate(-1.5deg);
+  transition: all 0.2s ease;
+}
+
+.official-stamp-yg.hidden {
+  display: none !important;
+}
+
+.stamp-head {
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.stamp-sub {
+  font-size: 0.60rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  margin-bottom: 1px;
+}
+
+.stamp-addr {
+  font-size: 0.50rem;
+  font-weight: 600;
+  line-height: 1.2;
+  opacity: 0.95;
+}
+
+.stamp-tax {
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+  padding-top: 1px;
+  border-top: 0.5px dashed rgba(26, 61, 124, 0.45);
+  width: 100%;
+}
+
+.wet-signature-yg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-45%, -50%) rotate(-4deg);
+  max-width: 155px;
+  max-height: 75px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.15)) contrast(1.15) brightness(0.95);
+  mix-blend-mode: multiply;
+  z-index: 2;
+  transition: opacity 0.2s ease;
+}
+
+.wet-signature-yg.hidden {
+  display: none !important;
 }
 
 .signature-box .sign-role {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text-main);
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--brand-primary-dark);
 }
 
 .signature-box .sign-name {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 /* ==========================================================================

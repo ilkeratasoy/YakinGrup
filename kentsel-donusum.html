@@ -742,6 +742,34 @@
         </div>
       </div>
 
+      <!-- İmza & Kaşe Kontrol Paneli -->
+      <div class="card no-print" style="margin-bottom: 1.25rem; background: #ffffff; border: 1.5px solid var(--border-color);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.3rem;">🖋️</span>
+            <div>
+              <div style="font-size: 0.86rem; font-weight: 800; color: var(--text-main);">Teklif Onay & Şirket Kaşe-İmza Ayarları</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Resmi teklif dosyasına şirket kaşesi ve yetkili ıslak imzasını ekleyin veya özelleştirin</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="sel-signatory" style="font-size: 0.76rem; font-weight: 700;">Yetkili İmza:</label>
+              <select id="sel-signatory" class="form-select" style="padding: 4px 10px; font-size: 0.78rem;" onchange="handleSignatoryChange(this.value)">
+                <option value="ilker">İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
+                <option value="eylul">Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
+                <option value="manual">Manuel Islak İmza Alanı (Boş)</option>
+                <option value="none">İmzasız (Yalnız Kaşe)</option>
+              </select>
+            </div>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="chk-show-stamp" checked onchange="handleStampToggle(this.checked)">
+              <span>Şirket Kaşesini Göster</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
       <!-- RESMİ TEKLİF VE FİZİBİLİTE DOSYASI (YAZDIRILABİLİR / PDF) -->
       <div class="proposal-paper" id="printable-proposal">
         
@@ -827,14 +855,27 @@
         <!-- İmzalar -->
         <div class="proposal-signatures">
           <div class="signature-box">
-            <div class="sign-line"></div>
-            <div class="sign-role">YAKIN GRUP A.Ş.</div>
-            <div class="sign-name">Kentsel Dönüşüm & Yatırım Komitesi</div>
-          </div>
-          <div class="signature-box">
-            <div class="sign-line"></div>
+            <div class="sign-space-client">
+              <div class="sign-line-box"></div>
+            </div>
             <div class="sign-role">BİNA MALİKLER KURULU</div>
             <div class="sign-name">Kat Malikleri Temsilcileri / Yönetim</div>
+            <div class="sign-date" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: ____ / ____ / 2026</div>
+          </div>
+
+          <div class="signature-box">
+            <div class="sign-space-yg">
+              <div class="official-stamp-yg" id="yg-official-stamp">
+                <div class="stamp-head">YAKIN GRUP ENERJİ GIDA</div>
+                <div class="stamp-sub">İNŞAAT VE TİCARET A.Ş.</div>
+                <div class="stamp-addr">Caferağa Mah. Moda Cad. Akyol No: 36 D: 5 Kadıköy / İSTANBUL</div>
+                <div class="stamp-tax">Kadıköy V.D. No: 929 099 6193 • Mersis: 0929099619300001</div>
+              </div>
+              <img id="yg-wet-signature" src="assets/images/imza-ilker-atasoy.png" alt="Yetkili Islak İmza" class="wet-signature-yg">
+            </div>
+            <div class="sign-role" id="yg-sign-role-title">YAKIN GRUP A.Ş.</div>
+            <div class="sign-name" id="yg-sign-person-name">İlker ATASOY — Yönetim Kurulu Başkanı / CXO</div>
+            <div class="sign-date" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Yetkili Kurumsal İmza & Kaşe</div>
           </div>
         </div>
 
@@ -1179,6 +1220,42 @@
       setText('bar-total-cost', eng.formatCurrency(res.costs.totalProjectCost));
       setText('bar-rec-model', res.decision.recommendedModel);
       setText('bar-roi', eng.formatPct(m1.contractorROI));
+    }
+
+    function handleSignatoryChange(val) {
+      const sigImg = document.getElementById('yg-wet-signature');
+      const nameEl = document.getElementById('yg-sign-person-name');
+
+      if (val === 'ilker') {
+        if (sigImg) {
+          sigImg.src = 'assets/images/imza-ilker-atasoy.png';
+          sigImg.classList.remove('hidden');
+        }
+        if (nameEl) nameEl.textContent = 'İlker ATASOY — Yönetim Kurulu Başkanı / CXO';
+      } else if (val === 'eylul') {
+        if (sigImg) {
+          sigImg.src = 'assets/images/imza-eylul-yilmaz.png';
+          sigImg.classList.remove('hidden');
+        }
+        if (nameEl) nameEl.textContent = 'Eylül YILMAZ — Kentsel Dönüşüm & Yatırım Direktörü';
+      } else if (val === 'manual') {
+        if (sigImg) sigImg.classList.add('hidden');
+        if (nameEl) nameEl.textContent = 'Yetkili İmza Sahibi';
+      } else if (val === 'none') {
+        if (sigImg) sigImg.classList.add('hidden');
+        if (nameEl) nameEl.textContent = 'Kentsel Dönüşüm & Yatırım Komitesi';
+      }
+    }
+
+    function handleStampToggle(show) {
+      const stampEl = document.getElementById('yg-official-stamp');
+      if (stampEl) {
+        if (show) {
+          stampEl.classList.remove('hidden');
+        } else {
+          stampEl.classList.add('hidden');
+        }
+      }
     }
 
     function exportDataJSON() {
