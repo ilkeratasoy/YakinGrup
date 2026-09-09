@@ -281,7 +281,10 @@
 
           <!-- Canlı İmar Özeti Kutusu -->
           <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-top: 1.25rem;">
-            <div style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--brand-primary);">📐 ANLIK İMAR & ÜRETİLEBİLİR ALAN ANALİZİ</div>
+            <div style="font-size: 0.8rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--brand-primary); display: flex; justify-content: space-between; align-items: center;">
+              <span>📐 ANLIK İMAR & ÜRETİLEBİLİR ALAN ANALİZİ</span>
+              <span id="lbl-quick-badge-bolum" style="background: #e2e8f0; color: #1e293b; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">-</span>
+            </div>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.75rem;">
               <div>Taban Alanı: <strong id="lbl-quick-taban">-</strong></div>
               <div>Emsal Alanı: <strong id="lbl-quick-emsal">-</strong></div>
@@ -289,6 +292,10 @@
               <div>Otopark/Sığınak: <strong id="lbl-quick-bodrum">-</strong></div>
               <div>Toplam Yapı Alanı: <strong id="lbl-quick-toplaminsaat" style="color: var(--brand-primary);">-</strong></div>
               <div>Satılabilir Brüt: <strong id="lbl-quick-satilabilir" style="color: var(--brand-accent-hover);">-</strong></div>
+              <div style="grid-column: span 3; border-top: 1px dashed var(--border-color); padding-top: 6px; margin-top: 4px; display: flex; justify-content: space-between;">
+                <span>🏢 Mevcut: <strong id="lbl-quick-mevcut-bolum" style="color: var(--brand-primary);">-</strong></span>
+                <span>🏗️ Hedef Proje: <strong id="lbl-quick-yeni-bolum" style="color: var(--status-success);">-</strong></span>
+              </div>
             </div>
           </div>
         </div>
@@ -719,14 +726,15 @@
           <table class="data-table" id="owner-balance-table">
             <thead>
               <tr>
-                <th>Malik / Bağımsız Bölüm</th>
+                <th>Tür</th>
+                <th>Bağımsız Bölüm & Malik</th>
                 <th>Mevcut Net m²</th>
                 <th>Mevcut Değer</th>
                 <th>Yeni Net m²</th>
                 <th>Yeni Mülk Değeri</th>
                 <th>Devlet Desteği</th>
                 <th>Malik Ek Ödeme</th>
-                <th>Net Ekonomik Kazanç</th>
+                <th>Net Kazanç</th>
                 <th>Malik ROI</th>
               </tr>
             </thead>
@@ -992,7 +1000,7 @@
         if (el) el.textContent = txt;
       };
 
-      // Stage 1 İmar Özeti
+      // Stage 1 İmar & Bölüm Özeti
       setText('lbl-quick-taban', eng.formatM2(res.tabanAlani));
       setText('lbl-quick-emsal', eng.formatM2(res.emsaleDahilAlan));
       setText('lbl-quick-emsaldisi', eng.formatM2(res.emsalDisiAlan));
@@ -1000,21 +1008,26 @@
       setText('lbl-quick-toplaminsaat', eng.formatM2(res.toplamInsaatAlani));
       setText('lbl-quick-satilabilir', eng.formatM2(res.toplamSatilabilirBrutAlan));
 
+      const exSumm = res.existingSummary;
+      setText('lbl-quick-badge-bolum', `${exSumm.totalSections} Bağımsız Bölüm (${exSumm.units} Daire + ${exSumm.shops} Dükkan)`);
+      setText('lbl-quick-mevcut-bolum', `${exSumm.units} Daire + ${exSumm.shops} Dükkan (Toplam ${exSumm.totalSections} Bölüm)`);
+      setText('lbl-quick-yeni-bolum', `${res.activeScenario.unitCount} Daire + ${res.activeScenario.shopCount} Dükkan (Toplam ${res.activeScenario.totalSections} Bölüm)`);
+
       // Stage 2 Senaryolar
       const sc = res.scenarios;
-      setText('scA-units', `${sc.A.unitCount} Daire`);
+      setText('scA-units', `${sc.A.unitCount} Daire + ${sc.A.shopCount} Dükkan`);
       setText('scA-net', `${sc.A.avgNetM2} m²`);
-      setText('scA-cont', `${sc.A.contractorUnits} Daire`);
+      setText('scA-cont', `${sc.A.contractorUnits} Daire + ${sc.A.contractorShops} Dükkan`);
       setText('scA-val', eng.formatCurrency(sc.A.totalProjectValue));
 
-      setText('scB-units', `${sc.B.unitCount} Daire`);
+      setText('scB-units', `${sc.B.unitCount} Daire + ${sc.B.shopCount} Dükkan`);
       setText('scB-net', `${sc.B.avgNetM2} m²`);
-      setText('scB-cont', `${sc.B.contractorUnits} Daire`);
+      setText('scB-cont', `${sc.B.contractorUnits} Daire + ${sc.B.contractorShops} Dükkan`);
       setText('scB-val', eng.formatCurrency(sc.B.totalProjectValue));
 
-      setText('scC-units', `${sc.C.unitCount} Daire`);
+      setText('scC-units', `${sc.C.unitCount} Daire + ${sc.C.shopCount} Dükkan`);
       setText('scC-net', `${sc.C.avgNetM2} m²`);
-      setText('scC-cont', `${sc.C.contractorUnits} Daire`);
+      setText('scC-cont', `${sc.C.contractorUnits} Daire + ${sc.C.contractorShops} Dükkan`);
       setText('scC-val', eng.formatCurrency(sc.C.totalProjectValue));
 
       // 2026 Maliyet Tablosu
@@ -1100,12 +1113,17 @@
       if (ownerTbody) {
         ownerTbody.innerHTML = (res.ownersTable || []).map(o => `
           <tr>
+            <td>
+              <span style="display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: ${o.sectionType === 'Ticari' ? '#fef3c7; color: #92400e;' : '#ecfdf5; color: #065f46;'}">
+                ${o.typeLabel}
+              </span>
+            </td>
             <td><strong>${o.name}</strong></td>
             <td>${o.existingNetM2} m²</td>
             <td>${eng.formatCurrency(o.existingValue)}</td>
             <td style="color: var(--brand-primary); font-weight: 700;">${o.newNetM2} m²</td>
             <td style="color: var(--status-success); font-weight: 700;">${eng.formatCurrency(o.newValue)}</td>
-            <td>${eng.formatCurrency(o.hibe + o.kredi + o.tahliye)}</td>
+            <td>${eng.formatCurrency(o.totalSupport)}</td>
             <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
               ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
             </td>
@@ -1131,7 +1149,7 @@
       setText('prop-t-time', `${eng.state.projectMonths} Ay (İskan Dahil)`);
 
       const exSum = `
-        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> üretilebilir inşaat alanı ve <strong>${res.activeScenario.unitCount} adet</strong> modern bağımsız bölüm üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
+        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; mevcut ${res.existingSummary.units} konut ve ${res.existingSummary.shops} dükkan yerine toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> üretilebilir inşaat alanında <strong>${res.activeScenario.unitCount} konut ve ${res.activeScenario.shopCount} dükkan (Toplam ${res.activeScenario.totalSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
         <br><br>
         <strong>Önerilen Stratejik Model:</strong> ${res.decision.recommendedModel}. 
         Proje Risk Puanı <strong>${res.riskScore.total}/100 (${res.riskScore.level})</strong> olup, hedef ROI (%${m1.contractorROI.toFixed(1)}) ve salt çoğunluk oranı (%${eng.state.majorityPct}) doğrultusunda yatırım kararı <strong>${dec.text}</strong> olarak belirlenmiştir.
@@ -1142,11 +1160,11 @@
       let supportTxt = "";
       if (res.supports.isIstanbul) {
         supportTxt = `
-          Taşınmaz İstanbul il sınırları içerisinde yer aldığından <strong>Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi + 125.000 TL Tahliye Desteği (Toplam 1.875.000 TL)</strong> hakedişli finansman desteği sağlanabilmektedir. Proje genelinde toplam <strong>${eng.formatCurrency(res.supports.ybd.totalFinancing)}</strong> devlet finansmanı kullanılacak olup, müteahhit nakit akışına %30 Ruhsat, %30 Kaba, %30 İnce ve %10 İskan dilimleriyle aktarılacaktır.
+          Taşınmaz İstanbul il sınırları içerisinde yer aldığından <strong>Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi + 125.000 TL Tahliye (1.875.000 TL)</strong>; ticari dükkanlar için <strong>437.500 TL Hibe + 437.500 TL Kredi + 125.000 TL Tahliye (1.000.000 TL)</strong> hakedişli finansman desteği sağlanabilmektedir. Proje genelinde (${res.existingSummary.units} Konut + ${res.existingSummary.shops} Dükkan) toplam <strong>${eng.formatCurrency(res.supports.ybd.totalFinancing)}</strong> devlet desteği kullanılacak olup, yüklenici hakedişine aktarılacaktır.
         `;
       } else if (res.supports.isIADSPEligible) {
         supportTxt = `
-          Taşınmaz Dünya Bankası finansmanlı <strong>İklim ve Afetlere Dayanıklı Şehirler Projesi (İADŞP)</strong> pilot illerinden ${eng.state.city} sınırlarında yer almaktadır. Bağımsız bölüm başına <strong>3.000.000 TL'ye kadar, aylık %0,69 faiz ve 180 ay vadeli (ilk 12 ay ödemesiz)</strong> uygun dönüşüm kredisi kullanılabilmektedir.
+          Taşınmaz Dünya Bankası finansmanlı <strong>İklim ve Afetlere Dayanıklı Şehirler Projesi (İADŞP)</strong> pilot illerinden ${eng.state.city} sınırlarında yer almaktadır. Bağımsız bölüm başına (konut ve dükkanlar dahil) <strong>3.000.000 TL'ye kadar, aylık %0,69 faiz ve 180 ay vadeli (ilk 12 ay ödemesiz)</strong> uygun dönüşüm kredisi kullanılabilmektedir. Toplam finansman kapasitesi <strong>${eng.formatCurrency(res.supports.iadsp.totalFinancing)}</strong> düzeyindedir.
         `;
       } else {
         supportTxt = `
