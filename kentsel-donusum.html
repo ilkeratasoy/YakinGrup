@@ -36,9 +36,51 @@
       <div class="header-actions">
         <a href="marketplace.html" class="btn btn-outline-light btn-sm" title="Marketplace">🏛️ Projeler</a>
         <a href="teklif.html" class="btn btn-outline-light btn-sm" title="Şartname Stüdyosu">📑 Şartname Stüdyosu</a>
-        <button class="btn btn-gold btn-sm" onclick="window.print()" title="Yazdır / PDF Olarak Kaydet">
-          🖨️ PDF / Teklif Al
-        </button>
+        
+        <!-- PDF / Yazdır Dropdown -->
+        <div class="print-dropdown" id="header-print-dropdown">
+          <button class="btn btn-gold btn-sm" onclick="togglePrintDropdown(event)" title="Sayfa veya Tüm Raporu PDF Olarak Al">
+            🖨️ PDF & Rapor Al ▾
+          </button>
+          <div class="print-dropdown-content" onclick="event.stopPropagation()">
+            <div class="print-dropdown-header">📄 PDF & Rapor Seçenekleri</div>
+            <div class="print-dropdown-item" onclick="printReport(1)">
+              <span class="icon">📐</span>
+              <div>
+                <strong>1. Sayfa: Proje & İmar Raporu</strong>
+                <span class="sub">Taşınmaz ve İmar Kapasitesi PDF</span>
+              </div>
+            </div>
+            <div class="print-dropdown-item" onclick="printReport(2)">
+              <span class="icon">🏗️</span>
+              <div>
+                <strong>2. Sayfa: Mimari & Maliyet</strong>
+                <span class="sub">3 Senaryo & 2026 Maliyet Tablosu PDF</span>
+              </div>
+            </div>
+            <div class="print-dropdown-item" onclick="printReport(3)">
+              <span class="icon">⚖️</span>
+              <div>
+                <strong>3. Sayfa: Finansman & Karar</strong>
+                <span class="sub">4 Model, Hakediş & AL/ALMA Kararı PDF</span>
+              </div>
+            </div>
+            <div class="print-dropdown-item" onclick="printReport(4)">
+              <span class="icon">📜</span>
+              <div>
+                <strong>4. Sayfa: Teklif & Malik Bilançosu</strong>
+                <span class="sub">Kaşeli-İmzalı Resmi Teklif & Malik Tablosu</span>
+              </div>
+            </div>
+            <div class="print-dropdown-item" style="background: #f8fafc; border-top: 1.5px solid var(--border-color);" onclick="printReport('all')">
+              <span class="icon">📚</span>
+              <div>
+                <strong style="color: var(--brand-primary);">TÜM RAPOR (Eksiksiz Proje Dosyası)</strong>
+                <span class="sub">1'den 4'e Tüm Sayfalar Sıralı Kitapçık</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -102,6 +144,18 @@
          STAGE 1: PROJE & İMAR GİRİŞ EKRANI
          ========================================================================== -->
     <section class="stage-view active" id="stage1">
+      
+      <!-- Stage 1 Hızlı PDF Barı -->
+      <div class="stage-print-bar no-print">
+        <div class="stage-print-title">
+          <span>📐 1. Sayfa: Taşınmaz, Ada/Parsel & İmar Kapasite Raporu</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline btn-sm" onclick="printReport(1)">🖨️ Bu Sayfayı PDF Al (1. Sayfa)</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+        </div>
+      </div>
+
       <div class="layout-2col">
         
         <!-- A. Taşınmaz Bilgileri -->
@@ -312,6 +366,17 @@
          ========================================================================== -->
     <section class="stage-view" id="stage2">
       
+      <!-- Stage 2 Hızlı PDF Barı -->
+      <div class="stage-print-bar no-print">
+        <div class="stage-print-title">
+          <span>🏗️ 2. Sayfa: Otomatik Mimari 3 Senaryo & 2026 Detaylı Maliyet Raporu</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline btn-sm" onclick="printReport(2)">🖨️ Bu Sayfayı PDF Al (2. Sayfa)</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+        </div>
+      </div>
+
       <!-- 3 Alternatif Mimari Senaryo -->
       <div class="card" style="margin-bottom: 1.5rem;">
         <div class="card-header">
@@ -473,6 +538,17 @@
          ========================================================================== -->
     <section class="stage-view" id="stage3">
       
+      <!-- Stage 3 Hızlı PDF Barı -->
+      <div class="stage-print-bar no-print">
+        <div class="stage-print-title">
+          <span>⚖️ 3. Sayfa: Finansman Modelleri Karşılaştırması, Hakediş & Karar Raporu</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline btn-sm" onclick="printReport(3)">🖨️ Bu Sayfayı PDF Al (3. Sayfa)</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+        </div>
+      </div>
+
       <!-- BÜYÜK KARAR BANNERI (AL / MÜZAKERE ET / ALMA) -->
       <div class="decision-banner" id="main-decision-banner">
         <div class="decision-status-box">
@@ -884,9 +960,10 @@
       <!-- Action buttons -->
       <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;" class="no-print">
         <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Finansman & Karar</button>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn btn-primary" onclick="exportDataJSON()">💾 Senaryoyu Kaydet (JSON)</button>
-          <button class="btn btn-gold btn-lg" onclick="window.print()">🖨️ Teklifi Yazdır / PDF Olarak Kaydet</button>
+          <button class="btn btn-outline" onclick="printReport(4)">🖨️ Bu Teklifi PDF Al (4. Sayfa)</button>
+          <button class="btn btn-gold btn-lg" onclick="printReport('all')">📚 Tüm Dosyayı PDF Olarak Kaydet</button>
         </div>
       </div>
     </section>
@@ -960,7 +1037,7 @@
       if (btnNext) {
         if (stageNum === 4) {
           btnNext.innerHTML = '🖨️ PDF / Teklif Al';
-          btnNext.onclick = function() { window.print(); };
+          btnNext.onclick = function() { printReport(4); };
           btnNext.className = 'btn btn-gold btn-sm';
         } else {
           btnNext.innerHTML = 'İleri ➔';
@@ -971,6 +1048,38 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // PDF / Print Handler
+    function printReport(mode) {
+      document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
+      if (mode === 'all') {
+        document.body.classList.add('print-mode-all');
+      } else if (mode >= 1 && mode <= 4) {
+        document.body.classList.add(`print-mode-${mode}`);
+      } else {
+        document.body.classList.add(`print-mode-${currentStage}`);
+      }
+      
+      const dd = document.getElementById('header-print-dropdown');
+      if (dd) dd.classList.remove('show');
+      
+      window.print();
+      
+      setTimeout(() => {
+        document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
+      }, 1500);
+    }
+
+    function togglePrintDropdown(e) {
+      if (e) e.stopPropagation();
+      const dd = document.getElementById('header-print-dropdown');
+      if (dd) dd.classList.toggle('show');
+    }
+
+    document.addEventListener('click', () => {
+      const dd = document.getElementById('header-print-dropdown');
+      if (dd) dd.classList.remove('show');
+    });
 
     function handleInputChange(field, value) {
       if (window.KDEngine) {

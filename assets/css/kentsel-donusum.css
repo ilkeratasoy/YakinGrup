@@ -1352,19 +1352,123 @@ body {
 }
 
 /* ==========================================================================
-   PRINT / PDF MEDIA QUERIES
+   PRINT DROPDOWN MENU
+   ========================================================================== */
+.print-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.print-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 6px;
+  background-color: #ffffff;
+  min-width: 280px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  z-index: 1100;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+
+.print-dropdown.show .print-dropdown-content {
+  display: block;
+}
+
+.print-dropdown-header {
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--brand-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.print-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.print-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.print-dropdown-item:hover {
+  background-color: #f1f5f9;
+  color: var(--brand-primary);
+}
+
+.print-dropdown-item .icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.print-dropdown-item .sub {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Print Banner inside Stages */
+.stage-print-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  margin-bottom: 1rem;
+}
+
+.stage-print-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   PRINT / PDF MEDIA QUERIES (GRANULAR PER-STAGE & ALL PAGES)
    ========================================================================== */
 @media print {
-  body {
-    background: #ffffff;
-    color: #000000;
-    font-size: 11pt;
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm 10mm 12mm;
   }
 
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Hide navigation, toolbars, buttons */
   .engine-header,
   .stepper-nav,
   .preset-bar,
   .bottom-action-bar,
+  .stage-print-bar,
+  .print-dropdown,
   .no-print,
   button,
   .btn {
@@ -1375,14 +1479,53 @@ body {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+    width: 100% !important;
   }
 
+  /* Default print behavior */
   .stage-view {
     display: none !important;
   }
 
-  #stage4, .proposal-paper {
+  /* Print Stage 1 Mode */
+  body.print-mode-1 #stage1 {
     display: block !important;
+  }
+
+  /* Print Stage 2 Mode */
+  body.print-mode-2 #stage2 {
+    display: block !important;
+  }
+
+  /* Print Stage 3 Mode */
+  body.print-mode-3 #stage3 {
+    display: block !important;
+  }
+
+  /* Print Stage 4 Mode */
+  body.print-mode-4 #stage4,
+  body.print-mode-4 .proposal-paper {
+    display: block !important;
+  }
+
+  /* Print All Stages Mode */
+  body.print-mode-all .stage-view {
+    display: block !important;
+    page-break-after: always !important;
+    margin-bottom: 2rem !important;
+  }
+
+  body.print-mode-all #stage4 {
+    page-break-after: avoid !important;
+  }
+
+  /* Fallback: if no specific class, print the active stage */
+  body:not(.print-mode-1):not(.print-mode-2):not(.print-mode-3):not(.print-mode-4):not(.print-mode-all) .stage-view.active {
+    display: block !important;
+  }
+
+  /* Clean Paper Styles */
+  .proposal-paper {
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
@@ -1391,14 +1534,60 @@ body {
   }
 
   .card {
-    border: 1px solid #ccc !important;
+    border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
-    page-break-inside: avoid;
+    margin-bottom: 12px !important;
+    padding: 10px 14px !important;
+    page-break-inside: avoid !important;
   }
 
-  .data-table th, .data-table td {
-    border-color: #ddd !important;
-    font-size: 9pt;
+  .form-input, .form-select {
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    font-size: 8.5pt !important;
+    padding: 3px 6px !important;
+    color: #000000 !important;
+  }
+
+  .data-table {
+    font-size: 8.5pt !important;
+  }
+
+  .data-table th {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    padding: 4px 6px !important;
+    border-bottom: 1.5px solid #94a3b8 !important;
+  }
+
+  .data-table td {
+    padding: 4px 6px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+
+  .decision-banner {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    padding: 10px 14px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .model-card, .scenario-card, .timeline-step {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    padding: 8px !important;
+    page-break-inside: avoid !important;
+  }
+
+  .official-stamp-yg {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    border: 1.5px solid #1a3d7c !important;
+  }
+
+  .wet-signature-yg {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 
