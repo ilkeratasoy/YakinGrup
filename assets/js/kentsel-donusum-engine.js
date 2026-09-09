@@ -591,7 +591,16 @@ class KentselDonusumEngine {
       const newPrice = parseFloat(s.newUnitPriceM2) * priceMultiplier;
       
       const existingVal = o.existingNetM2 * unitPrice;
-      const newNetM2 = Math.round((o.existingNetM2 / (existingTotalNet || 1)) * (toplamNetKullanilabilirAlan * (1 - (model1_ContractorSharePct / 100))));
+      
+      // Yeni Net m²: Seçili mimari senaryonun daire/dükkan büyüklüğü ve malikin mevcut büyüklük oranı
+      let newNetM2;
+      if (isShop) {
+        newNetM2 = Math.round(o.existingNetM2 * 1.05); // Ticari birimler imar kapsamında korunur
+      } else {
+        const ratioToAvg = (avgNet > 0) ? (o.existingNetM2 / avgNet) : 1.0;
+        newNetM2 = Math.round(ratioToAvg * (activeScenario.avgNetM2 || 95));
+      }
+      
       const newGrossM2 = Math.round(newNetM2 * 1.28);
       const newVal = newGrossM2 * newPrice;
       
@@ -601,13 +610,15 @@ class KentselDonusumEngine {
       
       let extraPay = 0;
       if (isIstanbul) {
-        extraPay = Math.max(0, (totalProjectCost / existingTotalSections) - (hibeShare + krediShare));
+        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - (hibeShare + krediShare)));
       } else if (isIADSPEligible) {
-        extraPay = Math.max(0, (totalProjectCost / existingTotalSections) - krediShare);
+        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - krediShare));
+      } else {
+        extraPay = 0; // Kat karşılığı modelinde malikten nakit talep edilmez
       }
       
       const netGain = (newVal - existingVal) - extraPay;
-      const ownerROI = existingVal > 0 ? ((netGain / existingVal) * 100) : 0;
+      const ownerROI = (existingVal + extraPay) > 0 ? ((netGain / (existingVal + extraPay)) * 100) : 0;
 
       return {
         ...o,
