@@ -1482,9 +1482,14 @@ body {
     width: 100% !important;
   }
 
-  /* Default print behavior */
+  /* Default print behavior: hide all stages unless explicitly shown */
   .stage-view {
     display: none !important;
+  }
+
+  /* Force print show class */
+  .stage-view.force-print-show {
+    display: block !important;
   }
 
   /* Print Stage 1 Mode */
@@ -1508,18 +1513,27 @@ body {
     display: block !important;
   }
 
-  /* Print All Stages Mode */
-  body.print-mode-all .stage-view {
+  /* Print All Stages Mode (Full Project Dossier) */
+  body.print-mode-all .stage-view,
+  body.print-mode-all #stage1,
+  body.print-mode-all #stage2,
+  body.print-mode-all #stage3,
+  body.print-mode-all #stage4 {
     display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     page-break-after: always !important;
-    margin-bottom: 2rem !important;
+    break-after: page !important;
+    margin-bottom: 25mm !important;
   }
 
   body.print-mode-all #stage4 {
-    page-break-after: avoid !important;
+    page-break-after: auto !important;
+    break-after: auto !important;
+    margin-bottom: 0 !important;
   }
 
-  /* Fallback: if no specific class, print the active stage */
+  /* Fallback: if no specific print class, print active stage */
   body:not(.print-mode-1):not(.print-mode-2):not(.print-mode-3):not(.print-mode-4):not(.print-mode-all) .stage-view.active {
     display: block !important;
   }
@@ -1533,50 +1547,94 @@ body {
     width: 100% !important;
   }
 
+  /* Print Page Header */
+  .print-page-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+    border-bottom: 1.5px solid #1a3d7c !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print-page-header .print-header-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .print-page-header .print-header-title {
+    font-size: 8.5pt !important;
+    font-weight: 800 !important;
+    color: #1a3d7c !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .print-page-header .print-header-sub {
+    font-size: 6.5pt !important;
+    color: #c5a059 !important;
+    font-weight: 700 !important;
+  }
+
+  .print-page-header .print-header-meta {
+    font-size: 7.5pt !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    text-align: right !important;
+  }
+
   .card {
     border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
-    margin-bottom: 12px !important;
-    padding: 10px 14px !important;
+    margin-bottom: 10px !important;
+    padding: 8px 12px !important;
     page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .form-input, .form-select {
     border: 1px solid #cbd5e1 !important;
     background: #f8fafc !important;
-    font-size: 8.5pt !important;
-    padding: 3px 6px !important;
+    font-size: 8pt !important;
+    padding: 2px 5px !important;
     color: #000000 !important;
   }
 
   .data-table {
-    font-size: 8.5pt !important;
+    font-size: 8pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .data-table th {
     background: #f1f5f9 !important;
     color: #1e293b !important;
-    padding: 4px 6px !important;
+    padding: 3px 5px !important;
     border-bottom: 1.5px solid #94a3b8 !important;
   }
 
   .data-table td {
-    padding: 4px 6px !important;
+    padding: 3px 5px !important;
     border-bottom: 1px solid #e2e8f0 !important;
   }
 
   .decision-banner {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    padding: 10px 14px !important;
-    margin-bottom: 12px !important;
+    padding: 8px 12px !important;
+    margin-bottom: 10px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
-  .model-card, .scenario-card, .timeline-step {
+  .model-card, .scenario-card, .timeline-step, .proposal-signatures {
     border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
     padding: 8px !important;
     page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .official-stamp-yg {

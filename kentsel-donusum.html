@@ -145,6 +145,21 @@
          ========================================================================== -->
     <section class="stage-view active" id="stage1">
       
+      <!-- Stage 1 Yazdırma Başlığı (Sadece PDF / Baskıda Görünür) -->
+      <div class="print-page-header">
+        <div class="print-header-brand">
+          <img src="assets/images/brand-emblem.png" alt="Yakın Grup" width="34" height="34" style="object-fit: contain;">
+          <div>
+            <div class="print-header-title">YAKIN GRUP A.Ş. • KENTSEL DÖNÜŞÜM & MÜHENDİSLİK DİREKTÖRLÜĞÜ</div>
+            <div class="print-header-sub">6306 SAYILI KANUN KAPSAMINDA OTOMATİK FİZİBİLİTE & TEKLİF DOSYASI</div>
+          </div>
+        </div>
+        <div class="print-header-meta">
+          <strong style="color: var(--brand-primary);">1. BÖLÜM: TAŞINMAZ & İMAR ANALİZİ</strong><br>
+          <span>Sayfa 1 / 4 • Tarih: <span class="prop-date-sync">17.08.2026</span></span>
+        </div>
+      </div>
+
       <!-- Stage 1 Hızlı PDF Barı -->
       <div class="stage-print-bar no-print">
         <div class="stage-print-title">
@@ -366,6 +381,21 @@
          ========================================================================== -->
     <section class="stage-view" id="stage2">
       
+      <!-- Stage 2 Yazdırma Başlığı (Sadece PDF / Baskıda Görünür) -->
+      <div class="print-page-header">
+        <div class="print-header-brand">
+          <img src="assets/images/brand-emblem.png" alt="Yakın Grup" width="34" height="34" style="object-fit: contain;">
+          <div>
+            <div class="print-header-title">YAKIN GRUP A.Ş. • KENTSEL DÖNÜŞÜM & MÜHENDİSLİK DİREKTÖRLÜĞÜ</div>
+            <div class="print-header-sub">6306 SAYILI KANUN KAPSAMINDA OTOMATİK FİZİBİLİTE & TEKLİF DOSYASI</div>
+          </div>
+        </div>
+        <div class="print-header-meta">
+          <strong style="color: var(--brand-primary);">2. BÖLÜM: MİMARİ SENARYOLAR & 2026 MALİYETLERİ</strong><br>
+          <span>Sayfa 2 / 4 • Tarih: <span class="prop-date-sync">17.08.2026</span></span>
+        </div>
+      </div>
+
       <!-- Stage 2 Hızlı PDF Barı -->
       <div class="stage-print-bar no-print">
         <div class="stage-print-title">
@@ -534,10 +564,25 @@
     </section>
 
     <!-- ==========================================================================
-         STAGE 3: FİNANSMAN MODELLERİ, HAKEDİŞ & AL/ALMA KARAR MOTORU
+         STAGE 3: 4 FİNANSMAN MODELİ, HAKEDİŞ AKIŞI & AL/ALMA KARAR MOTORU
          ========================================================================== -->
     <section class="stage-view" id="stage3">
       
+      <!-- Stage 3 Yazdırma Başlığı (Sadece PDF / Baskıda Görünür) -->
+      <div class="print-page-header">
+        <div class="print-header-brand">
+          <img src="assets/images/brand-emblem.png" alt="Yakın Grup" width="34" height="34" style="object-fit: contain;">
+          <div>
+            <div class="print-header-title">YAKIN GRUP A.Ş. • KENTSEL DÖNÜŞÜM & MÜHENDİSLİK DİREKTÖRLÜĞÜ</div>
+            <div class="print-header-sub">6306 SAYILI KANUN KAPSAMINDA OTOMATİK FİZİBİLİTE & TEKLİF DOSYASI</div>
+          </div>
+        </div>
+        <div class="print-header-meta">
+          <strong style="color: var(--brand-primary);">3. BÖLÜM: FİNANSMAN MODELLERİ & YATIRIM KARARI</strong><br>
+          <span>Sayfa 3 / 4 • Tarih: <span class="prop-date-sync">17.08.2026</span></span>
+        </div>
+      </div>
+
       <!-- Stage 3 Hızlı PDF Barı -->
       <div class="stage-print-bar no-print">
         <div class="stage-print-title">
@@ -782,7 +827,7 @@
     <section class="stage-view" id="stage4">
 
       <!-- Malikler Toplantı Ekranı / Malik Bilanço Tablosu -->
-      <div class="card no-print" style="margin-bottom: 1.5rem;">
+      <div class="card" style="margin-bottom: 1.5rem;">
         <div class="card-header">
           <div class="card-header-title">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -1049,26 +1094,42 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // PDF / Print Handler
+    // PDF / Print Handler (Tek Sayfa ve Tüm Proje Dosyası Desteği)
     function printReport(mode) {
       document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
-      if (mode === 'all') {
-        document.body.classList.add('print-mode-all');
-      } else if (mode >= 1 && mode <= 4) {
-        document.body.classList.add(`print-mode-${mode}`);
-      } else {
-        document.body.classList.add(`print-mode-${currentStage}`);
-      }
+      document.querySelectorAll('.stage-view').forEach(s => s.classList.remove('force-print-show'));
       
       const dd = document.getElementById('header-print-dropdown');
       if (dd) dd.classList.remove('show');
+
+      if (mode === 'all') {
+        document.body.classList.add('print-mode-all');
+        document.querySelectorAll('.stage-view').forEach(s => {
+          s.classList.add('force-print-show');
+        });
+      } else {
+        const target = (mode >= 1 && mode <= 4) ? mode : currentStage;
+        document.body.classList.add(`print-mode-${target}`);
+        const targetEl = document.getElementById(`stage${target}`);
+        if (targetEl) targetEl.classList.add('force-print-show');
+      }
       
-      window.print();
-      
+      // Tarayıcının tüm sayfaları render ağacına dahil etmesi için reflow tetikle
+      void document.body.offsetHeight;
+
+      // Yazdırma penceresini aç
       setTimeout(() => {
-        document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
-      }, 1500);
+        window.print();
+      }, 100);
     }
+
+    function cleanupPrintMode() {
+      document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
+      document.querySelectorAll('.stage-view').forEach(s => s.classList.remove('force-print-show'));
+      switchStage(currentStage);
+    }
+
+    window.addEventListener('afterprint', cleanupPrintMode);
 
     function togglePrintDropdown(e) {
       if (e) e.stopPropagation();
