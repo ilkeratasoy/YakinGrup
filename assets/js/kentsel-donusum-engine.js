@@ -778,11 +778,17 @@ class KentselDonusumEngine {
       
       const hibeShare = isIstanbul ? (isShop ? ybdHibePerShop : ybdHibePerUnit) : 0;
       const krediShare = isIstanbul ? (isShop ? ybdKrediPerShop : ybdKrediPerUnit) : (isIADSPEligible ? iadspMaxKrediPerUnit : 0);
-      const tahliyeShare = isIstanbul ? ybdTahliyePerUnit : 0;
+      const tahliyeShare = isIstanbul ? (isShop ? ybdTahliyePerShop : ybdTahliyePerUnit) : 0;
+      
+      // İnşaat Yapımını Karşılayan Devlet Desteği (Müteahhit Hakedişine: 875k Hibe + 875k Kredi = 1.750.000 TL)
+      const constructionSupport = isIstanbul ? (hibeShare + krediShare) : (isIADSPEligible ? krediShare : 0);
+      
+      // 125.000 TL Taşınma Desteği inşaat hesabından düşülmez; doğrudan malikin hesabına nakit ödenir
+      const tahliyeSupportToOwner = isIstanbul ? tahliyeShare : 0;
       
       let extraPay = 0;
       if (isIstanbul) {
-        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - (hibeShare + krediShare)));
+        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
       } else if (isIADSPEligible) {
         extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - krediShare));
       } else {
@@ -804,7 +810,9 @@ class KentselDonusumEngine {
         hibe: hibeShare,
         kredi: krediShare,
         tahliye: tahliyeShare,
-        totalSupport: hibeShare + krediShare + tahliyeShare,
+        constructionSupport: constructionSupport,
+        totalSupport: constructionSupport,
+        tahliyeSupportToOwner: tahliyeSupportToOwner,
         extraPayment: extraPay,
         netGain: netGain,
         roiPct: ownerROI

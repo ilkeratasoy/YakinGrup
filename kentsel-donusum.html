@@ -730,17 +730,17 @@
             <div>
               <div class="model-header">
                 <h4>Model 2: Yarısı Bizden</h4>
-                <p>1.875.000 TL Hibe + Kredi + Tahliye</p>
+                <p>1.750.000 TL İnşaat + 125.000 TL Taşınma</p>
               </div>
               <ul class="model-metrics-list">
-                <li><span class="name">Toplam Destek:</span><span class="value" id="m2-support-total" style="color: var(--brand-accent-hover);">-</span></li>
-                <li><span class="name">Daire Başı Destek:</span><span class="value">1.875.000 TL</span></li>
-                <li><span class="name">Daire Başı Kalan Pay:</span><span class="value" id="m2-owner-pay">-</span></li>
-                <li class="highlight-net"><span class="name">Müteahhit Nakit Akışı:</span><span class="value" style="color: var(--status-success);">Hakediş Güvenceli</span></li>
+                <li><span class="name">Müteahhit Hakediş Desteği:</span><span class="value" id="m2-support-total" style="color: var(--brand-accent-hover);">-</span></li>
+                <li><span class="name">Daire Başı İnşaat Katkısı:</span><span class="value">1.750.000 TL (875k Hibe + 875k Kredi)</span></li>
+                <li><span class="name">Malik Taşınma Desteği:</span><span class="value" style="color: #0284c7; font-weight: 700;">125.000 TL (Malik Hesabına)</span></li>
+                <li><span class="name">Daire Başı Kalan İnşaat Payı:</span><span class="value" id="m2-owner-pay">-</span></li>
               </ul>
             </div>
             <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
-              İstanbul için geçerlidir. Hibe/kredi ödemeleri müteahhide 4 aşamalı hakedişle aktarılır.
+              İstanbul için geçerlidir. 875k Hibe + 875k Kredi (1.750.000 TL) müteahhide hakedişle ödenir; 125.000 TL taşınma desteği doğrudan malike aktarılır.
             </div>
           </div>
 
@@ -942,6 +942,15 @@
           </div>
         </div>
 
+        <!-- Yarısı Bizden & Taşınma Desteği Bilgi Bandı -->
+        <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.78rem; color: #1e40af; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
+          <span style="font-size: 1.2rem; line-height: 1;">ℹ️</span>
+          <div>
+            <strong>Yarısı Bizden Hibe & Kredi vs. Taşınma Desteği Kuralı:</strong>
+            İstanbul projelerinde konut başına <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong> inşaat yapım bedelini karşılamak üzere doğrudan <strong>müteahhit hakedişine</strong> aktarılır. Hak sahibi maliğe sağlanan <strong>125.000 TL Taşınma/Tahliye Desteği</strong> ise inşaat yapım hesabından düşülmeyip <strong>doğrudan malikin kendi banka hesabına nakit</strong> olarak ödenmektedir.
+          </div>
+        </div>
+
         <div class="table-responsive">
           <table class="data-table" id="owner-balance-table">
             <thead>
@@ -953,8 +962,9 @@
                 <th>Tahsis Edilen Yeni Bölüm & Kat</th>
                 <th>Yeni Net / Brüt</th>
                 <th>Yeni Mülk Değeri</th>
-                <th>Devlet Desteği</th>
-                <th>Malik Ek Ödeme</th>
+                <th>İnşaat Hakediş Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0369a1;">(Hibe + Kredi Müteahhite)</span></th>
+                <th>Taşınma Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0891b2;">(Doğrudan Malike)</span></th>
+                <th>Malik Kalan Ek Ödeme</th>
                 <th>Net Kazanç</th>
                 <th>Malik ROI</th>
               </tr>
@@ -1527,7 +1537,18 @@
               ${o.newNetM2} m² <span style="font-size: 0.7rem; color: #64748b; font-weight: normal;">(Brüt: ${o.newGrossM2} m²)</span>
             </td>
             <td style="color: var(--status-success); font-weight: 700;">${eng.formatCurrency(o.newValue)}</td>
-            <td>${eng.formatCurrency(o.totalSupport)}</td>
+            <td style="font-weight: 700; color: #0369a1;">
+              ${eng.formatCurrency(o.constructionSupport)}
+              <div style="font-size: 0.65rem; color: #64748b; font-weight: normal;">(Hibe+Kredi Müteahhite)</div>
+            </td>
+            <td>
+              ${o.tahliyeSupportToOwner > 0 ? `
+                <span style="display: inline-block; padding: 3px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: #ecfeff; color: #0891b2; border: 1px solid #a5f3fc;">
+                  📦 ${eng.formatCurrency(o.tahliyeSupportToOwner)}
+                  <div style="font-size: 0.63rem; font-weight: normal; color: #0e7490;">(Malik Hesabına Direkt)</div>
+                </span>
+              ` : `<span style="color: #94a3b8; font-size: 0.72rem;">-</span>`}
+            </td>
             <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
               ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
             </td>
@@ -1564,7 +1585,9 @@
       let supportTxt = "";
       if (res.supports.isIstanbul) {
         supportTxt = `
-          Taşınmaz İstanbul il sınırları içerisinde yer aldığından <strong>Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi + 125.000 TL Tahliye (1.875.000 TL)</strong>; ticari dükkanlar için <strong>437.500 TL Hibe + 437.500 TL Kredi + 125.000 TL Tahliye (1.000.000 TL)</strong> hakedişli finansman desteği sağlanabilmektedir. Proje genelinde (${res.existingSummary.units} Konut + ${res.existingSummary.shops} Dükkan) toplam <strong>${eng.formatCurrency(res.supports.ybd.totalFinancing)}</strong> devlet desteği kullanılacak olup, yüklenici hakedişine aktarılacaktır.
+          Taşınmaz İstanbul il sınırları içerisinde yer aldığından <strong>Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong>; ticari dükkanlar için <strong>437.500 TL Hibe + 437.500 TL Kredi (Toplam 875.000 TL)</strong> inşaat yapım bedelini karşılamak üzere doğrudan <strong>yüklenici/müteahhit hakedişine</strong> aktarılacaktır.
+          <br><br>
+          Ayrıca hak sahibi her bir bağımsız bölüm malikine <strong>125.000 TL Taşınma ve Tahliye Desteği</strong> inşaat maliyetinden düşülmeyip <strong>doğrudan malikin kendi banka hesabına nakit</strong> olarak ödenecektir. Proje genelinde toplam <strong>${eng.formatCurrency(res.supports.ybd.totalInsaatHakedisFinancing || (res.existingSummary.units * 1750000 + res.existingSummary.shops * 875000))}</strong> inşaat hakediş finansmanı kullanılacak ve maliklere toplam <strong>${eng.formatCurrency(res.supports.ybd.totalTahliye)}</strong> nakit taşınma yardımı aktarılacaktır.
         `;
       } else if (res.supports.isIADSPEligible) {
         supportTxt = `
