@@ -2161,33 +2161,56 @@
 
   
   <!-- ========================================== -->
-  <!-- MODAL 1: Teklif & Belge Arşivi (Kaydet & Yönet) -->
+  <!-- MODAL 1: Teklif & Belge Arşivi (Veritabanı Masası) -->
   <!-- ========================================== -->
   <div class="modal-overlay" id="modal-archive">
-    <div class="modal-window" style="width: 960px;">
+    <div class="modal-window" style="width: 1020px; max-width: 95vw;">
       <div class="modal-header">
-        <h3>📁 Teklif Kaydet & Belge Arşivi</h3>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h3>📁 Teklif & Belge Veritabanı Arşivi</h3>
+          <span style="font-size:0.7rem; background:#dbeafe; color:#1e40af; font-weight:800; padding:2px 8px; border-radius:12px;">CANLI DB</span>
+        </div>
         <button class="modal-close-btn" onclick="closeModal('modal-archive')">✕</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="padding: 16px 20px;">
         
+        <!-- Live Portfolio Metrics Summary -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:16px;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 14px;">
+            <div style="font-size:0.7rem; font-weight:700; color:#64748b; text-transform:uppercase;">Toplam Kayıtlı Teklif</div>
+            <div style="font-size:1.25rem; font-weight:900; color:#0f172a; margin-top:2px;" id="stat-total-proposals">0</div>
+          </div>
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px 14px;">
+            <div style="font-size:0.7rem; font-weight:700; color:#15803d; text-transform:uppercase;">✅ Onaylanan Teklifler</div>
+            <div style="font-size:1.25rem; font-weight:900; color:#166534; margin-top:2px;" id="stat-approved-proposals">0</div>
+          </div>
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 14px;">
+            <div style="font-size:0.7rem; font-weight:700; color:#1d4ed8; text-transform:uppercase;">⏳ İletilen / Bekleyen</div>
+            <div style="font-size:1.25rem; font-weight:900; color:#1e40af; margin-top:2px;" id="stat-sent-proposals">0</div>
+          </div>
+          <div style="background:#fefce8; border:1px solid #fef08a; border-radius:8px; padding:10px 14px;">
+            <div style="font-size:0.7rem; font-weight:700; color:#a16207; text-transform:uppercase;">💰 Toplam Portföy Hacmi</div>
+            <div style="font-size:1.15rem; font-weight:900; color:#854d0e; margin-top:2px;" id="stat-total-volume">0</div>
+          </div>
+        </div>
+
         <!-- Active Proposal Quick-Save Action Card -->
-        <div style="background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%); border: 1.5px solid #93c5fd; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;">
+        <div style="background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%); border: 1.5px solid #93c5fd; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;">
           <div style="display: flex; flex-direction: column; gap: 2px;">
             <div style="font-size: 0.72rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em;">Aktif Düzenlenen Belge</div>
             <div style="font-size: 0.95rem; font-weight: 800; color: #0f172a;" id="archive-active-doc-title">YKN-DOC • Müşteri Teklifi</div>
             <div style="font-size: 0.78rem; color: #475569;" id="archive-active-doc-info">Tutar: - | Tarih: -</div>
           </div>
           <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="btn-sm-action" onclick="manualSaveDraft(); showToast('💾 Taslak geçici hafızaya kaydedildi!');" style="background:#ffffff; color:#15803d; border-color:#86efac; font-weight:700;">💾 Taslak Olarak Koru</button>
-            <button class="btn-sm-action btn-primary-sm" onclick="saveCurrentToArchive()" style="background:#1d4ed8; border-color:#1d4ed8; padding: 8px 16px; font-size: 0.85rem;">📥 Arşive & Veritabanına Kaydet</button>
+            <button class="btn-sm-action btn-primary-sm" onclick="saveCurrentToArchive()" style="background:#1d4ed8; border-color:#1d4ed8; padding: 8px 16px; font-size: 0.85rem; font-weight:800;">💾 Bu Teklifi Veritabanına Kaydet / Güncelle</button>
+            <button class="btn-sm-action" onclick="startNewBlankProposal()" style="background:#ffffff; color:#0f172a; border-color:#cbd5e1; font-weight:700;">➕ Yeni Boş Teklif</button>
           </div>
         </div>
 
         <!-- Search & Filter Controls -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap;">
-          <input type="text" id="archive-search-input" placeholder="🔍 Teklif No, Müşteri veya Konu Ara..." oninput="renderArchiveTable()" style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
-          <select id="archive-filter-status" onchange="renderArchiveTable()" style="padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem;">
+          <input type="text" id="archive-search-input" placeholder="🔍 Teklif No, Firma Unvanı veya Proje Konusu Ara..." oninput="renderArchiveTable()" style="flex:1; min-width:240px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          <select id="archive-filter-status" onchange="renderArchiveTable()" style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem; font-weight:600; color:#334155;">
             <option value="all">Tüm Durumlar</option>
             <option value="Taslak">Taslak</option>
             <option value="İletildi">İletildi</option>
@@ -2198,13 +2221,13 @@
         </div>
 
         <!-- Archive Table -->
-        <div style="overflow-x:auto;">
+        <div style="overflow-x:auto; max-height:420px;">
           <table class="erp-table">
             <thead>
               <tr>
-                <th>Belge No</th>
-                <th>Tür</th>
+                <th>Belge No & Mod</th>
                 <th>Müşteri / Kurum</th>
+                <th>Proje / Konu</th>
                 <th>Tarih</th>
                 <th>Tutar</th>
                 <th>Durum</th>
@@ -2217,9 +2240,12 @@
           </table>
         </div>
       </div>
-      <div class="modal-footer">
-        <span style="font-size:0.75rem; color:#64748b;" id="archive-count-label">Toplam: 0 Kayıtlı Belge</span>
-        <button class="btn-sm-action" onclick="closeModal('modal-archive')">Kapat</button>
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.78rem; font-weight:700; color:#475569;" id="archive-count-label">Toplam: 0 Kayıtlı Belge</span>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-sm-action" onclick="YakinERP.exportFullBackupJSON()">📥 Veritabanını İndir (.json)</button>
+          <button class="btn-sm-action btn-primary-sm" onclick="closeModal('modal-archive')">Kapat</button>
+        </div>
       </div>
     </div>
   </div>
@@ -2814,64 +2840,133 @@
       const tbody = document.getElementById('archive-table-body');
       if (!tbody || typeof YakinERP === 'undefined') return;
 
+      const allProposals = YakinERP.getAllProposals();
+      
+      // Calculate Portfolio Metrics
+      const totalCount = allProposals.length;
+      const approvedCount = allProposals.filter(p => p.status === 'Onaylandı' || p.status === 'Faturalandı').length;
+      const sentCount = allProposals.filter(p => p.status === 'İletildi' || p.status === 'Taslak').length;
+      let totalVolumeTRY = 0;
+      allProposals.forEach(p => {
+        totalVolumeTRY += (parseFloat(p.grandTotal) || 0);
+      });
+
+      const statTotalEl = document.getElementById('stat-total-proposals');
+      if (statTotalEl) statTotalEl.innerText = totalCount;
+      const statAppEl = document.getElementById('stat-approved-proposals');
+      if (statAppEl) statAppEl.innerText = approvedCount;
+      const statSentEl = document.getElementById('stat-sent-proposals');
+      if (statSentEl) statSentEl.innerText = sentCount;
+      const statVolEl = document.getElementById('stat-total-volume');
+      if (statVolEl) statVolEl.innerText = formatCurrency(totalVolumeTRY, 'TRY');
+
       const q = (document.getElementById('archive-search-input').value || '').toLowerCase();
       const statusFilter = document.getElementById('archive-filter-status').value;
-      let list = YakinERP.getAllProposals();
+      let list = [...allProposals];
 
       if (q) {
-        list = list.filter(p => (p.docNo + ' ' + p.title + ' ' + p.clientCompany).toLowerCase().includes(q));
+        list = list.filter(p => ((p.docNo || '') + ' ' + (p.title || '') + ' ' + (p.clientCompany || '') + ' ' + (p.clientName || '')).toLowerCase().includes(q));
       }
       if (statusFilter !== 'all') {
         list = list.filter(p => p.status === statusFilter);
       }
 
-      document.getElementById('archive-count-label').innerText = 'Toplam ' + list.length + ' Kayıtlı Belge';
+      document.getElementById('archive-count-label').innerText = 'Toplam ' + list.length + ' Kayıtlı Belge (Veritabanında Aktif)';
 
       if (list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:#64748b;">Henüz kayıtlı teklif bulunamadı. "Mevcut Teklifi Kaydet" butonu ile ekleyebilirsiniz.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:2rem; color:#64748b; font-weight:600;">Aradığınız kriterlere uygun teklif kaydı bulunamadı.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = list.map(p => {
-        let statusClass = 'status-draft';
-        if (p.status === 'İletildi') statusClass = 'status-sent';
-        if (p.status === 'Onaylandı') statusClass = 'status-approved';
-        if (p.status === 'Faturalandı') statusClass = 'status-invoiced';
-        if (p.status === 'İptal') statusClass = 'status-canceled';
+      const modeLabels = {
+        spec: '📑 Şartname',
+        prop: '💰 Fiyat',
+        hybrid: '💎 Paket',
+        proforma: '🌍 Proforma',
+        dispatch: '🚚 İrsaliye',
+        invoice: '🧾 Fatura'
+      };
 
+      tbody.innerHTML = list.map(p => {
+        const modeText = modeLabels[p.docType] || (p.docType ? p.docType.toUpperCase() : 'BELGE');
         const formattedTotal = formatCurrency(p.grandTotal, p.currency);
+        const subjText = p.title ? (p.title.length > 42 ? p.title.substring(0, 42) + '...' : p.title) : '-';
 
         return `
           <tr>
-            <td><strong>` + p.docNo + `</strong></td>
-            <td><span style="font-size:0.72rem; color:#475569; font-weight:600;">` + p.docType.toUpperCase() + `</span></td>
-            <td>` + p.clientCompany + `</td>
-            <td>` + p.date + `</td>
-            <td><strong>` + formattedTotal + `</strong></td>
             <td>
-              <select onchange="YakinERP.updateProposalStatus('` + p.docNo + `', this.value); renderArchiveTable();" style="font-size:0.7rem; padding:2px 4px; border-radius:4px;">
-                <option value="Taslak" ` + (p.status === 'Taslak' ? 'selected' : '') + `>Taslak</option>
-                <option value="İletildi" ` + (p.status === 'İletildi' ? 'selected' : '') + `>İletildi</option>
-                <option value="Onaylandı" ` + (p.status === 'Onaylandı' ? 'selected' : '') + `>Onaylandı</option>
-                <option value="Faturalandı" ` + (p.status === 'Faturalandı' ? 'selected' : '') + `>Faturalandı</option>
-                <option value="İptal" ` + (p.status === 'İptal' ? 'selected' : '') + `>İptal</option>
+              <strong>` + (p.docNo || '-') + `</strong><br>
+              <span style="font-size:0.7rem; color:#0369a1; font-weight:700; background:#e0f2fe; padding:1px 6px; border-radius:4px;">` + modeText + `</span>
+            </td>
+            <td>
+              <strong>` + (p.clientCompany || 'Müşteri') + `</strong><br>
+              <span style="font-size:0.7rem; color:#64748b;">` + (p.clientName || '') + `</span>
+            </td>
+            <td style="max-width:200px; font-size:0.78rem; color:#334155;" title="` + (p.title || '') + `">
+              ` + subjText + `
+            </td>
+            <td style="font-size:0.78rem; white-space:nowrap;">
+              ` + (p.date || '-') + `<br>
+              <span style="font-size:0.68rem; color:#64748b;">` + (p.validityDays || 30) + ` Gün Geçerli</span>
+            </td>
+            <td style="white-space:nowrap;">
+              <strong style="color:#0f172a; font-size:0.88rem;">` + formattedTotal + `</strong>
+            </td>
+            <td>
+              <select onchange="YakinERP.updateProposalStatus('` + p.docNo + `', this.value); renderArchiveTable();" style="font-size:0.72rem; padding:4px 6px; border-radius:6px; font-weight:700; border:1px solid #cbd5e1; background:#ffffff;">
+                <option value="Taslak" ` + (p.status === 'Taslak' ? 'selected' : '') + `>📝 Taslak</option>
+                <option value="İletildi" ` + (p.status === 'İletildi' ? 'selected' : '') + `>📨 İletildi</option>
+                <option value="Onaylandı" ` + (p.status === 'Onaylandı' ? 'selected' : '') + ` style="color:#15803d; font-weight:800;">✅ Onaylandı</option>
+                <option value="Faturalandı" ` + (p.status === 'Faturalandı' ? 'selected' : '') + ` style="color:#4338ca;">🧾 Faturalandı</option>
+                <option value="İptal" ` + (p.status === 'İptal' ? 'selected' : '') + ` style="color:#b91c1c;">✕ İptal</option>
               </select>
             </td>
-            <td style="text-align:right;">
-              <button class="btn-sm-action btn-primary-sm" onclick="loadProposalToStudio('` + p.docNo + `')" title="Bu teklifi stüdyoya yükle">Aç</button>
-              <button class="btn-sm-action" onclick="cloneProposal('` + p.docNo + `')" title="Klonla">Kopyala</button>
-              <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + p.docNo + `')" title="Sil">✕</button>
+            <td style="text-align:right; white-space:nowrap;">
+              <button class="btn-sm-action btn-primary-sm" onclick="loadProposalToStudio('` + p.docNo + `')" title="Bu teklifi stüdyoya yükle ve düzenle">📂 Aç</button>
+              <button class="btn-sm-action" onclick="cloneProposal('` + p.docNo + `')" title="Bu teklifi kopyala / revize et">📋 Klonla</button>
+              <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + p.docNo + `')" title="Veritabanından sil">🗑️</button>
             </td>
           </tr>
         `;
       }).join('');
     }
 
+    function startNewBlankProposal() {
+      if (!confirm('Yeni ve boş bir teklif şablonu oluşturmak istiyor musunuz?')) return;
+      appState.id = 'PROP-' + Date.now();
+      appState.docNo = 'YKN-TEK-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+      appState.date = new Date().toISOString().split('T')[0];
+      appState.subject = 'Yeni Proje / Hizmet Teklif Şartnamesi';
+      appState.clientCompany = '';
+      appState.clientName = '';
+      appState.clientLocation = '';
+      appState.items = [];
+      syncFormControlsFromState();
+      renderClausesEditor();
+      renderItemsEditor();
+      renderApp();
+      closeModal('modal-archive');
+      showToast('✨ Yeni boş teklif oluşturuldu: ' + appState.docNo);
+    }
+
     function saveCurrentToArchive() {
       if (typeof YakinERP === 'undefined') return;
+      
+      // Compute accurate grand total from items before saving
+      let sub = 0;
+      if (Array.isArray(appState.items)) {
+        appState.items.forEach(it => {
+          sub += (parseFloat(it.qty) || 0) * (parseFloat(it.price) || 0);
+        });
+      }
+      const disc = sub * ((parseFloat(appState.discountRate) || 0) / 100);
+      const net = sub - disc;
+      const vat = net * ((parseFloat(appState.vatRate) || 0) / 100);
+      appState.grandTotal = net + vat;
+
       const saved = YakinERP.saveProposal(appState);
       renderArchiveTable();
-      showToast('💾 "' + saved.docNo + '" arşive başarıyla kaydedildi!');
+      showToast('💾 "' + saved.docNo + '" veritabanına ve buluta kaydedildi!');
     }
 
     function loadProposalToStudio(id) {

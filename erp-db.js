@@ -15,7 +15,119 @@ const YakinERP = (function () {
   // Default Firebase / Cloud REST DB Endpoint for Yakın Grup
   const DEFAULT_CLOUD_URL = 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_erp.json';
 
-  // Preloaded Defaults for Initial State
+    // Preloaded Defaults for Initial State
+  const defaultProposals = [
+    {
+      id: 'prop-101',
+      docNo: 'YKN-TEK-2026-0816',
+      docType: 'hybrid',
+      title: '1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu',
+      clientCompany: 'Atlas Holding A.Ş.',
+      clientName: 'Sayın Ahmet Yılmaz — Yatırımlar Direktörü',
+      currency: 'USD',
+      grandTotal: 228798,
+      date: '2026-08-16',
+      validityDays: 30,
+      status: 'Onaylandı',
+      updatedAt: new Date().toISOString(),
+      createdAt: '2026-08-16T10:00:00Z',
+      fullState: {
+        id: 'prop-101',
+        mode: 'hybrid',
+        company: 'enerji',
+        docNo: 'YKN-TEK-2026-0816',
+        date: '2026-08-16',
+        validityDays: 30,
+        currency: 'USD',
+        clientCompany: 'Atlas Holding A.Ş.',
+        clientName: 'Sayın Ahmet Yılmaz — Yatırımlar Direktörü',
+        clientLocation: 'Kocaeli Dilovası OSB 4. Cadde No: 12 / Türkiye',
+        subject: '1.2 MWp Endüstriyel Çatı Tipi Güneş Enerji Santrali (GES) EPC Anahtar Teslim Kurulumu Teknik ve İdari Şartnamesi',
+        intro: 'İşbu şartname ve teklif dosyası; Yakın Grup tarafından taahhüt edilen mühendislik, satınalma, montaj, test-devreye alma, yasal kurum onayları ve kesin kabul süreçlerinin teknik ve idari esaslarını belirler.',
+        discountRate: 5,
+        vatRate: 20,
+        stampVisible: true,
+        stampMode: 'both',
+        author: 'ilker',
+        bankKey: 'both',
+        showBankQr: true,
+        clientSigFormat: 'company',
+        paymentTerms: '%30 Sözleşme İmzasında Peşinat / Avans, %50 Saha Montajı ve Teslimatı, %20 Geçici Kabul ve Tedaş Onayında',
+        deliveryTime: '60 İş Günü',
+        warranty: '2 Yıl Sistem Garantisi & 25 Yıl Lineer Performans Garantisi',
+        status: 'Onaylandı',
+        productSpecs: '• Güneş Panelleri: Tier-1 Bloomberg listesinde yer alan, minimum 550Wp N-Type TOPCon hücre teknolojili, 30 yıl lineer performans garantili fotovoltaik modüller.\n• İnvertörler: %98.6 maksimum verimlilik, 10 MPPT, IP66 dış ortam korumalı ve AFCI ark algılama özellikli üç fazlı string eviriciler.\n• Konstrüksiyon: EN AW-6063 T6 eloksallı alüminyum profiller ve A2-70 paslanmaz çelik bağlantı elemanları.',
+        items: [
+          { id: 101, name: '550W Tier-1 Monokristal N-Type PV Panel (Tier-1 Bloomberg)', desc: 'MBB, %22.8 Verim, 30 Yıl Lineer Performans Garantisi, IP68 Bağlantı Kutusu', gtip: '8541.43.00.00.00', qty: 2182, unit: 'Adet', price: 95 },
+          { id: 102, name: '100 kW Üç Fazlı String Solar İnvertör (10 MPPT, IP66)', desc: 'AFCI Ark Koruması, Wi-Fi/Ethernet Entegre İzleme, %98.6 Verim', gtip: '8504.40.88.00.00', qty: 10, unit: 'Adet', price: 4150 },
+          { id: 103, name: 'Statik Güçlendirilmiş Kenet Çatı Alüminyum Konstrüksiyon', desc: 'EN AW-6063 T6 Eloksallı Alüminyum Profil Seti ve Paslanmaz Civata Takımı', gtip: '7610.90.90.00.00', qty: 1200, unit: 'kWp', price: 22 },
+          { id: 104, name: 'Mühendislik, TEDAŞ Onayı, Statik Proje ve Saha Kurulumu', desc: 'Anahtar teslim EPC, test-ölçüm, devreye alma ve kesin kabul hizmetleri', gtip: '9999.99.99.00.00', qty: 1200, unit: 'kWp', price: 28 }
+        ],
+        clauses: [
+          { id: 1, title: 'Amaç ve Kapsam', body: 'Bu teknik şartname, İşveren mülkiyetindeki tesis çatısına kurulacak olan 1.2 MWp kapasiteli Güneş Enerji Santrali (GES) projesinin statik analizleri, mühendislik onayları, malzeme temini, montaj, elektriksel bağlantı, test-devreye alma ve geçici kabul süreçlerini eksiksiz kapsar.' },
+          { id: 2, title: 'Geçerli Standartlar ve Kalite Uygunluğu', body: 'Tüm ekipman ve işçilikler; TSE, IEC (IEC 61215, IEC 61730, IEC 62109), CE ve yürürlükteki Elektrik Piyasasında Lisanssız Elektrik Üretim Yönetmeliği ile TEDAŞ şartnamelerine tam uyumlu olacaktır.' },
+          { id: 3, title: 'Fotovoltaik (PV) Modül Şartları', body: 'Kullanılacak paneller Tier-1 sınıfında, minimum 550Wp gücünde, Monokristal N-Type / TOPCon hücre teknolojisine sahip olacaktır. Paneller 12 yıl ürün, 25 yıl en az %84.8 lineer performans garantili olacaktır.' },
+          { id: 4, title: 'İnvertör (Evirici) ve Pano Sistemi', body: 'İnvertörler üç fazlı, minimum %98.6 verimli, IP66 koruma sınıfında ve uzaktan izleme (Wi-Fi/4G) modülüne sahip olacaktır. AC/DC parafudrlar ve koruma panoları tip testli olacaktır.' },
+          { id: 5, title: 'Mekanik Konstrüksiyon ve Statik Taşıyıcılar', body: 'Taşıyıcı alüminyum ve sıcak daldırma galvanizli çelik konstrüksiyon, çatı tipine uygun özel kenet/sandviç aparatları ile su yalıtımını bozmadan monte edilecek; rüzgar ve kar yükü statik hesapları onaylatılacaktır.' },
+          { id: 6, title: 'Test, Devreye Alma ve Geçici Kabul', body: 'Yüklenici, TEDAŞ ve Dağıtım Şirketi kabul heyetinin onaylarını alarak santrali anahtar teslim işletmeye alacaktır. Termal kamera, IV-Curve ve izolasyon test raporları İşveren\'e dosya halinde teslim edilecektir.' }
+        ]
+      }
+    },
+    {
+      id: 'prop-102',
+      docNo: 'YKN-PRF-2026-0902',
+      docType: 'proforma',
+      title: 'Solar Module Export Proforma Invoice (CIF Hamburg)',
+      clientCompany: 'Solaris Global Energy LLC',
+      clientName: 'Mr. David Miller — Procurement Director',
+      currency: 'USD',
+      grandTotal: 145000,
+      date: '2026-09-02',
+      validityDays: 15,
+      status: 'İletildi',
+      updatedAt: new Date().toISOString(),
+      createdAt: '2026-09-02T14:30:00Z',
+      fullState: {
+        id: 'prop-102',
+        mode: 'proforma',
+        company: 'group',
+        docNo: 'YKN-PRF-2026-0902',
+        date: '2026-09-02',
+        validityDays: 15,
+        currency: 'USD',
+        clientCompany: 'Solaris Global Energy LLC',
+        clientName: 'Mr. David Miller — Procurement Director',
+        clientLocation: '1209 Orange St, Wilmington, DE 19801, USA',
+        subject: 'Export Proforma Invoice - Tier-1 TOPCon Solar PV Modules Supply (CIF Hamburg)',
+        intro: 'We are pleased to submit our export proforma invoice for the international supply of Tier-1 solar photovoltaic modules in accordance with Incoterms 2020 rules.',
+        discountRate: 0,
+        vatRate: 0,
+        stampVisible: true,
+        stampMode: 'both',
+        author: 'ilker',
+        bankKey: 'both',
+        showBankQr: true,
+        incoterm: 'CIF',
+        origin: 'Türkiye (TR)',
+        portLoading: 'Istanbul Port / Ambarlı (TR)',
+        portDischarge: 'Hamburg Port (DE)',
+        swift: 'YAPITRISXXX',
+        exportPayment: '%30 Advance T/T, %70 against B/L Copy',
+        paymentTerms: '%30 Advance T/T with Proforma Confirmation, %70 against Bill of Lading (B/L) copy',
+        deliveryTime: '20 Working Days',
+        warranty: '12 Years Product Warranty & 30 Years Linear Power Output Warranty',
+        status: 'İletildi',
+        productSpecs: '• High efficiency TOPCon Solar PV Panels with IEC, CE and TÜV certifications.',
+        items: [
+          { id: 201, name: '550W Tier-1 Monokristal N-Type TOPCon PV Module', desc: 'Efficiency: 22.8%, MBB, 1500V DC System Voltage, IP68 Junction Box', gtip: '8541.43.00.00.00', qty: 1526, unit: 'Adet', price: 95 }
+        ],
+        clauses: [
+          { id: 1, title: 'Incoterms & Shipping Terms', body: 'Delivery term is CIF Hamburg Port (Germany) as per Incoterms 2020. Insurance coverage includes Institute Cargo Clauses (A) 110% of CIF value.' },
+          { id: 2, title: 'Documentation & Inspection', body: 'Commercial Invoice, Packing List, Certificate of Origin (EUR.1 / Form A), Clean on Board Bill of Lading and Flash Test Data Reports will be provided.' }
+        ]
+      }
+    }
+  ];
   const defaultCustomers = [
     {
       id: 'cust-1',
@@ -275,7 +387,7 @@ const YakinERP = (function () {
       setLocal(INVENTORY_KEY, defaultInventory);
     }
     if (!localStorage.getItem(PROPOSALS_KEY)) {
-      setLocal(PROPOSALS_KEY, []);
+      setLocal(PROPOSALS_KEY, defaultProposals);
     }
 
     // Initial background cloud sync
@@ -347,7 +459,7 @@ const YakinERP = (function () {
 
   // --- 2. Proposals / Documents Archive ---
   function getAllProposals() {
-    return getLocal(PROPOSALS_KEY, []);
+    return getLocal(PROPOSALS_KEY, defaultProposals);
   }
 
   function getProposalById(id) {
@@ -358,21 +470,34 @@ const YakinERP = (function () {
     const list = getAllProposals();
     const existingIdx = list.findIndex(p => p.docNo === proposalData.docNo || p.id === proposalData.id);
 
+    // Compute accurate grand total if not set
+    let computedTotal = parseFloat(proposalData.grandTotal) || 0;
+    if (computedTotal === 0 && Array.isArray(proposalData.items)) {
+      let sub = 0;
+      proposalData.items.forEach(it => {
+        sub += (parseFloat(it.qty) || 0) * (parseFloat(it.price) || 0);
+      });
+      const disc = sub * ((parseFloat(proposalData.discountRate) || 0) / 100);
+      const net = sub - disc;
+      const vat = net * ((parseFloat(proposalData.vatRate) || 0) / 100);
+      computedTotal = net + vat;
+    }
+
     const record = {
-      id: proposalData.id || 'PROP-' + Date.now(),
+      id: proposalData.id || (existingIdx >= 0 ? list[existingIdx].id : 'PROP-' + Date.now()),
       docNo: proposalData.docNo || 'YKN-DOC-' + Math.floor(1000 + Math.random() * 9000),
       docType: proposalData.mode || 'spec',
       title: proposalData.subject || 'Başlıksız Teklif',
       clientCompany: proposalData.clientCompany || 'Müşteri',
       clientName: proposalData.clientName || '',
       currency: proposalData.currency || 'TRY',
-      grandTotal: proposalData.grandTotal || 0,
+      grandTotal: computedTotal,
       date: proposalData.date || new Date().toISOString().split('T')[0],
       validityDays: proposalData.validityDays || 30,
       status: proposalData.status || 'Taslak',
       updatedAt: new Date().toISOString(),
       createdAt: existingIdx >= 0 ? list[existingIdx].createdAt : new Date().toISOString(),
-      fullState: proposalData
+      fullState: JSON.parse(JSON.stringify(proposalData))
     };
 
     if (existingIdx >= 0) {
