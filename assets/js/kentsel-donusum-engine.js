@@ -20,6 +20,7 @@ const KD_PRESETS = {
     existingRentMonthly: 35000,
     ownerCount: 20,
     titleStatus: "Kat Mülkiyeti",
+      specSegment: "orta",
     kaks: 2.05,
     taks: 0.35,
     hmax: "Z+8 Kat",
@@ -164,77 +165,219 @@ function getRoomType(netM2) {
   return "1+1 Rezidans Daire";
 }
 
-// 2026 Kurumsal Teknik İmalat Şartnamesi
-const TECHNICAL_SPECIFICATIONS_2026 = [
-  {
-    category: "1. Statik Taşıyıcı Sistem & Kaba Yapı Güvenliği",
-    icon: "🏗️",
-    summary: "C35/40 Sınıfı Beton, B420C Donatı Çeliği, Radye Temel & Tam Bohçalama",
-    items: [
-      "Taşıyıcı Sistem: 2018 Türkiye Bina Deprem Yönetmeliği'ne (TBDY-2018) tam uyumlu, C35/40 hazır beton ve B420C nervürlü donatı çeliği ile inşa edilen sünek betonarme karkas sistem.",
-      "Temel ve Zemin: Lisanslı zemin etüdü onaylı, zemin sınıfına göre gerekli kuyu/fore kazık güçlendirmeleri ve statik hesaplı radye jeneral temel.",
-      "Su ve Nem Yalıtımı: Bodrum perde betonlarında ve temel altında çift kat polyester keçeli elastomerik membran ile eksiz tam bohçalama su yalıtımı.",
-      "Ses ve Darbe Yalıtımı: Daireler arası ve kat tabliyelerinde şap altı yüksek yoğunluklu ses yalıtım şiltesi ile 52 dB akustik konfor."
-    ]
-  },
-  {
-    category: "2. Dış Cephe Mimarisi & Enerji Verimliliği",
-    icon: "🏢",
-    summary: "150 kg/m³ Taş Yünü Yalıtım, Mekanik Sinterflex Porselen & Isı Konfor Cam",
-    items: [
-      "Yangın ve Isı Yalıtımı: 150 kg/m³ yoğunluklu, A1 sınıfı alev almaz taş yünü levhalar ile kesintisiz mantolama ve yangın bariyerleri.",
-      "Cephe Kaplaması: Mekanik ankrajlı sinterflex porselen seramik paneller + ahşap dokulu kompakt laminat ve antrasit alüminyum kompozit fuga detayları.",
-      "Doğrama Sistemi: Isı yalıtım bariyerli antrasit alüminyum/PVC doğrama serisi, gizli panjur kutusu ve motorlu monoblok alüminyum panjurlar.",
-      "Cam Kombinasyonu: 4+16+4 mm temperli Şişecam Konfor serisi çift cam (yazın güneş ısısını %40 engeller, kışın ısıyı %50 içeride tutar).",
-      "Balkonlar: Lamine temperli şeffaf cam korkuluklar, gizli lineer LED aydınlatmalı alüminyum küpeşteler ve su tahliye süzgeçleri."
-    ]
-  },
-  {
-    category: "3. İç Mekan, Kapılar & İnce İmalatlar",
-    icon: "🚪",
-    summary: "Parmak İzi Çelik Kapı, Özel Tasarım Lake İç Kapılar, 1. Sınıf Derzli Parke",
-    items: [
-      "Daire Giriş Kapısı: Çift kilitli, parmak izi okuyuculu / şifreli manyetik sistem, ahşap giydirmeli monoblok çelik kapı.",
-      "İç Kapılar: Masif gövdeli, manyetik kilitli ve sessiz fitilli, özel tasarım beyaz/antrasit lake boyalı mobilya kapılar.",
-      "Zemin Kaplamaları: Salon ve odalarda 1. sınıf 8 mm AC4/32 derzli laminant / lamine parke; antre, koridor ve mutfakta 60x120 cm rektifiye granit porselen seramik.",
-      "Duvar & Tavan: Alçı sıva üzeri su bazlı silinebilir antibakteriyel saten boya, salon ve antrede gizli LED/spot aydınlatmalı asma tavan bantları."
-    ]
-  },
-  {
-    category: "4. Mutfak & Banyo Özel Donanımları",
-    icon: "🍳",
-    summary: "Blum Mekanizmalı Mutfak, Kuvars Tezgah, Franke/Siemens 3'lü Ankastre, Vitra/Geberit",
-    items: [
-      "Mutfak Dolapları: Blum/Hettich frenli menteşe ve tandem ray mekanizmalı, soft-close lake veya akrilik kapaklı modüler mutfak tasarımı.",
-      "Mutfak Tezgahı: Leke ve çizilmeye dayanıklı, antibakteriyel 1. sınıf kuvars (Çimstone/Belenco) veya porselen tezgah ve tezgah arası panel.",
-      "Ankastre Set: Franke / Siemens / Bosch marka 3'lü ankastre set (dokunmatik indüksiyonlu ocak, davlumbaz, multifonksiyonlu ankastre fırın).",
-      "Banyo Donanımı: Vitra / Geberit gömme rezervuarlar ve asma klozetler, Hansgrohe / ECA termostatik ankastre banyo bataryaları, temperli füme cam duşakabin ve lake banyo mobilyası."
-    ]
-  },
-  {
-    category: "5. Isıtma, Soğutma & Mekanik Altyapı",
-    icon: "❄️",
-    summary: "Rehau/Danfoss Pay Ölçerli Yerden Isıtma, Multi-Inverter Klima, Sessiz Tesisat",
-    items: [
-      "Isıtma Sistemi: Rehau / Danfoss oksijen bariyerli borularla döşenen, her odası bağımsız dijital termostat kontrollü pay ölçerli yerden ısıtma sistemi.",
-      "İklimlendirme: Salon ve ebeveyn yatak odasında multi-inverter A+++ klima bakır borulama, drenaj ve elektrik altyapısı.",
-      "Sıhhi Tesisat: Fırat/Pimapen sessiz atık su boruları, merkezi paslanmaz çelik su deposu, frekans kontrollü hidrofor ve merkezi filtreleme ünitesi.",
-      "Yangın Güvenliği: Kapalı otoparkta ve bina kat hollerinde otomatik yangın sprinkler söndürme, duman tahliye ve yangın dolabı tesisatı."
-    ]
-  },
-  {
-    category: "6. Akıllı Ev, Elektrik & Ortak Alanlar",
-    icon: "⚡",
-    summary: "KNX Akıllı Ev, KONE Asansör, EV Şarj İstasyonu, 7/24 CCTV & Jeneratör",
-    items: [
-      "Akıllı Ev Sistemi: Aydınlatma, motorlu panjurlar, su vanası ve yerden ısıtmayı cep telefonundan uzaktan kontrol eden KNX akıllı ev altyapısı.",
-      "Elektrik Ekipmanı: Schneider / Siemens otomatik sigortalar, kaçak akım koruma röleleri, halogen-free alev iletmez kablolama ve prizler.",
-      "İnterkom & Güvenlik: Daire içi 10 inç dokunmatik IP görüntülü diafon, fiber optik internet altyapısı, bina çevresi ve otoparkta 7/24 HD CCTV kamera izleme.",
-      "Asansör: KONE / Otis marka çift hızlı, 10 kişilik, frekans kontrollü, acil kurtarma sistemli, paslanmaz lüks kabinli tam otomatik asansör.",
-      "Otopark & Enerji: Kapalı otoparkta her daireye tahsisli 1 araçlık park yeri ve elektrikli araç (EV) AC hızlı şarj altyapısı; ortak alanları ve daireleri besleyen tam güç otomatik jeneratör."
-    ]
-  }
-];
+// 2026 Kurumsal Teknik İmalat Şartnamesi (3 Opsiyonel Segment: Giriş, Orta, Premium)
+const TECHNICAL_SPECIFICATIONS_SEGMENTS = {
+  giris: [
+    {
+      category: "1. Statik Taşıyıcı Sistem & Kaba Yapı Güvenliği",
+      icon: "🏗️",
+      summary: "C30/37 Hazır Beton, B420C Donatı Çeliği, Radye Temel & Standart Bohçalama",
+      items: [
+        "Taşıyıcı Sistem: TBDY-2018 Türkiye Bina Deprem Yönetmeliği standartlarına tam uyumlu, C30/37 sınıfı hazır beton ve B420C nervürlü donatı çeliği ile inşa edilen sünek betonarme karkas.",
+        "Temel ve Zemin: Jeolojik ve jeofizik zemin etüt raporu onaylı, temel derinliği statik hesaplı rijit radye jeneral temel sistemi.",
+        "Su ve Nem Yalıtımı: Bodrum çevre perdelerinde ve temel altında çift kat SBS katkılı bitümlü polimer membran ile eksiz su yalıtımı.",
+        "Ses ve Darbe Yalıtımı: Kat aralarında ve daire ortak duvarlarında şap altı standart polietilen ses yalıtım şiltesi."
+      ]
+    },
+    {
+      category: "2. Dış Cephe Mimarisi & Enerji Verimliliği",
+      icon: "🏢",
+      summary: "5-6 cm EPS/Taşyünü Mantolama, 70'lik PVC Çift Cam, Silikonlu Dış Cephe Boyası",
+      items: [
+        "Isı Yalıtımı: Binalarda Enerji Performansı Yönetmeliğine uygun, 5-6 cm kalınlığında EPS veya taşyünü levhalar ile kesintisiz mantolama.",
+        "Dış Cephe Kaplaması: Filli Boya / Jotun silikonlu dış cephe boyası ve dekoratif mineral sıva kaplaması.",
+        "Doğrama Sistemi: 70'lik seri 5 odacıklı beyaz/antrasit PVC pencere doğramaları ve 4+16+4 mm standart çift cam kombinasyonu.",
+        "Balkonlar: Elektrostatik fırın boyalı alüminyum profil ve standart güvenlikli lamine cam korkuluk detayları."
+      ]
+    },
+    {
+      category: "3. İç Mekan, Kapılar & İnce İmalatlar",
+      icon: "🚪",
+      summary: "Monoblok Çelik Kapı, Membran/Melamin İç Kapılar, 8 mm AC3 Laminant Parke",
+      items: [
+        "Daire Giriş Kapısı: Çift kilit emniyet mekanizmalı, monoblok çelik gövdeli ahşap desenli kaplamalı çelik kapı.",
+        "İç Kapılar: Ahşap karkas üzeri MDF presli, kolay temizlenebilir mat membran veya melamin yüzeyli iç oda kapıları.",
+        "Zemin Kaplamaları: Salon ve odalarda 8 mm 31/32. sınıf yerli laminant parke; antre, koridor ve mutfakta 1. sınıf 60x60 cm seramik kaplama.",
+        "Duvar & Tavan: Alçı sıva üzeri su bazlı plastik/silikonlu mat iç cephe boyası, tavanlarda standart kartonpiyer perdahı."
+      ]
+    },
+    {
+      category: "4. Mutfak & Banyo Donanımları",
+      icon: "🍳",
+      summary: "MDF-Lam Mutfak, Akrilik/Granit Tezgah, Yerli 3'lü Ankastre Set, E.C.A./Artema & Vitra",
+      items: [
+        "Mutfak Dolapları: 1. sınıf MDF-Lam gövde, frenli menteşe sistemli parlak/mat PVC kapaklı modüler mutfak tasarımı.",
+        "Mutfak Tezgahı: Antibakteriyel ve leke tutmaz döküm akrilik veya 1. sınıf yerli granit mutfak tezgahı.",
+        "Ankastre Cihazlar: Silverline / Kumtel / Vestel marka 3'lü ankastre set (ocak, davlumbaz, statik/turbo fırın).",
+        "Banyo Donanımı: Vitra / Serel marka gömme rezervuarlı klozet, E.C.A. / Artema krom bataryalar, şeffaf temperli cam duşakabin ve MDF banyo dolabı."
+      ]
+    },
+    {
+      category: "5. Isıtma & Mekanik Altyapı",
+      icon: "❄️",
+      summary: "Kombili Panel Radyatör veya Standart Yerden Isıtma, Klima Boru Altyapısı",
+      items: [
+        "Isıtma Sistemi: Daire içi tam yoğuşmalı kombi veya merkezi pay ölçerli panel radyatör / standart yerden ısıtma borulama sistemi.",
+        "Klima Altyapısı: Salon bölgesinde split klima montajına uygun hazır bakır boru ve drenaj hattı tesisatı.",
+        "Temiz ve Atık Su Tesisatı: TSE belgeli PPRC kompozit temiz su boruları ve standart PVC atık su borulama sistemi.",
+        "Su Deposu & Hidrofor: Olası su kesintilerine karşı ortak paslanmaz çelik modüler su deposu ve otomatik hidrofor grubu."
+      ]
+    },
+    {
+      category: "6. Elektrik, Güvenlik & Ortak Donanımlar",
+      icon: "⚡",
+      summary: "Renkli Görüntülü Diafon, TSE Belgeli 8 Kişilik Asansör, Ortak Alan Jeneratörü",
+      items: [
+        "İletişim & İnterkom: Bina giriş paneli ile bağlantılı renkli görüntülü daire içi diafon sistemi ve merkezi uydu altyapısı.",
+        "Elektrik Altyapısı: Viko / Panasonic otomatik sigorta panosu, kaçak akım koruma rölesi ve TSE standartlı yangına dayanıklı kablolama.",
+        "Asansör: TSE standartlarında 8 kişilik, frekans kontrollü, çift hızlı, acil kat kurtarıcılı standart kabinli asansör.",
+        "Ortak Alanlar: Hidrofor, asansör ve merdiven aydınlatmasını besleyen standart ortak alan jeneratörü ve çevre aydınlatmaları."
+      ]
+    }
+  ],
+
+  orta: [
+    {
+      category: "1. Statik Taşıyıcı Sistem & Kaba Yapı Güvenliği",
+      icon: "🏗️",
+      summary: "C35/40 Sınıfı Beton, B420C Donatı Çeliği, Radye Temel & Tam Bohçalama",
+      items: [
+        "Taşıyıcı Sistem: 2018 Türkiye Bina Deprem Yönetmeliği'ne (TBDY-2018) tam uyumlu, C35/40 hazır beton ve B420C nervürlü donatı çeliği ile inşa edilen sünek betonarme karkas sistem.",
+        "Temel ve Zemin: Lisanslı zemin etüdü onaylı, zemin sınıfına göre gerekli kuyu/fore kazık güçlendirmeleri ve statik hesaplı radye jeneral temel.",
+        "Su ve Nem Yalıtımı: Bodrum perde betonlarında ve temel altında çift kat polyester keçeli elastomerik membran ile eksiz tam bohçalama su yalıtımı.",
+        "Ses ve Darbe Yalıtımı: Daireler arası ve kat tabliyelerinde şap altı yüksek yoğunluklu ses yalıtım şiltesi ile 52 dB akustik konfor."
+      ]
+    },
+    {
+      category: "2. Dış Cephe Mimarisi & Enerji Verimliliği",
+      icon: "🏢",
+      summary: "150 kg/m³ Taş Yünü Yalıtım, Mekanik Sinterflex Porselen & Isı Konfor Cam",
+      items: [
+        "Yangın ve Isı Yalıtımı: 150 kg/m³ yoğunluklu, A1 sınıfı alev almaz taş yünü levhalar ile kesintisiz mantolama ve yangın bariyerleri.",
+        "Cephe Kaplaması: Mekanik ankrajlı sinterflex porselen seramik paneller + ahşap dokulu kompakt laminat ve antrasit alüminyum kompozit fuga detayları.",
+        "Doğrama Sistemi: Isı yalıtım bariyerli antrasit alüminyum/PVC doğrama serisi, gizli panjur kutusu ve motorlu monoblok alüminyum panjurlar.",
+        "Cam Kombinasyonu: 4+16+4 mm temperli Şişecam Konfor serisi çift cam (yazın güneş ısısını %40 engeller, kışın ısıyı %50 içeride tutar).",
+        "Balkonlar: Lamine temperli şeffaf cam korkuluklar, gizli lineer LED aydınlatmalı alüminyum küpeşteler ve su tahliye süzgeçleri."
+      ]
+    },
+    {
+      category: "3. İç Mekan, Kapılar & İnce İmalatlar",
+      icon: "🚪",
+      summary: "Parmak İzi Çelik Kapı, Özel Tasarım Lake İç Kapılar, 1. Sınıf Derzli Parke",
+      items: [
+        "Daire Giriş Kapısı: Çift kilitli, parmak izi okuyuculu / şifreli manyetik sistem, ahşap giydirmeli monoblok çelik kapı.",
+        "İç Kapılar: Masif gövdeli, manyetik kilitli ve sessiz fitilli, özel tasarım beyaz/antrasit lake boyalı mobilya kapılar.",
+        "Zemin Kaplamaları: Salon ve odalarda 1. sınıf 8 mm AC4/32 derzli laminant / lamine parke; antre, koridor ve mutfakta 60x120 cm rektifiye granit porselen seramik.",
+        "Duvar & Tavan: Alçı sıva üzeri su bazlı silinebilir antibakteriyel saten boya, salon ve antrede gizli LED/spot aydınlatmalı asma tavan bantları."
+      ]
+    },
+    {
+      category: "4. Mutfak & Banyo Özel Donanımları",
+      icon: "🍳",
+      summary: "Blum Mekanizmalı Mutfak, Kuvars Tezgah, Franke/Siemens 3'lü Ankastre, Vitra/Geberit",
+      items: [
+        "Mutfak Dolapları: Blum/Hettich frenli menteşe ve tandem ray mekanizmalı, soft-close lake veya akrilik kapaklı modüler mutfak tasarımı.",
+        "Mutfak Tezgahı: Leke ve çizilmeye dayanıklı, antibakteriyel 1. sınıf kuvars (Çimstone/Belenco) veya porselen tezgah ve tezgah arası panel.",
+        "Ankastre Set: Franke / Siemens / Bosch marka 3'lü ankastre set (dokunmatik indüksiyonlu ocak, davlumbaz, multifonksiyonlu ankastre fırın).",
+        "Banyo Donanımı: Vitra / Geberit gömme rezervuarlar ve asma klozetler, Hansgrohe / ECA termostatik ankastre banyo bataryaları, temperli füme cam duşakabin ve lake banyo mobilyası."
+      ]
+    },
+    {
+      category: "5. Isıtma, Soğutma & Mekanik Altyapı",
+      icon: "❄️",
+      summary: "Rehau/Danfoss Pay Ölçerli Yerden Isıtma, Multi-Inverter Klima, Sessiz Tesisat",
+      items: [
+        "Isıtma Sistemi: Rehau / Danfoss oksijen bariyerli borularla döşenen, her odası bağımsız dijital termostat kontrollü pay ölçerli yerden ısıtma sistemi.",
+        "İklimlendirme: Salon ve ebeveyn yatak odasında multi-inverter A+++ klima bakır borulama, drenaj ve elektrik altyapısı.",
+        "Sıhhi Tesisat: Fırat/Pimapen sessiz atık su boruları, merkezi paslanmaz çelik su deposu, frekans kontrollü hidrofor ve merkezi filtreleme ünitesi.",
+        "Yangın Güvenliği: Kapalı otoparkta ve bina kat hollerinde otomatik yangın sprinkler söndürme, duman tahliye ve yangın dolabı tesisatı."
+      ]
+    },
+    {
+      category: "6. Akıllı Ev, Elektrik & Ortak Alanlar",
+      icon: "⚡",
+      summary: "KNX Akıllı Ev, KONE Asansör, EV Şarj İstasyonu, 7/24 CCTV & Jeneratör",
+      items: [
+        "Akıllı Ev Sistemi: Aydınlatma, motorlu panjurlar, su vanası ve yerden ısıtmayı cep telefonundan uzaktan kontrol eden KNX akıllı ev altyapısı.",
+        "Elektrik Ekipmanı: Schneider / Siemens otomatik sigortalar, kaçak akım koruma röleleri, halogen-free alev iletmez kablolama ve prizler.",
+        "İnterkom & Güvenlik: Daire içi 10 inç dokunmatik IP görüntülü diafon, fiber optik internet altyapısı, bina çevresi ve otoparkta 7/24 HD CCTV kamera izleme.",
+        "Asansör: KONE / Otis marka çift hızlı, 10 kişilik, frekans kontrollü, acil kurtarma sistemli, paslanmaz lüks kabinli tam otomatik asansör.",
+        "Otopark & Enerji: Kapalı otoparkta her daireye tahsisli 1 araçlık park yeri ve elektrikli araç (EV) AC hızlı şarj altyapısı; ortak alanları ve daireleri besleyen tam güç otomatik jeneratör."
+      ]
+    }
+  ],
+
+  premium: [
+    {
+      category: "1. Statik Taşıyıcı Sistem & Ağır Yük Mühendisliği",
+      icon: "🏗️",
+      summary: "C40/45 veya C50 Beton, Sismik İzolatör Uyumlu Karkas, 3 Kat Ağır Hizmet Elastomerik Bohçalama",
+      items: [
+        "Taşıyıcı Sistem: C40/45 veya C50 ultra yüksek mukavemetli hazır beton, B420C donatı çeliği ve sismik izolatör / derin fore kazık altyapısına tam uyumlu sünek betonarme karkas.",
+        "Temel ve Zemin: Kuyu temel ve jet-grouting / fore kazık zemin güçlendirmesi üzerine oturan, dinamik deprem simülasyonu onaylı 140 cm radye jeneral temel.",
+        "Su ve Nem İzolasyonu: Temel ve perdelerde 3 kat ağır hizmet tipi EPDM / elastomerik polimer bitümlü membran ile basınçlı yeraltı sularına karşı ömür boyu garantili eksiz tam bohçalama.",
+        "Akustik İzolasyon: Daireler arası duvarlarda çift kat çift karkas akustik taşyünü ve kat aralarında özel darbe emici elastomer şilteler ile 64 dB lüks akustik sessizlik."
+      ]
+    },
+    {
+      category: "2. High-Glass Alüminyum Giydirme Cephe & Akustik Cam",
+      icon: "🏢",
+      summary: "Schüco/Reynaers High-Glass Cephe, Guardian SunGuard Akustik Üçlü Cam, Doğal Granit & Çinko Giydirme",
+      items: [
+        "Giydirme Cephe: Schüco / Reynaers marka yüksek ısı yalıtım bariyerli yapısal silikonlu High-Glass alüminyum giydirme cephe ve doğal taş / titanyum çinko kompozit paneller.",
+        "Ultra Konfor Cam Sistemi: Guardian SunGuard / Saint-Gobain akustik lamine üçlü cam (4+14+4+14+4 mm) ile güneş ışınımını %70 kesen, kışın ısı kaybını sıfırlayan mimari camlama.",
+        "Doğrama ve Motorlu Sistemler: Gizli menteşeli, hebe-schiebe sürme cam kapılar ve Somfy akıllı motorlu dış cephe jaluzi / rüzgar sensörlü zip perde sistemleri.",
+        "Balkon ve Teraslar: Kesintisiz panoramik görüş sunan gömme taban profilli ekstra şeffaf lamine temperli cam korkuluklar ve gizli lineer drenaj kanalları."
+      ]
+    },
+    {
+      category: "3. Lüks İç Mimari, Biyometrik Giriş & Zanaat Kapılar",
+      icon: "🚪",
+      summary: "Yüz Tanımalı Akıllı Zırhlı Kapı, Tavana Kadar Lake Gizli Menteşeli Kapılar, 14 mm Lamine Meşe Parke",
+      items: [
+        "Giriş Kapısı: 3D Biyometrik yüz tanımalı, akıllı telefon NFC ve parmak izi okuyuculu, balistik çelik gövdeli doğal ahşap kaplamalı özel tasarım zırhlı kapı.",
+        "İç Mimari Kapılar: Tavana kadar uzanan (260 cm) gizli pervazlı, manyetik kilitli ve gizli menteşeli, fırınlanmış masif karkaslı mat lake / ceviz kaplama mobilya kapılar.",
+        "Zemin Mimarisi: Salon ve yatak odalarında 1. sınıf 14 mm Macar/Balıksırtı lamine masif meşe parke; ıslak hacimlerde 120x240 cm ithal İtalyan Calacatta / Statuario porselen seramik.",
+        "Duvar & Aydınlatma Tasarımı: İtalyan dekoratif efektli sıva ve Jotun Fenomastic saf mat boya, manyetik raylı akıllı LED spotlar ve gizli lineer ışık bantları."
+      ]
+    },
+    {
+      category: "4. Özel Tasarım Ada Mutfak & Master Banyo Spa",
+      icon: "🍳",
+      summary: "Ada Mutfak, Dekton/Neolith Porselen Tezgah, Gaggenau/Miele StudioLine Ankastre, Dornbracht/Axor & Duravit",
+      items: [
+        "Mutfak Mimarisi: Özel tasarım entegre ada mutfak, fırınlanmış lake ve ahşap kaplama dolaplar, elektrikli dokun-aç (Servo-Drive) Blum çekmece ve mekanizma sistemleri.",
+        "Mutfak Tezgahı: Isıya, çizilmeye ve asite %100 dayanıklı ultra kompakt porselen tezgah ve tezgah arası (Dekton / Neolith / Laminam).",
+        "Akıllı Ankastre Set: Gaggenau / Miele / Siemens StudioLine serisi WiFi bağlantılı 4'lü ankastre set (indüksiyonlu havalandırmalı ocak, akıllı buharlı fırın, mikrodalga, tam entegre sessiz bulaşık makinesi).",
+        "Master Banyo & Spa: Dornbracht / Axor Hansgrohe termostatik ankastre yağmur duş sistemleri, Duravit / Laufen akıllı entegre taharetli klozetler, masif lavabo tezgahları ve buğu önleyicili akıllı LED aynalar."
+      ]
+    },
+    {
+      category: "5. Bağımsız VRV/VRF İklimlendirme & Taze Hava Santrali",
+      icon: "❄️",
+      summary: "DAIKIN/Mitsubishi Bağımsız VRF Gizli Tavan Tipi İklimlendirme, Taze Hava Santrali, Rehau Akıllı Yerden Isıtma",
+      items: [
+        "Merkezi İklimlendirme: DAIKIN / Mitsubishi Electric marka, her oda için bağımsız sıcaklık kontrolü sağlayan gizli tavan tipi kanallı VRV/VRF ısıtma ve soğutma sistemi.",
+        "Taze Hava ve Havalandırma: Isı geri kazanımlı taze hava santrali (VAM ünitesi) ile pencereler açılmadan sürekli filtrelenmiş %100 taze hava beslemesi ve partikül filtreleme.",
+        "Yerden Isıtma: Rehau akıllı sensörlü yerden ısıtma borulama sistemi, her hacimde dijital cam dokunmatik oda termostatları ile hassas sıcaklık yönetimi.",
+        "Sıhhi Tesisat & Arıtma: Geberit Silent-PP ultra sessiz atık su boruları, bina ana girişinde kireç kırıcı su yumuşatma ve UV dezenfeksiyonlu merkezi su filtreleme istasyonu."
+      ]
+    },
+    {
+      category: "6. Tam Kapsamlı IoT Otomasyon & Ultra Lüks Tesis",
+      icon: "⚡",
+      summary: "Crestron/Control4 IoT Akıllı Otomasyon, Schindler 2.5 m/s Panoramik Asansör, 22kW Bağımsız EV Şarjı, 7/24 Concierge",
+      items: [
+        "Akıllı Ev Otomasyonu: Crestron / Control4 / KNX tabanlı tam entegre IoT otomasyon (aydınlatma senaryoları, perde/panjur, VRF klima, müzik yayını, su/gaz kaçak dedektörleri ve uzaktan erişim).",
+        "Dikey Ulaşım: Schindler / Otis marka 2.5 m/s ultra hızlı, panoramik cam/lüks deri kaplamalı, kartlı kat yetkilendirmeli çift asansör sistemi.",
+        "Yeşil Enerji & EV Şarjı: Kapalı otoparkta her daireye tahsisli 2 araçlık park yeri ve bağımsız 22 kW AC Type-2 hızlı elektrikli araç şarj istasyonu.",
+        "Kesintisiz Enerji & Güvenlik: Bina ve tüm dairelerin elektrik ihtiyacını kesintisiz %100 karşılayan ses yalıtımlı jeneratör; yapay zeka destekli 7/24 çevre güvenlik kameraları ve concierge danışma desk altyapısı."
+      ]
+    }
+  ]
+};
+
+const TECHNICAL_SPECIFICATIONS_2026 = TECHNICAL_SPECIFICATIONS_SEGMENTS.orta;
 
 class KentselDonusumEngine {
   constructor() {
@@ -927,7 +1070,12 @@ class KentselDonusumEngine {
       contractorShops,
       contractorTotalSections,
       floorSchedule,
-      technicalSpecs: TECHNICAL_SPECIFICATIONS_2026,
+      technicalSpecs: TECHNICAL_SPECIFICATIONS_SEGMENTS[s.specSegment || 'orta'] || TECHNICAL_SPECIFICATIONS_SEGMENTS.orta,
+      specSegment: {
+        key: s.specSegment || 'orta',
+        title: (s.specSegment === 'giris') ? 'Giriş / Standart' : ((s.specSegment === 'premium') ? 'Premium & High-Glass' : 'Orta / Konfor Plus'),
+        badge: (s.specSegment === 'giris') ? '🌱 Giriş / Standart Segment' : ((s.specSegment === 'premium') ? '💎 Premium & High-Glass Segment' : '⭐ Orta / Konfor Plus (Önerilen)')
+      },
       emsaleDahilAlan,
       emsalDisiAlan,
       bodrumOtoparkSiginak,

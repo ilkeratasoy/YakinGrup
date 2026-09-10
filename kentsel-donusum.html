@@ -1173,15 +1173,30 @@
           </div>
         </div>
 
-        <!-- 2026 Kurumsal Teknik Şartname Özeti -->
-        <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
-            <div style="font-size: 0.86rem; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 6px;">
-              <span>📋 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</span>
+        <!-- 2026 Kurumsal Teknik Şartname Özeti (3 Segment Opsiyonu) -->
+        <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.15rem; margin-bottom: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.85rem;">
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 6px;">
+                <span>📋 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</span>
+              </div>
+              <div style="font-size: 0.72rem; color: #64748b; margin-top: 2px;">
+                Proje vizyonuna ve bütçesine uygun 3 farklı malzeme ve ürün segmenti arasından seçim yapın
+              </div>
             </div>
-            <span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; background: #f0f9ff; border: 1px solid #bae6fd; padding: 2px 8px; border-radius: 4px;">
-              TBDY-2018 & TSE Garantili Standartlar
-            </span>
+
+            <!-- 3 Segment Seçici Buton Grubu -->
+            <div style="display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 8px; border: 1.5px solid #cbd5e1; gap: 4px; flex-wrap: wrap;">
+              <button type="button" class="btn-segment-pill" id="btn-seg-giris" onclick="handleSpecSegmentChange('giris')" style="border: none; background: transparent; padding: 6px 13px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: #475569; cursor: pointer; transition: all 0.2s;">
+                🌱 Giriş / Standart
+              </button>
+              <button type="button" class="btn-segment-pill active" id="btn-seg-orta" onclick="handleSpecSegmentChange('orta')" style="border: none; background: #1a3d7c; color: #ffffff; padding: 6px 13px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 6px rgba(26,61,124,0.3);">
+                ⭐ Orta / Konfor Plus
+              </button>
+              <button type="button" class="btn-segment-pill" id="btn-seg-premium" onclick="handleSpecSegmentChange('premium')" style="border: none; background: transparent; padding: 6px 13px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: #475569; cursor: pointer; transition: all 0.2s;">
+                💎 Premium & High-Glass
+              </button>
+            </div>
           </div>
 
           <div id="technical-specs-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;">
@@ -1313,7 +1328,12 @@
         </div>
 
         <!-- Bölüm 4: 2026 Teknik Şartname -->
-        <div class="proposal-section-title">4. 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+          <div class="proposal-section-title" style="margin-bottom: 0;">4. 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</div>
+          <span id="prop-spec-segment-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe;">
+            ⭐ Orta / Konfor Plus (Önerilen)
+          </span>
+        </div>
         <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px; margin-bottom: 1.25rem; font-size: 0.75rem; line-height: 1.5;">
           <div id="prop-technical-specs-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <!-- JS ile dinamik doldurulur -->
@@ -1910,6 +1930,40 @@
       if (selMode) selMode.value = stampModeVal;
       handleSignatoryChange(sigVal);
       handleStampModeChange(stampModeVal);
+      updateSegmentPillsUI(s.specSegment || 'orta');
+    }
+
+    
+    function handleSpecSegmentChange(segment) {
+      if (window.KDEngine) {
+        window.KDEngine.updateField('specSegment', segment);
+        updateSegmentPillsUI(segment);
+        renderUI();
+        const labels = {
+          giris: 'Giriş / Standart İmalat Şartnamesi seçildi',
+          orta: 'Orta / Konfor Plus Şartnamesi seçildi',
+          premium: 'Premium & High-Glass Lüks Rezidans Şartnamesi seçildi'
+        };
+        showToastNotification('📋 ' + (labels[segment] || 'Teknik imalat şartnamesi güncellendi.'));
+      }
+    }
+
+    function updateSegmentPillsUI(segment) {
+      const seg = segment || 'orta';
+      ['giris', 'orta', 'premium'].forEach(key => {
+        const btn = document.getElementById(`btn-seg-${key}`);
+        if (btn) {
+          if (key === seg) {
+            btn.style.background = '#1a3d7c';
+            btn.style.color = '#ffffff';
+            btn.style.boxShadow = '0 2px 6px rgba(26,61,124,0.3)';
+          } else {
+            btn.style.background = 'transparent';
+            btn.style.color = '#475569';
+            btn.style.boxShadow = 'none';
+          }
+        }
+      });
     }
 
     function renderUI() {
@@ -2180,6 +2234,11 @@
       if (elExSum) elExSum.innerHTML = exSum;
 
       // Printable Proposal Technical Specs
+      const segBadge = document.getElementById('prop-spec-segment-badge');
+      if (segBadge && res.specSegment) {
+        segBadge.textContent = res.specSegment.badge;
+      }
+
       const propSpecsList = document.getElementById('prop-technical-specs-list');
       if (propSpecsList && res.technicalSpecs) {
         propSpecsList.innerHTML = res.technicalSpecs.map(spec => `
