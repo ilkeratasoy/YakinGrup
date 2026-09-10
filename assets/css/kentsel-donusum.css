@@ -1553,8 +1553,23 @@ body {
     display: block !important;
   }
 
-  /* Print Stage 4 Mode */
-  body.print-mode-4 #stage4,
+  /* Print Stage 4 Mode: Yalnızca Resmi Teklif Dosyası Basılır */
+  body.print-mode-4 #stage1,
+  body.print-mode-4 #stage2,
+  body.print-mode-4 #stage3 {
+    display: none !important;
+  }
+
+  body.print-mode-4 #stage4 {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body.print-mode-4 #stage4 > *:not(.proposal-paper) {
+    display: none !important;
+  }
+
   body.print-mode-4 .proposal-paper {
     display: block !important;
   }
@@ -1571,6 +1586,10 @@ body {
     page-break-after: always !important;
     break-after: page !important;
     margin-bottom: 20mm !important;
+  }
+
+  body.print-mode-all #stage4 > *:not(.proposal-paper) {
+    display: none !important;
   }
 
   body.print-mode-all #stage4 {
@@ -1662,6 +1681,22 @@ body {
     padding: 2.5px 4px !important;
     border-bottom: 1px solid #e2e8f0 !important;
     font-size: 7pt !important;
+  }
+
+  /* 6. Malikler Kurulu Cetveli & Net Kazanç Kolonu Tam Uyum */
+  #prop-owner-summary-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    font-size: 6.8pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #prop-owner-summary-table th,
+  #prop-owner-summary-table td {
+    padding: 2px 2px !important;
+    word-break: break-word !important;
+    vertical-align: middle !important;
   }
 
   tr {

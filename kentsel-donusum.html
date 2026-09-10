@@ -12,7 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.3">
+  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.4">
   <style>
 /* =========================================================================
    MODAL & POPUP DIALOG STYLES (vCard / Modal Mantığı)
@@ -290,8 +290,8 @@
             <div class="print-dropdown-item" style="background: #f8fafc; border-top: 1.5px solid var(--border-color);" onclick="printReport('all')">
               <span class="icon">📚</span>
               <div>
-                <strong style="color: var(--brand-primary);">TÜM RAPOR (Eksiksiz Proje Dosyası)</strong>
-                <span class="sub">1'den 4'e Tüm Sayfalar Sıralı Kitapçık</span>
+                <strong style="color: var(--brand-primary);">Tüm Sayfaların PDF Al</strong>
+                <span class="sub">1'den 4'e Tüm Sayfalar Sıralı Proje Dosyası</span>
               </div>
             </div>
           </div>
@@ -382,7 +382,7 @@
             </select>
           </div>
           <button class="btn btn-outline btn-sm" onclick="printReport(1)">🖨️ Bu Sayfayı PDF Al (1. Sayfa)</button>
-          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Sayfaların PDF Al</button>
         </div>
       </div>
 
@@ -666,7 +666,7 @@
             </select>
           </div>
           <button class="btn btn-outline btn-sm" onclick="printReport(2)">🖨️ Bu Sayfayı PDF Al (2. Sayfa)</button>
-          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Sayfaların PDF Al</button>
         </div>
       </div>
 
@@ -894,7 +894,7 @@
             </select>
           </div>
           <button class="btn btn-outline btn-sm" onclick="printReport(3)">🖨️ Bu Sayfayı PDF Al (3. Sayfa)</button>
-          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Sayfaların PDF Al</button>
         </div>
       </div>
 
@@ -1130,8 +1130,8 @@
          ========================================================================== -->
     <section class="stage-view" id="stage4">
 
-      <!-- Malikler Toplantı Ekranı / Malik Bilanço Tablosu -->
-      <div class="card" style="margin-bottom: 1.5rem;">
+      <!-- Malikler Toplantı Ekranı / Malik Bilanço Tablosu (Web Düzenleyici) -->
+      <div class="card no-print" style="margin-bottom: 1.5rem;">
         <div class="card-header">
           <div class="card-header-title">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -1296,8 +1296,8 @@
               <option value="100">%100 (Orijinal)</option>
             </select>
           </div>
-          <button class="btn btn-outline btn-sm" onclick="printReport(4)">🖨️ Yalnızca Bu Teklifi PDF Al (4. Sayfa)</button>
-          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+          <button class="btn btn-outline btn-sm" onclick="previewAndPrintProposal()">🖨️ Yalnızca Bu Teklifi PDF Al (4. Sayfa)</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Sayfaların PDF Al</button>
         </div>
       </div>
 
@@ -1413,24 +1413,27 @@
         <!-- Bölüm 6: Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Tablosu -->
         <div class="proposal-section-title">6. Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Cetveli</div>
         <div class="table-responsive" style="margin-bottom: 1.25rem;">
-          <table class="data-table" style="font-size: 0.72rem;">
+          <table class="data-table" id="prop-owner-summary-table" style="font-size: 0.72rem; width: 100%; border-collapse: collapse;">
             <thead>
               <tr style="background: #f1f5f9;">
-                <th>Tür</th>
-                <th>Malik Adı</th>
-                <th>Mevcut Net</th>
-                <th>Tahsis Edilen Daire / Kat</th>
-                <th>Cephe & Yön</th>
-                <th>Yeni Net / Brüt</th>
-                <th>İnşaat Desteği</th>
-                <th>Taşınma Desteği</th>
-                <th>Malik Ek Ödeme</th>
-                <th>Net Kazanç</th>
+                <th style="width: 7%;">Tür</th>
+                <th style="width: 14%;">Malik Adı</th>
+                <th style="width: 8%;">Mevcut Net</th>
+                <th style="width: 14%;">Tahsis Edilen Daire / Kat</th>
+                <th style="width: 8%;">Cephe & Yön</th>
+                <th style="width: 10%;">Yeni Net / Brüt</th>
+                <th style="width: 10%;">İnşaat Desteği</th>
+                <th style="width: 9%;">Taşınma Desteği</th>
+                <th style="width: 9%;">Malik Ek Ödeme</th>
+                <th style="width: 11%; background: #fef9c3; color: #854d0e; font-weight: 800; text-align: right;">Net Kazanç</th>
               </tr>
             </thead>
             <tbody id="prop-owner-table-body">
               <!-- JS ile dinamik doldurulur -->
             </tbody>
+            <tfoot id="prop-owner-table-foot" style="font-weight: 800; background: #f8fafc; border-top: 2px solid #cbd5e1;">
+              <!-- JS ile toplam satırı doldurulur -->
+            </tfoot>
           </table>
         </div>
 
@@ -1505,7 +1508,7 @@
       </div>
 
       <!-- Stage 4 Navigasyon ve Çıktı Butonları -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Karar & Finansman</button>
         <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           <div style="display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-color);">
@@ -1524,11 +1527,11 @@
           <button class="btn btn-outline" onclick="openKDArchiveModal()" style="display: flex; align-items: center; gap: 6px;">
             🗄️ Teklif Arşivi (<span id="stage4-archive-count">0</span>)
           </button>
-          <button class="btn btn-outline" onclick="printReport(4)" style="display: flex; align-items: center; gap: 6px; font-weight: 700;">
+          <button class="btn btn-outline" onclick="previewAndPrintProposal()" style="display: flex; align-items: center; gap: 6px; font-weight: 700;">
             🖨️ Teklifi PDF Al (4. Sayfa)
           </button>
           <button class="btn btn-gold btn-lg" onclick="printReport('all')">
-            📚 Kurumsal Teklif Dosyasını PDF Yazdır (Tüm Rapor) ➔
+            📚 Tüm Sayfaların PDF Al ➔
           </button>
         </div>
       </div>
@@ -1868,7 +1871,7 @@
       if (btnNext) {
         if (stageNum === 4) {
           btnNext.innerHTML = '🖨️ PDF / Teklif Al';
-          btnNext.onclick = function() { printReport(4); };
+          btnNext.onclick = function() { previewAndPrintProposal(); };
           btnNext.className = 'btn btn-gold btn-sm';
         } else {
           btnNext.innerHTML = 'İleri ➔';
@@ -1878,6 +1881,19 @@
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function previewAndPrintProposal() {
+      if (currentStage !== 4) {
+        switchStage(4);
+      }
+      const propEl = document.getElementById('printable-proposal');
+      if (propEl) {
+        propEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      setTimeout(() => {
+        printReport(4);
+      }, 350);
     }
 
     // PDF / Print Handler (Tek Sayfa ve Tüm Proje Dosyası Desteği & Ölçeklendirme)
@@ -2370,15 +2386,32 @@
             <td>${o.existingNetM2} m²</td>
             <td style="color: var(--brand-primary); font-weight: 700;">${o.allocatedDescription}</td>
             <td style="color: #0369a1; font-weight: 700;">${o.allocatedFacade}</td>
-            <td style="font-weight: 700;">${o.newNetM2} m² (${o.newGrossM2} m²)</td>
+            <td style="font-weight: 700;">${o.newNetM2} m² <span style="font-weight: 400; font-size: 0.68rem; color: #64748b;">(${o.newGrossM2} m²)</span></td>
             <td style="font-weight: 700; color: #0369a1;">${eng.formatCurrency(o.constructionSupport)}</td>
             <td style="color: #0891b2; font-weight: 700;">${o.tahliyeSupportToOwner > 0 ? eng.formatCurrency(o.tahliyeSupportToOwner) : '-'}</td>
             <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
               ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
             </td>
-            <td style="color: var(--brand-accent-hover); font-weight: 800;">${eng.formatCurrency(o.netGain)}</td>
+            <td style="color: #15803d; font-weight: 800; text-align: right; background: rgba(34, 197, 94, 0.08);">${eng.formatCurrency(o.netGain)}</td>
           </tr>
         `).join('');
+
+        const propOwnerTfoot = document.getElementById('prop-owner-table-foot');
+        if (propOwnerTfoot) {
+          const totalNetGain = (res.ownersTable || []).reduce((acc, o) => acc + (o.netGain || 0), 0);
+          const totalConstruction = (res.ownersTable || []).reduce((acc, o) => acc + (o.constructionSupport || 0), 0);
+          const totalTahliye = (res.ownersTable || []).reduce((acc, o) => acc + (o.tahliyeSupportToOwner || 0), 0);
+          const totalExtraPayment = (res.ownersTable || []).reduce((acc, o) => acc + (o.extraPayment || 0), 0);
+          propOwnerTfoot.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: right; font-weight: 800; padding: 4px 6px;">PROJE GENELİ TOPLAM:</td>
+              <td style="color: #0369a1; font-weight: 800; padding: 4px 2px;">${eng.formatCurrency(totalConstruction)}</td>
+              <td style="color: #0891b2; font-weight: 800; padding: 4px 2px;">${eng.formatCurrency(totalTahliye)}</td>
+              <td style="color: ${totalExtraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 800; padding: 4px 2px;">${eng.formatCurrency(totalExtraPayment)}</td>
+              <td style="color: #15803d; font-weight: 800; text-align: right; background: rgba(34, 197, 94, 0.12); padding: 4px 6px;">${eng.formatCurrency(totalNetGain)}</td>
+            </tr>
+          `;
+        }
       }
 
       let supportTxt = "";
