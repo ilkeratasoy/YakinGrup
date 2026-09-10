@@ -1,7 +1,7 @@
 /**
- * Yakın Grup — Kentsel Dönüşüm Teklif Veritabanı & Arşiv Yönetim Motoru (assets/js/kentsel-donusum-db.js)
- * Kentsel dönüşüm resmi fizibilite tekliflerinin yerel veritabanında saklanması, arşivlenmesi,
- * revizyon takibi, portföy analitiği ve stüdyoya geri yüklenmesi.
+ * Yakın Grup — Kentsel Dönüşüm Online Bulut Veritabanı & Arşiv Yönetim Motoru (assets/js/kentsel-donusum-db.js)
+ * Gerçek zamanlı Firebase Cloud REST veritabanı senkronizasyonu, çoklu cihaz desteği (PC/Tablet/Mobil),
+ * otomatik periyodik eşitleme ve offline-first yerel önbellekleme.
  */
 
 (function (root, factory) {
@@ -14,9 +14,18 @@
   }
 }(typeof self !== 'undefined' ? self : this, function () {
 
-  const DB_STORAGE_KEY = 'yg_kd_proposals_db_v1';
+  const LOCAL_STORAGE_KEY = 'yg_kd_proposals_db_v1';
+  const CLOUD_URL_KEY = 'yg_kd_cloud_db_url';
+  const LAST_SYNC_KEY = 'yg_kd_last_sync_time';
 
-  // Önceden Tanımlı Örnek Arşiv Kayıtları (İlk Açılış İçin)
+  // Yakın Grup Online Firebase Realtime Database Endpoint
+  const DEFAULT_CLOUD_URL = 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
+
+  let isSyncing = false;
+  let syncStatus = 'online'; // 'online', 'syncing', 'offline', 'error'
+  let lastSyncTime = null;
+
+  // Önceden Tanımlı Örnek Arşiv Kayıtları (İlk Açılış / Çevrimdışı Başlangıç İçin)
   const defaultArchivedProposals = [
     {
       id: 'kd-prop-2026-001',
@@ -191,34 +200,56 @@
     }
   ];
 
-  // Helper: LocalStorage DB İşlemleri
-  function getRawDB() {
+  // Helper: Local Storage Data Access
+  function getLocalDB() {
     try {
-      const data = localStorage.getItem(DB_STORAGE_KEY);
+      const data = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (!data) {
-        localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(defaultArchivedProposals));
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultArchivedProposals));
         return [...defaultArchivedProposals];
       }
       return JSON.parse(data) || [];
     } catch (e) {
-      console.error('KDDB Storage Read Error:', e);
+      console.error('KDDB Local Storage Read Error:', e);
       return [...defaultArchivedProposals];
     }
   }
 
-  function saveRawDB(proposals) {
+  function saveLocalDB(proposals) {
     try {
-      localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(proposals));
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(proposals));
       return true;
     } catch (e) {
-      console.error('KDDB Storage Write Error:', e);
+      console.error('KDDB Local Storage Write Error:', e);
+      return false;
+    }
+  }
+
+  function getCloudUrl() {
+    try {
+      return localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL;
+    } catch (e) {
+      return DEFAULT_CLOUD_URL;
+    }
+  }
+
+  function setCloudUrl(url) {
+    try {
+      if (url && url.trim()) {
+        localStorage.setItem(CLOUD_URL_KEY, url.trim());
+      } else {
+        localStorage.removeItem(CLOUD_URL_KEY);
+      }
+      syncFromCloud(true);
+      return true;
+    } catch (e) {
       return false;
     }
   }
 
   // Benzersiz Teklif Numarası Üretici
   function generateDocNo() {
-    const list = getRawDB();
+    const list = getLocalDB();
     const count = list.length + 1;
     const pad = String(count).padStart(3, '0');
     const randomSuffix = Math.floor(100 + Math.random() * 900);
@@ -226,18 +257,160 @@
   }
 
   // =========================================================================
+  // ONLINE CLOUD REST SYNCHRONIZATION ENGINE
+  // =========================================================================
+  async function syncFromCloud(showNotification = false) {
+    if (isSyncing) return;
+    const url = getCloudUrl();
+    if (!url) return;
+
+    isSyncing = true;
+    syncStatus = 'syncing';
+    dispatchSyncEvent();
+
+    try {
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 8000) : null;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        signal: controller ? controller.signal : undefined
+      });
+
+      if (timeoutId) clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const cloudData = await response.json();
+        if (cloudData && Array.isArray(cloudData.proposals)) {
+          const localList = getLocalDB();
+          const mergedList = [...localList];
+          let hasNewOrUpdated = false;
+
+          cloudData.proposals.forEach(cloudP => {
+            const idx = mergedList.findIndex(m => m.docNo === cloudP.docNo || m.id === cloudP.id);
+            if (idx >= 0) {
+              const localUpdated = new Date(mergedList[idx].updatedAt || 0).getTime();
+              const cloudUpdated = new Date(cloudP.updatedAt || 0).getTime();
+              if (cloudUpdated > localUpdated) {
+                mergedList[idx] = Object.assign({}, mergedList[idx], cloudP);
+                hasNewOrUpdated = true;
+              }
+            } else {
+              mergedList.unshift(cloudP);
+              hasNewOrUpdated = true;
+            }
+          });
+
+          saveLocalDB(mergedList);
+          syncStatus = 'online';
+          lastSyncTime = new Date().toLocaleTimeString('tr-TR');
+          localStorage.setItem(LAST_SYNC_KEY, lastSyncTime);
+
+          if (hasNewOrUpdated) {
+            // Push back any local items the cloud didn't have
+            pushToCloud();
+          }
+
+          if (showNotification && typeof showToastNotification === 'function') {
+            showToastNotification(`☁️ Online bulut veritabanı eşitlendi (${mergedList.length} teklif aktif).`);
+          }
+        } else if (cloudData === null) {
+          // Cloud is empty, push local data to seed cloud database
+          pushToCloud();
+          syncStatus = 'online';
+          lastSyncTime = new Date().toLocaleTimeString('tr-TR');
+        }
+      } else {
+        syncStatus = 'offline';
+      }
+    } catch (err) {
+      console.warn('KDDB Cloud Sync notice (offline or network fallback):', err.message);
+      syncStatus = 'offline';
+    } finally {
+      isSyncing = false;
+      dispatchSyncEvent();
+    }
+  }
+
+  async function pushToCloud() {
+    const url = getCloudUrl();
+    if (!url) return;
+
+    try {
+      const list = getLocalDB();
+      const payload = {
+        updatedAt: new Date().toISOString(),
+        proposals: list
+      };
+
+      await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      syncStatus = 'online';
+      lastSyncTime = new Date().toLocaleTimeString('tr-TR');
+      localStorage.setItem(LAST_SYNC_KEY, lastSyncTime);
+      dispatchSyncEvent();
+    } catch (err) {
+      console.warn('KDDB Cloud Push warning:', err.message);
+    }
+  }
+
+  function dispatchSyncEvent() {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('yakin_kd_synced', {
+        detail: {
+          status: syncStatus,
+          lastSyncTime: lastSyncTime || localStorage.getItem(LAST_SYNC_KEY) || '-'
+        }
+      }));
+    }
+  }
+
+  // Start background periodic sync & event listeners
+  function initBackgroundSync() {
+    // Initial fetch
+    setTimeout(() => {
+      syncFromCloud();
+    }, 500);
+
+    // Periodic sync every 15 seconds
+    setInterval(() => {
+      syncFromCloud();
+    }, 15000);
+
+    // Sync on tab focus or online event
+    if (typeof window !== 'undefined') {
+      window.addEventListener('focus', () => {
+        syncFromCloud();
+      });
+      window.addEventListener('online', () => {
+        syncFromCloud();
+      });
+    }
+  }
+
+  // Initialize
+  initBackgroundSync();
+
+  // =========================================================================
   // PUBLIC API
   // =========================================================================
   const KDDB = {
     // 1. Tüm Teklifleri Getir
     getAll() {
-      const list = getRawDB();
+      const list = getLocalDB();
       return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     },
 
     // 2. Belirli Teklifi Getir
     getById(idOrDocNo) {
-      const list = getRawDB();
+      const list = getLocalDB();
       return list.find(p => p.id === idOrDocNo || p.docNo === idOrDocNo) || null;
     },
 
@@ -252,7 +425,7 @@
       const s = eng.state;
       const r = eng.results;
 
-      const list = getRawDB();
+      const list = getLocalDB();
       const isUpdate = customMetadata.docNo && list.some(p => p.docNo === customMetadata.docNo);
       
       const docNo = customMetadata.docNo || generateDocNo();
@@ -307,18 +480,22 @@
         list.unshift(proposalRecord);
       }
 
-      saveRawDB(list);
+      saveLocalDB(list);
+      pushToCloud();
+      dispatchSyncEvent();
       return proposalRecord;
     },
 
     // 4. Teklif Durumunu Güncelle
     updateStatus(docNo, newStatus) {
-      const list = getRawDB();
+      const list = getLocalDB();
       const item = list.find(p => p.docNo === docNo);
       if (item) {
         item.status = newStatus;
         item.updatedAt = new Date().toISOString();
-        saveRawDB(list);
+        saveLocalDB(list);
+        pushToCloud();
+        dispatchSyncEvent();
         return true;
       }
       return false;
@@ -326,11 +503,13 @@
 
     // 5. Teklifi Sil (Tekil Silme)
     delete(docNo) {
-      let list = getRawDB();
+      let list = getLocalDB();
       const initialLen = list.length;
       list = list.filter(p => p.docNo !== docNo && p.id !== docNo);
       if (list.length !== initialLen) {
-        saveRawDB(list);
+        saveLocalDB(list);
+        pushToCloud();
+        dispatchSyncEvent();
         return true;
       }
       return false;
@@ -339,25 +518,31 @@
     // 5b. Çoklu Teklif Sil (Toplu Silme)
     deleteMultiple(docNos) {
       if (!Array.isArray(docNos) || docNos.length === 0) return 0;
-      let list = getRawDB();
+      let list = getLocalDB();
       const initialLen = list.length;
       list = list.filter(p => !docNos.includes(p.docNo) && !docNos.includes(p.id));
       const deletedCount = initialLen - list.length;
       if (deletedCount > 0) {
-        saveRawDB(list);
+        saveLocalDB(list);
+        pushToCloud();
+        dispatchSyncEvent();
       }
       return deletedCount;
     },
 
     // 5c. Tüm Veritabanını Temizle
     clearAll() {
-      saveRawDB([]);
+      saveLocalDB([]);
+      pushToCloud();
+      dispatchSyncEvent();
       return true;
     },
 
     // 5d. Örnek Veritabanını Yeniden Yükle
     resetToDefaults() {
-      saveRawDB(defaultArchivedProposals);
+      saveLocalDB(defaultArchivedProposals);
+      pushToCloud();
+      dispatchSyncEvent();
       return true;
     },
 
@@ -366,7 +551,7 @@
       const item = this.getById(docNo);
       if (!item) return null;
 
-      const list = getRawDB();
+      const list = getLocalDB();
       const newDocNo = generateDocNo();
       const clonedItem = JSON.parse(JSON.stringify(item));
 
@@ -379,7 +564,9 @@
       clonedItem.notes = `[${docNo}] numaralı teklif üzerinden klonlandı. ${item.notes || ''}`;
 
       list.unshift(clonedItem);
-      saveRawDB(list);
+      saveLocalDB(list);
+      pushToCloud();
+      dispatchSyncEvent();
       return clonedItem;
     },
 
@@ -427,25 +614,47 @@
       };
     },
 
-    // 9. Tüm Veritabanını JSON Olarak Dışa Aktar (Backup)
+    // 9. Bulut Eşitleme Metodları
+    syncFromCloud,
+    pushToCloud,
+    getCloudUrl,
+    setCloudUrl,
+    getSyncStatus() {
+      return {
+        status: syncStatus,
+        lastSyncTime: lastSyncTime || localStorage.getItem(LAST_SYNC_KEY) || 'Henüz eşitlenmedi',
+        cloudUrl: getCloudUrl()
+      };
+    },
+
+    // 10. Tüm Veritabanını JSON Olarak Dışa Aktar (Backup)
     exportDatabaseJSON() {
       const list = this.getAll();
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(list, null, 2));
+      const payload = {
+        title: 'Yakın Grup Kentsel Dönüşüm Teklif Veritabanı',
+        exportedAt: new Date().toISOString(),
+        cloudUrl: getCloudUrl(),
+        proposals: list
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
       const a = document.createElement('a');
       a.setAttribute("href", dataStr);
-      a.setAttribute("download", `YakinGrup_KentselDonusum_Veritabani_Yedek_${new Date().toISOString().slice(0,10)}.json`);
+      a.setAttribute("download", `YakinGrup_KentselDonusum_OnlineDB_Yedek_${new Date().toISOString().slice(0,10)}.json`);
       document.body.appendChild(a);
       a.click();
       a.remove();
     },
 
-    // 10. JSON Dosyasından Veritabanını İçe Aktar (Restore)
+    // 11. JSON Dosyasından Veritabanını İçe Aktar (Restore)
     importDatabaseJSON(jsonStr) {
       try {
         const parsed = JSON.parse(jsonStr);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          saveRawDB(parsed);
-          return { success: true, count: parsed.length };
+        const list = Array.isArray(parsed) ? parsed : (parsed.proposals && Array.isArray(parsed.proposals) ? parsed.proposals : null);
+        if (list && list.length > 0) {
+          saveLocalDB(list);
+          pushToCloud();
+          dispatchSyncEvent();
+          return { success: true, count: list.length };
         }
         return { success: false, message: 'Geçersiz JSON veritabanı formatı.' };
       } catch (e) {
