@@ -1262,6 +1262,171 @@
   </main>
 
   <!-- ==========================================================================
+       MODAL 1: KENTSEL DÖNÜŞÜM TEKLİF VERİTABANI & ARŞİV YÖNETİMİ
+       ========================================================================== -->
+  <div class="modal-overlay" id="modal-kd-archive" onclick="if(event.target===this) closeKDModal('modal-kd-archive')">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><path d="M10 12h4"></path></svg>
+          <span>Kentsel Dönüşüm Teklif Veritabanı & Portföy Arşivi</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeKDModal('modal-kd-archive')">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Portföy KPI Özet Kartları -->
+        <div class="archive-stats-grid">
+          <div class="archive-stat-card">
+            <span class="lbl">Toplam Teklif</span>
+            <span class="val" id="db-stat-total-count">0</span>
+          </div>
+          <div class="archive-stat-card">
+            <span class="lbl">Onaylanan Projeler</span>
+            <span class="val" id="db-stat-approved-count" style="color: #16a34a;">0</span>
+          </div>
+          <div class="archive-stat-card">
+            <span class="lbl">Portföy Yapım Hacmi</span>
+            <span class="val" id="db-stat-total-volume" style="color: var(--brand-primary);">-</span>
+          </div>
+          <div class="archive-stat-card">
+            <span class="lbl">Toplam Bağımsız Bölüm</span>
+            <span class="val" id="db-stat-total-units" style="color: #0284c7;">0 Daire/Dükkan</span>
+          </div>
+        </div>
+
+        <!-- Arama, Filtre ve Hızlı Aksiyon Barı -->
+        <div style="display: flex; gap: 10px; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between; background: #f8fafc; padding: 10px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <div style="display: flex; gap: 8px; flex: 1; min-width: 280px;">
+            <input type="text" id="db-archive-search" placeholder="🔍 İlçe, Mahalle, Ada/Parsel, Teklif No veya Başlık Ara..." oninput="renderKDArchiveTable()" style="flex: 1; padding: 7px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem;">
+            <select id="db-archive-status-filter" onchange="renderKDArchiveTable()" style="padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.82rem; font-weight: 600; color: #334155;">
+              <option value="all">Tüm Durumlar (Tümü)</option>
+              <option value="Taslak">📝 Taslak</option>
+              <option value="Teklif İletildi">📨 Teklif İletildi</option>
+              <option value="Onaylandı">✅ Onaylandı</option>
+              <option value="Sözleşme İmzalandı">🤝 Sözleşme İmzalandı</option>
+              <option value="İptal">✕ İptal</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn-sm-action primary" onclick="closeKDModal('modal-kd-archive'); openSaveProposalModal();" title="Mevcut projenizi yeni teklif olarak kaydedin">
+              ➕ Yeni Kayıt
+            </button>
+            <button class="btn-sm-action" onclick="window.KDDB && window.KDDB.exportDatabaseJSON()" title="Tüm veritabanını JSON yedek dosyası olarak indirin">
+              ⬇️ Yedek Al
+            </button>
+            <label class="btn-sm-action" style="cursor: pointer; display: flex; align-items: center; gap: 4px;" title="Önceki veritabanı yedek JSON dosyasını geri yükleyin">
+              ⬆️ Geri Yükle
+              <input type="file" accept=".json" onchange="handleDBRestore(event)" style="display: none;">
+            </label>
+          </div>
+        </div>
+
+        <!-- Teklif Tablosu -->
+        <div class="table-responsive" style="max-height: 420px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 8px;">
+          <table class="data-table" style="font-size: 0.76rem; width: 100%;">
+            <thead>
+              <tr style="background: #f1f5f9; position: sticky; top: 0; z-index: 10;">
+                <th>Teklif No & Tarih</th>
+                <th>Proje & Konum</th>
+                <th>İnşaat Alanı / Daire</th>
+                <th>Proje Maliyeti / Hasılat</th>
+                <th>Önerilen Model</th>
+                <th>Durum</th>
+                <th style="text-align: right;">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="db-archive-table-body">
+              <!-- JS ile dinamik doldurulur -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span style="font-size: 0.76rem; font-weight: 700; color: #64748b;" id="db-archive-count-label">Toplam: 0 Kayıtlı Teklif</span>
+        <button class="btn btn-outline btn-sm" onclick="closeKDModal('modal-kd-archive')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: MEVCUT TEKLİFİ VERİTABANINA KAYDETME & ARŞİVLEME
+       ========================================================================== -->
+  <div class="modal-overlay" id="modal-save-proposal" onclick="if(event.target===this) closeKDModal('modal-save-proposal')">
+    <div class="modal-window" style="width: 650px;">
+      <div class="modal-header">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          <span>Teklifi Veritabanına Kaydet & Arşivle</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeKDModal('modal-save-proposal')">✕</button>
+      </div>
+
+      <form onsubmit="handleSaveProposalSubmit(event)">
+        <div class="modal-body">
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 1rem; font-size: 0.78rem;">
+            <div style="font-weight: 800; color: var(--brand-primary); margin-bottom: 4px;">🏢 Proje Otomatik Özeti</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; color: #475569;">
+              <div>Konum: <strong id="save-prev-location">-</strong></div>
+              <div>Arsa & Yapı: <strong id="save-prev-area">-</strong></div>
+              <div>Daire / Malik: <strong id="save-prev-units">-</strong></div>
+              <div>Maliyet: <strong id="save-prev-cost" style="color: var(--brand-primary);">-</strong></div>
+            </div>
+          </div>
+
+          <div style="display: grid; gap: 12px;">
+            <div>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Teklif Belge No</label>
+              <input type="text" id="inp-save-docno" class="form-input" style="font-weight: 700; font-family: monospace;" readonly>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Proje / Teklif Başlığı</label>
+              <input type="text" id="inp-save-title" class="form-input" required placeholder="örn: Kadıköy Fenerbahçe 1248/14 Kentsel Dönüşüm Teklifi">
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Müşteri / Malikler Kurulu Temsilcisi</label>
+              <input type="text" id="inp-save-client" class="form-input" placeholder="örn: Malikler Kurulu Temsilcisi (Ahmet Yılmaz)">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Teklif Durumu</label>
+                <select id="sel-save-status" class="form-select">
+                  <option value="Teklif İletildi" selected>📨 Teklif İletildi</option>
+                  <option value="Taslak">📝 Taslak</option>
+                  <option value="Onaylandı">✅ Onaylandı</option>
+                  <option value="Sözleşme İmzalandı">🤝 Sözleşme İmzalandı</option>
+                  <option value="İptal">✕ İptal</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Geçerlilik Süresi</label>
+                <input type="text" id="inp-save-validity" class="form-input" value="30 Gün">
+              </div>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Yönetici Notu & Revizyon Açıklaması</label>
+              <textarea id="inp-save-notes" class="form-input" rows="2" placeholder="Görüşme notları, özel şartlar veya revizyon gerekçeleri..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeKDModal('modal-save-proposal')">İptal</button>
+          <button type="submit" class="btn btn-primary btn-sm" style="font-weight: 700;">
+            💾 Teklifi Veritabanına Kaydet & Arşivle
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
        STICKY BOTTOM ACTION BAR
        ========================================================================== -->
   <footer class="bottom-action-bar no-print">
@@ -2038,14 +2203,17 @@
     }
 
     function handleSaveProposalSubmit(e) {
-      e.preventDefault();
-      if (!window.KDDB) return;
+      if (e) e.preventDefault();
+      if (!window.KDDB) {
+        alert('Veritabanı modülü henüz yüklenmedi.');
+        return;
+      }
 
-      const docNo = document.getElementById('inp-save-docno').value.trim();
-      const title = document.getElementById('inp-save-title').value.trim();
-      const client = document.getElementById('inp-save-client').value.trim();
-      const status = document.getElementById('sel-save-status').value;
-      const notes = document.getElementById('inp-save-notes').value.trim();
+      const docNo = (document.getElementById('inp-save-docno')?.value || '').trim();
+      const title = (document.getElementById('inp-save-title')?.value || '').trim();
+      const client = (document.getElementById('inp-save-client')?.value || '').trim();
+      const status = document.getElementById('sel-save-status')?.value || 'Teklif İletildi';
+      const notes = (document.getElementById('inp-save-notes')?.value || '').trim();
 
       const saved = window.KDDB.saveCurrentProposal({
         docNo: docNo,
@@ -2054,6 +2222,16 @@
         status: status,
         notes: notes
       });
+
+      closeKDModal('modal-save-proposal');
+      updateArchiveBadgeCounters();
+      showToastNotification(`💾 [${saved.docNo}] numaralı kentsel dönüşüm teklifi veritabanına kaydedildi ve arşivlendi.`);
+      
+      // Arşiv modalını otomatik açarak kullanıcının kaydettiği teklifi anında görmesini sağla
+      setTimeout(() => {
+        openKDArchiveModal();
+      }, 300);
+    });
 
       closeKDModal('modal-save-proposal');
       updateArchiveBadgeCounters();
