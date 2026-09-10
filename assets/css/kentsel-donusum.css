@@ -1446,21 +1446,66 @@ body {
   gap: 6px;
 }
 
+/* Print Scale Selector Controls */
+.btn-scale {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #475569;
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn-scale:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.btn-scale.active {
+  background: var(--brand-primary, #0f2744) !important;
+  color: #ffffff !important;
+  border-color: var(--brand-primary, #0f2744) !important;
+}
+
+.print-scale-select {
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+}
+
 /* ==========================================================================
-   PRINT / PDF MEDIA QUERIES (GRANULAR PER-STAGE & ALL PAGES)
+   PRINT / PDF MEDIA QUERIES (GRANULAR PER-STAGE & ALL PAGES WITH SCALING)
    ========================================================================== */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 10mm 12mm 10mm 12mm;
+    margin: 8mm 10mm 8mm 10mm;
   }
 
   body {
     background: #ffffff !important;
     color: #0f172a !important;
-    font-size: 9.5pt !important;
-    line-height: 1.35 !important;
+    font-size: 8.5pt !important;
+    line-height: 1.3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    /* Varsayılan A4 Baskı Ölçeği: %80 ile tam sığdırma */
+    zoom: 80% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
+
+  /* Kullanıcı Kontrollü Baskı Ölçekleri */
+  body.print-scale-70 { zoom: 70% !important; }
+  body.print-scale-75 { zoom: 75% !important; }
+  body.print-scale-80 { zoom: 80% !important; }
+  body.print-scale-85 { zoom: 85% !important; }
+  body.print-scale-90 { zoom: 90% !important; }
+  body.print-scale-100 { zoom: 100% !important; }
 
   /* Hide navigation, toolbars, buttons */
   .engine-header,
@@ -1471,7 +1516,8 @@ body {
   .print-dropdown,
   .no-print,
   button,
-  .btn {
+  .btn,
+  .form-select.print-scale-select {
     display: none !important;
   }
 
@@ -1524,7 +1570,7 @@ body {
     opacity: 1 !important;
     page-break-after: always !important;
     break-after: page !important;
-    margin-bottom: 25mm !important;
+    margin-bottom: 20mm !important;
   }
 
   body.print-mode-all #stage4 {
@@ -1538,22 +1584,97 @@ body {
     display: block !important;
   }
 
-  /* Clean Paper Styles */
+  /* Proposal & Clean Paper Layout */
   .proposal-paper {
     box-shadow: none !important;
     border: none !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
+    max-width: 100% !important;
   }
 
+  .proposal-brand-header {
+    margin-bottom: 10px !important;
+    padding-bottom: 8px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
 
+  .proposal-meta-box {
+    margin-bottom: 10px !important;
+    padding: 6px 10px !important;
+    gap: 0.5rem !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
 
+  .proposal-section-title {
+    margin: 10px 0 5px 0 !important;
+    font-size: 0.95rem !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 3D Görselleri Baskıda Sayfaya Sığdırma */
+  #prop-img-exterior,
+  #prop-img-interior {
+    height: 130px !important;
+    max-height: 130px !important;
+    object-fit: cover !important;
+  }
+
+  /* Şartname Maddeleri Izgarası */
+  #prop-technical-specs-list {
+    gap: 6px 12px !important;
+    font-size: 7.2pt !important;
+    line-height: 1.3 !important;
+  }
+  #prop-technical-specs-list > div {
+    padding-bottom: 3px !important;
+  }
+
+  /* Tablolar ve Veri Hücreleri */
+  .table-responsive {
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  .data-table {
+    width: 100% !important;
+    font-size: 7.2pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    table-layout: auto !important;
+  }
+
+  .data-table th {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    padding: 2.5px 4px !important;
+    border-bottom: 1.5px solid #94a3b8 !important;
+    font-size: 7pt !important;
+  }
+
+  .data-table td {
+    padding: 2.5px 4px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    font-size: 7pt !important;
+  }
+
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Kartlar ve Karar Blokları */
   .card {
     border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
-    margin-bottom: 10px !important;
-    padding: 8px 12px !important;
+    margin-bottom: 8px !important;
+    padding: 6px 10px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
@@ -1561,42 +1682,35 @@ body {
   .form-input, .form-select {
     border: 1px solid #cbd5e1 !important;
     background: #f8fafc !important;
-    font-size: 8pt !important;
-    padding: 2px 5px !important;
+    font-size: 7.5pt !important;
+    padding: 2px 4px !important;
     color: #000000 !important;
-  }
-
-  .data-table {
-    font-size: 8pt !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  .data-table th {
-    background: #f1f5f9 !important;
-    color: #1e293b !important;
-    padding: 3px 5px !important;
-    border-bottom: 1.5px solid #94a3b8 !important;
-  }
-
-  .data-table td {
-    padding: 3px 5px !important;
-    border-bottom: 1px solid #e2e8f0 !important;
   }
 
   .decision-banner {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    padding: 8px 12px !important;
-    margin-bottom: 10px !important;
+    padding: 6px 10px !important;
+    margin-bottom: 8px !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
 
-  .model-card, .scenario-card, .timeline-step, .proposal-signatures {
+  .model-card, .scenario-card, .timeline-step {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    padding: 6px 8px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .proposal-signatures {
     border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
     padding: 8px !important;
+    margin-top: 10px !important;
+    padding-top: 8px !important;
+    gap: 1.5rem !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }

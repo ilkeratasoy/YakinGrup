@@ -12,7 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.2">
+  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.3">
   <style>
 /* =========================================================================
    MODAL & POPUP DIALOG STYLES (vCard / Modal Mantığı)
@@ -246,6 +246,19 @@
           </button>
           <div class="print-dropdown-content" onclick="event.stopPropagation()">
             <div class="print-dropdown-header">📄 PDF & Rapor Seçenekleri</div>
+            <div style="padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid var(--border-color);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 0.74rem;">
+                <span style="font-weight: 700; color: #1e293b;">🔍 PDF Baskı Ölçeği:</span>
+                <span id="active-scale-label" style="font-size: 0.7rem; font-weight: 800; color: var(--brand-primary); background: #e0f2fe; padding: 1px 6px; border-radius: 4px;">%80 (A4 Tam Uyum)</span>
+              </div>
+              <div style="display: flex; gap: 4px; justify-content: space-between;" id="pdf-scale-selector-header">
+                <button type="button" class="btn-scale" data-scale="75" onclick="setPrintScale(75, event)" title="Çok kompakt sayfa düzeni">%75</button>
+                <button type="button" class="btn-scale active" data-scale="80" onclick="setPrintScale(80, event)" title="A4 dikey için ideal ölçeklendirme">%80 (A4)</button>
+                <button type="button" class="btn-scale" data-scale="85" onclick="setPrintScale(85, event)" title="Dengeli">%85</button>
+                <button type="button" class="btn-scale" data-scale="90" onclick="setPrintScale(90, event)" title="Büyük puntolar">%90</button>
+                <button type="button" class="btn-scale" data-scale="100" onclick="setPrintScale(100, event)" title="Ölçeklendirmesiz orijinal">%100</button>
+              </div>
+            </div>
             <div class="print-dropdown-item" onclick="printReport(1)">
               <span class="icon">📐</span>
               <div>
@@ -357,7 +370,17 @@
         <div class="stage-print-title">
           <span>📐 1. Sayfa: Taşınmaz, Ada/Parsel & İmar Kapasite Raporu</span>
         </div>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border-color);">
+            <span style="font-size: 0.7rem; font-weight: 700; color: #475569;">Ölçek:</span>
+            <select class="form-select print-scale-select" onchange="setPrintScale(this.value)" style="padding: 1px 4px; font-size: 0.72rem; height: 26px; width: auto; background: #fff; font-weight: 600;">
+              <option value="75">%75 (Kompakt)</option>
+              <option value="80" selected>%80 (A4 Tam Uyum • Önerilen)</option>
+              <option value="85">%85 (Dengeli)</option>
+              <option value="90">%90</option>
+              <option value="100">%100 (Orijinal)</option>
+            </select>
+          </div>
           <button class="btn btn-outline btn-sm" onclick="printReport(1)">🖨️ Bu Sayfayı PDF Al (1. Sayfa)</button>
           <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
         </div>
@@ -631,7 +654,17 @@
         <div class="stage-print-title">
           <span>🏗️ 2. Sayfa: Otomatik Mimari 3 Senaryo & 2026 Detaylı Maliyet Raporu</span>
         </div>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border-color);">
+            <span style="font-size: 0.7rem; font-weight: 700; color: #475569;">Ölçek:</span>
+            <select class="form-select print-scale-select" onchange="setPrintScale(this.value)" style="padding: 1px 4px; font-size: 0.72rem; height: 26px; width: auto; background: #fff; font-weight: 600;">
+              <option value="75">%75 (Kompakt)</option>
+              <option value="80" selected>%80 (A4 Tam Uyum • Önerilen)</option>
+              <option value="85">%85 (Dengeli)</option>
+              <option value="90">%90</option>
+              <option value="100">%100 (Orijinal)</option>
+            </select>
+          </div>
           <button class="btn btn-outline btn-sm" onclick="printReport(2)">🖨️ Bu Sayfayı PDF Al (2. Sayfa)</button>
           <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
         </div>
@@ -849,7 +882,17 @@
         <div class="stage-print-title">
           <span>⚖️ 3. Sayfa: Finansman Modelleri Karşılaştırması, Hakediş & Karar Raporu</span>
         </div>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border-color);">
+            <span style="font-size: 0.7rem; font-weight: 700; color: #475569;">Ölçek:</span>
+            <select class="form-select print-scale-select" onchange="setPrintScale(this.value)" style="padding: 1px 4px; font-size: 0.72rem; height: 26px; width: auto; background: #fff; font-weight: 600;">
+              <option value="75">%75 (Kompakt)</option>
+              <option value="80" selected>%80 (A4 Tam Uyum • Önerilen)</option>
+              <option value="85">%85 (Dengeli)</option>
+              <option value="90">%90</option>
+              <option value="100">%100 (Orijinal)</option>
+            </select>
+          </div>
           <button class="btn btn-outline btn-sm" onclick="printReport(3)">🖨️ Bu Sayfayı PDF Al (3. Sayfa)</button>
           <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
         </div>
@@ -1237,6 +1280,25 @@
             </tbody>
           </table>
         </div>
+      <!-- Stage 4 Hızlı PDF Barı -->
+      <div class="stage-print-bar no-print">
+        <div class="stage-print-title">
+          <span>📜 4. Sayfa: Resmi Malik Teklif Mektubu, Teknik Şartname & Tahsis Cetveli</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border-color);">
+            <span style="font-size: 0.7rem; font-weight: 700; color: #475569;">Ölçek:</span>
+            <select class="form-select print-scale-select" onchange="setPrintScale(this.value)" style="padding: 1px 4px; font-size: 0.72rem; height: 26px; width: auto; background: #fff; font-weight: 600;">
+              <option value="75">%75 (Kompakt)</option>
+              <option value="80" selected>%80 (A4 Tam Uyum • Önerilen)</option>
+              <option value="85">%85 (Dengeli)</option>
+              <option value="90">%90</option>
+              <option value="100">%100 (Orijinal)</option>
+            </select>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="printReport(4)">🖨️ Yalnızca Bu Teklifi PDF Al (4. Sayfa)</button>
+          <button class="btn btn-gold btn-sm" onclick="printReport('all')">📚 Tüm Proje Dosyasını PDF Al</button>
+        </div>
       </div>
 
       <!-- RESMİ TEKLİF VE FİZİBİLİTE DOSYASI (YAZDIRILABİLİR / PDF) -->
@@ -1446,14 +1508,27 @@
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Karar & Finansman</button>
         <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-color);">
+            <span style="font-size: 0.72rem; font-weight: 700; color: #475569;">🔍 PDF Ölçeği:</span>
+            <select class="form-select print-scale-select" onchange="setPrintScale(this.value)" style="padding: 2px 6px; font-size: 0.72rem; height: 28px; width: auto; background: #fff; font-weight: 600;">
+              <option value="75">%75 (Kompakt Sığdır)</option>
+              <option value="80" selected>%80 (A4 Tam Uyum • Önerilen)</option>
+              <option value="85">%85 (Dengeli)</option>
+              <option value="90">%90</option>
+              <option value="100">%100 (Orijinal)</option>
+            </select>
+          </div>
           <button class="btn btn-primary" onclick="openSaveProposalModal()" style="display: flex; align-items: center; gap: 6px; font-weight: 700;">
             💾 Kaydet
           </button>
           <button class="btn btn-outline" onclick="openKDArchiveModal()" style="display: flex; align-items: center; gap: 6px;">
             🗄️ Teklif Arşivi (<span id="stage4-archive-count">0</span>)
           </button>
+          <button class="btn btn-outline" onclick="printReport(4)" style="display: flex; align-items: center; gap: 6px; font-weight: 700;">
+            🖨️ Teklifi PDF Al (4. Sayfa)
+          </button>
           <button class="btn btn-gold btn-lg" onclick="printReport('all')">
-            🖨️ Kurumsal Teklif Dosyasını PDF Yazdır (Tüm Rapor) ➔
+            📚 Kurumsal Teklif Dosyasını PDF Yazdır (Tüm Rapor) ➔
           </button>
         </div>
       </div>
@@ -1805,11 +1880,46 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // PDF / Print Handler (Tek Sayfa ve Tüm Proje Dosyası Desteği)
+    // PDF / Print Handler (Tek Sayfa ve Tüm Proje Dosyası Desteği & Ölçeklendirme)
+    let currentPrintScale = 80;
+
+    function setPrintScale(scale, e) {
+      if (e) e.stopPropagation();
+      currentPrintScale = parseInt(scale) || 80;
+
+      // Header butonlarını güncelle
+      document.querySelectorAll('#pdf-scale-selector-header .btn-scale').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-scale')) === currentPrintScale) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Rozet etiketini güncelle
+      const badge = document.getElementById('active-scale-label');
+      if (badge) {
+        badge.textContent = currentPrintScale === 80 ? '%80 (A4 Tam Uyum)' : `%${currentPrintScale}`;
+      }
+
+      // Tüm select kutularını senkronize et
+      document.querySelectorAll('.print-scale-select').forEach(sel => {
+        sel.value = currentPrintScale;
+      });
+
+      try {
+        localStorage.setItem('yg_print_scale', currentPrintScale);
+      } catch (err) {}
+    }
+
     function printReport(mode) {
       document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
+      document.body.classList.remove('print-scale-70', 'print-scale-75', 'print-scale-80', 'print-scale-85', 'print-scale-90', 'print-scale-100');
       document.querySelectorAll('.stage-view').forEach(s => s.classList.remove('force-print-show'));
       
+      // Seçilen baskı ölçeğini gövdeye uygula
+      document.body.classList.add(`print-scale-${currentPrintScale}`);
+
       const dd = document.getElementById('header-print-dropdown');
       if (dd) dd.classList.remove('show');
 
@@ -1836,10 +1946,14 @@
 
     function cleanupPrintMode() {
       document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
+      document.body.classList.remove('print-scale-70', 'print-scale-75', 'print-scale-80', 'print-scale-85', 'print-scale-90', 'print-scale-100');
       document.querySelectorAll('.stage-view').forEach(s => s.classList.remove('force-print-show'));
       switchStage(currentStage);
     }
 
+    window.addEventListener('beforeprint', () => {
+      document.body.classList.add(`print-scale-${currentPrintScale}`);
+    });
     window.addEventListener('afterprint', cleanupPrintMode);
 
     function togglePrintDropdown(e) {
@@ -3197,6 +3311,10 @@
       window.KDEngine.calculate();
       syncInputsWithState();
       renderUI();
+      try {
+        const savedScale = localStorage.getItem('yg_print_scale');
+        if (savedScale) setPrintScale(savedScale);
+      } catch (err) {}
     });
   </script>
 </body>
