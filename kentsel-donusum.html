@@ -1650,7 +1650,7 @@
        MODAL 3: ONLINE BULUT VERİTABANI BAĞLANTI AYARLARI
        ========================================================================== -->
   <div class="modal-overlay" id="modal-kd-cloud-settings" onclick="if(event.target===this) closeKDModal('modal-kd-cloud-settings')">
-    <div class="modal-window" style="width: 600px;">
+    <div class="modal-window" style="width: 700px; max-width: 95vw;">
       <div class="modal-header">
         <h3>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
@@ -1659,30 +1659,58 @@
         <button class="modal-close-btn" onclick="closeKDModal('modal-kd-cloud-settings')">✕</button>
       </div>
 
-      <div class="modal-body">
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px; margin-bottom: 1rem; font-size: 0.78rem; color: #166534;">
-          <strong>☁️ Çoklu Cihaz & Canlı Ekip Paylaşımı:</strong><br>
-          Kayıtlı teklifler Firebase Cloud REST veritabanı üzerinden bilgisayar, tablet ve mobil cihazlar arasında <strong>otomatik ve gerçek zamanlı</strong> olarak eşitlenir.
+      <div class="modal-body" style="padding: 1.4rem;">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px 14px; margin-bottom: 1.2rem; font-size: 0.78rem; color: #166534; display: flex; align-items: flex-start; gap: 10px;">
+          <span style="font-size: 1.2rem; line-height: 1;">☁️</span>
+          <div>
+            <strong>Çoklu Cihaz & Canlı Ekip Paylaşımı:</strong><br>
+            Kayıtlı kentsel dönüşüm teklifleri Firebase Cloud REST veritabanı üzerinden bilgisayar, tablet ve telefonlar arasında <strong>otomatik ve gerçek zamanlı</strong> olarak eşitlenir.
+          </div>
         </div>
 
-        <div style="display: grid; gap: 12px;">
+        <div style="display: grid; gap: 14px;">
           <div>
-            <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Bulut Veritabanı REST URL (Endpoint)</label>
-            <input type="text" id="inp-cloud-db-url" class="form-input" style="font-family: monospace; font-size: 0.78rem;" placeholder="https://...firebaseio.com/yakingrup_kd_proposals.json">
-            <span style="font-size: 0.7rem; color: #64748b; margin-top: 3px; display: block;">Varsayılan: Yakın Grup Global Firebase Cloud Endpoint</span>
+            <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #334155; margin-bottom: 6px;">Bulut Veritabanı REST URL (Endpoint)</label>
+            <input type="text" id="inp-cloud-db-url" class="form-input" style="font-family: monospace; font-size: 0.8rem; font-weight: 600; padding: 9px 12px; width: 100%; border-radius: 6px; border: 1.5px solid #cbd5e1;" value="https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json" placeholder="https://PROJE-ADI.firebaseio.com/yakingrup_kd_proposals.json">
+            <span style="font-size: 0.72rem; color: #64748b; margin-top: 4px; display: block;">Örnek Firebase Endpoint: <code>https://&lt;proje-id&gt;-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json</code></span>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.78rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 12px 14px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.78rem; flex-wrap: wrap; gap: 10px;">
             <div>
-              <div style="font-weight: 700; color: #0f172a;">Son Senkronizasyon Zamanı:</div>
-              <div id="lbl-cloud-last-sync" style="color: #64748b; font-size: 0.74rem;">-</div>
+              <div style="font-weight: 800; color: #0f172a;">Son Senkronizasyon Zamanı:</div>
+              <div id="lbl-cloud-last-sync" style="color: #64748b; font-size: 0.76rem; font-family: monospace; margin-top: 2px;">-</div>
             </div>
-            <button type="button" class="btn-sm-action primary" onclick="handleTestCloudConnection()">
+            <button type="button" class="btn-sm-action primary" onclick="handleTestCloudConnection()" style="padding: 6px 14px; font-weight: 700;">
               ⚡ Bağlantıyı Test Et & Eşitle
             </button>
           </div>
+
+          <!-- Adım Adım Kurulum Rehberi -->
+          <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 14px; font-size: 0.78rem;">
+            <div style="font-weight: 800; color: #0f172a; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+              <span>🚀</span>
+              <span>1 Dakikada Kendi Ücretsiz Firebase Veritabanınızı Kurun (Adım Adım):</span>
+            </div>
+            <ol style="margin: 0; padding-left: 20px; color: #334155; line-height: 1.6;">
+              <li><strong><a href="https://console.firebase.google.com/" target="_blank" style="color: #0284c7; text-decoration: underline;">console.firebase.google.com</a></strong> adresine Google hesabınızla girin.</li>
+              <li><strong>"Proje Ekle"</strong> (Add Project) butonuna tıklayıp bir proje adı yazın (örn: <code>yakingrup-db</code>).</li>
+              <li>Sol menüden <strong>Build (Derle) &gt; Realtime Database</strong> bölümüne tıklayın ve <strong>"Veritabanı Oluştur"</strong> deyin.</li>
+              <li>Konum olarak <strong>Belgium (europe-west1)</strong> veya <strong>US (us-central1)</strong> seçip Güvenlik Kurallarında <strong>"Test modunda başlat"</strong>ı seçin.</li>
+              <li>Oluşan veritabanı adresinizi kopyalayıp sonuna <code>/yakingrup_kd_proposals.json</code> ekleyerek yukarıdaki kutuya yapıştırın ve <strong>"Kaydet & Bağlan"</strong> butonuna basın.</li>
+            </ol>
+          </div>
         </div>
       </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="handleResetCloudUrl()">Varsayılana Dön</button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeKDModal('modal-kd-cloud-settings')">Kapat</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="handleSaveCloudUrl()" style="font-weight: 700;">Kaydet & Bağlan</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline btn-sm" onclick="handleResetCloudUrl()">Varsayılana Dön</button>
@@ -2507,8 +2535,12 @@
         const urlInp = document.getElementById('inp-cloud-db-url');
         const lblLastSync = document.getElementById('lbl-cloud-last-sync');
         const syncInfo = window.KDDB.getSyncStatus();
-        if (urlInp) urlInp.value = syncInfo.cloudUrl;
-        if (lblLastSync) lblLastSync.textContent = syncInfo.lastSyncTime;
+        if (urlInp) {
+          urlInp.value = syncInfo.cloudUrl || window.KDDB.getCloudUrl() || 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
+        }
+        if (lblLastSync) {
+          lblLastSync.textContent = syncInfo.lastSyncTime || '-';
+        }
       }
       openKDModal('modal-kd-cloud-settings');
     }
