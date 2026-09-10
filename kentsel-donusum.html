@@ -12,7 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.4">
+  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.5">
   <style>
 /* =========================================================================
    MODAL & POPUP DIALOG STYLES (vCard / Modal Mantığı)
@@ -1280,6 +1280,8 @@
             </tbody>
           </table>
         </div>
+      </div>
+
       <!-- Stage 4 Hızlı PDF Barı -->
       <div class="stage-print-bar no-print">
         <div class="stage-print-title">
@@ -1792,16 +1794,6 @@
     </div>
   </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline btn-sm" onclick="handleResetCloudUrl()">Varsayılana Dön</button>
-        <div style="display: flex; gap: 8px;">
-          <button type="button" class="btn btn-outline btn-sm" onclick="closeKDModal('modal-kd-cloud-settings')">Kapat</button>
-          <button type="button" class="btn btn-primary btn-sm" onclick="handleSaveCloudUrl()">Kaydet & Bağlan</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <!-- ==========================================================================
        STICKY BOTTOM ACTION BAR
@@ -1891,9 +1883,7 @@
       if (propEl) {
         propEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-      setTimeout(() => {
-        printReport(4);
-      }, 350);
+      printReport(4);
     }
 
     // PDF / Print Handler (Tek Sayfa ve Tüm Proje Dosyası Desteği & Ölçeklendirme)
