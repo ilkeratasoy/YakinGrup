@@ -1375,7 +1375,7 @@
             </div>
             <div class="sign-role" id="yg-sign-role-title">YAKIN GRUP A.Ş.</div>
             <div class="sign-name" id="yg-sign-person-name">İlker ATASOY — Yönetim Kurulu Başkanı / CXO</div>
-            <div class="sign-date" id="yg-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Yetkili Kurumsal İmza & Kaşe</div>
+            <div class="sign-date" id="yg-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: ____ / ____ / 2026</div>
           </div>
         </div>
 
@@ -1383,24 +1383,11 @@
 
       <!-- İmza & Kaşe Kontrol Paneli (Resmi Teklifin Altında) -->
       <div class="card no-print" style="margin-top: 1.5rem; margin-bottom: 1.25rem; background: #ffffff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.85rem;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.4rem;">🖋️</span>
-            <div>
-              <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-main);">Teklif Onay, Yetkili İmzası & Şirket Kaşe Ayarları</div>
-              <div style="font-size: 0.74rem; color: var(--text-muted);">Resmi teklif dosyasına şirket yetkilisi (İlker ATASOY / Eylül YILMAZ), ıslak imza ve kurumsal kaşeyi uygulayın</div>
-            </div>
-          </div>
-          
-          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
-              <input type="checkbox" id="chk-toggle-stamp" checked onchange="toggleStampSignature('stamp', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
-              <span>🏛️ Kurumsal Kaşeyi Göster</span>
-            </label>
-            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
-              <input type="checkbox" id="chk-toggle-signature" checked onchange="toggleStampSignature('signature', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
-              <span>✍️ Islak İmzayı Göster</span>
-            </label>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.85rem;">
+          <span style="font-size: 1.4rem;">🖋️</span>
+          <div>
+            <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-main);">Teklif Onay, Yetkili İmzası & Şirket Kaşe Ayarları</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Resmi teklif dosyasına şirket yetkilisi (İlker ATASOY / Eylül YILMAZ), ıslak imza ve kurumsal kaşeyi uygulayın</div>
           </div>
         </div>
 
@@ -1423,19 +1410,6 @@
               <option value="sign">✍️ Yalnızca Islak İmza</option>
               <option value="none">⚪ İmzasız / Kaşesiz (Yalnızca İsim)</option>
             </select>
-          </div>
-        </div>
-      </div>
-          
-          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
-              <input type="checkbox" id="chk-toggle-stamp" checked onchange="toggleStampSignature('stamp', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
-              <span>Kurumsal Kaşeyi Göster</span>
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
-              <input type="checkbox" id="chk-toggle-signature" checked onchange="toggleStampSignature('signature', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
-              <span>Islak İmzayı Göster</span>
-            </label>
           </div>
         </div>
       </div>
@@ -2319,15 +2293,6 @@
       const selMode = document.getElementById('sel-yg-stamp-mode');
       if (selMode && selMode.value !== val) selMode.value = val;
 
-      const chkStamp = document.getElementById('chk-toggle-stamp');
-      const chkSign = document.getElementById('chk-toggle-signature');
-
-      const showStamp = (val === 'both' || val === 'stamp');
-      const showSign = (val === 'both' || val === 'sign');
-
-      if (chkStamp) chkStamp.checked = showStamp;
-      if (chkSign) chkSign.checked = showSign;
-
       syncSignatureVisibility();
       if (window.KDEngine) {
         window.KDEngine.updateField('stampMode', val);
@@ -2335,32 +2300,17 @@
     }
 
     function toggleStampSignature(type, checked) {
-      const chkStamp = document.getElementById('chk-toggle-stamp');
-      const chkSign = document.getElementById('chk-toggle-signature');
-      const isStamp = chkStamp ? chkStamp.checked : true;
-      const isSign = chkSign ? chkSign.checked : true;
-
-      let newMode = 'none';
-      if (isStamp && isSign) newMode = 'both';
-      else if (isStamp) newMode = 'stamp';
-      else if (isSign) newMode = 'sign';
-
-      const selMode = document.getElementById('sel-yg-stamp-mode');
-      if (selMode) selMode.value = newMode;
-
-      syncSignatureVisibility();
-      if (window.KDEngine) {
-        window.KDEngine.updateField('stampMode', newMode);
-      }
+      // Legacy fallback
+      handleStampModeChange(checked ? 'both' : 'none');
     }
 
     function syncSignatureVisibility() {
-      const chkStamp = document.getElementById('chk-toggle-stamp');
-      const chkSign = document.getElementById('chk-toggle-signature');
+      const selMode = document.getElementById('sel-yg-stamp-mode');
       const selSig = document.getElementById('sel-yg-signatory');
 
-      const showStamp = chkStamp ? chkStamp.checked : true;
-      const showSign = chkSign ? chkSign.checked : true;
+      const mode = selMode ? selMode.value : 'both';
+      const showStamp = (mode === 'both' || mode === 'stamp');
+      const showSign = (mode === 'both' || mode === 'sign');
       const signatory = selSig ? selSig.value : 'ilker';
 
       const stampEl = document.getElementById('yg-official-stamp');
@@ -2389,15 +2339,7 @@
       }
 
       if (dateLbl) {
-        if (showStamp && showSign) {
-          dateLbl.textContent = 'Yetkili Kurumsal İmza & Kaşe';
-        } else if (showStamp) {
-          dateLbl.textContent = 'Yetkili Kurumsal Kaşe';
-        } else if (showSign) {
-          dateLbl.textContent = 'Yetkili Islak İmza';
-        } else {
-          dateLbl.textContent = 'Tarih: ' + new Date().toLocaleDateString('tr-TR');
-        }
+        dateLbl.textContent = 'Tarih: ____ / ____ / 2026';
       }
     }
 
