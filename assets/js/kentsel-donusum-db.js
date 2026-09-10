@@ -324,16 +324,41 @@
       return false;
     },
 
-    // 5. Teklifi Sil
+    // 5. Teklifi Sil (Tekil Silme)
     delete(docNo) {
       let list = getRawDB();
       const initialLen = list.length;
-      list = list.filter(p => p.docNo !== docNo);
+      list = list.filter(p => p.docNo !== docNo && p.id !== docNo);
       if (list.length !== initialLen) {
         saveRawDB(list);
         return true;
       }
       return false;
+    },
+
+    // 5b. Çoklu Teklif Sil (Toplu Silme)
+    deleteMultiple(docNos) {
+      if (!Array.isArray(docNos) || docNos.length === 0) return 0;
+      let list = getRawDB();
+      const initialLen = list.length;
+      list = list.filter(p => !docNos.includes(p.docNo) && !docNos.includes(p.id));
+      const deletedCount = initialLen - list.length;
+      if (deletedCount > 0) {
+        saveRawDB(list);
+      }
+      return deletedCount;
+    },
+
+    // 5c. Tüm Veritabanını Temizle
+    clearAll() {
+      saveRawDB([]);
+      return true;
+    },
+
+    // 5d. Örnek Veritabanını Yeniden Yükle
+    resetToDefaults() {
+      saveRawDB(defaultArchivedProposals);
+      return true;
     },
 
     // 6. Teklifi Klonla / Yeni Revizyon Oluştur
