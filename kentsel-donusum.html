@@ -1363,7 +1363,7 @@
             <div class="sign-date" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: ____ / ____ / 2026</div>
           </div>
 
-          <div class="signature-box">
+          <div class="signature-box" id="yg-sign-box">
             <div class="sign-space-yg">
               <div class="official-stamp-yg" id="yg-official-stamp">
                 <div class="stamp-head">YAKIN GRUP ENERJİ GIDA</div>
@@ -1375,22 +1375,57 @@
             </div>
             <div class="sign-role" id="yg-sign-role-title">YAKIN GRUP A.Ş.</div>
             <div class="sign-name" id="yg-sign-person-name">İlker ATASOY — Yönetim Kurulu Başkanı / CXO</div>
-            <div class="sign-date" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Yetkili Kurumsal İmza & Kaşe</div>
+            <div class="sign-date" id="yg-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Yetkili Kurumsal İmza & Kaşe</div>
           </div>
         </div>
 
       </div>
 
       <!-- İmza & Kaşe Kontrol Paneli (Resmi Teklifin Altında) -->
-      <div class="card no-print" style="margin-top: 1.5rem; margin-bottom: 1.25rem; background: #ffffff; border: 1.5px solid var(--border-color);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div class="card no-print" style="margin-top: 1.5rem; margin-bottom: 1.25rem; background: #ffffff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.85rem;">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.3rem;">🖋️</span>
+            <span style="font-size: 1.4rem;">🖋️</span>
             <div>
-              <div style="font-size: 0.86rem; font-weight: 800; color: var(--text-main);">Teklif Onay & Şirket Kaşe-İmza Ayarları</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);">Yukarıdaki resmi teklif dosyasına şirket kaşesi ve yetkili ıslak imzasını ekleyin veya özelleştirin</div>
+              <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-main);">Teklif Onay, Yetkili İmzası & Şirket Kaşe Ayarları</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted);">Resmi teklif dosyasına şirket yetkilisi (İlker ATASOY / Eylül YILMAZ), ıslak imza ve kurumsal kaşeyi uygulayın</div>
             </div>
           </div>
+          
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <input type="checkbox" id="chk-toggle-stamp" checked onchange="toggleStampSignature('stamp', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
+              <span>🏛️ Kurumsal Kaşeyi Göster</span>
+            </label>
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <input type="checkbox" id="chk-toggle-signature" checked onchange="toggleStampSignature('signature', this.checked)" style="accent-color: var(--brand-primary); width: 16px; height: 16px;">
+              <span>✍️ Islak İmzayı Göster</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.75rem; font-weight: 800; color: #334155; margin-bottom: 6px;">👔 Teklif Yetkilisi & İmza Sahibi</label>
+            <select id="sel-yg-signatory" class="form-select" onchange="handleSignatoryChange(this.value)" style="font-weight: 700; font-size: 0.82rem; padding: 8px 12px; width: 100%; border-radius: 6px; border: 1.5px solid #cbd5e1; background: #ffffff;">
+              <option value="ilker" selected>👔 İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
+              <option value="eylul">📐 Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
+              <option value="manual">✍️ Yetkili İmza Sahibi (Boş Bırak / Elle İmzala)</option>
+              <option value="none">🏢 Kentsel Dönüşüm & Yatırım Komitesi (İmzasız)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.75rem; font-weight: 800; color: #334155; margin-bottom: 6px;">⚙️ Kaşe & Islak İmza Görünüm Modu</label>
+            <select id="sel-yg-stamp-mode" class="form-select" onchange="handleStampModeChange(this.value)" style="font-weight: 700; font-size: 0.82rem; padding: 8px 12px; width: 100%; border-radius: 6px; border: 1.5px solid #cbd5e1; background: #ffffff;">
+              <option value="both" selected>🔵 Resmi Kaşe + Islak İmza (Önerilen)</option>
+              <option value="stamp">🏛️ Yalnızca Resmi Kaşe</option>
+              <option value="sign">✍️ Yalnızca Islak İmza</option>
+              <option value="none">⚪ İmzasız / Kaşesiz (Yalnızca İsim)</option>
+            </select>
+          </div>
+        </div>
+      </div>
           
           <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
             <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">
@@ -1856,6 +1891,15 @@
       document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
       const activeCard = document.getElementById(`card-sc-${s.selectedScenario}`);
       if (activeCard) activeCard.classList.add('active');
+
+      const sigVal = s.signatory || 'ilker';
+      const stampModeVal = s.stampMode || 'both';
+      const selSig = document.getElementById('sel-yg-signatory');
+      if (selSig) selSig.value = sigVal;
+      const selMode = document.getElementById('sel-yg-stamp-mode');
+      if (selMode) selMode.value = stampModeVal;
+      handleSignatoryChange(sigVal);
+      handleStampModeChange(stampModeVal);
     }
 
     function renderUI() {
@@ -2211,35 +2255,120 @@
     function handleSignatoryChange(val) {
       const sigImg = document.getElementById('yg-wet-signature');
       const nameEl = document.getElementById('yg-sign-person-name');
+      const roleEl = document.getElementById('yg-sign-role-title');
+      const selSig = document.getElementById('sel-yg-signatory');
+      if (selSig && selSig.value !== val) selSig.value = val;
 
       if (val === 'ilker') {
         if (sigImg) {
           sigImg.src = 'assets/images/imza-ilker-atasoy.png';
-          sigImg.classList.remove('hidden');
+          sigImg.alt = 'İlker ATASOY Islak İmza';
         }
         if (nameEl) nameEl.textContent = 'İlker ATASOY — Yönetim Kurulu Başkanı / CXO';
+        if (roleEl) roleEl.textContent = 'YAKIN GRUP A.Ş.';
       } else if (val === 'eylul') {
         if (sigImg) {
           sigImg.src = 'assets/images/imza-eylul-yilmaz.png';
-          sigImg.classList.remove('hidden');
+          sigImg.alt = 'Eylül YILMAZ Islak İmza';
         }
         if (nameEl) nameEl.textContent = 'Eylül YILMAZ — Kentsel Dönüşüm & Yatırım Direktörü';
+        if (roleEl) roleEl.textContent = 'YAKIN GRUP A.Ş.';
       } else if (val === 'manual') {
-        if (sigImg) sigImg.classList.add('hidden');
         if (nameEl) nameEl.textContent = 'Yetkili İmza Sahibi';
+        if (roleEl) roleEl.textContent = 'YAKIN GRUP A.Ş.';
       } else if (val === 'none') {
-        if (sigImg) sigImg.classList.add('hidden');
         if (nameEl) nameEl.textContent = 'Kentsel Dönüşüm & Yatırım Komitesi';
+        if (roleEl) roleEl.textContent = 'YAKIN GRUP A.Ş.';
+      }
+
+      syncSignatureVisibility();
+      if (window.KDEngine) {
+        window.KDEngine.updateField('signatory', val);
       }
     }
 
-    function handleStampToggle(show) {
+    function handleStampModeChange(val) {
+      const selMode = document.getElementById('sel-yg-stamp-mode');
+      if (selMode && selMode.value !== val) selMode.value = val;
+
+      const chkStamp = document.getElementById('chk-toggle-stamp');
+      const chkSign = document.getElementById('chk-toggle-signature');
+
+      const showStamp = (val === 'both' || val === 'stamp');
+      const showSign = (val === 'both' || val === 'sign');
+
+      if (chkStamp) chkStamp.checked = showStamp;
+      if (chkSign) chkSign.checked = showSign;
+
+      syncSignatureVisibility();
+      if (window.KDEngine) {
+        window.KDEngine.updateField('stampMode', val);
+      }
+    }
+
+    function toggleStampSignature(type, checked) {
+      const chkStamp = document.getElementById('chk-toggle-stamp');
+      const chkSign = document.getElementById('chk-toggle-signature');
+      const isStamp = chkStamp ? chkStamp.checked : true;
+      const isSign = chkSign ? chkSign.checked : true;
+
+      let newMode = 'none';
+      if (isStamp && isSign) newMode = 'both';
+      else if (isStamp) newMode = 'stamp';
+      else if (isSign) newMode = 'sign';
+
+      const selMode = document.getElementById('sel-yg-stamp-mode');
+      if (selMode) selMode.value = newMode;
+
+      syncSignatureVisibility();
+      if (window.KDEngine) {
+        window.KDEngine.updateField('stampMode', newMode);
+      }
+    }
+
+    function syncSignatureVisibility() {
+      const chkStamp = document.getElementById('chk-toggle-stamp');
+      const chkSign = document.getElementById('chk-toggle-signature');
+      const selSig = document.getElementById('sel-yg-signatory');
+
+      const showStamp = chkStamp ? chkStamp.checked : true;
+      const showSign = chkSign ? chkSign.checked : true;
+      const signatory = selSig ? selSig.value : 'ilker';
+
       const stampEl = document.getElementById('yg-official-stamp');
+      const sigImg = document.getElementById('yg-wet-signature');
+      const dateLbl = document.getElementById('yg-sign-date-label');
+
       if (stampEl) {
-        if (show) {
+        if (showStamp) {
           stampEl.classList.remove('hidden');
+          stampEl.style.display = 'inline-flex';
         } else {
           stampEl.classList.add('hidden');
+          stampEl.style.display = 'none';
+        }
+      }
+
+      if (sigImg) {
+        const canShowImg = showSign && (signatory === 'ilker' || signatory === 'eylul');
+        if (canShowImg) {
+          sigImg.classList.remove('hidden');
+          sigImg.style.display = 'block';
+        } else {
+          sigImg.classList.add('hidden');
+          sigImg.style.display = 'none';
+        }
+      }
+
+      if (dateLbl) {
+        if (showStamp && showSign) {
+          dateLbl.textContent = 'Yetkili Kurumsal İmza & Kaşe';
+        } else if (showStamp) {
+          dateLbl.textContent = 'Yetkili Kurumsal Kaşe';
+        } else if (showSign) {
+          dateLbl.textContent = 'Yetkili Islak İmza';
+        } else {
+          dateLbl.textContent = 'Tarih: ' + new Date().toLocaleDateString('tr-TR');
         }
       }
     }
@@ -2519,6 +2648,95 @@
         renderKDArchiveTable();
       }
     });
+
+
+    
+    function openSaveProposalModal() {
+      if (!window.KDEngine) return;
+      window.KDEngine.calculate();
+      const eng = window.KDEngine;
+      const s = eng.state;
+      const r = eng.results;
+
+      const randomSuffix = Math.floor(100 + Math.random() * 900);
+      const count = (window.KDDB ? window.KDDB.getAll().length + 1 : 1);
+      const autoDocNo = `YKN-KD-2026-${String(count).padStart(3, '0')}-${randomSuffix}`;
+
+      const inpDocNo = document.getElementById('inp-save-docno');
+      const inpTitle = document.getElementById('inp-save-title');
+      const inpClient = document.getElementById('inp-save-client');
+      const selStatus = document.getElementById('sel-save-status');
+      const inpNotes = document.getElementById('inp-save-notes');
+
+      if (inpDocNo) inpDocNo.value = autoDocNo;
+      if (inpTitle) inpTitle.value = `${s.city} ${s.district} ${s.ada}/${s.parsel} Kentsel Dönüşüm Teklifi`;
+      if (inpClient) inpClient.value = `${s.neighborhood} Malikler Kurulu Temsilcisi`;
+      if (selStatus) selStatus.value = 'Teklif İletildi';
+      if (inpNotes) inpNotes.value = `Z+${r.normalKatSayisi} Kat, Toplam ${r.totalNewSections} Bağımsız Bölüm. Önerilen Model: ${r.decision.recommendedModel}`;
+
+      const pLoc = document.getElementById('save-prev-location');
+      const pArea = document.getElementById('save-prev-area');
+      const pUnits = document.getElementById('save-prev-units');
+      const pCost = document.getElementById('save-prev-cost');
+
+      if (pLoc) pLoc.textContent = `${s.city} / ${s.district} (${s.ada}/${s.parsel})`;
+      if (pArea) pArea.textContent = `Arsa: ${eng.formatM2(s.landArea)} | İnşaat: ${eng.formatM2(r.toplamInsaatAlani)}`;
+      if (pUnits) pUnits.textContent = `${s.ownerCount} Malik | ${r.totalNewResidentialUnits} Yeni Konut + ${r.groundFloorShops} Dükkan`;
+      if (pCost) pCost.textContent = eng.formatCurrency(r.costs.totalProjectCost);
+
+      openKDModal('modal-save-proposal');
+    }
+
+    function handleSaveProposalSubmit(e) {
+      e.preventDefault();
+      if (!window.KDDB) return;
+
+      const docNo = document.getElementById('inp-save-docno')?.value.trim();
+      const title = document.getElementById('inp-save-title')?.value.trim();
+      const client = document.getElementById('inp-save-client')?.value.trim();
+      const status = document.getElementById('sel-save-status')?.value || 'Teklif İletildi';
+      const notes = document.getElementById('inp-save-notes')?.value.trim();
+
+      const saved = window.KDDB.saveCurrentProposal({
+        docNo: docNo,
+        title: title,
+        clientRepresentative: client,
+        status: status,
+        notes: notes
+      });
+
+      closeKDModal('modal-save-proposal');
+      updateArchiveBadgeCounters();
+      showToastNotification(`💾 [${saved.docNo}] numaralı kentsel dönüşüm teklifi veritabanına kaydedildi ve arşivlendi.`);
+    }
+
+    function handleDBStatusChange(docNo, newStatus) {
+      if (window.KDDB && window.KDDB.updateStatus(docNo, newStatus)) {
+        renderKDArchiveTable();
+        showToastNotification(`✅ [${docNo}] teklif durumu "${newStatus}" olarak güncellendi.`);
+      }
+    }
+
+    function loadProposalFromDB(docNo) {
+      if (!window.KDDB) return;
+      const success = window.KDDB.loadToStudio(docNo);
+      if (success) {
+        closeKDModal('modal-kd-archive');
+        switchStage(4);
+        showToastNotification(`📂 [${docNo}] numaralı teklif veritabanından stüdyoya yüklendi.`);
+      } else {
+        alert('Teklif yüklenirken hata oluştu.');
+      }
+    }
+
+    function cloneProposalFromDB(docNo) {
+      if (!window.KDDB) return;
+      const cloned = window.KDDB.clone(docNo);
+      if (cloned) {
+        renderKDArchiveTable();
+        showToastNotification(`📋 [${docNo}] teklifi [${cloned.docNo}] olarak klonlandı.`);
+      }
+    }
 
 
     function renderKDArchiveTable() {
