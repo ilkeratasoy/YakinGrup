@@ -1671,7 +1671,7 @@
         <div style="display: grid; gap: 14px;">
           <div>
             <label style="display: block; font-size: 0.78rem; font-weight: 800; color: #334155; margin-bottom: 6px;">Bulut Veritabanı REST URL (Endpoint)</label>
-            <input type="text" id="inp-cloud-db-url" class="form-input" style="font-family: monospace; font-size: 0.8rem; font-weight: 600; padding: 9px 12px; width: 100%; border-radius: 6px; border: 1.5px solid #cbd5e1;" value="https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json" placeholder="https://PROJE-ADI.firebaseio.com/yakingrup_kd_proposals.json">
+            <input type="text" id="inp-cloud-db-url" class="form-input" style="font-family: monospace; font-size: 0.8rem; font-weight: 600; padding: 9px 12px; width: 100%; border-radius: 6px; border: 1.5px solid #cbd5e1;" value="https://yakingrup-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json" placeholder="https://PROJE-ADI.firebaseio.com/yakingrup_kd_proposals.json">
             <span style="font-size: 0.72rem; color: #64748b; margin-top: 4px; display: block;">Örnek Firebase Endpoint: <code>https://&lt;proje-id&gt;-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json</code></span>
           </div>
 
@@ -2536,7 +2536,7 @@
         const lblLastSync = document.getElementById('lbl-cloud-last-sync');
         const syncInfo = window.KDDB.getSyncStatus();
         if (urlInp) {
-          urlInp.value = syncInfo.cloudUrl || window.KDDB.getCloudUrl() || 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
+          urlInp.value = syncInfo.cloudUrl || window.KDDB.getCloudUrl() || 'https://yakingrup-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
         }
         if (lblLastSync) {
           lblLastSync.textContent = syncInfo.lastSyncTime || '-';

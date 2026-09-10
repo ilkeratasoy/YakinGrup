@@ -19,7 +19,7 @@
   const LAST_SYNC_KEY = 'yg_kd_last_sync_time';
 
   // Yakın Grup Online Firebase Realtime Database Endpoint
-  const DEFAULT_CLOUD_URL = 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
+  const DEFAULT_CLOUD_URL = 'https://yakingrup-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
 
   let isSyncing = false;
   let syncStatus = 'online'; // 'online', 'syncing', 'offline', 'error'
@@ -233,10 +233,28 @@
     }
   }
 
+  function sanitizeCloudUrl(url) {
+    if (!url || !url.trim()) return DEFAULT_CLOUD_URL;
+    let clean = url.trim();
+    if (clean.endsWith('/.json')) {
+      clean = clean.replace('/.json', '/yakingrup_kd_proposals.json');
+    } else if (clean.endsWith('.json')) {
+      // already a json file endpoint
+    } else {
+      if (clean.endsWith('/')) {
+        clean = clean + 'yakingrup_kd_proposals.json';
+      } else {
+        clean = clean + '/yakingrup_kd_proposals.json';
+      }
+    }
+    return clean;
+  }
+
   function setCloudUrl(url) {
     try {
       if (url && url.trim()) {
-        localStorage.setItem(CLOUD_URL_KEY, url.trim());
+        const sanitized = sanitizeCloudUrl(url);
+        localStorage.setItem(CLOUD_URL_KEY, sanitized);
       } else {
         localStorage.removeItem(CLOUD_URL_KEY);
       }
