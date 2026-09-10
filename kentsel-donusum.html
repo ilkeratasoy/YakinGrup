@@ -1419,7 +1419,7 @@
         <button class="btn btn-outline" onclick="switchStage(3)">⬅ Geri: Karar & Finansman</button>
         <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           <button class="btn btn-primary" onclick="openSaveProposalModal()" style="display: flex; align-items: center; gap: 6px; font-weight: 700;">
-            💾 Teklifi Veritabanına Kaydet & Arşivle
+            💾 Kaydet
           </button>
           <button class="btn btn-outline" onclick="openKDArchiveModal()" style="display: flex; align-items: center; gap: 6px;">
             🗄️ Teklif Arşivi (<span id="stage4-archive-count">0</span>)
@@ -1547,20 +1547,20 @@
        MODAL 2: MEVCUT TEKLİFİ VERİTABANINA KAYDETME & ARŞİVLEME
        ========================================================================== -->
   <div class="modal-overlay" id="modal-save-proposal" onclick="if(event.target===this) closeKDModal('modal-save-proposal')">
-    <div class="modal-window" style="width: 650px;">
+    <div class="modal-window" style="width: 750px; max-width: 95vw;">
       <div class="modal-header">
         <h3>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-          <span>Teklifi Veritabanına Kaydet & Arşivle</span>
+          <span>Teklifi Kaydet</span>
         </h3>
         <button class="modal-close-btn" onclick="closeKDModal('modal-save-proposal')">✕</button>
       </div>
 
       <form onsubmit="handleSaveProposalSubmit(event)">
-        <div class="modal-body">
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 1rem; font-size: 0.78rem;">
+        <div class="modal-body" style="padding: 1.4rem;">
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 1.1rem; font-size: 0.78rem;">
             <div style="font-weight: 800; color: var(--brand-primary); margin-bottom: 4px;">🏢 Proje Otomatik Özeti</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; color: #475569;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; color: #475569;">
               <div>Konum: <strong id="save-prev-location">-</strong></div>
               <div>Arsa & Yapı: <strong id="save-prev-area">-</strong></div>
               <div>Daire / Malik: <strong id="save-prev-units">-</strong></div>
@@ -1568,26 +1568,26 @@
             </div>
           </div>
 
-          <div style="display: grid; gap: 12px;">
+          <div style="display: grid; gap: 14px;">
             <div>
-              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Teklif Belge No</label>
-              <input type="text" id="inp-save-docno" class="form-input" style="font-weight: 700; font-family: monospace;" readonly>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Teklif Belge No</label>
+              <input type="text" id="inp-save-docno" class="form-input" style="width: 100%; box-sizing: border-box; font-weight: 700; font-family: monospace; background: #f1f5f9;" readonly>
             </div>
 
             <div>
-              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Proje / Teklif Başlığı</label>
-              <input type="text" id="inp-save-title" class="form-input" required placeholder="örn: Kadıköy Fenerbahçe 1248/14 Kentsel Dönüşüm Teklifi">
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Proje / Teklif Başlığı</label>
+              <input type="text" id="inp-save-title" class="form-input" style="width: 100%; box-sizing: border-box;" required placeholder="örn: Kadıköy Fenerbahçe 1248/14 Kentsel Dönüşüm Teklifi">
             </div>
 
             <div>
-              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Müşteri / Malikler Kurulu Temsilcisi</label>
-              <input type="text" id="inp-save-client" class="form-input" placeholder="örn: Malikler Kurulu Temsilcisi (Ahmet Yılmaz)">
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Müşteri / Malikler Kurulu Temsilcisi</label>
+              <input type="text" id="inp-save-client" class="form-input" style="width: 100%; box-sizing: border-box;" placeholder="örn: Malikler Kurulu Temsilcisi (Ahmet Yılmaz)">
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
               <div>
-                <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Teklif Durumu</label>
-                <select id="sel-save-status" class="form-select">
+                <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Teklif Durumu</label>
+                <select id="sel-save-status" class="form-select" style="width: 100%; box-sizing: border-box;">
                   <option value="Teklif İletildi" selected>📨 Teklif İletildi</option>
                   <option value="Taslak">📝 Taslak</option>
                   <option value="Onaylandı">✅ Onaylandı</option>
@@ -1596,22 +1596,22 @@
                 </select>
               </div>
               <div>
-                <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Geçerlilik Süresi</label>
-                <input type="text" id="inp-save-validity" class="form-input" value="30 Gün">
+                <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Geçerlilik Süresi</label>
+                <input type="text" id="inp-save-validity" class="form-input" style="width: 100%; box-sizing: border-box;" value="30 Gün">
               </div>
             </div>
 
             <div>
-              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">Yönetici Notu & Revizyon Açıklaması</label>
-              <textarea id="inp-save-notes" class="form-input" rows="2" placeholder="Görüşme notları, özel şartlar veya revizyon gerekçeleri..."></textarea>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 5px;">Yönetici Notu & Revizyon Açıklaması</label>
+              <textarea id="inp-save-notes" class="form-input" rows="4" style="width: 100%; min-height: 110px; box-sizing: border-box; resize: vertical; font-size: 0.82rem; line-height: 1.5; padding: 10px 12px;" placeholder="Görüşme notları, özel şartlar veya revizyon gerekçeleri..."></textarea>
             </div>
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-outline btn-sm" onclick="closeKDModal('modal-save-proposal')">İptal</button>
-          <button type="submit" class="btn btn-primary btn-sm" style="font-weight: 700;">
-            💾 Teklifi Veritabanına Kaydet & Arşivle
+          <button type="submit" class="btn btn-primary btn-sm" style="font-weight: 700; padding: 7px 18px;">
+            💾 Kaydet
           </button>
         </div>
       </form>
