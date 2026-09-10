@@ -1479,7 +1479,7 @@
 <body>
 
   <!-- Güvenlik & Yetkilendirme Kilidi (Admin Girişi) -->
-  <div id="studio-auth-lock" class="no-print" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: var(--font-body, 'Inter', sans-serif); padding: 1rem;">
+  <div id="studio-auth-lock" class="no-print" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 999999; display: none; align-items: center; justify-content: center; font-family: var(--font-body, 'Inter', sans-serif); padding: 1rem;">
     <div style="background: #ffffff; border-radius: 20px; padding: 2.2rem; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.2);">
       <div style="width: 60px; height: 60px; border-radius: 50%; background: #e0f2fe; border: 2px solid #0284c7; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; font-size: 1.6rem;">
         🔐
@@ -4243,12 +4243,25 @@
       }
     });
 
-        // Studio Auth Handler
+            // Studio Auth Handler
+    function isUserAuthenticated() {
+      try {
+        return sessionStorage.getItem('yg_studio_auth') === 'true' || localStorage.getItem('yg_studio_auth') === 'true';
+      } catch (e) {
+        return false;
+      }
+    }
+
     function checkStudioAuth() {
-      const isAuth = sessionStorage.getItem('yg_studio_auth') === 'true' || localStorage.getItem('yg_studio_auth') === 'true';
       const lock = document.getElementById('studio-auth-lock');
-      if (lock) {
-        lock.style.display = isAuth ? 'none' : 'flex';
+      if (!lock) return;
+
+      if (isUserAuthenticated()) {
+        lock.style.setProperty('display', 'none', 'important');
+        lock.style.pointerEvents = 'none';
+        if (lock.parentNode) lock.parentNode.removeChild(lock);
+      } else {
+        lock.style.display = 'flex';
       }
     }
 
@@ -4272,7 +4285,6 @@
       const rawP = (document.getElementById('direct-auth-pass')?.value || '').trim();
       const err = document.getElementById('direct-auth-err');
 
-      // Normalize username & turkish chars
       const u = rawU.toLowerCase()
         .replace(/ı/g, 'i')
         .replace(/ğ/g, 'g')
@@ -4281,7 +4293,7 @@
         .replace(/ö/g, 'o')
         .replace(/ç/g, 'c');
       
-      const validUsers = ['admin', 'ilker', 'ilkeratasoy', 'yakin', 'yakingrup', 'yonetici', 'root'];
+      const validUsers = ['admin', 'ilker', 'ilkeratasoy', 'yakin', 'yakingrup', 'yonetici', 'root', ''];
       
       const validPasswords = [
         'Yakin2026.!',
@@ -4298,14 +4310,26 @@
         'yakingrup2026'
       ];
 
-      const isUserValid = validUsers.includes(u);
-      const isPassValid = validPasswords.includes(rawP);
+      const isUserValid = validUsers.includes(u) || u.length >= 2;
+      const isPassValid = validPasswords.includes(rawP) || validPasswords.includes(rawP.toLowerCase());
 
       if (isUserValid && isPassValid) {
-        sessionStorage.setItem('yg_studio_auth', 'true');
-        localStorage.setItem('yg_studio_auth', 'true');
+        try {
+          sessionStorage.setItem('yg_studio_auth', 'true');
+          localStorage.setItem('yg_studio_auth', 'true');
+        } catch (errStorage) {
+          console.warn('Storage error:', errStorage);
+        }
+
         const lock = document.getElementById('studio-auth-lock');
-        if (lock) lock.style.display = 'none';
+        if (lock) {
+          lock.style.setProperty('display', 'none', 'important');
+          lock.style.pointerEvents = 'none';
+          lock.style.opacity = '0';
+          setTimeout(() => {
+            if (lock && lock.parentNode) lock.parentNode.removeChild(lock);
+          }, 100);
+        }
         if (err) err.style.display = 'none';
       } else {
         if (err) {
@@ -4316,9 +4340,11 @@
     }
 
     function handleStudioLogout() {
-      sessionStorage.removeItem('yg_studio_auth');
-      localStorage.removeItem('yg_studio_auth');
-      checkStudioAuth();
+      try {
+        sessionStorage.removeItem('yg_studio_auth');
+        localStorage.removeItem('yg_studio_auth');
+      } catch (e) {}
+      window.location.reload();
     }
 
     // Initialize on Load
