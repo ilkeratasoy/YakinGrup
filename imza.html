@@ -506,6 +506,7 @@
   </div>
 
   <script>
+    // Studio Auth Handler
     function checkStudioAuth() {
       const isAuth = sessionStorage.getItem('yg_studio_auth') === 'true' || localStorage.getItem('yg_studio_auth') === 'true';
       const lock = document.getElementById('studio-auth-lock');
@@ -513,7 +514,8 @@
         lock.style.display = isAuth ? 'none' : 'flex';
       }
     }
-                function toggleAuthPasswordVisibility() {
+
+    function toggleAuthPasswordVisibility() {
       const pInput = document.getElementById('direct-auth-pass');
       const toggleBtn = document.getElementById('btn-toggle-auth-pass');
       if (pInput) {
@@ -533,7 +535,6 @@
       const rawP = (document.getElementById('direct-auth-pass')?.value || '').trim();
       const err = document.getElementById('direct-auth-err');
 
-      // Normalize username & turkish chars
       const u = rawU.toLowerCase()
         .replace(/ı/g, 'i')
         .replace(/ğ/g, 'g')
@@ -574,16 +575,8 @@
           err.textContent = '⚠️ Kullanıcı adı veya şifre hatalı.';
         }
       }
-    } else {
-        if (err) {
-          err.style.display = 'block';
-          err.innerHTML = '⚠️ Kullanıcı adı veya şifre hatalı.<br><span style="font-size:0.75rem; color:#475569; font-weight:normal; margin-top:4px; display:block;">Kullanıcı: <b>admin</b> &nbsp;|&nbsp; Şifre: <b>Yakin2026.!</b></span>';
-        }
-      }
-    } else {
-        if (err) err.style.display = 'block';
-      }
     }
+
     window.addEventListener('DOMContentLoaded', checkStudioAuth);
   </script>
 
