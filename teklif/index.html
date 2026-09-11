@@ -1553,6 +1553,7 @@
     <div class="header-actions">
       <button class="btn btn-outline" style="border-color: #15803d; color: #15803d; font-weight: 800; background: rgba(21,128,61,0.08);" onclick="quickSaveActiveProposal()" title="Aktif teklifi anında veritabanına ve buluta kaydet">💾 Kaydet</button>
       <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 800; background: rgba(29,78,216,0.08);" onclick="openArchiveModal()" title="Kayıtlı tüm teklifleri ve arşivi görüntüle">📁 Teklif Arşivi</button>
+      <button class="btn btn-outline" style="border-color: #ef4444; color: #b91c1c; font-weight: 700; background: rgba(239,68,68,0.06);" onclick="startNewBlankProposal(true)" title="Aktif teklifi temizle ve yeni boş belge aç">🗑️ Sıfırla / Yeni</button>
       <button class="btn btn-outline" style="border-color: #b45309; color: #b45309; font-weight: 700; background: rgba(180,83,9,0.06);" onclick="openCustomersModal()">👥 Cari & Alacak</button>
       <button class="btn btn-outline" style="border-color: #4338ca; color: #4338ca; font-weight: 700; background: rgba(67,56,202,0.06);" onclick="openInventoryModal()">📦 Stok Takibi</button>
       <button class="btn btn-outline" style="border-color: #475569; color: #475569;" onclick="openBackupModal()" title="Veritabanı İçe/Dışa Aktar">⚙️ DB</button>
@@ -3187,7 +3188,7 @@
               <button class="btn-sm-action btn-primary-sm" onclick="loadProposalToStudio('` + (p.docNo || p.id) + `')" title="Bu teklifi stüdyoya yükle ve düzenle">📂 Aç</button>
               <button class="btn-sm-action" onclick="emailProposalDirectFromArchive('` + (p.docNo || p.id) + `')" title="Bu teklifi PDF ekli e-posta ile gönder" style="color:#0284c7; font-weight:700;">✉️ Mail</button>
               <button class="btn-sm-action" onclick="cloneProposal('` + (p.docNo || p.id) + `')" title="Bu teklifi kopyala / revize et">📋 Klonla</button>
-              <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + (p.docNo || p.id) + `')" title="Veritabanından sil">🗑️</button>
+              <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + (p.id || '') + `', '` + (p.docNo || '') + `')" title="Veritabanından sil">🗑️</button>
             </td>
           </tr>
         `;
@@ -3253,6 +3254,17 @@
         }
       }
 
+      // If active proposal in studio was deleted, reset studio
+      const currentDocNo = String(appState.docNo || '').trim().toLowerCase();
+      const currentId = String(appState.id || '').trim().toLowerCase();
+      const isCurrentDeleted = docNos.some(d => {
+        const s = String(d).trim().toLowerCase();
+        return s === currentDocNo || s === currentId;
+      });
+      if (isCurrentDeleted) {
+        startNewBlankProposal(false);
+      }
+
       renderArchiveTable();
       updateSelectedProposalsToolbar();
       showToast(`🗑️ ${checkedCount} adet belge başarıyla silindi.`);
@@ -3283,8 +3295,8 @@
       showToast(`🏷️ Seçilen ${docNos.length} belgenin durumu "${newStatus}" olarak güncellendi!`);
     }
 
-    function startNewBlankProposal() {
-      if (!confirm('Yeni ve boş bir belge oluşturmak istiyor musunuz?')) return;
+    function startNewBlankProposal(askConfirm = true) {
+      if (askConfirm && !confirm('Yeni ve boş bir belge oluşturmak istiyor musunuz?')) return;
       appState.id = 'PROP-' + (appState.mode || 'prop').toUpperCase() + '-' + Date.now();
       appState.docNo = generateDocNoForMode(appState.mode || 'prop');
       appState.date = new Date().toISOString().split('T')[0];
@@ -3369,11 +3381,28 @@
       showToast('Teklif klonlandı: ' + clone.docNo);
     }
 
-    function deleteProposalFromArchive(id) {
+    function deleteProposalFromArchive(id, docNo) {
       if (!confirm('Bu belgeyi arşivden ve veritabanından kalıcı olarak silmek istediğinize emin misiniz?')) return;
+      const targets = [id, docNo].filter(Boolean);
       if (typeof YakinERP !== 'undefined') {
-        YakinERP.deleteProposal(id);
+        if (typeof YakinERP.deleteProposals === 'function') {
+          YakinERP.deleteProposals(targets);
+        } else {
+          targets.forEach(t => YakinERP.deleteProposal(t));
+        }
       }
+
+      // If active proposal in studio was deleted, reset studio
+      const currentDocNo = String(appState.docNo || '').trim().toLowerCase();
+      const currentId = String(appState.id || '').trim().toLowerCase();
+      const isCurrent = targets.some(t => {
+        const s = String(t).trim().toLowerCase();
+        return s === currentDocNo || s === currentId;
+      });
+      if (isCurrent) {
+        startNewBlankProposal(false);
+      }
+
       renderArchiveTable();
       updateSelectedProposalsToolbar();
       showToast('🗑️ Belge veritabanından silindi.');
