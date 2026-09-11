@@ -2267,14 +2267,23 @@
 
         <!-- Search & Filter Controls -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; flex-wrap:wrap;">
-          <input type="text" id="archive-search-input" placeholder="🔍 Teklif No, Firma Unvanı veya Proje Konusu Ara..." oninput="renderArchiveTable()" style="flex:1; min-width:240px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
-          <select id="archive-filter-status" onchange="renderArchiveTable()" style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem; font-weight:600; color:#334155;">
+          <input type="text" id="archive-search-input" placeholder="🔍 Teklif No, Firma Unvanı veya Proje Konusu Ara..." oninput="renderArchiveTable()" style="flex:1; min-width:220px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          <select id="archive-filter-mode" onchange="renderArchiveTable()" style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem; font-weight:700; color:#1e293b; background:#f8fafc;">
+            <option value="all">📑 Tüm Formatlar (Teklif, Şartname, Fatura...)</option>
+            <option value="prop">💰 Fiyat Teklifi</option>
+            <option value="spec">📑 Teknik Şartname</option>
+            <option value="hybrid">💎 Birleşik Paket (Şartname & Teklif)</option>
+            <option value="proforma">🌍 Proforma Fatura</option>
+            <option value="dispatch">🚚 Sevk İrsaliyesi</option>
+            <option value="invoice">🧾 E-Fatura</option>
+          </select>
+          <select id="archive-filter-status" onchange="renderArchiveTable()" style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem; font-weight:700; color:#334155;">
             <option value="all">Tüm Durumlar</option>
-            <option value="Taslak">Taslak</option>
-            <option value="İletildi">İletildi</option>
-            <option value="Onaylandı">Onaylandı</option>
-            <option value="Faturalandı">Faturalandı</option>
-            <option value="İptal">İptal</option>
+            <option value="Taslak">📝 Taslak</option>
+            <option value="İletildi">📨 İletildi</option>
+            <option value="Onaylandı">✅ Onaylandı</option>
+            <option value="Faturalandı">🧾 Faturalandı</option>
+            <option value="İptal">✕ İptal</option>
           </select>
         </div>
 
@@ -2955,6 +2964,33 @@
 
     // 1. Archive Modal
     function openArchiveModal() {
+      const modeConfigs = {
+        prop: { label: '💰 Fiyat Teklifi', bg: '#e0f2fe', color: '#0369a1', border: '#7dd3fc' },
+        spec: { label: '📑 Teknik Şartname', bg: '#dcfce7', color: '#15803d', border: '#86efac' },
+        hybrid: { label: '💎 Birleşik Paket', bg: '#f3e8ff', color: '#6b21a8', border: '#d8b4fe' },
+        proforma: { label: '🌍 Proforma Fatura', bg: '#fef3c7', color: '#b45309', border: '#fde68a' },
+        dispatch: { label: '🚚 Sevk İrsaliyesi', bg: '#f1f5f9', color: '#334155', border: '#cbd5e1' },
+        invoice: { label: '🧾 E-Fatura', bg: '#ccfbf1', color: '#0f766e', border: '#5eead4' }
+      };
+
+      const cfg = modeConfigs[appState.mode] || { label: '📄 Ticari Belge', bg: '#e0f2fe', color: '#0369a1', border: '#7dd3fc' };
+      const grandTotal = document.getElementById('sheet-grand-total') ? document.getElementById('sheet-grand-total').innerText : '0.00';
+
+      const titleEl = document.getElementById('archive-active-doc-title');
+      const infoEl = document.getElementById('archive-active-doc-info');
+
+      if (titleEl) {
+        titleEl.innerHTML = `<span style="display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <strong style="color:#0f172a; font-size:1rem;">${appState.docNo || 'YKN-DOC'}</strong>
+          <span style="color:#94a3b8;">•</span>
+          <span style="color:#0f172a; font-weight:700;">${appState.clientCompany || 'Müşteri Belirtilmedi'}</span>
+          <span style="font-size:0.75rem; background:${cfg.bg}; color:${cfg.color}; border:1px solid ${cfg.border}; font-weight:800; padding:2px 8px; border-radius:6px; letter-spacing:0.02em;">${cfg.label}</span>
+        </span>`;
+      }
+      if (infoEl) {
+        infoEl.innerText = `Toplam Tutar: ${grandTotal} | Tarih: ${appState.date || '-'} | Geçerlilik: ${appState.validityDays || 30} Gün`;
+      }
+
       renderArchiveTable();
       openModal('modal-archive');
     }
@@ -2985,6 +3021,8 @@
 
       const q = (document.getElementById('archive-search-input').value || '').toLowerCase();
       const statusFilter = document.getElementById('archive-filter-status').value;
+      const modeFilterEl = document.getElementById('archive-filter-mode');
+      const modeFilter = modeFilterEl ? modeFilterEl.value : 'all';
       let list = [...allProposals];
 
       if (q) {
@@ -2993,33 +3031,36 @@
       if (statusFilter !== 'all') {
         list = list.filter(p => p.status === statusFilter);
       }
+      if (modeFilter !== 'all') {
+        list = list.filter(p => p.docType === modeFilter);
+      }
 
       document.getElementById('archive-count-label').innerText = 'Toplam ' + list.length + ' Kayıtlı Belge (Veritabanında Aktif)';
 
       if (list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:2rem; color:#64748b; font-weight:600;">Aradığınız kriterlere uygun teklif kaydı bulunamadı.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:2rem; color:#64748b; font-weight:600;">Aradığınız kriterlere uygun belge kaydı bulunamadı.</td></tr>';
         return;
       }
 
-      const modeLabels = {
-        spec: '📑 Şartname',
-        prop: '💰 Fiyat',
-        hybrid: '💎 Paket',
-        proforma: '🌍 Proforma',
-        dispatch: '🚚 İrsaliye',
-        invoice: '🧾 Fatura'
+      const modeBadgeStyles = {
+        prop: { label: '💰 Fiyat Teklifi', bg: '#e0f2fe', color: '#0369a1', border: '#7dd3fc' },
+        spec: { label: '📑 Teknik Şartname', bg: '#dcfce7', color: '#15803d', border: '#86efac' },
+        hybrid: { label: '💎 Birleşik Paket', bg: '#f3e8ff', color: '#6b21a8', border: '#d8b4fe' },
+        proforma: { label: '🌍 Proforma Fatura', bg: '#fef3c7', color: '#b45309', border: '#fde68a' },
+        dispatch: { label: '🚚 Sevk İrsaliyesi', bg: '#f1f5f9', color: '#334155', border: '#cbd5e1' },
+        invoice: { label: '🧾 E-Fatura', bg: '#ccfbf1', color: '#0f766e', border: '#5eead4' }
       };
 
       tbody.innerHTML = list.map(p => {
-        const modeText = modeLabels[p.docType] || (p.docType ? p.docType.toUpperCase() : 'BELGE');
+        const badge = modeBadgeStyles[p.docType] || { label: '📄 ' + (p.docType || 'Belge').toUpperCase(), bg: '#f1f5f9', color: '#334155', border: '#cbd5e1' };
         const formattedTotal = formatCurrency(p.grandTotal, p.currency);
         const subjText = p.title ? (p.title.length > 42 ? p.title.substring(0, 42) + '...' : p.title) : '-';
 
         return `
           <tr>
             <td>
-              <strong>` + (p.docNo || '-') + `</strong><br>
-              <span style="font-size:0.7rem; color:#0369a1; font-weight:700; background:#e0f2fe; padding:1px 6px; border-radius:4px;">` + modeText + `</span>
+              <strong style="font-size:0.88rem; color:#0f172a;">` + (p.docNo || '-') + `</strong><br>
+              <span style="font-size:0.72rem; color:` + badge.color + `; font-weight:800; background:` + badge.bg + `; border:1px solid ` + badge.border + `; padding:2px 7px; border-radius:5px; display:inline-block; margin-top:2px;">` + badge.label + `</span>
             </td>
             <td>
               <strong>` + (p.clientCompany || 'Müşteri') + `</strong><br>
