@@ -473,23 +473,35 @@ const YakinERP = (function () {
     fatura: 'YKN-FAT'
   };
 
-  function getNextDocNo(mode) {
+  function getNextDocNo(mode, targetDate = null) {
     const prefix = MODE_PREFIXES[mode] || 'YKN-TEK';
+    const d = targetDate ? new Date(targetDate) : new Date();
+    
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const dateTag = `${yyyy}${mm}${dd}`; // e.g. 20260911
+    const basePrefix = `${prefix}-${dateTag}`;
+
     const list = getAllProposals();
-    let maxNum = 1000;
+    let maxSeq = 0;
 
     list.forEach(p => {
       const docNo = p.docNo || (p.fullState ? p.fullState.docNo : '');
-      if (docNo && docNo.startsWith(prefix + '-')) {
-        const rawSuffix = docNo.replace(prefix + '-', '');
-        const numPart = parseInt(rawSuffix.split('-')[0], 10);
-        if (!isNaN(numPart) && numPart > maxNum) {
-          maxNum = numPart;
+      if (docNo) {
+        if (docNo.startsWith(basePrefix + '-')) {
+          const seqPart = parseInt(docNo.replace(basePrefix + '-', ''), 10);
+          if (!isNaN(seqPart) && seqPart > maxSeq) {
+            maxSeq = seqPart;
+          }
+        } else if (docNo === basePrefix) {
+          if (maxSeq < 1) maxSeq = 1;
         }
       }
     });
 
-    return prefix + '-' + (maxNum + 1);
+    const nextSeq = String(maxSeq + 1).padStart(2, '0');
+    return `${basePrefix}-${nextSeq}`;
   }
 
   function getAllProposals() {
@@ -507,7 +519,7 @@ const YakinERP = (function () {
     // Ensure document has a valid, non-empty serial number
     let docNo = (proposalData.docNo || '').trim();
     if (!docNo || forceNew) {
-      docNo = getNextDocNo(mode);
+      docNo = getNextDocNo(mode, proposalData.date);
       proposalData.docNo = docNo;
     }
 

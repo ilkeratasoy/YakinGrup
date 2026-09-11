@@ -2626,7 +2626,7 @@
       id: 'PROP-' + Date.now(),
       mode: 'spec', // 'spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice'
       company: 'group',
-      docNo: 'YKN-SRT-1001',
+      docNo: 'YKN-SRT-20260911-01',
       date: new Date().toISOString().split('T')[0],
       validityDays: 30,
       currency: 'TRY',
@@ -2848,26 +2848,16 @@
       invoice: 'YKN-FAT'     // E-Fatura
     };
 
-    function generateDocNoForMode(mode) {
-      const prefix = docPrefixMap[mode] || 'YKN-DOC';
-      let maxNum = 1000;
-
-      if (typeof YakinERP !== 'undefined') {
-        const list = YakinERP.getAllProposals();
-        list.forEach(p => {
-          if (p.docNo && p.docNo.startsWith(prefix + '-')) {
-            const parts = p.docNo.split('-');
-            const lastPart = parts[parts.length - 1];
-            const num = parseInt(lastPart, 10);
-            if (!isNaN(num) && num > maxNum) {
-              maxNum = num;
-            }
-          }
-        });
+    function generateDocNoForMode(mode, targetDate = null) {
+      if (typeof YakinERP !== 'undefined' && typeof YakinERP.getNextDocNo === 'function') {
+        return YakinERP.getNextDocNo(mode, targetDate || appState.date);
       }
-
-      const nextNum = maxNum + 1;
-      return prefix + '-' + nextNum;
+      const prefix = docPrefixMap[mode] || 'YKN-DOC';
+      const d = targetDate ? new Date(targetDate) : new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      return `${prefix}-${yyyy}${mm}${dd}-01`;
     }
 
     // Set Document Mode ('spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice')
