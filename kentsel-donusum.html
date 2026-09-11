@@ -12,7 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.6">
+  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.7">
   <style>
 /* =========================================================================
    MODAL & POPUP DIALOG STYLES (vCard / Modal Mantığı)
@@ -1391,29 +1391,42 @@
           </div>
         </div>
 
-        <!-- Bölüm 4: 2026 Teknik Şartname -->
+        <!-- Bölüm 4: Kat Kat Bağımsız Bölüm & Cephe Dağılım Mimarisi -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
-          <div class="proposal-section-title" style="margin-bottom: 0;">4. 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</div>
-          <span id="prop-spec-segment-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe;">
-            ⭐ Orta / Konfor Plus (Önerilen)
+          <div class="proposal-section-title" style="margin-bottom: 0;">4. 🏢 Kat Kat Bağımsız Bölüm & Cephe Dağılım Mimarisi</div>
+          <span id="prop-floor-summary-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe;">
+            -
           </span>
         </div>
-        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px; margin-bottom: 1.25rem; font-size: 0.75rem; line-height: 1.5;">
-          <div id="prop-technical-specs-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; margin-bottom: 1.25rem;">
+          <div id="prop-floor-schedule-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; font-size: 0.72rem;">
             <!-- JS ile dinamik doldurulur -->
           </div>
         </div>
 
-        <!-- Bölüm 5: Destekler & Hakediş -->
-        <div class="proposal-section-title">5. Devlet Destekleri, Yarısı Bizden & Finansman Hükümleri</div>
+        <!-- Bölüm 5: 2026 Teknik Şartname (Detaylarıyla Birlikte) -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+          <div class="proposal-section-title" style="margin-bottom: 0;">5. 📋 2026 Kurumsal Kentsel Dönüşüm Teknik İmalat Şartnamesi</div>
+          <span id="prop-spec-segment-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe;">
+            ⭐ Orta / Konfor Plus (Önerilen)
+          </span>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px; margin-bottom: 1.25rem;">
+          <div id="prop-technical-specs-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <!-- JS ile detaylarıyla dinamik doldurulur -->
+          </div>
+        </div>
+
+        <!-- Bölüm 6: Destekler & Hakediş -->
+        <div class="proposal-section-title">6. Devlet Destekleri, Yarısı Bizden & Finansman Hükümleri</div>
         <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1rem;">
           <div id="prop-support-text">
             Yükleniyor...
           </div>
         </div>
 
-        <!-- Bölüm 6: Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Tablosu -->
-        <div class="proposal-section-title">6. Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Cetveli</div>
+        <!-- Bölüm 7: Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Tablosu -->
+        <div class="proposal-section-title">7. Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Cetveli</div>
         <div class="table-responsive" style="margin-bottom: 1.25rem;">
           <table class="data-table" id="prop-owner-summary-table" style="font-size: 0.72rem; width: 100%; border-collapse: collapse;">
             <thead>
@@ -1439,8 +1452,8 @@
           </table>
         </div>
 
-        <!-- Bölüm 7: 6306 Hukuki Dayanak & İmzalar -->
-        <div class="proposal-section-title">7. Malik Hakları, 6306 Salt Çoğunluk & Kurumsal Taahhüt</div>
+        <!-- Bölüm 8: 6306 Hukuki Dayanak & İmzalar -->
+        <div class="proposal-section-title">8. Malik Hakları, 6306 Salt Çoğunluk & Kurumsal Taahhüt</div>
         <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 1.5rem;">
           <p>
             İşbu fizibilite ve teklif dosyası; 6306 sayılı Afet Riski Altındaki Alanların Dönüştürülmesi Hakkında Kanun kapsamında maliklerin hisseleri oranında <strong>%50+1 salt çoğunluk</strong> kararı doğrultusunda geçerlidir. Kat karşılığı veya hakediş usulü taahhüt kapsamında maliklerin bağımsız bölüm hakları, SPK lisanslı değerleme raporu, mimari avan proje ve noter onaylı Kat Karşılığı İnşaat Sözleşmesi ile teminat altına alınır.
@@ -2350,7 +2363,45 @@
       const elExSum = document.getElementById('prop-executive-summary');
       if (elExSum) elExSum.innerHTML = exSum;
 
-      // Printable Proposal Technical Specs
+      // Printable Proposal Floor Schedule
+      const propFloorBadge = document.getElementById('prop-floor-summary-badge');
+      if (propFloorBadge) {
+        propFloorBadge.textContent = `Toplam ${res.totalNewSections} Bağımsız Bölüm (${res.existingSummary.totalSections} Malik Payı + ${res.contractorTotalSections} Yüklenici Satış)`;
+      }
+      const propFloorScheduleBox = document.getElementById('prop-floor-schedule-cards');
+      if (propFloorScheduleBox && res.floorSchedule) {
+        propFloorScheduleBox.innerHTML = res.floorSchedule.map(f => {
+          const isZemin = f.floorIndex === 0;
+          return `
+            <div class="prop-floor-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 7px 9px; break-inside: avoid; page-break-inside: avoid;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; border-bottom: 1px solid #f1f5f9; padding-bottom: 3px;">
+                <span style="font-weight: 800; font-size: 0.74rem; color: ${isZemin ? '#b45309' : 'var(--brand-primary)'};">
+                  ${isZemin ? '🏪' : '🏢'} ${f.floorName}
+                </span>
+                <span style="font-size: 0.67rem; font-weight: 700; color: #475569; background: #f8fafc; padding: 1px 6px; border-radius: 3px; border: 1px solid #e2e8f0;">
+                  Tabliye: ${f.slabGrossM2} m² (Net: ${f.slabNetM2} m²)
+                </span>
+              </div>
+              <div style="font-size: 0.69rem; color: #334155; margin-bottom: 4px; font-weight: 600;">
+                ${f.summaryText}
+              </div>
+              ${f.units && f.units.length > 0 ? `
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                  ${f.units.map(u => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.66rem; padding: 2px 6px; border-radius: 3px; background: ${u.isOwner ? '#f0fdf4' : '#fffbeb'}; border: 1px solid ${u.isOwner ? '#bbf7d0' : '#fde68a'};">
+                      <span><strong>D:${u.doorNo}</strong> (${u.type || u.ownerName})</span>
+                      <span style="font-weight: 700; color: #0284c7;">${u.facade || ''}</span>
+                      <span style="font-weight: 800; color: ${u.isOwner ? '#166534' : '#92400e'};">${u.ownerName}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Printable Proposal Technical Specs (Detaylarıyla Birlikte)
       const segBadge = document.getElementById('prop-spec-segment-badge');
       if (segBadge && res.specSegment) {
         segBadge.textContent = res.specSegment.badge;
@@ -2359,9 +2410,17 @@
       const propSpecsList = document.getElementById('prop-technical-specs-list');
       if (propSpecsList && res.technicalSpecs) {
         propSpecsList.innerHTML = res.technicalSpecs.map(spec => `
-          <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
-            <strong style="color: var(--brand-primary);">${spec.icon} ${spec.category}</strong>
-            <div style="color: #475569; font-size: 0.72rem; margin-top: 2px;">${spec.summary}</div>
+          <div class="prop-spec-box" style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 10px; background: #fafbfc; break-inside: avoid; page-break-inside: avoid;">
+            <div style="font-weight: 800; color: var(--brand-primary); font-size: 0.75rem; margin-bottom: 3px; display: flex; align-items: center; gap: 5px;">
+              <span>${spec.icon}</span>
+              <span>${spec.category}</span>
+            </div>
+            <div style="font-size: 0.69rem; color: #1e3a8a; font-weight: 700; margin-bottom: 5px; background: #eff6ff; padding: 2px 6px; border-radius: 4px; border: 1px solid #dbeafe; display: inline-block;">
+              ${spec.summary}
+            </div>
+            <ul style="margin: 0; padding-left: 14px; font-size: 0.67rem; color: #334155; line-height: 1.35;">
+              ${(spec.items || []).map(item => `<li style="margin-bottom: 2px;">${item}</li>`).join('')}
+            </ul>
           </div>
         `).join('');
       }
