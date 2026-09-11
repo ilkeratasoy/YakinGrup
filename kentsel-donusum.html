@@ -12,7 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.7">
+  <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.8">
   <style>
 /* =========================================================================
    MODAL & POPUP DIALOG STYLES (vCard / Modal Mantığı)
@@ -45,6 +45,10 @@
   border: 1px solid #cbd5e1 !important;
   overflow: hidden !important;
   animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+#modal-kd-archive .modal-window {
+  width: 1320px !important;
+  max-width: 96vw !important;
 }
 @keyframes modalFadeIn {
   from { opacity: 0; transform: scale(0.95) translateY(12px); }
@@ -1637,20 +1641,20 @@
         </div>
 
         <!-- Teklif Tablosu -->
-        <div class="table-responsive" style="max-height: 420px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 8px;">
-          <table class="data-table" style="font-size: 0.76rem; width: 100%;">
+        <div class="table-responsive" style="max-height: 440px; overflow-y: auto; overflow-x: auto; border: 1px solid #cbd5e1; border-radius: 8px;">
+          <table class="data-table" style="font-size: 0.76rem; width: 100%; min-width: 1080px;">
             <thead>
               <tr style="background: #f1f5f9; position: sticky; top: 0; z-index: 10;">
-                <th style="width: 32px; text-align: center;">
+                <th style="width: 36px; text-align: center;">
                   <input type="checkbox" id="chk-select-all-proposals" onchange="toggleSelectAllProposals(this.checked)" style="cursor: pointer; width: 15px; height: 15px;">
                 </th>
-                <th>Teklif No & Tarih</th>
-                <th>Proje & Konum</th>
-                <th>İnşaat Alanı / Daire</th>
-                <th>Proje Maliyeti / Hasılat</th>
-                <th>Önerilen Model</th>
-                <th>Durum</th>
-                <th style="text-align: right;">İşlemler</th>
+                <th style="width: 135px;">Teklif No & Tarih</th>
+                <th style="min-width: 180px;">Proje & Konum</th>
+                <th style="width: 130px;">İnşaat Alanı / Daire</th>
+                <th style="width: 145px;">Proje Maliyeti / Hasılat</th>
+                <th style="min-width: 140px;">Önerilen Model</th>
+                <th style="width: 125px;">Durum</th>
+                <th style="width: 240px; min-width: 240px; text-align: right;">İşlemler</th>
               </tr>
             </thead>
             <tbody id="db-archive-table-body">
@@ -3166,11 +3170,11 @@
                 <option value="İptal" ${p.status === 'İptal' ? 'selected' : ''} style="color: #dc2626;">✕ İptal</option>
               </select>
             </td>
-            <td style="text-align: right; white-space: nowrap;">
-              <button class="btn-sm-action primary" onclick="loadProposalFromDB('${p.docNo}')" title="Bu teklifin tüm verilerini stüdyoya yükle">📂 Aç</button>
-              <button class="btn-sm-action" onclick="openEmailProposalModal('${p.docNo}')" title="Bu teklifi e-posta ile gönder" style="color: #0369a1; font-weight: 700; border-color: #bae6fd; background: #f0f9ff;">✉️ Mail</button>
-              <button class="btn-sm-action" onclick="cloneProposalFromDB('${p.docNo}')" title="Teklifi klonla / revizyon oluştur">📋 Klonla</button>
-              <button class="btn-sm-action danger" onclick="deleteProposalFromDB('${p.docNo}', event)" title="Bu teklifi veritabanından kalıcı olarak sil">🗑️ Sil</button>
+            <td style="text-align: right; white-space: nowrap; min-width: 240px;">
+              <button class="btn-sm-action primary" onclick="loadProposalFromDB('${p.docNo}')" title="Bu teklifin tüm verilerini stüdyoya yükle" style="padding: 4px 8px; font-size: 0.72rem;">📂 Aç</button>
+              <button class="btn-sm-action" onclick="openEmailProposalModal('${p.docNo}')" title="Bu teklifi e-posta ile gönder" style="padding: 4px 8px; font-size: 0.72rem; color: #0369a1; font-weight: 700; border-color: #bae6fd; background: #f0f9ff;">✉️ Mail</button>
+              <button class="btn-sm-action" onclick="cloneProposalFromDB('${p.docNo}')" title="Teklifi klonla / revizyon oluştur" style="padding: 4px 8px; font-size: 0.72rem;">📋 Klonla</button>
+              <button class="btn-sm-action danger" onclick="deleteProposalFromDB('${p.docNo}', event)" title="Bu teklifi veritabanından kalıcı olarak sil" style="padding: 4px 8px; font-size: 0.72rem;">🗑️ Sil</button>
             </td>
           </tr>
         `;
