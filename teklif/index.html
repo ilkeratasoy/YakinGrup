@@ -3148,10 +3148,11 @@
         const formattedTotal = formatCurrency(p.grandTotal, p.currency);
         const subjText = p.title ? (p.title.length > 42 ? p.title.substring(0, 42) + '...' : p.title) : '-';
 
+        const rowKey = p.docNo || p.id || '';
         return `
           <tr>
             <td style="text-align:center; width:36px;">
-              <input type="checkbox" class="archive-row-checkbox" value="` + (p.docNo || '') + `" onchange="updateSelectedProposalsToolbar()" style="cursor:pointer; width:16px; height:16px; accent-color:#1d4ed8;">
+              <input type="checkbox" class="archive-row-checkbox" value="` + rowKey + `" data-docno="` + (p.docNo || '') + `" data-id="` + (p.id || '') + `" onchange="updateSelectedProposalsToolbar()" style="cursor:pointer; width:16px; height:16px; accent-color:#1d4ed8;">
             </td>
             <td style="white-space:nowrap;">
               <strong style="font-size:0.88rem; color:#0f172a;">` + (p.docNo || '-') + `</strong>
@@ -3174,7 +3175,7 @@
               <strong style="color:#0f172a; font-size:0.88rem;">` + formattedTotal + `</strong>
             </td>
             <td>
-              <select onchange="YakinERP.updateProposalStatus('` + p.docNo + `', this.value); renderArchiveTable();" style="font-size:0.72rem; padding:4px 6px; border-radius:6px; font-weight:700; border:1px solid #cbd5e1; background:#ffffff;">
+              <select onchange="YakinERP.updateProposalStatus('` + (p.docNo || p.id) + `', this.value); renderArchiveTable();" style="font-size:0.72rem; padding:4px 6px; border-radius:6px; font-weight:700; border:1px solid #cbd5e1; background:#ffffff;">
                 <option value="Taslak" ` + (p.status === 'Taslak' ? 'selected' : '') + `>📝 Taslak</option>
                 <option value="İletildi" ` + (p.status === 'İletildi' ? 'selected' : '') + `>📨 İletildi</option>
                 <option value="Onaylandı" ` + (p.status === 'Onaylandı' ? 'selected' : '') + ` style="color:#15803d; font-weight:800;">✅ Onaylandı</option>
@@ -3183,10 +3184,10 @@
               </select>
             </td>
             <td style="text-align:right; white-space:nowrap;">
-              <button class="btn-sm-action btn-primary-sm" onclick="loadProposalToStudio('` + p.docNo + `')" title="Bu teklifi stüdyoya yükle ve düzenle">📂 Aç</button>
-              <button class="btn-sm-action" onclick="emailProposalDirectFromArchive('` + p.docNo + `')" title="Bu teklifi PDF ekli e-posta ile gönder" style="color:#0284c7; font-weight:700;">✉️ Mail</button>
-              <button class="btn-sm-action" onclick="cloneProposal('` + p.docNo + `')" title="Bu teklifi kopyala / revize et">📋 Klonla</button>
-              <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + p.docNo + `')" title="Veritabanından sil">🗑️</button>
+              <button class="btn-sm-action btn-primary-sm" onclick="loadProposalToStudio('` + (p.docNo || p.id) + `')" title="Bu teklifi stüdyoya yükle ve düzenle">📂 Aç</button>
+              <button class="btn-sm-action" onclick="emailProposalDirectFromArchive('` + (p.docNo || p.id) + `')" title="Bu teklifi PDF ekli e-posta ile gönder" style="color:#0284c7; font-weight:700;">✉️ Mail</button>
+              <button class="btn-sm-action" onclick="cloneProposal('` + (p.docNo || p.id) + `')" title="Bu teklifi kopyala / revize et">📋 Klonla</button>
+              <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + (p.docNo || p.id) + `')" title="Veritabanından sil">🗑️</button>
             </td>
           </tr>
         `;
@@ -3228,26 +3229,33 @@
       const checkedBoxes = document.querySelectorAll('.archive-row-checkbox:checked');
       const docNos = [];
       checkedBoxes.forEach(cb => {
-        if (cb.value) docNos.push(cb.value);
+        if (cb.dataset.docno && !docNos.includes(cb.dataset.docno)) docNos.push(cb.dataset.docno);
+        if (cb.dataset.id && !docNos.includes(cb.dataset.id)) docNos.push(cb.dataset.id);
+        if (cb.value && !docNos.includes(cb.value)) docNos.push(cb.value);
       });
       return docNos;
     }
 
     function deleteSelectedProposals() {
       const docNos = getSelectedProposalDocNos();
-      if (docNos.length === 0) return;
+      const checkedCount = document.querySelectorAll('.archive-row-checkbox:checked').length;
+      if (docNos.length === 0 || checkedCount === 0) return;
 
-      if (!confirm(`Seçilen ${docNos.length} adet belgeyi arşivden ve veritabanından kalıcı olarak silmek istediğinize emin misiniz?`)) return;
+      if (!confirm(`Seçilen ${checkedCount} adet belgeyi arşivden ve veritabanından kalıcı olarak silmek istediğinize emin misiniz?`)) return;
 
       if (typeof YakinERP !== 'undefined') {
-        docNos.forEach(dNo => {
-          YakinERP.deleteProposal(dNo);
-        });
+        if (typeof YakinERP.deleteProposals === 'function') {
+          YakinERP.deleteProposals(docNos);
+        } else {
+          docNos.forEach(dNo => {
+            YakinERP.deleteProposal(dNo);
+          });
+        }
       }
 
       renderArchiveTable();
       updateSelectedProposalsToolbar();
-      showToast(`🗑️ ${docNos.length} adet belge başarıyla silindi.`);
+      showToast(`🗑️ ${checkedCount} adet belge başarıyla silindi.`);
     }
 
     function applyBulkStatusChange() {
@@ -3362,10 +3370,13 @@
     }
 
     function deleteProposalFromArchive(id) {
-      if (!confirm('Bu teklifi arşivden silmek istediğinize emin misiniz?')) return;
-      YakinERP.deleteProposal(id);
+      if (!confirm('Bu belgeyi arşivden ve veritabanından kalıcı olarak silmek istediğinize emin misiniz?')) return;
+      if (typeof YakinERP !== 'undefined') {
+        YakinERP.deleteProposal(id);
+      }
       renderArchiveTable();
-      showToast('Teklif silindi.');
+      updateSelectedProposalsToolbar();
+      showToast('🗑️ Belge veritabanından silindi.');
     }
 
     // 2. Customers Modal

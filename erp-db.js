@@ -11,9 +11,47 @@ const YakinERP = (function () {
   const INVENTORY_KEY = DB_PREFIX + 'inventory';
   const CLOUD_URL_KEY = DB_PREFIX + 'cloud_db_url';
   const LAST_SYNC_KEY = DB_PREFIX + 'last_sync_time';
+  const DELETED_PROPOSALS_KEY = DB_PREFIX + 'deleted_proposals';
+  const DELETED_CUSTOMERS_KEY = DB_PREFIX + 'deleted_customers';
+  const DELETED_INVENTORY_KEY = DB_PREFIX + 'deleted_inventory';
 
   // Default Firebase / Cloud REST DB Endpoint for Yakın Grup
   const DEFAULT_CLOUD_URL = 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_erp.json';
+
+  function getDeletedIds(key) {
+    try {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function addDeletedId(key, ...ids) {
+    const list = getDeletedIds(key);
+    ids.forEach(id => {
+      if (id) {
+        const norm = String(id).trim().toLowerCase();
+        if (norm && !list.includes(norm)) list.push(norm);
+      }
+    });
+    try {
+      localStorage.setItem(key, JSON.stringify(list));
+    } catch (e) {}
+  }
+
+  function removeDeletedId(key, ...ids) {
+    let list = getDeletedIds(key);
+    ids.forEach(id => {
+      if (id) {
+        const norm = String(id).trim().toLowerCase();
+        list = list.filter(x => x !== norm);
+      }
+    });
+    try {
+      localStorage.setItem(key, JSON.stringify(list));
+    } catch (e) {}
+  }
 
     // Preloaded Defaults for Initial State
   const defaultProposals = [
@@ -306,13 +344,21 @@ const YakinERP = (function () {
         const cloudData = await res.json();
         if (cloudData) {
           let hasNew = false;
+          const deletedPropIds = new Set(getDeletedIds(DELETED_PROPOSALS_KEY));
+          const deletedCustIds = new Set(getDeletedIds(DELETED_CUSTOMERS_KEY));
+          const deletedInvIds = new Set(getDeletedIds(DELETED_INVENTORY_KEY));
 
           // Merge Customers
           if (cloudData.customers && Array.isArray(cloudData.customers)) {
             const localCust = getCustomers();
             const mergedCust = [...localCust];
             cloudData.customers.forEach(c => {
-              const idx = mergedCust.findIndex(m => m.id === c.id || (m.company.toLowerCase() === c.company.toLowerCase() && m.taxNumber === c.taxNumber));
+              const cId = c.id ? String(c.id).trim().toLowerCase() : '';
+              const cTax = c.taxNumber ? String(c.taxNumber).trim().toLowerCase() : '';
+              if (deletedCustIds.has(cId) || (cTax && deletedCustIds.has(cTax))) {
+                return; // Do not resurrect deleted customer
+              }
+              const idx = mergedCust.findIndex(m => m.id === c.id || (m.company && c.company && m.company.toLowerCase() === c.company.toLowerCase() && m.taxNumber === c.taxNumber));
               if (idx >= 0) {
                 mergedCust[idx] = Object.assign({}, mergedCust[idx], c);
               } else {
@@ -328,6 +374,11 @@ const YakinERP = (function () {
             const localProp = getAllProposals();
             const mergedProp = [...localProp];
             cloudData.proposals.forEach(p => {
+              const pId = p.id ? String(p.id).trim().toLowerCase() : '';
+              const pDoc = p.docNo ? String(p.docNo).trim().toLowerCase() : '';
+              if (deletedPropIds.has(pId) || deletedPropIds.has(pDoc)) {
+                return; // Do not resurrect deleted proposal
+              }
               const idx = mergedProp.findIndex(m => m.id === p.id || m.docNo === p.docNo);
               if (idx >= 0) {
                 mergedProp[idx] = Object.assign({}, mergedProp[idx], p);
@@ -344,6 +395,11 @@ const YakinERP = (function () {
             const localInv = getInventory();
             const mergedInv = [...localInv];
             cloudData.inventory.forEach(i => {
+              const iId = i.id ? String(i.id).trim().toLowerCase() : '';
+              const iCode = i.code ? String(i.code).trim().toLowerCase() : '';
+              if (deletedInvIds.has(iId) || (iCode && deletedInvIds.has(iCode))) {
+                return; // Do not resurrect deleted inventory item
+              }
               const idx = mergedInv.findIndex(m => m.id === i.id || m.code === i.code);
               if (idx >= 0) {
                 mergedInv[idx] = Object.assign({}, mergedInv[idx], i);
@@ -362,7 +418,7 @@ const YakinERP = (function () {
             window.showToast('☁️ Bulut veritabanı başarıyla eşitlendi!');
           }
 
-          // Push back any local items the cloud might not have
+          // Push back current local state
           pushToCloud();
         }
       }
@@ -380,13 +436,13 @@ const YakinERP = (function () {
   }
 
   function initDB() {
-    if (!localStorage.getItem(CUSTOMERS_KEY)) {
+    if (localStorage.getItem(CUSTOMERS_KEY) === null) {
       setLocal(CUSTOMERS_KEY, defaultCustomers);
     }
-    if (!localStorage.getItem(INVENTORY_KEY)) {
+    if (localStorage.getItem(INVENTORY_KEY) === null) {
       setLocal(INVENTORY_KEY, defaultInventory);
     }
-    if (!localStorage.getItem(PROPOSALS_KEY)) {
+    if (localStorage.getItem(PROPOSALS_KEY) === null) {
       setLocal(PROPOSALS_KEY, defaultProposals);
     }
 
@@ -410,18 +466,34 @@ const YakinERP = (function () {
 
   // --- 1. Customers (Cari Kartlar) Management ---
   function getCustomers() {
-    return getLocal(CUSTOMERS_KEY, defaultCustomers);
+    const raw = localStorage.getItem(CUSTOMERS_KEY);
+    if (raw !== null) {
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    return defaultCustomers;
   }
 
   function getCustomerById(id) {
-    return getCustomers().find(c => c.id === id);
+    if (!id) return null;
+    const target = String(id).trim().toLowerCase();
+    return getCustomers().find(c => {
+      const cId = c.id ? String(c.id).trim().toLowerCase() : '';
+      const cTax = c.taxNumber ? String(c.taxNumber).trim().toLowerCase() : '';
+      return cId === target || cTax === target;
+    });
   }
 
   function saveCustomer(customerData) {
     const list = getCustomers();
     const idx = list.findIndex(c => c.id === customerData.id);
+    const uniqueId = customerData.id || 'cust-' + Date.now();
     const record = {
-      id: customerData.id || 'cust-' + Date.now(),
+      id: uniqueId,
       company: customerData.company || 'Yeni Cari',
       contactName: customerData.contactName || '',
       taxOffice: customerData.taxOffice || '',
@@ -442,19 +514,46 @@ const YakinERP = (function () {
       list.push(record);
     }
 
+    removeDeletedId(DELETED_CUSTOMERS_KEY, uniqueId, record.taxNumber);
     setLocal(CUSTOMERS_KEY, list);
     pushToCloud();
     dispatchSyncEvent();
     return record;
   }
 
-  function deleteCustomer(id) {
+  function deleteCustomers(ids) {
+    if (!Array.isArray(ids) || ids.length === 0) return false;
+    const targetSet = new Set(ids.filter(Boolean).map(x => String(x).trim().toLowerCase()));
+    if (targetSet.size === 0) return false;
+
     let list = getCustomers();
-    list = list.filter(c => c.id !== id);
+    const initialLen = list.length;
+    const deletedTrack = [];
+
+    list = list.filter(c => {
+      const cId = c.id ? String(c.id).trim().toLowerCase() : '';
+      const cTax = c.taxNumber ? String(c.taxNumber).trim().toLowerCase() : '';
+      const isMatch = targetSet.has(cId) || targetSet.has(cTax);
+      if (isMatch) {
+        if (cId) deletedTrack.push(cId);
+        if (cTax) deletedTrack.push(cTax);
+        return false;
+      }
+      return true;
+    });
+
+    targetSet.forEach(t => deletedTrack.push(t));
+    addDeletedId(DELETED_CUSTOMERS_KEY, ...deletedTrack);
+
     setLocal(CUSTOMERS_KEY, list);
     pushToCloud();
     dispatchSyncEvent();
-    return true;
+    return list.length < initialLen;
+  }
+
+  function deleteCustomer(id) {
+    if (!id) return false;
+    return deleteCustomers([id]);
   }
 
   // --- 2. Proposals / Documents Archive ---
@@ -510,11 +609,28 @@ const YakinERP = (function () {
   }
 
   function getAllProposals() {
-    return getLocal(PROPOSALS_KEY, defaultProposals);
+    const raw = localStorage.getItem(PROPOSALS_KEY);
+    if (raw !== null) {
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    return defaultProposals;
   }
 
   function getProposalById(id) {
-    return getAllProposals().find(p => p.id === id || p.docNo === id);
+    if (!id) return null;
+    const target = String(id).trim().toLowerCase();
+    return getAllProposals().find(p => {
+      const pId = p.id ? String(p.id).trim().toLowerCase() : '';
+      const pDoc = p.docNo ? String(p.docNo).trim().toLowerCase() : '';
+      const pFullDoc = (p.fullState && p.fullState.docNo) ? String(p.fullState.docNo).trim().toLowerCase() : '';
+      const pFullId = (p.fullState && p.fullState.id) ? String(p.fullState.id).trim().toLowerCase() : '';
+      return pId === target || pDoc === target || pFullDoc === target || pFullId === target;
+    });
   }
 
   function saveProposal(proposalData, forceNew = false) {
@@ -531,7 +647,13 @@ const YakinERP = (function () {
     // Check if updating existing record
     let existingIdx = -1;
     if (!forceNew) {
-      existingIdx = list.findIndex(p => p.id === proposalData.id || p.docNo === docNo);
+      const checkDoc = docNo.toLowerCase();
+      const checkId = proposalData.id ? String(proposalData.id).toLowerCase() : '';
+      existingIdx = list.findIndex(p => {
+        const pId = p.id ? String(p.id).toLowerCase() : '';
+        const pDoc = p.docNo ? String(p.docNo).toLowerCase() : '';
+        return (checkId && pId === checkId) || (checkDoc && pDoc === checkDoc);
+      });
     }
 
     // Compute accurate grand total from lines
@@ -578,6 +700,7 @@ const YakinERP = (function () {
       list.unshift(record);
     }
 
+    removeDeletedId(DELETED_PROPOSALS_KEY, uniqueId, docNo);
     setLocal(PROPOSALS_KEY, list);
     pushToCloud();
     dispatchSyncEvent();
@@ -585,10 +708,17 @@ const YakinERP = (function () {
   }
 
   function updateProposalStatus(docNo, newStatus) {
+    if (!docNo) return false;
+    const target = String(docNo).trim().toLowerCase();
     const list = getAllProposals();
-    const item = list.find(p => p.docNo === docNo || p.id === docNo);
+    const item = list.find(p => {
+      const pDoc = p.docNo ? String(p.docNo).trim().toLowerCase() : '';
+      const pId = p.id ? String(p.id).trim().toLowerCase() : '';
+      return pDoc === target || pId === target;
+    });
     if (item) {
       item.status = newStatus;
+      if (item.fullState) item.fullState.status = newStatus;
       item.updatedAt = new Date().toISOString();
       setLocal(PROPOSALS_KEY, list);
       pushToCloud();
@@ -598,29 +728,80 @@ const YakinERP = (function () {
     return false;
   }
 
-  function deleteProposal(idOrDocNo) {
+  function deleteProposals(idsOrDocNos) {
+    if (!Array.isArray(idsOrDocNos) || idsOrDocNos.length === 0) return false;
+    const targetSet = new Set(
+      idsOrDocNos
+        .filter(Boolean)
+        .map(x => String(x).trim().toLowerCase())
+    );
+    if (targetSet.size === 0) return false;
+
     let list = getAllProposals();
-    list = list.filter(p => p.id !== idOrDocNo && p.docNo !== idOrDocNo);
+    const initialLen = list.length;
+    const deletedTrack = [];
+
+    list = list.filter(p => {
+      const pId = p.id ? String(p.id).trim().toLowerCase() : '';
+      const pDoc = p.docNo ? String(p.docNo).trim().toLowerCase() : '';
+      const pFullDoc = (p.fullState && p.fullState.docNo) ? String(p.fullState.docNo).trim().toLowerCase() : '';
+      const pFullId = (p.fullState && p.fullState.id) ? String(p.fullState.id).trim().toLowerCase() : '';
+
+      const isMatch = targetSet.has(pId) || targetSet.has(pDoc) || targetSet.has(pFullDoc) || targetSet.has(pFullId);
+      if (isMatch) {
+        if (pId) deletedTrack.push(pId);
+        if (pDoc) deletedTrack.push(pDoc);
+        if (pFullDoc) deletedTrack.push(pFullDoc);
+        if (pFullId) deletedTrack.push(pFullId);
+        return false;
+      }
+      return true;
+    });
+
+    targetSet.forEach(t => deletedTrack.push(t));
+    addDeletedId(DELETED_PROPOSALS_KEY, ...deletedTrack);
+
     setLocal(PROPOSALS_KEY, list);
     pushToCloud();
     dispatchSyncEvent();
-    return true;
+    return list.length < initialLen;
+  }
+
+  function deleteProposal(idOrDocNo) {
+    if (!idOrDocNo) return false;
+    return deleteProposals([idOrDocNo]);
   }
 
   // --- 3. Inventory (Stok Kalemleri) Management ---
   function getInventory() {
-    return getLocal(INVENTORY_KEY, defaultInventory);
+    const raw = localStorage.getItem(INVENTORY_KEY);
+    if (raw !== null) {
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    return defaultInventory;
   }
 
   function getInventoryItemById(id) {
-    return getInventory().find(i => i.id === id || i.code === id);
+    if (!id) return null;
+    const target = String(id).trim().toLowerCase();
+    return getInventory().find(i => {
+      const iId = i.id ? String(i.id).trim().toLowerCase() : '';
+      const iCode = i.code ? String(i.code).trim().toLowerCase() : '';
+      return iId === target || iCode === target;
+    });
   }
 
   function saveInventoryItem(itemData) {
     const list = getInventory();
     const idx = list.findIndex(i => i.id === itemData.id || (itemData.code && i.code === itemData.code));
+    const uniqueId = itemData.id || 'inv-' + Date.now();
     const record = {
-      id: itemData.id || 'inv-' + Date.now(),
+      id: uniqueId,
       code: itemData.code || 'STK-' + Math.floor(100 + Math.random() * 900),
       name: itemData.name || 'Yeni Ürün/Hizmet',
       category: itemData.category || 'Genel',
@@ -641,19 +822,46 @@ const YakinERP = (function () {
       list.push(record);
     }
 
+    removeDeletedId(DELETED_INVENTORY_KEY, uniqueId, record.code);
     setLocal(INVENTORY_KEY, list);
     pushToCloud();
     dispatchSyncEvent();
     return record;
   }
 
-  function deleteInventoryItem(id) {
+  function deleteInventoryItems(ids) {
+    if (!Array.isArray(ids) || ids.length === 0) return false;
+    const targetSet = new Set(ids.filter(Boolean).map(x => String(x).trim().toLowerCase()));
+    if (targetSet.size === 0) return false;
+
     let list = getInventory();
-    list = list.filter(i => i.id !== id);
+    const initialLen = list.length;
+    const deletedTrack = [];
+
+    list = list.filter(i => {
+      const iId = i.id ? String(i.id).trim().toLowerCase() : '';
+      const iCode = i.code ? String(i.code).trim().toLowerCase() : '';
+      const isMatch = targetSet.has(iId) || targetSet.has(iCode);
+      if (isMatch) {
+        if (iId) deletedTrack.push(iId);
+        if (iCode) deletedTrack.push(iCode);
+        return false;
+      }
+      return true;
+    });
+
+    targetSet.forEach(t => deletedTrack.push(t));
+    addDeletedId(DELETED_INVENTORY_KEY, ...deletedTrack);
+
     setLocal(INVENTORY_KEY, list);
     pushToCloud();
     dispatchSyncEvent();
-    return true;
+    return list.length < initialLen;
+  }
+
+  function deleteInventoryItem(id) {
+    if (!id) return false;
+    return deleteInventoryItems([id]);
   }
 
   // --- 4. Export & Import JSON Backup ---
@@ -712,16 +920,19 @@ const YakinERP = (function () {
     getCustomerById,
     saveCustomer,
     deleteCustomer,
+    deleteCustomers,
     getAllProposals,
     getProposalById,
     getNextDocNo,
     saveProposal,
     updateProposalStatus,
     deleteProposal,
+    deleteProposals,
     getInventory,
     getInventoryItemById,
     saveInventoryItem,
     deleteInventoryItem,
+    deleteInventoryItems,
     saveDraft,
     loadDraft,
     clearDraft,
