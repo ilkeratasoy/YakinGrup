@@ -1551,7 +1551,8 @@
     </a>
 
     <div class="header-actions">
-      <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 800; background: rgba(29,78,216,0.08);" onclick="openArchiveModal()" title="Aktif teklifi kaydet, arşive ekle veya kayıtlı teklifleri yönet">📁 Kaydet & Arşiv</button>
+      <button class="btn btn-outline" style="border-color: #15803d; color: #15803d; font-weight: 800; background: rgba(21,128,61,0.08);" onclick="quickSaveActiveProposal()" title="Aktif teklifi anında veritabanına ve buluta kaydet">💾 Kaydet</button>
+      <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 800; background: rgba(29,78,216,0.08);" onclick="openArchiveModal()" title="Kayıtlı tüm teklifleri ve arşivi görüntüle">📁 Teklif Arşivi</button>
       <button class="btn btn-outline" style="border-color: #b45309; color: #b45309; font-weight: 700; background: rgba(180,83,9,0.06);" onclick="openCustomersModal()">👥 Cari & Alacak</button>
       <button class="btn btn-outline" style="border-color: #4338ca; color: #4338ca; font-weight: 700; background: rgba(67,56,202,0.06);" onclick="openInventoryModal()">📦 Stok Takibi</button>
       <button class="btn btn-outline" style="border-color: #475569; color: #475569;" onclick="openBackupModal()" title="Veritabanı İçe/Dışa Aktar">⚙️ DB</button>
@@ -3070,6 +3071,26 @@
       renderApp();
       closeModal('modal-archive');
       showToast('✨ Yeni boş teklif oluşturuldu: ' + appState.docNo);
+    }
+
+    
+    // Direct 1-Click Quick Save Active Proposal
+    function quickSaveActiveProposal() {
+      if (typeof YakinERP === 'undefined') return;
+
+      let sub = 0;
+      if (Array.isArray(appState.items)) {
+        appState.items.forEach(it => {
+          sub += (parseFloat(it.qty) || 0) * (parseFloat(it.price) || 0);
+        });
+      }
+      const disc = sub * ((parseFloat(appState.discountRate) || 0) / 100);
+      const net = sub - disc;
+      const vat = net * ((parseFloat(appState.vatRate) || 0) / 100);
+      appState.grandTotal = net + vat;
+
+      const saved = YakinERP.saveProposal(appState);
+      showToast('💾 "' + (saved.docNo || 'Teklif') + '" veritabanına ve buluta başarıyla kaydedildi!');
     }
 
     function saveCurrentToArchive() {
