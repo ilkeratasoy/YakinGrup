@@ -1507,7 +1507,7 @@ body {
   body.print-scale-90 { zoom: 90% !important; }
   body.print-scale-100 { zoom: 100% !important; }
 
-  /* Hide navigation, toolbars, buttons */
+  /* Hide navigation, toolbars, buttons, modals, toasts */
   .engine-header,
   .stepper-nav,
   .preset-bar,
@@ -1515,6 +1515,10 @@ body {
   .stage-print-bar,
   .print-dropdown,
   .no-print,
+  .modal-overlay,
+  .modal-overlay.active,
+  .modal-window,
+  .toast-notification,
   button,
   .btn,
   .form-select.print-scale-select {
@@ -1637,12 +1641,17 @@ body {
     page-break-inside: avoid !important;
   }
 
-  /* 3D Görselleri Baskıda Sayfaya Sığdırma */
+  /* 3D Görselleri & Kat Planlarını Baskıda Sayfaya Sığdırma */
   #prop-img-exterior,
   #prop-img-interior {
-    height: 130px !important;
-    max-height: 130px !important;
+    height: 140px !important;
+    max-height: 140px !important;
     object-fit: cover !important;
+  }
+
+  .prop-render-grid > div > div:first-child {
+    height: 140px !important;
+    max-height: 140px !important;
   }
 
   /* Kat Kat Dağılım Çizelgesi Baskı Formatı */

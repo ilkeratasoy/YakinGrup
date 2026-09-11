@@ -33,6 +33,14 @@
 .modal-overlay.active {
   display: flex !important;
 }
+@media print {
+  .modal-overlay,
+  .modal-overlay.active,
+  .modal-window,
+  .toast-notification {
+    display: none !important;
+  }
+}
 .modal-window {
   background: #ffffff !important;
   border-radius: 16px !important;
@@ -1379,6 +1387,9 @@
             <div style="font-size: 0.75rem; color: var(--text-muted);">
               Doküman No: <span id="prop-doc-no">YG-KD-2026/09</span> • Tarih: <span id="prop-date">11.09.2026</span>
             </div>
+            <div style="font-size: 0.68rem; color: #15803d; font-weight: 700; margin-top: 3px; display: inline-flex; align-items: center; gap: 4px; background: #f0fdf4; padding: 2px 8px; border-radius: 4px; border: 1px solid #bbf7d0;">
+              ✓ Kat Planları &bull; Kat Dağılım Mimarisi &bull; 2026 Teknik Şartname &bull; Malik Tahsis Cetveli dahildir
+            </div>
           </div>
         </div>
 
@@ -1429,17 +1440,23 @@
         </div>
 
         <!-- Bölüm 3: Mimari 3D Render & Tipik Kat Planı -->
-        <div class="proposal-section-title">3. Mimari Görselleştirme & Tipik Daire Yerleşim Planı</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem;">
-          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #fff;">
-            <img id="prop-img-exterior" src="assets/images/proje-bina-render.jpg" alt="3D Mimari Dış Cephe Renderı" style="width: 100%; height: 210px; object-fit: cover; display: block;">
-            <div id="prop-lbl-exterior" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center; border-top: 1px solid #f1f5f9;">
+        <div class="proposal-section-title">3. 🏢 Kat Planları, 3D Mimari Renderlar & İç Mekan Mimarisi</div>
+        <div class="prop-render-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; break-inside: avoid; page-break-inside: avoid;">
+          <div style="border: 1.5px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #fff;">
+            <div style="position: relative; height: 210px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img id="prop-img-exterior" src="assets/images/proje-bina-render.jpg" alt="3D Mimari Dış Cephe Renderı" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <span style="position: absolute; top: 6px; left: 6px; background: rgba(15,23,42,0.88); color: #f8fafc; font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(4px);">🏢 3D Mimari Dış Cephe</span>
+            </div>
+            <div id="prop-lbl-exterior" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center; border-top: 1px solid #e2e8f0;">
               Proje 3D Dış Cephe & Mimari Konsept Görseli
             </div>
           </div>
-          <div style="border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #fff;">
-            <img id="prop-img-interior" src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Kat Planı / İç Mekan" style="width: 100%; height: 210px; object-fit: cover; display: block;">
-            <div id="prop-lbl-interior" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center; border-top: 1px solid #f1f5f9;">
+          <div style="border: 1.5px solid #cbd5e1; border-radius: 6px; overflow: hidden; background: #fff;">
+            <div style="position: relative; height: 210px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img id="prop-img-interior" src="assets/images/tipik-daire-plani.jpg" alt="Tipik Daire Kat Planı / İç Mekan" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <span style="position: absolute; top: 6px; left: 6px; background: rgba(15,23,42,0.88); color: #f8fafc; font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(4px);">📐 Tipik Kat / Daire Yerleşim Planı</span>
+            </div>
+            <div id="prop-lbl-interior" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 700; background: #f8fafc; color: #334155; text-align: center; border-top: 1px solid #e2e8f0;">
               Tipik Kat 3+1 / 2+1 Mimari İç Yerleşim Planı
             </div>
           </div>
@@ -2105,13 +2122,24 @@
       const dd = document.getElementById('header-print-dropdown');
       if (dd) dd.classList.remove('show');
 
+      if (!window._origDocTitle) {
+        window._origDocTitle = document.title;
+      }
+      const curDocNo = window.KDEngine?.state?.docNo || '2026';
+
       if (mode === 'all') {
+        document.title = `YakinGrup_Kentsel_Donusum_Tam_Fizibilite_${curDocNo}`;
         document.body.classList.add('print-mode-all');
         document.querySelectorAll('.stage-view').forEach(s => {
           s.classList.add('force-print-show');
         });
       } else {
         const target = (mode >= 1 && mode <= 4) ? mode : currentStage;
+        if (target === 4 || target === '4') {
+          document.title = `YakinGrup_Resmi_Teklif_${curDocNo}`;
+        } else {
+          document.title = `YakinGrup_Kentsel_Donusum_Sayfa_${target}_${curDocNo}`;
+        }
         document.body.classList.add(`print-mode-${target}`);
         const targetEl = document.getElementById(`stage${target}`);
         if (targetEl) targetEl.classList.add('force-print-show');
@@ -2123,13 +2151,16 @@
       // Yazdırma penceresini aç
       setTimeout(() => {
         window.print();
-      }, 100);
+      }, 120);
     }
 
     function cleanupPrintMode() {
       document.body.classList.remove('print-mode-1', 'print-mode-2', 'print-mode-3', 'print-mode-4', 'print-mode-all');
       document.body.classList.remove('print-scale-70', 'print-scale-75', 'print-scale-80', 'print-scale-85', 'print-scale-90', 'print-scale-100');
       document.querySelectorAll('.stage-view').forEach(s => s.classList.remove('force-print-show'));
+      if (window._origDocTitle) {
+        document.title = window._origDocTitle;
+      }
       switchStage(currentStage);
     }
 
@@ -2678,6 +2709,18 @@
 
       const ygDateEl = document.getElementById('yg-sign-date-label');
       if (ygDateEl) ygDateEl.textContent = `Tarih: ${finalDate}`;
+
+      // Proposal Kat Planları & 3D Render Görselleri Senkronizasyonu
+      const extPrev = document.getElementById('img-exterior-preview');
+      const propExt = document.getElementById('prop-img-exterior');
+      if (extPrev && propExt && extPrev.src) {
+        propExt.src = extPrev.src;
+      }
+      const intPrev = document.getElementById('img-interior-preview');
+      const propInt = document.getElementById('prop-img-interior');
+      if (intPrev && propInt && intPrev.src) {
+        propInt.src = intPrev.src;
+      }
 
       // Stage 1 (Section A) Bağımsız Bölüm Bazında Mevcut Net Metraj Cetveli
       const existingTbody = document.getElementById('existing-units-schedule-body');
@@ -3543,7 +3586,7 @@ Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
         alertBox.style.background = '#f0fdf4';
         alertBox.style.color = '#166534';
         alertBox.style.border = '1px solid #86efac';
-        alertBox.innerHTML = `📄 <strong>[${currentEmailProposalDocNo}]</strong> Resmi Teklif PDF çıktısı hazırlanıyor. Açılan pencerede "PDF Olarak Kaydet" seçeneğiyle belgenizi kaydedebilir ve e-postanıza ekleyebilirsiniz.`;
+        alertBox.innerHTML = `📄 <strong>[${currentEmailProposalDocNo}]</strong> Resmi Teklif PDF çıktısı hazırlanıyor: <em>✓ Kat Planları • Kat Dağılım Mimarisi • 2026 Teknik Şartname • Malik Tahsis Cetveli</em> dahildir. Açılan yazdırma ekranında "PDF Olarak Kaydet" seçeneğiyle belgenizi kaydedebilir ve e-postanıza ekleyebilirsiniz.`;
       }
     }
 
