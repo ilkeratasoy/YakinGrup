@@ -3737,22 +3737,7 @@
       reader.readAsText(file);
     }
 
-    // --- Draft Auto-Save & Manual Save ---
-    function manualSaveDraft() {
-      if (typeof YakinERP === 'undefined') return;
-      YakinERP.saveDraft(appState);
-      showToast('💾 Taslak başarıyla kaydedildi!');
-    }
-
-    let autoSaveTimeout = null;
-    function triggerAutoSaveDraft() {
-      if (typeof YakinERP === 'undefined') return;
-      clearTimeout(autoSaveTimeout);
-      autoSaveTimeout = setTimeout(() => {
-        YakinERP.saveDraft(appState);
-      }, 1000);
-    }
-
+    // --- Form Controls Sync Helper ---
     function syncFormControlsFromState() {
       const map = {
         'inp-doc-no': appState.docNo,
@@ -4448,9 +4433,6 @@
           sigImg.style.display = 'none';
         }
       }
-
-      // Trigger automatic background draft save
-      triggerAutoSaveDraft();
     }
 
     // Payment Preset Helper
@@ -4679,10 +4661,13 @@
         mailtoUrl += '&cc=' + encodeURIComponent(cc);
       }
 
-      // Mark proposal as Sent in database
+      // If proposal is already saved in database, mark status as Sent
       if (typeof YakinERP !== 'undefined' && appState.docNo) {
-        appState.status = 'İletildi';
-        YakinERP.saveProposal(appState);
+        const existing = YakinERP.getProposalById(appState.docNo) || YakinERP.getProposalById(appState.id);
+        if (existing) {
+          appState.status = 'İletildi';
+          YakinERP.updateProposalStatus(appState.docNo, 'İletildi');
+        }
       }
 
       // Open email client
@@ -4843,13 +4828,6 @@
     // Initialize on Load
     document.addEventListener('DOMContentLoaded', () => {
       checkStudioAuth();
-      // Check if draft exists
-      if (typeof YakinERP !== 'undefined') {
-        const draft = YakinERP.loadDraft();
-        if (draft && draft.state) {
-          Object.assign(appState, draft.state);
-        }
-      }
 
       document.getElementById('inp-doc-date').value = appState.date;
       if (document.getElementById('inp-product-specs')) {

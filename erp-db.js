@@ -898,15 +898,32 @@ const YakinERP = (function () {
     }
   }
 
+  const TEMP_DRAFT_KEY = DB_PREFIX + 'temp_draft';
+
   function saveDraft(stateData) {
-    return saveProposal(Object.assign({}, stateData, { status: 'Taslak' }));
+    if (!stateData) return null;
+    try {
+      localStorage.setItem(TEMP_DRAFT_KEY, JSON.stringify(stateData));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   function loadDraft() {
-    return null;
+    try {
+      const data = localStorage.getItem(TEMP_DRAFT_KEY);
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
+    }
   }
 
-  function clearDraft() {}
+  function clearDraft() {
+    try {
+      localStorage.removeItem(TEMP_DRAFT_KEY);
+    } catch (e) {}
+  }
 
   initDB();
 
