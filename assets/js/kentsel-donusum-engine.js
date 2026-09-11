@@ -213,12 +213,13 @@ const TECHNICAL_SPECIFICATIONS_SEGMENTS = {
       ]
     },
     {
-      category: "5. Isıtma & Mekanik Altyapı",
+      category: "5. Isıtma, Mekanik Altyapı & İçme Suyu Arıtma",
       icon: "❄️",
-      summary: "Kombili Panel Radyatör veya Standart Yerden Isıtma, Klima Boru Altyapısı",
+      summary: "Kombili Panel Radyatör veya Yerden Isıtma, Daire İçi Ters Osmoz İçme Suyu Arıtması, Klima Altyapısı",
       items: [
         "Isıtma Sistemi: Daire içi tam yoğuşmalı kombi veya merkezi pay ölçerli panel radyatör / standart yerden ısıtma borulama sistemi.",
         "Klima Altyapısı: Salon bölgesinde split klima montajına uygun hazır bakır boru ve drenaj hattı tesisatı.",
+        "Şebeke Suyunu İçilebilir Düzeyde Arıtma: Daire mutfak tezgahı altına entegre edilen, TSE ve NSF sertifikalı 5 aşamalı ters osmoz (Reverse Osmosis) içme suyu arıtma cihazı ve paslanmaz çelik kuğu içme suyu bataryası; şebeke suyunu tortu, klor ve kireçten arındırarak doğrudan musluktan içilebilir kaynak suyu kalitesi.",
         "Temiz ve Atık Su Tesisatı: TSE belgeli PPRC kompozit temiz su boruları ve standart PVC atık su borulama sistemi.",
         "Su Deposu & Hidrofor: Olası su kesintilerine karşı ortak paslanmaz çelik modüler su deposu ve otomatik hidrofor grubu."
       ]
@@ -232,6 +233,18 @@ const TECHNICAL_SPECIFICATIONS_SEGMENTS = {
         "Elektrik Altyapısı: Viko / Panasonic otomatik sigorta panosu, kaçak akım koruma rölesi ve TSE standartlı yangına dayanıklı kablolama.",
         "Asansör: TSE standartlarında 8 kişilik, frekans kontrollü, çift hızlı, acil kat kurtarıcılı standart kabinli asansör.",
         "Ortak Alanlar: Hidrofor, asansör ve merdiven aydınlatmasını besleyen standart ortak alan jeneratörü ve çevre aydınlatmaları."
+      ]
+    },
+    {
+      category: "7. 2026 Yönetmelik Uyumlu Çatı GES, EV Şarj & İçme Suyu Arıtma (2000 m²)",
+      icon: "☀️",
+      summary: "2000 m² Üzeri NSEB Çatı GES (Ortak Alan Elektrik Karşılama), Hane Sayacına Bağlı EV Şarj Altyapısı & Ters Osmoz Su Arıtma",
+      items: [
+        "2000 m² ve Üzeri Yönetmelik Gereği Çatı GES: Binalarda Enerji Performansı (BEP) ve NSEB (Neredeyse Sıfır Enerjili Binalar) 2026 mevzuatı uyarınca, toplam inşaat alanı 2.000 m² ve üzeri yapılarda bina çatısında kurulacak fotovoltaik güneş panelleri (GES) ve on-grid inverter sistemi.",
+        "Ortak Alan Enerji İhtiyacının Karşılanması: Çatıda üretilen güneş elektriği ile bina asansörü, hidrofor grubu, merdiven ve çevre aydınlatması gibi tüm ortak alan tüketimlerinin karşılanması; çift yönlü sayaç ile mahsuplaşarak bina aidat yükünün minimize edilmesi.",
+        "Elektrikli Araç (EV) Şarj İstasyonu: Otopark bölgesinde elektrikli araçların şarj edilebilmesi için yönetmelik standartlarında yangına dayanıklı kablo tavası, Tip-2 soket uyumlu şarj altyapı hazırlığı ve enerji besleme panosu.",
+        "Hane Sayacından Bireysel Faturalandırma: Ortak alan elektriğinden çekilmeden, her araç şarj noktasının doğrudan ilgili bağımsız bölümün ana hane sayacına veya MID sertifikalı süzme sayaca irtibatlandırılması; böylece şarj bedelinin doğrudan ilgili dairenin kendi faturasına adil ve bağımsız olarak yansıtılması.",
+        "Şebeke Suyunu İçme Suyu Olarak Arıtma: Bina ana girişinde kum-tortu tutucu filtre grubu ve daire mutfaklarında NSF onaylı mineral zenginleştiricili tezgah altı ters osmoz içme suyu arıtma ünitesi ile damacana ihtiyacını bitiren doğrudan musluktan içilebilir su temini."
       ]
     }
   ],
@@ -285,10 +298,11 @@ const TECHNICAL_SPECIFICATIONS_SEGMENTS = {
     {
       category: "5. Isıtma, Soğutma & Mekanik Altyapı",
       icon: "❄️",
-      summary: "Rehau/Danfoss Pay Ölçerli Yerden Isıtma, Multi-Inverter Klima, Sessiz Tesisat",
+      summary: "Rehau/Danfoss Pay Ölçerli Yerden Isıtma, Multi-Inverter Klima, Merkezi Su Yumuşatma & İçme Arıtması",
       items: [
         "Isıtma Sistemi: Rehau / Danfoss oksijen bariyerli borularla döşenen, her odası bağımsız dijital termostat kontrollü pay ölçerli yerden ısıtma sistemi.",
         "İklimlendirme: Salon ve ebeveyn yatak odasında multi-inverter A+++ klima bakır borulama, drenaj ve elektrik altyapısı.",
+        "Şebeke Suyunu İçilebilir Düzeyde Arıtma: Bina ana girişinde kireç önleyici otomatik su yumuşatma ünitesi + daire mutfaklarında Franke/Vitra uyumlu 6 aşamalı ters osmoz alkali içme suyu arıtma teknolojisi ile musluktan 7/24 içilebilir su temini.",
         "Sıhhi Tesisat: Fırat/Pimapen sessiz atık su boruları, merkezi paslanmaz çelik su deposu, frekans kontrollü hidrofor ve merkezi filtreleme ünitesi.",
         "Yangın Güvenliği: Kapalı otoparkta ve bina kat hollerinde otomatik yangın sprinkler söndürme, duman tahliye ve yangın dolabı tesisatı."
       ]
@@ -296,13 +310,25 @@ const TECHNICAL_SPECIFICATIONS_SEGMENTS = {
     {
       category: "6. Akıllı Ev, Elektrik & Ortak Alanlar",
       icon: "⚡",
-      summary: "KNX Akıllı Ev, KONE Asansör, EV Şarj İstasyonu, 7/24 CCTV & Jeneratör",
+      summary: "KNX Akıllı Ev, KONE Asansör, Hane Sayacına Bağlı EV Şarjı, 7/24 CCTV & Jeneratör",
       items: [
         "Akıllı Ev Sistemi: Aydınlatma, motorlu panjurlar, su vanası ve yerden ısıtmayı cep telefonundan uzaktan kontrol eden KNX akıllı ev altyapısı.",
         "Elektrik Ekipmanı: Schneider / Siemens otomatik sigortalar, kaçak akım koruma röleleri, halogen-free alev iletmez kablolama ve prizler.",
         "İnterkom & Güvenlik: Daire içi 10 inç dokunmatik IP görüntülü diafon, fiber optik internet altyapısı, bina çevresi ve otoparkta 7/24 HD CCTV kamera izleme.",
         "Asansör: KONE / Otis marka çift hızlı, 10 kişilik, frekans kontrollü, acil kurtarma sistemli, paslanmaz lüks kabinli tam otomatik asansör.",
-        "Otopark & Enerji: Kapalı otoparkta her daireye tahsisli 1 araçlık park yeri ve elektrikli araç (EV) AC hızlı şarj altyapısı; ortak alanları ve daireleri besleyen tam güç otomatik jeneratör."
+        "Otopark & Enerji: Kapalı otoparkta her daireye tahsisli 1 araçlık park yeri ve bağımsız hane elektrik sayacına irtibatlı AC hızlı şarj altyapısı; ortak alanları ve daireleri besleyen tam güç otomatik jeneratör."
+      ]
+    },
+    {
+      category: "7. 2026 NSEB Yönetmelik Uyumlu Çatı GES, Akıllı EV Şarj & İçme Suyu Arıtma (2000 m²)",
+      icon: "☀️",
+      summary: "Yüksek Verimli Monokristal Çatı GES (Ortak Alan Elektrik Üretimi), Bağımsız Hane Sayacına Bağlı 11-22 kW EV Şarjı, Merkezi Yumuşatma & Mutfak Arıtması",
+      items: [
+        "2000 m² ve Üzeri NSEB Güneş Enerjisi (GES) Sistemi: 2026 Binalarda Enerji Performansı ve 2.000 m² üzeri binalarda zorunlu NSEB (Neredeyse Sıfır Enerjili Bina) yönetmeliği kapsamında, bina çatısında yüksek verimli Half-Cut monokristal fotovoltaik güneş panelleri ve akıllı hibrit inverter santrali.",
+        "Ortak Alan Tüketimlerinin Karşılanması & Sıfır Aidat Hedefi: Üretilen güneş elektriği ile KONE asansörler, frekans kontrollü hidrofor, otopark havalandırma fanları, sığınak ve çevre LED aydınlatmalarının kesintisiz beslenmesi; çift yönlü net-ölçüm (net-metering) ile ortak elektrik faturalarında %70-90 tasarruf.",
+        "Kapalı Otopark Akıllı EV Şarj İstasyonu: Kapalı otoparkta her daireye tahsisli park yerinde 11 kW / 22 kW AC Type-2 akıllı Wallbox elektrikli araç şarj istasyonu montajı ve dinamik yük dengeleme panosu.",
+        "Hane Sayacından Doğrudan Bireysel Faturalandırma: Her EV şarj istasyonunun besleme hattının doğrudan ilgili dairenin ana elektrik panosu ve bağımsız hane sayacına bağlanması; araç şarj bedelinin doğrudan malikin kendi elektrik faturasına yansıtılarak bina yönetiminden bağımsız, adil ve ihtilafsız ölçümleme sağlanması.",
+        "Şebeke Suyunu İçme Suyu Olarak Arıtma Sistemi: Bina ana girişinde merkezi tortu/karbon filtreleme ve otomatik kireç kırıcı yumuşatma istasyonu; mutfaklarda ise tezgah altı 6 aşamalı mineralize ters osmoz içme suyu arıtma teknolojisi ile pet şişe ve damacana ihtiyacını tamamen ortadan kaldıran şebeke suyu arıtımı."
       ]
     }
   ],
@@ -355,26 +381,38 @@ const TECHNICAL_SPECIFICATIONS_SEGMENTS = {
     {
       category: "5. Bağımsız VRV/VRF İklimlendirme & Taze Hava Santrali",
       icon: "❄️",
-      summary: "DAIKIN/Mitsubishi Bağımsız VRF Gizli Tavan Tipi İklimlendirme, Taze Hava Santrali, Rehau Akıllı Yerden Isıtma",
+      summary: "DAIKIN/Mitsubishi Bağımsız VRF Gizli Tavan Tipi İklimlendirme, Taze Hava Santrali, Rehau Yerden Isıtma & Ultra Su Arıtması",
       items: [
         "Merkezi İklimlendirme: DAIKIN / Mitsubishi Electric marka, her oda için bağımsız sıcaklık kontrolü sağlayan gizli tavan tipi kanallı VRV/VRF ısıtma ve soğutma sistemi.",
         "Taze Hava ve Havalandırma: Isı geri kazanımlı taze hava santrali (VAM ünitesi) ile pencereler açılmadan sürekli filtrelenmiş %100 taze hava beslemesi ve partikül filtreleme.",
         "Yerden Isıtma: Rehau akıllı sensörlü yerden ısıtma borulama sistemi, her hacimde dijital cam dokunmatik oda termostatları ile hassas sıcaklık yönetimi.",
-        "Sıhhi Tesisat & Arıtma: Geberit Silent-PP ultra sessiz atık su boruları, bina ana girişinde kireç kırıcı su yumuşatma ve UV dezenfeksiyonlu merkezi su filtreleme istasyonu."
+        "Sıhhi Tesisat & Ultra Arıtma: Geberit Silent-PP ultra sessiz atık su boruları, bina ana girişinde kireç kırıcı su yumuşatma ve UV-C dezenfeksiyonlu merkezi su filtreleme; daire mutfaklarında doğrudan şebeke suyunu mineralli kaynak suyu değerlerine getiren entegre ters osmoz ve ozonlu arıtma sistemi."
       ]
     },
     {
       category: "6. Tam Kapsamlı IoT Otomasyon & Ultra Lüks Tesis",
       icon: "⚡",
-      summary: "Crestron/Control4 IoT Akıllı Otomasyon, Schindler 2.5 m/s Panoramik Asansör, 22kW Bağımsız EV Şarjı, 7/24 Concierge",
+      summary: "Crestron/Control4 IoT Akıllı Otomasyon, Schindler 2.5 m/s Panoramik Asansör, Hane Sayacı Entegreli 22kW EV Şarjı, 7/24 Concierge",
       items: [
         "Akıllı Ev Otomasyonu: Crestron / Control4 / KNX tabanlı tam entegre IoT otomasyon (aydınlatma senaryoları, perde/panjur, VRF klima, müzik yayını, su/gaz kaçak dedektörleri ve uzaktan erişim).",
         "Dikey Ulaşım: Schindler / Otis marka 2.5 m/s ultra hızlı, panoramik cam/lüks deri kaplamalı, kartlı kat yetkilendirmeli çift asansör sistemi.",
-        "Yeşil Enerji & EV Şarjı: Kapalı otoparkta her daireye tahsisli 2 araçlık park yeri ve bağımsız 22 kW AC Type-2 hızlı elektrikli araç şarj istasyonu.",
+        "Yeşil Enerji & EV Şarjı: Kapalı otoparkta her daireye tahsisli 2 araçlık park yeri ve doğrudan dairenin bağımsız hane sayacına bağlı 22 kW AC Type-2 hızlı elektrikli araç şarj istasyonu.",
         "Kesintisiz Enerji & Güvenlik: Bina ve tüm dairelerin elektrik ihtiyacını kesintisiz %100 karşılayan ses yalıtımlı jeneratör; yapay zeka destekli 7/24 çevre güvenlik kameraları ve concierge danışma desk altyapısı."
       ]
+    },
+    {
+      category: "7. 2026 Çatı GES (Yeşil Enerji), 22 kW Bağımsız EV Şarjı & Ultra Arıtma İstasyonu (2000 m²)",
+      icon: "☀️",
+      summary: "2000 m² Üzeri NSEB Çift Yönlü Güneş Enerjisi (GES), Her Daireye Bağımsız Hane Sayacı Entegreli 22 kW Hızlı EV Şarjı, Endüstriyel UV-C & Ters Osmoz İçilebilir Su Arıtımı",
+      items: [
+        "2000 m² ve Üzeri NSEB Yönetmelik Tam Uyumlu Çatı GES Santrali: Binalarda Enerji Performansı Yönetmeliği'nin 2.000 m² üzeri yapılar için getirdiği NSEB (Neredeyse Sıfır Enerjili Binalar) standartlarına %100 uyumlu, çatı terasında aerodinamik montajlı Tier-1 sınıfı çift yüzeyli (Bifacial) monokristal fotovoltaik GES santrali ve yapay zeka destekli akıllı mikro-inverter altyapısı.",
+        "Ortak Alan & Tesis Enerjisinin Yeşil Güneşten Karşılanması: Üretilen temiz güneş elektriği ile Schindler yüksek hızlı asansörler, VRF taze hava klima santralleri, hidrofor, concierge, sığınak ve tüm çevre/mimari cephe aydınlatmalarının %100 yeşil enerjiden beslenmesi; şebekeye enerji satışı ve mahsuplaşma ile ortak alan elektrik giderlerinin sıfırlanması.",
+        "Bağımsız 22 kW AC / DC Hızlı EV Şarj İstasyonu: Kapalı otoparkta her bağımsız bölümün mülkiyetindeki 2 araçlık park alanında kurulu, RFID kart ve akıllı telefon uygulamasıyla yetkilendirilen bağımsız 22 kW AC Type-2 hızlı şarj istasyonu (Wallbox).",
+        "Daire Hane Sayacı & IoT Faturalandırma Entegrasyonu: Şarj tüketiminin doğrudan dairenin kendi sayaç panosu ve bağımsız hane sayacına entegre edilmesi; Crestron/Control4 akıllı ev ekranından tüketim kWh, anlık şarj durumu ve maliyet analizinin canlı takibi ile komşular arası ortak fatura ihtilaflarını tamamen önleyen bireysel faturalandırma.",
+        "Endüstriyel UV-C Dezenfeksiyon & İçilebilir Mutfak Suyu İstasyonu: Bina ana girişinde 3 kademeli tortu/karbon filtrasyon, kireç sıfırlayıcı tam otomatik tuzlu yumuşatma ve UV-C ultraviyole mikrobiyolojik dezenfeksiyon; daire mutfaklarında ise doğrudan şebeke suyunu mineralli kaynak suyu değerlerine dönüştüren entegre ters osmoz ve ozonlama arıtma ünitesi."
+      ]
     }
-  ]
+  ],
 };
 
 const TECHNICAL_SPECIFICATIONS_2026 = TECHNICAL_SPECIFICATIONS_SEGMENTS.orta;

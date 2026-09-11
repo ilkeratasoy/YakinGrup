@@ -2452,7 +2452,7 @@
               ${spec.summary}
             </div>
             <ul style="margin: 0; padding-left: 14px; font-size: 0.68rem; color: #334155; line-height: 1.4;">
-              ${spec.items.slice(0, 2).map(item => `<li>${item}</li>`).join('')}
+              ${(spec.items || []).map(item => `<li>${item}</li>`).join('')}
             </ul>
           </div>
         `).join('');
