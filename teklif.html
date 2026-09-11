@@ -1622,7 +1622,7 @@
           </div>
           <div class="form-group">
             <label>Tarih</label>
-            <input type="date" id="inp-doc-date" oninput="renderApp()">
+            <input type="date" id="inp-doc-date" onchange="handleDocDateChange(this.value)" oninput="handleDocDateChange(this.value)">
           </div>
         </div>
 
@@ -2848,16 +2848,33 @@
       invoice: 'YKN-FAT'     // E-Fatura
     };
 
+    
+    // Dynamic Document Date & Serial Number Synchronizer
+    function handleDocDateChange(dateVal) {
+      if (!dateVal) return;
+      appState.date = dateVal;
+
+      const curDocNo = document.getElementById('inp-doc-no') ? document.getElementById('inp-doc-no').value : (appState.docNo || '');
+      const isAutoPattern = Object.values(docPrefixMap).some(p => curDocNo.startsWith(p + '-')) || curDocNo.startsWith('YKN-') || curDocNo === '';
+
+      if (isAutoPattern) {
+        const newDocNo = generateDocNoForMode(appState.mode || 'prop', dateVal);
+        appState.docNo = newDocNo;
+        const inpNo = document.getElementById('inp-doc-no');
+        if (inpNo) inpNo.value = newDocNo;
+      }
+
+      renderApp();
+    }
+
     function generateDocNoForMode(mode, targetDate = null) {
+      const curDate = targetDate || appState.date || new Date().toISOString().split('T')[0];
       if (typeof YakinERP !== 'undefined' && typeof YakinERP.getNextDocNo === 'function') {
-        return YakinERP.getNextDocNo(mode, targetDate || appState.date);
+        return YakinERP.getNextDocNo(mode, curDate);
       }
       const prefix = docPrefixMap[mode] || 'YKN-DOC';
-      const d = targetDate ? new Date(targetDate) : new Date();
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      return `${prefix}-${yyyy}${mm}${dd}-01`;
+      let dateTag = curDate.replace(/-/g, '');
+      return `${prefix}-${dateTag}-01`;
     }
 
     // Set Document Mode ('spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice')

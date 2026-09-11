@@ -475,14 +475,19 @@ const YakinERP = (function () {
 
   function getNextDocNo(mode, targetDate = null) {
     const prefix = MODE_PREFIXES[mode] || 'YKN-TEK';
-    const d = targetDate ? new Date(targetDate) : new Date();
+    let dateTag = '';
     
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const dateTag = `${yyyy}${mm}${dd}`; // e.g. 20260911
-    const basePrefix = `${prefix}-${dateTag}`;
+    if (typeof targetDate === 'string' && targetDate.includes('-')) {
+      dateTag = targetDate.replace(/-/g, ''); // "2026-09-11" -> "20260911"
+    } else {
+      const d = targetDate ? new Date(targetDate) : new Date();
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      dateTag = `${yyyy}${mm}${dd}`;
+    }
 
+    const basePrefix = `${prefix}-${dateTag}`;
     const list = getAllProposals();
     let maxSeq = 0;
 
