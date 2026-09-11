@@ -977,6 +977,12 @@
     }
 
     /* Signatures and Stamp Block */
+    
+    .doc-signatures-grid, .doc-totals-grid, .doc-footer, .official-stamp, .spec-block-card, .bank-card, .doc-banks-grid, .doc-clause-card {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
     .doc-signatures-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1223,33 +1229,46 @@
     /* Print Optimizations */
     @media print {
       body {
-        background: #ffffff;
-        color: #000000;
+        background: #ffffff !important;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
-      header, .controls-panel, .stage-toolbar, .toast {
+      header, .controls-panel, .stage-toolbar, .toast, .modal-overlay, #studio-auth-lock {
         display: none !important;
       }
       .studio-container {
-        height: auto;
-        overflow: visible;
-        display: block;
+        height: auto !important;
+        overflow: visible !important;
+        display: block !important;
       }
       .preview-stage {
-        padding: 0;
-        background: none;
-        overflow: visible;
+        padding: 0 !important;
+        background: none !important;
+        overflow: visible !important;
       }
       .doc-sheet {
-        box-shadow: none;
-        border: none;
-        width: 100%;
-        min-height: auto;
-        padding: 0;
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        padding: 12mm 14mm !important;
+        margin: 0 !important;
         transform: none !important;
+        page-break-after: auto;
       }
       @page {
-        size: A4;
-        margin: 15mm 15mm 15mm 15mm;
+        size: A4 portrait;
+        margin: 0;
+      }
+      .doc-header, .doc-info-grid, .doc-clause-card, .doc-table, .doc-totals-grid, .doc-totals-card, .doc-signatures-grid, .signature-card, .doc-footer, .official-stamp, .spec-block-card, .bank-card, .doc-banks-grid {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .doc-table tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
     }
 
@@ -4334,15 +4353,24 @@
       const element = document.getElementById('doc-sheet');
       if (!element) return;
 
-      showToast('⏳ PDF hazırlanıyor...');
+      showToast('⏳ PDF hazırlanıyor ve sayfaya sığdırılıyor...');
 
       if (typeof html2pdf !== 'undefined') {
         const opt = {
-          margin: [8, 8, 8, 8],
+          margin: 0,
           filename: (appState.docNo || 'YKN-DOC') + '_Yakin_Grup_Teklif.pdf',
           image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          html2canvas: { 
+            scale: 2, 
+            useCORS: true, 
+            letterRendering: true,
+            scrollY: 0
+          },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak: { 
+            mode: ['avoid-all', 'css', 'legacy'],
+            avoid: ['.doc-signatures-grid', '.signature-card', '.doc-footer', '.doc-totals-grid', '.official-stamp', '.doc-table tr', '.spec-block-card', '.doc-clause-card', '.doc-banks-grid']
+          }
         };
         html2pdf().set(opt).from(element).save().then(() => {
           showToast('📥 PDF belgesi başarıyla indirildi!');
