@@ -2287,11 +2287,33 @@
           </select>
         </div>
 
+                <!-- Bulk Actions Toolbar -->
+        <div id="archive-bulk-toolbar" style="display:none; background:#eff6ff; border:1.5px solid #93c5fd; border-radius:8px; padding:8px 14px; margin-bottom:10px; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.84rem; font-weight:800; color:#1e40af;" id="archive-bulk-count">0 Belge Seçildi</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <select id="archive-bulk-status-select" style="font-size:0.75rem; padding:4px 8px; border-radius:6px; border:1px solid #93c5fd; font-weight:700; background:#ffffff; color:#0f172a;">
+              <option value="">-- Durum Değiştir --</option>
+              <option value="Taslak">📝 Taslak</option>
+              <option value="İletildi">📨 İletildi</option>
+              <option value="Onaylandı">✅ Onaylandı</option>
+              <option value="Faturalandı">🧾 Faturalandı</option>
+              <option value="İptal">✕ İptal</option>
+            </select>
+            <button class="btn-sm-action" onclick="applyBulkStatusChange()" style="background:#ffffff; color:#1e40af; border-color:#93c5fd; font-weight:700;">Uygula</button>
+            <button class="btn-sm-action" onclick="deleteSelectedProposals()" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">🗑️ Seçilenleri Sil</button>
+          </div>
+        </div>
+
         <!-- Archive Table -->
         <div style="overflow-x:auto; max-height:420px;">
           <table class="erp-table">
             <thead>
               <tr>
+                <th style="width:36px; text-align:center;">
+                  <input type="checkbox" id="archive-select-all" onchange="toggleSelectAllProposals(this.checked)" title="Tümünü Seç / Kaldır" style="cursor:pointer; width:16px; height:16px; accent-color:#1d4ed8;">
+                </th>
                 <th>Belge No</th>
                 <th>Belge Türü</th>
                 <th>Müşteri / Kurum</th>
@@ -3108,7 +3130,7 @@
       document.getElementById('archive-count-label').innerText = 'Toplam ' + list.length + ' Kayıtlı Belge (Veritabanında Aktif)';
 
       if (list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:2rem; color:#64748b; font-weight:600;">Aradığınız kriterlere uygun belge kaydı bulunamadı.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:2rem; color:#64748b; font-weight:600;">Aradığınız kriterlere uygun belge kaydı bulunamadı.</td></tr>';
         return;
       }
 
@@ -3128,6 +3150,9 @@
 
         return `
           <tr>
+            <td style="text-align:center; width:36px;">
+              <input type="checkbox" class="archive-row-checkbox" value="` + (p.docNo || '') + `" onchange="updateSelectedProposalsToolbar()" style="cursor:pointer; width:16px; height:16px; accent-color:#1d4ed8;">
+            </td>
             <td style="white-space:nowrap;">
               <strong style="font-size:0.88rem; color:#0f172a;">` + (p.docNo || '-') + `</strong>
             </td>
@@ -3166,6 +3191,88 @@
           </tr>
         `;
       }).join('');
+    }
+
+    
+    // Archive Row Selection & Bulk Actions
+    function toggleSelectAllProposals(checked) {
+      const checkboxes = document.querySelectorAll('.archive-row-checkbox');
+      checkboxes.forEach(cb => {
+        cb.checked = checked;
+      });
+      updateSelectedProposalsToolbar();
+    }
+
+    function updateSelectedProposalsToolbar() {
+      const checkedBoxes = document.querySelectorAll('.archive-row-checkbox:checked');
+      const allBoxes = document.querySelectorAll('.archive-row-checkbox');
+      const masterBox = document.getElementById('archive-select-all');
+      const toolbar = document.getElementById('archive-bulk-toolbar');
+      const countEl = document.getElementById('archive-bulk-count');
+
+      if (masterBox && allBoxes.length > 0) {
+        masterBox.checked = (checkedBoxes.length === allBoxes.length);
+      }
+
+      if (toolbar && countEl) {
+        if (checkedBoxes.length > 0) {
+          toolbar.style.display = 'flex';
+          countEl.innerText = `${checkedBoxes.length} Belge Seçildi`;
+        } else {
+          toolbar.style.display = 'none';
+        }
+      }
+    }
+
+    function getSelectedProposalDocNos() {
+      const checkedBoxes = document.querySelectorAll('.archive-row-checkbox:checked');
+      const docNos = [];
+      checkedBoxes.forEach(cb => {
+        if (cb.value) docNos.push(cb.value);
+      });
+      return docNos;
+    }
+
+    function deleteSelectedProposals() {
+      const docNos = getSelectedProposalDocNos();
+      if (docNos.length === 0) return;
+
+      if (!confirm(`Seçilen ${docNos.length} adet belgeyi arşivden ve veritabanından kalıcı olarak silmek istediğinize emin misiniz?`)) return;
+
+      if (typeof YakinERP !== 'undefined') {
+        docNos.forEach(dNo => {
+          YakinERP.deleteProposal(dNo);
+        });
+      }
+
+      renderArchiveTable();
+      updateSelectedProposalsToolbar();
+      showToast(`🗑️ ${docNos.length} adet belge başarıyla silindi.`);
+    }
+
+    function applyBulkStatusChange() {
+      const docNos = getSelectedProposalDocNos();
+      const statusSelect = document.getElementById('archive-bulk-status-select');
+      const newStatus = statusSelect ? statusSelect.value : '';
+
+      if (docNos.length === 0) {
+        alert('Lütfen en az bir belge seçiniz.');
+        return;
+      }
+      if (!newStatus) {
+        alert('Lütfen uygulanacak durumu seçiniz.');
+        return;
+      }
+
+      if (typeof YakinERP !== 'undefined') {
+        docNos.forEach(dNo => {
+          YakinERP.updateProposalStatus(dNo, newStatus);
+        });
+      }
+
+      renderArchiveTable();
+      updateSelectedProposalsToolbar();
+      showToast(`🏷️ Seçilen ${docNos.length} belgenin durumu "${newStatus}" olarak güncellendi!`);
     }
 
     function startNewBlankProposal() {
