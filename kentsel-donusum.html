@@ -1823,7 +1823,7 @@
         <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
           <h3>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <span>Kentsel Dönüşüm Teklifini E-Posta ile Gönder</span>
+            <span>Resmi Kentsel Dönüşüm Teklifini (PDF) E-Posta ile Gönder</span>
           </h3>
           <span id="email-modal-docno-badge" style="font-size: 0.72rem; font-weight: 800; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-family: monospace;">
             -
@@ -1834,14 +1834,34 @@
 
       <div class="modal-body">
         <!-- Bilgi Kutucuğu -->
-        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; margin-bottom: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
           <div>
             <div id="email-modal-proj-title" style="font-weight: 800; font-size: 0.88rem; color: var(--brand-primary);">-</div>
             <div id="email-modal-proj-subtitle" style="font-size: 0.73rem; color: #64748b; margin-top: 2px;">-</div>
           </div>
-          <div id="email-modal-status-pill" style="font-size: 0.72rem; font-weight: 700; background: #ecfdf5; color: #166534; padding: 3px 10px; border-radius: 9999px; border: 1px solid #bbf7d0;">
-            📝 Taslak
+          <div id="email-modal-status-pill" style="font-size: 0.72rem; font-weight: 700; background: #ecfdf5; color: #166534; padding: 3px 10px; border-radius: 9999px; border: 1px solid #86efac;">
+            📄 Resmi Teklif (PDF Hazır)
           </div>
+        </div>
+
+        <!-- PDF Belge Kartı & Hızlı İndirme Paneli -->
+        <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 10px 14px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background: #dc2626; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 900; letter-spacing: -0.5px; box-shadow: 0 2px 6px rgba(220,38,38,0.25);">
+              PDF
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: #166534;" id="email-modal-pdf-filename">
+                YakinGrup_Resmi_Teklif.pdf
+              </div>
+              <div style="font-size: 0.70rem; color: #15803d; margin-top: 1px;">
+                ✓ Kat Planları &bull; Kat Dağılım Mimarisi &bull; 2026 Teknik Şartname &bull; Malik Tahsis Cetveli dahildir
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn-sm-action primary" onclick="downloadProposalPDFFromEmailModal()" style="background: #166534; border-color: #15803d; color: #fff; font-weight: 800; padding: 7px 14px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.80rem; border-radius: 6px;" title="Resmi teklif mektubunun PDF çıktısını hemen indirin">
+            📥 PDF Teklifi İndir / Yazdır
+          </button>
         </div>
 
         <form id="form-send-proposal-email" onsubmit="handleSendProposalEmailSubmit(event)">
@@ -1878,7 +1898,7 @@
             </div>
             <textarea id="inp-mail-body" class="form-input" rows="10" style="width: 100%; box-sizing: border-box; font-size: 0.78rem; line-height: 1.5; padding: 10px; font-family: inherit; resize: vertical;"></textarea>
             <div style="font-size: 0.70rem; color: #64748b; margin-top: 4px;">
-              💡 <em>İpucu:</em> <strong>"E-Posta Programında Aç"</strong> butonuna basarak doğrudan Outlook, Gmail veya Apple Mail uygulamanızda önceden doldurulmuş olarak açabilir veya metni kopyalayıp dilediğiniz webmail/mesajlaşma kanalından iletebilirsiniz.
+              💡 <em>İpucu:</em> <strong>"PDF İndir & E-Posta Aç"</strong> butonuna basarak hem teklifinizin resmi PDF çıktısını alabilir hem de Outlook, Gmail veya Apple Mail uygulamanızda önceden doldurulmuş olarak açabilirsiniz.
             </div>
           </div>
 
@@ -1889,8 +1909,8 @@
             <button type="button" class="btn-sm-action" onclick="copyEmailBodyToClipboard()" style="padding: 7px 14px; font-size: 0.82rem;">
               📋 Metni Kopyala
             </button>
-            <button type="button" class="btn-sm-action primary" onclick="launchMailtoClient()" style="padding: 7px 16px; font-size: 0.82rem; font-weight: 800; background: #1a3d7c; color: #fff;">
-              📧 E-Posta Programında Aç (mailto)
+            <button type="button" class="btn-sm-action primary" onclick="launchMailtoWithPDF()" style="padding: 7px 16px; font-size: 0.82rem; font-weight: 800; background: #0f2b5c; color: #fff; display: inline-flex; align-items: center; gap: 6px;" title="PDF çıktısını hazırlayıp e-posta istemcinizi açar">
+              📧 PDF İndir & E-Posta Aç (mailto)
             </button>
             <button type="submit" class="btn btn-primary btn-sm" style="font-weight: 800;">
               ✓ Gönderildi Olarak İşaretle & Kaydet
@@ -3264,6 +3284,7 @@
       const lblTitle = document.getElementById('email-modal-proj-title');
       const lblSubtitle = document.getElementById('email-modal-proj-subtitle');
       const statusPill = document.getElementById('email-modal-status-pill');
+      const pdfFilenameEl = document.getElementById('email-modal-pdf-filename');
       const inpTo = document.getElementById('inp-mail-to');
       const inpCc = document.getElementById('inp-mail-cc');
       const inpSubj = document.getElementById('inp-mail-subject');
@@ -3282,27 +3303,39 @@
       if (badgeDocNo) badgeDocNo.textContent = p.docNo;
       if (lblTitle) lblTitle.textContent = p.title || `${p.city} ${p.district} Kentsel Dönüşüm Teklifi`;
       if (lblSubtitle) lblSubtitle.textContent = `📍 ${p.city} / ${p.district} • ${p.neighborhood || ''} • Ada: ${p.ada} Parsel: ${p.parsel} • Tarih: ${dateStr}`;
+      if (pdfFilenameEl) {
+        pdfFilenameEl.textContent = `YakinGrup_Resmi_Teklif_${p.docNo}.pdf`;
+      }
       if (statusPill) {
-        statusPill.textContent = p.status || 'Taslak';
-        statusPill.style.background = p.status === 'Onaylandı' ? '#ecfdf5' : '#eff6ff';
-        statusPill.style.color = p.status === 'Onaylandı' ? '#166534' : '#1e40af';
+        statusPill.textContent = '📄 Resmi Teklif Dosyası (PDF Hazır)';
+        statusPill.style.background = '#ecfdf5';
+        statusPill.style.color = '#166534';
+        statusPill.style.border = '1px solid #86efac';
       }
 
       if (inpTo) inpTo.value = '';
       if (inpCc) inpCc.value = 'info@yakingrup.net';
       if (inpSubj) {
-        inpSubj.value = `[Yakın Grup] Resmi Kentsel Dönüşüm Teklifi & Fizibilite Dosyası — No: ${p.docNo} (${p.district} ${p.ada}/${p.parsel})`;
+        inpSubj.value = `[Yakın Grup] Resmi Kentsel Dönüşüm Teklifi & Fizibilite Dosyası (PDF) — No: ${p.docNo} (${p.district} ${p.ada}/${p.parsel})`;
       }
 
       const emailText = `Sayın Kat Malikleri Temsilcileri ve Yönetim Kurulu,
 
-${p.city} ili, ${p.district} ilçesi, ${p.ada} Ada ${p.parsel} Parsel üzerinde yer alan taşınmazınız için 2026 Kentsel Dönüşüm Mevzuatı ve güncel imar yönetmelikleri kapsamında Yakın Grup bünyesinde hazırlanan "Kentsel Dönüşüm Resmi Fizibilite & Teklif Dosyası" bilgilerinize sunulmuştur.
+${p.city} ili, ${p.district} ilçesi, ${p.ada} Ada ${p.parsel} Parsel üzerinde yer alan taşınmazınız için 2026 Kentsel Dönüşüm Mevzuatı ve güncel imar yönetmelikleri kapsamında Yakın Grup bünyesinde hazırlanan "KENTSEL DÖNÜŞÜM RESMİ FİZİBİLİTE & TEKLİF DOSYASI" ekteki resmi PDF dokümanı ve aşağıdaki özet bilgileriyle tarafınıza sunulmuştur.
+
+📎 E-POSTA EKLERİ (PDF İÇERİĞİ):
+--------------------------------------------------
+1. Resmi Kentsel Dönüşüm Teklif Mektubu & Fizibilite Raporu (PDF)
+2. 🏢 Kat Kat Bağımsız Bölüm & Cephe Dağılım Mimarisi
+3. 📋 2026 Kurumsal Teknik İmalat Şartnamesi (Tüm Alt Maddeleriyle)
+4. 6. Malikler Kurulu Karar & Bağımsız Bölüm Tahsis Cetveli (Net Kazanç Analizli)
+5. 6306 Sayılı Kanun Kapsamında Malik Hakları & Kurumsal Taahhütname
 
 ==================================================
 PROJE VE FİZİBİLİTE YÖNETİCİ ÖZETİ
 ==================================================
 • Resmi Teklif No: ${p.docNo}
-• Taşınmaz Konumu: ${p.city} / ${p.district} (Ada: ${p.ada}, Parsel: ${p.parsel})
+• Taşınmaz Konumu: ${p.city} / ${p.district} (${p.neighborhood || ''} • Ada: ${p.ada}, Parsel: ${p.parsel})
 • Arsa Alanı: ${p.landArea ? p.landArea + ' m²' : '-'}
 • Toplam İnşaat Alanı: ${p.totalConstructionArea ? p.totalConstructionArea.toLocaleString('tr-TR') + ' m²' : '-'}
 • Bağımsız Bölüm Üretimi: ${p.newUnits || '-'} Konut + ${p.newShops || 0} Ticari Dükkan (Toplam ${(p.newUnits || 0) + (p.newShops || 0)} Bölüm)
@@ -3323,12 +3356,12 @@ MİMARİ VE TEKNİK İMALAT KALİTE STANDARTLARI
 • İç Mekan: Rehau yerden ısıtma, 60x120 porselen seramik, 10mm laminat parke, lake mobilya mutfak, Hansgrohe/ECA armatürler, Kale çelik kapı.
 
 ==================================================
-RESMİ TEKLİF & RAPOR GÖRÜNTÜLEME
+ÇEVRİMİÇİ DOĞRULAMA & DİJİTAL TEKLİF BAĞLANTISI
 ==================================================
-İşbu teklifin tüm teknik şartname maddelerine, bağımsız bölüm dağılım cetveline ve resmi teklif çıktısına stüdyomuz üzerinden erişebilirsiniz:
-https://www.yakingrup.net/kentsel-donusum.html
+İşbu teklifin tüm detaylı çizelgelerine, bağımsız bölüm tahsis cetveline ve resmi PDF çıktısına aşağıdaki kurumsal sistem adresimizden de doğrudan erişebilirsiniz:
+https://www.yakingrup.net/kentsel-donusum.html?teklif=${p.docNo}
 
-Her türlü teknik değerlendirme, avan proje incelemesi veya malikler kurulu bilgilendirme toplantısı organizasyonu için şirketimiz yetkilileriyle iletişime geçebilirsiniz.
+Teklif dosyası, kat planları veya bina malikler kurulu bilgilendirme toplantısı organizasyonu için şirketimiz yetkilileriyle dilediğiniz zaman iletişime geçebilirsiniz.
 
 Saygılarımızla,
 Yakın Grup Kentsel Dönüşüm & Proje Geliştirme A.Ş.
@@ -3339,6 +3372,30 @@ Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
       }
 
       openKDModal('modal-kd-email');
+    }
+
+    function downloadProposalPDFFromEmailModal() {
+      if (!currentEmailProposalDocNo) return;
+      if (window.KDDB) {
+        window.KDDB.loadToStudio(currentEmailProposalDocNo);
+      }
+      switchStage(4);
+      printReport(4);
+      const alertBox = document.getElementById('email-send-status-alert');
+      if (alertBox) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#f0fdf4';
+        alertBox.style.color = '#166534';
+        alertBox.style.border = '1px solid #86efac';
+        alertBox.innerHTML = `📄 <strong>[${currentEmailProposalDocNo}]</strong> Resmi Teklif PDF çıktısı hazırlanıyor. Açılan pencerede "PDF Olarak Kaydet" seçeneğiyle belgenizi kaydedebilir ve e-postanıza ekleyebilirsiniz.`;
+      }
+    }
+
+    function launchMailtoWithPDF() {
+      downloadProposalPDFFromEmailModal();
+      setTimeout(() => {
+        launchMailtoClient();
+      }, 500);
     }
 
     function launchMailtoClient() {
@@ -3377,7 +3434,7 @@ Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
         alertBox.style.background = '#eff6ff';
         alertBox.style.color = '#1e40af';
         alertBox.style.border = '1px solid #bfdbfe';
-        alertBox.innerHTML = `🚀 E-Posta istemciniz (Mail/Outlook vb.) açılıyor. Teklif durumu <strong>Teklif İletildi</strong> olarak güncellendi.`;
+        alertBox.innerHTML = `🚀 E-Posta istemciniz açılıyor. Teklif durumu <strong>Teklif İletildi</strong> olarak güncellendi.`;
       }
 
       window.location.href = mailtoUrl;
@@ -3684,6 +3741,8 @@ Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
       if (e.key === 'Escape') {
         closeKDModal('modal-kd-archive');
         closeKDModal('modal-save-proposal');
+        closeKDModal('modal-kd-cloud-settings');
+        closeKDModal('modal-kd-email');
       }
     });
 
@@ -3697,6 +3756,20 @@ Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
       try {
         const savedScale = localStorage.getItem('yg_print_scale');
         if (savedScale) setPrintScale(savedScale);
+      } catch (err) {}
+
+      // URL parametresi ile doğrudan teklif görüntüleme (?teklif=DOC_NO veya ?docNo=DOC_NO)
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetDocNo = urlParams.get('teklif') || urlParams.get('docNo');
+        if (targetDocNo && window.KDDB) {
+          setTimeout(() => {
+            if (window.KDDB.loadToStudio(targetDocNo)) {
+              switchStage(4);
+              showToastNotification(`📄 [${targetDocNo}] Resmi Teklif Dosyası yüklendi.`);
+            }
+          }, 350);
+        }
       } catch (err) {}
     });
   </script>
