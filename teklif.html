@@ -2626,7 +2626,7 @@
       id: 'PROP-' + Date.now(),
       mode: 'spec', // 'spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice'
       company: 'group',
-      docNo: 'YKN-SRT-2026-0816',
+      docNo: 'YKN-SRT-1001',
       date: new Date().toISOString().split('T')[0],
       validityDays: 30,
       currency: 'TRY',
@@ -2837,9 +2837,57 @@
       return subject;
     }
 
+    
+    // Prefix mapping per Document Format
+    const docPrefixMap = {
+      prop: 'YKN-TEK',       // Fiyat Teklifi
+      spec: 'YKN-SRT',       // Teknik Şartname
+      hybrid: 'YKN-PKT',     // Birleşik Paket
+      proforma: 'YKN-PRF',   // Proforma Fatura
+      dispatch: 'YKN-IRS',   // Sevk İrsaliyesi
+      invoice: 'YKN-FAT'     // E-Fatura
+    };
+
+    function generateDocNoForMode(mode) {
+      const prefix = docPrefixMap[mode] || 'YKN-DOC';
+      let maxNum = 1000;
+
+      if (typeof YakinERP !== 'undefined') {
+        const list = YakinERP.getAllProposals();
+        list.forEach(p => {
+          if (p.docNo && p.docNo.startsWith(prefix + '-')) {
+            const parts = p.docNo.split('-');
+            const lastPart = parts[parts.length - 1];
+            const num = parseInt(lastPart, 10);
+            if (!isNaN(num) && num > maxNum) {
+              maxNum = num;
+            }
+          }
+        });
+      }
+
+      const nextNum = maxNum + 1;
+      return prefix + '-' + nextNum;
+    }
+
     // Set Document Mode ('spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice')
-    function setDocMode(mode) {
+    function setDocMode(mode, preserveDocNo = false) {
+      const prevMode = appState.mode;
       appState.mode = mode;
+
+      // Update Document Number prefix if not preserving
+      if (!preserveDocNo && mode !== prevMode) {
+        const curDocNo = document.getElementById('inp-doc-no') ? document.getElementById('inp-doc-no').value : (appState.docNo || '');
+        const isAutoPrefixed = Object.values(docPrefixMap).some(p => curDocNo.startsWith(p + '-')) || curDocNo.startsWith('YKN-') || curDocNo === '';
+        
+        if (isAutoPrefixed) {
+          appState.docNo = generateDocNoForMode(mode);
+          appState.id = 'PROP-' + mode.toUpperCase() + '-' + Date.now();
+          if (document.getElementById('inp-doc-no')) {
+            document.getElementById('inp-doc-no').value = appState.docNo;
+          }
+        }
+      }
       
       const modeBtns = ['spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice'];
       modeBtns.forEach(m => {
@@ -3100,11 +3148,11 @@
     }
 
     function startNewBlankProposal() {
-      if (!confirm('Yeni ve boş bir teklif şablonu oluşturmak istiyor musunuz?')) return;
-      appState.id = 'PROP-' + Date.now();
-      appState.docNo = 'YKN-TEK-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+      if (!confirm('Yeni ve boş bir belge oluşturmak istiyor musunuz?')) return;
+      appState.id = 'PROP-' + (appState.mode || 'prop').toUpperCase() + '-' + Date.now();
+      appState.docNo = generateDocNoForMode(appState.mode || 'prop');
       appState.date = new Date().toISOString().split('T')[0];
-      appState.subject = 'Yeni Proje / Hizmet Teklif Şartnamesi';
+      appState.subject = 'Yeni ' + (docPrefixMap[appState.mode] || 'Belge') + ' Dosyası';
       appState.clientCompany = '';
       appState.clientName = '';
       appState.clientLocation = '';
@@ -3114,7 +3162,7 @@
       renderItemsEditor();
       renderApp();
       closeModal('modal-archive');
-      showToast('✨ Yeni boş teklif oluşturuldu: ' + appState.docNo);
+      showToast('✨ Yeni boş belge oluşturuldu: ' + appState.docNo);
     }
 
     
@@ -3166,7 +3214,7 @@
       syncFormControlsFromState();
       renderClausesEditor();
       renderItemsEditor();
-      setDocMode(appState.mode || 'spec');
+      setDocMode(appState.mode || 'spec', true);
       closeModal('modal-archive');
       showToast('📂 "' + p.docNo + '" stüdyoya yüklendi.');
     }
@@ -3176,9 +3224,9 @@
       const p = YakinERP.getProposalById(id);
       if (!p) return;
       const clone = JSON.parse(JSON.stringify(p.fullState));
-      clone.id = 'PROP-' + Date.now();
-      clone.docNo = 'YKN-REV-' + Math.floor(1000 + Math.random() * 9000);
-      clone.subject += ' (Revizyon)';
+      clone.id = 'PROP-' + (p.docType || 'prop').toUpperCase() + '-' + Date.now();
+      clone.docNo = generateDocNoForMode(p.docType || 'prop');
+      clone.subject += ' (Revize Kopya)';
       clone.status = 'Taslak';
       YakinERP.saveProposal(clone);
       renderArchiveTable();
@@ -4642,7 +4690,7 @@
       populateCustomerDropdown();
       renderClausesEditor();
       renderItemsEditor();
-      setDocMode(appState.mode || 'spec');
+      setDocMode(appState.mode || 'spec', true);
     });
   </script>
 </body>
