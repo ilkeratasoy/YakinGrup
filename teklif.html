@@ -1475,6 +1475,7 @@
     }
   </style>
   <script src="erp-db.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -1538,6 +1539,7 @@
       <button class="btn btn-outline" onclick="copyDocumentText()">📋 Kopyala</button>
       <button class="btn btn-outline" onclick="exportToWordDoc()">📄 Word</button>
       <button class="btn btn-whatsapp" onclick="shareWhatsApp()">💬 WhatsApp</button>
+      <button class="btn btn-outline" style="border-color: #0284c7; color: #0284c7; font-weight: 700; background: rgba(2,132,199,0.08);" onclick="openEmailModal()" title="Teklifi PDF olarak hazırla ve e-posta ile gönder">✉️ E-Posta</button>
       <button class="btn btn-primary" onclick="window.print()">🖨️ PDF / Yazdır</button>
     </div>
   </header>
@@ -2522,6 +2524,71 @@
     </div>
   </div>
 
+    <!-- ======================================================== -->
+  <!-- MODAL 5: E-Posta ile Gönder & PDF Teklif Ekleme Modalı  -->
+  <!-- ======================================================== -->
+  <div class="modal-overlay" id="modal-email-send">
+    <div class="modal-window" style="width: 740px; max-width: 95vw;">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h3>✉️ Teklifi E-Posta ile Gönder (PDF Ekli)</h3>
+          <span style="font-size:0.7rem; background:#e0f2fe; color:#0369a1; font-weight:800; padding:2px 8px; border-radius:12px;">RESMİ İLETİM</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-email-send')">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 16px 20px; display:flex; flex-direction:column; gap:14px;">
+        
+        <!-- Attached Document Banner -->
+        <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #86efac; border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-size: 1.8rem;">📎</div>
+            <div>
+              <div style="font-size: 0.72rem; font-weight: 800; color: #166534; text-transform: uppercase;">Ekli PDF Teklif Belgesi Hazır</div>
+              <div style="font-size: 0.92rem; font-weight: 800; color: #0f172a;" id="email-doc-filename">YKN-TEK-2026_Yakin_Grup_Teklif.pdf</div>
+              <div style="font-size: 0.75rem; color: #475569;" id="email-doc-subinfo">-</div>
+            </div>
+          </div>
+          <button class="btn-sm-action" onclick="downloadPdfDirect()" style="background:#ffffff; color:#166534; border-color:#86efac; font-weight:700;">📥 PDF'i Şimdi İndir</button>
+        </div>
+
+        <!-- Form fields for To, CC, Subject -->
+        <div class="form-row">
+          <div class="form-group" style="flex:2;">
+            <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:4px; display:block;">Alıcı Müşteri E-Posta *</label>
+            <input type="email" id="email-to-input" placeholder="ornek@musteri.com" style="width:100%; box-sizing:border-box; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          </div>
+          <div class="form-group" style="flex:1.5;">
+            <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:4px; display:block;">Bilgi / CC (Şirket İçi)</label>
+            <input type="text" id="email-cc-input" value="info@yakingrup.net" style="width:100%; box-sizing:border-box; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label style="font-size:0.75rem; font-weight:700; color:#1e293b; margin-bottom:4px; display:block;">E-Posta Konu Başlığı</label>
+          <input type="text" id="email-subject-input" style="width:100%; box-sizing:border-box; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.85rem; font-weight:600; color:#0f172a;">
+        </div>
+
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <label style="font-size:0.75rem; font-weight:700; color:#1e293b;">Resmi Ön Yazı & Mesaj Metni</label>
+            <button class="btn-action-sm" onclick="copyEmailBodyText()" style="color:#0284c7; font-weight:700; font-size:0.75rem;">📋 Metni Kopyala</button>
+          </div>
+          <textarea id="email-body-input" rows="8" style="width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.82rem; font-family:inherit; line-height:1.5; color:#334155; resize:vertical;"></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.75rem; color:#64748b;">💡 Teklif durumu otomatik olarak <strong>"İletildi"</strong> durumuna güncellenir.</span>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-sm-action" onclick="closeModal('modal-email-send')">Vazgeç</button>
+          <button class="btn-sm-action btn-primary-sm" onclick="sendProposalEmailWithPdf()" style="background:#0284c7; border-color:#0284c7; font-weight:800; font-size:0.85rem; padding:8px 16px;">
+            🚀 E-Postayı Başlat & PDF İle İlet
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Logic & Scripts -->
   <script>
     // Comprehensive State Store
@@ -2959,6 +3026,7 @@
             </td>
             <td style="text-align:right; white-space:nowrap;">
               <button class="btn-sm-action btn-primary-sm" onclick="loadProposalToStudio('` + p.docNo + `')" title="Bu teklifi stüdyoya yükle ve düzenle">📂 Aç</button>
+              <button class="btn-sm-action" onclick="emailProposalDirectFromArchive('` + p.docNo + `')" title="Bu teklifi PDF ekli e-posta ile gönder" style="color:#0284c7; font-weight:700;">✉️ Mail</button>
               <button class="btn-sm-action" onclick="cloneProposal('` + p.docNo + `')" title="Bu teklifi kopyala / revize et">📋 Klonla</button>
               <button class="btn-sm-action" style="color:#b91c1c;" onclick="deleteProposalFromArchive('` + p.docNo + `')" title="Veritabanından sil">🗑️</button>
             </td>
@@ -4208,6 +4276,122 @@
     }
 
     // Share Summary on WhatsApp
+    
+    // Open Email & PDF Send Modal
+    
+    function emailProposalDirectFromArchive(docNo) {
+      loadProposalToStudio(docNo);
+      setTimeout(() => {
+        openEmailModal();
+      }, 250);
+    }
+
+    function openEmailModal() {
+      // Find customer email from ERP database if available
+      let clientEmail = '';
+      if (typeof YakinERP !== 'undefined') {
+        const custs = YakinERP.getCustomers();
+        const matched = custs.find(c => c.company.toLowerCase() === (appState.clientCompany || '').toLowerCase());
+        if (matched && matched.email) {
+          clientEmail = matched.email;
+        }
+      }
+
+      const grandTotal = document.getElementById('sheet-grand-total') ? document.getElementById('sheet-grand-total').innerText : '0.00';
+      const docTypeTitle = document.getElementById('sheet-badge-title') ? document.getElementById('sheet-badge-title').innerText : 'Teklif & Şartname';
+      
+      const authorName = (appState.author === 'eylul') ? 'Eylül YILMAZ' : 'İlker ATASOY';
+      const authorTitle = (appState.author === 'eylul') ? 'CEO & Baş Mimar' : 'CXO / Yönetici Ortak';
+
+      document.getElementById('email-doc-filename').innerText = (appState.docNo || 'YKN-TEK') + '_Yakin_Grup_Teklif.pdf';
+      document.getElementById('email-doc-subinfo').innerText = (appState.clientCompany || 'Müşteri') + ' • Toplam Tutar: ' + grandTotal;
+
+      document.getElementById('email-to-input').value = clientEmail;
+      document.getElementById('email-cc-input').value = 'info@yakingrup.net';
+      document.getElementById('email-subject-input').value = '[Yakın Grup] ' + docTypeTitle + ' — ' + (appState.docNo || '') + ' (' + (appState.clientCompany || '') + ')';
+
+      const contactGreeting = appState.clientName ? appState.clientName : 'Sayın Yetkili,';
+      const bodyText = contactGreeting + '\n' + (appState.clientCompany || '') + '\n\n' +
+        'Tarafınızla görüşülen "' + (appState.subject || 'Proje') + '" çalışmasına ilişkin hazırladığımız resmi ' + docTypeTitle.toLowerCase() + ' dosyamız ekte PDF formatında bilgilerinize sunulmuştur.\n\n' +
+        '• Belge / Teklif No: ' + (appState.docNo || '-') + '\n' +
+        '• Belge Türü: ' + docTypeTitle + '\n' +
+        '• Toplam Tutar: ' + grandTotal + '\n' +
+        '• Teslim Süresi: ' + (appState.deliveryTime || 'Belirtilen sürede') + '\n' +
+        '• Garanti / SLA: ' + (appState.warranty || '2 Yıl Sistem Garantisi') + '\n' +
+        '• Geçerlilik Süresi: ' + (appState.validityDays || 30) + ' Gün\n\n' +
+        'Teklifimizi incelemenizi rica eder, teknik detaylar ve sorularınız için her zaman bizimle iletişime geçebileceğinizi belirtmek isteriz.\n\n' +
+        'Saygılarımızla,\n' +
+        'Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti.\n' +
+        authorName + ' — ' + authorTitle + '\n' +
+        'Tel: +90 216 555 0199 | E-Posta: info@yakingrup.net | Web: https://yakingrup.net/teklif';
+
+      document.getElementById('email-body-input').value = bodyText;
+      openModal('modal-email-send');
+    }
+
+    // Direct PDF Generation and Download
+    function downloadPdfDirect() {
+      const element = document.getElementById('doc-sheet');
+      if (!element) return;
+
+      showToast('⏳ PDF hazırlanıyor...');
+
+      if (typeof html2pdf !== 'undefined') {
+        const opt = {
+          margin: [8, 8, 8, 8],
+          filename: (appState.docNo || 'YKN-DOC') + '_Yakin_Grup_Teklif.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save().then(() => {
+          showToast('📥 PDF belgesi başarıyla indirildi!');
+        }).catch(() => {
+          window.print();
+        });
+      } else {
+        window.print();
+      }
+    }
+
+    // Send Proposal Email and Auto-Download PDF
+    function sendProposalEmailWithPdf() {
+      const to = (document.getElementById('email-to-input').value || '').trim();
+      const cc = (document.getElementById('email-cc-input').value || '').trim();
+      const subject = (document.getElementById('email-subject-input').value || '').trim();
+      const body = (document.getElementById('email-body-input').value || '').trim();
+
+      // Download PDF document automatically
+      downloadPdfDirect();
+
+      // Construct mailto link
+      let mailtoUrl = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      if (cc) {
+        mailtoUrl += '&cc=' + encodeURIComponent(cc);
+      }
+
+      // Mark proposal as Sent in database
+      if (typeof YakinERP !== 'undefined' && appState.docNo) {
+        appState.status = 'İletildi';
+        YakinERP.saveProposal(appState);
+      }
+
+      // Open email client
+      setTimeout(() => {
+        window.location.href = mailtoUrl;
+      }, 500);
+
+      closeModal('modal-email-send');
+      showToast('✉️ E-posta istemciniz açıldı ve teklif "İletildi" olarak güncellendi!');
+    }
+
+    function copyEmailBodyText() {
+      const bodyText = document.getElementById('email-body-input').value;
+      navigator.clipboard.writeText(bodyText).then(() => {
+        showToast('📋 E-posta ön yazısı panoya kopyalandı!');
+      });
+    }
+
     function shareWhatsApp() {
       const grandTotal = document.getElementById('sheet-grand-total').innerText;
       let msg = '*YAKIN GRUP — ' + document.getElementById('sheet-badge-title').innerText + '*\n\n';
