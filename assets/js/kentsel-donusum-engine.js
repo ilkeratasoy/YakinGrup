@@ -418,6 +418,8 @@ class KentselDonusumEngine {
       contractorSharePctInput: 55,
       contractorMarginPct: 35,
       applyContractorMargin: true,
+      signatory: 'eylul',
+      stampMode: 'both',
       
       owners: []
     };

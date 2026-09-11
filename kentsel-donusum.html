@@ -1483,10 +1483,10 @@
                 <div class="stamp-addr">Caferağa Mah. Moda Cad. Akyol No: 36 D: 5 Kadıköy / İSTANBUL</div>
                 <div class="stamp-tax">Kadıköy V.D. No: 929 099 6193 • Mersis: 0929099619300001</div>
               </div>
-              <img id="yg-wet-signature" src="assets/images/imza-ilker-atasoy.png" alt="Yetkili Islak İmza" class="wet-signature-yg">
+              <img id="yg-wet-signature" src="assets/images/imza-eylul-yilmaz.png" alt="Eylül YILMAZ Islak İmza" class="wet-signature-yg">
             </div>
             <div class="sign-role" id="yg-sign-role-title">YAKIN GRUP A.Ş.</div>
-            <div class="sign-name" id="yg-sign-person-name">İlker ATASOY — Yönetim Kurulu Başkanı / CXO</div>
+            <div class="sign-name" id="yg-sign-person-name">Eylül YILMAZ — Kentsel Dönüşüm & Yatırım Direktörü</div>
             <div class="sign-date" id="yg-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: ____ / ____ / 2026</div>
           </div>
         </div>
@@ -1499,7 +1499,7 @@
           <span style="font-size: 1.4rem;">🖋️</span>
           <div>
             <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-main);">Teklif Onay, Yetkili İmzası & Şirket Kaşe Ayarları</div>
-            <div style="font-size: 0.74rem; color: var(--text-muted);">Resmi teklif dosyasına şirket yetkilisi (İlker ATASOY / Eylül YILMAZ), ıslak imza ve kurumsal kaşeyi uygulayın</div>
+            <div style="font-size: 0.74rem; color: var(--text-muted);">Resmi teklif dosyasına şirket yetkilisi (Eylül YILMAZ / İlker ATASOY), ıslak imza ve kurumsal kaşeyi uygulayın</div>
           </div>
         </div>
 
@@ -1507,8 +1507,8 @@
           <div>
             <label style="display: block; font-size: 0.75rem; font-weight: 800; color: #334155; margin-bottom: 6px;">👔 Teklif Yetkilisi & İmza Sahibi</label>
             <select id="sel-yg-signatory" class="form-select" onchange="handleSignatoryChange(this.value)" style="font-weight: 700; font-size: 0.82rem; padding: 8px 12px; width: 100%; border-radius: 6px; border: 1.5px solid #cbd5e1; background: #ffffff;">
-              <option value="ilker" selected>👔 İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
-              <option value="eylul">📐 Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
+              <option value="eylul" selected>📐 Eylül YILMAZ (Kentsel Dönüşüm & Yatırım Direktörü)</option>
+              <option value="ilker">👔 İlker ATASOY (Yönetim Kurulu Başkanı / CXO)</option>
               <option value="manual">✍️ Yetkili İmza Sahibi (Boş Bırak / Elle İmzala)</option>
               <option value="none">🏢 Kentsel Dönüşüm & Yatırım Komitesi (İmzasız)</option>
             </select>
@@ -2168,7 +2168,7 @@
       const activeCard = document.getElementById(`card-sc-${s.selectedScenario}`);
       if (activeCard) activeCard.classList.add('active');
 
-      const sigVal = s.signatory || 'ilker';
+      const sigVal = s.signatory || 'eylul';
       const stampModeVal = s.stampMode || 'both';
       const selSig = document.getElementById('sel-yg-signatory');
       if (selSig) selSig.value = sigVal;
@@ -2684,7 +2684,7 @@
       const mode = selMode ? selMode.value : 'both';
       const showStamp = (mode === 'both' || mode === 'stamp');
       const showSign = (mode === 'both' || mode === 'sign');
-      const signatory = selSig ? selSig.value : 'ilker';
+      const signatory = selSig ? selSig.value : 'eylul';
 
       const stampEl = document.getElementById('yg-official-stamp');
       const sigImg = document.getElementById('yg-wet-signature');
