@@ -4,9 +4,9 @@
    ========================================================================== */
 
 :root {
-  --brand-primary: #1b4332;       /* Derin Orman Yeşili */
-  --brand-primary-light: #2d6a4f; /* Zümrüt Yeşili */
-  --brand-primary-dark: #081c15;  /* Koyu Yeşil / Gece */
+  --brand-primary: #0f2b5c;       /* Derin Kurumsal Lacivert */
+  --brand-primary-light: #1e498a; /* Safir Mavi / Royal Blue */
+  --brand-primary-dark: #0a192f;  /* Gece Mavisi / Midnight Navy */
   --brand-accent: #d4af37;        /* Lüks Altın */
   --brand-accent-hover: #b89628;  /* Koyu Altın */
   --brand-accent-subtle: #fbf7ee; /* Altın Açık Arka Plan */
@@ -34,7 +34,7 @@
   --border-color: #e2e8f0;
   --border-subtle: #f1f5f9;
   --border-strong: #cbd5e1;
-  --border-focus: #2d6a4f;
+  --border-focus: #1e498a;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -218,13 +218,13 @@ body {
   background: linear-gradient(135deg, var(--brand-primary-light), var(--brand-primary));
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 2px 6px rgba(27, 67, 50, 0.3);
+  box-shadow: 0 2px 6px rgba(15, 43, 92, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #357c5e, #1f4e3b);
+  background: linear-gradient(135deg, #2563eb, #0f2b5c);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.4);
+  box-shadow: 0 4px 12px rgba(15, 43, 92, 0.4);
 }
 
 .btn-gold {
@@ -314,7 +314,7 @@ body {
 .step-tab.active {
   background: #ffffff;
   border-color: var(--brand-primary);
-  box-shadow: 0 2px 8px rgba(27, 67, 50, 0.12);
+  box-shadow: 0 2px 8px rgba(15, 43, 92, 0.15);
   position: relative;
 }
 
@@ -352,7 +352,7 @@ body {
 .step-tab.active .step-number {
   background: var(--brand-primary);
   color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.2);
+  box-shadow: 0 0 0 3px rgba(30, 73, 138, 0.25);
 }
 
 .step-info {
@@ -405,7 +405,7 @@ body {
 
 /* Top Banner with Quick Presets */
 .preset-bar {
-  background: linear-gradient(to right, #1b4332, #245741);
+  background: linear-gradient(135deg, #0a192f 0%, #0f2b5c 50%, #163b75 100%);
   color: #ffffff;
   padding: 0.85rem 1.25rem;
   border-radius: var(--radius-lg);
@@ -584,7 +584,7 @@ body {
 
 .form-input:focus, .form-select:focus {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+  box-shadow: 0 0 0 3px rgba(30, 73, 138, 0.2);
 }
 
 .form-input:disabled {
@@ -736,7 +736,7 @@ body {
 .scenario-card.active {
   border-color: var(--brand-primary);
   background: #fdfefe;
-  box-shadow: 0 4px 16px rgba(27, 67, 50, 0.12);
+  box-shadow: 0 4px 16px rgba(15, 43, 92, 0.15);
 }
 
 .scenario-card.active::after {
