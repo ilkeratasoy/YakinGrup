@@ -458,6 +458,40 @@ const YakinERP = (function () {
   }
 
   // --- 2. Proposals / Documents Archive ---
+  // Prefix mapping per Document Format
+  const MODE_PREFIXES = {
+    prop: 'YKN-TEK',
+    teklif: 'YKN-TEK',
+    spec: 'YKN-SRT',
+    sartname: 'YKN-SRT',
+    hybrid: 'YKN-PKT',
+    paket: 'YKN-PKT',
+    proforma: 'YKN-PRF',
+    dispatch: 'YKN-IRS',
+    irsaliye: 'YKN-IRS',
+    invoice: 'YKN-FAT',
+    fatura: 'YKN-FAT'
+  };
+
+  function getNextDocNo(mode) {
+    const prefix = MODE_PREFIXES[mode] || 'YKN-TEK';
+    const list = getAllProposals();
+    let maxNum = 1000;
+
+    list.forEach(p => {
+      const docNo = p.docNo || (p.fullState ? p.fullState.docNo : '');
+      if (docNo && docNo.startsWith(prefix + '-')) {
+        const rawSuffix = docNo.replace(prefix + '-', '');
+        const numPart = parseInt(rawSuffix.split('-')[0], 10);
+        if (!isNaN(numPart) && numPart > maxNum) {
+          maxNum = numPart;
+        }
+      }
+    });
+
+    return prefix + '-' + (maxNum + 1);
+  }
+
   function getAllProposals() {
     return getLocal(PROPOSALS_KEY, defaultProposals);
   }
@@ -466,11 +500,24 @@ const YakinERP = (function () {
     return getAllProposals().find(p => p.id === id || p.docNo === id);
   }
 
-  function saveProposal(proposalData) {
+  function saveProposal(proposalData, forceNew = false) {
     const list = getAllProposals();
-    const existingIdx = list.findIndex(p => p.docNo === proposalData.docNo || p.id === proposalData.id);
+    const mode = proposalData.mode || proposalData.docType || 'prop';
+    
+    // Ensure document has a valid, non-empty serial number
+    let docNo = (proposalData.docNo || '').trim();
+    if (!docNo || forceNew) {
+      docNo = getNextDocNo(mode);
+      proposalData.docNo = docNo;
+    }
 
-    // Compute accurate grand total if not set
+    // Check if updating existing record
+    let existingIdx = -1;
+    if (!forceNew) {
+      existingIdx = list.findIndex(p => p.id === proposalData.id || p.docNo === docNo);
+    }
+
+    // Compute accurate grand total from lines
     let computedTotal = parseFloat(proposalData.grandTotal) || 0;
     if (computedTotal === 0 && Array.isArray(proposalData.items)) {
       let sub = 0;
@@ -483,24 +530,32 @@ const YakinERP = (function () {
       computedTotal = net + vat;
     }
 
+    const uniqueId = (existingIdx >= 0 && !forceNew) 
+      ? list[existingIdx].id 
+      : (proposalData.id && !list.some(p => p.id === proposalData.id) ? proposalData.id : 'doc_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7));
+
+    proposalData.id = uniqueId;
+    proposalData.docNo = docNo;
+    proposalData.grandTotal = computedTotal;
+
     const record = {
-      id: proposalData.id || (existingIdx >= 0 ? list[existingIdx].id : 'PROP-' + Date.now()),
-      docNo: proposalData.docNo || 'YKN-DOC-' + Math.floor(1000 + Math.random() * 9000),
-      docType: proposalData.mode || 'spec',
-      title: proposalData.subject || 'Başlıksız Teklif',
+      id: uniqueId,
+      docNo: docNo,
+      docType: mode,
+      title: proposalData.subject || 'Başlıksız Belge',
       clientCompany: proposalData.clientCompany || 'Müşteri',
       clientName: proposalData.clientName || '',
       currency: proposalData.currency || 'TRY',
       grandTotal: computedTotal,
       date: proposalData.date || new Date().toISOString().split('T')[0],
-      validityDays: proposalData.validityDays || 30,
+      validityDays: parseInt(proposalData.validityDays, 10) || 30,
       status: proposalData.status || 'Taslak',
       updatedAt: new Date().toISOString(),
-      createdAt: existingIdx >= 0 ? list[existingIdx].createdAt : new Date().toISOString(),
+      createdAt: (existingIdx >= 0 && !forceNew) ? (list[existingIdx].createdAt || new Date().toISOString()) : new Date().toISOString(),
       fullState: JSON.parse(JSON.stringify(proposalData))
     };
 
-    if (existingIdx >= 0) {
+    if (existingIdx >= 0 && !forceNew) {
       list[existingIdx] = record;
     } else {
       list.unshift(record);
@@ -642,6 +697,7 @@ const YakinERP = (function () {
     deleteCustomer,
     getAllProposals,
     getProposalById,
+    getNextDocNo,
     saveProposal,
     updateProposalStatus,
     deleteProposal,

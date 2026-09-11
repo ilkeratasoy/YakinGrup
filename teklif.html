@@ -2871,6 +2871,20 @@
     }
 
     // Set Document Mode ('spec', 'prop', 'hybrid', 'proforma', 'dispatch', 'invoice')
+    
+    // Assign Next Unique Serial Number for Active Mode
+    function assignNextDocNo() {
+      if (typeof YakinERP !== 'undefined' && typeof YakinERP.getNextDocNo === 'function') {
+        const nextNo = YakinERP.getNextDocNo(appState.mode || 'prop');
+        appState.docNo = nextNo;
+        appState.id = 'doc_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+        const inp = document.getElementById('inp-doc-no');
+        if (inp) inp.value = nextNo;
+        renderApp();
+        showToast('⚡ Sıradaki yeni belge numarası atandı: ' + nextNo);
+      }
+    }
+
     function setDocMode(mode, preserveDocNo = false) {
       const prevMode = appState.mode;
       appState.mode = mode;
