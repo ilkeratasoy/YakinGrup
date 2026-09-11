@@ -492,6 +492,56 @@
               </div>
             </div>
           </div>
+
+          <!-- Bağımsız Bölüm Bazında Mevcut Net Metraj Cetveli -->
+          <div class="existing-units-schedule-section" style="margin-top: 1.35rem; border-top: 1.5px dashed #cbd5e1; padding-top: 1.15rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 6px;">
+                  <span>📐 Bağımsız Bölüm Bazında Mevcut Net Metraj Dağılım Cetveli</span>
+                  <span class="card-badge gold" style="font-size: 0.66rem; padding: 2px 7px;">Bireysel Değer Girişi</span>
+                </div>
+                <div style="font-size: 0.73rem; color: #64748b; margin-top: 2px;">
+                  Mevcut binadaki her bağımsız bölümün (daire / dükkan) fiili net m² metrajını bireysel olarak girebilirsiniz. Değişiklikler Malikler Tahsis Cetveli ve resmi teklif dosyasındaki "Mevcut Net" sütununa anında yansır.
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="distributeAvgNetToAll()" style="font-size: 0.72rem; padding: 4px 10px; font-weight: 700;" title="Mevcut ortalama m² değerini tüm dairelere eşit olarak uygular">
+                  ⚡ Ortalamayı Tümüyle Eşitle
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="resetDefaultNetDistribution()" style="font-size: 0.72rem; padding: 4px 10px; font-weight: 600;" title="Tipik mimari kat varyasyonlu metrajlara geri döner">
+                  🔄 Varyasyonu Sıfırla
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive" style="max-height: 360px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.03);">
+              <table class="data-table" style="font-size: 0.78rem; width: 100%; margin: 0;">
+                <thead>
+                  <tr style="position: sticky; top: 0; background: #f8fafc; z-index: 2; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                    <th style="width: 45px; text-align: center;">No</th>
+                    <th style="width: 95px;">Tür</th>
+                    <th>Bağımsız Bölüm / Malik Tanımı</th>
+                    <th style="width: 80px; text-align: center;">Kat</th>
+                    <th style="width: 155px; text-align: right;">Mevcut Net (m²)</th>
+                    <th style="width: 130px; text-align: right;">Mevcut Brüt (m²)</th>
+                    <th style="width: 105px; text-align: right;">Arsa Payı (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="existing-units-schedule-body">
+                  <!-- JS ile render edilir -->
+                </tbody>
+                <tfoot>
+                  <tr style="position: sticky; bottom: 0; background: #f1f5f9; font-weight: 800; border-top: 2px solid #cbd5e1; z-index: 2;">
+                    <td colspan="4" style="text-align: right; color: #334155;">MEVCUT BİNA TOPLAMI / ORTALAMA:</td>
+                    <td id="existing-schedule-total-net" style="text-align: right; color: var(--brand-primary); font-size: 0.84rem; font-weight: 800;">-</td>
+                    <td id="existing-schedule-total-gross" style="text-align: right; color: #475569; font-size: 0.82rem;">-</td>
+                    <td style="text-align: right; color: #0284c7;">%100.00</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
         </div>
 
         <!-- B. İmar & Hedef Proje Verileri -->
@@ -1327,7 +1377,7 @@
               KENTSEL DÖNÜŞÜM RESMİ FİZİBİLİTE & TEKLİF DOSYASI
             </div>
             <div style="font-size: 0.75rem; color: var(--text-muted);">
-              Doküman No: YG-KD-2026/08 • Tarih: <span id="prop-date">17.08.2026</span>
+              Doküman No: <span id="prop-doc-no">YG-KD-2026/09</span> • Tarih: <span id="prop-date">11.09.2026</span>
             </div>
           </div>
         </div>
@@ -1472,7 +1522,7 @@
             </div>
             <div class="sign-role">BİNA MALİKLER KURULU</div>
             <div class="sign-name">Kat Malikleri Temsilcileri / Yönetim</div>
-            <div class="sign-date" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: ____ / ____ / 2026</div>
+            <div class="sign-date" id="mgmt-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: 11.09.2026</div>
           </div>
 
           <div class="signature-box" id="yg-sign-box">
@@ -1487,7 +1537,7 @@
             </div>
             <div class="sign-role" id="yg-sign-role-title">YAKIN GRUP A.Ş.</div>
             <div class="sign-name" id="yg-sign-person-name">Eylül YILMAZ — Kentsel Dönüşüm & Yatırım Direktörü</div>
-            <div class="sign-date" id="yg-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: ____ / ____ / 2026</div>
+            <div class="sign-date" id="yg-sign-date-label" style="font-size: 0.68rem; color: var(--text-muted); margin-top: 2px;">Tarih: 11.09.2026</div>
           </div>
         </div>
 
@@ -2419,7 +2469,12 @@
               </span>
             </td>
             <td><strong>${o.name}</strong></td>
-            <td>${o.existingNetM2} m²</td>
+            <td>
+              <div style="display: inline-flex; align-items: center; gap: 3px;">
+                <input type="number" step="0.5" min="10" max="2000" class="form-input" value="${o.existingNetM2}" onchange="handleScheduleNetM2Change(${o.id}, this.value)" style="width: 72px; font-size: 0.78rem; font-weight: 700; text-align: right; padding: 2px 4px; height: 26px; border: 1.5px solid #0284c7; border-radius: 4px; background: #f0f9ff; color: #0369a1;">
+                <span style="font-size: 0.7rem; font-weight: 600; color: #475569;">m²</span>
+              </div>
+            </td>
             <td>${eng.formatCurrency(o.existingValue)}</td>
             <td style="color: var(--brand-primary); font-weight: 700;">
               <strong>${o.allocatedDescription}</strong>
@@ -2545,7 +2600,7 @@
           <tr>
             <td><strong>${o.typeLabel}</strong></td>
             <td><strong>${o.name}</strong></td>
-            <td>${o.existingNetM2} m²</td>
+            <td style="font-weight: 700; color: #0f172a;">${o.existingNetM2} m²</td>
             <td style="color: var(--brand-primary); font-weight: 700;">${o.allocatedDescription}</td>
             <td style="color: #0369a1; font-weight: 700;">${o.allocatedFacade}</td>
             <td style="font-weight: 700;">${o.newNetM2} m² <span style="font-weight: 400; font-size: 0.68rem; color: #64748b;">(${o.newGrossM2} m²)</span></td>
@@ -2600,6 +2655,100 @@
       setText('bar-total-cost', eng.formatCurrency(res.costs.totalProjectCost));
       setText('bar-rec-model', res.decision.recommendedModel);
       setText('bar-roi', eng.formatPct(m1.contractorROI));
+
+      // Dynamic Proposal Date & Doküman No
+      const today = new Date();
+      const dayStr = String(today.getDate()).padStart(2, '0');
+      const monthStr = String(today.getMonth() + 1).padStart(2, '0');
+      const yearStr = today.getFullYear();
+      const currentDateFormatted = `${dayStr}.${monthStr}.${yearStr}`;
+      const defaultDocNo = `YG-KD-${yearStr}/${monthStr}`;
+
+      const finalDate = eng.state.proposalDate || currentDateFormatted;
+      const finalDocNo = eng.state.docNo || defaultDocNo;
+
+      const elPropDate = document.getElementById('prop-date');
+      if (elPropDate) elPropDate.textContent = finalDate;
+
+      const elPropDocNo = document.getElementById('prop-doc-no');
+      if (elPropDocNo) elPropDocNo.textContent = finalDocNo;
+
+      const mgmtDateEl = document.getElementById('mgmt-sign-date-label');
+      if (mgmtDateEl) mgmtDateEl.textContent = `Tarih: ${finalDate}`;
+
+      const ygDateEl = document.getElementById('yg-sign-date-label');
+      if (ygDateEl) ygDateEl.textContent = `Tarih: ${finalDate}`;
+
+      // Stage 1 (Section A) Bağımsız Bölüm Bazında Mevcut Net Metraj Cetveli
+      const existingTbody = document.getElementById('existing-units-schedule-body');
+      if (existingTbody) {
+        const owners = eng.state.owners || [];
+        existingTbody.innerHTML = owners.map(o => `
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="text-align: center; font-weight: 700; color: #64748b; padding: 6px 8px;">${o.id}</td>
+            <td style="padding: 6px 8px;">
+              <span style="display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; background: ${o.sectionType === 'Ticari' ? '#fef3c7; color: #92400e;' : '#ecfdf5; color: #065f46;'}">
+                ${o.typeLabel}
+              </span>
+            </td>
+            <td style="padding: 6px 8px;">
+              <input type="text" class="form-input" value="${o.name}" onchange="handleScheduleOwnerNameChange(${o.id}, this.value)" style="font-size: 0.77rem; padding: 3px 8px; height: 28px; width: 100%; font-weight: 600; border: 1px solid #cbd5e1; border-radius: 4px;">
+            </td>
+            <td style="text-align: center; font-weight: 700; color: #334155; padding: 6px 8px;">${o.floor === 0 ? 'Zemin' : o.floor + '. Kat'}</td>
+            <td style="text-align: right; padding: 6px 8px;">
+              <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 4px;">
+                <input type="number" step="0.5" min="10" max="2000" class="form-input existing-net-input" data-owner-id="${o.id}" value="${o.existingNetM2}" onchange="handleScheduleNetM2Change(${o.id}, this.value)" style="width: 82px; font-size: 0.82rem; font-weight: 800; text-align: right; padding: 3px 6px; height: 28px; border: 1.5px solid #0284c7; border-radius: 4px; background: #f0f9ff; color: #0369a1;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: #475569;">m²</span>
+              </div>
+            </td>
+            <td style="text-align: right; font-weight: 600; color: #475569; padding: 6px 8px;">${o.existingGrossM2} m²</td>
+            <td style="text-align: right; font-weight: 600; color: #64748b; padding: 6px 8px;">%${o.landShareRatio}</td>
+          </tr>
+        `).join('');
+
+        const totalNet = owners.reduce((acc, o) => acc + (parseFloat(o.existingNetM2) || 0), 0);
+        const totalGross = owners.reduce((acc, o) => acc + (parseFloat(o.existingGrossM2) || 0), 0);
+        const avgNetVal = owners.length > 0 ? (totalNet / owners.length).toFixed(1) : 0;
+
+        const totalNetEl = document.getElementById('existing-schedule-total-net');
+        if (totalNetEl) totalNetEl.innerHTML = `<strong>${Math.round(totalNet).toLocaleString('tr-TR')} m²</strong> <span style="font-size: 0.72rem; font-weight: normal; color: #64748b;">(Ort: ${avgNetVal} m²)</span>`;
+        const totalGrossEl = document.getElementById('existing-schedule-total-gross');
+        if (totalGrossEl) totalGrossEl.textContent = `${Math.round(totalGross).toLocaleString('tr-TR')} m²`;
+      }
+    }
+
+    // Schedule Handler Functions
+    function handleScheduleNetM2Change(id, val) {
+      if (window.KDEngine) {
+        window.KDEngine.updateOwnerNetM2(id, val);
+        renderUI();
+      }
+    }
+
+    function handleScheduleOwnerNameChange(id, name) {
+      if (window.KDEngine) {
+        window.KDEngine.updateOwnerName(id, name);
+        renderUI();
+      }
+    }
+
+    function distributeAvgNetToAll() {
+      if (window.KDEngine) {
+        const inpAvg = document.getElementById('inp-existingAvgNet');
+        const avg = inpAvg ? parseFloat(inpAvg.value) : 95;
+        window.KDEngine.distributeUniformNetM2(avg);
+        renderUI();
+        showToastNotification(`⚡ Tüm bağımsız bölümlerin mevcut net metrajı ${avg} m² olarak eşitlendi.`);
+      }
+    }
+
+    function resetDefaultNetDistribution() {
+      if (window.KDEngine) {
+        window.KDEngine.generateDefaultOwners(true);
+        window.KDEngine.calculate();
+        renderUI();
+        showToastNotification('🔄 Bağımsız bölüm metrajları varsayılan kat varyasyonuna sıfırlandı.');
+      }
     }
 
     function handleMarginToggle(checked) {
@@ -2711,8 +2860,15 @@
         }
       }
 
+      const today = new Date();
+      const curDate = (window.KDEngine && window.KDEngine.state && window.KDEngine.state.proposalDate) || 
+        `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
       if (dateLbl) {
-        dateLbl.textContent = 'Tarih: ____ / ____ / 2026';
+        dateLbl.textContent = `Tarih: ${curDate}`;
+      }
+      const mgmtDateLbl = document.getElementById('mgmt-sign-date-label');
+      if (mgmtDateLbl) {
+        mgmtDateLbl.textContent = `Tarih: ${curDate}`;
       }
     }
 

@@ -595,7 +595,19 @@
 
       // KDEngine State güncelle
       Object.assign(window.KDEngine.state, item.stateSnapshot);
-      window.KDEngine.generateDefaultOwners();
+      window.KDEngine.state.docNo = item.docNo || docNo;
+      if (item.createdAt) {
+        const d = new Date(item.createdAt);
+        if (!isNaN(d.getTime())) {
+          const day = String(d.getDate()).padStart(2, '0');
+          const month = String(d.getMonth() + 1).padStart(2, '0');
+          const year = d.getFullYear();
+          window.KDEngine.state.proposalDate = `${day}.${month}.${year}`;
+        }
+      }
+      if (!window.KDEngine.state.owners || window.KDEngine.state.owners.length === 0) {
+        window.KDEngine.generateDefaultOwners(true);
+      }
       window.KDEngine.calculate();
 
       // Form inputlarını ve arayüzü senkronize et

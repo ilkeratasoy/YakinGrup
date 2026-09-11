@@ -437,7 +437,15 @@ class KentselDonusumEngine {
     }
   }
 
-  generateDefaultOwners() {
+  generateDefaultOwners(forceReset = false) {
+    const oldOwners = (this.state.owners || []);
+    const oldMap = new Map();
+    if (!forceReset) {
+      oldOwners.forEach(o => {
+        oldMap.set(o.id, o);
+      });
+    }
+
     const list = [];
     const unitCount = parseInt(this.state.unitCount) >= 0 ? parseInt(this.state.unitCount) : 20;
     const shopCount = parseInt(this.state.shopCount) >= 0 ? parseInt(this.state.shopCount) : 0;
@@ -448,39 +456,65 @@ class KentselDonusumEngine {
     let id = 1;
 
     for (let i = 1; i <= unitCount; i++) {
-      const variation = (i % 3 === 0 ? 8 : (i % 3 === 1 ? -6 : 0));
-      const netM2 = Math.max(45, avgNet + variation);
-      const brutM2 = Math.round(netM2 * 1.25);
+      const existing = oldMap.get(id);
       const floor = Math.min(Math.ceil(i / unitsPerFloor), 12);
+      let netM2, brutM2, name, customSet = false;
+
+      if (existing && existing.customNetManuallySet) {
+        netM2 = existing.existingNetM2;
+        brutM2 = existing.existingGrossM2;
+        name = existing.name || `Malik ${i} (Daire ${i} • Kat ${floor})`;
+        customSet = true;
+      } else {
+        const variation = (i % 3 === 0 ? 8 : (i % 3 === 1 ? -6 : 0));
+        netM2 = Math.max(30, Math.round(avgNet + variation));
+        brutM2 = Math.round(netM2 * 1.25);
+        name = existing ? existing.name : `Malik ${i} (Daire ${i} • Kat ${floor})`;
+      }
       
       list.push({
-        id: id++,
+        id: id,
         sectionType: 'Konut',
         typeLabel: '🏠 Daire',
-        name: `Malik ${i} (Daire ${i} • Kat ${floor})`,
+        name: name,
         floor: floor,
         existingNetM2: netM2,
         existingGrossM2: brutM2,
         landShareRatio: (100 / totalSections).toFixed(2),
-        agreed: id <= Math.ceil(totalSections * (this.state.majorityPct / 100))
+        agreed: id <= Math.ceil(totalSections * (this.state.majorityPct / 100)),
+        customNetManuallySet: customSet
       });
+      id++;
     }
 
     for (let j = 1; j <= shopCount; j++) {
-      const shopNetM2 = Math.round(avgNet * 1.25);
-      const brutM2 = Math.round(shopNetM2 * 1.30);
+      const existing = oldMap.get(id);
+      let shopNetM2, brutM2, name, customSet = false;
+
+      if (existing && existing.customNetManuallySet) {
+        shopNetM2 = existing.existingNetM2;
+        brutM2 = existing.existingGrossM2;
+        name = existing.name || `Dükkan ${j} Sahibi (Zemin Dk:${j})`;
+        customSet = true;
+      } else {
+        shopNetM2 = Math.round(avgNet * 1.25);
+        brutM2 = Math.round(shopNetM2 * 1.30);
+        name = existing ? existing.name : `Dükkan ${j} Sahibi (Zemin Dk:${j})`;
+      }
       
       list.push({
-        id: id++,
+        id: id,
         sectionType: 'Ticari',
         typeLabel: '🏪 Dükkan',
-        name: `Dükkan ${j} Sahibi (Zemin Dk:${j})`,
+        name: name,
         floor: 0,
         existingNetM2: shopNetM2,
         existingGrossM2: brutM2,
         landShareRatio: (100 / totalSections).toFixed(2),
-        agreed: id <= Math.ceil(totalSections * (this.state.majorityPct / 100))
+        agreed: id <= Math.ceil(totalSections * (this.state.majorityPct / 100)),
+        customNetManuallySet: customSet
       });
+      id++;
     }
 
     if (list.length === 0) {
@@ -493,11 +527,61 @@ class KentselDonusumEngine {
         existingNetM2: avgNet,
         existingGrossM2: Math.round(avgNet * 1.25),
         landShareRatio: "100.00",
-        agreed: true
+        agreed: true,
+        customNetManuallySet: false
       });
     }
 
     this.state.owners = list;
+  }
+
+  updateOwnerNetM2(id, netVal) {
+    const val = Math.max(1, parseFloat(netVal) || 0);
+    const owner = (this.state.owners || []).find(o => o.id === id);
+    if (owner) {
+      const isShop = owner.sectionType === 'Ticari';
+      owner.existingNetM2 = val;
+      owner.existingGrossM2 = Math.round(val * (isShop ? 1.30 : 1.25));
+      owner.customNetManuallySet = true;
+
+      // Konutların ortalamasını güncelle
+      const resUnits = (this.state.owners || []).filter(o => o.sectionType === 'Konut');
+      if (resUnits.length > 0) {
+        const sumResNet = resUnits.reduce((acc, u) => acc + (parseFloat(u.existingNetM2) || 0), 0);
+        this.state.existingUnitAvgNet = Math.round((sumResNet / resUnits.length) * 10) / 10;
+      }
+      // Toplam bina mevcut alanını güncelle
+      const totalGross = (this.state.owners || []).reduce((acc, o) => acc + (parseFloat(o.existingGrossM2) || 0), 0);
+      if (totalGross > 0) {
+        this.state.existingBuildingArea = totalGross;
+      }
+      this.calculate();
+    }
+  }
+
+  updateOwnerName(id, name) {
+    const owner = (this.state.owners || []).find(o => o.id === id);
+    if (owner) {
+      owner.name = name;
+      this.calculate();
+    }
+  }
+
+  distributeUniformNetM2(netM2) {
+    const val = parseFloat(netM2) || parseFloat(this.state.existingUnitAvgNet) || 95;
+    (this.state.owners || []).forEach(o => {
+      const isShop = o.sectionType === 'Ticari';
+      const unitVal = isShop ? Math.round(val * 1.25) : val;
+      o.existingNetM2 = unitVal;
+      o.existingGrossM2 = Math.round(unitVal * (isShop ? 1.30 : 1.25));
+      o.customNetManuallySet = true;
+    });
+    this.state.existingUnitAvgNet = val;
+    const totalGross = (this.state.owners || []).reduce((acc, o) => acc + (parseFloat(o.existingGrossM2) || 0), 0);
+    if (totalGross > 0) {
+      this.state.existingBuildingArea = totalGross;
+    }
+    this.calculate();
   }
 
   updateField(key, value) {
@@ -530,9 +614,25 @@ class KentselDonusumEngine {
       const s = parseInt(this.state.shopCount) || 0;
       this.state.ownerCount = u + s;
       this.state.groundFloorShopsCount = s;
-      this.generateDefaultOwners();
-    } else if (key === 'ownerCount' || key === 'existingUnitAvgNet' || key === 'majorityPct' || key === 'unitsPerNormalFloor') {
-      this.generateDefaultOwners();
+      this.generateDefaultOwners(false);
+    } else if (key === 'ownerCount' || key === 'majorityPct' || key === 'unitsPerNormalFloor') {
+      this.generateDefaultOwners(false);
+    } else if (key === 'existingUnitAvgNet') {
+      // Eğer kullanıcı ortalamayı doğrudan değiştirdiyse, özel olarak ayarlanmamış birimleri güncelle
+      const newAvg = parseFloat(value) || 95;
+      (this.state.owners || []).forEach(o => {
+        if (!o.customNetManuallySet) {
+          const isShop = o.sectionType === 'Ticari';
+          if (isShop) {
+            o.existingNetM2 = Math.round(newAvg * 1.25);
+            o.existingGrossM2 = Math.round(o.existingNetM2 * 1.30);
+          } else {
+            const variation = (o.id % 3 === 0 ? 8 : (o.id % 3 === 1 ? -6 : 0));
+            o.existingNetM2 = Math.max(30, Math.round(newAvg + variation));
+            o.existingGrossM2 = Math.round(o.existingNetM2 * 1.25);
+          }
+        }
+      });
     }
     
     this.calculate();
