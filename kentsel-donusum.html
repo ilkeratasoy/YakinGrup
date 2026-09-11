@@ -1611,6 +1611,9 @@
             <button id="btn-batch-delete" class="btn-sm-action danger" onclick="handleBatchDelete()" style="display: none;" title="Seçilen teklifleri veritabanından sil">
               🗑️ Seçilenleri Sil (<span id="batch-del-count">0</span>)
             </button>
+            <button id="btn-batch-email" class="btn-sm-action" onclick="handleBatchEmail()" style="display: none; color: #0369a1; font-weight: 700; border-color: #bae6fd; background: #f0f9ff;" title="Seçilen teklifi e-posta ile gönder">
+              ✉️ Mail Gönder (<span id="batch-email-count">0</span>)
+            </button>
             <button class="btn-sm-action primary" onclick="closeKDModal('modal-kd-archive'); openSaveProposalModal();" title="Mevcut projenizi yeni teklif olarak kaydedin">
               ➕ Yeni Kayıt
             </button>
@@ -1807,6 +1810,92 @@
     </div>
   </div>
 
+  <!-- ==========================================================================
+       MODAL 4: TEKLİFİ E-POSTA İLE GÖNDERME & PAYLAŞMA
+       ========================================================================== -->
+  <div class="modal-overlay" id="modal-kd-email" onclick="if(event.target===this) closeKDModal('modal-kd-email')">
+    <div class="modal-window" style="max-width: 680px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>Kentsel Dönüşüm Teklifini E-Posta ile Gönder</span>
+          </h3>
+          <span id="email-modal-docno-badge" style="font-size: 0.72rem; font-weight: 800; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-family: monospace;">
+            -
+          </span>
+        </div>
+        <button class="modal-close-btn" onclick="closeKDModal('modal-kd-email')">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Bilgi Kutucuğu -->
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <div id="email-modal-proj-title" style="font-weight: 800; font-size: 0.88rem; color: var(--brand-primary);">-</div>
+            <div id="email-modal-proj-subtitle" style="font-size: 0.73rem; color: #64748b; margin-top: 2px;">-</div>
+          </div>
+          <div id="email-modal-status-pill" style="font-size: 0.72rem; font-weight: 700; background: #ecfdf5; color: #166534; padding: 3px 10px; border-radius: 9999px; border: 1px solid #bbf7d0;">
+            📝 Taslak
+          </div>
+        </div>
+
+        <form id="form-send-proposal-email" onsubmit="handleSendProposalEmailSubmit(event)">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 0.85rem;">
+            <div>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">
+                Alıcı E-Posta (Bina Yönetimi / Malik)*
+              </label>
+              <input type="email" id="inp-mail-to" class="form-input" required placeholder="ornek@siteyonetimi.com" style="width: 100%; box-sizing: border-box; font-size: 0.82rem; padding: 8px 10px;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">
+                Bilgi (CC - İsteğe Bağlı)
+              </label>
+              <input type="email" id="inp-mail-cc" class="form-input" placeholder="bilgi@yakingrup.net" value="info@yakingrup.net" style="width: 100%; box-sizing: border-box; font-size: 0.82rem; padding: 8px 10px;">
+            </div>
+          </div>
+
+          <div style="margin-bottom: 0.85rem;">
+            <label style="display: block; font-size: 0.76rem; font-weight: 700; color: #334155; margin-bottom: 4px;">
+              E-Posta Konusu*
+            </label>
+            <input type="text" id="inp-mail-subject" class="form-input" required style="width: 100%; box-sizing: border-box; font-size: 0.82rem; padding: 8px 10px; font-weight: 600;">
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <label style="font-size: 0.76rem; font-weight: 700; color: #334155;">
+                E-Posta Mesaj İçeriği & Şablonu
+              </label>
+              <button type="button" class="btn-sm-action" onclick="copyEmailBodyToClipboard()" title="E-Posta metnini panoya kopyalayın">
+                📋 Metni Kopyala
+              </button>
+            </div>
+            <textarea id="inp-mail-body" class="form-input" rows="10" style="width: 100%; box-sizing: border-box; font-size: 0.78rem; line-height: 1.5; padding: 10px; font-family: inherit; resize: vertical;"></textarea>
+            <div style="font-size: 0.70rem; color: #64748b; margin-top: 4px;">
+              💡 <em>İpucu:</em> <strong>"E-Posta Programında Aç"</strong> butonuna basarak doğrudan Outlook, Gmail veya Apple Mail uygulamanızda önceden doldurulmuş olarak açabilir veya metni kopyalayıp dilediğiniz webmail/mesajlaşma kanalından iletebilirsiniz.
+            </div>
+          </div>
+
+          <div id="email-send-status-alert" style="display: none; padding: 8px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; margin-bottom: 1rem;"></div>
+
+          <div style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="closeKDModal('modal-kd-email')">Vazgeç</button>
+            <button type="button" class="btn-sm-action" onclick="copyEmailBodyToClipboard()" style="padding: 7px 14px; font-size: 0.82rem;">
+              📋 Metni Kopyala
+            </button>
+            <button type="button" class="btn-sm-action primary" onclick="launchMailtoClient()" style="padding: 7px 16px; font-size: 0.82rem; font-weight: 800; background: #1a3d7c; color: #fff;">
+              📧 E-Posta Programında Aç (mailto)
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" style="font-weight: 800;">
+              ✓ Gönderildi Olarak İşaretle & Kaydet
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- ==========================================================================
        STICKY BOTTOM ACTION BAR
@@ -2790,11 +2879,17 @@
 
     function updateBatchDeleteButtonState() {
       const btnBatch = document.getElementById('btn-batch-delete');
+      const btnBatchEmail = document.getElementById('btn-batch-email');
       const lblCount = document.getElementById('batch-del-count');
+      const lblEmailCount = document.getElementById('batch-email-count');
       const count = selectedProposalDocNos.size;
       if (lblCount) lblCount.textContent = count;
+      if (lblEmailCount) lblEmailCount.textContent = count;
       if (btnBatch) {
         btnBatch.style.display = count > 0 ? 'inline-flex' : 'none';
+      }
+      if (btnBatchEmail) {
+        btnBatchEmail.style.display = count > 0 ? 'inline-flex' : 'none';
       }
     }
 
@@ -3073,6 +3168,7 @@
             </td>
             <td style="text-align: right; white-space: nowrap;">
               <button class="btn-sm-action primary" onclick="loadProposalFromDB('${p.docNo}')" title="Bu teklifin tüm verilerini stüdyoya yükle">📂 Aç</button>
+              <button class="btn-sm-action" onclick="openEmailProposalModal('${p.docNo}')" title="Bu teklifi e-posta ile gönder" style="color: #0369a1; font-weight: 700; border-color: #bae6fd; background: #f0f9ff;">✉️ Mail</button>
               <button class="btn-sm-action" onclick="cloneProposalFromDB('${p.docNo}')" title="Teklifi klonla / revizyon oluştur">📋 Klonla</button>
               <button class="btn-sm-action danger" onclick="deleteProposalFromDB('${p.docNo}', event)" title="Bu teklifi veritabanından kalıcı olarak sil">🗑️ Sil</button>
             </td>
@@ -3142,6 +3238,207 @@
       };
       reader.readAsText(file);
       e.target.value = '';
+    }
+
+    // =========================================================================
+    // TEKLİF E-POSTA GÖNDERME & PAYLAŞMA FONKSİYONLARI
+    // =========================================================================
+    let currentEmailProposalDocNo = null;
+
+    function openEmailProposalModal(docNo) {
+      if (!window.KDDB) return;
+      const p = window.KDDB.getById(docNo);
+      if (!p) {
+        alert('Teklif kaydı bulunamadı: ' + docNo);
+        return;
+      }
+
+      currentEmailProposalDocNo = docNo;
+      const eng = window.KDEngine;
+
+      const badgeDocNo = document.getElementById('email-modal-docno-badge');
+      const lblTitle = document.getElementById('email-modal-proj-title');
+      const lblSubtitle = document.getElementById('email-modal-proj-subtitle');
+      const statusPill = document.getElementById('email-modal-status-pill');
+      const inpTo = document.getElementById('inp-mail-to');
+      const inpCc = document.getElementById('inp-mail-cc');
+      const inpSubj = document.getElementById('inp-mail-subject');
+      const inpBody = document.getElementById('inp-mail-body');
+      const alertBox = document.getElementById('email-send-status-alert');
+
+      if (alertBox) {
+        alertBox.style.display = 'none';
+        alertBox.textContent = '';
+      }
+
+      const costStr = eng ? eng.formatCurrency(p.totalCost) : (p.totalCost ? p.totalCost.toLocaleString('tr-TR') + ' TL' : '-');
+      const revStr = eng ? eng.formatCurrency(p.totalRevenue) : (p.totalRevenue ? p.totalRevenue.toLocaleString('tr-TR') + ' TL' : '-');
+      const dateStr = p.createdAt ? new Date(p.createdAt).toLocaleDateString('tr-TR') : new Date().toLocaleDateString('tr-TR');
+
+      if (badgeDocNo) badgeDocNo.textContent = p.docNo;
+      if (lblTitle) lblTitle.textContent = p.title || `${p.city} ${p.district} Kentsel Dönüşüm Teklifi`;
+      if (lblSubtitle) lblSubtitle.textContent = `📍 ${p.city} / ${p.district} • ${p.neighborhood || ''} • Ada: ${p.ada} Parsel: ${p.parsel} • Tarih: ${dateStr}`;
+      if (statusPill) {
+        statusPill.textContent = p.status || 'Taslak';
+        statusPill.style.background = p.status === 'Onaylandı' ? '#ecfdf5' : '#eff6ff';
+        statusPill.style.color = p.status === 'Onaylandı' ? '#166534' : '#1e40af';
+      }
+
+      if (inpTo) inpTo.value = '';
+      if (inpCc) inpCc.value = 'info@yakingrup.net';
+      if (inpSubj) {
+        inpSubj.value = `[Yakın Grup] Resmi Kentsel Dönüşüm Teklifi & Fizibilite Dosyası — No: ${p.docNo} (${p.district} ${p.ada}/${p.parsel})`;
+      }
+
+      const emailText = `Sayın Kat Malikleri Temsilcileri ve Yönetim Kurulu,
+
+${p.city} ili, ${p.district} ilçesi, ${p.ada} Ada ${p.parsel} Parsel üzerinde yer alan taşınmazınız için 2026 Kentsel Dönüşüm Mevzuatı ve güncel imar yönetmelikleri kapsamında Yakın Grup bünyesinde hazırlanan "Kentsel Dönüşüm Resmi Fizibilite & Teklif Dosyası" bilgilerinize sunulmuştur.
+
+==================================================
+PROJE VE FİZİBİLİTE YÖNETİCİ ÖZETİ
+==================================================
+• Resmi Teklif No: ${p.docNo}
+• Taşınmaz Konumu: ${p.city} / ${p.district} (Ada: ${p.ada}, Parsel: ${p.parsel})
+• Arsa Alanı: ${p.landArea ? p.landArea + ' m²' : '-'}
+• Toplam İnşaat Alanı: ${p.totalConstructionArea ? p.totalConstructionArea.toLocaleString('tr-TR') + ' m²' : '-'}
+• Bağımsız Bölüm Üretimi: ${p.newUnits || '-'} Konut + ${p.newShops || 0} Ticari Dükkan (Toplam ${(p.newUnits || 0) + (p.newShops || 0)} Bölüm)
+• Toplam Proje Maliyeti: ${costStr}
+• Hedef Satış Hasılatı Değeri: ${revStr}
+• Önerilen Finansman Modeli: ${p.recommendedModel || 'Yarısı Bizden Destekli & Hakedişli Model'}
+
+==================================================
+DEVLET DESTEKLERİ & HAKEDİŞ FİNANSMANI (2026)
+==================================================
+${p.city === 'İstanbul' ? 'Taşınmaz İstanbul sınırlarında yer aldığından "Yarısı Bizden Kampanyası" kapsamında hak sahibi her bir konut için 875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL) doğrudan yüklenici hakedişine aktarılmakta; ayrıca her bağımsız bölüme 125.000 TL nakit taşınma desteği doğrudan malikin banka hesabına ödenmektedir.' : 'Dünya Bankası ve Çevre Şehircilik Bakanlığı finansman protokolleri kapsamında uygun vadeli dönüşüm kredisi imkanları sağlanmaktadır.'}
+
+==================================================
+MİMARİ VE TEKNİK İMALAT KALİTE STANDARTLARI
+==================================================
+• Statik: TBDY-2018 Deprem Yönetmeliği standartlarında C30/37 hazır beton, B420C çelik donatı ve radye jeneral temel sistemi.
+• Dış Cephe & Yalıtım: A1 yanmaz taş yünü mantolama, Sinterflex / Porselen cephe kaplama, Rehau/Winsa çok odacıklı PVC & Isıcam Konfor.
+• İç Mekan: Rehau yerden ısıtma, 60x120 porselen seramik, 10mm laminat parke, lake mobilya mutfak, Hansgrohe/ECA armatürler, Kale çelik kapı.
+
+==================================================
+RESMİ TEKLİF & RAPOR GÖRÜNTÜLEME
+==================================================
+İşbu teklifin tüm teknik şartname maddelerine, bağımsız bölüm dağılım cetveline ve resmi teklif çıktısına stüdyomuz üzerinden erişebilirsiniz:
+https://www.yakingrup.net/kentsel-donusum.html
+
+Her türlü teknik değerlendirme, avan proje incelemesi veya malikler kurulu bilgilendirme toplantısı organizasyonu için şirketimiz yetkilileriyle iletişime geçebilirsiniz.
+
+Saygılarımızla,
+Yakın Grup Kentsel Dönüşüm & Proje Geliştirme A.Ş.
+Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
+
+      if (inpBody) {
+        inpBody.value = emailText;
+      }
+
+      openKDModal('modal-kd-email');
+    }
+
+    function launchMailtoClient() {
+      const inpTo = document.getElementById('inp-mail-to');
+      const inpCc = document.getElementById('inp-mail-cc');
+      const inpSubj = document.getElementById('inp-mail-subject');
+      const inpBody = document.getElementById('inp-mail-body');
+      const alertBox = document.getElementById('email-send-status-alert');
+
+      const to = (inpTo?.value || '').trim();
+      const cc = (inpCc?.value || '').trim();
+      const subject = (inpSubj?.value || '').trim();
+      const body = inpBody?.value || '';
+
+      if (!to) {
+        alert('Lütfen teklifi göndereceğiniz alıcı e-posta adresini giriniz.');
+        if (inpTo) inpTo.focus();
+        return;
+      }
+
+      let mailtoUrl = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      if (cc) {
+        mailtoUrl += `&cc=${encodeURIComponent(cc)}`;
+      }
+
+      if (currentEmailProposalDocNo && window.KDDB) {
+        const p = window.KDDB.getById(currentEmailProposalDocNo);
+        if (p && p.status === 'Taslak') {
+          window.KDDB.updateStatus(currentEmailProposalDocNo, 'Teklif İletildi');
+          renderKDArchiveTable();
+        }
+      }
+
+      if (alertBox) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#eff6ff';
+        alertBox.style.color = '#1e40af';
+        alertBox.style.border = '1px solid #bfdbfe';
+        alertBox.innerHTML = `🚀 E-Posta istemciniz (Mail/Outlook vb.) açılıyor. Teklif durumu <strong>Teklif İletildi</strong> olarak güncellendi.`;
+      }
+
+      window.location.href = mailtoUrl;
+    }
+
+    function copyEmailBodyToClipboard() {
+      const inpBody = document.getElementById('inp-mail-body');
+      const alertBox = document.getElementById('email-send-status-alert');
+      if (!inpBody) return;
+
+      navigator.clipboard.writeText(inpBody.value).then(() => {
+        if (alertBox) {
+          alertBox.style.display = 'block';
+          alertBox.style.background = '#ecfdf5';
+          alertBox.style.color = '#166534';
+          alertBox.style.border = '1px solid #bbf7d0';
+          alertBox.innerHTML = `📋 <strong>E-Posta metni ve teklif özeti panoya kopyalandı!</strong> Dilediğiniz webmail servisine (Gmail, Yandex vb.) veya mesajlaşma uygulamasına yapıştırabilirsiniz.`;
+        }
+        showToastNotification('📋 E-Posta metni başarıyla panoya kopyalandı!');
+      }).catch(err => {
+        inpBody.select();
+        document.execCommand('copy');
+        showToastNotification('📋 E-Posta metni panoya kopyalandı!');
+      });
+    }
+
+    function handleSendProposalEmailSubmit(e) {
+      if (e) e.preventDefault();
+      const inpTo = document.getElementById('inp-mail-to');
+      const to = (inpTo?.value || '').trim();
+      const alertBox = document.getElementById('email-send-status-alert');
+
+      if (!to) {
+        alert('Lütfen alıcı e-posta adresini giriniz.');
+        if (inpTo) inpTo.focus();
+        return;
+      }
+
+      if (currentEmailProposalDocNo && window.KDDB) {
+        window.KDDB.updateStatus(currentEmailProposalDocNo, 'Teklif İletildi');
+        renderKDArchiveTable();
+        updateArchiveBadgeCounters();
+      }
+
+      if (alertBox) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#ecfdf5';
+        alertBox.style.color = '#166534';
+        alertBox.style.border = '1px solid #bbf7d0';
+        alertBox.innerHTML = `✅ Teklif <strong>${to}</strong> adresine iletildi olarak işaretlendi ve veritabanı güncellendi!`;
+      }
+
+      showToastNotification(`📨 [${currentEmailProposalDocNo}] teklifi "${to}" adresine iletildi olarak kaydedildi.`);
+      setTimeout(() => {
+        closeKDModal('modal-kd-email');
+      }, 1400);
+    }
+
+    function handleBatchEmail() {
+      const docNos = Array.from(selectedProposalDocNos);
+      if (docNos.length === 0) {
+        alert('Lütfen e-posta ile göndermek istediğiniz teklifi tablodan seçiniz.');
+        return;
+      }
+      openEmailProposalModal(docNos[0]);
     }
 
 
