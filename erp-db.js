@@ -16,7 +16,7 @@ const YakinERP = (function () {
   const DELETED_INVENTORY_KEY = DB_PREFIX + 'deleted_inventory';
 
   // Default Firebase / Cloud REST DB Endpoint for Yakın Grup
-  const DEFAULT_CLOUD_URL = 'https://yakingrup-cloud-db-default-rtdb.firebaseio.com/yakingrup_erp.json';
+  const DEFAULT_CLOUD_URL = 'https://yakingrup-default-rtdb.firebaseio.com/yakingrup_erp.json';
 
   function getDeletedIds(key) {
     try {
@@ -271,7 +271,12 @@ const YakinERP = (function () {
   ];
 
   function getCloudUrl() {
-    return localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL;
+    let url = localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL;
+    if (url && url.includes('yakingrup-cloud-db-default-rtdb')) {
+      url = url.replace('yakingrup-cloud-db-default-rtdb', 'yakingrup-default-rtdb');
+      localStorage.setItem(CLOUD_URL_KEY, url);
+    }
+    return url;
   }
 
   function setCloudUrl(url) {

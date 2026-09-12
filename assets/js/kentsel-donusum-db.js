@@ -227,7 +227,12 @@
 
   function getCloudUrl() {
     try {
-      return localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL;
+      let url = localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL;
+      if (url && url.includes('yakingrup-cloud-db-default-rtdb')) {
+        url = url.replace('yakingrup-cloud-db-default-rtdb', 'yakingrup-default-rtdb');
+        localStorage.setItem(CLOUD_URL_KEY, url);
+      }
+      return url;
     } catch (e) {
       return DEFAULT_CLOUD_URL;
     }
@@ -300,12 +305,20 @@
 
       if (response.ok) {
         const cloudData = await response.json();
+        let cloudProposals = null;
         if (cloudData && Array.isArray(cloudData.proposals)) {
+          cloudProposals = cloudData.proposals;
+        } else if (cloudData && cloudData.proposals && typeof cloudData.proposals === 'object') {
+          cloudProposals = Object.values(cloudData.proposals);
+        }
+
+        if (cloudProposals) {
           const localList = getLocalDB();
           const mergedList = [...localList];
           let hasNewOrUpdated = false;
 
-          cloudData.proposals.forEach(cloudP => {
+          cloudProposals.forEach(cloudP => {
+            if (!cloudP) return;
             const idx = mergedList.findIndex(m => m.docNo === cloudP.docNo || m.id === cloudP.id);
             if (idx >= 0) {
               const localUpdated = new Date(mergedList[idx].updatedAt || 0).getTime();
@@ -333,8 +346,8 @@
           if (showNotification && typeof showToastNotification === 'function') {
             showToastNotification(`☁️ Online bulut veritabanı eşitlendi (${mergedList.length} teklif aktif).`);
           }
-        } else if (cloudData === null) {
-          // Cloud is empty, push local data to seed cloud database
+        } else if (cloudData === null || (cloudData && !cloudData.proposals)) {
+          // Cloud is empty or unseeded, push local data to seed cloud database
           pushToCloud();
           syncStatus = 'online';
           lastSyncTime = new Date().toLocaleTimeString('tr-TR');
@@ -353,7 +366,7 @@
 
   async function pushToCloud() {
     const url = getCloudUrl();
-    if (!url) return;
+    if (!url) return false;
 
     try {
       const list = getLocalDB();
@@ -362,7 +375,7 @@
         proposals: list
       };
 
-      await fetch(url, {
+      const res = await fetch(url, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -370,12 +383,23 @@
         body: JSON.stringify(payload)
       });
 
-      syncStatus = 'online';
-      lastSyncTime = new Date().toLocaleTimeString('tr-TR');
-      localStorage.setItem(LAST_SYNC_KEY, lastSyncTime);
-      dispatchSyncEvent();
+      if (res.ok) {
+        syncStatus = 'online';
+        lastSyncTime = new Date().toLocaleTimeString('tr-TR');
+        localStorage.setItem(LAST_SYNC_KEY, lastSyncTime);
+        dispatchSyncEvent();
+        return true;
+      } else {
+        console.error('KDDB Cloud Push response not ok:', res.status, res.statusText);
+        syncStatus = 'offline';
+        dispatchSyncEvent();
+        return false;
+      }
     } catch (err) {
       console.warn('KDDB Cloud Push warning:', err.message);
+      syncStatus = 'offline';
+      dispatchSyncEvent();
+      return false;
     }
   }
 
