@@ -8,7 +8,9 @@
   if (typeof define === 'function' && define.amd) {
     define([], factory);
   } else if (typeof module === 'object' && module.exports) {
-    module.exports = factory();
+    const inst = factory();
+    module.exports = inst;
+    if (typeof window !== 'undefined') window.KDDB = inst;
   } else {
     root.KDDB = factory();
   }
@@ -17,6 +19,26 @@
   const LOCAL_STORAGE_KEY = 'yg_kd_proposals_db_v1';
   const CLOUD_URL_KEY = 'yg_kd_cloud_db_url';
   const LAST_SYNC_KEY = 'yg_kd_last_sync_time';
+  const DELETED_PROPOSALS_KEY = 'yg_kd_deleted_proposals';
+
+  function getDeletedIds() {
+    try {
+      const data = localStorage.getItem(DELETED_PROPOSALS_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function addDeletedIds(...ids) {
+    try {
+      const current = new Set(getDeletedIds());
+      ids.forEach(id => {
+        if (id) current.add(String(id));
+      });
+      localStorage.setItem(DELETED_PROPOSALS_KEY, JSON.stringify(Array.from(current)));
+    } catch (e) {}
+  }
 
   // Yakın Grup Online Firebase Realtime Database Endpoint
   const DEFAULT_CLOUD_URL = 'https://yakingrup-default-rtdb.firebaseio.com/yakingrup_kd_proposals.json';
@@ -208,7 +230,29 @@
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultArchivedProposals));
         return [...defaultArchivedProposals];
       }
-      return JSON.parse(data) || [];
+      const rawList = JSON.parse(data) || [];
+      const deletedIds = new Set(getDeletedIds());
+
+      // Otomatik Temizlik: docNo'su olmayan, 'undefined' olan veya silinen kayıtları filtrele
+      const cleanList = rawList.filter(p => {
+        if (!p || typeof p !== 'object') return false;
+        const docNoStr = String(p.docNo || '').trim();
+        const idStr = String(p.id || '').trim();
+
+        if (!docNoStr || docNoStr === 'undefined' || docNoStr === 'null') {
+          return false; // Geçersiz / bozuk kayıt
+        }
+        if (deletedIds.has(docNoStr) || deletedIds.has(idStr)) {
+          return false; // Daha önce silinmiş kayıt
+        }
+        return true;
+      });
+
+      if (cleanList.length !== rawList.length) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cleanList));
+      }
+
+      return cleanList;
     } catch (e) {
       console.error('KDDB Local Storage Read Error:', e);
       return [...defaultArchivedProposals];
@@ -313,41 +357,50 @@
         }
 
         if (cloudProposals) {
+          const deletedIds = new Set(getDeletedIds());
           const localList = getLocalDB();
           const mergedList = [...localList];
-          let hasNewOrUpdated = false;
 
           cloudProposals.forEach(cloudP => {
-            if (!cloudP) return;
-            const idx = mergedList.findIndex(m => m.docNo === cloudP.docNo || m.id === cloudP.id);
+            if (!cloudP || typeof cloudP !== 'object') return;
+            const docNoStr = String(cloudP.docNo || '').trim();
+            const idStr = String(cloudP.id || '').trim();
+            // Geçersiz, tanımsız veya silinmiş kayıtları içeri alma
+            if (!docNoStr || docNoStr === 'undefined' || docNoStr === 'null') return;
+            if (deletedIds.has(docNoStr) || deletedIds.has(idStr)) return;
+
+            const idx = mergedList.findIndex(m => m.docNo === docNoStr || m.id === idStr);
             if (idx >= 0) {
               const localUpdated = new Date(mergedList[idx].updatedAt || 0).getTime();
               const cloudUpdated = new Date(cloudP.updatedAt || 0).getTime();
               if (cloudUpdated > localUpdated) {
                 mergedList[idx] = Object.assign({}, mergedList[idx], cloudP);
-                hasNewOrUpdated = true;
               }
             } else {
               mergedList.unshift(cloudP);
-              hasNewOrUpdated = true;
             }
           });
 
-          saveLocalDB(mergedList);
+          // Kesin temizlik: bozuk ve silinmiş kayıtları listeden ayıkla
+          const finalList = mergedList.filter(p => {
+            if (!p || typeof p !== 'object') return false;
+            const d = String(p.docNo || '').trim();
+            const i = String(p.id || '').trim();
+            return d && d !== 'undefined' && d !== 'null' && !deletedIds.has(d) && !deletedIds.has(i);
+          });
+
+          saveLocalDB(finalList);
           syncStatus = 'online';
           lastSyncTime = new Date().toLocaleTimeString('tr-TR');
           localStorage.setItem(LAST_SYNC_KEY, lastSyncTime);
 
-          if (hasNewOrUpdated) {
-            // Push back any local items the cloud didn't have
-            pushToCloud();
-          }
+          // DİKKAT: Burada pushToCloud() ÇAĞRILMAZ! (Otomatik kaydet döngüsünü engeller)
 
           if (showNotification && typeof showToastNotification === 'function') {
-            showToastNotification(`☁️ Online bulut veritabanı eşitlendi (${mergedList.length} teklif aktif).`);
+            showToastNotification(`☁️ Online bulut veritabanı eşitlendi (${finalList.length} teklif aktif).`);
           }
-        } else if (cloudData === null || (cloudData && !cloudData.proposals)) {
-          // Cloud is empty or unseeded, push local data to seed cloud database
+        } else if (cloudData === null) {
+          // Bulut tamamen boşsa başlangıç verilerini yükle
           pushToCloud();
           syncStatus = 'online';
           lastSyncTime = new Date().toLocaleTimeString('tr-TR');
@@ -544,11 +597,26 @@
     },
 
     // 5. Teklifi Sil (Tekil Silme)
-    delete(docNo) {
+    delete(docNoOrId) {
       let list = getLocalDB();
       const initialLen = list.length;
-      list = list.filter(p => p.docNo !== docNo && p.id !== docNo);
-      if (list.length !== initialLen) {
+      const target = String(docNoOrId || '').trim();
+
+      list = list.filter(p => {
+        if (!p) return false;
+        const d = String(p.docNo || '').trim();
+        const i = String(p.id || '').trim();
+        if (target === 'undefined' || target === 'null' || !target) {
+          return d && d !== 'undefined';
+        }
+        return d !== target && i !== target;
+      });
+
+      if (target && target !== 'undefined' && target !== 'null') {
+        addDeletedIds(target);
+      }
+
+      if (list.length !== initialLen || target === 'undefined' || !target) {
         saveLocalDB(list);
         pushToCloud();
         dispatchSyncEvent();
@@ -558,13 +626,27 @@
     },
 
     // 5b. Çoklu Teklif Sil (Toplu Silme)
-    deleteMultiple(docNos) {
-      if (!Array.isArray(docNos) || docNos.length === 0) return 0;
+    deleteMultiple(docNosOrIds) {
+      if (!Array.isArray(docNosOrIds) || docNosOrIds.length === 0) return 0;
       let list = getLocalDB();
       const initialLen = list.length;
-      list = list.filter(p => !docNos.includes(p.docNo) && !docNos.includes(p.id));
+      const targets = new Set(docNosOrIds.map(d => String(d || '').trim()));
+      const hasUndefined = targets.has('undefined') || targets.has('') || targets.has('null');
+
+      list = list.filter(p => {
+        if (!p) return false;
+        const d = String(p.docNo || '').trim();
+        const i = String(p.id || '').trim();
+        if (hasUndefined && (!d || d === 'undefined')) return false;
+        return !targets.has(d) && !targets.has(i);
+      });
+
+      docNosOrIds.forEach(id => {
+        if (id && id !== 'undefined' && id !== 'null') addDeletedIds(id);
+      });
+
       const deletedCount = initialLen - list.length;
-      if (deletedCount > 0) {
+      if (deletedCount > 0 || hasUndefined) {
         saveLocalDB(list);
         pushToCloud();
         dispatchSyncEvent();

@@ -3352,6 +3352,8 @@
       }
 
       tbody.innerHTML = list.map(p => {
+        const propKey = p.docNo || p.id || 'undefined';
+        const displayDocNo = (p.docNo && p.docNo !== 'undefined') ? p.docNo : (p.id ? `Geçersiz (${p.id})` : 'Tanımsız Kayıt');
         const dateFormatted = p.createdAt ? new Date(p.createdAt).toLocaleDateString('tr-TR') : '-';
         const costFormatted = eng ? eng.formatCurrency(p.totalCost) : (p.totalCost ? p.totalCost.toLocaleString('tr-TR') + ' TL' : '-');
         const revFormatted = eng ? eng.formatCurrency(p.totalRevenue) : (p.totalRevenue ? p.totalRevenue.toLocaleString('tr-TR') + ' TL' : '-');
@@ -3359,18 +3361,18 @@
         return `
           <tr>
             <td style="text-align: center; vertical-align: middle;">
-              <input type="checkbox" class="chk-proposal-row" data-docno="${p.docNo}" onchange="toggleProposalRowSelection('${p.docNo}', this.checked)" style="cursor: pointer; width: 15px; height: 15px;">
+              <input type="checkbox" class="chk-proposal-row" data-docno="${propKey}" onchange="toggleProposalRowSelection('${propKey}', this.checked)" style="cursor: pointer; width: 15px; height: 15px;">
             </td>
             <td>
-              <strong style="font-family: monospace; color: var(--brand-primary); font-size: 0.82rem;">${p.docNo}</strong><br>
+              <strong style="font-family: monospace; color: ${p.docNo && p.docNo !== 'undefined' ? 'var(--brand-primary)' : '#dc2626'}; font-size: 0.82rem;">${displayDocNo}</strong><br>
               <span style="font-size: 0.68rem; color: #64748b;">📅 ${dateFormatted}</span>
             </td>
             <td>
-              <strong>${p.title || `${p.city} ${p.district}`}</strong><br>
-              <span style="font-size: 0.7rem; color: #0284c7; font-weight: 600;">📍 ${p.city} / ${p.district} • ${p.ada}/${p.parsel} (${p.existingUnits || '-'} Malik)</span>
+              <strong>${p.title || `${p.city || ''} ${p.district || ''}` || 'İsimsiz Teklif'}</strong><br>
+              <span style="font-size: 0.7rem; color: #0284c7; font-weight: 600;">📍 ${p.city || '-'} / ${p.district || '-'} • ${p.ada || '-'}/${p.parsel || '-'} (${p.existingUnits || '-'} Malik)</span>
             </td>
             <td>
-              <strong>${eng ? eng.formatM2(p.totalConstructionArea) : p.totalConstructionArea + ' m²'}</strong><br>
+              <strong>${eng ? eng.formatM2(p.totalConstructionArea) : (p.totalConstructionArea || 0) + ' m²'}</strong><br>
               <span style="font-size: 0.7rem; color: #475569;">${p.newUnits || 0} Konut + ${p.newShops || 0} Dükkan</span>
             </td>
             <td>
@@ -3381,7 +3383,7 @@
               ${p.recommendedModel || '-'}
             </td>
             <td>
-              <select onchange="handleDBStatusChange('${p.docNo}', this.value)" style="font-size: 0.72rem; padding: 4px 6px; border-radius: 4px; font-weight: 700; border: 1px solid #cbd5e1; background: #ffffff;">
+              <select onchange="handleDBStatusChange('${propKey}', this.value)" style="font-size: 0.72rem; padding: 4px 6px; border-radius: 4px; font-weight: 700; border: 1px solid #cbd5e1; background: #ffffff;">
                 <option value="Taslak" ${p.status === 'Taslak' ? 'selected' : ''}>📝 Taslak</option>
                 <option value="Teklif İletildi" ${p.status === 'Teklif İletildi' ? 'selected' : ''}>📨 Teklif İletildi</option>
                 <option value="Onaylandı" ${p.status === 'Onaylandı' ? 'selected' : ''} style="color: #16a34a; font-weight: 800;">✅ Onaylandı</option>
@@ -3390,25 +3392,30 @@
               </select>
             </td>
             <td style="text-align: right; white-space: nowrap; min-width: 240px;">
-              <button class="btn-sm-action primary" onclick="loadProposalFromDB('${p.docNo}')" title="Bu teklifin tüm verilerini stüdyoya yükle" style="padding: 4px 8px; font-size: 0.72rem;">📂 Aç</button>
-              <button class="btn-sm-action" onclick="openEmailProposalModal('${p.docNo}')" title="Bu teklifi e-posta ile gönder" style="padding: 4px 8px; font-size: 0.72rem; color: #0369a1; font-weight: 700; border-color: #bae6fd; background: #f0f9ff;">✉️ Mail</button>
-              <button class="btn-sm-action" onclick="cloneProposalFromDB('${p.docNo}')" title="Teklifi klonla / revizyon oluştur" style="padding: 4px 8px; font-size: 0.72rem;">📋 Klonla</button>
-              <button class="btn-sm-action danger" onclick="deleteProposalFromDB('${p.docNo}', event)" title="Bu teklifi veritabanından kalıcı olarak sil" style="padding: 4px 8px; font-size: 0.72rem;">🗑️ Sil</button>
+              <button class="btn-sm-action primary" onclick="loadProposalFromDB('${propKey}')" title="Bu teklifin tüm verilerini stüdyoya yükle" style="padding: 4px 8px; font-size: 0.72rem;">📂 Aç</button>
+              <button class="btn-sm-action" onclick="openEmailProposalModal('${propKey}')" title="Bu teklifi e-posta ile gönder" style="padding: 4px 8px; font-size: 0.72rem; color: #0369a1; font-weight: 700; border-color: #bae6fd; background: #f0f9ff;">✉️ Mail</button>
+              <button class="btn-sm-action" onclick="cloneProposalFromDB('${propKey}')" title="Teklifi klonla / revizyon oluştur" style="padding: 4px 8px; font-size: 0.72rem;">📋 Klonla</button>
+              <button class="btn-sm-action danger" onclick="deleteProposalFromDB('${propKey}', event)" title="Bu teklifi veritabanından kalıcı olarak sil" style="padding: 4px 8px; font-size: 0.72rem;">🗑️ Sil</button>
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    function deleteProposalFromDB(docNo, e) {
+    function deleteProposalFromDB(key, e) {
       if (e) e.stopPropagation();
-      if (!confirm(`[${docNo}] numaralı kentsel dönüşüm teklifini veritabanından silmek istediğinize emin misiniz?`)) {
+      const isCorrupt = !key || key === 'undefined' || key.includes('Geçersiz');
+      const confirmMsg = isCorrupt 
+        ? 'Bu geçersiz / tanımsız kaydı veritabanından kalıcı olarak silmek istediğinize emin misiniz?'
+        : `[${key}] numaralı kentsel dönüşüm teklifini veritabanından silmek istediğinize emin misiniz?`;
+
+      if (!confirm(confirmMsg)) {
         return;
       }
-      if (window.KDDB && window.KDDB.delete(docNo)) {
+      if (window.KDDB && window.KDDB.delete(key)) {
         renderKDArchiveTable();
         updateArchiveBadgeCounters();
-        showToastNotification(`🗑️ [${docNo}] numaralı teklif veritabanından başarıyla silindi.`);
+        showToastNotification(`🗑️ ${isCorrupt ? 'Geçersiz kayıt' : '[' + key + ']'} veritabanından başarıyla silindi.`);
       }
     }
 
