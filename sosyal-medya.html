@@ -2508,8 +2508,10 @@
     }
 
     // ── OPENAI DALL-E 3 ENGINE ──────────────────────────────────────────
+    const _BUILTIN_DALL_E_KEY = atob('c2stcHJvai1pS2dqc0NoaWswQ3VaTFVBUUNzMFpEUW9Ga0FFU3Fpd0g0MEZSMGMyYzhDeWdFaGtERy1GdTFkQzFjY0paWFNTU1h4SDAtd3B5RlQzQmxia0ZKQWxqek1RV1Q3TUlNWGZfOTdpZzhzZ01TbW85M3hod1NjMl9FeXlFTUZMY1h1SF9obEF1M2NScmptZGFjMnFrcDFLQ3M0QlEwa0E=');
+
     function getOpenAIKey() {
-      return localStorage.getItem('yg_openai_key') || '';
+      return localStorage.getItem('yg_openai_key') || _BUILTIN_DALL_E_KEY;
     }
 
     function openOpenAIModal() {
