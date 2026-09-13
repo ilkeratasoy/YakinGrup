@@ -501,9 +501,9 @@
     .social-share-row { display: flex; gap: 6px; align-items: center; margin-top: 2px; }
     .btn-share {
       flex: 1;
-      padding: 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
+      padding: 7px 8px;
+      border-radius: 8px;
+      font-size: 0.76rem;
       font-weight: 700;
       text-decoration: none;
       text-align: center;
@@ -511,15 +511,107 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      transition: opacity 0.2s;
+      gap: 5px;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
     }
-    .btn-share:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-share:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
     .share-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
     .share-youtube { background: #cc0000; }
     .share-facebook { background: #1877f2; }
     .share-linkedin { background: #0a66c2; }
     .share-x { background: #000000; }
+    .share-whatsapp { background: #25d366; }
+
+    /* Manual Share Dedicated Card */
+    .manual-share-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .manual-share-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .manual-share-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .btn-manual-share {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .btn-manual-share:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+      filter: brightness(1.06);
+    }
+    .btn-manual-share:active {
+      transform: translateY(0);
+    }
+    .btn-facebook {
+      background: #1877f2;
+    }
+    .btn-instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+    .btn-youtube {
+      background: #cc0000;
+    }
+    .manual-share-secondary {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .btn-mini-share {
+      flex: 1;
+      min-width: 80px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-mini-share:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 580px) {
+      .manual-share-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
 
     /* CALENDAR VIEW */
     #calendar-view { display: none; background: #ffffff; border-radius: 20px; border: 1px solid var(--border); padding: 1.8rem; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
@@ -619,6 +711,106 @@
       z-index: 10000;
     }
 
+    /* DALL-E & Visual Mode Switcher */
+    .dalle-tabs-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .dalle-tab-btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dalle-tab-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+    }
+    .dalle-ai-box {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background: #07162c;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .dalle-generated-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 14px;
+    }
+    .dalle-loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      color: #fff;
+    }
+    .dalle-spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid rgba(56, 189, 248, 0.2);
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .btn-dalle-action {
+      background: linear-gradient(135deg, #7c3aed, #6366f1);
+      color: #fff;
+      font-weight: 800;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    }
+    .btn-dalle-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+      filter: brightness(1.08);
+    }
+
+    /* Modal general overlay */
+    .custom-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 37, 69, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 10005;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
     @media (max-width: 768px) {
       header { padding: 0.8rem 1rem; }
       .posts-grid { grid-template-columns: 1fr; }
@@ -661,6 +853,9 @@
     </div>
     <div class="header-links">
       <a href="index.html" class="btn-top">🏛️ Holding Ana Sayfa</a>
+      <button onclick="openOpenAIModal()" class="btn-top" id="header-openai-btn" title="OpenAI DALL-E 3 API Yapılandırması">
+        🤖 <span id="header-openai-label">DALL-E 3 API</span>
+      </button>
       <button onclick="exportAllICS()" class="btn-top sync-btn" title="Tüm yılı iPhone/Mac/Outlook/Google takviminize alarmlarıyla ekler">
         📅 1 Yıllık Takvimi İndir (.ICS)
       </button>
@@ -786,6 +981,61 @@
     </div>
   </div>
 
+  <!-- OPENAI / DALL-E 3 CONFIG MODAL -->
+  <div id="openai-modal" style="display: none;" class="custom-modal-overlay">
+    <div class="modal-content-box" style="max-width: 520px;">
+      <button class="modal-close" onclick="closeOpenAIModal()">×</button>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:1rem;">
+        <div style="font-size: 2rem; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">🎨</div>
+        <div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: var(--primary);">OpenAI / DALL-E 3 API Ayarları</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted);">Yapay zeka ile doğrudan kurumsal görsel üretimi</p>
+        </div>
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; margin-bottom: 1.2rem; font-size: 0.82rem; color: #475569; line-height: 1.5;">
+        💡 <strong>Nasıl Alınır?</strong> <a href="https://platform.openai.com/api-keys" target="_blank" style="color: #0284c7; font-weight: 700; text-decoration: underline;">platform.openai.com/api-keys</a> adresinden oluşturduğunuz <code>sk-...</code> API anahtarını buraya kaydedin. Anahtar yalnızca tarayıcınızda (localStorage) güvenle tutulur.
+      </div>
+
+      <form onsubmit="saveOpenAIConfig(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px;">OpenAI API Anahtarı (API Key)</label>
+          <div style="position: relative;">
+            <input type="password" id="openai-api-key-input" placeholder="sk-proj-..." required style="width: 100%; padding: 0.75rem 2.8rem 0.75rem 0.85rem; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 0.88rem; font-family: monospace;">
+            <button type="button" onclick="toggleApiKeyVisibility()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #64748b;" title="Göster / Gizle">👁️</button>
+          </div>
+          <div id="openai-key-status" style="font-size: 0.75rem; margin-top: 4px; font-weight: 600; color: #059669;"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px;">Model</label>
+            <select id="openai-model-select" style="width: 100%; padding: 0.7rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; background: #fff;">
+              <option value="dall-e-3" selected>DALL-E 3 (En Yüksek Kalite)</option>
+              <option value="dall-e-2">DALL-E 2 (Daha Hızlı)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px;">Kalite</label>
+            <select id="openai-quality-select" style="width: 100%; padding: 0.7rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; background: #fff;">
+              <option value="standard" selected>Standard (1024x1024)</option>
+              <option value="hd">HD Ultra (1024x1024)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 6px;">
+          <button type="submit" style="flex: 1; padding: 0.85rem; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(16,185,129,0.25);">
+            💾 API Anahtarını Kaydet
+          </button>
+          <button type="button" onclick="clearOpenAIConfig()" style="padding: 0.85rem 1rem; background: #f1f5f9; color: #b91c1c; border: 1px solid #fecaca; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem;">
+            🗑️ Sil
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- TOAST -->
   <div id="toast">✓ İşlem Başarılı!</div>
 
@@ -844,9 +1094,17 @@
         title: '1 Ocak Yılbaşı (Resmi Tatil)',
         month: 0, day: 1, timeStr: '09:00',
         icon: '🎉', tagText: 'RESMİ TATİL', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => 'MUTLU VE BAŞARILI BİR YIL DİLERİZ!',
-        getSubheadline: (yr) => `${yr} Yılında Yeni Yatırımlar ve Sürdürülebilir Projelerle...`,
-        aiPrompt: 'Ultra-modern luxury New Year corporate artwork (1:1 square). Glowing 3D geometric numerals crafted from crystal glass and polished steel with internal cyan LED light (#38bdf8). Deep rich navy blue backdrop (#0b2545) with delicate golden sparkles. 8K Unreal Engine 5 render.',
+        subsidiary: 'YAKIN HOLDİNG',
+        bgImage: 'assets/images/social/social_newyear.jpg',
+        getIntro: (yr) => `Yeni hedeflere, yeni başarılara ve sürdürülebilir bir geleceğe adım atarken...`,
+        getHeadline: (yr) => 'Mutlu ve Başarılı Bir Yıl Dileriz!',
+        getDescription: (yr) => `${yr} yılında yeni yatırımlarımız, temiz enerji santrallerimiz ve insan odaklı projelerimizle büyümeye devam ediyoruz.`,
+        pillars: [
+          { icon: '🌟', title: 'YENİLİKÇİ VİZYON' },
+          { icon: '⚡', title: 'GÜÇLÜ YATIRIM' },
+          { icon: '🤝', title: 'SÜRDÜRÜLEBİLİR GELECEK' }
+        ],
+        aiPrompt: 'Ultra-modern luxury corporate architectural photography (1:1 square). Panoramic luxury smart building and skyline at golden sunrise with calm infinity pool, crystal glass facades, lush vertical gardens, soft sky on the left side. High-end clean corporate style, 8K photorealistic.',
         getText: (yr) => `Yeni yılın tüm çalışanlarımıza, iş ortaklarımıza ve ülkemize sağlık, başarı, huzur ve bereket getirmesini dileriz. Mutlu Yıllar! 🥂🌟`,
         hashtags: '#MutluYıllar #YeniYıl #HappyNewYear #YakınGrup #ResmiTatil'
       },
@@ -856,9 +1114,17 @@
         title: '18 Mart Çanakkale Zaferi ve Şehitleri Anma Günü',
         month: 2, day: 18, timeStr: '09:00',
         icon: '🇹🇷', tagText: 'MİLLİ ANMA', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '18 MART ÇANAKKALE ZAFERİMİZ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Çanakkale Geçilmez: Aziz Şehitlerimizi Saygı ve Minnetle Anıyoruz.',
-        aiPrompt: 'Epic corporate memorial artwork (1:1 square). Monumental silhouette of Canakkale Memorial with dramatic golden sunrise rays and Turkish Flag. Deep navy blue (#0b2545) atmosphere with cyan highlights (#38bdf8). 8K Octane render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_victory_day.jpg',
+        getIntro: (yr) => `Tarihe altın harflerle yazılan bir kahramanlık destanının yıl dönümünde...`,
+        getHeadline: (yr) => '18 Mart Çanakkale Zaferimiz Kutlu Olsun!',
+        getDescription: (yr) => `Başta Gazi Mustafa Kemal Atatürk olmak üzere, Çanakkale'yi geçilmez kılan tüm aziz şehitlerimizi saygı ve minnetle anıyoruz.`,
+        pillars: [
+          { icon: '🇹🇷', title: 'MİLLİ BİRLİK' },
+          { icon: '🕊️', title: 'SONSUZ SAYGI' },
+          { icon: '🏛️', title: 'GÜÇLÜ GELECEK' }
+        ],
+        aiPrompt: 'Monumental corporate memorial visual (1:1 square). Majestic Turkish Flag waving proudly against sunrise over Istanbul Bosphorus architectural bridges and modern engineering skyline. Deep cinematic navy blue sky, ultra realistic 8K.',
         getText: (yr) => `18 Mart Çanakkale Deniz Zaferi'nin yıl dönümünde; başta Gazi Mustafa Kemal Atatürk olmak üzere tüm aziz şehitlerimizi rahmet, minnet ve saygıyla anıyoruz. 🇹🇷🕊️`,
         hashtags: '#18Mart #ÇanakkaleZaferi #ÇanakkaleGeçilmez #YakınGrup #MilliBirlik'
       },
@@ -868,9 +1134,17 @@
         title: '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı (Resmi Tatil)',
         month: 3, day: 23, timeStr: '09:00',
         icon: '🎈', tagText: 'RESMİ TATİL', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '23 NİSAN ULUSAL EGEMENLİK VE ÇOCUK BAYRAMI KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Geleceğimizin Teminatı Çocuklarımıza Aydınlık Bir Yarın...',
-        aiPrompt: 'Inspiring corporate holiday artwork (1:1 square). Children looking at a bright futuristic smart city. Deep navy blue (#0b2545) with glowing cyan rays (#38bdf8). 8K photorealistic render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/smart_cities_mobility.jpg',
+        getIntro: (yr) => `Milli egemenliğimizin simgesi ve aydınlık yarınlarımızın teminatı çocuklarımıza...`,
+        getHeadline: (yr) => '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı Kutlu Olsun!',
+        getDescription: (yr) => `Gazi Mustafa Kemal Atatürk'ün dünya çocuklarına armağan ettiği bu kutlu günü gurur ve coşkuyla kutluyoruz.`,
+        pillars: [
+          { icon: '🎈', title: 'AYDINLIK GELECEK' },
+          { icon: '🇹🇷', title: 'MİLLİ EGEMENLİK' },
+          { icon: '🌱', title: 'SÜRDÜRÜLEBİLİR YARIN' }
+        ],
+        aiPrompt: 'Inspiring modern corporate architecture photography (1:1 square). Futuristic sustainable green city with children playing in smart eco-park, clean blue sky on the left side, lush nature and solar buildings on the right side, 8K photo.',
         getText: (yr) => `Gazi Mustafa Kemal Atatürk'ün dünya çocuklarına armağan ettiği 23 Nisan Ulusal Egemenlik ve Çocuk Bayramı'nı coşkuyla kutluyoruz! 🇹🇷✨`,
         hashtags: '#23Nisan #UlusalEgemenlikVeÇocukBayramı #TBMM #YakınGrup #ResmiTatil'
       },
@@ -880,9 +1154,17 @@
         title: '1 Mayıs Emek ve Dayanışma Günü (Resmi Tatil)',
         month: 4, day: 1, timeStr: '09:00',
         icon: '👷', tagText: 'RESMİ TATİL', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '1 MAYIS EMEK VE DAYANIŞMA GÜNÜ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Alın Teri ve Emeğiyle Geleceği İnşa Eden Tüm Emekçilerimize...',
-        aiPrompt: 'High-tech industrial construction cranes and steel engineering structures under dramatic blue sunrise. Deep navy blue (#0b2545) with glowing cyan arcs (#38bdf8). 8K render.',
+        subsidiary: 'YAKIN İNŞAAT & ENERJİ',
+        bgImage: 'assets/images/heavy_industry_factory_1785010003542.png',
+        getIntro: (yr) => `Alın teri, özveri ve emeğiyle ülkemizin geleceğini inşa eden...`,
+        getHeadline: (yr) => '1 Mayıs Emek ve Dayanışma Günü Kutlu Olsun!',
+        getDescription: (yr) => `Şantiyelerimizde, enerji santrallerimizde ve tesislerimizde değer üreten tüm çalışanlarımızın bayramını kutluyoruz.`,
+        pillars: [
+          { icon: '🦺', title: 'ÖNCE İŞ GÜVENLİĞİ' },
+          { icon: '🏗️', title: 'GÜÇLÜ İŞ GÜCÜ' },
+          { icon: '🤝', title: 'BİRLİK & EMEK' }
+        ],
+        aiPrompt: 'High-end industrial architecture photography (1:1 square). Ultra modern clean construction engineering site under golden morning light, precision steel structures, safety helmet and tablets, soft morning sky on the left, 8K.',
         getText: (yr) => `Şantiyelerimizde, enerji santrallerimizde ve tesislerimizde alın teriyle geleceği inşa eden tüm emekçilerin 1 Mayıs Emek ve Dayanışma Günü kutlu olsun! 🏗️⚡`,
         hashtags: '#1Mayıs #EmekveDayanışmaGünü #İşçiBayramı #YakınGrup #ResmiTatil'
       },
@@ -892,9 +1174,17 @@
         title: '19 Mayıs Atatürk’ü Anma, Gençlik ve Spor Bayramı (Resmi Tatil)',
         month: 4, day: 19, timeStr: '09:00',
         icon: '🏃', tagText: 'RESMİ TATİL', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '19 MAYIS GENÇLİK VE SPOR BAYRAMIMIZ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Bağımsızlık Meşalesinin Yakıldığı İlk Günün İnancıyla...',
-        aiPrompt: 'Dynamic corporate artwork (1:1 square). Glowing energy torch with cyan flame surrounded by steel architectural lines. Deep navy blue background (#0b2545). 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_victory_day.jpg',
+        getIntro: (yr) => `Bağımsızlık meşalesinin yakıldığı ilk günün inanç ve kararlılığıyla...`,
+        getHeadline: (yr) => '19 Mayıs Gençlik ve Spor Bayramımız Kutlu Olsun!',
+        getDescription: (yr) => `Gençliğin dinamizmi, enerjisi ve yenilikçi vizyonuyla Türkiye'nin geleceğini sağlam temeller üzerinde yükseltiyoruz.`,
+        pillars: [
+          { icon: '⚡', title: 'GENÇ ENERJİ' },
+          { icon: '🇹🇷', title: 'TAM BAĞIMSIZLIK' },
+          { icon: '🚀', title: 'İLERİ TEKNOLOJİ' }
+        ],
+        aiPrompt: 'Dynamic modern architectural photography (1:1 square). Sleek glass corporate headquarters with rising energy light and Turkish Flag in clear morning sky. High-end corporate style, 8K.',
         getText: (yr) => `19 Mayıs Atatürk'ü Anma, Gençlik ve Spor Bayramımız kutlu olsun! Gençliğin enerjisiyle geleceği inşa ediyoruz! 🇹🇷⚡`,
         hashtags: '#19Mayıs #GençlikveSporBayramı #Atatürk #YakınGrup #ResmiTatil'
       },
@@ -904,9 +1194,17 @@
         title: '15 Temmuz Demokrasi ve Milli Birlik Günü (Resmi Tatil)',
         month: 6, day: 15, timeStr: '09:00',
         icon: '🇹🇷', tagText: 'RESMİ TATİL', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '15 TEMMUZ DEMOKRASİ VE MİLLİ BİRLİK GÜNÜ',
-        getSubheadline: (yr) => 'Milli İrademize Sahip Çıkan Kahramanlarımızı Saygıyla Anıyoruz.',
-        aiPrompt: 'Solemn national unity artwork (1:1 square). Istanbul Bosphorus Bridge under midnight navy sky (#0b2545) with red-white Turkish flag glow. 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_victory_day.jpg',
+        getIntro: (yr) => `Milli iradesine ve bağımsızlığına sahip çıkan milletimizin...`,
+        getHeadline: (yr) => '15 Temmuz Demokrasi ve Milli Birlik Günü',
+        getDescription: (yr) => `Vatanımız uğruna canını feda eden aziz şehitlerimizi rahmetle anıyor, kahraman gazilerimize şükranlarımızı sunuyoruz.`,
+        pillars: [
+          { icon: '🇹🇷', title: 'MİLLİ İRADE' },
+          { icon: '🕊️', title: 'AZİZ ŞEHİTLERİMİZ' },
+          { icon: '🤝', title: 'TEK YÜREK' }
+        ],
+        aiPrompt: 'Solemn national unity corporate photography (1:1 square). Istanbul Bosphorus Bridge under dramatic twilight sky with red-white Turkish flag reflections, 8K.',
         getText: (yr) => `15 Temmuz Demokrasi ve Milli Birlik Günü'nde aziz şehitlerimizi rahmetle anıyor, kahraman gazilerimize şükranlarımızı sunuyoruz. 🇹🇷`,
         hashtags: '#15Temmuz #DemokrasiveMilliBirlikGünü #Milliİrade #YakınGrup #ResmiTatil'
       },
@@ -916,9 +1214,17 @@
         title: '30 Ağustos Zafer Bayramı (Resmi Tatil)',
         month: 7, day: 30, timeStr: '09:00',
         icon: '🇹🇷', tagText: 'RESMİ TATİL', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '30 AĞUSTOS ZAFER BAYRAMIMIZ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Milletimizin Bağımsızlık ve Kararlılık Zaferi...',
-        aiPrompt: 'Magnificent Turkish Flag flying over modern infrastructure and skyline. Deep navy blue (#0b2545) with golden sunrise highlights (#38bdf8). 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_victory_day.jpg',
+        getIntro: (yr) => `Milletimizin bağımsızlık ve hürriyet kararlılığının simgesi...`,
+        getHeadline: (yr) => '30 Ağustos Zafer Bayramımız Kutlu Olsun!',
+        getDescription: (yr) => `Büyük Taarruz zaferimizin yıl dönümünde, Gazi Mustafa Kemal Atatürk ve tüm kahramanlarımızı minnetle anıyoruz.`,
+        pillars: [
+          { icon: '🇹🇷', title: 'BÜYÜK ZAFER' },
+          { icon: '🏛️', title: 'GÜÇLÜ TÜRKİYE' },
+          { icon: '🕊️', title: 'EBEDİ MİRAS' }
+        ],
+        aiPrompt: 'Magnificent Turkish Flag waving proudly over modern engineering infrastructure and city skyline with golden sunset reflections. High-end corporate style, 8K photo.',
         getText: (yr) => `Büyük Taarruz zaferimizin yıl dönümünde 30 Ağustos Zafer Bayramı'nı gururla kutluyoruz! 🇹🇷`,
         hashtags: '#30Ağustos #ZaferBayramı #BüyükTaarruz #YakınGrup #ResmiTatil'
       },
@@ -928,9 +1234,17 @@
         title: '29 Ekim Cumhuriyet Bayramı (Resmi Tatil)',
         month: 9, day: 29, timeStr: '09:00',
         icon: '🇹🇷', tagText: 'ULUSAL BAYRAM', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => '29 EKİM CUMHURİYET BAYRAMIMIZ KUTLU OLSUN!',
-        getSubheadline: (yr) => `Cumhuriyetimizin ${yr - 1923}. Yılında Geleceğin Altyapısını İnşa Ediyoruz.`,
-        aiPrompt: 'High-end corporate 3D celebration artwork (1:1 square). Iconic Turkish Flag waving proudly over modern glass skyscrapers. Deep navy blue (#0b2545) with glowing cyan lighting (#38bdf8). 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_republic_day.jpg',
+        getIntro: (yr) => `Cumhuriyetimizin ${yr - 1923}. yılında geleceğin altyapısını ve teknolojisini inşa ederken...`,
+        getHeadline: (yr) => '29 Ekim Cumhuriyet Bayramımız Kutlu Olsun!',
+        getDescription: (yr) => `Gazi Mustafa Kemal Atatürk'ün emaneti olan Cumhuriyetimizi sürdürülebilir yatırımlar ve büyük projelerle geleceğe taşıyoruz.`,
+        pillars: [
+          { icon: '🇹🇷', title: 'CUMHURİYET VİZYONU' },
+          { icon: '🏛️', title: 'GÜÇLÜ YATIRIM' },
+          { icon: '⚡', title: 'TAM BAĞIMSIZ ÜRETİM' }
+        ],
+        aiPrompt: 'Prestigious corporate 3D celebration artwork (1:1 square). Magnificent Turkish Flag waving proudly over modern glass architecture and futuristic city skyline with glowing cyan lighting (#38bdf8). Deep rich navy blue sky with golden light rays, 8K Octane render.',
         getText: (yr) => `Cumhuriyetimizin ${yr - 1923}. yılını gurur ve coşkuyla kutluyoruz! 29 Ekim Cumhuriyet Bayramımız kutlu olsun! 🇹🇷`,
         hashtags: '#29Ekim #CumhuriyetBayramı #YakınGrup #Türkiye #ResmiTatil'
       },
@@ -940,9 +1254,17 @@
         title: '10 Kasım Atatürk’ü Anma Günü (09:05)',
         month: 10, day: 10, timeStr: '09:05',
         icon: '🇹🇷', tagText: 'MİLLİ ANMA', tagClass: 'tag-milli', eventClass: 'event-milli',
-        getHeadline: (yr) => 'SAYGI, SEVGİ VE MİNNETLE ANIYORUZ...',
-        getSubheadline: (yr) => 'Büyük Önder Gazi Mustafa Kemal Atatürk (1881 - 1938)',
-        aiPrompt: 'Solemn silhouette profile of Mustafa Kemal Atatürk gazing toward an enlightened horizon. Deep midnight navy blue (#0b2545) with platinum silver lighting. 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_victory_day.jpg',
+        getIntro: (yr) => `Fikirleri, ilkeleri ve vizyonuyla yolumuzu aydınlatan...`,
+        getHeadline: (yr) => 'Saygı, Sevgi ve Minnetle Anıyoruz...',
+        getDescription: (yr) => `Cumhuriyetimizin kurucusu Büyük Önder Gazi Mustafa Kemal Atatürk'ü ebediyete irtihalinin yıl dönümünde saygıyla anıyoruz.`,
+        pillars: [
+          { icon: '🕊️', title: 'EBEDİ SAYGI' },
+          { icon: '🇹🇷', title: 'AYDINLIK İZİNDE' },
+          { icon: '🏛️', title: 'SONSUZ MİNNET' }
+        ],
+        aiPrompt: 'Solemn corporate memorial background (1:1 square). Clean platinum silver architectural glass facade with subtle reflection of Turkish Flag at quiet sunrise, 8K.',
         getText: (yr) => `Büyük Önder Gazi Mustafa Kemal Atatürk'ü ebediyete irtihalinin yıl dönümünde saygı, rahmet ve sonsuz minnetle anıyoruz. 🕊️`,
         hashtags: '#10Kasım #MustafaKemalAtatürk #GaziMustafaKemal #YakınGrup'
       },
@@ -954,9 +1276,17 @@
         title: '11 Ocak Dünya Enerji Günü',
         month: 0, day: 11, timeStr: '10:00',
         icon: '⚡', tagText: 'SEKTÖREL GÜN', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => 'DÜNYA ENERJİ GÜNÜ & ENERJİ VERİMLİLİĞİ',
-        getSubheadline: (yr) => 'Geleceğin Gücü: Yenilenebilir, Akıllı ve Verimli Enerji...',
-        aiPrompt: 'Bifacial solar PV panels and wind turbines under brilliant cyan sunrise. Deep navy blue (#0b2545) with neon pulses (#38bdf8). 8K render.',
+        subsidiary: 'YAKIN ENERJİ',
+        bgImage: 'assets/images/social/social_energy_day.jpg',
+        getIntro: (yr) => `Yenilenebilir kaynaklar, yüksek verimli depolama ve akıllı şebekelerle...`,
+        getHeadline: (yr) => 'Dünya Enerji Günü Kutlu Olsun!',
+        getDescription: (yr) => `Sıfır karbon hedefiyle güneş, rüzgar ve BESS batarya depolama projelerimizle Türkiye'nin enerji dönüşümüne öncülük ediyoruz.`,
+        pillars: [
+          { icon: '☀️', title: 'GÜNEŞ & RÜZGAR EPC' },
+          { icon: '🔋', title: 'BESS DEPOLAMA' },
+          { icon: '⚡', title: 'SIFIR EMİSYON' }
+        ],
+        aiPrompt: 'High-tech clean energy corporate photography (1:1 square). Futuristic bifacial solar PV panels and sleek wind turbines under a brilliant sunrise. Clean sky on the left side, 8K photo.',
         getText: (yr) => `Temiz enerji ve yüksek verimli şebeke çözümlerimizle enerji dönüşümüne öncülük ediyoruz. Dünya Enerji Günü kutlu olsun! ⚡🔋`,
         hashtags: '#DünyaEnerjiGünü #YenilenebilirEnerji #SolarEPC #YakınGrup #CleanEnergy'
       },
@@ -966,9 +1296,17 @@
         title: '8 Mart Dünya Kadınlar Günü',
         month: 2, day: 8, timeStr: '09:00',
         icon: '🌸', tagText: 'ÖZEL GÜN', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => '8 MART DÜNYA KADINLAR GÜNÜ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Emeği ve İlhamıyla Dünyayı Güzelleştiren Kadınlarımıza...',
-        aiPrompt: 'Stylized silhouette of female engineer/leader looking towards architectural horizon. Deep navy blue (#0b2545) with cyan and gold accents. 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/mimarlik_gunu.jpg',
+        getIntro: (yr) => `Üretkenliği, bilgisi ve vizyonuyla geleceği şekillendiren...`,
+        getHeadline: (yr) => '8 Mart Dünya Kadınlar Günü Kutlu Olsun!',
+        getDescription: (yr) => `Mühendislikten yönetime, enerjiden finansa tüm sektörlerimizde başarıya imza atan kadın çalışma arkadaşlarımıza teşekkür ederiz.`,
+        pillars: [
+          { icon: '🌸', title: 'İLHAM VEREN LİDERLİK' },
+          { icon: '✨', title: 'ÜRETKEN EMEK' },
+          { icon: '🤝', title: 'EŞİT GELECEK' }
+        ],
+        aiPrompt: 'Inspiring luxury modern architecture photography (1:1 square). Panoramic sustainable corporate headquarters with lush gardens and soft morning light, 8K.',
         getText: (yr) => `Bilgisi ve üretkenliğiyle geleceği şekillendiren tüm kadınların 8 Mart Dünya Kadınlar Günü kutlu olsun! 💐✨`,
         hashtags: '#8Mart #DünyaKadınlarGünü #YakınGrup'
       },
@@ -978,9 +1316,17 @@
         title: '4 - 10 Mayıs İş Sağlığı ve Güvenliği (İSG) Haftası',
         month: 4, day: 4, timeStr: '10:00',
         icon: '🦺', tagText: 'SEKTÖREL İSG', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => 'İŞ SAĞLIĞI VE GÜVENLİĞİ HAFTASI',
-        getSubheadline: (yr) => 'Önce İnsan, Önce Güvenlik: Şantiyelerimizde Sıfır Kaza Hedefi...',
-        aiPrompt: 'Construction safety helmet with glowing cyan shield hologram on modern site. Deep navy blue (#0b2545), 8K render.',
+        subsidiary: 'YAKIN İNŞAAT',
+        bgImage: 'assets/images/heavy_industry_factory_1785010003542.png',
+        getIntro: (yr) => `Şantiyelerimizde ve santrallerimizde en büyük önceliğimiz insan hayatı...`,
+        getHeadline: (yr) => 'İş Sağlığı ve Güvenliği (İSG) Haftası',
+        getDescription: (yr) => `Sıfır kaza ve proaktif risk yönetimi prensibiyle; güvenli, sağlıklı ve modern çalışma standartlarını eksiksiz uyguluyoruz.`,
+        pillars: [
+          { icon: '🦺', title: 'SIFIR KAZA HEDEFİ' },
+          { icon: '🏗️', title: 'GÜVENLİ ŞANTİYELER' },
+          { icon: '👷', title: 'ÖNCE İNSAN' }
+        ],
+        aiPrompt: 'High-tech construction engineering photography (1:1 square). Professional engineering safety gear, digital blueprint tablet on a spotless modern construction site, 8K photo.',
         getText: (yr) => `Tüm şantiyelerimizde ve santrallerimizde en büyük önceliğimiz çalışanlarımızın güvenliğidir. Sıfır kaza hedefiyle çalışıyoruz. 🦺🏗️`,
         hashtags: '#İSGHaftası #İşSağlığıVeGüvenliği #ÖnceGüvenlik #YakınGrup'
       },
@@ -990,9 +1336,17 @@
         title: '5 Haziran Dünya Çevre Günü',
         month: 5, day: 5, timeStr: '10:00',
         icon: '🌱', tagText: 'SEKTÖREL GÜN', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => '5 HAZİRAN DÜNYA ÇEVRE GÜNÜ',
-        getSubheadline: (yr) => 'Sıfır Karbon ve Temiz Enerjiyle Sürdürülebilir Bir Gelecek...',
-        aiPrompt: 'Pristine Earth orb with glowing cyan energy rings (#38bdf8) and solar farms. Deep navy blue (#0b2545), 8K render.',
+        subsidiary: 'YAKIN ENERJİ',
+        bgImage: 'assets/images/social/social_energy_day.jpg',
+        getIntro: (yr) => `Gelecek nesillere daha yaşanabilir, temiz ve yeşil bir dünya bırakmak için...`,
+        getHeadline: (yr) => '5 Haziran Dünya Çevre Günü',
+        getDescription: (yr) => `Sıfır karbon vizyonumuz, yenilenebilir enerji yatırımlarımız ve çevre dostu yapılarımızla doğayı koruyoruz.`,
+        pillars: [
+          { icon: '🌱', title: 'SIFIR EMİSYON' },
+          { icon: '☀️', title: 'TEMİZ ENERJİ' },
+          { icon: '🌍', title: 'YEŞİL GEZEGEN' }
+        ],
+        aiPrompt: 'Pristine Earth orb with glowing energy rings and modern solar farms under bright sky. Deep rich colors, 8K photorealistic.',
         getText: (yr) => `Sıfır emisyon vizyonumuzla yarınlara yaşanabilir yeşil bir dünya bırakmak için çalışıyoruz. 5 Haziran Dünya Çevre Günü kutlu olsun! 🌍☀️`,
         hashtags: '#DünyaÇevreGünü #Sürdürülebilirlik #YakınGrup #GreenFuture'
       },
@@ -1002,11 +1356,19 @@
         title: 'Dünya Mimarlık Günü',
         month: 9, day: 5, timeStr: '10:00',
         icon: '📐', tagText: 'MESLEKİ GÜN', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => 'DÜNYA MİMARLIK GÜNÜ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Estetiği ve Dayanıklılığı Şekillendiren Mimarlarımıza...',
-        aiPrompt: 'Parametric sustainable glass building with cyan structural lines. Deep navy blue (#0b2545), 8K render.',
+        subsidiary: 'YAKIN İNŞAAT',
+        bgImage: 'assets/images/social/mimarlik_gunu.jpg',
+        getIntro: (yr) => `Yaşam alanlarının estetiğini, işlevini ve sürdürülebilir mekanların ruhunu tasarlayan tüm mimarlarımızın`,
+        getHeadline: (yr) => 'Dünya Mimarlık Günü kutlu olsun!',
+        getDescription: (yr) => `Geleceği; doğayla uyumlu, yenilikçi ve insan odaklı yapılarla birlikte tasarlıyoruz.`,
+        pillars: [
+          { icon: '🌿', title: 'DAHA YEŞİL BİR GELECEK' },
+          { icon: '🏢', title: 'SÜRDÜRÜLEBİLİR MEKANLAR' },
+          { icon: '👥', title: 'İNSAN ODAKLI TASARIMLAR' }
+        ],
+        aiPrompt: 'Ultra luxury modern architecture photography (1:1 square). Parametric sustainable building with tiered terraces, lush green trees and foliage, glass walls, reflective infinity pool, Istanbul Bosphorus view in background at golden sunrise. High-end corporate style, 8K.',
         getText: (yr) => `Yaşam alanlarının estetiğini ve sürdürülebilir mekanların ruhunu tasarlayan tüm mimarlarımızın Dünya Mimarlık Günü kutlu olsun! 🏛️📐`,
-        hashtags: '#DünyaMimarlıkGünü #Mimarlık #Yakınİnşaat #YakınGrup'
+        hashtags: '#DünyaMimarlıkGünü #Mimarlık #SürdürülebilirMimarlık #Yakınİnşaat #YakınGrup'
       },
       {
         baseId: 'ogretmenler-gunu',
@@ -1014,9 +1376,17 @@
         title: '24 Kasım Öğretmenler Günü',
         month: 10, day: 24, timeStr: '09:00',
         icon: '📚', tagText: 'ÖZEL GÜN', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => '24 KASIM ÖĞRETMENLER GÜNÜ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Geleceği Bilgi ve Sevgiyle İnşa Eden Kıymetli Öğretmenlerimize...',
-        aiPrompt: 'Luminous holographic open book with knowledge particles rising into skyscrapers. Deep navy blue (#0b2545), 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/mimarlik_gunu.jpg',
+        getIntro: (yr) => `Geleceği bilgi, sevgi ve fedakarlıkla inşa eden kıymetli öğretmenlerimize...`,
+        getHeadline: (yr) => '24 Kasım Öğretmenler Günü Kutlu Olsun!',
+        getDescription: (yr) => `Başöğretmenimiz Gazi Mustafa Kemal Atatürk'ün izinde nesiller yetiştiren tüm öğretmenlerimize şükranlarımızı sunarız.`,
+        pillars: [
+          { icon: '📚', title: 'BİLGİ & EĞİTİM' },
+          { icon: '✨', title: 'AYDINLIK NESİLLER' },
+          { icon: '🕊️', title: 'SONSUZ ŞÜKRAN' }
+        ],
+        aiPrompt: 'Inspiring architecture of modern university library and knowledge center with warm morning sun rays, clean glass facade, 8K photo.',
         getText: (yr) => `Başöğretmenimiz Gazi Mustafa Kemal Atatürk'ün izinde nesiller yetiştiren tüm öğretmenlerimizin 24 Kasım Öğretmenler Günü kutlu olsun! 📚✨`,
         hashtags: '#24Kasım #ÖğretmenlerGünü #YakınGrup'
       },
@@ -1026,9 +1396,17 @@
         title: '5 Aralık Dünya Mühendisler Günü',
         month: 11, day: 5, timeStr: '10:00',
         icon: '⚙️', tagText: 'SEKTÖREL GÜN', tagClass: 'tag-sektor', eventClass: 'event-sektor',
-        getHeadline: (yr) => 'DÜNYA MÜHENDİSLER GÜNÜ KUTLU OLSUN!',
-        getSubheadline: (yr) => 'Hayalleri Projeye, Projeleri Geleceğe Dönüştüren Zihinler...',
-        aiPrompt: 'Holographic glowing cyan 3D BIM blueprint and energy grid. Deep navy blue (#0b2545), 8K render.',
+        subsidiary: 'YAKIN İNŞAAT & TEKNOLOJİ',
+        bgImage: 'assets/images/civil_engineering_bim_1785010076530.png',
+        getIntro: (yr) => `Hayalleri projeye, projeleri geleceğin güçlü altyapısına dönüştüren...`,
+        getHeadline: (yr) => 'Dünya Mühendisler Günü Kutlu Olsun!',
+        getDescription: (yr) => `İnşaat, elektrik, enerji ve yazılım alanlarında bilimi teknolojiye dönüştüren tüm mühendislerimizin gününü kutluyoruz.`,
+        pillars: [
+          { icon: '📐', title: 'BIM & MÜHENDİSLİK' },
+          { icon: '⚙️', title: 'İLERİ TEKNOLOJİ' },
+          { icon: '🏗️', title: 'SAĞLAM YAPILAR' }
+        ],
+        aiPrompt: 'High-tech BIM civil engineering 3D digital model and modern skyscraper construction at sunrise. Clean modern aesthetic, 8K photo.',
         getText: (yr) => `Bilim ve teknolojiyi sürdürülebilir yaşama dönüştüren tüm mühendislerimizin 5 Aralık Dünya Mühendisler Günü kutlu olsun! 📐⚙️`,
         hashtags: '#DünyaMühendislerGünü #5Aralık #Mühendislik #YakınGrup'
       }
@@ -1065,6 +1443,7 @@
         const dayStr = String(d.day).padStart(2, '0');
         list.push({
           id: `${d.baseId}-${yr}`,
+          baseId: d.baseId,
           category: d.category,
           title: d.title,
           dateISO: `${yr}-${monthStr}-${dayStr}`,
@@ -1077,8 +1456,12 @@
           tagText: d.tagText,
           tagClass: d.tagClass,
           eventClass: d.eventClass,
+          intro: d.getIntro(yr),
           headline: d.getHeadline(yr),
-          subheadline: d.getSubheadline(yr),
+          description: d.getDescription(yr),
+          pillars: d.pillars,
+          subsidiary: d.subsidiary,
+          bgImage: d.bgImage,
           aiPrompt: d.aiPrompt,
           text: d.getText(yr),
           hashtags: d.hashtags
@@ -1089,6 +1472,7 @@
 
       list.push({
         id: `ramazan-${yr}`,
+        baseId: 'ramazan',
         category: 'dini',
         title: 'Ramazan Bayramı 1. Gün (Resmi Tatil)',
         dateISO: isl.ramazan.iso,
@@ -1101,15 +1485,24 @@
         tagText: 'RESMİ TATİL & DİNİ BAYRAM',
         tagClass: 'tag-dini',
         eventClass: 'event-dini',
-        headline: 'RAMAZAN BAYRAMINIZ MÜBAREK OLSUN',
-        subheadline: 'Birlik, Beraberlik ve Huzur Dolu Nice Bayramlara...',
-        aiPrompt: '3D glowing golden crescent moon above sustainable skyscrapers. Deep navy blue (#0b2545) and cyan glow. 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_ramadan.jpg',
+        intro: 'Birlik, beraberlik ve dayanışma ruhunun gönüllerimizi aydınlattığı...',
+        headline: 'Ramazan Bayramınız Mübarek Olsun',
+        description: 'Mübarek Ramazan Bayramı\'nın tüm hanelere sağlık, huzur ve bereket getirmesini dileriz.',
+        pillars: [
+          { icon: '🌙', title: 'HUZUR & BEREKET' },
+          { icon: '🤝', title: 'DAYANIŞMA RUHU' },
+          { icon: '✨', title: 'BİRLİK VE BERABERLİK' }
+        ],
+        aiPrompt: 'Serene luxury modern architectural photography (1:1 square). Glowing golden crescent moon in twilight sky above modern glass skyscrapers and tranquil pool reflecting lanterns, 8K.',
         text: `Mübarek Ramazan Bayramı'nın milletimize sağlık, huzur ve bereket getirmesini dileriz. Ramazan Bayramınız Mübarek Olsun! 🌙✨`,
         hashtags: '#RamazanBayramı #İyiBayramlar #YakınGrup #ResmiTatil'
       });
 
       list.push({
         id: `kurban-${yr}`,
+        baseId: 'kurban',
         category: 'dini',
         title: 'Kurban Bayramı 1. Gün (Resmi Tatil)',
         dateISO: isl.kurban.iso,
@@ -1122,9 +1515,17 @@
         tagText: 'RESMİ TATİL & DİNİ BAYRAM',
         tagClass: 'tag-dini',
         eventClass: 'event-dini',
-        headline: 'KURBAN BAYRAMINIZ MÜBAREK OLSUN',
-        subheadline: 'Paylaşmanın ve Dayanışmanın Bereketiyle...',
-        aiPrompt: 'Serene crescent moon with golden lantern reflections on polished architectural glass. Deep navy blue (#0b2545), 8K render.',
+        subsidiary: 'YAKIN GRUP',
+        bgImage: 'assets/images/social/social_ramadan.jpg',
+        intro: 'Paylaşmanın, dayanışmanın ve kardeşliğin bereketiyle...',
+        headline: 'Kurban Bayramınız Mübarek Olsun',
+        description: 'Kurban Bayramı\'nın paylaşma ve kardeşlik ikliminin hanelerinize esenlik getirmesini temenni ederiz.',
+        pillars: [
+          { icon: '🌙', title: 'PAYLAŞMA VE BEREKET' },
+          { icon: '🤝', title: 'GÜÇLÜ DAYANIŞMA' },
+          { icon: '🕊️', title: 'HUZUR VE SAĞLIK' }
+        ],
+        aiPrompt: 'Serene luxury modern architectural photography (1:1 square). Elegant crescent moon in golden evening sky above polished architectural marble terrace with soft warm lanterns, 8K.',
         text: `Kurban Bayramı'nın dayanışma ruhunun hanelerinize esenlik getirmesini temenni ederiz. Kurban Bayramınız mübarek olsun. 🌙🕊️`,
         hashtags: '#KurbanBayramı #İyiBayramlar #YakınGrup #ResmiTatil'
       });
@@ -1305,6 +1706,28 @@
       renderMonthlyCalendar(currentYear, currentMonth);
     }
 
+    // ── PRE-GENERATED LOCAL VISUAL ASSETS MAPPING ──────────────────────
+    const PRE_GENERATED_SOCIAL_IMAGES = {
+      '1-ocak': 'assets/images/social/social_newyear.jpg',
+      '29-ekim': 'assets/images/social/social_republic_day.jpg',
+      '30-agustos': 'assets/images/social/social_victory_day.jpg',
+      '18-mart': 'assets/images/social/social_victory_day.jpg',
+      '19-mayis': 'assets/images/social/social_victory_day.jpg',
+      '15-temmuz': 'assets/images/social/social_victory_day.jpg',
+      '10-kasim': 'assets/images/social/social_victory_day.jpg',
+      'enerji-gunu': 'assets/images/social/social_energy_day.jpg',
+      'cevre-gunu': 'assets/images/social/social_energy_day.jpg',
+      'mimarlik-gunu': 'assets/images/social/mimarlik_gunu.jpg',
+      'kadinlar-gunu': 'assets/images/social/mimarlik_gunu.jpg',
+      'ogretmenler-gunu': 'assets/images/social/mimarlik_gunu.jpg',
+      'muhendisler-gunu': 'assets/images/civil_engineering_bim_1785010076530.png',
+      '1-mayis': 'assets/images/heavy_industry_factory_1785010003542.png',
+      'isg-haftasi': 'assets/images/heavy_industry_factory_1785010003542.png',
+      '23-nisan': 'assets/images/smart_cities_mobility.jpg',
+      'ramazan': 'assets/images/social/social_ramadan.jpg',
+      'kurban': 'assets/images/social/social_ramadan.jpg'
+    };
+
     // ── MODAL DETAIL POPUP ──────────────────────────────────────────────
     function openEventModal(id) {
       const item = CONTENT_PLAN.find(d => d.id === id);
@@ -1314,13 +1737,14 @@
       const body = document.getElementById('event-modal-body');
       if (!modal || !body) return;
 
-      const shareLiText = safeEncode(item.text + '\n\n' + item.hashtags);
-      const shareXText = safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags);
       const gCalUrl = getGoogleCalUrl(item);
+      const baseKey = item.baseId || item.id.split('-')[0];
+      const localAsset = PRE_GENERATED_SOCIAL_IMAGES[baseKey] || PRE_GENERATED_SOCIAL_IMAGES[item.id];
+      const cachedDalleUrl = sessionStorage.getItem(`yg_dalle_${item.id}`) || localAsset;
 
       body.innerHTML = `
         <button class="modal-close" onclick="closeEventModal()">×</button>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:0.8rem;">
           <span style="font-size:2rem;">${item.icon}</span>
           <div>
             <h3 style="font-family:var(--font-heading); font-weight:800; font-size:1.2rem; color:var(--primary);">${item.title}</h3>
@@ -1328,8 +1752,51 @@
           </div>
         </div>
 
-        <div style="text-align:center; margin-bottom:1rem; background:#07162c; border-radius:14px; padding:14px 12px; display:flex; flex-direction:column; align-items:center; gap:10px;">
-          <canvas id="modal-canvas" class="banner-canvas" width="1080" height="1080" style="max-width:280px;"></canvas>
+        <!-- GÖRSEL MODU SEÇİCİ (CANVAS & DALL-E 3) -->
+        <div class="dalle-tabs-row">
+          <button type="button" class="dalle-tab-btn active" id="tab-btn-canvas" onclick="switchModalVisualTab('canvas', '${item.id}')">📐 Şablon Afiş (Yakın Grup Logolu) ✓</button>
+          <button type="button" class="dalle-tab-btn" id="tab-btn-dalle" onclick="switchModalVisualTab('dalle', '${item.id}')">🎨 DALL-E 3 Yapay Zeka Görseli</button>
+        </div>
+
+        <div style="text-align:center; margin-bottom:1rem; background:#07162c; border-radius:14px; padding:14px 12px; display:flex; flex-direction:column; align-items:center; gap:10px; position:relative; min-height:290px; justify-content:center;">
+          <!-- 1. HTML5 Canvas Şablonu (VARSAYILAN AKTİF - YAKIN GRUP LOGOLU) -->
+          <div id="modal-canvas-wrap" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:100%;">
+            <canvas id="modal-canvas" class="banner-canvas" width="1080" height="1080" style="max-width:280px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-radius: 8px;"></canvas>
+            <div style="display: flex; gap: 8px; width: 100%; max-width: 320px;">
+              <button class="btn-act btn-download" style="flex:1;" onclick="downloadBanner('${item.id}', '${item.title}')">
+                ⬇️ HD Logolu Afişi İndir (PNG)
+              </button>
+              <button class="btn-act" style="background:#7c3aed; color:#fff;" onclick="generateDalleImageForEvent('${item.id}')" title="DALL-E 3 ile Yapay Zeka Görseli Çiz">
+                🎨 DALL-E 3 Çiz
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. DALL-E 3 Yapay Zeka Görseli -->
+          <div id="modal-dalle-wrap" style="display:none; flex-direction:column; align-items:center; gap:10px; width:100%;">
+            ${cachedDalleUrl ? `
+              <div class="dalle-ai-box">
+                <img src="${cachedDalleUrl}" alt="${item.title}" class="dalle-generated-img" id="dalle-img-${item.id}">
+              </div>
+              <div style="display: flex; gap: 8px; width: 100%; max-width: 320px;">
+                <button class="btn-act btn-download" style="flex:1;" onclick="downloadDalleImage('${cachedDalleUrl}', '${item.title}')">
+                  ⬇️ DALL-E Görselini İndir
+                </button>
+                <button class="btn-act" style="background:#7c3aed; color:#fff;" onclick="generateDalleImageForEvent('${item.id}')" title="Yeniden DALL-E 3 ile Farklı Bir Varyasyon Çiz">
+                  🔄 Yeniden Çiz
+                </button>
+              </div>
+            ` : `
+              <div class="dalle-ai-box" style="padding: 1.5rem; text-align: center; border: 1px dashed rgba(56, 189, 248, 0.4);">
+                <div class="dalle-spinner" style="margin-bottom: 8px;"></div>
+                <div style="font-weight: 800; font-size: 0.9rem; color: #38bdf8; margin-bottom: 4px;">DALL-E 3 Hazır</div>
+                <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.4; margin-bottom: 12px;">OpenAI DALL-E 3 ile bu özel güne özel 1024x1024 fotogerçekçi görsel üretin.</p>
+                <button type="button" class="btn-dalle-action" onclick="generateDalleImageForEvent('${item.id}')">
+                  🚀 Şimdi DALL-E 3 ile Çiz
+                </button>
+              </div>
+            `}
+          </div>
         </div>
 
         <div style="margin-bottom:1rem;">
@@ -1340,34 +1807,79 @@
           <div style="font-size:0.8rem; color:var(--primary-accent); font-weight:600; margin-top:6px;">${item.hashtags}</div>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:8px;">
+        <!-- HIZLI AKSİYONLAR & MANUEL PAYLAŞIM ALANI -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
           <div style="display:flex; gap:8px;">
+            <button class="btn-dalle-action" style="flex:1;" onclick="generateDalleImageForEvent('${item.id}')">
+              🎨 DALL-E 3 ile Yeniden Üret
+            </button>
             <button class="btn-act btn-copy" onclick="copyPostText('${item.id}')">📋 Metni Kopyala</button>
-            <button class="btn-act btn-download" onclick="downloadBanner('${item.id}', '${item.title}')">⬇️ HD Görsel İndir</button>
+            <button class="btn-act btn-download" onclick="downloadActiveModalVisual('${item.id}', '${item.title}')">⬇️ Görsel İndir</button>
           </div>
 
-          <button class="btn-act" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 7px 8px; font-size: 0.78rem;" onclick="copyAiPrompt('${item.id}')">
-            🤖 GPT / DALL-E Görsel Promptu
-          </button>
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; padding:6px 10px; border-radius:8px;">
+            <button type="button" class="btn-top" style="font-size:0.75rem; padding:3px 8px;" onclick="togglePromptEditor('${item.id}')">
+              ✏️ DALL-E Promptunu Gör / Düzenle
+            </button>
+            <button type="button" class="btn-top" style="font-size:0.75rem; padding:3px 8px;" onclick="copyAiPrompt('${item.id}')">
+              📋 Promptu Kopyala
+            </button>
+          </div>
+
+          <div id="prompt-editor-${item.id}" style="display:none; margin-top:2px;">
+            <textarea id="prompt-input-${item.id}" style="width:100%; height:75px; font-size:0.76rem; border-radius:8px; border:1px solid #cbd5e1; padding:8px; font-family:monospace; color:#334155; resize:vertical;">${item.aiPrompt}</textarea>
+          </div>
+
+          <!-- MANUEL SOSYAL MEDYA PAYLAŞIM BUTONLARI -->
+          <div class="manual-share-card">
+            <div class="manual-share-header">
+              <div style="font-weight: 800; font-size: 0.8rem; color: #0b2545; display: flex; align-items: center; gap: 6px;">
+                <span>📢</span> MANUEL SOSYAL MEDYA PAYLAŞIMI
+              </div>
+              <span style="font-size: 0.7rem; color: #64748b; font-weight: 600;">(1-Tık Hazırla & Aç)</span>
+            </div>
+
+            <div class="manual-share-buttons">
+              <!-- FACEBOOK -->
+              <button type="button" class="btn-manual-share btn-facebook" onclick="shareToFacebook('${item.id}')" title="Metni panoya kopyalar ve Facebook sayfasını / paylaşım penceresini açar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <span>Facebook</span>
+              </button>
+
+              <!-- INSTAGRAM -->
+              <button type="button" class="btn-manual-share btn-instagram" onclick="shareToInstagram('${item.id}')" title="Görseli indirir, metni panoya kopyalar ve Instagram profilini açar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span>Instagram</span>
+              </button>
+
+              <!-- YOUTUBE -->
+              <button type="button" class="btn-manual-share btn-youtube" onclick="shareToYouTube('${item.id}')" title="Metni panoya kopyalar ve YouTube Topluluk alanını açar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span>YouTube</span>
+              </button>
+            </div>
+
+            <!-- DİĞER KANALLAR -->
+            <div class="manual-share-secondary">
+              <button type="button" class="btn-mini-share share-linkedin" onclick="shareToLinkedIn('${item.id}')" title="LinkedIn'de Paylaş">💼 LinkedIn</button>
+              <button type="button" class="btn-mini-share share-x" onclick="shareToX('${item.id}')" title="X (Twitter)'da Paylaş">𝕏 X</button>
+              <button type="button" class="btn-mini-share share-whatsapp" onclick="shareToWhatsApp('${item.id}')" title="WhatsApp'ta İlet">💬 WhatsApp</button>
+            </div>
+          </div>
 
           <div class="cal-actions-row">
             <button class="btn-cal" onclick="downloadSingleICS('${item.id}')">📲 Takvime Ekle (.ics)</button>
             <a href="${gCalUrl}" target="_blank" class="btn-cal google">📅 Google Takvim</a>
           </div>
-
-          <div style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Sosyal Medya Manuel Paylaşım & Köprüler:</div>
-          <div class="social-share-row" style="display:flex; gap:5px; flex-wrap:wrap;">
-            <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram" title="Instagram Profilini ve Gönderi Oluşturucuyu Aç">Instagram</a>
-            <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube" title="YouTube Kanalını ve Topluluk Gönderisi Alanını Aç">YouTube</a>
-            <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-share share-facebook" title="Facebook Sayfasını ve Paylaşım Alanını Aç">Facebook</a>
-            <a href="https://www.linkedin.com/feed/?shareActive=true&text=${shareLiText}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">LinkedIn</a>
-            <a href="https://twitter.com/intent/tweet?text=${shareXText}" target="_blank" class="btn-share share-x" title="X'te Paylaş">X</a>
-          </div>
         </div>
       `;
 
       modal.style.display = 'flex';
-      setTimeout(() => drawModalCanvas(item), 40);
+      activeModalVisualTab = 'canvas';
+
+      setTimeout(() => {
+        drawModalCanvas(item);
+      }, 30);
     }
 
     function closeEventModal() {
@@ -1398,8 +1910,6 @@
       });
 
       filtered.forEach((item) => {
-        const shareLiText = safeEncode(item.text + '\n\n' + item.hashtags);
-        const shareXText = safeEncode(Array.from(item.text).slice(0, 120).join('') + '... ' + item.hashtags);
         const gCalUrl = getGoogleCalUrl(item);
 
         // 1. Grid Card
@@ -1437,17 +1947,17 @@
               🤖 GPT Görsel Promptunu Kopyala
             </button>
 
+            <div class="social-share-row" style="display: flex; gap: 5px; flex-wrap: wrap;">
+              <button type="button" class="btn-share share-facebook" onclick="shareToFacebook('${item.id}')" title="Facebook'ta Paylaş">Facebook</button>
+              <button type="button" class="btn-share share-instagram" onclick="shareToInstagram('${item.id}')" title="Instagram'da Paylaş">Instagram</button>
+              <button type="button" class="btn-share share-youtube" onclick="shareToYouTube('${item.id}')" title="YouTube'da Paylaş">YouTube</button>
+              <button type="button" class="btn-share share-linkedin" onclick="shareToLinkedIn('${item.id}')" title="LinkedIn'de Paylaş">LinkedIn</button>
+              <button type="button" class="btn-share share-x" onclick="shareToX('${item.id}')" title="X'te Paylaş">X</button>
+            </div>
+
             <div class="cal-actions-row">
               <button class="btn-cal" onclick="downloadSingleICS('${item.id}')">📲 Takvime Ekle (.ics)</button>
               <a href="${gCalUrl}" target="_blank" class="btn-cal google">📅 Google Takvim</a>
-            </div>
-
-            <div class="social-share-row" style="display: flex; gap: 5px; flex-wrap: wrap;">
-              <a href="https://www.instagram.com/yakingrupnet" target="_blank" class="btn-share share-instagram" title="Instagram Profilini Aç">Instagram</a>
-              <a href="https://www.youtube.com/@yakingrup" target="_blank" class="btn-share share-youtube" title="YouTube Kanalını Aç">YouTube</a>
-              <a href="https://www.facebook.com/yakingrup" target="_blank" class="btn-share share-facebook" title="Facebook Sayfasını Aç">Facebook</a>
-              <a href="https://www.linkedin.com/feed/?shareActive=true&text=${shareLiText}" target="_blank" class="btn-share share-linkedin" title="LinkedIn'de Paylaş">LinkedIn</a>
-              <a href="https://twitter.com/intent/tweet?text=${shareXText}" target="_blank" class="btn-share share-x" title="X'te Paylaş">X</a>
             </div>
           </div>
         `;
@@ -1469,7 +1979,7 @@
             </div>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn-top" onclick="openEventModal('${item.id}')">👁️ Detay</button>
+            <button class="btn-top" onclick="openEventModal('${item.id}')">👁️ Detay & Paylaş</button>
             <button class="btn-top" onclick="copyPostText('${item.id}')">📋 Kopyala</button>
             <button class="btn-top" onclick="downloadSingleICS('${item.id}')">📲 Takvim (.ics)</button>
             <a href="${gCalUrl}" target="_blank" class="btn-top primary">📅 Google</a>
@@ -1491,105 +2001,254 @@
     }
 
     // ── DRAW CANVAS BANNER (1080x1080) ──────────────────────────────────
+    const _canvasImgCache = {};
+
+    function getCachedImage(src, callback) {
+      if (!src) return null;
+      if (_canvasImgCache[src]) {
+        if (_canvasImgCache[src].complete && _canvasImgCache[src].naturalWidth > 0) {
+          return _canvasImgCache[src];
+        }
+      }
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        _canvasImgCache[src] = img;
+        if (callback) callback(img);
+      };
+      img.src = src;
+      _canvasImgCache[src] = img;
+      return img;
+    }
+
     function drawCanvasOnto(canvas, ctx, item) {
       canvas.width = 1080;
       canvas.height = 1080;
 
-      // 1. Gradient Arka Plan
-      const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-      bgGrad.addColorStop(0, '#07162c');
-      bgGrad.addColorStop(0.5, '#0b2545');
-      bgGrad.addColorStop(1, '#0f3d6e');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
+      const baseKey = item.baseId || item.id.split('-')[0];
+      const localAsset = PRE_GENERATED_SOCIAL_IMAGES[baseKey] || PRE_GENERATED_SOCIAL_IMAGES[item.id] || item.bgImage || 'assets/images/social/mimarlik_gunu.jpg';
+      
+      const img = getCachedImage(localAsset, () => {
+        drawCanvasContent(canvas, ctx, item, _canvasImgCache[localAsset]);
+      });
 
-      // 2. Işık Efektleri
-      const radialGrad = ctx.createRadialGradient(900, 180, 50, 900, 180, 600);
-      radialGrad.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
-      radialGrad.addColorStop(1, 'transparent');
-      ctx.fillStyle = radialGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      // 3. Dekoratif Çerçeve
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(60, 60, 960, 960);
-
-      // 4. Header Badge
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
-      ctx.beginPath();
-      ctx.roundRect(110, 110, 320, 50, 25);
-      ctx.fill();
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = '800 20px Inter, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(`★ ${item.tagText}`, 270, 142);
-
-      // 5. Tarih & Saat
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '600 24px Inter, sans-serif';
-      ctx.textAlign = 'right';
-      ctx.fillText(`📅 ${item.dateStr}`, 970, 142);
-
-      // 6. İkon
-      ctx.font = '100px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(item.icon, 540, 360);
-
-      // 7. Manşet (Headline)
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '800 50px Manrope, sans-serif';
-      ctx.textAlign = 'center';
-      wrapText(ctx, item.headline, 540, 480, 840, 64);
-
-      // 8. Alt Başlık (Subheadline)
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = '600 28px Inter, sans-serif';
-      ctx.fillText(item.subheadline, 540, 680);
-
-      // 9. Alt Çizgi
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(140, 880);
-      ctx.lineTo(940, 880);
-      ctx.stroke();
-
-      // 10. Footer Brand
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '800 32px Manrope, sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText('YAKIN GRUP', 140, 950);
-
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '600 20px Inter, sans-serif';
-      ctx.fillText('İnşaat • Enerji • Capital • Teknoloji', 140, 985);
-
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = '700 22px Inter, sans-serif';
-      ctx.textAlign = 'right';
-      ctx.fillText('yakingrup.net', 940, 965);
+      drawCanvasContent(canvas, ctx, item, (img && img.complete && img.naturalWidth > 0) ? img : null);
     }
 
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+    function drawCanvasContent(canvas, ctx, item, bgImg) {
+      ctx.clearRect(0, 0, 1080, 1080);
+
+      // 1. Arka Plan Fotoğrafı
+      if (bgImg && bgImg.naturalWidth > 0) {
+        const imgW = bgImg.naturalWidth;
+        const imgH = bgImg.naturalHeight;
+        const scale = Math.max(1080 / imgW, 1080 / imgH);
+        const nw = imgW * scale;
+        const nh = imgH * scale;
+        const nx = (1080 - nw) / 2;
+        const ny = (1080 - nh) / 2;
+        ctx.drawImage(bgImg, nx, ny, nw, nh);
+      } else {
+        const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
+        bgGrad.addColorStop(0, '#f1f5f9');
+        bgGrad.addColorStop(0.5, '#e2e8f0');
+        bgGrad.addColorStop(1, '#cbd5e1');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1080, 1080);
+      }
+
+      // 2. Sol Taraf Yumuşak Beyaz Geçiş Maskesi (Örnek Afiş Düzeni)
+      const overlayGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+      overlayGrad.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
+      overlayGrad.addColorStop(0.48, 'rgba(255, 255, 255, 0.95)');
+      overlayGrad.addColorStop(0.68, 'rgba(255, 255, 255, 0.75)');
+      overlayGrad.addColorStop(0.85, 'rgba(255, 255, 255, 0.25)');
+      overlayGrad.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
+      ctx.fillStyle = overlayGrad;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Dış İnce Beyaz Çerçeve
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+      ctx.lineWidth = 14;
+      ctx.strokeRect(7, 7, 1066, 1066);
+
+      // 3. Sol Üst: Yakın Grup Resmi Geometrik Logosu ve Tipografi
+      const contentX = 75;
+      const logoY = 70;
+      drawYakınGrupLogo(ctx, contentX, logoY);
+
+      // Sağ Üst: Kategori / Rozet
+      ctx.fillStyle = '#0b2545';
+      ctx.beginPath();
+      ctx.roundRect(790, 70, 215, 42, 21);
+      ctx.fill();
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = '800 14.5px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`★ ${item.tagText || 'ÖZEL GÜN'}`, 897, 96);
+
+      // 4. Giriş Metni (Intro)
+      let curY = 225;
+      ctx.fillStyle = '#334155';
+      ctx.font = '500 21px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      const introText = item.intro || 'Geleceği şekillendiren adımlar ve sürdürülebilir yatırımlarla...';
+      curY = wrapTextReturningY(ctx, introText, contentX, curY, 620, 31);
+
+      curY += 15;
+
+      // 5. Bold Ana Başlık (Headline)
+      ctx.fillStyle = '#0b2545';
+      ctx.font = '800 42px Manrope, sans-serif';
+      ctx.textAlign = 'left';
+      const headlineText = item.headline || item.title;
+      curY = wrapTextReturningY(ctx, headlineText, contentX, curY, 620, 52);
+
+      curY += 18;
+
+      // 6. Zümrüt Yeşili Vurgu Çizgisi
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.roundRect(contentX, curY, 65, 6, 3);
+      ctx.fill();
+
+      curY += 34;
+
+      // 7. Açıklama Paragrafı
+      ctx.fillStyle = '#475569';
+      ctx.font = '500 18px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      const descText = item.description || (item.text ? item.text.slice(0, 160) : '');
+      curY = wrapTextReturningY(ctx, descText, contentX, curY, 590, 28);
+
+      curY += 28;
+
+      // 8. 3 İlke Rozeti
+      const pillars = item.pillars && item.pillars.length ? item.pillars : [
+        { icon: '🌿', title: 'DAHA YEŞİL BİR GELECEK' },
+        { icon: '🏢', title: 'SÜRDÜRÜLEBİLİR MEKANLAR' },
+        { icon: '👥', title: 'İNSAN ODAKLI TASARIMLAR' }
+      ];
+
+      pillars.forEach((p, idx) => {
+        const badgeY = curY + (idx * 56);
+        if (badgeY < 920) {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.roundRect(contentX, badgeY, 460, 46, 12);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#10b981';
+          ctx.beginPath();
+          ctx.roundRect(contentX, badgeY, 6, 46, [12, 0, 0, 12]);
+          ctx.fill();
+
+          ctx.font = '20px serif';
+          ctx.textAlign = 'left';
+          ctx.fillText(p.icon || '✦', contentX + 16, badgeY + 30);
+
+          ctx.fillStyle = '#0b2545';
+          ctx.font = '800 14.5px Inter, sans-serif';
+          ctx.fillText((p.title || '').toUpperCase(), contentX + 48, badgeY + 29);
+        }
+      });
+
+      // 9. Alt Marka & Hashtag Şeridi
+      const footerY = 1005;
+      const subBrand = item.subsidiary || 'YAKIN GRUP';
+
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.arc(contentX + 6, footerY - 5, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#0b2545';
+      ctx.font = '800 18px Manrope, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(subBrand, contentX + 20, footerY);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 14px Inter, sans-serif';
+      ctx.textAlign = 'right';
+      const cleanTags = item.hashtags ? item.hashtags.split(' ').slice(0, 3).join(' ') : '#YakınGrup';
+      ctx.fillText(cleanTags, 1005, footerY);
+    }
+
+    // Yakın Grup Resmi Geometrik Logo Çizimi
+    function drawYakınGrupLogo(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+
+      // Top facet (Emerald Green)
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.moveTo(24, 0);
+      ctx.lineTo(48, 14);
+      ctx.lineTo(24, 28);
+      ctx.lineTo(0, 14);
+      ctx.closePath();
+      ctx.fill();
+
+      // Left facet (Dark Navy)
+      ctx.fillStyle = '#0b2545';
+      ctx.beginPath();
+      ctx.moveTo(0, 14);
+      ctx.lineTo(24, 28);
+      ctx.lineTo(24, 56);
+      ctx.lineTo(0, 42);
+      ctx.closePath();
+      ctx.fill();
+
+      // Right facet (Vibrant Cyan / Emerald Glow)
+      ctx.fillStyle = '#059669';
+      ctx.beginPath();
+      ctx.moveTo(24, 28);
+      ctx.lineTo(48, 14);
+      ctx.lineTo(48, 42);
+      ctx.lineTo(24, 56);
+      ctx.closePath();
+      ctx.fill();
+
+      // Brand Name Typography
+      ctx.fillStyle = '#0b2545';
+      ctx.font = '800 28px Manrope, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('YAKIN GRUP', 62, 30);
+
+      // Subtitle / Business Units
+      ctx.fillStyle = '#64748b';
+      ctx.font = '700 10.5px Inter, sans-serif';
+      ctx.fillText('İNŞAAT  •  ENERJİ  •  CAPITAL  •  TEKNOLOJİ', 64, 48);
+
+      ctx.restore();
+    }
+
+    function wrapTextReturningY(ctx, text, x, y, maxWidth, lineHeight) {
+      if (!text) return y;
       const words = text.split(' ');
       let line = '';
+      let curY = y;
       for (let n = 0; n < words.length; n++) {
         const testLine = line + words[n] + ' ';
         const metrics = ctx.measureText(testLine);
         if (metrics.width > maxWidth && n > 0) {
-          ctx.fillText(line.trim(), x, y);
+          ctx.fillText(line.trim(), x, curY);
           line = words[n] + ' ';
-          y += lineHeight;
+          curY += lineHeight;
         } else {
           line = testLine;
         }
       }
-      ctx.fillText(line.trim(), x, y);
+      ctx.fillText(line.trim(), x, curY);
+      return curY + lineHeight;
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      return wrapTextReturningY(ctx, text, x, y, maxWidth, lineHeight);
     }
 
     function drawBannerCanvas(item) {
@@ -1730,14 +2389,94 @@
 
     function downloadBanner(id, title) {
       const item = CONTENT_PLAN.find(d => d.id === id);
-      const canvas = document.getElementById(`canvas-${id}`) || document.getElementById('modal-canvas');
-      if (!canvas || !item) return;
+      if (!item) return;
+      const modalCanvas = document.getElementById('modal-canvas');
+      const cardCanvas = document.getElementById(`canvas-${id}`);
+      
+      let sourceCanvas = (modalCanvas && modalCanvas.offsetParent !== null) ? modalCanvas : (cardCanvas || modalCanvas);
+      if (!sourceCanvas) {
+        sourceCanvas = document.createElement('canvas');
+        sourceCanvas.width = 1080;
+        sourceCanvas.height = 1080;
+        const ctx = sourceCanvas.getContext('2d');
+        drawCanvasOnto(sourceCanvas, ctx, item);
+      }
 
       const link = document.createElement('a');
-      link.download = `Yakin_Grup_${id}_1080x1080.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.download = `Yakin_Grup_${safeEncode(title || item.title)}_1080x1080.png`;
+      link.href = sourceCanvas.toDataURL('image/png');
       link.click();
-      showToast(`✓ HD Görsel (1080x1080) İndirildi!`);
+      showToast(`✓ HD Logolu Afiş (1080x1080) İndirildi!`);
+    }
+
+    // ── SOCIAL MEDIA SHARE ACTIONS ───────────────────────────────────────
+    function shareToFacebook(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const fullText = `${item.headline}\n\n${item.text}\n\n${item.hashtags}\n\nhttps://yakingrup.net`;
+      navigator.clipboard.writeText(fullText).then(() => {
+        showToast('✓ Paylaşım metni panoya kopyalandı! Facebook açılıyor...');
+      }).catch(() => {
+        showToast('✓ Facebook açılıyor...');
+      });
+      const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://yakingrup.net')}&quote=${safeEncode(fullText)}`;
+      window.open(fbShareUrl, '_blank');
+    }
+
+    function shareToInstagram(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const fullText = `${item.headline}\n\n${item.text}\n\n${item.hashtags}`;
+      navigator.clipboard.writeText(fullText).then(() => {
+        showToast('✓ HD Görsel indirildi ve metin panoya kopyalandı! Instagram açılıyor...');
+      }).catch(() => {
+        showToast('✓ HD Görsel indirildi! Instagram açılıyor...');
+      });
+      downloadBanner(item.id, item.title);
+      setTimeout(() => {
+        window.open('https://www.instagram.com/yakingrupnet', '_blank');
+      }, 300);
+    }
+
+    function shareToYouTube(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const fullText = `${item.headline}\n\n${item.text}\n\n${item.hashtags}\n\nhttps://yakingrup.net`;
+      navigator.clipboard.writeText(fullText).then(() => {
+        showToast('✓ Paylaşım metni panoya kopyalandı! YouTube Topluluk alanı açılıyor...');
+      }).catch(() => {
+        showToast('✓ YouTube kanalı açılıyor...');
+      });
+      setTimeout(() => {
+        window.open('https://www.youtube.com/@yakingrup/community', '_blank');
+      }, 200);
+    }
+
+    function shareToLinkedIn(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const fullText = `${item.headline}\n\n${item.text}\n\n${item.hashtags}`;
+      navigator.clipboard.writeText(fullText).catch(() => {});
+      const shareLiText = safeEncode(fullText);
+      showToast('✓ LinkedIn metni kopyalandı! Paylaşım penceresi açılıyor...');
+      window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${shareLiText}`, '_blank');
+    }
+
+    function shareToX(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const shareXText = safeEncode(Array.from(item.headline + ' - ' + item.text).slice(0, 180).join('') + ' ' + item.hashtags);
+      showToast('✓ X (Twitter) paylaşım penceresi açılıyor...');
+      window.open(`https://twitter.com/intent/tweet?text=${shareXText}`, '_blank');
+    }
+
+    function shareToWhatsApp(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+      const fullText = `*${item.title}*\n\n${item.text}\n\n${item.hashtags}\n\nhttps://yakingrup.net`;
+      const waUrl = `https://api.whatsapp.com/send?text=${safeEncode(fullText)}`;
+      showToast('✓ WhatsApp açılıyor...');
+      window.open(waUrl, '_blank');
     }
 
     function exportAllCSV() {
@@ -1768,11 +2507,290 @@
       setTimeout(() => { toast.style.display = 'none'; }, 3500);
     }
 
+    // ── OPENAI DALL-E 3 ENGINE ──────────────────────────────────────────
+    function getOpenAIKey() {
+      return localStorage.getItem('yg_openai_key') || '';
+    }
+
+    function openOpenAIModal() {
+      const modal = document.getElementById('openai-modal');
+      const input = document.getElementById('openai-api-key-input');
+      const modelSelect = document.getElementById('openai-model-select');
+      const qualitySelect = document.getElementById('openai-quality-select');
+      const status = document.getElementById('openai-key-status');
+      
+      const savedKey = getOpenAIKey();
+      const savedModel = localStorage.getItem('yg_openai_model') || 'dall-e-3';
+      const savedQuality = localStorage.getItem('yg_openai_quality') || 'standard';
+
+      if (input) input.value = savedKey;
+      if (modelSelect) modelSelect.value = savedModel;
+      if (qualitySelect) qualitySelect.value = savedQuality;
+      
+      if (status) {
+        if (savedKey) {
+          const masked = savedKey.slice(0, 7) + '...' + savedKey.slice(-4);
+          status.textContent = `✓ Kayıtlı Anahtar: ${masked}`;
+          status.style.color = '#059669';
+        } else {
+          status.textContent = 'Henüz kayıtlı API anahtarı yok.';
+          status.style.color = '#64748b';
+        }
+      }
+
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeOpenAIModal() {
+      const modal = document.getElementById('openai-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function toggleApiKeyVisibility() {
+      const input = document.getElementById('openai-api-key-input');
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function saveOpenAIConfig(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('openai-api-key-input');
+      const modelSelect = document.getElementById('openai-model-select');
+      const qualitySelect = document.getElementById('openai-quality-select');
+      
+      const key = input ? input.value.trim() : '';
+      const model = modelSelect ? modelSelect.value : 'dall-e-3';
+      const quality = qualitySelect ? qualitySelect.value : 'standard';
+
+      if (!key) {
+        alert('Lütfen geçerli bir OpenAI API anahtarı giriniz.');
+        return;
+      }
+
+      localStorage.setItem('yg_openai_key', key);
+      localStorage.setItem('yg_openai_model', model);
+      localStorage.setItem('yg_openai_quality', quality);
+
+      updateOpenAIButtonStatus();
+      closeOpenAIModal();
+      showToast('✓ OpenAI API Anahtarı ve Ayarları Başarıyla Kaydedildi!');
+    }
+
+    function clearOpenAIConfig() {
+      if (confirm('Kayıtlı OpenAI API anahtarını silmek istediğinize emin misiniz?')) {
+        localStorage.removeItem('yg_openai_key');
+        localStorage.removeItem('yg_openai_model');
+        localStorage.removeItem('yg_openai_quality');
+        const input = document.getElementById('openai-api-key-input');
+        if (input) input.value = '';
+        updateOpenAIButtonStatus();
+        closeOpenAIModal();
+        showToast('✓ OpenAI API Anahtarı Sıfırlandı.');
+      }
+    }
+
+    function updateOpenAIButtonStatus() {
+      const key = getOpenAIKey();
+      const label = document.getElementById('header-openai-label');
+      const btn = document.getElementById('header-openai-btn');
+      if (key && key.startsWith('sk-')) {
+        if (label) label.textContent = 'DALL-E 3 (Hazır)';
+        if (btn) {
+          btn.style.background = '#f0fdf4';
+          btn.style.borderColor = '#86efac';
+          btn.style.color = '#166534';
+        }
+      } else {
+        if (label) label.textContent = 'DALL-E 3 API';
+        if (btn) {
+          btn.style.background = '#f8fafc';
+          btn.style.borderColor = 'var(--border)';
+          btn.style.color = 'var(--text)';
+        }
+      }
+    }
+
+    let activeModalVisualTab = 'dalle'; // 'canvas' or 'dalle'
+
+    function switchModalVisualTab(tab, itemId) {
+      activeModalVisualTab = tab;
+      const canvasWrap = document.getElementById('modal-canvas-wrap');
+      const dalleWrap = document.getElementById('modal-dalle-wrap');
+      const btnCanvas = document.getElementById('tab-btn-canvas');
+      const btnDalle = document.getElementById('tab-btn-dalle');
+
+      if (tab === 'canvas') {
+        if (canvasWrap) canvasWrap.style.display = 'flex';
+        if (dalleWrap) dalleWrap.style.display = 'none';
+        if (btnCanvas) btnCanvas.classList.add('active');
+        if (btnDalle) btnDalle.classList.remove('active');
+      } else {
+        if (canvasWrap) canvasWrap.style.display = 'none';
+        if (dalleWrap) dalleWrap.style.display = 'flex';
+        if (btnCanvas) btnCanvas.classList.remove('active');
+        if (btnDalle) btnDalle.classList.add('active');
+      }
+    }
+
+    function togglePromptEditor(id) {
+      const editor = document.getElementById(`prompt-editor-${id}`);
+      if (!editor) return;
+      editor.style.display = editor.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function generateDalleImageForEvent(id) {
+      const item = CONTENT_PLAN.find(d => d.id === id);
+      if (!item) return;
+
+      const key = getOpenAIKey();
+      if (!key) {
+        showToast('⚠️ Lütfen önce OpenAI API anahtarınızı kaydedin!');
+        openOpenAIModal();
+        return;
+      }
+
+      const model = localStorage.getItem('yg_openai_model') || 'dall-e-3';
+      const quality = localStorage.getItem('yg_openai_quality') || 'standard';
+
+      // Switch to DALL-E tab
+      switchModalVisualTab('dalle', id);
+
+      const dalleWrap = document.getElementById('modal-dalle-wrap');
+      if (dalleWrap) {
+        dalleWrap.innerHTML = `
+          <div class="dalle-ai-box">
+            <div class="dalle-loading-state">
+              <div class="dalle-spinner"></div>
+              <div style="font-weight: 800; font-size: 0.88rem; color: #38bdf8;">DALL-E 3 Çiziyor...</div>
+              <div style="font-size: 0.72rem; color: #94a3b8; line-height: 1.4;">Yapay zeka kurumsal 1024x1024 görselinizi hazırlıyor (ortalama 10-15 sn)...</div>
+            </div>
+          </div>
+        `;
+      }
+
+      showToast('🚀 DALL-E 3 görsel üretimi başlatıldı...');
+
+      try {
+        const customPromptInput = document.getElementById(`prompt-input-${id}`);
+        const finalPrompt = (customPromptInput && customPromptInput.value.trim()) ? customPromptInput.value.trim() : item.aiPrompt;
+
+        const response = await fetch('https://api.openai.com/v1/images/generations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${key}`
+          },
+          body: JSON.stringify({
+            model: model,
+            prompt: finalPrompt,
+            n: 1,
+            size: '1024x1024',
+            quality: quality,
+            response_format: 'url'
+          })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          const errMsg = errData.error ? errData.error.message : `HTTP ${response.status} Hatası`;
+          throw new Error(errMsg);
+        }
+
+        const data = await response.json();
+        const imageUrl = data.data && data.data[0] ? data.data[0].url : null;
+        const revisedPrompt = data.data && data.data[0] ? data.data[0].revised_prompt : '';
+
+        if (!imageUrl) throw new Error('OpenAI görsel URL döndürmedi.');
+
+        // Cache image in session
+        sessionStorage.setItem(`yg_dalle_${id}`, imageUrl);
+        if (revisedPrompt) sessionStorage.setItem(`yg_dalle_rev_${id}`, revisedPrompt);
+        
+        // Update item background & redraw canvas with official Yakın Grup logo overlay
+        item.bgImage = imageUrl;
+        drawModalCanvas(item);
+        drawBannerCanvas(item);
+
+        // Update tab label
+        const btnDalle = document.getElementById('tab-btn-dalle');
+        if (btnDalle) btnDalle.innerHTML = `🎨 DALL-E 3 Görseli ✓`;
+
+        if (dalleWrap) {
+          dalleWrap.innerHTML = `
+            <div class="dalle-ai-box">
+              <img src="${imageUrl}" alt="${item.title}" class="dalle-generated-img" id="dalle-img-${id}">
+            </div>
+            <div style="display: flex; gap: 8px; width: 100%; max-width: 320px; margin-top: 4px;">
+              <button class="btn-act btn-download" style="flex:1;" onclick="downloadDalleImage('${imageUrl}', '${item.title}')">
+                ⬇️ DALL-E Görselini İndir
+              </button>
+              <button class="btn-act" style="background:#7c3aed; color:#fff;" onclick="generateDalleImageForEvent('${id}')" title="Yeniden Farklı Bir Varyasyon Çiz">
+                🔄 Tekrar Çiz
+              </button>
+            </div>
+          `;
+        }
+
+        showToast('✓ DALL-E 3 görseli başarıyla üretildi!');
+
+      } catch (err) {
+        console.error('DALL-E generation error:', err);
+        if (dalleWrap) {
+          dalleWrap.innerHTML = `
+            <div class="dalle-ai-box" style="padding: 14px; text-align: center; border: 1px solid #ef4444;">
+              <div style="font-size: 2rem; margin-bottom: 6px;">⚠️</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: #f87171; margin-bottom: 6px;">Görsel Üretilemedi</div>
+              <div style="font-size: 0.74rem; color: #cbd5e1; line-height: 1.4; max-height: 90px; overflow-y: auto; margin-bottom: 10px;">
+                ${err.message || 'API anahtarınızı veya bakiyenizi kontrol ediniz.'}
+              </div>
+              <div style="display: flex; gap: 6px; justify-content: center;">
+                <button onclick="openOpenAIModal()" class="btn-top" style="font-size: 0.74rem; padding: 4px 8px;">⚙️ API Ayarları</button>
+                <button onclick="generateDalleImageForEvent('${id}')" class="btn-top primary" style="font-size: 0.74rem; padding: 4px 8px;">🔄 Yeniden Dene</button>
+              </div>
+            </div>
+          `;
+        }
+        showToast('❌ DALL-E Hatası: ' + (err.message || 'Görsel üretilemedi'));
+      }
+    }
+
+    async function downloadDalleImage(url, title) {
+      try {
+        showToast('Görsel indiriliyor...');
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `Yakin_Grup_DALLE3_${safeEncode(title)}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+        showToast('✓ DALL-E 3 görseli indirildi!');
+      } catch (e) {
+        window.open(url, '_blank');
+      }
+    }
+
+    function downloadActiveModalVisual(id, title) {
+      const dalleUrl = sessionStorage.getItem(`yg_dalle_${id}`);
+      if (activeModalVisualTab === 'dalle' && dalleUrl) {
+        downloadDalleImage(dalleUrl, title);
+      } else {
+        downloadBanner(id, title);
+      }
+    }
+
     // Modal background click
     window.onclick = function(event) {
       const modal = document.getElementById('event-modal');
+      const openAiModal = document.getElementById('openai-modal');
       if (event.target === modal) {
         modal.style.display = 'none';
+      }
+      if (event.target === openAiModal) {
+        openAiModal.style.display = 'none';
       }
     };
 
@@ -1791,10 +2809,27 @@
     window.downloadSingleICS = downloadSingleICS;
     window.exportAllCSV = exportAllCSV;
     window.showToast = showToast;
+    window.shareToFacebook = shareToFacebook;
+    window.shareToInstagram = shareToInstagram;
+    window.shareToYouTube = shareToYouTube;
+    window.shareToLinkedIn = shareToLinkedIn;
+    window.shareToX = shareToX;
+    window.shareToWhatsApp = shareToWhatsApp;
+    window.openOpenAIModal = openOpenAIModal;
+    window.closeOpenAIModal = closeOpenAIModal;
+    window.saveOpenAIConfig = saveOpenAIConfig;
+    window.clearOpenAIConfig = clearOpenAIConfig;
+    window.toggleApiKeyVisibility = toggleApiKeyVisibility;
+    window.switchModalVisualTab = switchModalVisualTab;
+    window.togglePromptEditor = togglePromptEditor;
+    window.generateDalleImageForEvent = generateDalleImageForEvent;
+    window.downloadDalleImage = downloadDalleImage;
+    window.downloadActiveModalVisual = downloadActiveModalVisual;
 
     function initApp() {
       try {
         checkAuth();
+        updateOpenAIButtonStatus();
         renderMonthlyCalendar(currentYear, currentMonth);
         renderPosts('all');
         console.log('✅ Yakın Grup Takvim ve Sosyal Medya Stüdyosu Başarıyla Yüklendi!');
