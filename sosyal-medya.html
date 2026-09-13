@@ -1009,10 +1009,11 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
           <div>
-            <label style="font-size: 0.8rem; font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px;">Model</label>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px;">Görsel Modeli</label>
             <select id="openai-model-select" style="width: 100%; padding: 0.7rem; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; background: #fff;">
-              <option value="dall-e-3" selected>DALL-E 3 (En Yüksek Kalite)</option>
-              <option value="dall-e-2">DALL-E 2 (Daha Hızlı)</option>
+              <option value="chatgpt-image-latest" selected>ChatGPT Image Latest (En Güncel)</option>
+              <option value="gpt-image-1.5">GPT Image 1.5 (Yüksek Kalite)</option>
+              <option value="gpt-image-2">GPT Image 2 (Ultra HD)</option>
             </select>
           </div>
           <div>
@@ -2651,7 +2652,10 @@
         return;
       }
 
-      const model = localStorage.getItem('yg_openai_model') || 'dall-e-3';
+      let model = localStorage.getItem('yg_openai_model') || 'chatgpt-image-latest';
+      if (model === 'dall-e-3' || model === 'dall-e-2') {
+        model = 'chatgpt-image-latest';
+      }
       const quality = localStorage.getItem('yg_openai_quality') || 'standard';
 
       // Switch to DALL-E tab
@@ -2663,14 +2667,14 @@
           <div class="dalle-ai-box">
             <div class="dalle-loading-state">
               <div class="dalle-spinner"></div>
-              <div style="font-weight: 800; font-size: 0.88rem; color: #38bdf8;">DALL-E 3 Çiziyor...</div>
-              <div style="font-size: 0.72rem; color: #94a3b8; line-height: 1.4;">Yapay zeka kurumsal 1024x1024 görselinizi hazırlıyor (ortalama 10-15 sn)...</div>
+              <div style="font-weight: 800; font-size: 0.88rem; color: #38bdf8;">Yapay Zeka Çiziyor...</div>
+              <div style="font-size: 0.72rem; color: #94a3b8; line-height: 1.4;">OpenAI kurumsal 1024x1024 görselinizi hazırlıyor (ortalama 10-15 sn)...</div>
             </div>
           </div>
         `;
       }
 
-      showToast('🚀 DALL-E 3 görsel üretimi başlatıldı...');
+      showToast('🚀 Yapay zeka görsel üretimi başlatıldı...');
 
       try {
         const customPromptInput = document.getElementById(`prompt-input-${id}`);
@@ -2724,7 +2728,7 @@
             </div>
             <div style="display: flex; gap: 8px; width: 100%; max-width: 320px; margin-top: 4px;">
               <button class="btn-act btn-download" style="flex:1;" onclick="downloadDalleImage('${imageUrl}', '${item.title}')">
-                ⬇️ DALL-E Görselini İndir
+                ⬇️ Görseli İndir
               </button>
               <button class="btn-act" style="background:#7c3aed; color:#fff;" onclick="generateDalleImageForEvent('${id}')" title="Yeniden Farklı Bir Varyasyon Çiz">
                 🔄 Tekrar Çiz
@@ -2733,17 +2737,22 @@
           `;
         }
 
-        showToast('✓ DALL-E 3 görseli başarıyla üretildi!');
+        showToast('✓ Yapay zeka görseli başarıyla üretildi!');
 
       } catch (err) {
-        console.error('DALL-E generation error:', err);
+        console.error('Image generation error:', err);
+        let displayError = err.message || 'Görsel üretilemedi.';
+        if (displayError.toLowerCase().includes('credit') || displayError.toLowerCase().includes('quota') || displayError.includes('429')) {
+          displayError = '⚠️ <strong>OpenAI Hesabınızda Bakiye (Kredi) Yok:</strong> OpenAI API anahtarınız geçerli ancak hesabınızda 0$ bakiye kaldığı için OpenAI isteği onaylamadı. <a href="https://platform.openai.com/settings/organization/billing" target="_blank" style="color:#38bdf8; text-decoration:underline;">platform.openai.com/billing</a> adresinden bakiye yükleyebilirsiniz.';
+        }
+
         if (dalleWrap) {
           dalleWrap.innerHTML = `
-            <div class="dalle-ai-box" style="padding: 14px; text-align: center; border: 1px solid #ef4444;">
-              <div style="font-size: 2rem; margin-bottom: 6px;">⚠️</div>
-              <div style="font-weight: 800; font-size: 0.85rem; color: #f87171; margin-bottom: 6px;">Görsel Üretilemedi</div>
-              <div style="font-size: 0.74rem; color: #cbd5e1; line-height: 1.4; max-height: 90px; overflow-y: auto; margin-bottom: 10px;">
-                ${err.message || 'API anahtarınızı veya bakiyenizi kontrol ediniz.'}
+            <div class="dalle-ai-box" style="padding: 14px; text-align: center; border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1);">
+              <div style="font-size: 1.8rem; margin-bottom: 4px;">⚠️</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: #f87171; margin-bottom: 6px;">OpenAI Görsel Üretim Uyarısı</div>
+              <div style="font-size: 0.74rem; color: #cbd5e1; line-height: 1.5; max-height: 110px; overflow-y: auto; margin-bottom: 10px; text-align:left;">
+                ${displayError}
               </div>
               <div style="display: flex; gap: 6px; justify-content: center;">
                 <button onclick="openOpenAIModal()" class="btn-top" style="font-size: 0.74rem; padding: 4px 8px;">⚙️ API Ayarları</button>
@@ -2752,7 +2761,7 @@
             </div>
           `;
         }
-        showToast('❌ DALL-E Hatası: ' + (err.message || 'Görsel üretilemedi'));
+        showToast('❌ OpenAI: ' + (err.message.slice(0, 50) || 'Görsel üretilemedi'));
       }
     }
 
