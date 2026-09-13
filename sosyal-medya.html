@@ -2415,13 +2415,15 @@
       const item = CONTENT_PLAN.find(d => d.id === id);
       if (!item) return;
       const fullText = `${item.headline}\n\n${item.text}\n\n${item.hashtags}\n\nhttps://yakingrup.net`;
+      downloadBanner(item.id, item.title);
       navigator.clipboard.writeText(fullText).then(() => {
-        showToast('✓ Paylaşım metni panoya kopyalandı! Facebook açılıyor...');
+        showToast('✓ HD Afiş indirildi, metin kopyalandı! Yakın Grup Facebook sayfası açılıyor...');
       }).catch(() => {
-        showToast('✓ Facebook açılıyor...');
+        showToast('✓ HD Afiş indirildi! Yakın Grup Facebook sayfası açılıyor...');
       });
-      const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://yakingrup.net')}&quote=${safeEncode(fullText)}`;
-      window.open(fbShareUrl, '_blank');
+      setTimeout(() => {
+        window.open('https://www.facebook.com/yakingrup', '_blank');
+      }, 300);
     }
 
     function shareToInstagram(id) {
