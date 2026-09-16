@@ -1,8 +1,7 @@
 /**
  * YAKIN GRUP MARKETPLACE — B2B & B2C PLATFORM LOGIC
  * Comprehensive Renewable Energy & IT Equipment Platform (A to Z)
- * Supports Mode Switching, Multi-currency, Multi-language,
- * Dynamic Filtering, RFQ & Cart Drawer, Solar & Renewable Calculator & Proforma Export.
+ * Features Category-Separated View, Macro Pillars, Multi-currency & Multi-language.
  */
 
 // Global State
@@ -10,8 +9,9 @@ const state = {
   mode: 'b2b', // 'b2b' | 'b2c'
   lang: 'tr',  // 'tr' | 'en'
   currency: 'TRY', // 'TRY' | 'USD' | 'EUR'
-  rates: { TRY: 1, USD: 0.026, EUR: 0.024 }, // relative to TRY
+  rates: { TRY: 1, USD: 0.026, EUR: 0.024 },
   currencySymbols: { TRY: '₺', USD: '$', EUR: '€' },
+  macroPillar: 'all', // 'all' | 'energy' | 'it'
   category: 'all',
   searchQuery: '',
   sortBy: 'featured',
@@ -74,21 +74,14 @@ const i18n = {
     stat_b2c_4: '10 Yıl',
     stat_b2c_4_l: 'Sistem & Donanım Garantisi',
 
-    // Categories
-    cat_all: 'Tüm Ekipmanlar',
-    cat_ges: '☀️ Güneş Enerjisi (GES)',
-    cat_res: '💨 Rüzgar Enerjisi (RES)',
-    cat_heatpump: '♨️ Isı Pompası & Termal',
-    cat_inverter: '🔄 İnvertör & Evirici',
-    cat_storage: '🔋 Enerji Depolama (BESS)',
-    cat_ev: '⚡ Araç Şarj İstasyonu',
-    cat_server: '🖥️ Sunucu & Veri Depolama',
-    cat_network: '🌐 Ağ & Telekom (Switch/Router)',
-    cat_security: '🛡️ Siber Güvenlik & Firewall',
-    cat_datacenter: '🏢 Veri Merkezi & Kabinet',
-    cat_ups: '⚡ Kesintisiz Güç (UPS)',
-    cat_workstation: '💻 İş İstasyonu & PC',
-    cat_cabling: '🧶 Yapısal Kablolama & Fiber',
+    pillar_all: '⚡ Tüm Sistemler & Ekipmanlar',
+    pillar_energy: '🌿 Yenilenebilir Enerji (GES/RES/Termal)',
+    pillar_it: '💻 IT, Bilişim & Veri Merkezi',
+
+    cat_all: 'Tüm Kategoriler',
+    cat_zoom_btn: 'Kategoriye Odaklan ➔',
+    cat_back_btn: '← Tüm Kategorilere Dön (Bölümlendirilmiş Görünüm)',
+    cat_items_suffix: 'Model / Ekipman',
 
     filters_title: 'Filtreler',
     filters_reset: 'Temizle',
@@ -144,7 +137,7 @@ const i18n = {
     footer_about_title: 'Yakın Grup Marketplace',
     footer_about_desc: 'Güneş (GES), Rüzgar (RES), Isı Pompası, Enerji Depolama, EV Şarj ve Kurumsal IT & Veri Merkezi altyapısında Türkiye\'nin ve bölgenin entegre B2B & B2C tedarik platformu.',
     footer_col1_title: 'Kurumsal B2B',
-    footer_col2_title: 'Bireysel B2C',
+    footer_col2_title: 'Bireysel B2C & KOBİ',
     footer_col3_title: 'Holding & Ekosistem',
     footer_rights: '© 2026 Yakın Grup Holding A.Ş. Tüm hakları saklıdır.'
   },
@@ -192,21 +185,14 @@ const i18n = {
     stat_b2c_4: '10 Years',
     stat_b2c_4_l: 'System & Hardware Warranty',
 
-    // Categories
-    cat_all: 'All Equipment',
-    cat_ges: '☀️ Solar Power (PV)',
-    cat_res: '💨 Wind Power (WTG)',
-    cat_heatpump: '♨️ Heat Pumps & Thermal',
-    cat_inverter: '🔄 Inverters & Systems',
-    cat_storage: '🔋 Energy Storage (BESS)',
-    cat_ev: '⚡ EV Charging Stations',
-    cat_server: '🖥️ Servers & SAN Storage',
-    cat_network: '🌐 Network & Telecom',
-    cat_security: '🛡️ Cyber Security & Firewall',
-    cat_datacenter: '🏢 Data Center & Racks',
-    cat_ups: '⚡ Uninterruptible Power (UPS)',
-    cat_workstation: '💻 Workstations & PCs',
-    cat_cabling: '🧶 Structured Cabling & Fiber',
+    pillar_all: '⚡ All Systems & Equipment',
+    pillar_energy: '🌿 Renewable Energy (PV/Wind/Thermal)',
+    pillar_it: '💻 IT, Data Center & Telecom',
+
+    cat_all: 'All Categories',
+    cat_zoom_btn: 'Focus Category ➔',
+    cat_back_btn: '← Back to All Categories (Sectioned View)',
+    cat_items_suffix: 'Models / Equipment',
 
     filters_title: 'Filters',
     filters_reset: 'Reset',
@@ -262,9 +248,117 @@ const i18n = {
     footer_about_title: 'Yakın Group Marketplace',
     footer_about_desc: 'Trusted digital supply platform for industrial energy, contracting engineering, and enterprise IT data center infrastructure.',
     footer_col1_title: 'Corporate B2B',
-    footer_col2_title: 'Consumer B2C',
+    footer_col2_title: 'Consumer B2C & SMB',
     footer_col3_title: 'Holding & Ecosystem',
     footer_rights: '© 2026 Yakın Group Holding Inc. All rights reserved.'
+  }
+};
+
+// ── Master Category Definitions (Metadata & Separation Map) ────────────────
+const CATEGORIES_DEF = {
+  ges: {
+    pillar: 'energy',
+    icon: '☀️',
+    title_tr: 'Güneş Enerjisi (GES) & Fotovoltaik Sistemler',
+    title_en: 'Solar Energy (PV) & Photovoltaic Systems',
+    desc_tr: 'Tier-1 N-Type TOPCon çift cam güneş modülleri, BIPV bina cephe camları ve akıllı solar tracker sistemleri.',
+    desc_en: 'Tier-1 TOPCon bifacial modules, BIPV solar glass facades, and dual-axis trackers.'
+  },
+  heatpump: {
+    pillar: 'energy',
+    icon: '♨️',
+    title_tr: 'Isı Pompaları & Termal Enerji Çözümleri',
+    title_en: 'Heat Pumps & Thermal Energy Solutions',
+    desc_tr: 'A+++ R290 çevre dostu havadan suya monoblok ev ısı pompaları ve endüstriyel yüksek sıcaklık kaskad sistemler.',
+    desc_en: 'A+++ R290 eco air-to-water heat pumps and industrial high-temperature cascade systems.'
+  },
+  server: {
+    pillar: 'it',
+    icon: '🖥️',
+    title_tr: 'Kurumsal Sunucu & SAN/NAS Veri Depolama',
+    title_en: 'Enterprise Servers & SAN/NAS Storage',
+    desc_tr: 'Dell PowerEdge, HPE ProLiant 2U rack sunucular, All-Flash NVMe SAN depolama ve Synology NAS sistemleri.',
+    desc_en: 'Dell PowerEdge, HPE ProLiant rack servers, all-flash NVMe SAN arrays, and Synology NAS systems.'
+  },
+  network: {
+    pillar: 'it',
+    icon: '🌐',
+    title_tr: 'Ağ & Telekomünikasyon Altyapısı (Switch / Router)',
+    title_en: 'Enterprise Network & Telecom Infrastructure',
+    desc_tr: 'Cisco Catalyst ve Huawei CloudEngine omurga PoE+ switchler, Wi-Fi 7 Tri-Band mesh ağ sistemleri.',
+    desc_en: 'Cisco Catalyst and Huawei CloudEngine PoE+ core switches, Wi-Fi 7 Tri-Band mesh networks.'
+  },
+  security: {
+    pillar: 'it',
+    icon: '🛡️',
+    title_tr: 'Siber Güvenlik & Next-Gen Firewall (UTM)',
+    title_en: 'Cyber Security & Next-Gen Firewalls (UTM)',
+    desc_tr: 'Fortinet FortiGate, Palo Alto Zero-Trust ağ güvenlik duvarları ve KOBİ/ofis donanımsal VPN cihazları.',
+    desc_en: 'Fortinet FortiGate, Palo Alto Zero-Trust security appliances, and SMB VPN hardware.'
+  },
+  ups: {
+    pillar: 'it',
+    icon: '⚡',
+    title_tr: 'Kesintisiz Güç Kaynakları (Online UPS)',
+    title_en: 'Uninterruptible Power Supplies (UPS)',
+    desc_tr: 'Schneider Electric Galaxy 100kVA modüler 3-faz online UPS ve 3000VA saf sinüs rack/tower sistemleri.',
+    desc_en: 'Schneider Galaxy 100kVA modular online 3-phase UPS and 3000VA pure sine wave systems.'
+  },
+  inverter: {
+    pillar: 'energy',
+    icon: '🔄',
+    title_tr: 'İnvertör & Güç Dönüşüm Sistemleri',
+    title_en: 'Inverters & Power Conversion Systems',
+    desc_tr: 'Huawei, Sungrow, Deye ticari dizi invertörleri ve mikroinverter ev çözümleri.',
+    desc_en: 'Huawei, Sungrow, Deye commercial string inverters and microinverter solutions.'
+  },
+  storage: {
+    pillar: 'energy',
+    icon: '🔋',
+    title_tr: 'Enerji Depolama & BESS Bataryalar',
+    title_en: 'Energy Storage & BESS Batteries',
+    desc_tr: 'CATL 2.5 MWh konteyner BESS, 215 kWh KOBİ kabinleri, duvar tipi LiFePO4 ev bataryaları ve portatif UPS.',
+    desc_en: 'CATL 2.5 MWh container BESS, 215 kWh commercial cabinets, wall-mount home batteries, and portable UPS.'
+  },
+  res: {
+    pillar: 'energy',
+    icon: '💨',
+    title_tr: 'Rüzgar Enerjisi Santralleri (RES) & Türbinler',
+    title_en: 'Wind Power Plants (RES) & Turbines',
+    desc_tr: '500kW doğrudan tahrikli endüstriyel türbinler, 3kW maglev sessiz ev/çiftlik rüzgar jeneratörleri ve Lidar.',
+    desc_en: '500kW direct-drive industrial turbines, 3kW maglev silent home wind generators, and Lidar.'
+  },
+  ev: {
+    pillar: 'energy',
+    icon: '⚡',
+    title_tr: 'Elektrikli Araç Şarj İstasyonları (EV Charging)',
+    title_en: 'Electric Vehicle Charging Stations',
+    desc_tr: 'Yakın Volt 180kW DC ultra hızlı şarj istasyonları ve 22kW ev tipi akıllı Wallbox cihazları.',
+    desc_en: 'Yakın Volt 180kW DC ultra-fast chargers and 22kW smart home Wallbox units.'
+  },
+  datacenter: {
+    pillar: 'it',
+    icon: '🏢',
+    title_tr: 'Veri Merkezi Kabinet & InRow Soğutma',
+    title_en: 'Data Center Racks & InRow Cooling',
+    desc_tr: '48U ağır hizmet sunucu kabinleri, akıllı IP-PDU güç dağıtımı ve biometrik erişim kontrolü.',
+    desc_en: '48U heavy-duty server rack suites with managed IP-PDUs and biometric access control.'
+  },
+  cabling: {
+    pillar: 'it',
+    icon: '🧶',
+    title_tr: 'Yapısal Kablolama & Fiber Optik Sistemler',
+    title_en: 'Structured Cabling & Fiber Optics',
+    desc_tr: 'Fujikura 90S+ füzyon ek cihazları, Cat7 1000MHz S/FTP LSZH yangına dayanıklı veri kabloları.',
+    desc_en: 'Fujikura 90S+ fusion splicers and Cat7 1000MHz S/FTP LSZH fire-resistant data cables.'
+  },
+  workstation: {
+    pillar: 'it',
+    icon: '💻',
+    title_tr: 'Profesyonel İş İstasyonları (AI & BIM)',
+    title_en: 'Professional Workstations (AI & BIM)',
+    desc_tr: 'Intel Core i9-14900K, NVIDIA RTX 4090 24GB AI, Deep Learning ve BIM mühendislik render sistemleri.',
+    desc_en: 'Intel Core i9-14900K, NVIDIA RTX 4090 24GB AI, Deep Learning and BIM engineering workstations.'
   }
 };
 
@@ -284,7 +378,7 @@ const PRODUCTS_DATA = [
     brand: 'Longi / Yakın',
     image: 'assets/images/energy_hero_1784577681830.png',
     power: '585Wp TOPCon',
-    moq: 36, // 1 Pallet
+    moq: 36,
     unit: 'Adet',
     basePriceTRY: 4250,
     tiers: [
@@ -296,8 +390,7 @@ const PRODUCTS_DATA = [
       'Hücre Tipi': 'N-Type TOPCon Bifacial Çift Yüzeyli',
       'Modül Verimliliği': '%22.8 Yüksek Verim',
       'Garanti': '15 Yıl Ürün / 30 Yıl Lineer Performans',
-      'Maks. Sistem Voltajı': '1500V DC Standart',
-      'Dayanım': '5400 Pa Kar / 2400 Pa Rüzgar Yükü'
+      'Maks. Sistem Voltajı': '1500V DC Standart'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak & Kocaeli Depo)',
@@ -324,8 +417,7 @@ const PRODUCTS_DATA = [
       'Hücre Teknolojisi': '210mm N-Type i-TOPCon',
       'Modül Verimi': '%22.5',
       'Düşük Sıcaklık Katsayısı': '-0.30%/°C (Yüksek Sıcaklıkta Üstün Verim)',
-      'Kullanım Alanı': 'Büyük Ölçekli Arazi GES & Endüstriyel Çatılar',
-      'Sertifikalar': 'IEC 61215, IEC 61730, CE, UL'
+      'Kullanım Alanı': 'Büyük Ölçekli Arazi GES & Endüstriyel Çatılar'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -350,8 +442,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Cam Yapısı': 'Lamine Çift Kat Temperli Güvenlik Camı',
       'Işık Geçirgenliği': '%10 - %40 Ayarlanabilir Saydamlık',
-      'Isı Yalıtımı': 'Low-E Kaplamalı Çift Cam Isı Bariyeri',
-      'Mimari': 'Renkli / Şeffaf / Opak Cephe Giydirme Uyumu'
+      'Isı Yalıtımı': 'Low-E Kaplamalı Çift Cam Isı Bariyeri'
     },
     inStock: false,
     leadTime: 'Proje Bazlı 3-4 Hafta',
@@ -379,9 +470,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Maks. Verim': '%98.8 (Euro Verim %98.6)',
       'MPPT Sayısı': '10 Bağımsız MPPT (20 DC Giriş)',
-      'Haberleşme': 'RS485, MBUS, 4G / Smart Dongle Entegre',
-      'Koruma': 'AI Destekli AFCI Ark Algılama + IP66',
-      'PID Kurtarma': 'Entegre Anti-PID Modülü'
+      'Koruma': 'AI Destekli AFCI Ark Algılama + IP66'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -405,9 +494,7 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Maks. Verim': '%99.01',
-      'DC/AC Oranı': '1.8x Yüksek DC Yükleme Oranı',
       'MPPT Girişi': '6 MPPT / 12 Giriş (65A/MPPT)',
-      'Şebeke Uyumu': 'SCR ≥ 1.0 Zayıf Şebeke Desteği & Q-at-Night',
       'Soğutma': 'Akıllı Zorlamalı Hava Soğutma (IP66 & C5)'
     },
     inStock: true,
@@ -435,9 +522,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Hücre Kimyası': 'LiFePO4 (LFP) 314Ah Ultra Dayanıklı Prizmatik Hücre',
       'Konteyner Boyutu': '20ft Standart ISO / IP55 Sıvı Soğutmalı',
-      'Çevrim Ömrü': '≥ 8000 Çevrim (%80 SOH)',
-      'Yangın Güvenliği': 'NFPA 855 / Aerosol + Novec 1230 Gazlı Söndürme',
-      'PCS Entegrasyonu': 'Entegre 1.25MW Çift Yönlü Evirici + Trafo'
+      'Çevrim Ömrü': '≥ 8000 Çevrim (%80 SOH)'
     },
     inStock: false,
     leadTime: '6-8 Hafta Üretim & Proje Teslim',
@@ -464,9 +549,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Çıkış Suyu Sıcaklığı': '80°C\'ye Kadar Yüksek Sıcaklık (Radyatör & Proses Uyumu)',
       'Soğutucu Gaz': 'R290 Doğal Çevre Dostu Gaz (GWP = 3)',
-      'COP Verimliliği': 'COP 4.65 (A+++ Seviyesi)',
-      'Kaskad Desteği': '16 Üniteye Kadar Kaskad Bağlantı (1.6 MW Kapasite)',
-      'Kullanım Alanı': 'Oteller, Hastaneler, Fabrika Isıtma & Sıcak Su Hatları'
+      'COP Verimliliği': 'COP 4.65 (A+++ Seviyesi)'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -493,9 +576,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Jeneratör': 'Kalıcı Mıknatıslı Senkron Jeneratör (PMG - Dişli Kutusuz)',
       'Rüzgar Başlama Hızı': '2.5 m/s (Düşük Rüzgarda Yüksek Üretim)',
-      'Nominal Hız': '10.5 m/s (Kesme Hızı: 25 m/s)',
-      'Kule Yüksekliği': '45m / 55m Konik Çelik Kule Seçenekleri',
-      'Kanat': 'Epoksi Cam Elyaf Takviyeli 24.5m Aerodinamik Kanatlar'
+      'Nominal Hız': '10.5 m/s (Kesme Hızı: 25 m/s)'
     },
     inStock: false,
     leadTime: '8-10 Hafta Üretim & Kurulum',
@@ -517,13 +598,11 @@ const PRODUCTS_DATA = [
     basePriceTRY: 780000,
     tiers: [
       { min: 1, max: 2, discount: 0, priceTRY: 780000 },
-      { min: 3, max: 8, discount: 8, priceTRY: 717600 },
-      { min: 9, max: 30, discount: 14, priceTRY: 670800 }
+      { min: 3, max: 8, discount: 8, priceTRY: 717600 }
     ],
     specs: {
       'Çıkış Voltajı': '150V - 1000V DC (800V Süper Hızlı Araçlarla Tam Uyum)',
       'Protokol': 'OCPP 1.6J / OCPP 2.0.1 Hazır',
-      'Ödeme Terminali': 'Entegre Temassız POS / Kredi Kartı / RFID',
       'Ekran': '15.6 inç Dış Ortam Yüksek Parlaklıklı Dokunmatik'
     },
     inStock: true,
@@ -531,7 +610,7 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 7. IT & BİLİŞİM: SUNUCU & VERİ DEPOLAMA (Servers & Storage)
+  // 7. IT: SUNUCU & DEPOLAMA (Servers & Storage)
   {
     id: 'b2b-srv-poweredge-r760',
     mode: 'b2b',
@@ -546,15 +625,12 @@ const PRODUCTS_DATA = [
     basePriceTRY: 485000,
     tiers: [
       { min: 1, max: 2, discount: 0, priceTRY: 485000 },
-      { min: 3, max: 8, discount: 8, priceTRY: 446200 },
-      { min: 9, max: 30, discount: 15, priceTRY: 412250 }
+      { min: 3, max: 8, discount: 8, priceTRY: 446200 }
     ],
     specs: {
-      'İşlemci': '2x Intel Xeon Gold 6430 (64 Çekirdek, 128 Thread, 2.10 GHz)',
-      'Bellek': '256GB (8x32GB) DDR5 4800MHz RDIMM ECC (32 Yuva - 8TB Maks)',
-      'Depolama': '8x 3.84TB NVMe SSD Enterprise (PERC H755 Front SAS/NVMe)',
-      'Ağ & Yönetim': 'Broadcom 57414 Çift Port 25GbE SFP28 + iDRAC9 Enterprise',
-      'Güç Kaynağı': 'Çift Yedekli 1400W Titanyum Hot-Plug PSU (1+1)'
+      'İşlemci': '2x Intel Xeon Gold 6430 (64 Çekirdek, 128 Thread)',
+      'Bellek': '256GB DDR5 4800MHz RDIMM ECC (32 Yuva - 8TB Maks)',
+      'Depolama': '8x 3.84TB NVMe SSD Enterprise'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Sevkiyat)',
@@ -579,9 +655,7 @@ const PRODUCTS_DATA = [
     specs: {
       'İşlemci': '2x Intel Xeon Platinum 8468 (96 Çekirdek, 2.10 GHz)',
       'Bellek': '512GB (16x32GB) DDR5 SmartMemory RDIMM',
-      'Depolama': '16x 1.92TB SAS 12G Read Intensive SFF SSD',
-      'Güvenlik': 'HPE Silicon Root of Trust & iLO 6 Advanced Lisansı',
-      'Garanti': '3 Yıl 7x24 4 Saat Müdahale Garantili'
+      'Güvenlik': 'HPE Silicon Root of Trust & iLO 6 Advanced'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak Depo)',
@@ -605,8 +679,7 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Mimari': 'Active-Active Çift Controller (Dual Node NVMe)',
-      'Kapasite': '23 TB Ham / 92 TB Efektif (4:1 Veri Sıkıştırma & Deduplication Garantisi)',
-      'Protokoller': 'NVMe-oF, FC (Fibre Channel), iSCSI, NFS, SMB',
+      'Kapasite': '23 TB Ham / 92 TB Efektif (4:1 Veri Sıkıştırma)',
       'Gecikme (Latency)': '< 0.3 ms Sub-millisecond Ultra Düşük Gecikme'
     },
     inStock: false,
@@ -614,7 +687,7 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 8. IT & BİLİŞİM: AĞ & TELEKOM (Network, Switch, Router)
+  // 8. IT: AĞ & TELEKOM (Network)
   {
     id: 'b2b-net-cisco-catalyst-9300',
     mode: 'b2b',
@@ -629,15 +702,12 @@ const PRODUCTS_DATA = [
     basePriceTRY: 165000,
     tiers: [
       { min: 1, max: 3, discount: 0, priceTRY: 165000 },
-      { min: 4, max: 10, discount: 8, priceTRY: 151800 },
-      { min: 11, max: 30, discount: 14, priceTRY: 141900 }
+      { min: 4, max: 10, discount: 8, priceTRY: 151800 }
     ],
     specs: {
       'Portlar': '48 Port 10/100/1000 Ethernet (PoE+ 740W Bütçe)',
-      'Uplink': 'Modüler Network Modülü (4x 10GE SFP+ / 2x 40GE)',
-      'Switching Kapasitesi': '480 Gbps / 480 Mpps İletim Hızı',
-      'Yazılım': 'Cisco DNA Premier & Network Advantage L3 Routing (OSPF, BGP)',
-      'Yedeklilik': 'StackWise-480 (480G İstifleme) + Dual Yedekli Güç Kaynağı'
+      'Uplink': 'Modüler Network Modülü (4x 10GE SFP+)',
+      'Switching Kapasitesi': '480 Gbps / 480 Mpps İletim Hızı'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -661,16 +731,14 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Performans': '176 Gbps / 132 Mpps Paket Yönlendirme Kapasitesi',
-      'Yönetim': 'iMaster NCE-Campus Bulut Yönetim & SNMP v3',
-      'Akıllı PoE': 'Hızlı PoE & Kesintisiz Kalıcı PoE (Perpetual PoE) Desteği',
-      'Güvenlik': '802.1X, MAC Kimlik Doğrulama, DoS Saldırı Koruması'
+      'Yönetim': 'iMaster NCE-Campus Bulut Yönetim & SNMP v3'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak Depo)',
     datasheetUrl: '#'
   },
 
-  // 9. IT & BİLİŞİM: SİBER GÜVENLİK & FIREWALL
+  // 9. IT: SİBER GÜVENLİK & FIREWALL
   {
     id: 'b2b-sec-fortigate-200f',
     mode: 'b2b',
@@ -689,10 +757,8 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Firewall Verimliliği': '27 Gbps Throughput / 3 Gbps SSL-VPN İnceleme',
-      'IPS & Tehdit Koruma': '5 Gbps IPS / 3 Gbps Threat Protection',
       'Arayüzler': '16x GE RJ45, 8x SFP, 4x 10GE SFP+ Yuvaları',
-      'Lisans': '1 Yıl FortiGuard Enterprise UTM (Antivirüs, IPS, Web Filtre, Sandbox)',
-      'İşlemci': 'Özel Fortinet SPU NP6XLite & CP9 Güvenlik Hızlandırıcı ASIC'
+      'Lisans': '1 Yıl FortiGuard Enterprise UTM Dahil'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Sevkiyat)',
@@ -712,16 +778,14 @@ const PRODUCTS_DATA = [
     basePriceTRY: 380000,
     specs: {
       'Zero Trust': 'Tam Katman-7 Uygulama Tabanlı App-ID & User-ID Denetimi',
-      'Tehdit Önleme': 'WildFire Bulut Tabanlı Sıfırıncı Gün (Zero-Day) Analizi',
-      'Portlar': '8x 10M/100M/1G RJ45, 8x 1G/10G SFP/SFP+ Yuvaları',
-      'Yedekli Güç': 'Çift AC/DC Hot-Swap Güç Kaynakları'
+      'Tehdit Önleme': 'WildFire Bulut Tabanlı Sıfırıncı Gün Analizi'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   },
 
-  // 10. IT & BİLİŞİM: KESİNTİSİZ GÜÇ KAYNAĞI (UPS)
+  // 10. IT: KESİNTİSİZ GÜÇ KAYNAĞI (UPS)
   {
     id: 'b2b-ups-schneider-galaxy-100k',
     mode: 'b2b',
@@ -740,17 +804,15 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Teknoloji': '3-Kademeli Çift Çevrim Online (VFI-SS-111)',
-      'Verimlilik': '%99\'a Varan ECOnversion Patentli Yüksek Verim Modu',
-      'Batarya Teknolojisi': 'Li-Ion ve VRLA Akü Dolabı Entegrasyonu',
-      'Yönetim': 'EcoStruxure IT Bulut İzleme & Akıllı SNMP/Modbus Kartı',
-      'Paralellenebilirlik': '4 Üniteye Kadar N+1 Yedekli Paralel Çalışma (400 kVA)'
+      'Verimlilik': '%99 ECOnversion Patentli Yüksek Verim Modu',
+      'Yönetim': 'EcoStruxure IT Bulut İzleme & Akıllı SNMP/Modbus Kartı'
     },
     inStock: true,
     leadTime: 'Stokta (Kocaeli Depo)',
     datasheetUrl: '#'
   },
 
-  // 11. IT & BİLİŞİM: VERİ MERKEZİ & KABİNET & FIBER
+  // 11. IT: VERİ MERKEZİ & KABİNET & FIBER
   {
     id: 'b2b-cab-datacenter-48u',
     mode: 'b2b',
@@ -769,9 +831,7 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Boyutlar': '800 x 1200 x 2300 mm (48U Ekstra Derinlik)',
-      'Havalandırma': '%83 Yüksek Perfore Delikli Çift Kanatlı Ön/Arka Kapılar',
-      'Güç Dağıtımı': '2 Adet 32A 3-Faz 22kW Akıllı Yönetilebilir Çıkış Bazlı Ölçümlü PDU',
-      'Güvenlik': 'RFID / Kartlı / Şifreli Elektronik Kilit + Sıcaklık/Nem Sensör Kiti'
+      'Güç Dağıtımı': '2 Adet 32A 3-Faz 22kW Akıllı Yönetilebilir Çıkış Bazlı PDU'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak Depo)',
@@ -791,8 +851,6 @@ const PRODUCTS_DATA = [
     basePriceTRY: 320000,
     specs: {
       'Ek Süresi': '6-8 Saniye Ultra Hızlı Füzyon Ek (0.01 dB Kayıp)',
-      'Isıtıcı Fırın': '9-10 Saniye Otomatik Koruyucu Manşon Fırını',
-      'Dayanıklılık': 'Darbe, Yağmur ve Toz Korumalı IP52 Sert Gövde',
       'Set İçeriği': 'CT50 Akıllı Bluetooth Cleaver, Çift Batarya, Taşıma Çantası'
     },
     inStock: true,
@@ -817,9 +875,7 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'İletken': '4x2x23 AWG Katı Saf Bakır (Solid Bare Copper)',
-      'Ekranlama': 'Her Çift Alüminyum Folyo Korumalı + Dış Kalaylı Bakır Örgü (S/FTP)',
-      'Kılıf': 'LSZH Düşük Duman Sıfır Halojen (CPR Sınıfı B2ca Yangın Dayanımı)',
-      'Standart': 'ISO/IEC 11801, EN 50173 & TIA-568-C.2 Uyumlu'
+      'Ekranlama': 'Her Çift Alüminyum Folyo + Dış Kalaylı Bakır Örgü (S/FTP)'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak & Kocaeli Depo)',
@@ -847,9 +903,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Panel Adedi': '18 x 585W TOPCon Çift Cam Modül',
       'İnvertör': '10kW 3-Faz Hibrit Akıllı İnvertör',
-      'Montaj': 'Statik Onaylı Alüminyum Çatı Taşıyıcı Seti',
-      'Mobil Takip': 'Yakın Energy iOS & Android Anlık İzleme',
-      'Garanti': '10 Yıl Sistem & Montaj Garantisi'
+      'Montaj': 'Statik Onaylı Alüminyum Çatı Taşıyıcı Seti'
     },
     inStock: true,
     leadTime: '3 Günde Keşif / 7 Günde Kurulum',
@@ -870,8 +924,6 @@ const PRODUCTS_DATA = [
     specs: {
       'Kurulum': 'Doğrudan Ev Prizine Tak-Çalıştır (Ruhsat Gerektirmez)',
       'Paneller': '2 Adet 430W Full Black Yüksek Verimli Panel',
-      'Mikroinverter': '800W Dahili Wi-Fi / Bulut Bağlantılı',
-      'Kablo & Askı': 'Balkon Korkuluğu / Teras Ayarlanabilir Montaj Braketi',
       'Tasarruf': 'Yıllık ~1100 kWh Elektrik Üretimi'
     },
     inStock: true,
@@ -896,9 +948,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Enerji Sınıfı': 'A+++ (35°C) / A++ (55°C) ErP Enerji Etiketi',
       'Gaz Türü': 'R290 Propan Doğal Gaz (Sıfır Karbon Ayak İzi)',
-      'Çıkış Sıcaklığı': '75°C Sıcak Su (Mevcut Peteklerle Tam Uyum)',
-      'Ses Seviyesi': '38 dB(A) Ultra Sessiz Gece Çalışma Modu',
-      'Mobil Uygulama': 'Wi-Fi Entegre Akıllı Oda Termostatı & Sıcaklık Takibi'
+      'Çıkış Sıcaklığı': '75°C Sıcak Su (Mevcut Peteklerle Tam Uyum)'
     },
     inStock: true,
     leadTime: 'Stokta (3 Günde Montaj)',
@@ -922,8 +972,7 @@ const PRODUCTS_DATA = [
       'İşlemci': 'Intel Core i9-14900K (6.0 GHz Turbo, 24 Çekirdek, 32 Thread)',
       'Ekran Kartı': 'NVIDIA GeForce RTX 4090 24GB GDDR6X (AI LLM & BIM Render)',
       'Bellek': '64GB (2x32GB) DDR5 6000MHz Kingston Fury Beast',
-      'Depolama': '2TB Samsung 990 Pro NVMe PCIe 4.0 M.2 SSD (7450 MB/s)',
-      'Soğutma & Kasa': '360mm Sıvı Soğutma + 1200W 80+ Gold PCIe 5.0 Güç Kaynağı'
+      'Depolama': '2TB Samsung 990 Pro NVMe PCIe 4.0 M.2 SSD (7450 MB/s)'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Kargo)',
@@ -944,8 +993,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Disk Konfigürasyonu': '4x 8TB WD Red Pro NAS HDD Dahil (RAID 5/6/SHR Desteği)',
       'NVMe Önbellek': '2x 500GB M.2 NVMe SSD Read/Write Cache Entegre',
-      'Ağ Arayüzü': '2x 1GbE LAN (Opsiyonel 10GbE PCIe Yükseltme Modülü Desteği)',
-      'Yazılım': 'Synology DSM 7.2 (Otomatik Ofis/Ev Yedekleme, Fotoğraf & Dosya Bulutu)'
+      'Yazılım': 'Synology DSM 7.2 (Otomatik Ofis/Ev Yedekleme)'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -966,8 +1014,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Hız & Bant': '19 Gbps Tri-Band Wi-Fi 7 (320 MHz Geniş Kanal & 4K-QAM)',
       'Kapsama Alanı': '750 m² Kesintisiz Dolaşım (Seamless Roaming)',
-      'Kablolu Portlar': 'Her Ünitede 2x 10 Gbps + 2x 2.5 Gbps Ethernet WAN/LAN Portları',
-      'Kapasite': '200+ Eşzamanlı Cihaz Bağlantısı (Düşük Gecikme MLO Teknolojisi)'
+      'Kablolu Portlar': 'Her Ünitede 2x 10 Gbps + 2x 2.5 Gbps Ethernet WAN/LAN'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Kargo)',
@@ -988,8 +1035,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Portlar': '24 Port 10/100/1000 Mbps PoE+ (Port Başına 30W Maks)',
       'Uplink': '2 Adet 1.25G Gigabit SFP Fiber Uplink Yuvası',
-      'Yönetim': 'Web GUI, VLAN, QoS, IGMP Snooping, Port İzolasyonu',
-      'Kullanım': 'IP Kamera, Wi-Fi Access Point ve IP Telefon Altyapısı'
+      'Yönetim': 'Web GUI, VLAN, QoS, IGMP Snooping, Port İzolasyonu'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -1010,8 +1056,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Portlar': '5x 2.5 GbE RJ45 Intel i226-V Ağ Portu',
       'Güvenlik': 'Dahili IPS/IDS, Reklam & Zararlı Yazılım Engelleme, DNS Filtreleme',
-      'VPN Desteği': 'WireGuard & OpenVPN Donanımsal Hızlandırma (500 Mbps VPN Hızı)',
-      'Tasarım': 'Alüminyum Fansız (Fanless 0 dB) Sessiz Kompakt Gövde'
+      'VPN Desteği': 'WireGuard & OpenVPN Donanımsal Hızlandırma (500 Mbps VPN Hızı)'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Kargo)',
@@ -1031,9 +1076,8 @@ const PRODUCTS_DATA = [
     basePriceTRY: 22500,
     specs: {
       'Çıkış Dalga Şekli': '0ms Transfer Süreli Gerçek Çift Çevrim Saf Sinüs Dalgası',
-      'Ekran': 'Döndürülebilir Renkli LCD Ekran (Yük Yüzdesi, Akü Seviyesi, Giriş/Çıkış V)',
-      'Çıkışlar': '8x IEC C13 + 1x IEC C19 + 2x Standart Schuko Priz',
-      'Yönetim': 'USB, RS232 ve Akıllı SNMP Ağ İzleme Yuvası'
+      'Ekran': 'Döndürülebilir Renkli LCD Ekran',
+      'Çıkışlar': '8x IEC C13 + 1x IEC C19 + 2x Standart Schuko Priz'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -1057,8 +1101,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Kablo': '5 Metre Entegre Tip-2 Spiral Kablo',
       'Bağlantı': 'Wi-Fi, Bluetooth, RFID Kart Okuyucu, Mobil Uygulama',
-      'Güneş Entegrasyonu': 'Solar Fazlalık Şarj Modu (Sadece GES Üretimiyle Şarj)',
-      'Koruma': 'Dahili 6mA DC Kaçak Akım + IP65 Su Geçirmezlik'
+      'Güneş Entegrasyonu': 'Solar Fazlalık Şarj Modu (Sadece GES Üretimiyle Şarj)'
     },
     inStock: true,
     leadTime: 'Stokta (Ücretsiz Aynı Gün Kargo)',
@@ -1094,11 +1137,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const urlCat = urlParams.get('cat');
-  if (urlCat) {
+  if (urlCat && CATEGORIES_DEF[urlCat]) {
     state.category = urlCat;
   }
 
-  // Restore cart
   const savedCart = localStorage.getItem('yakin_market_cart');
   if (savedCart) {
     try { state.cart = JSON.parse(savedCart); } catch (e) { state.cart = []; }
@@ -1116,7 +1158,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function setMarketMode(newMode) {
   if (state.mode === newMode) return;
   state.mode = newMode;
-  state.category = 'all'; // Reset category on mode switch
+  state.category = 'all';
+  state.macroPillar = 'all';
   applyMode(newMode);
   renderCategories();
   renderProducts();
@@ -1127,12 +1170,10 @@ function applyMode(mode) {
   document.body.classList.remove('mode-b2b', 'mode-b2c');
   document.body.classList.add(`mode-${mode}`);
 
-  // Update pill buttons
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mode === mode);
   });
 
-  // Update Dynamic Text elements
   const t = i18n[state.lang];
   const isB2B = (mode === 'b2b');
 
@@ -1142,7 +1183,6 @@ function applyMode(mode) {
   document.getElementById('hero-cta1').textContent = isB2B ? t.hero_b2b_cta1 : t.hero_b2c_cta1;
   document.getElementById('hero-cta2').textContent = isB2B ? t.hero_b2b_cta2 : t.hero_b2c_cta2;
 
-  // Stats
   document.getElementById('stat-1-val').textContent = isB2B ? t.stat_b2b_1 : t.stat_b2c_1;
   document.getElementById('stat-1-lbl').textContent = isB2B ? t.stat_b2b_1_l : t.stat_b2c_1_l;
   document.getElementById('stat-2-val').textContent = isB2B ? t.stat_b2b_2 : t.stat_b2c_2;
@@ -1152,7 +1192,6 @@ function applyMode(mode) {
   document.getElementById('stat-4-val').textContent = isB2B ? t.stat_b2b_4 : t.stat_b2c_4;
   document.getElementById('stat-4-lbl').textContent = isB2B ? t.stat_b2b_4_l : t.stat_b2c_4_l;
 
-  // Drawer Title
   document.getElementById('drawer-title-text').textContent = isB2B ? t.drawer_b2b_title : t.drawer_b2c_title;
 }
 
@@ -1174,71 +1213,177 @@ function setCurrency(curr) {
   initSolarCalculator();
 }
 
-// ── Category Pills Rendering ───────────────────────────────────────────────
+// ── Macro Pillar & Category Navigation Rendering ───────────────────────────
+function setMacroPillar(pillar) {
+  state.macroPillar = pillar;
+  if (pillar !== 'all') {
+    state.category = 'all';
+  }
+  renderCategories();
+  renderProducts();
+}
+
 function renderCategories() {
   const catNav = document.getElementById('categories-nav-bar');
   if (!catNav) return;
 
   const t = i18n[state.lang];
   
-  let categories = [
-    { key: 'all', label: t.cat_all, icon: '⚡' },
-    { key: 'ges', label: t.cat_ges, icon: '☀️' },
-    { key: 'heatpump', label: t.cat_heatpump, icon: '♨️' },
-    { key: 'server', label: t.cat_server, icon: '🖥️' },
-    { key: 'network', label: t.cat_network, icon: '🌐' },
-    { key: 'security', label: t.cat_security, icon: '🛡️' },
-    { key: 'ups', label: t.cat_ups, icon: '⚡' },
-    { key: 'inverter', label: t.cat_inverter, icon: '🔄' },
-    { key: 'storage', label: t.cat_storage, icon: '🔋' },
-    { key: 'res', label: t.cat_res, icon: '💨' },
-    { key: 'ev', label: t.cat_ev, icon: '⚡' }
-  ];
+  // Available categories for current mode
+  const activeProducts = PRODUCTS_DATA.filter(p => p.mode === state.mode);
+  const availableCatKeys = [...new Set(activeProducts.map(p => p.category))];
 
-  if (state.mode === 'b2b') {
-    categories.push(
-      { key: 'datacenter', label: t.cat_datacenter, icon: '🏢' },
-      { key: 'cabling', label: t.cat_cabling, icon: '🧶' }
-    );
-  } else {
-    categories.push(
-      { key: 'workstation', label: t.cat_workstation, icon: '💻' }
-    );
+  // Filter categories by macro pillar if selected
+  let filteredCatKeys = availableCatKeys;
+  if (state.macroPillar !== 'all') {
+    filteredCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === state.macroPillar);
   }
 
-  catNav.innerHTML = categories.map(cat => `
-    <button class="cat-pill-btn ${state.category === cat.key ? 'active' : ''}" onclick="selectCategory('${cat.key}')">
-      ${cat.label}
-    </button>
-  `).join('');
+  // Macro Pillar Buttons + Category Pills
+  let html = `
+    <div class="macro-pillar-bar">
+      <button class="macro-tab-btn ${state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
+        ${t.pillar_all}
+      </button>
+      <button class="macro-tab-btn ${state.macroPillar === 'energy' ? 'active' : ''}" onclick="setMacroPillar('energy')">
+        ${t.pillar_energy}
+      </button>
+      <button class="macro-tab-btn ${state.macroPillar === 'it' ? 'active' : ''}" onclick="setMacroPillar('it')">
+        ${t.pillar_it}
+      </button>
+    </div>
+    <div class="categories-bar">
+      <button class="cat-pill-btn ${state.category === 'all' ? 'active' : ''}" onclick="selectCategory('all')">
+        ⚡ ${t.cat_all} (${activeProducts.length})
+      </button>
+  `;
+
+  filteredCatKeys.forEach(k => {
+    const def = CATEGORIES_DEF[k];
+    if (!def) return;
+    const catTitle = (state.lang === 'tr' ? def.title_tr : def.title_en);
+    const catCount = activeProducts.filter(p => p.category === k).length;
+    html += `
+      <button class="cat-pill-btn ${state.category === k ? 'active' : ''}" onclick="selectCategory('${k}')">
+        ${def.icon} ${catTitle} (${catCount})
+      </button>
+    `;
+  });
+
+  html += `</div>`;
+  catNav.innerHTML = html;
 }
 
 function selectCategory(catKey) {
   state.category = catKey;
   renderCategories();
   renderProducts();
+
+  // Smooth scroll to catalog section if selecting category
+  const catSection = document.getElementById('catalog');
+  if (catSection) {
+    catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
-// ── Product Grid Rendering ─────────────────────────────────────────────────
+// ── Product Card Template Generator ─────────────────────────────────────────
+function createProductCardHTML(p) {
+  const title = state.lang === 'tr' ? p.title_tr : p.title_en;
+  const isB2B = (state.mode === 'b2b');
+  const t = i18n[state.lang];
+
+  const specEntries = Object.entries(p.specs).slice(0, 3);
+  const specHtml = specEntries.map(([k, v]) => `
+    <span class="spec-chip"><strong>${k}:</strong> ${v}</span>
+  `).join('');
+
+  let tierHtml = '';
+  if (isB2B && p.tiers && p.tiers.length > 1) {
+    const topTier = p.tiers[p.tiers.length - 1];
+    tierHtml = `
+      <div class="b2b-tier-preview">
+        <span>${topTier.min}+ ${p.unit} Siparişte</span>
+        <strong>%${topTier.discount} İskonto (${formatPrice(topTier.priceTRY)})</strong>
+      </div>
+    `;
+  } else if (!isB2B && p.installFeeTRY) {
+    tierHtml = `
+      <div class="b2c-install-option">
+        ${t.card_install_included}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="product-card">
+      <div class="card-img-wrapper">
+        <img src="${p.image}" alt="${title}" class="card-img" loading="lazy">
+        <div class="card-tags-top">
+          <span class="tag-badge ${isB2B ? 'tag-b2b' : 'tag-b2c'}">${isB2B ? 'B2B Kurumsal' : 'B2C Bireysel'}</span>
+          <span class="tag-badge ${p.inStock ? 'tag-stock' : 'tag-leadtime'}">${p.leadTime}</span>
+        </div>
+        <button class="quick-view-btn" onclick="openProductDetailModal('${p.id}')">👁️ ${t.card_spec_btn}</button>
+      </div>
+
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-brand">${p.brand}</span>
+          <span>${p.power ? p.power : ''}</span>
+        </div>
+
+        <h3 class="card-title" title="${title}">${title}</h3>
+
+        <div class="card-specs-list">
+          ${specHtml}
+        </div>
+
+        <div class="card-price-block">
+          ${tierHtml}
+          <div class="price-main">
+            <span class="price-amount">${formatPrice(p.basePriceTRY)}</span>
+            <span class="price-sub">/ ${p.unit} ${isB2B ? '+ KDV' : '(KDV Dahil)'}</span>
+          </div>
+          ${isB2B ? `<div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">${t.card_moq_prefix} <strong>${p.moq} ${p.unit}</strong></div>` : ''}
+        </div>
+
+        <div class="card-actions-row">
+          <button class="btn-card-action" onclick="addToCart('${p.id}')">
+            ${isB2B ? '📋 ' + t.card_rfq_btn : '🛒 ' + t.card_cart_btn}
+          </button>
+          <button class="btn-icon-detail" onclick="openProductDetailModal('${p.id}')" title="${t.card_spec_btn}">
+            📑
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Product Grid Rendering (Category-Separated Engine) ───────────────────────
 function renderProducts() {
-  const grid = document.getElementById('products-grid-container');
+  const container = document.getElementById('products-grid-container');
   const countSpan = document.getElementById('results-count-number');
-  if (!grid) return;
+  if (!container) return;
 
   const t = i18n[state.lang];
 
-  // Filter products by mode
-  let filtered = PRODUCTS_DATA.filter(p => p.mode === state.mode);
+  // Base list of mode products
+  let modeProducts = PRODUCTS_DATA.filter(p => p.mode === state.mode);
 
-  // Filter by category
-  if (state.category !== 'all') {
-    filtered = filtered.filter(p => p.category === state.category);
+  // Filter by stock
+  if (state.filterStockOnly) {
+    modeProducts = modeProducts.filter(p => p.inStock);
+  }
+
+  // Filter by macro pillar if active
+  if (state.macroPillar !== 'all') {
+    modeProducts = modeProducts.filter(p => CATEGORIES_DEF[p.category] && CATEGORIES_DEF[p.category].pillar === state.macroPillar);
   }
 
   // Filter by search query
   if (state.searchQuery.trim() !== '') {
     const q = state.searchQuery.toLowerCase();
-    filtered = filtered.filter(p => {
+    modeProducts = modeProducts.filter(p => {
       const title = (state.lang === 'tr' ? p.title_tr : p.title_en).toLowerCase();
       const brand = p.brand.toLowerCase();
       const power = p.power ? p.power.toLowerCase() : '';
@@ -1247,106 +1392,128 @@ function renderProducts() {
     });
   }
 
-  // Filter by stock only
-  if (state.filterStockOnly) {
-    filtered = filtered.filter(p => p.inStock);
-  }
-
-  // Sort
+  // Sorting
   if (state.sortBy === 'price-asc') {
-    filtered.sort((a, b) => a.basePriceTRY - b.basePriceTRY);
+    modeProducts.sort((a, b) => a.basePriceTRY - b.basePriceTRY);
   } else if (state.sortBy === 'price-desc') {
-    filtered.sort((a, b) => b.basePriceTRY - a.basePriceTRY);
+    modeProducts.sort((a, b) => b.basePriceTRY - a.basePriceTRY);
   }
 
   if (countSpan) {
-    countSpan.textContent = filtered.length;
+    countSpan.textContent = modeProducts.length;
   }
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `
+  // Empty state
+  if (modeProducts.length === 0) {
+    container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: #ffffff; border-radius: 16px; border: 1px solid var(--border-light);">
         <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-        <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem;">${state.lang === 'tr' ? 'Aradığınız kriterlere uygun yenilenebilir enerji veya IT ekipmanı bulunamadı.' : 'No matching renewable energy or IT equipment found.'}</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">${state.lang === 'tr' ? 'Filtreleri temizleyebilir veya farklı bir arama terimi (Sunucu, Switch, GES, Isı Pompası vb.) deneyebilirsiniz.' : 'Try resetting filters or using a different search keyword.'}</p>
+        <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem;">${state.lang === 'tr' ? 'Aradığınız kriterlere uygun ekipman bulunamadı.' : 'No matching equipment found.'}</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">${state.lang === 'tr' ? 'Filtreleri temizleyebilir veya farklı bir arama terimi deneyebilirsiniz.' : 'Try resetting filters or using a different search keyword.'}</p>
         <button class="btn-primary" style="margin-top: 1.5rem;" onclick="resetAllFilters()">${t.filters_reset}</button>
       </div>
     `;
     return;
   }
 
-  grid.innerHTML = filtered.map(p => {
-    const title = state.lang === 'tr' ? p.title_tr : p.title_en;
-    const isB2B = (state.mode === 'b2b');
+  // ── CASE A: Specific Category Selected (Single Category Zoom View) ────────
+  if (state.category !== 'all') {
+    const singleCatProducts = modeProducts.filter(p => p.category === state.category);
+    const def = CATEGORIES_DEF[state.category] || {
+      icon: '⚡',
+      title_tr: state.category.toUpperCase(),
+      title_en: state.category.toUpperCase(),
+      desc_tr: '',
+      desc_en: ''
+    };
+    const catTitle = state.lang === 'tr' ? def.title_tr : def.title_en;
+    const catDesc = state.lang === 'tr' ? def.desc_tr : def.desc_en;
 
-    // Spec chips
-    const specEntries = Object.entries(p.specs).slice(0, 3);
-    const specHtml = specEntries.map(([k, v]) => `
-      <span class="spec-chip"><strong>${k}:</strong> ${v}</span>
-    `).join('');
-
-    // Tier or B2C Install text
-    let tierHtml = '';
-    if (isB2B && p.tiers && p.tiers.length > 1) {
-      const topTier = p.tiers[p.tiers.length - 1];
-      tierHtml = `
-        <div class="b2b-tier-preview">
-          <span>${topTier.min}+ ${p.unit} Siparişte</span>
-          <strong>%${topTier.discount} İskonto (${formatPrice(topTier.priceTRY)})</strong>
-        </div>
-      `;
-    } else if (!isB2B && p.installFeeTRY) {
-      tierHtml = `
-        <div class="b2c-install-option">
-          ${t.card_install_included}
-        </div>
-      `;
-    }
-
-    return `
-      <div class="product-card">
-        <div class="card-img-wrapper">
-          <img src="${p.image}" alt="${title}" class="card-img" loading="lazy">
-          <div class="card-tags-top">
-            <span class="tag-badge ${isB2B ? 'tag-b2b' : 'tag-b2c'}">${isB2B ? 'B2B Kurumsal' : 'B2C Bireysel'}</span>
-            <span class="tag-badge ${p.inStock ? 'tag-stock' : 'tag-leadtime'}">${p.leadTime}</span>
-          </div>
-          <button class="quick-view-btn" onclick="openProductDetailModal('${p.id}')">👁️ ${t.card_spec_btn}</button>
-        </div>
-
-        <div class="card-body">
-          <div class="card-meta">
-            <span class="card-brand">${p.brand}</span>
-            <span>${p.power ? p.power : ''}</span>
-          </div>
-
-          <h3 class="card-title" title="${title}">${title}</h3>
-
-          <div class="card-specs-list">
-            ${specHtml}
-          </div>
-
-          <div class="card-price-block">
-            ${tierHtml}
-            <div class="price-main">
-              <span class="price-amount">${formatPrice(p.basePriceTRY)}</span>
-              <span class="price-sub">/ ${p.unit} ${isB2B ? '+ KDV' : '(KDV Dahil)'}</span>
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1;">
+        <div class="category-active-breadcrumb">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.4rem;">${def.icon}</span>
+              <h2 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-main);">${catTitle}</h2>
+              <span class="category-count-chip">${singleCatProducts.length} ${t.cat_items_suffix}</span>
             </div>
-            ${isB2B ? `<div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">${t.card_moq_prefix} <strong>${p.moq} ${p.unit}</strong></div>` : ''}
+            ${catDesc ? `<p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">${catDesc}</p>` : ''}
           </div>
+          <button class="breadcrumb-back-btn" onclick="selectCategory('all')">
+            ${t.cat_back_btn}
+          </button>
+        </div>
 
-          <div class="card-actions-row">
-            <button class="btn-card-action" onclick="addToCart('${p.id}')">
-              ${isB2B ? '📋 ' + t.card_rfq_btn : '🛒 ' + t.card_cart_btn}
-            </button>
-            <button class="btn-icon-detail" onclick="openProductDetailModal('${p.id}')" title="${t.card_spec_btn}">
-              📑
-            </button>
-          </div>
+        <div class="products-grid">
+          ${singleCatProducts.map(p => createProductCardHTML(p)).join('')}
         </div>
       </div>
     `;
-  }).join('');
+    return;
+  }
+
+  // ── CASE B: Search Query Active (Flat Search Results Grid) ─────────────────
+  if (state.searchQuery.trim() !== '') {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1;">
+        <div style="margin-bottom: 1.25rem; font-size: 1.1rem; font-weight: 700; color: var(--text-main);">
+          🔍 "${state.searchQuery}" ${state.lang === 'tr' ? 'için arama sonuçları' : 'search results'}:
+        </div>
+        <div class="products-grid">
+          ${modeProducts.map(p => createProductCardHTML(p)).join('')}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // ── CASE C: Category-Separated View (Grouped by Category Blocks) ───────────
+  const presentCategories = [...new Set(modeProducts.map(p => p.category))];
+
+  let sectionsHTML = '';
+
+  presentCategories.forEach(catKey => {
+    const catItems = modeProducts.filter(p => p.category === catKey);
+    if (catItems.length === 0) return;
+
+    const def = CATEGORIES_DEF[catKey] || {
+      icon: '⚡',
+      title_tr: catKey.toUpperCase(),
+      title_en: catKey.toUpperCase(),
+      desc_tr: '',
+      desc_en: ''
+    };
+
+    const catTitle = state.lang === 'tr' ? def.title_tr : def.title_en;
+    const catDesc = state.lang === 'tr' ? def.desc_tr : def.desc_en;
+
+    sectionsHTML += `
+      <section class="category-section-block" id="cat-sec-${catKey}">
+        <div class="category-section-header">
+          <div class="category-header-left">
+            <div class="category-icon-badge">${def.icon}</div>
+            <div class="category-title-group">
+              <h3>${catTitle}</h3>
+              <p>${catDesc}</p>
+            </div>
+          </div>
+          <div class="category-header-right">
+            <span class="category-count-chip">${catItems.length} ${t.cat_items_suffix}</span>
+            <button class="category-zoom-btn" onclick="selectCategory('${catKey}')">
+              ${t.cat_zoom_btn}
+            </button>
+          </div>
+        </div>
+
+        <div class="products-grid">
+          ${catItems.map(p => createProductCardHTML(p)).join('')}
+        </div>
+      </section>
+    `;
+  });
+
+  container.innerHTML = `<div style="grid-column: 1 / -1;">${sectionsHTML}</div>`;
 }
 
 // ── Filter & Search Listeners ──────────────────────────────────────────────
@@ -1378,6 +1545,7 @@ function setupEventListeners() {
 
 function resetAllFilters() {
   state.category = 'all';
+  state.macroPillar = 'all';
   state.searchQuery = '';
   state.filterStockOnly = false;
   state.sortBy = 'featured';
