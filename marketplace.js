@@ -35,7 +35,7 @@ const i18n = {
     topbar_holding: 'Yakın Grup Holding',
     topbar_teklif: 'Şartname & Teklif Stüdyosu',
     topbar_sunum: 'Yatırımcı Sunumu',
-    topbar_support: 'Tedarikçi & IT Destek: +90 (212) 345 67 89',
+    topbar_support: '📞 Kurumsal Destek: +90 (542) 897 3446',
     
     brand_sub: 'MARKETPLACE',
     btn_b2b: '🏢 Kurumsal (B2B)',
@@ -146,7 +146,7 @@ const i18n = {
     topbar_holding: 'Yakın Group Holding',
     topbar_teklif: 'Spec & Proposal Studio',
     topbar_sunum: 'Investor Presentation',
-    topbar_support: 'Supplier & IT Support: +90 (212) 345 67 89',
+    topbar_support: '📞 Corporate Support: +90 (542) 897 3446',
 
     brand_sub: 'MARKETPLACE',
     btn_b2b: '🏢 Corporate (B2B)',
@@ -1779,6 +1779,11 @@ function applyMode(mode) {
   document.getElementById('stat-4-lbl').textContent = isB2B ? t.stat_b2b_4_l : t.stat_b2c_4_l;
 
   document.getElementById('drawer-title-text').textContent = isB2B ? t.drawer_b2b_title : t.drawer_b2c_title;
+
+  const supportEl = document.getElementById('topbar-support-phone');
+  if (supportEl) {
+    supportEl.textContent = t.topbar_support;
+  }
 }
 
 // ── Language Toggle ────────────────────────────────────────────────────────
