@@ -407,6 +407,13 @@ const CATEGORIES_DEF = {
     title_en: 'Industrial IoT, Smart Sensors & Gateways',
     desc_tr: 'Milesight & Advantech Dış Ortam LoRaWAN Ağ Geçitleri, Modbus/MQTT Edge IoT Gateway, Kablosuz Titreşim, Sıcaklık & Enerji Sensörleri.',
     desc_en: 'Milesight & Advantech Outdoor LoRaWAN Gateways, Modbus/MQTT Edge IoT Gateways, Wireless Vibration, Temperature & Energy Sensors.'
+  },
+  automation: {
+    pillar: 'it',
+    title_tr: 'Endüstriyel Otomasyon, PLC & Bina Yönetim Sistemleri (Automation)',
+    title_en: 'Industrial Automation, PLC & Building Management Systems',
+    desc_tr: 'Siemens SIMATIC S7-1500 / Schneider Modicon PLC, Endüstriyel HMI Dokunmatik Paneller, VFD Frekans Sürücüleri ve KNX/Modbus Akıllı Bina Otomasyonu.',
+    desc_en: 'Siemens SIMATIC S7-1500 / Schneider Modicon PLCs, Industrial HMI Touch Panels, VFD Frequency Drives and KNX/Modbus Smart Building Automation.'
   }
 };
 
@@ -1424,6 +1431,79 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
+  // 15. IT: ENDÜSTRİYEL OTOMASYON, PLC & SÜRÜCÜ (Automation)
+  {
+    id: 'b2b-auto-siemens-s71500',
+    mode: 'b2b',
+    category: 'automation',
+    title_tr: 'Siemens SIMATIC S7-1500 CPU 1515-2 PN Modüler Endüstriyel PLC Kontrol Ünitesi',
+    title_en: 'Siemens SIMATIC S7-1500 CPU 1515-2 PN Modular Industrial PLC Controller',
+    brand: 'Siemens Industrial Automation',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: 'PROFINET IO / 30ns Bit Hızı',
+    moq: 1,
+    unit: 'Ünite',
+    basePriceTRY: 125000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 125000 },
+      { min: 3, max: 8, discount: 7, priceTRY: 116250 }
+    ],
+    specs: {
+      'Hafıza & Hız': '500 KB Program / 3 MB Veri Belleği (30 ns Bit İşleme Hızı)',
+      'Haberleşme': '2-Port PROFINET IO IRT Switch + Ek PROFINET Arayüzü (Dahili OPC-UA Server)',
+      'Genişleme': '32 Modüle Kadar Dijital/Analog I/O ve Güvenlik Modülü (Fail-Safe) Entegrasyonu'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-auto-schneider-vfd-atv930',
+    mode: 'b2b',
+    category: 'automation',
+    title_tr: 'Schneider Electric Altivar Process ATV930 75kW (100 HP) Ağır Şart Frekans Sürücü (VFD)',
+    title_en: 'Schneider Electric Altivar Process ATV930 75kW (100 HP) Heavy Duty Industrial VFD',
+    brand: 'Schneider Electric',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '75 kW (100 HP) / 145A 3-Faz',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 168000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 168000 },
+      { min: 3, max: 5, discount: 8, priceTRY: 154560 }
+    ],
+    specs: {
+      'Motor Gücü': '75 kW (100 HP) / 145A 380-480V 3-Faz Ağır Şart Sürücü',
+      'Enerji Ölçümü': '< %5 Hassasiyetle Dahili Enerji ve Güç Tüketimi İzleme',
+      'Haberleşme': 'Dahili Çift Ethernet/IP, Modbus TCP ve Akıllı Pompa/Fan Kontrol Fonksiyonları'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-auto-weintek-hmi-15',
+    mode: 'b2b',
+    category: 'automation',
+    title_tr: 'Weintek cMT3162X 15.6 inç Full HD Kapasitif Dokunmatik Endüstriyel HMI Operatör Paneli',
+    title_en: 'Weintek cMT3162X 15.6-inch Full HD Capacitive Touch Industrial HMI Operator Panel',
+    brand: 'Weintek',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '15.6" Full HD / 4-Core RISC',
+    moq: 1,
+    unit: 'Panel',
+    basePriceTRY: 48000,
+    specs: {
+      'Ekran': '15.6" IPS Full HD (1920x1080) Yüksek Parlaklık ve Geniş Görüş Açısı',
+      'Performans': 'Dört Çekirdekli Yüksek Hızlı RISC İşlemci + 4GB Flash / 1GB RAM',
+      'Protokoller': '400+ PLC/Sürücü Protokolü, OPC-UA, MQTT, SQL Veritabanı ve Uzaktan WebView'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+
   // =========================================================================
   // ── B2C / KOBİ PRODUCTS (BİREYSEL & PROFESYONEL SİSTEMLER) ───────────────
   // =========================================================================
@@ -1977,6 +2057,50 @@ const PRODUCTS_DATA = [
       'Protokol Dönüşümü': 'RS485 Modbus Sayaç/İnvertör Verisini JSON MQTT / REST API Formatına Çevirme',
       'Ağ Bağlantısı': 'Wi-Fi 2.4GHz + 10/100 Ethernet + Din-Ray Tipi Endüstriyel Kasa',
       'Uyumluluk': 'GES İnvertörleri, Isı Pompaları ve Akıllı Sayaçlarla Tak-Çalıştır Uyum'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 12. IT: AKILLI BİNA & EV OTOMASYONU (B2C & KOBİ)
+  {
+    id: 'b2c-auto-knx-home-server',
+    mode: 'b2c',
+    category: 'automation',
+    title_tr: 'Yakın SmartHome KNX & Modbus Akıllı Villa Otomasyonu Ağ Geçidi & Dokunmatik Kontrol Paneli',
+    title_en: 'Yakın SmartHome KNX & Modbus Smart Villa Automation Gateway & Touch Controller',
+    brand: 'Yakın SmartHome',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '10.1" IPS / KNX & Modbus IP',
+    moq: 1,
+    unit: 'Set',
+    basePriceTRY: 38500,
+    specs: {
+      'Protokol Uyumu': 'KNX IP, Modbus RTU/TCP, Zigbee 3.0 ve Apple HomeKit / Google Home',
+      'Kontrol Kapasitesi': 'Aydınlatma, İklimlendirme (Isı Pompası/Klima), Perde/Panjur ve Enerji Yönetimi',
+      'Ekran': '10.1 inç Duvar Tipi IPS Akıllı Ev Dokunmatik Ana Kontrol İstasyonu'
+    },
+    inStock: true,
+    leadTime: 'Stokta (3 Günde Kurulum)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-auto-smart-relay-din',
+    mode: 'b2c',
+    category: 'automation',
+    title_tr: 'Yakın SmartPower 8-Kanal DIN-Ray Tipi Akıllı Röle & Enerji Ölçümlü Otomasyon Modülü (Wi-Fi + RS485)',
+    title_en: 'Yakın SmartPower 8-Channel DIN-Rail Smart Relay & Power Metering Automation Module (Wi-Fi + RS485)',
+    brand: 'Yakın SmartPower',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '8x 16A (128A Toplam) / Wi-Fi',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 8400,
+    specs: {
+      'Çıkışlar': '8x 16A Bağımsız Kuru Kontak Röle Çıkışı (Toplam 128A Kapasite)',
+      'Ölçüm': 'Kanal Başına Gerçek Zamanlı Akım (A), Gerilim (V) ve Güç (W) Tüketim Analizi',
+      'Yönetim': 'Mobil Uygulama, Otomatik Zamanlama, Senaryo ve REST API / MQTT Desteği'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
