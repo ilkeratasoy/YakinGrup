@@ -256,7 +256,7 @@ const i18n = {
 
 // ── Master Category Definitions (Metadata & Separation Map) ────────────────
 const CATEGORIES_DEF = {
-  // 🌿 RENEWABLE ENERGY PILLAR
+  // 🌿 RENEWABLE ENERGY & POWER INFRASTRUCTURE PILLAR
   ges: {
     pillar: 'energy',
     icon: '☀️',
@@ -281,9 +281,17 @@ const CATEGORIES_DEF = {
     desc_tr: 'CATL 2.5 MWh konteyner BESS, 215 kWh ticari batarya kabinleri ve duvar tipi LiFePO4 ev bataryaları.',
     desc_en: 'CATL 2.5 MWh container BESS, 215 kWh commercial cabinets, and wall-mount LiFePO4 home batteries.'
   },
-  ev: {
+  transformer: {
     pillar: 'energy',
     icon: '⚡',
+    title_tr: 'Trafo & OG/AG Şalt Merkezleri',
+    title_en: 'Transformers & MV/LV Switchgear',
+    desc_tr: '1600 kVA Kuru Tip Dökme Reçineli Transformatörler, Gaz Yalıtımlı RMU Hücreleri ve Kompakt Trafo Merkezleri.',
+    desc_en: '1600 kVA Dry-Type Cast Resin Transformers, Gas-Insulated RMUs, and Compact Substations.'
+  },
+  ev: {
+    pillar: 'energy',
+    icon: '🔌',
     title_tr: 'Elektrikli Araç Şarj İstasyonları (EV Charging)',
     title_en: 'Electric Vehicle Charging Stations',
     desc_tr: 'Yakın Volt 180kW DC ultra hızlı şarj istasyonları ve 22kW ev tipi akıllı Wallbox cihazları.',
@@ -304,6 +312,22 @@ const CATEGORIES_DEF = {
     title_en: 'Wind Power Plants (RES) & Turbines',
     desc_tr: '500kW doğrudan tahrikli endüstriyel türbinler ve 3kW maglev sessiz ev/çiftlik rüzgar jeneratörleri.',
     desc_en: '500kW direct-drive industrial turbines and 3kW maglev silent home wind generators.'
+  },
+  scada: {
+    pillar: 'energy',
+    icon: '📊',
+    title_tr: 'SCADA, Akıllı Şebeke & Enerji Otomasyonu',
+    title_en: 'SCADA & Smart Grid Automation',
+    desc_tr: 'GES/RES Santral SCADA Yazılımları, TEİAŞ Uyumlu RTU Panoları ve IoT Güç Kalitesi Analizörleri.',
+    desc_en: 'Power plant SCADA systems, TEİAŞ compliant RTU telecontrol panels, and IoT power quality analyzers.'
+  },
+  generator: {
+    pillar: 'energy',
+    icon: '⚡',
+    title_tr: 'Jeneratör & Hibrit Güç Sistemleri',
+    title_en: 'Generators & Hybrid Power Systems',
+    desc_tr: '550 kVA Perkins motorlu endüstriyel senkron dizel jeneratörler ve otomatik transfer panolu konut jeneratörleri.',
+    desc_en: '550 kVA Perkins industrial synchronous diesel generators and residential automatic backup units.'
   },
 
   // 💻 IT, BİLİŞİM & VERİ MERKEZİ PILLAR (SERVER, STORAGE, NETWORK, SECURITY)
@@ -621,7 +645,108 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 7. IT: SUNUCU & COMPUTE (Server)
+  // 7. TRAFO & OG/AG ŞALT MERKEZLERİ (Transformer & Switchgear)
+  {
+    id: 'b2b-trafo-1600k',
+    mode: 'b2b',
+    category: 'transformer',
+    title_tr: 'Yakın PowerGrid 1600 kVA 34.5/0.4kV Kuru Tip Dökme Reçineli Dağıtım Trafosu',
+    title_en: 'Yakın PowerGrid 1600 kVA 34.5/0.4kV Dry-Type Cast Resin Distribution Transformer',
+    brand: 'Yakın PowerGrid',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '1600 kVA (34.5 kV / 400V)',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 1150000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 1150000 },
+      { min: 3, max: 6, discount: 7, priceTRY: 1069500 }
+    ],
+    specs: {
+      'Kayıp Sınıfı': 'Ecodesign Tier-2 (Düşük Boşta ve Yükte Enerji Kaybı)',
+      'Yalıtım': 'F Sınıfı 155°C Dökme Reçine (Yangına & Neme Dayanıklı)',
+      'Standart': 'IEC 60076 & TSE Uygunluk Sertifikalı'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Kocaeli Fabrika Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-rmu-switchgear',
+    mode: 'b2b',
+    category: 'transformer',
+    title_tr: 'Schneider Electric RM6 36kV Gaz Yalıtımlı Ring Main Unit (RMU) Şalt Hücresi',
+    title_en: 'Schneider Electric RM6 36kV Gas-Insulated Ring Main Unit (RMU) Compact Switchgear',
+    brand: 'Schneider Electric',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '36 kV / 630A / 16 kA',
+    moq: 1,
+    unit: 'Hücre',
+    basePriceTRY: 480000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 480000 },
+      { min: 3, max: 8, discount: 8, priceTRY: 441600 }
+    ],
+    specs: {
+      'Yapı': '3 Fonksiyonlu Gaz Yalıtımlı Kompakt Hücre (2 Hat + 1 Trafo Koruma Kesicili)',
+      'Standart': 'IEC 62271-200 & TEİAŞ/TEDAŞ MYD-96 Tip Onaylı'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+
+  // 8. SCADA & ENERJİ OTOMASYONU (Smart Grid & SCADA)
+  {
+    id: 'b2b-scada-rtu-panel',
+    mode: 'b2b',
+    category: 'scada',
+    title_tr: 'Yakın ScadaGrid GES & RES Santral Otomasyonu ve TEİAŞ Uyumlu RTU Panosu',
+    title_en: 'Yakın ScadaGrid Solar & Wind SCADA Automation & TEİAŞ Compliant RTU Panel',
+    brand: 'Yakın Otomasyon',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'IEC 60870-5-104 / IEC 61850',
+    moq: 1,
+    unit: 'Sistem',
+    basePriceTRY: 275000,
+    specs: {
+      'Haberleşme': 'TEİAŞ Yük Tevzi Merkezine Çift Hatlı Kesintisiz Veri İletimi',
+      'Yazılım': '7/24 Web & Mobil SCADA İzleme, Anlık Alarm ve Kayıp Tespiti',
+      'Donanım': 'Endüstriyel PLC, Modbus TCP/RTU Gateway, Yedekli UPS Beslemesi'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 9. JENERATÖR & HİBRİT GÜÇ SİSTEMLERİ (Generators)
+  {
+    id: 'b2b-gen-550k',
+    mode: 'b2b',
+    category: 'generator',
+    title_tr: 'Yakın PowerGen 550 kVA Perkins Motorlu Ağır Hizmet Kabinli Senkron Dizel Jeneratör',
+    title_en: 'Yakın PowerGen 550 kVA Perkins Engine Heavy-Duty Canopy Synchronous Diesel Generator',
+    brand: 'Yakın PowerGen',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '550 kVA Standby / 500 kVA Prime',
+    moq: 1,
+    unit: 'Set',
+    basePriceTRY: 890000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 890000 },
+      { min: 3, max: 6, discount: 7, priceTRY: 827700 }
+    ],
+    specs: {
+      'Motor': 'Orijinal Perkins 2506A Elektronik Enjeksiyonlu Dizel Motor',
+      'Alternatör': 'Leroy Somer 4 Kutuplu Fırçasız Senkron Alternatör',
+      'Kontrol Ünitesi': 'Deep Sea (DSE) Otomatik Şebeke & Solar Senkronizasyon Modülü'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Sevkiyat)',
+    datasheetUrl: '#'
+  },
+
+  // 10. IT: SUNUCU & COMPUTE (Server)
   {
     id: 'b2b-srv-poweredge-r760',
     mode: 'b2b',
@@ -1192,7 +1317,51 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 3. IT: SERVER (B2C & Prosumer Sunucular)
+  // 3. JENERATÖR & AKILLI ENERJİ İZLEME (B2C Enerji Altyapısı)
+  {
+    id: 'b2c-gen-inverter-10k',
+    mode: 'b2c',
+    category: 'generator',
+    title_tr: 'Yakın EcoGen 10 kVA Sessiz Kabinli Akıllı Dizel Ev & Villa Jeneratörü (ATS Dahil)',
+    title_en: 'Yakın EcoGen 10 kVA Silent Canopy Smart Diesel Home & Villa Generator (ATS Bundle)',
+    brand: 'Yakın EcoGen',
+    image: 'assets/images/energy_hero_1784577681830.png',
+    power: '10 kVA / 8 kW (230V / 400V)',
+    moq: 1,
+    unit: 'Set',
+    basePriceTRY: 78500,
+    specs: {
+      'Ses Seviyesi': '68 dB Ultra Sessiz Akustik Ses İzolasyon Kabini',
+      'Otomatik Transfer': 'Elektrik Kesintisinde 5 Saniyede Otomatik Devreye Girme (ATS Panolu)',
+      'Ekran & Kontrol': 'Dijital LCD Çok Fonksiyonlu Kontrol Paneli ve Aşırı Yük Koruması'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-scada-iot-meter',
+    mode: 'b2c',
+    category: 'scada',
+    title_tr: 'Yakın SmartEnergy 3-Faz Akıllı IoT Enerji Analizörü & Mobil Güç İzleme Kiti',
+    title_en: 'Yakın SmartEnergy 3-Phase Smart IoT Energy Analyzer & Mobile Power Monitor',
+    brand: 'Yakın SmartLink',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '3-Faz 100A Akım Trafolu / Wi-Fi & RS485',
+    moq: 1,
+    unit: 'Kit',
+    basePriceTRY: 8900,
+    specs: {
+      'İzleme': 'Anlık Tüketim, GES Üretimi, Şebekeye Verilen Güç ve Fatura Hesaplama',
+      'Bağlantı': 'Wi-Fi + RS-485 Modbus RTU, Akıllı Telefon & Web Arayüzü',
+      'Hassasiyet': 'Class 0.5S Yüksek Hassasiyetli Enerji Ölçümü'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+
+  // 4. IT: SERVER (B2C & Prosumer Sunucular)
   {
     id: 'b2c-srv-homelab-mini',
     mode: 'b2c',
@@ -1650,28 +1819,32 @@ function renderCategories() {
   const activeProducts = PRODUCTS_DATA.filter(p => p.mode === state.mode);
   const availableCatKeys = [...new Set(activeProducts.map(p => p.category))];
 
+  // Count items per macro pillar
+  const energyCount = activeProducts.filter(p => CATEGORIES_DEF[p.category] && CATEGORIES_DEF[p.category].pillar === 'energy').length;
+  const itCount = activeProducts.filter(p => CATEGORIES_DEF[p.category] && CATEGORIES_DEF[p.category].pillar === 'it').length;
+
   // Filter categories by macro pillar if selected
   let filteredCatKeys = availableCatKeys;
   if (state.macroPillar !== 'all') {
     filteredCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === state.macroPillar);
   }
 
-  // Macro Pillar Buttons + Category Pills
+  // Macro Pillar Selector Buttons + Category Tabs
   let html = `
     <div class="macro-pillar-bar">
       <button class="macro-tab-btn ${state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
-        ${t.pillar_all}
+        ${t.pillar_all} <span class="macro-count-chip">${activeProducts.length}</span>
       </button>
       <button class="macro-tab-btn ${state.macroPillar === 'energy' ? 'active' : ''}" onclick="setMacroPillar('energy')">
-        ${t.pillar_energy}
+        ${t.pillar_energy} <span class="macro-count-chip">${energyCount}</span>
       </button>
       <button class="macro-tab-btn ${state.macroPillar === 'it' ? 'active' : ''}" onclick="setMacroPillar('it')">
-        ${t.pillar_it}
+        ${t.pillar_it} <span class="macro-count-chip">${itCount}</span>
       </button>
     </div>
     <div class="categories-bar">
       <button class="cat-pill-btn ${state.category === 'all' ? 'active' : ''}" onclick="selectCategory('all')">
-        ⚡ ${t.cat_all} (${activeProducts.length})
+        <span>⚡</span> <span>${t.cat_all}</span> <span class="pill-count-chip">${activeProducts.length}</span>
       </button>
   `;
 
@@ -1682,7 +1855,7 @@ function renderCategories() {
     const catCount = activeProducts.filter(p => p.category === k).length;
     html += `
       <button class="cat-pill-btn ${state.category === k ? 'active' : ''}" onclick="selectCategory('${k}')">
-        ${def.icon} ${catTitle} (${catCount})
+        <span>${def.icon}</span> <span>${catTitle}</span> <span class="pill-count-chip">${catCount}</span>
       </button>
     `;
   });
