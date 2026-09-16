@@ -74,12 +74,12 @@ const i18n = {
     stat_b2c_4: '10 Yıl',
     stat_b2c_4_l: 'Sistem & Donanım Garantisi',
 
-    pillar_all: '⚡ Tüm Sistemler & Ekipmanlar',
-    pillar_energy: '🌿 Yenilenebilir Enerji (GES/RES/Termal)',
-    pillar_it: '💻 IT, Bilişim & Veri Merkezi',
+    pillar_all: 'Tüm Sistemler & Ekipmanlar',
+    pillar_energy: 'Yenilenebilir Enerji & Güç Altyapısı',
+    pillar_it: 'IT, Bilişim & Veri Merkezi',
 
     cat_all: 'Tüm Kategoriler',
-    cat_zoom_btn: 'Kategoriye Odaklan ➔',
+    cat_zoom_btn: 'Kategoriye Odaklan →',
     cat_back_btn: '← Tüm Kategorilere Dön (Bölümlendirilmiş Görünüm)',
     cat_items_suffix: 'Model / Ekipman',
 
@@ -185,12 +185,12 @@ const i18n = {
     stat_b2c_4: '10 Years',
     stat_b2c_4_l: 'System & Hardware Warranty',
 
-    pillar_all: '⚡ All Systems & Equipment',
-    pillar_energy: '🌿 Renewable Energy (PV/Wind/Thermal)',
-    pillar_it: '💻 IT, Data Center & Telecom',
+    pillar_all: 'All Systems & Equipment',
+    pillar_energy: 'Renewable Energy & Power Infrastructure',
+    pillar_it: 'IT, Data Center & Telecom',
 
     cat_all: 'All Categories',
-    cat_zoom_btn: 'Focus Category ➔',
+    cat_zoom_btn: 'Focus Category →',
     cat_back_btn: '← Back to All Categories (Sectioned View)',
     cat_items_suffix: 'Models / Equipment',
 
@@ -1807,11 +1807,21 @@ function setCurrency(curr) {
 // ── Macro Pillar & Category Navigation Rendering ───────────────────────────
 function setMacroPillar(pillar) {
   state.macroPillar = pillar;
-  if (pillar !== 'all') {
-    state.category = 'all';
-  }
+  state.category = 'all';
   renderCategories();
   renderProducts();
+}
+
+function handlePillarCategorySelect(pillar, catKey) {
+  state.macroPillar = pillar;
+  state.category = catKey;
+  renderCategories();
+  renderProducts();
+
+  const catSection = document.getElementById('catalog');
+  if (catSection) {
+    catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function renderCategories() {
@@ -1834,54 +1844,73 @@ function renderCategories() {
     filteredCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === state.macroPillar);
   }
 
-  // Energy & IT specific categories for dropdown optgroups
+  // Energy & IT specific categories for dropdowns
   const energyCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === 'energy');
   const itCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === 'it');
 
-  // Macro Pillar Selector Buttons + Direct Select Dropdown in the Bar
+  // 3-Pillar Master Cards Grid with Dedicated Dropdowns Directly Under Main Headers
   let html = `
-    <div class="macro-pillar-bar">
-      <div class="macro-btn-group">
-        <button class="macro-tab-btn ${state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
-          ${t.pillar_all} <span class="macro-count-chip">${activeProducts.length}</span>
-        </button>
-        <button class="macro-tab-btn ${state.macroPillar === 'energy' ? 'active' : ''}" onclick="setMacroPillar('energy')">
-          ${t.pillar_energy} <span class="macro-count-chip">${energyCount}</span>
-        </button>
-        <button class="macro-tab-btn ${state.macroPillar === 'it' ? 'active' : ''}" onclick="setMacroPillar('it')">
-          ${t.pillar_it} <span class="macro-count-chip">${itCount}</span>
+    <div class="pillar-cards-grid">
+      
+      <!-- Pillar 1: Tüm Sistemler & Ekipmanlar -->
+      <div class="pillar-card ${state.macroPillar === 'all' && state.category === 'all' ? 'active' : ''}">
+        <button class="pillar-card-btn" onclick="setMacroPillar('all')">
+          <span class="pillar-title-text">${t.pillar_all}</span>
+          <span class="pillar-badge-count">${activeProducts.length}</span>
         </button>
       </div>
 
-      <!-- Direct Bar Select Dropdown -->
-      <div class="bar-select-wrapper">
-        <label for="category-select-dropdown" class="bar-select-label">📂 ${state.lang === 'tr' ? 'Bardan Seç:' : 'Select Category:'}</label>
-        <select id="category-select-dropdown" class="bar-select-dropdown" onchange="selectCategory(this.value)">
-          <option value="all" ${state.category === 'all' ? 'selected' : ''}>⚡ ${t.cat_all} (${activeProducts.length})</option>
-          <optgroup label="🌿 ${state.lang === 'tr' ? 'Yenilenebilir Enerji & Güç Altyapısı' : 'Renewable Energy & Power'}">
+      <!-- Pillar 2: Yenilenebilir Enerji & Güç Altyapısı (Header + Dedicated Dropdown) -->
+      <div class="pillar-card ${state.macroPillar === 'energy' ? 'active' : ''}">
+        <button class="pillar-card-btn" onclick="setMacroPillar('energy')">
+          <span class="pillar-title-text">${t.pillar_energy}</span>
+          <span class="pillar-badge-count">${energyCount}</span>
+        </button>
+        <div class="pillar-dropdown-box">
+          <label class="pillar-dropdown-label">${state.lang === 'tr' ? 'Enerji Ekipmanları Kategorisi:' : 'Energy Equipment Category:'}</label>
+          <select class="pillar-dropdown-select" onchange="handlePillarCategorySelect('energy', this.value)">
+            <option value="all" ${state.macroPillar === 'energy' && state.category === 'all' ? 'selected' : ''}>
+              ${state.lang === 'tr' ? 'Tüm Enerji Sistemleri' : 'All Energy Systems'} (${energyCount})
+            </option>
             ${energyCatKeys.map(k => {
               const def = CATEGORIES_DEF[k];
               const catTitle = state.lang === 'tr' ? def.title_tr : def.title_en;
               const catCount = activeProducts.filter(p => p.category === k).length;
-              return `<option value="${k}" ${state.category === k ? 'selected' : ''}>${def.icon} ${catTitle} (${catCount})</option>`;
+              return `<option value="${k}" ${state.category === k ? 'selected' : ''}>${catTitle} (${catCount})</option>`;
             }).join('')}
-          </optgroup>
-          <optgroup label="💻 ${state.lang === 'tr' ? 'IT, Bilişim & Veri Merkezi' : 'IT, Data Center & Telecom'}">
+          </select>
+        </div>
+      </div>
+
+      <!-- Pillar 3: IT, Bilişim & Veri Merkezi (Header + Dedicated Dropdown) -->
+      <div class="pillar-card ${state.macroPillar === 'it' ? 'active' : ''}">
+        <button class="pillar-card-btn" onclick="setMacroPillar('it')">
+          <span class="pillar-title-text">${t.pillar_it}</span>
+          <span class="pillar-badge-count">${itCount}</span>
+        </button>
+        <div class="pillar-dropdown-box">
+          <label class="pillar-dropdown-label">${state.lang === 'tr' ? 'IT & Veri Merkezi Kategorisi:' : 'IT & Data Center Category:'}</label>
+          <select class="pillar-dropdown-select" onchange="handlePillarCategorySelect('it', this.value)">
+            <option value="all" ${state.macroPillar === 'it' && state.category === 'all' ? 'selected' : ''}>
+              ${state.lang === 'tr' ? 'Tüm IT & Veri Merkezi Ekipmanları' : 'All IT & Data Center Equipment'} (${itCount})
+            </option>
             ${itCatKeys.map(k => {
               const def = CATEGORIES_DEF[k];
               const catTitle = state.lang === 'tr' ? def.title_tr : def.title_en;
               const catCount = activeProducts.filter(p => p.category === k).length;
-              return `<option value="${k}" ${state.category === k ? 'selected' : ''}>${def.icon} ${catTitle} (${catCount})</option>`;
+              return `<option value="${k}" ${state.category === k ? 'selected' : ''}>${catTitle} (${catCount})</option>`;
             }).join('')}
-          </optgroup>
-        </select>
+          </select>
+        </div>
       </div>
+
     </div>
 
-    <!-- Category Pill Strip -->
+    <!-- Category Pill Strip (Large Typography, Zero Icons) -->
     <div class="categories-bar">
-      <button class="cat-pill-btn ${state.category === 'all' ? 'active' : ''}" onclick="selectCategory('all')">
-        <span>⚡</span> <span>${t.cat_all}</span> <span class="pill-count-chip">${activeProducts.length}</span>
+      <button class="cat-pill-btn ${state.category === 'all' && state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
+        <span>${t.cat_all}</span>
+        <span class="pill-count-chip">${activeProducts.length}</span>
       </button>
   `;
 
@@ -1892,7 +1921,8 @@ function renderCategories() {
     const catCount = activeProducts.filter(p => p.category === k).length;
     html += `
       <button class="cat-pill-btn ${state.category === k ? 'active' : ''}" onclick="selectCategory('${k}')">
-        <span>${def.icon}</span> <span>${catTitle}</span> <span class="pill-count-chip">${catCount}</span>
+        <span>${catTitle}</span>
+        <span class="pill-count-chip">${catCount}</span>
       </button>
     `;
   });
@@ -1903,6 +1933,9 @@ function renderCategories() {
 
 function selectCategory(catKey) {
   state.category = catKey;
+  if (catKey !== 'all' && CATEGORIES_DEF[catKey]) {
+    state.macroPillar = CATEGORIES_DEF[catKey].pillar;
+  }
   renderCategories();
   renderProducts();
 
@@ -2060,12 +2093,11 @@ function renderProducts() {
       <div style="grid-column: 1 / -1;">
         <div class="category-active-breadcrumb">
           <div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 1.4rem;">${def.icon}</span>
-              <h2 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-main);">${catTitle}</h2>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <h2 style="font-family: var(--font-heading); font-size: 1.45rem; font-weight: 800; color: var(--text-main); margin: 0;">${catTitle}</h2>
               <span class="category-count-chip">${singleCatProducts.length} ${t.cat_items_suffix}</span>
             </div>
-            ${catDesc ? `<p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">${catDesc}</p>` : ''}
+            ${catDesc ? `<p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 5px;">${catDesc}</p>` : ''}
           </div>
           <button class="breadcrumb-back-btn" onclick="selectCategory('all')">
             ${t.cat_back_btn}
@@ -2085,7 +2117,7 @@ function renderProducts() {
     container.innerHTML = `
       <div style="grid-column: 1 / -1;">
         <div style="margin-bottom: 1.25rem; font-size: 1.1rem; font-weight: 700; color: var(--text-main);">
-          🔍 "${state.searchQuery}" ${state.lang === 'tr' ? 'için arama sonuçları' : 'search results'}:
+          "${state.searchQuery}" ${state.lang === 'tr' ? 'için arama sonuçları' : 'search results'}:
         </div>
         <div class="products-grid">
           ${modeProducts.map(p => createProductCardHTML(p)).join('')}
@@ -2105,7 +2137,6 @@ function renderProducts() {
     if (catItems.length === 0) return;
 
     const def = CATEGORIES_DEF[catKey] || {
-      icon: '⚡',
       title_tr: catKey.toUpperCase(),
       title_en: catKey.toUpperCase(),
       desc_tr: '',
@@ -2119,7 +2150,6 @@ function renderProducts() {
       <section class="category-section-block" id="cat-sec-${catKey}">
         <div class="category-section-header">
           <div class="category-header-left">
-            <div class="category-icon-badge">${def.icon}</div>
             <div class="category-title-group">
               <h3>${catTitle}</h3>
               <p>${catDesc}</p>
