@@ -40,7 +40,7 @@ const i18n = {
     brand_sub: 'MARKETPLACE',
     btn_b2b: '🏢 Kurumsal (B2B)',
     btn_b2c: '🏠 Bireysel (B2C)',
-    search_placeholder: 'GES, RES, Isı Pompası, Sunucu, Switch, Firewall, UPS, Batarya ara...',
+    search_placeholder: 'GES, RES, Isı Pompası, Sunucu, Switch, Firewall, Telekom, 5G, UPS ara...',
     btn_supplier_apply: 'Tedarikçi Ol',
     btn_cart: 'Sepet & Teklif',
     
@@ -151,7 +151,7 @@ const i18n = {
     brand_sub: 'MARKETPLACE',
     btn_b2b: '🏢 Corporate (B2B)',
     btn_b2c: '🏠 Consumer (B2C)',
-    search_placeholder: 'Search Solar PV, Wind, Heat Pump, Server, Switch, Firewall, UPS...',
+    search_placeholder: 'Search Solar PV, Wind, Heat Pump, Server, Switch, Telecom, 5G, UPS...',
     btn_supplier_apply: 'Become Supplier',
     btn_cart: 'Cart & RFQ',
 
@@ -389,11 +389,17 @@ const CATEGORIES_DEF = {
   },
   workstation: {
     pillar: 'it',
-    icon: '💻',
     title_tr: 'Profesyonel İş İstasyonları (AI & BIM)',
     title_en: 'Professional Workstations (AI & BIM)',
     desc_tr: 'Intel Core i9-14900K, NVIDIA RTX 4090 24GB AI, Deep Learning ve BIM mühendislik render sistemleri.',
     desc_en: 'Intel Core i9-14900K, NVIDIA RTX 4090 24GB AI, Deep Learning and BIM engineering workstations.'
+  },
+  telecom: {
+    pillar: 'it',
+    title_tr: 'Telekom, 5G & Transmisyon Altyapısı (Telecom)',
+    title_en: 'Telecom, 5G & Transmission Infrastructure',
+    desc_tr: 'Huawei / ZTE DWDM Optik Transmisyon, 5G Radyo Erişim Üniteleri (RRU/BBU), GPON OLT/ONT Fiber Dağıtım ve Noktadan Noktaya Mikrodalga Radyolink Sistemleri.',
+    desc_en: 'Huawei / ZTE DWDM Optical Transmission, 5G Radio Units (RRU/BBU), GPON OLT/ONT Fiber Access and Point-to-Point Microwave Link Systems.'
   }
 };
 
@@ -1244,6 +1250,100 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
+  // 13. IT: TELEKOM, 5G & TRANSMİSYON ALTYAPISI (Telecom)
+  {
+    id: 'b2b-telecom-dwdm-huawei',
+    mode: 'b2b',
+    category: 'telecom',
+    title_tr: 'Huawei OptiX OSN 1800 V DWDM / OTN Taşıyıcı Sınıfı Optik Transmisyon Platformu (400G/800G)',
+    title_en: 'Huawei OptiX OSN 1800 V Carrier-Grade DWDM / OTN Optical Transmission Platform (400G/800G)',
+    brand: 'Huawei Technologies',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '400G / 800G OTN / 5U Subrack',
+    moq: 1,
+    unit: 'Sistem',
+    basePriceTRY: 640000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 640000 },
+      { min: 3, max: 6, discount: 8, priceTRY: 588800 }
+    ],
+    specs: {
+      'Transmisyon Kapasitesi': '80 Dalga Boyu DWDM (50GHz Izgara) / 400G-800G Taşıma',
+      'Servis Desteği': '100GE, 10GE, STM-1/4/16/64, OTU2/OTU4 Hibrit Entegrasyon',
+      'Yedeklilik': '1+1 Çift Kontrol Kartı, 1+1 Güç Modülü ve Optik Koruma (1+1 OLP)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-telecom-gpon-olt-ma5800',
+    mode: 'b2b',
+    category: 'telecom',
+    title_tr: 'Huawei SmartAX MA5800-X7 Dağıtık Mimarili XGS-PON / GPON OLT Şasi Sistemi',
+    title_en: 'Huawei SmartAX MA5800-X7 Distributed Architecture XGS-PON / GPON OLT Chassis',
+    brand: 'Huawei Enterprise',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '7x Hizmet Yuvası / 16-Port XGS-PON',
+    moq: 1,
+    unit: 'Şasi',
+    basePriceTRY: 290000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 290000 },
+      { min: 3, max: 5, discount: 7, priceTRY: 269700 }
+    ],
+    specs: {
+      'Kullanıcı Kapasitesi': '7168 GPON / 3584 XGS-PON 10G Simetrik Abone Desteği',
+      'Anahtarlama Kapasitesi': '7 Tbit/s Backplane / 200 Gbit/s Yuva Başına Hız',
+      'Yedekli Yapı': 'Çift MPU Kontrol Ünitesi ve Çift -48V DC / 220V AC Güç Besleme'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-telecom-microwave-rtn950',
+    mode: 'b2b',
+    category: 'telecom',
+    title_tr: 'Huawei RTN 950A Noktadan Noktaya (PtP) 10Gbps Modüler Mikrodalga Radyolink Seti',
+    title_en: 'Huawei RTN 950A Point-to-Point (PtP) 10Gbps Modular Microwave Radio Link Kit',
+    brand: 'Huawei Technologies',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '6-42 GHz / 10 Gbps Kapasite',
+    moq: 1,
+    unit: 'Komple Set',
+    basePriceTRY: 380000,
+    specs: {
+      'Frekans Bandı': '6 GHz - 42 GHz Lisanslı Mikrodalga Bantları + E-Band (80 GHz)',
+      'Modülasyon': '4096-QAM Adaptif Modülasyon (AM) ile Kesintisiz İletim',
+      'Anten & ODU': '2 Adet Çift Polarizasyonlu Parabolik Çanak Anten ve Yüksek Güçlü ODU'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Sevkiyat)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-telecom-5g-rru-aau',
+    mode: 'b2b',
+    category: 'telecom',
+    title_tr: 'Ericsson / Huawei 5G Massive MIMO 64T64R Aktif Anten Ünitesi (AAU / RRU Makro Baz İstasyonu)',
+    title_en: 'Ericsson / Huawei 5G Massive MIMO 64T64R Active Antenna Unit (AAU / RRU Macro Base Station)',
+    brand: 'Huawei / Ericsson',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '320W RF Çıkış Gücü / 64T64R',
+    moq: 1,
+    unit: 'Ünite',
+    basePriceTRY: 520000,
+    specs: {
+      'RF Yapısı': '64 Gönderici / 64 Alıcı (64T64R) 3D Işın Şekillendirme (Beamforming)',
+      'Frekans Desteği': 'n78 (3.5 GHz) / n77 C-Band 5G NR Makro Kapsama',
+      'Arayüz': '2x 25G eCPRI Optik Fiber Arayüzü / IP65 Dış Ortam Koruma'
+    },
+    inStock: true,
+    leadTime: 'Proje Teslim (1-2 Hafta)',
+    datasheetUrl: '#'
+  },
+
   // =========================================================================
   // ── B2C / KOBİ PRODUCTS (BİREYSEL & PROFESYONEL SİSTEMLER) ───────────────
   // =========================================================================
@@ -1691,6 +1791,71 @@ const PRODUCTS_DATA = [
     },
     inStock: true,
     leadTime: 'Stokta (Ücretsiz Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+
+  // 10. IT: TELEKOM & VOIP / 5G KURUMSAL ERİŞİM (B2C & KOBİ)
+  {
+    id: 'b2c-telecom-gpon-ont-wifi6',
+    mode: 'b2c',
+    category: 'telecom',
+    title_tr: 'Huawei OptiXstar HG8145X6-10 Wi-Fi 6 AX3000 Gigabit GPON ONT Fiber Modem Router',
+    title_en: 'Huawei OptiXstar HG8145X6-10 Wi-Fi 6 AX3000 Gigabit GPON ONT Fiber Modem Router',
+    brand: 'Huawei',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: 'AX3000 Wi-Fi 6 / GPON SC-APC',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 3850,
+    specs: {
+      'Fiber Optik Giriş': 'SC/APC GPON Sınıf B+ Optik Arayüz (2.5 Gbps Down / 1.25 Gbps Up)',
+      'Kablosuz Hız': '3000 Mbps Çift Bant Wi-Fi 6 (160MHz Kanal Genişliği & OFDMA)',
+      'Portlar': '4x Gigabit Ethernet LAN + 1x POTS VoIP Telefon Portu + 1x USB 2.0'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-telecom-voip-pbx-grandstream',
+    mode: 'b2c',
+    category: 'telecom',
+    title_tr: 'Grandstream UCM6304 IP Santral & Kurumsal VoIP / Video Konferans Ağ Geçidi',
+    title_en: 'Grandstream UCM6304 IP PBX & Enterprise VoIP / Video Conference Appliance',
+    brand: 'Grandstream',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '1000 Kullanıcı / 150 Eşzamanlı Çağrı',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 46000,
+    specs: {
+      'Kapasite': '1000 SIP Abonesi, 150 Eşzamanlı Arama ve 6 Konferans Odası Desteği',
+      'Port Yapısı': '4x FXO Harici Hat + 4x FXS Dahili Hat + 3x Gigabit PoE Portu',
+      'Entegrasyon': 'Grandstream Wave Mobil/Masaüstü Softphone ve TLS/SRTP Güvenlik'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-telecom-5g-cellular-router',
+    mode: 'b2c',
+    category: 'telecom',
+    title_tr: 'Teltonika RUTX50 Endüstriyel Çift SIM 5G / 4G LTE Gigabit Router & Yedekli Ağ Geçidi',
+    title_en: 'Teltonika RUTX50 Industrial Dual SIM 5G / 4G LTE Gigabit Router & Failover Gateway',
+    brand: 'Teltonika Networks',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '3.3 Gbps 5G Sub-6GHz / Wi-Fi 5',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 29800,
+    specs: {
+      'Hücresel Hız': '3.3 Gbps\'ye Varan 5G SA/NSA ve 2 Gbps 4G LTE Cat 20 İndirme',
+      'SIM & Yedeklilik': 'Otomatik Yük Devretmeli (Auto-Failover) Çift SIM Yuvası',
+      'Portlar': '5x Gigabit Ethernet RJ45, 4x SMA 5G Anten, Dayanıklı Alüminyum Gövde'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   }
 ];
