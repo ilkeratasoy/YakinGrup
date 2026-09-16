@@ -211,32 +211,40 @@
               <span>Tüm Markalar</span>
             </label>
             <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Dell'; renderProducts();">
+              <span>Dell Technologies</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='HPE'; renderProducts();">
+              <span>HPE Enterprise</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Cisco'; renderProducts();">
+              <span>Cisco Systems</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Fortinet'; renderProducts();">
+              <span>Fortinet Security</span>
+            </label>
+            <label class="filter-option-label">
               <input type="radio" name="brand-filter" onclick="state.searchQuery='Huawei'; renderProducts();">
-              <span>Huawei Smart PV</span>
+              <span>Huawei Smart PV & IT</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Schneider'; renderProducts();">
+              <span>Schneider / APC</span>
             </label>
             <label class="filter-option-label">
               <input type="radio" name="brand-filter" onclick="state.searchQuery='Longi'; renderProducts();">
               <span>Longi Solar (GES)</span>
             </label>
             <label class="filter-option-label">
-              <input type="radio" name="brand-filter" onclick="state.searchQuery='Sungrow'; renderProducts();">
-              <span>Sungrow / Deye</span>
-            </label>
-            <label class="filter-option-label">
               <input type="radio" name="brand-filter" onclick="state.searchQuery='CATL'; renderProducts();">
               <span>CATL ESS Storage</span>
             </label>
             <label class="filter-option-label">
-              <input type="radio" name="brand-filter" onclick="state.searchQuery='EcoHeat'; renderProducts();">
-              <span>Yakın EcoHeat (Isı Pompası)</span>
-            </label>
-            <label class="filter-option-label">
-              <input type="radio" name="brand-filter" onclick="state.searchQuery='Wind'; renderProducts();">
-              <span>Yakın Wind (RES Türbin)</span>
-            </label>
-            <label class="filter-option-label">
-              <input type="radio" name="brand-filter" onclick="state.searchQuery='Volt'; renderProducts();">
-              <span>Yakın Volt (EV Şarj)</span>
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Yakın'; renderProducts();">
+              <span>Yakın Teknoloji / Volt</span>
             </label>
           </div>
 
@@ -630,24 +638,24 @@
         <div class="footer-col">
           <h5>Kurumsal B2B</h5>
           <ul class="footer-links">
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('server');">Sunucu & SAN Depolama (Dell/HPE)</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('network');">Omurga Switch & Router (Cisco)</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('security');">Next-Gen Firewall (Fortinet)</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ups');">Modüler Online UPS (Schneider)</a></li>
             <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ges');">Endüstriyel Güneş (GES)</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('res');">Rüzgar Türbinleri (RES)</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('heatpump');">Endüstriyel Isı Pompası</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('inverter');">Santral & Dizi İnvertörleri</a></li>
             <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('storage');">Konteyner BESS Depolama</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ev');">DC Ultra Hızlı Şarj İstasyonları</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h5>Bireysel B2C</h5>
+          <h5>Bireysel B2C & KOBİ</h5>
           <ul class="footer-links">
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('workstation');">AI & BIM İş İstasyonları</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('server');">NAS Akıllı Bulut Sunucuları</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('network');">Wi-Fi 7 Mesh & PoE Switch</a></li>
             <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('ges');">Villa Çatı GES Paketleri</a></li>
             <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('heatpump');">A+++ Ev Isı Pompaları</a></li>
-            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('res');">Mikro Ev Rüzgar Türbinleri</a></li>
-            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('storage');">Duvar Tipi Ev Bataryaları</a></li>
             <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('ev');">Ev Tipi Wallbox Şarj</a></li>
-            <li><a href="#simulator">Yenilenebilir Enerji Simülatörü</a></li>
           </ul>
         </div>
 

@@ -1,5 +1,6 @@
 /**
  * YAKIN GRUP MARKETPLACE — B2B & B2C PLATFORM LOGIC
+ * Comprehensive Renewable Energy & IT Equipment Platform (A to Z)
  * Supports Mode Switching, Multi-currency, Multi-language,
  * Dynamic Filtering, RFQ & Cart Drawer, Solar & Renewable Calculator & Proforma Export.
  */
@@ -30,35 +31,35 @@ const FX_RATES_TO_TRY = {
 // ── Translation Dictionary ──────────────────────────────────────────────────
 const i18n = {
   tr: {
-    topbar_tag: 'YENİLENEBİLİR ENERJİ & TİCARET PORTALI',
+    topbar_tag: 'MÜHENDİSLİK, YENİLENEBİLİR ENERJİ & IT TİCARET PORTALI',
     topbar_holding: 'Yakın Grup Holding',
     topbar_teklif: 'Şartname & Teklif Stüdyosu',
     topbar_sunum: 'Yatırımcı Sunumu',
-    topbar_support: 'Tedarikçi Destek: +90 (212) 345 67 89',
+    topbar_support: 'Tedarikçi & IT Destek: +90 (212) 345 67 89',
     
     brand_sub: 'MARKETPLACE',
     btn_b2b: '🏢 Kurumsal (B2B)',
     btn_b2c: '🏠 Bireysel (B2C)',
-    search_placeholder: 'GES, RES, Isı Pompası, İnvertör, Batarya, Şarj İstasyonu ara...',
+    search_placeholder: 'GES, RES, Isı Pompası, Sunucu, Switch, Firewall, UPS, Batarya ara...',
     btn_supplier_apply: 'Tedarikçi Ol',
     btn_cart: 'Sepet & Teklif',
     
-    hero_b2b_badge: 'ENDÜSTRİYEL YENİLENEBİLİR ENERJİ & ŞARTNAMELİ TEDARİK',
-    hero_b2b_title: 'Endüstriyel GES, RES, Isı Pompası & Enerji Depolama Tedarik Platformu',
-    hero_b2b_sub: 'Tier-1 Solar PV, Rüzgar Türbinleri, Yüksek Sıcaklık Isı Pompaları, BESS Batarya Konteynerleri ve DC Ultra Hızlı Şarj İstasyonlarında doğrudan üretici fiyatları, kademeli toptan iskonto ve şartnameli RFQ altyapısı.',
+    hero_b2b_badge: 'ENDÜSTRİYEL ENERJİ & KURUMSAL IT EKİPMAN TEDARİKİ',
+    hero_b2b_title: 'Endüstriyel GES, RES, Isı Pompası, Sunucu & IT Altyapı Platformu',
+    hero_b2b_sub: 'Tier-1 Solar PV, Rüzgar Türbinleri, Isı Pompaları, BESS Depolama ile Kurumsal Rack Sunucular (Dell/HPE), Cisco Ağ Çözümleri, Fortinet Firewall ve Modüler Veri Merkezi sistemlerinde doğrudan üretici fiyatları ve şartnameli RFQ altyapısı.',
     hero_b2b_cta1: 'Toptan Kataloğu Keşfet',
     hero_b2b_cta2: 'BOM / Şartname Teklifi Al',
     
-    hero_b2c_badge: 'BİREYSEL & KONUT YENİLENEBİLİR ENERJİ ÇÖZÜMLERİ',
-    hero_b2c_title: 'Konut Güneş Enerjisi, Isı Pompası & Akıllı EV Şarj Sistemleri',
-    hero_b2c_sub: 'Villa çatı GES paketleri, A+++ çevre dostu R290 ısı pompaları, mikro rüzgar türbinleri, ev tipi bataryalar ve Wallbox şarj cihazlarında anahtar teslim mühendislik ve montaj güvencesi.',
-    hero_b2c_cta1: 'Konut Paketlerini İncele',
+    hero_b2c_badge: 'BİREYSEL YENİLENEBİLİR ENERJİ & İŞ İSTASYONU ÇÖZÜMLERİ',
+    hero_b2c_title: 'Konut Güneş Enerjisi, Isı Pompası, EV Şarj & Profesyonel IT Sistemleri',
+    hero_b2c_sub: 'Villa çatı GES paketleri, A+++ R290 ısı pompaları, Wallbox şarj cihazları, AI/BIM iş istasyonları, NAS depolama ve Wi-Fi 7 ağ çözümlerinde anahtar teslim kurulum ve garanti güvencesi.',
+    hero_b2c_cta1: 'Tüm Paketleri İncele',
     hero_b2c_cta2: 'Ücretsiz Keşif Hesapla',
 
     stat_b2b_1: '500+ MW',
     stat_b2b_1_l: 'Tedarik Gücü (GES/RES)',
-    stat_b2b_2: '%100',
-    stat_b2b_2_l: 'Tier-1 & CE / IEC Standart',
+    stat_b2b_2: '10.000+',
+    stat_b2b_2_l: 'Kurumsal IT & Enerji Ekipmanı',
     stat_b2b_3: '24 Saat',
     stat_b2b_3_l: 'Mühendislik RFQ Süresi',
     stat_b2b_4: 'Cari & Leasing',
@@ -67,22 +68,27 @@ const i18n = {
     stat_b2c_1: '12 Taksit',
     stat_b2c_1_l: 'Tüm Kartlara Vade Farksız',
     stat_b2c_2: '81 İl',
-    stat_b2c_2_l: 'Montaj & Mühendislik Ağı',
-    stat_b2c_3: 'A+++ / R290',
-    stat_b2c_3_l: 'Yüksek Verimli Isı Pompası',
+    stat_b2c_2_l: 'Montaj & Teknik Servis',
+    stat_b2c_3: 'A+++ / Tier-1',
+    stat_b2c_3_l: 'En Yüksek Enerji Verimi',
     stat_b2c_4: '10 Yıl',
-    stat_b2c_4_l: 'Sistem Performans Garantisi',
+    stat_b2c_4_l: 'Sistem & Donanım Garantisi',
 
     // Categories
     cat_all: 'Tüm Ekipmanlar',
     cat_ges: '☀️ Güneş Enerjisi (GES)',
     cat_res: '💨 Rüzgar Enerjisi (RES)',
     cat_heatpump: '♨️ Isı Pompası & Termal',
-    cat_inverter: '🔄 İnvertör & Eviriciler',
+    cat_inverter: '🔄 İnvertör & Evirici',
     cat_storage: '🔋 Enerji Depolama (BESS)',
     cat_ev: '⚡ Araç Şarj İstasyonu',
-    cat_electrical: '🔌 Trafo & Şalt Altyapı',
-    cat_smarthome: '📱 Akıllı Enerji & EMS',
+    cat_server: '🖥️ Sunucu & Veri Depolama',
+    cat_network: '🌐 Ağ & Telekom (Switch/Router)',
+    cat_security: '🛡️ Siber Güvenlik & Firewall',
+    cat_datacenter: '🏢 Veri Merkezi & Kabinet',
+    cat_ups: '⚡ Kesintisiz Güç (UPS)',
+    cat_workstation: '💻 İş İstasyonu & PC',
+    cat_cabling: '🧶 Yapısal Kablolama & Fiber',
 
     filters_title: 'Filtreler',
     filters_reset: 'Temizle',
@@ -123,10 +129,10 @@ const i18n = {
     calc_btn_package: 'Bu Çözümü İncele & Keşif İste',
 
     rfq_box_title: 'Toplu BOM & Şartname Teklifi İste (B2B)',
-    rfq_box_desc: 'GES, RES, Isı Pompası ve Depolama projeleriniz için malzeme listenizi (Excel / PDF) yükleyin; 24 saat içinde mühendislik onaylı proforma teklifinizi hazırlayalım.',
+    rfq_box_desc: 'GES, RES, Isı Pompası, Sunucu, Depolama ve Network projeleriniz için malzeme listenizi (Excel / PDF) yükleyin; 24 saat içinde mühendislik onaylı proforma teklifinizi hazırlayalım.',
     rfq_box_btn: 'Şartname / BOM Yükle',
     supplier_box_title: 'Yakın Grup Tedarikçi Ekosistemi',
-    supplier_box_desc: 'Tier-1 güneş panelleri, rüzgar türbinleri, ısı pompaları, invertörler veya bataryalar üretiyorsanız, pazaryerimizde onaylı tedarikçi olun.',
+    supplier_box_desc: 'Yenilenebilir enerji veya kurumsal IT ekipmanları (Sunucu, Switch, Güvenlik, Trafo, Batarya vb.) üretiyorsanız, pazaryerimizde onaylı tedarikçi olun.',
     supplier_box_btn: 'Tedarikçi Başvuru Formu',
 
     drawer_b2b_title: 'Kurumsal RFQ & Teklif Sepeti',
@@ -136,42 +142,42 @@ const i18n = {
     drawer_b2c_checkout: 'Güvenli Sipariş & Keşif Onayı',
 
     footer_about_title: 'Yakın Grup Marketplace',
-    footer_about_desc: 'Güneş (GES), Rüzgar (RES), Isı Pompası, Enerji Depolama ve EV Şarj altyapısında Türkiye\'nin ve bölgenin lider B2B & B2C yenilenebilir enerji ticaret platformu.',
+    footer_about_desc: 'Güneş (GES), Rüzgar (RES), Isı Pompası, Enerji Depolama, EV Şarj ve Kurumsal IT & Veri Merkezi altyapısında Türkiye\'nin ve bölgenin entegre B2B & B2C tedarik platformu.',
     footer_col1_title: 'Kurumsal B2B',
     footer_col2_title: 'Bireysel B2C',
     footer_col3_title: 'Holding & Ekosistem',
     footer_rights: '© 2026 Yakın Grup Holding A.Ş. Tüm hakları saklıdır.'
   },
   en: {
-    topbar_tag: 'RENEWABLE ENERGY & COMMERCE PORTAL',
+    topbar_tag: 'ENGINEERING, RENEWABLE ENERGY & IT COMMERCE PORTAL',
     topbar_holding: 'Yakın Group Holding',
     topbar_teklif: 'Spec & Proposal Studio',
     topbar_sunum: 'Investor Presentation',
-    topbar_support: 'Supplier Support: +90 (212) 345 67 89',
+    topbar_support: 'Supplier & IT Support: +90 (212) 345 67 89',
 
     brand_sub: 'MARKETPLACE',
     btn_b2b: '🏢 Corporate (B2B)',
     btn_b2c: '🏠 Consumer (B2C)',
-    search_placeholder: 'Search Solar PV, Wind, Heat Pump, Inverter, Battery, EV Chargers...',
+    search_placeholder: 'Search Solar PV, Wind, Heat Pump, Server, Switch, Firewall, UPS...',
     btn_supplier_apply: 'Become Supplier',
     btn_cart: 'Cart & RFQ',
 
-    hero_b2b_badge: 'INDUSTRIAL RENEWABLE ENERGY & SPEC PROCUREMENT',
-    hero_b2b_title: 'Industrial Solar (PV), Wind (WTG), Heat Pumps & Energy Storage Supply',
-    hero_b2b_sub: 'Direct factory pricing, volume discounts and specification-ready RFQs for Tier-1 Solar PV, Wind Turbines, High-Temp Heat Pumps, Containerized BESS, and Ultra-Fast DC Chargers.',
+    hero_b2b_badge: 'INDUSTRIAL ENERGY & ENTERPRISE IT PROCUREMENT',
+    hero_b2b_title: 'Industrial PV, Wind, Heat Pumps, Servers & IT Infrastructure Supply',
+    hero_b2b_sub: 'Direct manufacturer pricing and specification-ready RFQs for Tier-1 Solar PV, Wind Turbines, BESS Storage, Enterprise Rack Servers (Dell/HPE), Cisco Networking, Fortinet Firewalls, and Modular Data Centers.',
     hero_b2b_cta1: 'Explore Wholesale Catalog',
     hero_b2b_cta2: 'Request Spec / BOM Quote',
 
-    hero_b2c_badge: 'RESIDENTIAL & CONSUMER RENEWABLE ENERGY',
-    hero_b2c_title: 'Rooftop Solar, Eco Heat Pumps & Smart EV Charging',
-    hero_b2c_sub: 'Turnkey engineering and installation guarantee on villa rooftop solar packages, A+++ R290 eco heat pumps, micro wind turbines, home batteries, and Wallbox EV chargers.',
-    hero_b2c_cta1: 'View Residential Packages',
+    hero_b2c_badge: 'RESIDENTIAL RENEWABLES & PRO IT WORKSTATIONS',
+    hero_b2c_title: 'Rooftop Solar, Heat Pumps, EV Chargers & Professional IT Systems',
+    hero_b2c_sub: 'Turnkey engineering and installation on villa solar kits, A+++ heat pumps, Wallbox EV chargers, AI/BIM workstations, NAS storage, and Wi-Fi 7 networking.',
+    hero_b2c_cta1: 'View All Packages',
     hero_b2c_cta2: 'Calculate Free Site Survey',
 
     stat_b2b_1: '500+ MW',
     stat_b2b_1_l: 'Supply Capacity (PV/Wind)',
-    stat_b2b_2: '100%',
-    stat_b2b_2_l: 'Tier-1 & CE / IEC Standard',
+    stat_b2b_2: '10,000+',
+    stat_b2b_2_l: 'Enterprise IT & Energy Items',
     stat_b2b_3: '24 Hours',
     stat_b2b_3_l: 'Engineering RFQ Turnaround',
     stat_b2b_4: 'Credit & Lease',
@@ -180,11 +186,11 @@ const i18n = {
     stat_b2c_1: '12 Installments',
     stat_b2c_1_l: 'Zero Interest Available',
     stat_b2c_2: '81 Cities',
-    stat_b2c_2_l: 'Turnkey Installation Network',
-    stat_b2c_3: 'A+++ / R290',
-    stat_b2c_3_l: 'Eco High-Efficiency Heat Pump',
+    stat_b2c_2_l: 'Installation & Tech Support',
+    stat_b2c_3: 'A+++ / Tier-1',
+    stat_b2c_3_l: 'Highest Efficiency Ratings',
     stat_b2c_4: '10 Years',
-    stat_b2c_4_l: 'Performance Guarantee',
+    stat_b2c_4_l: 'System & Hardware Warranty',
 
     // Categories
     cat_all: 'All Equipment',
@@ -194,8 +200,13 @@ const i18n = {
     cat_inverter: '🔄 Inverters & Systems',
     cat_storage: '🔋 Energy Storage (BESS)',
     cat_ev: '⚡ EV Charging Stations',
-    cat_electrical: '🔌 Transformers & Grid',
-    cat_smarthome: '📱 Smart Energy & EMS',
+    cat_server: '🖥️ Servers & SAN Storage',
+    cat_network: '🌐 Network & Telecom',
+    cat_security: '🛡️ Cyber Security & Firewall',
+    cat_datacenter: '🏢 Data Center & Racks',
+    cat_ups: '⚡ Uninterruptible Power (UPS)',
+    cat_workstation: '💻 Workstations & PCs',
+    cat_cabling: '🧶 Structured Cabling & Fiber',
 
     filters_title: 'Filters',
     filters_reset: 'Reset',
@@ -236,10 +247,10 @@ const i18n = {
     calc_btn_package: 'Inspect Solution & Book Survey',
 
     rfq_box_title: 'Request Bulk BOM & Specification Quote (B2B)',
-    rfq_box_desc: 'For large-scale utility projects, tenders, or custom Bill of Materials (BOM), receive an engineered proforma within 24 hours.',
+    rfq_box_desc: 'For large-scale utility, server, and networking projects, receive an engineered proforma within 24 hours.',
     rfq_box_btn: 'Upload BOM / Spec',
     supplier_box_title: 'Yakın Group Supplier Ecosystem',
-    supplier_box_desc: 'If you manufacture high-quality solar modules, wind turbines, heat pumps, inverters, or batteries, join our marketplace network.',
+    supplier_box_desc: 'If you manufacture high-quality renewable energy or enterprise IT equipment, join our marketplace network.',
     supplier_box_btn: 'Supplier Application Form',
 
     drawer_b2b_title: 'Corporate RFQ & Quote Cart',
@@ -249,7 +260,7 @@ const i18n = {
     drawer_b2c_checkout: 'Proceed to Secure Checkout',
 
     footer_about_title: 'Yakın Group Marketplace',
-    footer_about_desc: 'Trusted digital supply platform for industrial and residential renewable energy equipment, contracting engineering, and smart technologies.',
+    footer_about_desc: 'Trusted digital supply platform for industrial energy, contracting engineering, and enterprise IT data center infrastructure.',
     footer_col1_title: 'Corporate B2B',
     footer_col2_title: 'Consumer B2C',
     footer_col3_title: 'Holding & Ecosystem',
@@ -257,10 +268,10 @@ const i18n = {
   }
 };
 
-// ── Complete Renewable Energy Product Database ──────────────────────────────
+// ── Complete Renewable Energy & IT Equipment Database (A to Z) ──────────────
 const PRODUCTS_DATA = [
   // =========================================================================
-  // ── B2B PRODUCTS (KURUMSAL / ENDÜSTRİYEL TEDARİK) ─────────────────────────
+  // ── B2B PRODUCTS (KURUMSAL / ENDÜSTRİYEL ENERJİ & IT TEDARİK) ─────────────
   // =========================================================================
 
   // 1. GES (Güneş Enerjisi Sistemleri)
@@ -301,7 +312,7 @@ const PRODUCTS_DATA = [
     brand: 'Trina Solar',
     image: 'assets/images/energy_hero_1784577681830.png',
     power: '700Wp N-Type',
-    moq: 31, // 1 Pallet
+    moq: 31,
     unit: 'Adet',
     basePriceTRY: 4980,
     tiers: [
@@ -344,32 +355,6 @@ const PRODUCTS_DATA = [
     },
     inStock: false,
     leadTime: 'Proje Bazlı 3-4 Hafta',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2b-ges-tracker',
-    mode: 'b2b',
-    category: 'ges',
-    title_tr: 'YakınTrack Çift Eksenli Akıllı Astronomik Güneş Takip Sistemi (Tracker)',
-    title_en: 'YakınTrack Dual-Axis Smart Astronomical Solar Tracker System',
-    brand: 'Yakın Mühendislik',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '40kWp / 64 Panel Taşıma',
-    moq: 1,
-    unit: 'Set',
-    basePriceTRY: 185000,
-    tiers: [
-      { min: 1, max: 5, discount: 0, priceTRY: 185000 },
-      { min: 6, max: 25, discount: 12, priceTRY: 162800 }
-    ],
-    specs: {
-      'Verim Artışı': '+%35 - +%45 Ekstra Yıllık Enerji Üretimi',
-      'Kontrol': 'GPS + Astronomik Algoritma + Rüzgar Sensörü Otomatik Park Modu',
-      'Motor & Şanzıman': 'IP66 IP Sınıfı Ağır Hizmet Sonsuz Vida Tahrik',
-      'Konstrüksiyon': 'Sıcak Daldırma Galvanizli Çelik (C4/C5 Korozyon Direnci)'
-    },
-    inStock: true,
-    leadTime: 'Stokta (1-2 Hafta Kurulum)',
     datasheetUrl: '#'
   },
 
@@ -429,32 +414,6 @@ const PRODUCTS_DATA = [
     leadTime: 'Stokta (Maslak Depo)',
     datasheetUrl: '#'
   },
-  {
-    id: 'b2b-inv-hybrid-50k',
-    mode: 'b2b',
-    category: 'inverter',
-    title_tr: 'Deye 50kW Yüksek Voltaj Üç Fazlı Ticari Hibrit İnvertör (Batarya Uyumlu)',
-    title_en: 'Deye 50kW High-Voltage 3-Phase Commercial Hybrid Inverter (BESS Ready)',
-    brand: 'Deye / Yakın',
-    image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '50 kW AC / 65 kW DC',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 195000,
-    tiers: [
-      { min: 1, max: 3, discount: 0, priceTRY: 195000 },
-      { min: 4, max: 10, discount: 7, priceTRY: 181350 }
-    ],
-    specs: {
-      'Batarya Voltaj Aralığı': '160V - 800V HV Lityum Batarya Desteği',
-      'Şebekeden Bağımsız (Off-Grid)': '10ms Kesintisiz Güç Geçişi (UPS Fonksiyonu)',
-      'Paralel Bağlantı': '10 Üniteye Kadar Paralel Çalışma (500kW)',
-      'Dizel Jeneratör Girişi': 'Entegre Otomatik Jeneratör Start/Stop Yönetimi'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
 
   // 3. ENERJİ DEPOLAMA (BESS / ESS Bataryalar)
   {
@@ -484,34 +443,8 @@ const PRODUCTS_DATA = [
     leadTime: '6-8 Hafta Üretim & Proje Teslim',
     datasheetUrl: '#'
   },
-  {
-    id: 'b2b-ess-commercial-215kwh',
-    mode: 'b2b',
-    category: 'storage',
-    title_tr: 'Yakın PowerVault 215 kWh / 100kW Fabrika & KOBİ Ticari Batarya Kabini',
-    title_en: 'Yakın PowerVault 215 kWh / 100kW Commercial & Industrial Energy Storage Cabinet',
-    brand: 'Yakın Energy',
-    image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '215 kWh / 100 kW',
-    moq: 1,
-    unit: 'Kabin',
-    basePriceTRY: 1850000,
-    tiers: [
-      { min: 1, max: 2, discount: 0, priceTRY: 1850000 },
-      { min: 3, max: 8, discount: 8, priceTRY: 1702000 }
-    ],
-    specs: {
-      'Uygulama': 'Pik Tıraşlama (Peak Shaving) & Jeneratör İkamesi',
-      'Batarya Teknolojisi': 'LFP Hücreler + Akıllı Çift Yönlü BMS',
-      'Soğutma Sistemi': 'Endüstriyel Sıvı Soğutma (Liquid Cooling)',
-      'Boyut & Yerleşim': 'Kompakt Dış Ortam IP55 Kabin (Sadece 1.8 m² Taban Alanı)'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Maslak & Kocaeli Depo)',
-    datasheetUrl: '#'
-  },
 
-  // 4. ISI POMPASI & TERMAL SİSTEMLER (Heat Pumps)
+  // 4. ISI POMPASI & TERMAL SİSTEMLER
   {
     id: 'b2b-hp-commercial-100k',
     mode: 'b2b',
@@ -539,34 +472,8 @@ const PRODUCTS_DATA = [
     leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   },
-  {
-    id: 'b2b-hp-geothermal-150k',
-    mode: 'b2b',
-    category: 'heatpump',
-    title_tr: 'Yakın GeoMaster 150kW Toprak / Su Kaynaklı Jeotermal Isı Pompası',
-    title_en: 'Yakın GeoMaster 150kW Ground/Water-Source Geothermal Heat Pump',
-    brand: 'Yakın Termal',
-    image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '150 kW Jeotermal Güç',
-    moq: 1,
-    unit: 'Sistem',
-    basePriceTRY: 890000,
-    tiers: [
-      { min: 1, max: 2, discount: 0, priceTRY: 890000 },
-      { min: 3, max: 6, discount: 8, priceTRY: 818800 }
-    ],
-    specs: {
-      'COP Değeri': 'COP 5.80 (Maksimum Jeotermal Verim)',
-      'Kompresör': 'Danfoss Inverter Scroll Çift Kompresör',
-      'Sondaj & Kolektör': 'Dikey Jeotermal Kuyu / Göl / Deniz Suyu Entegrasyonu',
-      'Akıllı Kontrol': 'Modbus & BACnet Bina Otomasyonu (BMS) Entegre'
-    },
-    inStock: false,
-    leadTime: '4-6 Hafta Proje Bazlı Teslim',
-    datasheetUrl: '#'
-  },
 
-  // 5. RES (Rüzgar Enerjisi Santralleri & Türbinleri)
+  // 5. RES (Rüzgar Enerjisi Santralleri)
   {
     id: 'b2b-res-turbine-500k',
     mode: 'b2b',
@@ -594,30 +501,8 @@ const PRODUCTS_DATA = [
     leadTime: '8-10 Hafta Üretim & Kurulum',
     datasheetUrl: '#'
   },
-  {
-    id: 'b2b-res-lidar',
-    mode: 'b2b',
-    category: 'res',
-    title_tr: 'ZX 300 Sürekli Dalga Rüzgar Lidar Ölçüm & RES Saha Fizibilite İstasyonu',
-    title_en: 'ZX 300 Continuous Wave Wind Lidar Measurement Station',
-    brand: 'ZX Lidars / Yakın',
-    image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '10m - 300m Ölçüm Aralığı',
-    moq: 1,
-    unit: 'Set',
-    basePriceTRY: 1450000,
-    specs: {
-      'Ölçüm Yüksekliği': '10m ile 300m Arasında 50 Farklı Yükseklik Katmanı',
-      'Güç Kaynağı': 'Entegre Güneş Paneli + Metanol Yakıt Pili (Otonom Çalışma)',
-      'Hassasiyet': 'Banka ve Finans Onaylı RES Fizibilite Raporlaması',
-      'Haberleşme': 'Uydu & 4G/5G Canlı Veri Aktarımı'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
 
-  // 6. ARAÇ ŞARJ İSTASYONLARI (EV Charging)
+  // 6. ARAÇ ŞARJ İSTASYONLARI (EV)
   {
     id: 'b2b-ev-dc180',
     mode: 'b2b',
@@ -639,96 +524,310 @@ const PRODUCTS_DATA = [
       'Çıkış Voltajı': '150V - 1000V DC (800V Süper Hızlı Araçlarla Tam Uyum)',
       'Protokol': 'OCPP 1.6J / OCPP 2.0.1 Hazır',
       'Ödeme Terminali': 'Entegre Temassız POS / Kredi Kartı / RFID',
-      'Ekran': '15.6 inç Dış Ortam Yüksek Parlaklıklı Dokunmatik',
-      'Dinamik Güç': 'Smart Power Matrix Akıllı Yük Dağılımı'
+      'Ekran': '15.6 inç Dış Ortam Yüksek Parlaklıklı Dokunmatik'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 7. IT & BİLİŞİM: SUNUCU & VERİ DEPOLAMA (Servers & Storage)
+  {
+    id: 'b2b-srv-poweredge-r760',
+    mode: 'b2b',
+    category: 'server',
+    title_tr: 'Dell PowerEdge R760 2U Çift Soket Intel Xeon Kurumsal Rack Sunucu',
+    title_en: 'Dell PowerEdge R760 2U Dual-Socket Intel Xeon Enterprise Rack Server',
+    brand: 'Dell Technologies',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '2x Intel Xeon Gold 6430 / 256GB RAM',
+    moq: 1,
+    unit: 'Sunucu',
+    basePriceTRY: 485000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 485000 },
+      { min: 3, max: 8, discount: 8, priceTRY: 446200 },
+      { min: 9, max: 30, discount: 15, priceTRY: 412250 }
+    ],
+    specs: {
+      'İşlemci': '2x Intel Xeon Gold 6430 (64 Çekirdek, 128 Thread, 2.10 GHz)',
+      'Bellek': '256GB (8x32GB) DDR5 4800MHz RDIMM ECC (32 Yuva - 8TB Maks)',
+      'Depolama': '8x 3.84TB NVMe SSD Enterprise (PERC H755 Front SAS/NVMe)',
+      'Ağ & Yönetim': 'Broadcom 57414 Çift Port 25GbE SFP28 + iDRAC9 Enterprise',
+      'Güç Kaynağı': 'Çift Yedekli 1400W Titanyum Hot-Plug PSU (1+1)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Sevkiyat)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-srv-hpe-dl380',
+    mode: 'b2b',
+    category: 'server',
+    title_tr: 'HPE ProLiant DL380 Gen11 2U Sanallaştırma & Veritabanı Rack Sunucu',
+    title_en: 'HPE ProLiant DL380 Gen11 2U Virtualization & Database Rack Server',
+    brand: 'HPE (Hewlett Packard)',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '2x Intel Xeon Platinum / 512GB RAM',
+    moq: 1,
+    unit: 'Sunucu',
+    basePriceTRY: 620000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 620000 },
+      { min: 3, max: 6, discount: 9, priceTRY: 564200 }
+    ],
+    specs: {
+      'İşlemci': '2x Intel Xeon Platinum 8468 (96 Çekirdek, 2.10 GHz)',
+      'Bellek': '512GB (16x32GB) DDR5 SmartMemory RDIMM',
+      'Depolama': '16x 1.92TB SAS 12G Read Intensive SFF SSD',
+      'Güvenlik': 'HPE Silicon Root of Trust & iLO 6 Advanced Lisansı',
+      'Garanti': '3 Yıl 7x24 4 Saat Müdahale Garantili'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-sto-dell-powerstore',
+    mode: 'b2b',
+    category: 'server',
+    title_tr: 'Dell PowerStore 1000T All-Flash NVMe Kurumsal SAN / NAS Veri Depolama',
+    title_en: 'Dell PowerStore 1000T All-Flash NVMe Enterprise SAN / NAS Storage Array',
+    brand: 'Dell Technologies',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '92 TB Efektif / 25 GbE & 32Gb FC',
+    moq: 1,
+    unit: 'Array',
+    basePriceTRY: 1450000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 1450000 },
+      { min: 3, max: 5, discount: 7, priceTRY: 1348500 }
+    ],
+    specs: {
+      'Mimari': 'Active-Active Çift Controller (Dual Node NVMe)',
+      'Kapasite': '23 TB Ham / 92 TB Efektif (4:1 Veri Sıkıştırma & Deduplication Garantisi)',
+      'Protokoller': 'NVMe-oF, FC (Fibre Channel), iSCSI, NFS, SMB',
+      'Gecikme (Latency)': '< 0.3 ms Sub-millisecond Ultra Düşük Gecikme'
+    },
+    inStock: false,
+    leadTime: '2-3 Hafta Proje Sevkiyatı',
+    datasheetUrl: '#'
+  },
+
+  // 8. IT & BİLİŞİM: AĞ & TELEKOM (Network, Switch, Router)
+  {
+    id: 'b2b-net-cisco-catalyst-9300',
+    mode: 'b2b',
+    category: 'network',
+    title_tr: 'Cisco Catalyst 9300 48-Port Gigabit PoE+ Layer-3 Yönetilebilir Omurga Switch',
+    title_en: 'Cisco Catalyst 9300 48-Port Gigabit PoE+ Layer-3 Managed Core Switch',
+    brand: 'Cisco Systems',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '48x 1GbE PoE+ / 4x 10G SFP+',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 165000,
+    tiers: [
+      { min: 1, max: 3, discount: 0, priceTRY: 165000 },
+      { min: 4, max: 10, discount: 8, priceTRY: 151800 },
+      { min: 11, max: 30, discount: 14, priceTRY: 141900 }
+    ],
+    specs: {
+      'Portlar': '48 Port 10/100/1000 Ethernet (PoE+ 740W Bütçe)',
+      'Uplink': 'Modüler Network Modülü (4x 10GE SFP+ / 2x 40GE)',
+      'Switching Kapasitesi': '480 Gbps / 480 Mpps İletim Hızı',
+      'Yazılım': 'Cisco DNA Premier & Network Advantage L3 Routing (OSPF, BGP)',
+      'Yedeklilik': 'StackWise-480 (480G İstifleme) + Dual Yedekli Güç Kaynağı'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   },
   {
-    id: 'b2b-ev-dc360',
+    id: 'b2b-net-huawei-cloudengine',
     mode: 'b2b',
-    category: 'ev',
-    title_tr: 'Yakın Volt Ultra DC 360kW Sıvı Soğutmalı Dağıtımlı Megawatt Şarj İstasyonu Hub\'ı',
-    title_en: 'Yakın Volt Ultra DC 360kW Liquid-Cooled Split Megawatt Charging Hub',
-    brand: 'Yakın Volt',
-    image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '360 kW (500A Sıvı Soğutmalı)',
-    moq: 1,
-    unit: 'Sistem',
-    basePriceTRY: 1480000,
-    tiers: [
-      { min: 1, max: 2, discount: 0, priceTRY: 1480000 },
-      { min: 3, max: 6, discount: 7, priceTRY: 1376400 }
-    ],
-    specs: {
-      'Şarj Hızı': '10 Dakikada 300+ km Menzil Şarjı',
-      'Kablo': 'Sıvı Soğutmalı Hafif 500A CCS2 Tabanca',
-      'Dağıtıcı Ünite': '1 Güç Kabini + 4 Bağımsız Dispenser Uyumu',
-      'Verimlilik': '%96.5 Yüksek Enerji Dönüşüm Verimi'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Kocaeli Depo)',
-    datasheetUrl: '#'
-  },
-
-  // 7. TRAFO & ŞALT ALTYAPI & VERİ MERKEZİ
-  {
-    id: 'b2b-trafo-1600',
-    mode: 'b2b',
-    category: 'electrical',
-    title_tr: '1600 kVA 34.5/0.4 kV Kuru Tip Dökme Reçineli Dağıtım Transformatörü',
-    title_en: '1600 kVA 34.5/0.4 kV Cast Resin Dry-Type Distribution Transformer',
-    brand: 'Schneider / Yakın',
+    category: 'network',
+    title_tr: 'Huawei CloudEngine S5735-L48P4X-A1 48-Port PoE+ & 4x 10GE SFP+ Switch',
+    title_en: 'Huawei CloudEngine S5735-L48P4X-A1 48-Port PoE+ & 4x 10GE SFP+ Enterprise Switch',
+    brand: 'Huawei Enterprise',
     image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '1600 kVA',
+    power: '48 Port PoE+ (380W) / 4x 10GE SFP+',
     moq: 1,
     unit: 'Adet',
-    basePriceTRY: 1250000,
+    basePriceTRY: 74000,
     tiers: [
-      { min: 1, max: 2, discount: 0, priceTRY: 1250000 },
-      { min: 3, max: 10, discount: 6, priceTRY: 1175000 }
+      { min: 1, max: 4, discount: 0, priceTRY: 74000 },
+      { min: 5, max: 15, discount: 9, priceTRY: 67340 }
     ],
     specs: {
-      'Gerilim': '34.5 kV / 400V (50 Hz)',
-      'Yalıtım': 'F / F Sınıfı Kuru Tip (Yangına Dayanıklı)',
-      'Kayıp': 'EcoDesign Tier 2 Uyumlu (Ultra Düşük Kayıplı)',
-      'Koruma': 'PT100 Sıcaklık Sensörleri + IP31 Muhafaza'
-    },
-    inStock: false,
-    leadTime: '3-4 Hafta Üretim',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2b-dc-rack42u',
-    mode: 'b2b',
-    category: 'electrical',
-    title_tr: 'Yakın Modular Data Center 42U Akıllı Sunucu Kabin Paketi (PDU + InRow Soğutma)',
-    title_en: 'Yakın Modular Data Center 42U Smart Server Rack Suite (PDU + InRow Cooling)',
-    brand: 'Yakın Teknoloji',
-    image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '12 kW Kapasite',
-    moq: 2,
-    unit: 'Kabin',
-    basePriceTRY: 185000,
-    tiers: [
-      { min: 2, max: 5, discount: 0, priceTRY: 185000 },
-      { min: 6, max: 20, discount: 10, priceTRY: 166500 }
-    ],
-    specs: {
-      'Ölçüler': '800 x 1200 x 2055 mm (42U)',
-      'Statik Yük': '1500 kg Taşıma Kapasitesi',
-      'PDU': 'Yönetilebilir IP-PDU (32A 3-Faz)',
-      'Sertifikasyon': 'TIA-942 Tier III Uyumlu'
+      'Performans': '176 Gbps / 132 Mpps Paket Yönlendirme Kapasitesi',
+      'Yönetim': 'iMaster NCE-Campus Bulut Yönetim & SNMP v3',
+      'Akıllı PoE': 'Hızlı PoE & Kesintisiz Kalıcı PoE (Perpetual PoE) Desteği',
+      'Güvenlik': '802.1X, MAC Kimlik Doğrulama, DoS Saldırı Koruması'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak Depo)',
     datasheetUrl: '#'
   },
 
+  // 9. IT & BİLİŞİM: SİBER GÜVENLİK & FIREWALL
+  {
+    id: 'b2b-sec-fortigate-200f',
+    mode: 'b2b',
+    category: 'security',
+    title_tr: 'Fortinet FortiGate 200F Next-Generation Kurumsal Ağ Güvenlik Duvarı (UTM Bundle)',
+    title_en: 'Fortinet FortiGate 200F Next-Generation Enterprise Security Firewall (UTM Bundle)',
+    brand: 'Fortinet',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '27 Gbps Firewall / 3 Gbps IPSec VPN',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 245000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 245000 },
+      { min: 3, max: 6, discount: 7, priceTRY: 227850 }
+    ],
+    specs: {
+      'Firewall Verimliliği': '27 Gbps Throughput / 3 Gbps SSL-VPN İnceleme',
+      'IPS & Tehdit Koruma': '5 Gbps IPS / 3 Gbps Threat Protection',
+      'Arayüzler': '16x GE RJ45, 8x SFP, 4x 10GE SFP+ Yuvaları',
+      'Lisans': '1 Yıl FortiGuard Enterprise UTM (Antivirüs, IPS, Web Filtre, Sandbox)',
+      'İşlemci': 'Özel Fortinet SPU NP6XLite & CP9 Güvenlik Hızlandırıcı ASIC'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Sevkiyat)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-sec-paloalto-pa1410',
+    mode: 'b2b',
+    category: 'security',
+    title_tr: 'Palo Alto Networks PA-1410 Next-Generation Firewall & Zero Trust SOC Cihazı',
+    title_en: 'Palo Alto Networks PA-1410 Next-Gen Firewall & Zero Trust SOC Appliance',
+    brand: 'Palo Alto Networks',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '10.5 Gbps App-ID / 5.2 Gbps Threat',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 380000,
+    specs: {
+      'Zero Trust': 'Tam Katman-7 Uygulama Tabanlı App-ID & User-ID Denetimi',
+      'Tehdit Önleme': 'WildFire Bulut Tabanlı Sıfırıncı Gün (Zero-Day) Analizi',
+      'Portlar': '8x 10M/100M/1G RJ45, 8x 1G/10G SFP/SFP+ Yuvaları',
+      'Yedekli Güç': 'Çift AC/DC Hot-Swap Güç Kaynakları'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 10. IT & BİLİŞİM: KESİNTİSİZ GÜÇ KAYNAĞI (UPS)
+  {
+    id: 'b2b-ups-schneider-galaxy-100k',
+    mode: 'b2b',
+    category: 'ups',
+    title_tr: 'Schneider Electric Galaxy VS 100 kVA Modüler 3-Faz Online Kesintisiz Güç Kaynağı',
+    title_en: 'Schneider Electric Galaxy VS 100 kVA Modular 3-Phase Online Industrial UPS',
+    brand: 'APC by Schneider Electric',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '100 kVA / 100 kW (PF=1.0)',
+    moq: 1,
+    unit: 'Sistem',
+    basePriceTRY: 780000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 780000 },
+      { min: 3, max: 5, discount: 8, priceTRY: 717600 }
+    ],
+    specs: {
+      'Teknoloji': '3-Kademeli Çift Çevrim Online (VFI-SS-111)',
+      'Verimlilik': '%99\'a Varan ECOnversion Patentli Yüksek Verim Modu',
+      'Batarya Teknolojisi': 'Li-Ion ve VRLA Akü Dolabı Entegrasyonu',
+      'Yönetim': 'EcoStruxure IT Bulut İzleme & Akıllı SNMP/Modbus Kartı',
+      'Paralellenebilirlik': '4 Üniteye Kadar N+1 Yedekli Paralel Çalışma (400 kVA)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Kocaeli Depo)',
+    datasheetUrl: '#'
+  },
+
+  // 11. IT & BİLİŞİM: VERİ MERKEZİ & KABİNET & FIBER
+  {
+    id: 'b2b-cab-datacenter-48u',
+    mode: 'b2b',
+    category: 'datacenter',
+    title_tr: 'Yakın Datacenter Pro 48U Akıllı Soğutmalı Sunucu Kabinet Paketi (2x IP-PDU + Kilit)',
+    title_en: 'Yakın Datacenter Pro 48U Smart Server Rack Suite (2x Managed IP-PDU + Biometric)',
+    brand: 'Yakın Teknoloji',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '48U / 1800 kg Statik Taşıma',
+    moq: 1,
+    unit: 'Kabin',
+    basePriceTRY: 210000,
+    tiers: [
+      { min: 1, max: 4, discount: 0, priceTRY: 210000 },
+      { min: 5, max: 20, discount: 12, priceTRY: 184800 }
+    ],
+    specs: {
+      'Boyutlar': '800 x 1200 x 2300 mm (48U Ekstra Derinlik)',
+      'Havalandırma': '%83 Yüksek Perfore Delikli Çift Kanatlı Ön/Arka Kapılar',
+      'Güç Dağıtımı': '2 Adet 32A 3-Faz 22kW Akıllı Yönetilebilir Çıkış Bazlı Ölçümlü PDU',
+      'Güvenlik': 'RFID / Kartlı / Şifreli Elektronik Kilit + Sıcaklık/Nem Sensör Kiti'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-fib-fusion-splicer',
+    mode: 'b2b',
+    category: 'cabling',
+    title_tr: 'Fujikura 90S+ Core Alignment Endüstriyel Fiber Optik Ek Cihazı Seti (Cleaver Dahil)',
+    title_en: 'Fujikura 90S+ Core Alignment Industrial Optical Fiber Fusion Splicer Kit',
+    brand: 'Fujikura / Yakın',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'Çekirdek Hizalama (Core-Alignment)',
+    moq: 1,
+    unit: 'Set',
+    basePriceTRY: 320000,
+    specs: {
+      'Ek Süresi': '6-8 Saniye Ultra Hızlı Füzyon Ek (0.01 dB Kayıp)',
+      'Isıtıcı Fırın': '9-10 Saniye Otomatik Koruyucu Manşon Fırını',
+      'Dayanıklılık': 'Darbe, Yağmur ve Toz Korumalı IP52 Sert Gövde',
+      'Set İçeriği': 'CT50 Akıllı Bluetooth Cleaver, Çift Batarya, Taşıma Çantası'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-cab-cat7-drum',
+    mode: 'b2b',
+    category: 'cabling',
+    title_tr: 'Yakın Cabling Cat7 S/FTP 1000MHz LSZH Halojensiz Veri Kablosu (500 Metre Makara)',
+    title_en: 'Yakın Cabling Cat7 S/FTP 1000MHz LSZH Halogen-Free Data Cable (500m Drum)',
+    brand: 'Yakın Cabling',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '10 Gbps / 1000 MHz Bant Genişliği',
+    moq: 2,
+    unit: 'Makara (500m)',
+    basePriceTRY: 18500,
+    tiers: [
+      { min: 2, max: 10, discount: 0, priceTRY: 18500 },
+      { min: 11, max: 50, discount: 12, priceTRY: 16280 }
+    ],
+    specs: {
+      'İletken': '4x2x23 AWG Katı Saf Bakır (Solid Bare Copper)',
+      'Ekranlama': 'Her Çift Alüminyum Folyo Korumalı + Dış Kalaylı Bakır Örgü (S/FTP)',
+      'Kılıf': 'LSZH Düşük Duman Sıfır Halojen (CPR Sınıfı B2ca Yangın Dayanımı)',
+      'Standart': 'ISO/IEC 11801, EN 50173 & TIA-568-C.2 Uyumlu'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak & Kocaeli Depo)',
+    datasheetUrl: '#'
+  },
+
   // =========================================================================
-  // ── B2C PRODUCTS (BİREYSEL & KONUT ENERJİ SİSTEMLERİ) ────────────────────
+  // ── B2C / KOBİ PRODUCTS (BİREYSEL & PROFESYONEL SİSTEMLER) ───────────────
   // =========================================================================
 
   // 1. GES (Konut & Tak-Çalıştır)
@@ -779,30 +878,8 @@ const PRODUCTS_DATA = [
     leadTime: '24 Saatte Kargo (Stokta)',
     datasheetUrl: '#'
   },
-  {
-    id: 'b2c-portable-solar-400',
-    mode: 'b2c',
-    category: 'ges',
-    title_tr: 'Yakın SolarFold 400W Katlanabilir Monokristal Taşınabilir Güneş Paneli',
-    title_en: 'Yakın SolarFold 400W Foldable Monocrystalline Portable Solar Panel',
-    brand: 'Yakın PowerBase',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '400Wp Monokristal',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 16500,
-    specs: {
-      'Hücre Verimi': '%23.4 Yüksek Dönüşüm Verimliliği',
-      'Taşıma': 'Dahili Taşıma Çantası + Ayaklı Destek Sehpa',
-      'Suya Dayanıklılık': 'IP68 Su & Toz Geçirmezlik Kaplaması',
-      'Bağlantı': 'MC4 Evrensel Konnektör / Güç İstasyonları ile Uyumlu'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Aynı Gün Kargo)',
-    datasheetUrl: '#'
-  },
 
-  // 2. ISI POMPASI (Konut Tipi Isıtma & Sıcak Su)
+  // 2. ISI POMPASI (Konut Tipi)
   {
     id: 'b2c-hp-monoblock-12k',
     mode: 'b2c',
@@ -827,193 +904,143 @@ const PRODUCTS_DATA = [
     leadTime: 'Stokta (3 Günde Montaj)',
     datasheetUrl: '#'
   },
+
+  // 3. İŞ İSTASYONLARI & KURUMSAL BİLGİSAYARLAR (Workstations)
   {
-    id: 'b2c-hp-hybrid-boiler',
+    id: 'b2c-ws-ai-workstation',
     mode: 'b2c',
-    category: 'heatpump',
-    title_tr: 'Yakın ThermPlus 250L Güneş & Isı Pompası Entegreli Akıllı Sıcak Su Boyleri',
-    title_en: 'Yakın ThermPlus 250L Solar & Heat Pump Integrated Smart Domestic Hot Water Boiler',
-    brand: 'Yakın EcoHeat',
+    category: 'workstation',
+    title_tr: 'Yakın AI-Station Pro Intel Core i9-14900K / 64GB DDR5 / RTX 4090 24GB İş İstasyonu',
+    title_en: 'Yakın AI-Station Pro Intel Core i9-14900K / 64GB DDR5 / RTX 4090 24GB AI & BIM Workstation',
+    brand: 'Yakın Teknoloji Pro',
     image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '2.5 kW Termal / 250 Litre',
+    power: 'i9-14900K (24 Çekirdek) + RTX 4090 24GB',
     moq: 1,
-    unit: 'Set',
-    basePriceTRY: 48500,
-    installFeeTRY: 6500,
+    unit: 'Sistem',
+    basePriceTRY: 185000,
     specs: {
-      'Hacim': '250 Litre Emaye Kaplı Titanyum Anot Korumalı Depo',
-      'Tasarruf': 'Klasik Elektrikli Termosifona Göre %75 Daha Az Tüketim',
-      'Çalışma Aralığı': '-7°C ile +43°C Dış Ortam Havasından Isı Transferi',
-      'Legionella Koruması': 'Otomatik 65°C Anti-Bakteri Dezenfeksiyon Döngüsü'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-
-  // 3. İNVERTÖR (Ev & Mikro Sistemler)
-  {
-    id: 'b2c-inv-hybrid-8k',
-    mode: 'b2c',
-    category: 'inverter',
-    title_tr: 'Growatt SPH 8000TL-HU 8kW Üç Fazlı Hibrit Akıllı Ev İnvertörü',
-    title_en: 'Growatt SPH 8000TL-HU 8kW 3-Phase Smart Hybrid Home Inverter',
-    brand: 'Growatt',
-    image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '8 kW AC / 12 kW DC',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 68000,
-    specs: {
-      'Verim': '%98.2 Maksimum Verimlilik',
-      'MPPT': '2 Bağımsız MPPT Takipçisi',
-      'Batarya Arayüzü': 'Lityum & Kurşun-Asit Batarya Desteği',
-      'EPS Çıkışı': 'Elektrik Kesildiğinde 10ms İçinde Evi Besleme'
+      'İşlemci': 'Intel Core i9-14900K (6.0 GHz Turbo, 24 Çekirdek, 32 Thread)',
+      'Ekran Kartı': 'NVIDIA GeForce RTX 4090 24GB GDDR6X (AI LLM & BIM Render)',
+      'Bellek': '64GB (2x32GB) DDR5 6000MHz Kingston Fury Beast',
+      'Depolama': '2TB Samsung 990 Pro NVMe PCIe 4.0 M.2 SSD (7450 MB/s)',
+      'Soğutma & Kasa': '360mm Sıvı Soğutma + 1200W 80+ Gold PCIe 5.0 Güç Kaynağı'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Kargo)',
     datasheetUrl: '#'
   },
   {
-    id: 'b2c-microinv-hoymiles-800',
+    id: 'b2c-nas-synology-ds923',
     mode: 'b2c',
-    category: 'inverter',
-    title_tr: 'Hoymiles HMS-800W-2T 800W Dahili Wi-Fi Mikroinverter (2 Panel İçin 2 MPPT)',
-    title_en: 'Hoymiles HMS-800W-2T 800W Built-in Wi-Fi Microinverter (2 MPPTs)',
-    brand: 'Hoymiles',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '800W AC (2x MPPT)',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 8400,
-    specs: {
-      'Giriş': '2 Adet 320W - 540W+ Güneş Paneli Desteği',
-      'Haberleşme': 'Dahili Wi-Fi Modülü (Ek Gateway DTU Gerektirmez)',
-      'Güvenlik': '60V DC Altı Güvenli Voltaj (Yangın Riski Sıfır)',
-      'Garanti': '12 Yıl Standart / 25 Yıl Opsiyonel Garanti'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-
-  // 4. ENERJİ DEPOLAMA (Ev Bataryaları & Güç İstasyonları)
-  {
-    id: 'b2c-home-bat-5k',
-    mode: 'b2c',
-    category: 'storage',
-    title_tr: 'Yakın WallBattery 5.12 kWh Duvar Tipi Lityum LiFePO4 Ev Bataryası',
-    title_en: 'Yakın WallBattery 5.12 kWh Wall-Mount Lithium LiFePO4 Home Battery',
-    brand: 'Yakın Energy',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '5.12 kWh / 100Ah 51.2V',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 88000,
-    installFeeTRY: 12000,
-    specs: {
-      'Hücre Kimyası': 'Tier-1 LiFePO4 (6000+ Çevrim)',
-      'Genişletilebilirlik': '15 Üniteye Kadar Paralel Bağlantı (76.8 kWh)',
-      'Uyumlu İnvertörler': 'Growatt, Deye, Huawei, Victron, Goodwe',
-      'İletişim': 'CAN / RS485 Entegre Akıllı BMS'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2c-home-bat-10k',
-    mode: 'b2c',
-    category: 'storage',
-    title_tr: 'Yakın StackPower 10.24 kWh Yüksek Voltaj Modüler Ev Enerji Depolama Kulesi',
-    title_en: 'Yakın StackPower 10.24 kWh High-Voltage Modular Home Battery Tower',
-    brand: 'Yakın Energy',
+    category: 'server',
+    title_tr: 'Synology DiskStation DS923+ 4-Yuvalı Akıllı Bulut & Yedekleme NAS Sunucusu (32TB Dahil)',
+    title_en: 'Synology DiskStation DS923+ 4-Bay Smart Cloud & Backup NAS Server (32TB Bundle)',
+    brand: 'Synology',
     image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '10.24 kWh / 204.8V HV',
+    power: '4-Bay / 32 TB WD Red Pro RAID',
     moq: 1,
-    unit: 'Kule',
-    basePriceTRY: 165000,
-    installFeeTRY: 15000,
+    unit: 'Set',
+    basePriceTRY: 54000,
     specs: {
-      'Modüler Yapı': 'Tak-Çıkar Modüllerle 25.6 kWh\'e Kadar Kolay Büyütme',
-      'HV Avantajı': 'Yüksek Voltaj Sayesinde %97.5 Çift Yönlü Çevrim Verimi',
-      'Tasarım': 'Şık İnce Tasarım (Evin İçinde veya Garajda Sıfır Alan Kaybı)',
-      'Güvenlik': 'Çok Kademeli Termal Koruma & Otomatik Hücre Dengeleme'
+      'Disk Konfigürasyonu': '4x 8TB WD Red Pro NAS HDD Dahil (RAID 5/6/SHR Desteği)',
+      'NVMe Önbellek': '2x 500GB M.2 NVMe SSD Read/Write Cache Entegre',
+      'Ağ Arayüzü': '2x 1GbE LAN (Opsiyonel 10GbE PCIe Yükseltme Modülü Desteği)',
+      'Yazılım': 'Synology DSM 7.2 (Otomatik Ofis/Ev Yedekleme, Fotoğraf & Dosya Bulutu)'
     },
     inStock: true,
-    leadTime: 'Stokta (3 Günde Kurulum)',
+    leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   },
   {
-    id: 'b2c-power-station-2k',
+    id: 'b2c-wifi-mesh-wifi7',
     mode: 'b2c',
-    category: 'storage',
-    title_tr: 'Yakın PowerBase 2048Wh Portatif Güç İstasyonu (2400W Kesintisiz Güç Kaynağı)',
-    title_en: 'Yakın PowerBase 2048Wh Portable Power Station (2400W AC UPS)',
+    category: 'network',
+    title_tr: 'Yakın MeshPro Wi-Fi 7 Tri-Band 19 Gbps Tüm Ev & Ofis Kesintisiz Kablosuz Ağ Kiti (3\'lü)',
+    title_en: 'Yakın MeshPro Wi-Fi 7 Tri-Band 19 Gbps Whole Home & Office Mesh Wireless Kit (3-Pack)',
+    brand: 'Yakın NetLink',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'BE19000 (6GHz + 5GHz + 2.4GHz)',
+    moq: 1,
+    unit: 'Set (3\'lü Paket)',
+    basePriceTRY: 26500,
+    specs: {
+      'Hız & Bant': '19 Gbps Tri-Band Wi-Fi 7 (320 MHz Geniş Kanal & 4K-QAM)',
+      'Kapsama Alanı': '750 m² Kesintisiz Dolaşım (Seamless Roaming)',
+      'Kablolu Portlar': 'Her Ünitede 2x 10 Gbps + 2x 2.5 Gbps Ethernet WAN/LAN Portları',
+      'Kapasite': '200+ Eşzamanlı Cihaz Bağlantısı (Düşük Gecikme MLO Teknolojisi)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-sw-poe-24p',
+    mode: 'b2c',
+    category: 'network',
+    title_tr: 'Yakın NetLink 24-Port Gigabit PoE+ Yönetilebilir Akıllı Switch (250W PoE + 2x SFP)',
+    title_en: 'Yakın NetLink 24-Port Gigabit PoE+ Smart Managed Switch (250W PoE + 2x SFP)',
+    brand: 'Yakın NetLink',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '24x PoE+ (250W) / 2x Gigabit SFP',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 12400,
+    specs: {
+      'Portlar': '24 Port 10/100/1000 Mbps PoE+ (Port Başına 30W Maks)',
+      'Uplink': '2 Adet 1.25G Gigabit SFP Fiber Uplink Yuvası',
+      'Yönetim': 'Web GUI, VLAN, QoS, IGMP Snooping, Port İzolasyonu',
+      'Kullanım': 'IP Kamera, Wi-Fi Access Point ve IP Telefon Altyapısı'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-sec-firewall-box',
+    mode: 'b2c',
+    category: 'security',
+    title_tr: 'Yakın SafeGate Micro KOBİ & Ev Ofis Next-Gen Güvenlik Duvarı (VPN + Siber Koruma)',
+    title_en: 'Yakın SafeGate Micro SMB & Home Office Next-Gen Firewall (VPN + Cyber Defense)',
+    brand: 'Yakın SafeGate',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '2.5 Gbps Throughput / 5x 2.5G Port',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 16800,
+    specs: {
+      'Portlar': '5x 2.5 GbE RJ45 Intel i226-V Ağ Portu',
+      'Güvenlik': 'Dahili IPS/IDS, Reklam & Zararlı Yazılım Engelleme, DNS Filtreleme',
+      'VPN Desteği': 'WireGuard & OpenVPN Donanımsal Hızlandırma (500 Mbps VPN Hızı)',
+      'Tasarım': 'Alüminyum Fansız (Fanless 0 dB) Sessiz Kompakt Gövde'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-ups-line-interactive-3k',
+    mode: 'b2c',
+    category: 'ups',
+    title_tr: 'Yakın PowerGuard 3000VA / 2700W Saf Sinüs Online Rack / Tower Kesintisiz Güç Kaynağı',
+    title_en: 'Yakın PowerGuard 3000VA / 2700W Pure Sine Wave Online Rack/Tower UPS',
     brand: 'Yakın PowerBase',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '2400W Sürekli / 4800W Tepe AC',
-    moq: 1,
-    unit: 'Set',
-    basePriceTRY: 64900,
-    specs: {
-      'Batarya': '2048Wh LiFePO4 (3500+ Çevrim)',
-      'Şarj': '55 Dakikada %80 Hızlı Şebeke Şarjı / 800W Güneş Girişi',
-      'Çıkışlar': '4x 220V AC Priz, 2x 100W USB-C PD, 4x USB-A',
-      'UPS Modu': 'Elektrik Kesintisinde 20ms İçinde Devreye Girme'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-
-  // 5. RES (Mikro Konut & Çiftlik Rüzgar Türbinleri)
-  {
-    id: 'b2c-res-turbine-3k',
-    mode: 'b2c',
-    category: 'res',
-    title_tr: 'Yakın AeroHome 3kW Sessiz Dikey Eksenli Konut & Çiftlik Rüzgar Türbini',
-    title_en: 'Yakın AeroHome 3kW Silent Vertical-Axis Home & Farm Wind Turbine',
-    brand: 'Yakın Wind',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '3 kW (48V / 220V)',
-    moq: 1,
-    unit: 'Set',
-    basePriceTRY: 78000,
-    installFeeTRY: 14000,
-    specs: {
-      'Tasarım': 'Dikey Eksenli (Maglev Manyetik Yataklama ile 30 dB Süper Sessiz)',
-      'Rüzgar Yönü': '360 Derece Tüm Rüzgarları Karşılar (Yön Değiştirme Gerektirmez)',
-      'Başlama Hızı': '1.5 m/s Düşük Rüzgarda Dönmeye Başlar',
-      'Kullanım': 'Müstakil Ev, Çiftlik, Karavan, Baz İstasyonu'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2c-res-hybrid-controller',
-    mode: 'b2c',
-    category: 'res',
-    title_tr: 'Yakın WindSolar 5kW Hibrit Rüzgar & Güneş Akıllı MPPT Şarj Kontrolörü',
-    title_en: 'Yakın WindSolar 5kW Hybrid Wind & Solar Smart MPPT Charge Controller',
-    brand: 'Yakın Wind',
     image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '3kW Rüzgar + 2kW Güneş',
+    power: '3000 VA / 2700 W (PF=0.9)',
     moq: 1,
     unit: 'Adet',
-    basePriceTRY: 14200,
+    basePriceTRY: 22500,
     specs: {
-      'Frenleme': 'Otomatik Elektronik & Manuel Kademeli Dump-Load Rüzgar Freni',
-      'Ekran': 'Geniş Renkli LCD (Rüzgar Hızı, Panel Voltajı, Batarya Şarj Akımı)',
-      'Batarya Uyumu': '12V / 24V / 48V Otomatik Algılama LFP & Jel Batarya'
+      'Çıkış Dalga Şekli': '0ms Transfer Süreli Gerçek Çift Çevrim Saf Sinüs Dalgası',
+      'Ekran': 'Döndürülebilir Renkli LCD Ekran (Yük Yüzdesi, Akü Seviyesi, Giriş/Çıkış V)',
+      'Çıkışlar': '8x IEC C13 + 1x IEC C19 + 2x Standart Schuko Priz',
+      'Yönetim': 'USB, RS232 ve Akıllı SNMP Ağ İzleme Yuvası'
     },
     inStock: true,
-    leadTime: 'Stokta (Aynı Gün Kargo)',
+    leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   },
 
-  // 6. ARAÇ ŞARJ İSTASYONLARI (Wallbox)
+  // 4. EV ŞARJ (Wallbox)
   {
     id: 'b2c-wallbox-22k',
     mode: 'b2c',
@@ -1031,57 +1058,10 @@ const PRODUCTS_DATA = [
       'Kablo': '5 Metre Entegre Tip-2 Spiral Kablo',
       'Bağlantı': 'Wi-Fi, Bluetooth, RFID Kart Okuyucu, Mobil Uygulama',
       'Güneş Entegrasyonu': 'Solar Fazlalık Şarj Modu (Sadece GES Üretimiyle Şarj)',
-      'Koruma': 'Dahili 6mA DC Kaçak Akım + IP65 Su Geçirmezlik',
-      'Yük Dengeleme': 'Ev Ana Sigortasını Attırmayan Dinamik Güç Yönetimi'
+      'Koruma': 'Dahili 6mA DC Kaçak Akım + IP65 Su Geçirmezlik'
     },
     inStock: true,
     leadTime: 'Stokta (Ücretsiz Aynı Gün Kargo)',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2c-ev-mobile-charger',
-    mode: 'b2c',
-    category: 'ev',
-    title_tr: 'Yakın Volt Go 11kW Ayarlanabilir Taşınabilir Seyahat Tipi EV Şarj Adaptörü',
-    title_en: 'Yakın Volt Go 11kW Adjustable Portable Travel EV Charger Adapter',
-    brand: 'Yakın Volt',
-    image: 'assets/images/energy_hero_1784577681830.png',
-    power: '11 kW (3-Faz 16A)',
-    moq: 1,
-    unit: 'Set',
-    basePriceTRY: 12800,
-    specs: {
-      'Ayarlanabilir Akım': '6A / 8A / 10A / 13A / 16A Kademeli Seçim',
-      'Dönüştürücü': 'Kırmızı CEE Sanayi Prizi + Standart Ev Prizi (Schuko) Adaptörü',
-      'Ekran': 'OLED Ekran (Çekilen Akım, Sıcaklık, Toplam Verilen kWh)',
-      'Çanta': 'Özel Darbeye Dayanıklı Taşıma Çantası Dahil'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Aynı Gün Kargo)',
-    datasheetUrl: '#'
-  },
-
-  // 7. AKILLI ENERJİ & EMS YÖNETİMİ
-  {
-    id: 'b2c-iot-meter',
-    mode: 'b2c',
-    category: 'smarthome',
-    title_tr: 'Yakın SmartSense 3-Faz Akıllı Enerji Analizörü & Mobil Kaçak Akım Rölesi',
-    title_en: 'Yakın SmartSense 3-Phase Smart Energy Meter & Cloud Leakage Relay',
-    brand: 'Yakın Teknoloji',
-    image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '80A x 3-Faz',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 4850,
-    specs: {
-      'İzleme': 'Gerilim, Akım, Aktif/Reaktif Güç, Tüketim Grafiği (₺/Saat)',
-      'Haberleşme': 'Wi-Fi / Zigbee / Tuya Entegrasyonu',
-      'Akıllı Koruma': 'Aşırı Voltaj, Düşük Voltaj ve Sıcaklık Alarmları',
-      'DIN Ray Montajı': 'Standart Sigorta Panosuna Kolay Geçme'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Aynı Gün Kargo)',
     datasheetUrl: '#'
   }
 ];
@@ -1201,11 +1181,14 @@ function renderCategories() {
 
   const t = i18n[state.lang];
   
-  // Universal categories across modes
   let categories = [
     { key: 'all', label: t.cat_all, icon: '⚡' },
     { key: 'ges', label: t.cat_ges, icon: '☀️' },
     { key: 'heatpump', label: t.cat_heatpump, icon: '♨️' },
+    { key: 'server', label: t.cat_server, icon: '🖥️' },
+    { key: 'network', label: t.cat_network, icon: '🌐' },
+    { key: 'security', label: t.cat_security, icon: '🛡️' },
+    { key: 'ups', label: t.cat_ups, icon: '⚡' },
     { key: 'inverter', label: t.cat_inverter, icon: '🔄' },
     { key: 'storage', label: t.cat_storage, icon: '🔋' },
     { key: 'res', label: t.cat_res, icon: '💨' },
@@ -1214,11 +1197,12 @@ function renderCategories() {
 
   if (state.mode === 'b2b') {
     categories.push(
-      { key: 'electrical', label: t.cat_electrical, icon: '🔌' }
+      { key: 'datacenter', label: t.cat_datacenter, icon: '🏢' },
+      { key: 'cabling', label: t.cat_cabling, icon: '🧶' }
     );
   } else {
     categories.push(
-      { key: 'smarthome', label: t.cat_smarthome, icon: '📱' }
+      { key: 'workstation', label: t.cat_workstation, icon: '💻' }
     );
   }
 
@@ -1283,8 +1267,8 @@ function renderProducts() {
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: #ffffff; border-radius: 16px; border: 1px solid var(--border-light);">
         <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-        <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem;">${state.lang === 'tr' ? 'Aradığınız kriterlere uygun yenilenebilir enerji ekipmanı bulunamadı.' : 'No matching renewable energy equipment found.'}</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">${state.lang === 'tr' ? 'Filtreleri temizleyebilir veya farklı bir arama terimi (GES, RES, Isı Pompası vb.) deneyebilirsiniz.' : 'Try resetting filters or using a different search keyword.'}</p>
+        <h3 style="font-family: var(--font-heading); margin-bottom: 0.5rem;">${state.lang === 'tr' ? 'Aradığınız kriterlere uygun yenilenebilir enerji veya IT ekipmanı bulunamadı.' : 'No matching renewable energy or IT equipment found.'}</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">${state.lang === 'tr' ? 'Filtreleri temizleyebilir veya farklı bir arama terimi (Sunucu, Switch, GES, Isı Pompası vb.) deneyebilirsiniz.' : 'Try resetting filters or using a different search keyword.'}</p>
         <button class="btn-primary" style="margin-top: 1.5rem;" onclick="resetAllFilters()">${t.filters_reset}</button>
       </div>
     `;
@@ -1597,7 +1581,7 @@ function openProductDetailModal(productId) {
           ${formatPrice(p.basePriceTRY)} <span style="font-size: 0.85rem; color: var(--text-muted);">/ ${p.unit} ${isB2B ? '+ KDV' : '(KDV Dahil)'}</span>
         </div>
         <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
-          ${state.lang === 'tr' ? 'Yakın Grup mühendislik garantisi ve teknik şartname onaylı orijinal üretici sevkiyatı.' : 'Certified original equipment with Yakın Group engineering warranty.'}
+          ${state.lang === 'tr' ? 'Yakın Grup mühendislik garantisi ve orijinal üretici yetkili distribütör sevkiyatı.' : 'Certified original enterprise equipment with Yakın Group warranty.'}
         </p>
         <button class="btn-card-action" style="width: 100%; padding: 0.8rem;" onclick="addToCart('${p.id}'); closeProductDetailModal();">
           ${isB2B ? '📋 Teklif Listesine Ekle (RFQ)' : '🛒 Sepete Ekle'}
@@ -1641,19 +1625,16 @@ function initSolarCalculator() {
     const monthlyKWh = monthlyBillTRY / unitRateTRY;
     const annualKWh = monthlyKWh * 12;
 
-    // Daily peak sun hours & wind coefficient by region
     let sunHours = 4.2;
     if (regionSelect && regionSelect.value === 'akdeniz') sunHours = 5.2;
     else if (regionSelect && regionSelect.value === 'anadolu') sunHours = 3.8;
 
-    // Recommended system size in kWp: Annual / (sunHours * 365 * 0.82 PR)
     const recommendedKWp = (annualKWh / (sunHours * 365 * 0.82));
     const roundedKWp = Math.max(1, Math.round(recommendedKWp * 10) / 10);
 
     const estimatedAnnualGen = Math.round(roundedKWp * sunHours * 365 * 0.82);
     const annualSavingsTRY = Math.round(estimatedAnnualGen * unitRateTRY);
 
-    // Payback period
     const estimatedCostTRY = roundedKWp * (isCommercial ? 24000 : 31000);
     const paybackYears = Math.max(2.4, Math.round((estimatedCostTRY / annualSavingsTRY) * 10) / 10);
 
