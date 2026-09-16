@@ -256,77 +256,30 @@ const i18n = {
 
 // ── Master Category Definitions (Metadata & Separation Map) ────────────────
 const CATEGORIES_DEF = {
+  // 🌿 RENEWABLE ENERGY PILLAR
   ges: {
     pillar: 'energy',
     icon: '☀️',
     title_tr: 'Güneş Enerjisi (GES) & Fotovoltaik Sistemler',
     title_en: 'Solar Energy (PV) & Photovoltaic Systems',
-    desc_tr: 'Tier-1 N-Type TOPCon çift cam güneş modülleri, BIPV bina cephe camları ve akıllı solar tracker sistemleri.',
-    desc_en: 'Tier-1 TOPCon bifacial modules, BIPV solar glass facades, and dual-axis trackers.'
-  },
-  heatpump: {
-    pillar: 'energy',
-    icon: '♨️',
-    title_tr: 'Isı Pompaları & Termal Enerji Çözümleri',
-    title_en: 'Heat Pumps & Thermal Energy Solutions',
-    desc_tr: 'A+++ R290 çevre dostu havadan suya monoblok ev ısı pompaları ve endüstriyel yüksek sıcaklık kaskad sistemler.',
-    desc_en: 'A+++ R290 eco air-to-water heat pumps and industrial high-temperature cascade systems.'
-  },
-  server: {
-    pillar: 'it',
-    icon: '🖥️',
-    title_tr: 'Kurumsal Sunucu & SAN/NAS Veri Depolama',
-    title_en: 'Enterprise Servers & SAN/NAS Storage',
-    desc_tr: 'Dell PowerEdge, HPE ProLiant 2U rack sunucular, All-Flash NVMe SAN depolama ve Synology NAS sistemleri.',
-    desc_en: 'Dell PowerEdge, HPE ProLiant rack servers, all-flash NVMe SAN arrays, and Synology NAS systems.'
-  },
-  network: {
-    pillar: 'it',
-    icon: '🌐',
-    title_tr: 'Ağ & Telekomünikasyon Altyapısı (Switch / Router)',
-    title_en: 'Enterprise Network & Telecom Infrastructure',
-    desc_tr: 'Cisco Catalyst ve Huawei CloudEngine omurga PoE+ switchler, Wi-Fi 7 Tri-Band mesh ağ sistemleri.',
-    desc_en: 'Cisco Catalyst and Huawei CloudEngine PoE+ core switches, Wi-Fi 7 Tri-Band mesh networks.'
-  },
-  security: {
-    pillar: 'it',
-    icon: '🛡️',
-    title_tr: 'Siber Güvenlik & Next-Gen Firewall (UTM)',
-    title_en: 'Cyber Security & Next-Gen Firewalls (UTM)',
-    desc_tr: 'Fortinet FortiGate, Palo Alto Zero-Trust ağ güvenlik duvarları ve KOBİ/ofis donanımsal VPN cihazları.',
-    desc_en: 'Fortinet FortiGate, Palo Alto Zero-Trust security appliances, and SMB VPN hardware.'
-  },
-  ups: {
-    pillar: 'it',
-    icon: '⚡',
-    title_tr: 'Kesintisiz Güç Kaynakları (Online UPS)',
-    title_en: 'Uninterruptible Power Supplies (UPS)',
-    desc_tr: 'Schneider Electric Galaxy 100kVA modüler 3-faz online UPS ve 3000VA saf sinüs rack/tower sistemleri.',
-    desc_en: 'Schneider Galaxy 100kVA modular online 3-phase UPS and 3000VA pure sine wave systems.'
+    desc_tr: 'Tier-1 N-Type TOPCon çift cam güneş modülleri, BIPV bina cephe camları ve çatı GES sistemleri.',
+    desc_en: 'Tier-1 TOPCon bifacial modules, BIPV solar glass facades, and rooftop PV systems.'
   },
   inverter: {
     pillar: 'energy',
     icon: '🔄',
     title_tr: 'İnvertör & Güç Dönüşüm Sistemleri',
     title_en: 'Inverters & Power Conversion Systems',
-    desc_tr: 'Huawei, Sungrow, Deye ticari dizi invertörleri ve mikroinverter ev çözümleri.',
-    desc_en: 'Huawei, Sungrow, Deye commercial string inverters and microinverter solutions.'
+    desc_tr: 'Huawei, Sungrow, Deye ticari dizi invertörleri ve hibrit konut güç dönüştürücüleri.',
+    desc_en: 'Huawei, Sungrow, Deye commercial string inverters and hybrid residential converters.'
   },
-  storage: {
+  energy_storage: {
     pillar: 'energy',
     icon: '🔋',
     title_tr: 'Enerji Depolama & BESS Bataryalar',
     title_en: 'Energy Storage & BESS Batteries',
-    desc_tr: 'CATL 2.5 MWh konteyner BESS, 215 kWh KOBİ kabinleri, duvar tipi LiFePO4 ev bataryaları ve portatif UPS.',
-    desc_en: 'CATL 2.5 MWh container BESS, 215 kWh commercial cabinets, wall-mount home batteries, and portable UPS.'
-  },
-  res: {
-    pillar: 'energy',
-    icon: '💨',
-    title_tr: 'Rüzgar Enerjisi Santralleri (RES) & Türbinler',
-    title_en: 'Wind Power Plants (RES) & Turbines',
-    desc_tr: '500kW doğrudan tahrikli endüstriyel türbinler, 3kW maglev sessiz ev/çiftlik rüzgar jeneratörleri ve Lidar.',
-    desc_en: '500kW direct-drive industrial turbines, 3kW maglev silent home wind generators, and Lidar.'
+    desc_tr: 'CATL 2.5 MWh konteyner BESS, 215 kWh ticari batarya kabinleri ve duvar tipi LiFePO4 ev bataryaları.',
+    desc_en: 'CATL 2.5 MWh container BESS, 215 kWh commercial cabinets, and wall-mount LiFePO4 home batteries.'
   },
   ev: {
     pillar: 'energy',
@@ -336,6 +289,56 @@ const CATEGORIES_DEF = {
     desc_tr: 'Yakın Volt 180kW DC ultra hızlı şarj istasyonları ve 22kW ev tipi akıllı Wallbox cihazları.',
     desc_en: 'Yakın Volt 180kW DC ultra-fast chargers and 22kW smart home Wallbox units.'
   },
+  heatpump: {
+    pillar: 'energy',
+    icon: '♨️',
+    title_tr: 'Isı Pompaları & Termal Enerji Çözümleri',
+    title_en: 'Heat Pumps & Thermal Energy Solutions',
+    desc_tr: 'A+++ R290 çevre dostu havadan suya monoblok ev ısı pompaları ve endüstriyel yüksek sıcaklık kaskad sistemler.',
+    desc_en: 'A+++ R290 eco air-to-water heat pumps and industrial high-temperature cascade systems.'
+  },
+  res: {
+    pillar: 'energy',
+    icon: '💨',
+    title_tr: 'Rüzgar Enerjisi Santralleri (RES) & Türbinler',
+    title_en: 'Wind Power Plants (RES) & Turbines',
+    desc_tr: '500kW doğrudan tahrikli endüstriyel türbinler ve 3kW maglev sessiz ev/çiftlik rüzgar jeneratörleri.',
+    desc_en: '500kW direct-drive industrial turbines and 3kW maglev silent home wind generators.'
+  },
+
+  // 💻 IT, BİLİŞİM & VERİ MERKEZİ PILLAR (SERVER, STORAGE, NETWORK, SECURITY)
+  server: {
+    pillar: 'it',
+    icon: '🖥️',
+    title_tr: 'Sunucu & AI Hesaplama Sistemleri (Server)',
+    title_en: 'Enterprise Servers & AI Compute Systems',
+    desc_tr: 'Dell PowerEdge, HPE ProLiant 1U/2U/4U Rack Sunucular, Supermicro GPU AI Düğümleri ve KOBİ Tower Sunucuları.',
+    desc_en: 'Dell PowerEdge, HPE ProLiant rack servers, Supermicro GPU AI compute nodes, and SMB tower servers.'
+  },
+  storage: {
+    pillar: 'it',
+    icon: '💾',
+    title_tr: 'Veri Depolama & SAN / NAS Sistemleri (Storage)',
+    title_en: 'Data Storage & SAN / NAS Systems',
+    desc_tr: 'Dell PowerStore All-Flash NVMe SAN, HPE MSA Fibre Channel Hibrit Storage, Synology Enterprise Rackmount NAS ve QNAP ZFS Depolama.',
+    desc_en: 'Dell PowerStore All-Flash NVMe SAN, HPE MSA Fibre Channel storage, Synology Enterprise Rack NAS, and QNAP ZFS backup units.'
+  },
+  network: {
+    pillar: 'it',
+    icon: '🌐',
+    title_tr: 'Ağ & Telekomünikasyon Altyapısı (Network)',
+    title_en: 'Enterprise Networking & Telecom Infrastructure',
+    desc_tr: 'Cisco Catalyst ve Huawei CloudEngine 48-Port PoE+ Omurga Switchler, MikroTik 10G Routerlar ve Wi-Fi 7 Mesh AP Sistemleri.',
+    desc_en: 'Cisco Catalyst and Huawei CloudEngine PoE+ core switches, MikroTik 10G routers, and enterprise Wi-Fi 7 mesh APs.'
+  },
+  security: {
+    pillar: 'it',
+    icon: '🛡️',
+    title_tr: 'Siber Güvenlik & Next-Gen Firewall (Security)',
+    title_en: 'Cyber Security & Next-Gen Firewalls',
+    desc_tr: 'Fortinet FortiGate UTM Güvenlik Duvarları, Palo Alto ML-Powered Next-Gen Firewall Cihazları, Sophos XGS Tehdit Önleme ve Zero-Trust VPN.',
+    desc_en: 'Fortinet FortiGate UTM firewalls, Palo Alto ML-Powered NGFW appliances, Sophos XGS threat prevention, and Zero-Trust VPN.'
+  },
   datacenter: {
     pillar: 'it',
     icon: '🏢',
@@ -343,6 +346,14 @@ const CATEGORIES_DEF = {
     title_en: 'Data Center Racks & InRow Cooling',
     desc_tr: '48U ağır hizmet sunucu kabinleri, akıllı IP-PDU güç dağıtımı ve biometrik erişim kontrolü.',
     desc_en: '48U heavy-duty server rack suites with managed IP-PDUs and biometric access control.'
+  },
+  ups: {
+    pillar: 'it',
+    icon: '⚡',
+    title_tr: 'Kesintisiz Güç Kaynakları (Online UPS)',
+    title_en: 'Uninterruptible Power Supplies (UPS)',
+    desc_tr: 'Schneider Electric Galaxy 100kVA modüler 3-faz online UPS ve 3000VA saf sinüs rack/tower sistemleri.',
+    desc_en: 'Schneider Galaxy 100kVA modular online 3-phase UPS and 3000VA pure sine wave systems.'
   },
   cabling: {
     pillar: 'it',
@@ -506,7 +517,7 @@ const PRODUCTS_DATA = [
   {
     id: 'b2b-ess-container',
     mode: 'b2b',
-    category: 'storage',
+    category: 'energy_storage',
     title_tr: 'Yakın-CATL 2.5 MWh Konteyner Tipi Sıvı Soğutmalı Endüstriyel BESS Depolama',
     title_en: 'Yakın-CATL 2.5 MWh Containerized Liquid-Cooled Utility BESS Storage',
     brand: 'CATL / Yakın Energy',
@@ -610,7 +621,7 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 7. IT: SUNUCU & DEPOLAMA (Servers & Storage)
+  // 7. IT: SUNUCU & COMPUTE (Server)
   {
     id: 'b2b-srv-poweredge-r760',
     mode: 'b2b',
@@ -630,7 +641,8 @@ const PRODUCTS_DATA = [
     specs: {
       'İşlemci': '2x Intel Xeon Gold 6430 (64 Çekirdek, 128 Thread)',
       'Bellek': '256GB DDR5 4800MHz RDIMM ECC (32 Yuva - 8TB Maks)',
-      'Depolama': '8x 3.84TB NVMe SSD Enterprise'
+      'Depolama': '8x 3.84TB NVMe SSD Enterprise Hot-Plug',
+      'Yönetim': 'iDRAC9 Enterprise Remote Management'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Sevkiyat)',
@@ -655,18 +667,73 @@ const PRODUCTS_DATA = [
     specs: {
       'İşlemci': '2x Intel Xeon Platinum 8468 (96 Çekirdek, 2.10 GHz)',
       'Bellek': '512GB (16x32GB) DDR5 SmartMemory RDIMM',
-      'Güvenlik': 'HPE Silicon Root of Trust & iLO 6 Advanced'
+      'Güvenlik': 'HPE Silicon Root of Trust & iLO 6 Advanced',
+      'Güç Kaynağı': '2x 1600W Flex Slot Platin Redundant PSU'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak Depo)',
     datasheetUrl: '#'
   },
   {
-    id: 'b2b-sto-dell-powerstore',
+    id: 'b2b-srv-supermicro-ai-gpu',
     mode: 'b2b',
     category: 'server',
-    title_tr: 'Dell PowerStore 1000T All-Flash NVMe Kurumsal SAN / NAS Veri Depolama',
-    title_en: 'Dell PowerStore 1000T All-Flash NVMe Enterprise SAN / NAS Storage Array',
+    title_tr: 'Supermicro 4U 8x GPU AI & LLM Derin Öğrenme Yüksek Hesaplama Sunucusu',
+    title_en: 'Supermicro 4U 8x GPU AI & LLM Deep Learning High-Compute Server Node',
+    brand: 'Supermicro',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '8x NVIDIA L40S 48GB / 1TB DDR5',
+    moq: 1,
+    unit: 'Sunucu',
+    basePriceTRY: 2450000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 2450000 },
+      { min: 3, max: 6, discount: 6, priceTRY: 2303000 }
+    ],
+    specs: {
+      'GPU Desteği': '8x NVIDIA L40S 48GB GDDR6 ECC PCIe 4.0/5.0',
+      'İşlemci': '2x Intel Xeon Platinum 8480+ (112 Çekirdek, 224 Thread)',
+      'Ağ & Interconnect': '4x 200Gb/s InfiniBand / RoCE v2 QSFP56',
+      'Depolama': '8x 7.68TB Enterprise U.2 NVMe SSD (RAID-10)'
+    },
+    inStock: false,
+    leadTime: '2-3 Hafta Proje Sevkiyatı',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-srv-dell-t560',
+    mode: 'b2b',
+    category: 'server',
+    title_tr: 'Dell PowerEdge T560 KOBİ & Şube Ofis Sessiz Tower Sunucu',
+    title_en: 'Dell PowerEdge T560 SMB & Branch Office Quiet Tower Server',
+    brand: 'Dell Technologies',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'Intel Xeon Silver 4410Y / 64GB ECC',
+    moq: 1,
+    unit: 'Sunucu',
+    basePriceTRY: 195000,
+    tiers: [
+      { min: 1, max: 3, discount: 0, priceTRY: 195000 },
+      { min: 4, max: 10, discount: 7, priceTRY: 181350 }
+    ],
+    specs: {
+      'İşlemci': 'Intel Xeon Silver 4410Y (12 Çekirdek, 24 Thread, 2.0 GHz)',
+      'Bellek': '64GB (2x32GB) DDR5 RDIMM ECC',
+      'Disk Yuvaları': '8x 3.5" SAS/SATA Hot-Plug (4x 8TB SAS 12G Dahil)',
+      'RAID Denetleyici': 'PERC H755 8GB NV Cache Donanımsal RAID'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 8. IT: VERİ DEPOLAMA & SAN / NAS (Storage)
+  {
+    id: 'b2b-sto-dell-powerstore',
+    mode: 'b2b',
+    category: 'storage',
+    title_tr: 'Dell PowerStore 1200T All-Flash NVMe Kurumsal SAN / NAS Birleşik Veri Depolama',
+    title_en: 'Dell PowerStore 1200T All-Flash NVMe Enterprise SAN / NAS Storage Array',
     brand: 'Dell Technologies',
     image: 'assets/images/data_center_construction_1785092614608.png',
     power: '92 TB Efektif / 25 GbE & 32Gb FC',
@@ -679,15 +746,88 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Mimari': 'Active-Active Çift Controller (Dual Node NVMe)',
-      'Kapasite': '23 TB Ham / 92 TB Efektif (4:1 Veri Sıkıştırma)',
-      'Gecikme (Latency)': '< 0.3 ms Sub-millisecond Ultra Düşük Gecikme'
+      'Kapasite': '23 TB Ham / 92 TB Efektif (4:1 Veri Sıkıştırma Garantisi)',
+      'Gecikme (Latency)': '< 0.3 ms Sub-millisecond Ultra Düşük Gecikme',
+      'Protokoller': 'iSCSI, Fibre Channel (32G), NVMe-oF, NFS, SMB'
     },
     inStock: false,
     leadTime: '2-3 Hafta Proje Sevkiyatı',
     datasheetUrl: '#'
   },
+  {
+    id: 'b2b-sto-hpe-msa2060',
+    mode: 'b2b',
+    category: 'storage',
+    title_tr: 'HPE MSA 2060 16Gb Fibre Channel Hibrit Kurumsal SAN Storage Array',
+    title_en: 'HPE MSA 2060 16Gb Fibre Channel Hybrid Enterprise SAN Storage Array',
+    brand: 'HPE (Hewlett Packard)',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '24-Bay SFF / Çift 16Gb FC Controller',
+    moq: 1,
+    unit: 'Array',
+    basePriceTRY: 780000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 780000 },
+      { min: 3, max: 5, discount: 8, priceTRY: 717600 }
+    ],
+    specs: {
+      'Controller': 'Çift Aktif 16Gb Fibre Channel Controller (4 Port/Controller)',
+      'Disk Kapasitesi': '24x 2.5" SFF Yuva (Dahili 8x 3.84TB RI SSD + 16x 2.4TB 10K SAS)',
+      'Otomasyon': 'Otomatik Katmanlama (Tiering) ve Anlık Görüntü (Snapshot)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-sto-synology-sa3610',
+    mode: 'b2b',
+    category: 'storage',
+    title_tr: 'Synology Enterprise SA3610 24-Yuvalı 2U Rackmount NAS & Petabyte Yedekleme Sunucusu',
+    title_en: 'Synology Enterprise SA3610 24-Bay 2U Rackmount NAS & Petabyte Backup Server',
+    brand: 'Synology',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '24-Bay SAS/SATA / Dual 10GbE SFP+',
+    moq: 1,
+    unit: 'Sistem',
+    basePriceTRY: 395000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 395000 },
+      { min: 3, max: 6, discount: 8, priceTRY: 363400 }
+    ],
+    specs: {
+      'İşlemci': 'Intel Xeon D-1567 12-Core 2.1 GHz',
+      'Bellek': '64GB DDR4 ECC RDIMM (128GB Maks)',
+      'Ağ Arayüzü': '2x 10GbE RJ-45 + 4x 1GbE RJ-45 + PCIe Gen3 x8 Genişleme',
+      'Ölçeklenebilirlik': 'Genişleme Üniteleriyle 96 Sürücüye / 1.7 PB Kapasite'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Sevkiyat)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-sto-pure-flasharray',
+    mode: 'b2b',
+    category: 'storage',
+    title_tr: 'Pure Storage FlashArray //C20 All-Flash NVMe Kapasite Optimize Depolama Ünitesi',
+    title_en: 'Pure Storage FlashArray //C20 All-Flash NVMe Capacity-Optimized Storage Array',
+    brand: 'Pure Storage',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'DirectFlash NVMe / 100% NVMe-oF',
+    moq: 1,
+    unit: 'Array',
+    basePriceTRY: 2850000,
+    specs: {
+      'Yazılım': 'Purity//FA İşletim Sistemi, Evergreen Mimari',
+      'Veri Azaltma': 'Ortalama 5:1 Tekilleştirme & Sıkıştırma (Deduplication)',
+      'Süreklilik': '%99.9999 (6-Nines) Kesintisiz Çalışma Garantisi'
+    },
+    inStock: false,
+    leadTime: '3-4 Hafta Proje Teslimatı',
+    datasheetUrl: '#'
+  },
 
-  // 8. IT: AĞ & TELEKOM (Network)
+  // 9. IT: AĞ & TELEKOM (Network)
   {
     id: 'b2b-net-cisco-catalyst-9300',
     mode: 'b2b',
@@ -707,7 +847,8 @@ const PRODUCTS_DATA = [
     specs: {
       'Portlar': '48 Port 10/100/1000 Ethernet (PoE+ 740W Bütçe)',
       'Uplink': 'Modüler Network Modülü (4x 10GE SFP+)',
-      'Switching Kapasitesi': '480 Gbps / 480 Mpps İletim Hızı'
+      'Switching Kapasitesi': '480 Gbps / 480 Mpps İletim Hızı',
+      'Stacking': 'StackWise-480 Donanımsal Yığınlama Teknolojisi'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
@@ -731,14 +872,61 @@ const PRODUCTS_DATA = [
     ],
     specs: {
       'Performans': '176 Gbps / 132 Mpps Paket Yönlendirme Kapasitesi',
-      'Yönetim': 'iMaster NCE-Campus Bulut Yönetim & SNMP v3'
+      'Yönetim': 'iMaster NCE-Campus Bulut Yönetim & SNMP v3',
+      'Enerji Tasarrufu': 'Energy Efficient Ethernet (EEE) Desteği'
     },
     inStock: true,
     leadTime: 'Stokta (Maslak Depo)',
     datasheetUrl: '#'
   },
+  {
+    id: 'b2b-net-cisco-ap9130',
+    mode: 'b2b',
+    category: 'network',
+    title_tr: 'Cisco Catalyst 9130AX Series Kurumsal Tri-Band Wi-Fi 6E / Wi-Fi 7 Access Point',
+    title_en: 'Cisco Catalyst 9130AX Series Enterprise Tri-Band Wi-Fi 6E / Wi-Fi 7 Access Point',
+    brand: 'Cisco Systems',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'Tri-Band 8x8:8 MIMO / 5 Gbps mGig',
+    moq: 2,
+    unit: 'Adet',
+    basePriceTRY: 42000,
+    tiers: [
+      { min: 2, max: 10, discount: 0, priceTRY: 42000 },
+      { min: 11, max: 50, discount: 10, priceTRY: 37800 }
+    ],
+    specs: {
+      'Radyo Yapısı': 'Tri-Band (2.4GHz / 5GHz / 6GHz) 8x8:8 MIMO Akıllı Anten',
+      'Kullanıcı Kapasitesi': '1000+ Eşzamanlı Kurumsal İstemci Bağlantısı',
+      'Entegrasyon': 'Cisco DNA Spaces, BLE 5.0 ve Zigbee IoT Desteği'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-net-mikrotik-ccr2116',
+    mode: 'b2b',
+    category: 'network',
+    title_tr: 'MikroTik CCR2116-16G-1S+ 16-Çekirdekli 10G Omurga BGP Router & ISP Gateway',
+    title_en: 'MikroTik CCR2116-16G-1S+ 16-Core 10G Backbone BGP Router & ISP Gateway',
+    brand: 'MikroTik',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '16-Core ARM 2.0 GHz / 4x 10G SFP+',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 58000,
+    specs: {
+      'İşlemci': 'Annapurna Labs Alpine AL73400 16-Core ARM 64-bit 2.0GHz',
+      'Portlar': '13x 1GbE RJ45 + 4x 10G SFP+ Yuvaları + M.2 PCIe Yuvası',
+      'BGP Throughput': '13 Gbit/s BGP Yönlendirme Performansı (Çift Yedekli PSU)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
 
-  // 9. IT: SİBER GÜVENLİK & FIREWALL
+  // 10. IT: SİBER GÜVENLİK & NEXT-GEN FIREWALL (Security)
   {
     id: 'b2b-sec-fortigate-200f',
     mode: 'b2b',
@@ -758,7 +946,7 @@ const PRODUCTS_DATA = [
     specs: {
       'Firewall Verimliliği': '27 Gbps Throughput / 3 Gbps SSL-VPN İnceleme',
       'Arayüzler': '16x GE RJ45, 8x SFP, 4x 10GE SFP+ Yuvaları',
-      'Lisans': '1 Yıl FortiGuard Enterprise UTM Dahil'
+      'Lisans': '1 Yıl FortiGuard Enterprise UTM (IPS, AV, Web Filter, Antispam)'
     },
     inStock: true,
     leadTime: 'Stokta (Aynı Gün Sevkiyat)',
@@ -778,14 +966,61 @@ const PRODUCTS_DATA = [
     basePriceTRY: 380000,
     specs: {
       'Zero Trust': 'Tam Katman-7 Uygulama Tabanlı App-ID & User-ID Denetimi',
-      'Tehdit Önleme': 'WildFire Bulut Tabanlı Sıfırıncı Gün Analizi'
+      'Tehdit Önleme': 'WildFire Bulut Tabanlı Sıfırıncı Gün Analizi & DNS Güvenliği',
+      'Bağlantılar': '8x 10/100/1000, 4x 1G/2.5G/5G/10G RJ-45, 4x 1G/10G SFP/SFP+'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
     datasheetUrl: '#'
   },
+  {
+    id: 'b2b-sec-sophos-xgs2100',
+    mode: 'b2b',
+    category: 'security',
+    title_tr: 'Sophos XGS 2100 Next-Gen Hardware Firewall & Deep Packet Inspection Cihazı',
+    title_en: 'Sophos XGS 2100 Next-Gen Hardware Firewall & Deep Packet Inspection Appliance',
+    brand: 'Sophos',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '35 Gbps Firewall / 1.3 Gbps TLS',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 185000,
+    tiers: [
+      { min: 1, max: 2, discount: 0, priceTRY: 185000 },
+      { min: 3, max: 5, discount: 8, priceTRY: 170200 }
+    ],
+    specs: {
+      'İşlemci Mimarisi': 'Çift İşlemci (Xstream Flow İşlemcisi + Çok Çekirdekli x86)',
+      'TLS İnceleme': '1.3 Gbps Donanımsal Hızlandırmalı SSL/TLS 1.3 Şifre Çözme',
+      'Yönetim': 'Sophos Central Tek Merkezden Bulut Güvenlik Yönetimi'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-sec-checkpoint-quantum',
+    mode: 'b2b',
+    category: 'security',
+    title_tr: 'Check Point Quantum Spark 1800 Pro Kurumsal Siber Savunma Ağ Geçidi',
+    title_en: 'Check Point Quantum Spark 1800 Pro Enterprise Cyber Defense Gateway',
+    brand: 'Check Point',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '5 Gbps Threat / SandBlast AI',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 215000,
+    specs: {
+      'Siber Koruma': 'SandBlast AI Zero-Day Tehdit ve Fidye Yazılımı (Ransomware) Engelleme',
+      'Port Yapısı': '16x 1GbE LAN, 2x 10GbE SFP+ Fiber Yuva, Çift Güç Kaynağı',
+      'VPN Performansı': '2.5 Gbps Güvenli IPSec/SSL Şubeler Arası VPN Tünelleme'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
 
-  // 10. IT: KESİNTİSİZ GÜÇ KAYNAĞI (UPS)
+  // 11. IT: KESİNTİSİZ GÜÇ KAYNAĞI (UPS)
   {
     id: 'b2b-ups-schneider-galaxy-100k',
     mode: 'b2b',
@@ -812,7 +1047,7 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 11. IT: VERİ MERKEZİ & KABİNET & FIBER
+  // 12. IT: VERİ MERKEZİ & KABİNET
   {
     id: 'b2b-cab-datacenter-48u',
     mode: 'b2b',
@@ -837,6 +1072,8 @@ const PRODUCTS_DATA = [
     leadTime: 'Stokta (Maslak Depo)',
     datasheetUrl: '#'
   },
+
+  // 13. IT: YAPISAL KABLOLAMA & FIBER
   {
     id: 'b2b-fib-fusion-splicer',
     mode: 'b2b',
@@ -955,7 +1192,269 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 3. İŞ İSTASYONLARI & KURUMSAL BİLGİSAYARLAR (Workstations)
+  // 3. IT: SERVER (B2C & Prosumer Sunucular)
+  {
+    id: 'b2c-srv-homelab-mini',
+    mode: 'b2c',
+    category: 'server',
+    title_tr: 'Yakın MicroServer Edge Home Lab & Sanallaştırma Mini Sunucu (i7-13700 / 64GB / 4x 2.5G)',
+    title_en: 'Yakın MicroServer Edge Home Lab & Virtualization Mini Server (i7-13700 / 64GB / 4x 2.5G)',
+    brand: 'Yakın Teknoloji Pro',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: 'Intel Core i7-13700 (16C) / 64GB DDR5',
+    moq: 1,
+    unit: 'Sistem',
+    basePriceTRY: 48500,
+    specs: {
+      'İşlemci': 'Intel Core i7-13700 (16 Çekirdek, 24 Thread, 5.2 GHz)',
+      'Bellek': '64GB (2x32GB) DDR5 5600MHz Kingston Fury ECC Destekli',
+      'Ağ': '4 Adet Intel i226-V 2.5 GbE Ethernet (Proxmox, ESXi, TrueNAS Uyumlu)',
+      'Depolama': '2TB Samsung 990 PRO PCIe 4.0 NVMe SSD'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-srv-lenovo-st50',
+    mode: 'b2c',
+    category: 'server',
+    title_tr: 'Lenovo ThinkSystem ST50 V2 Kompakt KOBİ & Ofis Tower Sunucu',
+    title_en: 'Lenovo ThinkSystem ST50 V2 Compact SMB & Office Tower Server',
+    brand: 'Lenovo Enterprise',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'Intel Xeon E-2324G / 32GB ECC RAM',
+    moq: 1,
+    unit: 'Sunucu',
+    basePriceTRY: 62000,
+    specs: {
+      'İşlemci': 'Intel Xeon E-2324G (4 Çekirdek, 4.6 GHz)',
+      'Bellek': '32GB TruDDR4 ECC UDIMM',
+      'Depolama': '2x 4TB Enterprise SATA HDD (Dahili Donanımsal RAID-1)',
+      'Kullanım': 'Muhasebe (Logo, Mikro, ERP), Dosya Paylaşımı ve Ofis Veritabanı'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 4. IT: STORAGE (B2C & KOBİ NAS Veri Depolama)
+  {
+    id: 'b2c-sto-synology-ds923',
+    mode: 'b2c',
+    category: 'storage',
+    title_tr: 'Synology DiskStation DS923+ 4-Yuvalı Akıllı Bulut & Yedekleme NAS Sunucusu (32TB Dahil)',
+    title_en: 'Synology DiskStation DS923+ 4-Bay Smart Cloud & Backup NAS Server (32TB Bundle)',
+    brand: 'Synology',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '4-Bay / 32 TB WD Red Pro RAID',
+    moq: 1,
+    unit: 'Set',
+    basePriceTRY: 54000,
+    specs: {
+      'Disk Konfigürasyonu': '4x 8TB WD Red Pro NAS HDD Dahil (RAID 5/6/SHR Desteği)',
+      'NVMe Önbellek': '2x 500GB M.2 NVMe SSD Read/Write Cache Entegre',
+      'Yazılım': 'Synology DSM 7.2 (Otomatik Ofis/Ev Yedekleme, Fotoğraf & Dosya Bulutu)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-sto-qnap-tvs874',
+    mode: 'b2c',
+    category: 'storage',
+    title_tr: 'QNAP TVS-h874 Intel Core i7 8-Yuvalı ZFS QuTS hero 10GbE Yüksek Performanslı NAS',
+    title_en: 'QNAP TVS-h874 Intel Core i7 8-Bay ZFS QuTS hero 10GbE High-Performance NAS',
+    brand: 'QNAP',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'Intel i7 12-Core / 32GB DDR4 / 10GbE',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 115000,
+    specs: {
+      'İşletim Sistemi': 'ZFS Tabanlı QuTS hero (Veri Bütünlüğü, Self-Healing, Snapshots)',
+      'Yuvalar': '8x 3.5"/2.5" SATA 6Gb/s + 2x M.2 2280 PCIe Gen 4 x4',
+      'Bağlantılar': 'Dahili 2.5GbE + PCIe Gen 4 Yuvası (10GbE / 25GbE Kart Hazır)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-sto-synology-ds224',
+    mode: 'b2c',
+    category: 'storage',
+    title_tr: 'Synology DiskStation DS224+ 2-Yuvalı Ev & Kişisel Güvenli Bulut NAS Kiti (8TB Dahil)',
+    title_en: 'Synology DiskStation DS224+ 2-Bay Home & Personal Secure Cloud NAS Kit (8TB Bundle)',
+    brand: 'Synology',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '2-Bay / 2x 4TB WD Red RAID-1',
+    moq: 1,
+    unit: 'Set',
+    basePriceTRY: 24800,
+    specs: {
+      'Diskler': '2x 4TB Western Digital Red Plus NAS Disk Dahil (Ayna RAID-1)',
+      'İşlemci': 'Intel Celeron J4125 4-Core 2.7 GHz',
+      'Özellikler': 'Mobil Fotoğraf Otomatik Yedekleme, 4K Video Transcoding, VPN Sunucu'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+
+  // 5. IT: NETWORK (B2C & KOBİ Ağ Ekipmanları)
+  {
+    id: 'b2c-net-meshpro-wifi7',
+    mode: 'b2c',
+    category: 'network',
+    title_tr: 'Yakın MeshPro Wi-Fi 7 Tri-Band 19 Gbps Tüm Ev & Ofis Kesintisiz Kablosuz Ağ Kiti (3\'lü)',
+    title_en: 'Yakın MeshPro Wi-Fi 7 Tri-Band 19 Gbps Whole Home & Office Mesh Wireless Kit (3-Pack)',
+    brand: 'Yakın NetLink',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'BE19000 (6GHz + 5GHz + 2.4GHz)',
+    moq: 1,
+    unit: 'Set (3\'lü Paket)',
+    basePriceTRY: 26500,
+    specs: {
+      'Hız & Bant': '19 Gbps Tri-Band Wi-Fi 7 (320 MHz Geniş Kanal & 4K-QAM)',
+      'Kapsama Alanı': '750 m² Kesintisiz Dolaşım (Seamless Roaming)',
+      'Kablolu Portlar': 'Her Ünitede 2x 10 Gbps + 2x 2.5 Gbps Ethernet WAN/LAN'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-net-sw-poe-24p',
+    mode: 'b2c',
+    category: 'network',
+    title_tr: 'Yakın NetLink 24-Port Gigabit PoE+ Yönetilebilir Akıllı Switch (250W PoE + 2x SFP)',
+    title_en: 'Yakın NetLink 24-Port Gigabit PoE+ Smart Managed Switch (250W PoE + 2x SFP)',
+    brand: 'Yakın NetLink',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '24x PoE+ (250W) / 2x Gigabit SFP',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 12400,
+    specs: {
+      'Portlar': '24 Port 10/100/1000 Mbps PoE+ (Port Başına 30W Maks)',
+      'Uplink': '2 Adet 1.25G Gigabit SFP Fiber Uplink Yuvası',
+      'Yönetim': 'Web GUI, VLAN, QoS, IGMP Snooping, Port İzolasyonu'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-net-asus-rog-be98',
+    mode: 'b2c',
+    category: 'network',
+    title_tr: 'ASUS ROG Rapture GT-BE98 Quad-Band Wi-Fi 7 25Gbps Gaming & Yüksek Hızlı Ofis Router',
+    title_en: 'ASUS ROG Rapture GT-BE98 Quad-Band Wi-Fi 7 25Gbps Gaming & Office Router',
+    brand: 'ASUS',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'BE25000 Quad-Band / Çift 10G Port',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 38500,
+    specs: {
+      'Hız': '25.000 Mbps Quad-Band Wi-Fi 7 (320MHz & MLO Desteği)',
+      'Port Yapısı': '2x 10G Port + 4x 2.5G Port + 1x USB 3.2 Gen 1',
+      'Güvenlik': 'AiProtection Pro Trend Micro Tabanlı Ömür Boyu Ücretsiz Ağ Koruması'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-net-ubiquiti-udm-pro',
+    mode: 'b2c',
+    category: 'network',
+    title_tr: 'Ubiquiti UniFi Dream Machine Pro (UDM-Pro) 10G Güvenlik Ağ Geçidi & Switch',
+    title_en: 'Ubiquiti UniFi Dream Machine Pro (UDM-Pro) 10G Security Gateway & Switch',
+    brand: 'Ubiquiti UniFi',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '10G SFP+ WAN/LAN / 8x 1GbE Switch',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 29500,
+    specs: {
+      'Sistem': 'UniFi OS Entegre Controller, Protect CCTV, Access & Talk Desteği',
+      'Güvenlik': '3.5 Gbps Tam IPS/IDS Tehdit Yönetimi ve DPI Trafik Analizi',
+      'Depolama': 'UniFi Protect Video Kaydı İçin 3.5" HDD Yuvası'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 6. IT: SECURITY (B2C & KOBİ Güvenlik Duvarı)
+  {
+    id: 'b2c-sec-safegate-micro',
+    mode: 'b2c',
+    category: 'security',
+    title_tr: 'Yakın SafeGate Micro KOBİ & Ev Ofis Next-Gen Güvenlik Duvarı (VPN + Siber Koruma)',
+    title_en: 'Yakın SafeGate Micro SMB & Home Office Next-Gen Firewall (VPN + Cyber Defense)',
+    brand: 'Yakın SafeGate',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '2.5 Gbps Throughput / 5x 2.5G Port',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 16800,
+    specs: {
+      'Portlar': '5x 2.5 GbE RJ45 Intel i226-V Ağ Portu',
+      'Güvenlik': 'Dahili IPS/IDS, Reklam & Zararlı Yazılım Engelleme, DNS Filtreleme',
+      'VPN Desteği': 'WireGuard & OpenVPN Donanımsal Hızlandırma (500 Mbps VPN Hızı)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-sec-fortigate-40f',
+    mode: 'b2c',
+    category: 'security',
+    title_tr: 'Fortinet FortiGate 40F Masaüstü Next-Gen Firewall & Güvenli SSL-VPN Şube Cihazı',
+    title_en: 'Fortinet FortiGate 40F Desktop Next-Gen Firewall & Secure SSL-VPN Branch Appliance',
+    brand: 'Fortinet',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '5 Gbps Firewall / SOC4 İşlemci',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 32000,
+    specs: {
+      'İşlemci': 'Fortinet Patentli SOC4 Güvenlik İşlemcisi',
+      'Portlar': '5x GE RJ45 (1x WAN, 4x Dahili LAN Switch)',
+      'Kapasite': '5 Gbps Firewall / 1 Gbps IPS / 600 Mbps Tehdit Koruması'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-sec-sonicwall-tz370',
+    mode: 'b2c',
+    category: 'security',
+    title_tr: 'SonicWall TZ370 Multi-Gigabit Tehdit Önleme & KOBİ Donanımsal Güvenlik Duvarı',
+    title_en: 'SonicWall TZ370 Multi-Gigabit Threat Prevention & SMB Hardware Firewall',
+    brand: 'SonicWall',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: '3 Gbps Firewall / 1 Gbps Anti-Malware',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 28500,
+    specs: {
+      'İnceleme': 'Real-Time Deep Memory Inspection (RTDMI) Patentli Bellek Analizi',
+      'Arayüz': '8x 1GbE Bakır RJ-45 Port + USB 3.0',
+      'Kullanıcı Desteği': '50 Eşzamanlı Kullanıcı ve 250.000 Bağlantı Kapasitesi'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 7. IT: WORKSTATION (İş İstasyonları)
   {
     id: 'b2c-ws-ai-workstation',
     mode: 'b2c',
@@ -978,90 +1477,8 @@ const PRODUCTS_DATA = [
     leadTime: 'Stokta (Aynı Gün Kargo)',
     datasheetUrl: '#'
   },
-  {
-    id: 'b2c-nas-synology-ds923',
-    mode: 'b2c',
-    category: 'server',
-    title_tr: 'Synology DiskStation DS923+ 4-Yuvalı Akıllı Bulut & Yedekleme NAS Sunucusu (32TB Dahil)',
-    title_en: 'Synology DiskStation DS923+ 4-Bay Smart Cloud & Backup NAS Server (32TB Bundle)',
-    brand: 'Synology',
-    image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '4-Bay / 32 TB WD Red Pro RAID',
-    moq: 1,
-    unit: 'Set',
-    basePriceTRY: 54000,
-    specs: {
-      'Disk Konfigürasyonu': '4x 8TB WD Red Pro NAS HDD Dahil (RAID 5/6/SHR Desteği)',
-      'NVMe Önbellek': '2x 500GB M.2 NVMe SSD Read/Write Cache Entegre',
-      'Yazılım': 'Synology DSM 7.2 (Otomatik Ofis/Ev Yedekleme)'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2c-wifi-mesh-wifi7',
-    mode: 'b2c',
-    category: 'network',
-    title_tr: 'Yakın MeshPro Wi-Fi 7 Tri-Band 19 Gbps Tüm Ev & Ofis Kesintisiz Kablosuz Ağ Kiti (3\'lü)',
-    title_en: 'Yakın MeshPro Wi-Fi 7 Tri-Band 19 Gbps Whole Home & Office Mesh Wireless Kit (3-Pack)',
-    brand: 'Yakın NetLink',
-    image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: 'BE19000 (6GHz + 5GHz + 2.4GHz)',
-    moq: 1,
-    unit: 'Set (3\'lü Paket)',
-    basePriceTRY: 26500,
-    specs: {
-      'Hız & Bant': '19 Gbps Tri-Band Wi-Fi 7 (320 MHz Geniş Kanal & 4K-QAM)',
-      'Kapsama Alanı': '750 m² Kesintisiz Dolaşım (Seamless Roaming)',
-      'Kablolu Portlar': 'Her Ünitede 2x 10 Gbps + 2x 2.5 Gbps Ethernet WAN/LAN'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Aynı Gün Kargo)',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2c-sw-poe-24p',
-    mode: 'b2c',
-    category: 'network',
-    title_tr: 'Yakın NetLink 24-Port Gigabit PoE+ Yönetilebilir Akıllı Switch (250W PoE + 2x SFP)',
-    title_en: 'Yakın NetLink 24-Port Gigabit PoE+ Smart Managed Switch (250W PoE + 2x SFP)',
-    brand: 'Yakın NetLink',
-    image: 'assets/images/data_center_construction_1785092614608.png',
-    power: '24x PoE+ (250W) / 2x Gigabit SFP',
-    moq: 1,
-    unit: 'Adet',
-    basePriceTRY: 12400,
-    specs: {
-      'Portlar': '24 Port 10/100/1000 Mbps PoE+ (Port Başına 30W Maks)',
-      'Uplink': '2 Adet 1.25G Gigabit SFP Fiber Uplink Yuvası',
-      'Yönetim': 'Web GUI, VLAN, QoS, IGMP Snooping, Port İzolasyonu'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Hemen Teslim)',
-    datasheetUrl: '#'
-  },
-  {
-    id: 'b2c-sec-firewall-box',
-    mode: 'b2c',
-    category: 'security',
-    title_tr: 'Yakın SafeGate Micro KOBİ & Ev Ofis Next-Gen Güvenlik Duvarı (VPN + Siber Koruma)',
-    title_en: 'Yakın SafeGate Micro SMB & Home Office Next-Gen Firewall (VPN + Cyber Defense)',
-    brand: 'Yakın SafeGate',
-    image: 'assets/images/civil_engineering_bim_1785010076530.png',
-    power: '2.5 Gbps Throughput / 5x 2.5G Port',
-    moq: 1,
-    unit: 'Cihaz',
-    basePriceTRY: 16800,
-    specs: {
-      'Portlar': '5x 2.5 GbE RJ45 Intel i226-V Ağ Portu',
-      'Güvenlik': 'Dahili IPS/IDS, Reklam & Zararlı Yazılım Engelleme, DNS Filtreleme',
-      'VPN Desteği': 'WireGuard & OpenVPN Donanımsal Hızlandırma (500 Mbps VPN Hızı)'
-    },
-    inStock: true,
-    leadTime: 'Stokta (Aynı Gün Kargo)',
-    datasheetUrl: '#'
-  },
+
+  // 8. IT: UPS (Kesintisiz Güç Kaynağı)
   {
     id: 'b2c-ups-line-interactive-3k',
     mode: 'b2c',
@@ -1084,7 +1501,7 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
-  // 4. EV ŞARJ (Wallbox)
+  // 9. ARAÇ ŞARJ (Wallbox)
   {
     id: 'b2c-wallbox-22k',
     mode: 'b2c',
