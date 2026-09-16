@@ -400,6 +400,13 @@ const CATEGORIES_DEF = {
     title_en: 'Telecom, 5G & Transmission Infrastructure',
     desc_tr: 'Huawei / ZTE DWDM Optik Transmisyon, 5G Radyo Erişim Üniteleri (RRU/BBU), GPON OLT/ONT Fiber Dağıtım ve Noktadan Noktaya Mikrodalga Radyolink Sistemleri.',
     desc_en: 'Huawei / ZTE DWDM Optical Transmission, 5G Radio Units (RRU/BBU), GPON OLT/ONT Fiber Access and Point-to-Point Microwave Link Systems.'
+  },
+  iot: {
+    pillar: 'it',
+    title_tr: 'Endüstriyel IoT, Akıllı Sensör & Ağ Geçitleri (IoT)',
+    title_en: 'Industrial IoT, Smart Sensors & Gateways',
+    desc_tr: 'Milesight & Advantech Dış Ortam LoRaWAN Ağ Geçitleri, Modbus/MQTT Edge IoT Gateway, Kablosuz Titreşim, Sıcaklık & Enerji Sensörleri.',
+    desc_en: 'Milesight & Advantech Outdoor LoRaWAN Gateways, Modbus/MQTT Edge IoT Gateways, Wireless Vibration, Temperature & Energy Sensors.'
   }
 };
 
@@ -1344,6 +1351,79 @@ const PRODUCTS_DATA = [
     datasheetUrl: '#'
   },
 
+  // 14. IT: ENDÜSTRİYEL IOT, SENSÖR & GATEWAY (IoT)
+  {
+    id: 'b2b-iot-lorawan-gateway',
+    mode: 'b2b',
+    category: 'iot',
+    title_tr: 'Milesight UG67 Endüstriyel IP67 Dış Ortam 8-Kanal LoRaWAN Ağ Geçidi (PoE + 4G/GPS)',
+    title_en: 'Milesight UG67 Industrial IP67 Outdoor 8-Channel LoRaWAN Gateway (PoE + 4G/GPS)',
+    brand: 'Milesight IoT',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '8-Kanal LoRa / IP67 Dış Ortam',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 34500,
+    tiers: [
+      { min: 1, max: 3, discount: 0, priceTRY: 34500 },
+      { min: 4, max: 10, discount: 8, priceTRY: 31740 }
+    ],
+    specs: {
+      'Kapsama Alanı': 'Açık Alanda 15 km / Şehir İçi 2-3 km LoRaWAN Kapsama',
+      'Kanal Kapasitesi': '8 Eşzamanlı Kanal (Semtech SX1302 Tabanlı İşlemci)',
+      'Dayanıklılık': 'IP67 Su/Toz Geçirmez & -40°C ~ +70°C Çalışma Sıcaklığı'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Maslak Depo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-iot-advantech-edge',
+    mode: 'b2b',
+    category: 'iot',
+    title_tr: 'Advantech UNO-2484G Fansız Endüstriyel Edge AI / IoT Veri Toplama Bilgisayarı',
+    title_en: 'Advantech UNO-2484G Fanless Industrial Edge AI / IoT Gateway Computer',
+    brand: 'Advantech',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'Core i7 Fansız / 4x GbE / 4x COM',
+    moq: 1,
+    unit: 'Sistem',
+    basePriceTRY: 89000,
+    specs: {
+      'İşlemci': 'Intel Core i7 Fansız Endüstriyel Gömülü İşlemci (7/24 Dayanıklı)',
+      'Arayüzler': '4x GbE LAN, 4x RS-232/422/485 Seri Port, 2x mPCIe Yuvası',
+      'Protokol': 'Modbus TCP/RTU, OPC-UA, MQTT, Node-RED ve AWS/Azure IoT Desteği'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2b-iot-vibration-sensor',
+    mode: 'b2b',
+    category: 'iot',
+    title_tr: 'Yakın IoT SensPro Endüstriyel Kablosuz Titreşim & Sıcaklık Kestirimci Bakım Sensörü (LoRaWAN)',
+    title_en: 'Yakın IoT SensPro Industrial Wireless Vibration & Temperature Predictive Sensor (LoRaWAN)',
+    brand: 'Yakın IoT',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '3-Eksenli Titreşim / 10 Yıl Pil',
+    moq: 5,
+    unit: 'Adet',
+    basePriceTRY: 9800,
+    tiers: [
+      { min: 5, max: 20, discount: 0, priceTRY: 9800 },
+      { min: 21, max: 100, discount: 12, priceTRY: 8624 }
+    ],
+    specs: {
+      'Ölçüm': '3-Eksenli Titreşim Hızı, İvme, FFT Spektrumu ve Yüzey Sıcaklığı (-40°C ~ +125°C)',
+      'Pil Ömrü': 'Dahili Li-SOCl2 Batarya ile 10 Yıla Varan Kesintisiz Çalışma',
+      'Bağlantı': 'LoRaWAN 868 MHz / IP68 Koruma Sınıfı (Ex-Proof Opsiyonlu)'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+
   // =========================================================================
   // ── B2C / KOBİ PRODUCTS (BİREYSEL & PROFESYONEL SİSTEMLER) ───────────────
   // =========================================================================
@@ -1853,6 +1933,50 @@ const PRODUCTS_DATA = [
       'Hücresel Hız': '3.3 Gbps\'ye Varan 5G SA/NSA ve 2 Gbps 4G LTE Cat 20 İndirme',
       'SIM & Yedeklilik': 'Otomatik Yük Devretmeli (Auto-Failover) Çift SIM Yuvası',
       'Portlar': '5x Gigabit Ethernet RJ45, 4x SMA 5G Anten, Dayanıklı Alüminyum Gövde'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Hemen Teslim)',
+    datasheetUrl: '#'
+  },
+
+  // 11. IT: AKILLI IOT SENSÖR & GATEWAY (B2C & KOBİ)
+  {
+    id: 'b2c-iot-smart-env-sensor',
+    mode: 'b2c',
+    category: 'iot',
+    title_tr: 'Milesight AM308 9\'u 1 Arada E-Ink Ekranlı Akıllı İç Ortam Hava Kalitesi & IoT Sensörü (LoRaWAN)',
+    title_en: 'Milesight AM308 9-in-1 E-Ink Smart Indoor Air Quality & IoT Ambient Sensor (LoRaWAN)',
+    brand: 'Milesight IoT',
+    image: 'assets/images/data_center_construction_1785092614608.png',
+    power: '9-Sensör / 4.2" E-Ink Ekran',
+    moq: 1,
+    unit: 'Adet',
+    basePriceTRY: 14500,
+    specs: {
+      'Sensörler': 'CO2, Sıcaklık, Nem, TVOC, PM2.5/PM10, Aydınlık, PIR Hareket, Basınç',
+      'Ekran': '4.2 inç Düşük Güç Tüketimli E-Ink Gösterge Ekranı',
+      'Bağlantı': 'LoRaWAN + NFC Hızlı Kurulum / 3 Yıl Pil Ömrü'
+    },
+    inStock: true,
+    leadTime: 'Stokta (Aynı Gün Kargo)',
+    datasheetUrl: '#'
+  },
+  {
+    id: 'b2c-iot-modbus-mqtt-gateway',
+    mode: 'b2c',
+    category: 'iot',
+    title_tr: 'Yakın IoT Gate-200 Kompakt Modbus RTU / RS485 to MQTT & Wi-Fi Akıllı Enerji Ağ Geçidi',
+    title_en: 'Yakın IoT Gate-200 Compact Modbus RTU / RS485 to MQTT & Wi-Fi Smart Energy Gateway',
+    brand: 'Yakın IoT',
+    image: 'assets/images/civil_engineering_bim_1785010076530.png',
+    power: 'RS485 to MQTT / Wi-Fi & Eth',
+    moq: 1,
+    unit: 'Cihaz',
+    basePriceTRY: 4950,
+    specs: {
+      'Protokol Dönüşümü': 'RS485 Modbus Sayaç/İnvertör Verisini JSON MQTT / REST API Formatına Çevirme',
+      'Ağ Bağlantısı': 'Wi-Fi 2.4GHz + 10/100 Ethernet + Din-Ray Tipi Endüstriyel Kasa',
+      'Uyumluluk': 'GES İnvertörleri, Isı Pompaları ve Akıllı Sayaçlarla Tak-Çalıştır Uyum'
     },
     inStock: true,
     leadTime: 'Stokta (Hemen Teslim)',
