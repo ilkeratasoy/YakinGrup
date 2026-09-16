@@ -534,7 +534,7 @@ body.mode-b2c .hero-banner-card {
    CATEGORY PILLS & QUICK FILTERS (3-PILLAR GRID & ENLARGED CONTROLS)
    ========================================================================== */
 .categories-nav-section {
-  padding: 1.25rem 0 1rem 0;
+  padding: 0.9rem 0;
   background: #ffffff;
   border-bottom: 1px solid var(--border-light);
   position: sticky;
@@ -546,9 +546,9 @@ body.mode-b2c .hero-banner-card {
 /* 3-Pillar Cards Master Layout */
 .pillar-cards-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.55fr 1.55fr;
+  grid-template-columns: 0.95fr 1.55fr 1.55fr;
   gap: 1rem;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0;
 }
 
 @media (max-width: 992px) {
@@ -566,6 +566,7 @@ body.mode-b2c .hero-banner-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 86px;
   gap: 0.65rem;
   transition: var(--transition);
 }

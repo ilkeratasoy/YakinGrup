@@ -2070,29 +2070,8 @@ function renderCategories() {
       </div>
 
     </div>
-
-    <!-- Category Pill Strip (Large Typography, Zero Icons) -->
-    <div class="categories-bar">
-      <button class="cat-pill-btn ${state.category === 'all' && state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
-        <span>${t.cat_all}</span>
-        <span class="pill-count-chip">${activeProducts.length}</span>
-      </button>
   `;
 
-  filteredCatKeys.forEach(k => {
-    const def = CATEGORIES_DEF[k];
-    if (!def) return;
-    const catTitle = (state.lang === 'tr' ? def.title_tr : def.title_en);
-    const catCount = activeProducts.filter(p => p.category === k).length;
-    html += `
-      <button class="cat-pill-btn ${state.category === k ? 'active' : ''}" onclick="selectCategory('${k}')">
-        <span>${catTitle}</span>
-        <span class="pill-count-chip">${catCount}</span>
-      </button>
-    `;
-  });
-
-  html += `</div>`;
   catNav.innerHTML = html;
 }
 
