@@ -1829,19 +1829,51 @@ function renderCategories() {
     filteredCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === state.macroPillar);
   }
 
-  // Macro Pillar Selector Buttons + Category Tabs
+  // Energy & IT specific categories for dropdown optgroups
+  const energyCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === 'energy');
+  const itCatKeys = availableCatKeys.filter(k => CATEGORIES_DEF[k] && CATEGORIES_DEF[k].pillar === 'it');
+
+  // Macro Pillar Selector Buttons + Direct Select Dropdown in the Bar
   let html = `
     <div class="macro-pillar-bar">
-      <button class="macro-tab-btn ${state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
-        ${t.pillar_all} <span class="macro-count-chip">${activeProducts.length}</span>
-      </button>
-      <button class="macro-tab-btn ${state.macroPillar === 'energy' ? 'active' : ''}" onclick="setMacroPillar('energy')">
-        ${t.pillar_energy} <span class="macro-count-chip">${energyCount}</span>
-      </button>
-      <button class="macro-tab-btn ${state.macroPillar === 'it' ? 'active' : ''}" onclick="setMacroPillar('it')">
-        ${t.pillar_it} <span class="macro-count-chip">${itCount}</span>
-      </button>
+      <div class="macro-btn-group">
+        <button class="macro-tab-btn ${state.macroPillar === 'all' ? 'active' : ''}" onclick="setMacroPillar('all')">
+          ${t.pillar_all} <span class="macro-count-chip">${activeProducts.length}</span>
+        </button>
+        <button class="macro-tab-btn ${state.macroPillar === 'energy' ? 'active' : ''}" onclick="setMacroPillar('energy')">
+          ${t.pillar_energy} <span class="macro-count-chip">${energyCount}</span>
+        </button>
+        <button class="macro-tab-btn ${state.macroPillar === 'it' ? 'active' : ''}" onclick="setMacroPillar('it')">
+          ${t.pillar_it} <span class="macro-count-chip">${itCount}</span>
+        </button>
+      </div>
+
+      <!-- Direct Bar Select Dropdown -->
+      <div class="bar-select-wrapper">
+        <label for="category-select-dropdown" class="bar-select-label">📂 ${state.lang === 'tr' ? 'Bardan Seç:' : 'Select Category:'}</label>
+        <select id="category-select-dropdown" class="bar-select-dropdown" onchange="selectCategory(this.value)">
+          <option value="all" ${state.category === 'all' ? 'selected' : ''}>⚡ ${t.cat_all} (${activeProducts.length})</option>
+          <optgroup label="🌿 ${state.lang === 'tr' ? 'Yenilenebilir Enerji & Güç Altyapısı' : 'Renewable Energy & Power'}">
+            ${energyCatKeys.map(k => {
+              const def = CATEGORIES_DEF[k];
+              const catTitle = state.lang === 'tr' ? def.title_tr : def.title_en;
+              const catCount = activeProducts.filter(p => p.category === k).length;
+              return `<option value="${k}" ${state.category === k ? 'selected' : ''}>${def.icon} ${catTitle} (${catCount})</option>`;
+            }).join('')}
+          </optgroup>
+          <optgroup label="💻 ${state.lang === 'tr' ? 'IT, Bilişim & Veri Merkezi' : 'IT, Data Center & Telecom'}">
+            ${itCatKeys.map(k => {
+              const def = CATEGORIES_DEF[k];
+              const catTitle = state.lang === 'tr' ? def.title_tr : def.title_en;
+              const catCount = activeProducts.filter(p => p.category === k).length;
+              return `<option value="${k}" ${state.category === k ? 'selected' : ''}>${def.icon} ${catTitle} (${catCount})</option>`;
+            }).join('')}
+          </optgroup>
+        </select>
+      </div>
     </div>
+
+    <!-- Category Pill Strip -->
     <div class="categories-bar">
       <button class="cat-pill-btn ${state.category === 'all' ? 'active' : ''}" onclick="selectCategory('all')">
         <span>⚡</span> <span>${t.cat_all}</span> <span class="pill-count-chip">${activeProducts.length}</span>
