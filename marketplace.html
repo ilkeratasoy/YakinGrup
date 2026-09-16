@@ -87,7 +87,7 @@
       <div class="search-container">
         <div class="search-input-wrapper">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input-field" class="search-input" placeholder="Ürün, model, marka veya teknik şartname ara...">
+          <input type="text" id="search-input-field" class="search-input" placeholder="GES, RES, Isı Pompası, İnvertör, Batarya, Şarj İstasyonu ara...">
         </div>
       </div>
 
@@ -216,15 +216,27 @@
             </label>
             <label class="filter-option-label">
               <input type="radio" name="brand-filter" onclick="state.searchQuery='Longi'; renderProducts();">
-              <span>Longi Solar</span>
+              <span>Longi Solar (GES)</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Sungrow'; renderProducts();">
+              <span>Sungrow / Deye</span>
             </label>
             <label class="filter-option-label">
               <input type="radio" name="brand-filter" onclick="state.searchQuery='CATL'; renderProducts();">
               <span>CATL ESS Storage</span>
             </label>
             <label class="filter-option-label">
-              <input type="radio" name="brand-filter" onclick="state.searchQuery='Yakın'; renderProducts();">
-              <span>Yakın Teknoloji / Volt</span>
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='EcoHeat'; renderProducts();">
+              <span>Yakın EcoHeat (Isı Pompası)</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Wind'; renderProducts();">
+              <span>Yakın Wind (RES Türbin)</span>
+            </label>
+            <label class="filter-option-label">
+              <input type="radio" name="brand-filter" onclick="state.searchQuery='Volt'; renderProducts();">
+              <span>Yakın Volt (EV Şarj)</span>
             </label>
           </div>
 
@@ -512,12 +524,13 @@
             <div class="form-group">
               <label>Üretim / Tedarik Kategorisi *</label>
               <select required>
-                <option>Güneş PV Modülleri & BIPV</option>
-                <option>Dizi & Merkezi İnvertörler</option>
-                <option>Endüstriyel Batarya & ESS</option>
-                <option>DC Hızlı EV Şarj İstasyonları</option>
+                <option>Güneş PV Modülleri & BIPV (GES)</option>
+                <option>Rüzgar Türbinleri & RES Ekipmanları</option>
+                <option>Isı Pompaları & Termal Sistemler</option>
+                <option>Dizi, Hibrit & Santral İnvertörleri</option>
+                <option>Endüstriyel & Konut Batarya Depolama (BESS)</option>
+                <option>DC Hızlı & AC EV Şarj İstasyonları</option>
                 <option>Transformatör & Şalt Malzemeleri</option>
-                <option>Veri Merkezi & Yapısal Kablolama</option>
               </select>
             </div>
           </div>
@@ -581,8 +594,8 @@
           </div>
 
           <div class="form-group">
-            <label>Açık Adres & Çatı Bilgisi</label>
-            <textarea rows="2" placeholder="Konut açık adresi ve çatı tipi (Kiremit / Düz Teras / Sandviç Panel vb.)..."></textarea>
+            <label>Açık Adres & Çatı / Tesis Bilgisi</label>
+            <textarea rows="2" placeholder="Konut açık adresi, çatı tipi veya ısı pompası petek/yerden ısıtma bilgisi..."></textarea>
           </div>
 
           <div class="form-group">
@@ -610,34 +623,36 @@
         <div class="footer-brand">
           <h4>YAKIN GRUP MARKETPLACE</h4>
           <p>
-            Mühendislik taahhüdü, yenilenebilir enerji altyapısı ve ileri teknoloji ekipmanlarında Türkiye'nin ve bölgenin entegre B2B & B2C ticaret platformu.
+            Güneş (GES), Rüzgar (RES), Isı Pompası, Enerji Depolama ve EV Şarj altyapısında Türkiye'nin ve bölgenin entegre B2B & B2C yenilenebilir enerji ticaret platformu.
           </p>
         </div>
 
         <div class="footer-col">
           <h5>Kurumsal B2B</h5>
           <ul class="footer-links">
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('solar');">Endüstriyel Güneş & PV</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('storage');">ESS Batarya Depolama</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ev');">DC Hızlı Şarj İstasyonları</a></li>
-            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('datacenter');">Modüler Veri Merkezi</a></li>
-            <li><a href="#" onclick="openRFQModal()">BOM / Şartname Yükleme</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ges');">Endüstriyel Güneş (GES)</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('res');">Rüzgar Türbinleri (RES)</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('heatpump');">Endüstriyel Isı Pompası</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('inverter');">Santral & Dizi İnvertörleri</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('storage');">Konteyner BESS Depolama</a></li>
+            <li><a href="#" onclick="setMarketMode('b2b'); selectCategory('ev');">DC Ultra Hızlı Şarj İstasyonları</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h5>Bireysel B2C</h5>
           <ul class="footer-links">
-            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('residential');">Villa Çatı GES Paketleri</a></li>
-            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('residential');">Balkon Tak-Çalıştır Solar</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('ges');">Villa Çatı GES Paketleri</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('heatpump');">A+++ Ev Isı Pompaları</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('res');">Mikro Ev Rüzgar Türbinleri</a></li>
+            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('storage');">Duvar Tipi Ev Bataryaları</a></li>
             <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('ev');">Ev Tipi Wallbox Şarj</a></li>
-            <li><a href="#" onclick="setMarketMode('b2c'); selectCategory('storage');">Portatif Güç İstasyonları</a></li>
-            <li><a href="#simulator">Güneş Enerjisi Hesaplayıcı</a></li>
+            <li><a href="#simulator">Yenilenebilir Enerji Simülatörü</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h5>Holding Ekosistemi</h5>
+          <h5>Holding & Ekosistem</h5>
           <ul class="footer-links">
             <li><a href="index.html">Yakın Grup Kurumsal</a></li>
             <li><a href="teklif.html">Şartname & Teklif Stüdyosu</a></li>
