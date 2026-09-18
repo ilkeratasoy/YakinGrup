@@ -1263,7 +1263,11 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    const APPS_SCRIPT_TEMPLATE = `function doPost(e) {
+    const APPS_SCRIPT_TEMPLATE = `function doGet(e) {
+  return ContentService.createTextOutput("✅ Yakın Grup Google Sheets Webhook Aktif ve Çalışıyor!").setMimeType(ContentService.MimeType.TEXT);
+}
+
+function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     var sheetName = data.sheet || "Alış Faturaları";
