@@ -2,11 +2,11 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Yakın Grup — Müşteri ve Proje Rehberi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Tesseract.js (Client-Side OCR) -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -15,34 +15,20 @@
 
   <style>
     :root {
-      --primary-navy: #0b2545;
-      --navy-dark: #07172c;
-      --navy-light: #133a6b;
-      --accent-gold: #d4af37;
-      --accent-gold-hover: #b89728;
-      --forest-green: #1b4332;
-      --emerald: #10b981;
-      --emerald-dark: #059669;
+      --navy: #0b2545;
+      --navy-light: #1e3a8a;
+      --gold: #d4af37;
+      --green: #10b981;
+      --green-dark: #059669;
       --danger: #ef4444;
-      --warning: #f59e0b;
-      --info: #0284c7;
-      --bg-main: #f8fafc;
-      --bg-card: #ffffff;
-      --border-color: #e2e8f0;
-      --border-dark: #cbd5e1;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --text-light: #94a3b8;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 24px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-      --shadow-md: 0 4px 12px rgba(11,37,69,0.08);
-      --shadow-lg: 0 12px 30px rgba(11,37,69,0.12);
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-heading: 'Manrope', sans-serif;
-      --font-serif: 'Cinzel', serif;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --heading: 'Manrope', -apple-system, sans-serif;
+      --safe-bottom: env(safe-area-inset-bottom, 16px);
     }
 
     * {
@@ -53,2693 +39,1446 @@
     }
 
     body {
-      font-family: var(--font-body);
-      background-color: var(--bg-main);
-      color: var(--text-main);
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      padding-bottom: calc(72px + var(--safe-bottom));
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Navigation */
-    header {
+    /* Top App Bar */
+    .app-header {
       background: #ffffff;
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.85rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 1000;
-      box-shadow: var(--shadow-sm);
+      z-index: 100;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     }
 
-    .brand-section {
+    .brand-box {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       text-decoration: none;
-      color: var(--text-main);
+      color: inherit;
     }
 
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, var(--primary-navy), var(--navy-light));
-      border-radius: 10px;
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: var(--gold);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-gold);
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 800;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      box-shadow: 0 2px 8px rgba(11,37,69,0.2);
     }
 
-    .brand-text h1 {
-      font-family: var(--font-heading);
-      font-size: 1.15rem;
+    .brand-title {
+      font-family: var(--heading);
+      font-size: 0.95rem;
       font-weight: 800;
-      color: var(--primary-navy);
-      letter-spacing: -0.01em;
-      line-height: 1.2;
+      color: var(--navy);
+      line-height: 1.1;
     }
 
-    .brand-text p {
-      font-size: 0.72rem;
-      color: var(--text-muted);
+    .brand-sub {
+      font-size: 0.68rem;
+      color: var(--muted);
       font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
     }
 
-    .btn {
+    .icon-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      padding: 0.55rem 1rem;
-      border-radius: var(--radius-md);
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      border: 1px solid transparent;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary-navy), var(--navy-light));
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(11,37,69,0.25);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #081d36, var(--primary-navy));
-      transform: translateY(-1px);
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, var(--accent-gold), #c99f24);
-      color: #0b2545;
-      font-weight: 800;
-      box-shadow: 0 2px 8px rgba(212,175,55,0.3);
-    }
-
-    .btn-gold:hover {
-      background: linear-gradient(135deg, #dfbc45, var(--accent-gold));
-      transform: translateY(-1px);
-    }
-
-    .btn-green {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #ffffff;
-    }
-
-    .btn-green:hover {
-      background: linear-gradient(135deg, #059669, #047857);
-    }
-
-    .btn-outline {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-    }
-
-    .btn-outline:hover {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       background: #f1f5f9;
-      border-color: var(--border-dark);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
     }
 
-    .btn-sm {
-      padding: 0.35rem 0.65rem;
-      font-size: 0.76rem;
-      border-radius: var(--radius-sm);
+    .icon-btn:active {
+      transform: scale(0.92);
+      background: #e2e8f0;
     }
 
-    /* Sub-nav banner for Google Sheet Link */
-    .sheet-sync-banner {
-      background: linear-gradient(90deg, #0f172a, #0b2545 40%, #1e3a8a 100%);
-      color: #ffffff;
-      padding: 0.6rem 1.75rem;
+    /* Cloud Sync Status Indicator */
+    .sync-pill {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      border-bottom: 1px solid rgba(212,175,55,0.25);
-    }
-
-    .sheet-sync-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sheet-status-dot {
-      width: 9px;
-      height: 9px;
-      background: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulseDot 2s infinite;
-    }
-
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.7; }
-    }
-
-    /* Tab Navigation */
-    .portal-nav {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border-color);
-      padding: 0 1.75rem;
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .portal-nav::-webkit-scrollbar { display: none; }
-
-    .tab-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0.95rem 1.15rem;
-      background: none;
-      border: none;
-      border-bottom: 3px solid transparent;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 0.88rem;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 99px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: var(--green-dark);
+      font-size: 0.72rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
     }
 
-    .tab-btn:hover {
-      color: var(--primary-navy);
-      background: #f8fafc;
+    .sync-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
     }
 
-    .tab-btn.active {
-      color: var(--primary-navy);
-      border-bottom-color: var(--accent-gold);
-      background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(212,175,55,0.12) 100%);
-    }
-
-    .tab-badge {
-      background: #e2e8f0;
-      color: #334155;
-      font-size: 0.7rem;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 99px;
-    }
-
-    .tab-btn.active .tab-badge {
-      background: var(--primary-navy);
-      color: #ffffff;
-    }
-
-    /* Main Container */
-    main {
-      flex: 1;
-      max-width: 1560px;
+    /* Container */
+    .container {
+      max-width: 960px;
       width: 100%;
       margin: 0 auto;
-      padding: 1.5rem 1.75rem 3rem 1.75rem;
+      padding: 0.9rem 1rem;
     }
 
-    .tab-content {
+    .tab-pane {
       display: none;
     }
-    .tab-content.active {
+    .tab-pane.active {
       display: block;
-      animation: fadeIn 0.25s ease-in-out;
+      animation: tabFadeIn 0.2s ease-out;
     }
-
-    @keyframes fadeIn {
+    @keyframes tabFadeIn {
       from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .stat-card {
-      background: #ffffff;
-      padding: 1.15rem 1.25rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
+    /* Native Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      justify-content: space-around;
+      padding: 6px 4px calc(6px + var(--safe-bottom)) 4px;
+      z-index: 1000;
     }
 
-    .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      flex-shrink: 0;
-    }
-
-    .stat-title {
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .stat-value {
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: var(--text-main);
-      font-family: var(--font-heading);
-    }
-
-    /* Panel Header Toolbar */
-    .panel-toolbar {
-      background: #ffffff;
-      padding: 1rem 1.25rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .search-box {
-      position: relative;
+    .nav-item {
       flex: 1;
-      min-width: 240px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 0.6rem 1rem 0.6rem 2.4rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      font-size: 0.85rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .search-box input:focus {
-      border-color: var(--primary-navy);
-      box-shadow: 0 0 0 3px rgba(11,37,69,0.1);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 0.8rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-light);
-      font-size: 0.95rem;
-    }
-
-    .filter-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .filter-select {
-      padding: 0.55rem 0.9rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      background: #ffffff;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--text-main);
-      outline: none;
-      cursor: pointer;
-    }
-
-    /* OCR Scanner Section */
-    .ocr-scanner-wrapper {
-      background: linear-gradient(135deg, #0b2545, #1e3a8a);
-      color: #ffffff;
-      padding: 1.75rem;
-      border-radius: var(--radius-xl);
-      margin-bottom: 1.75rem;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(212,175,55,0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ocr-scanner-wrapper::after {
-      content: '';
-      position: absolute;
-      right: -50px;
-      bottom: -50px;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .ocr-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .ocr-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .ocr-dropzone {
-      border: 2px dashed rgba(255, 255, 255, 0.35);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem 1rem;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
-    }
-
-    .ocr-dropzone:hover, .ocr-dropzone.dragover {
-      border-color: var(--accent-gold);
-      background: rgba(212, 175, 55, 0.1);
-    }
-
-    .ocr-preview-img {
-      max-width: 100%;
-      max-height: 240px;
-      object-fit: contain;
-      border-radius: var(--radius-md);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      margin-top: 10px;
-      display: none;
-    }
-
-    .ocr-status {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: #93c5fd;
-      font-weight: 600;
-      min-height: 20px;
-    }
-
-    .progress-bar-container {
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 99px;
-      margin-top: 8px;
-      overflow: hidden;
-      display: none;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-gold), #10b981);
-      width: 0%;
-      transition: width 0.2s ease;
-    }
-
-    /* OCR Form */
-    .ocr-form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .ocr-form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .ocr-form-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      align-items: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px 0;
+      border-radius: 8px;
+      transition: all 0.15s ease;
     }
 
-    .ocr-form-group.full-width {
+    .nav-item:active {
+      transform: scale(0.92);
+    }
+
+    .nav-item.active {
+      color: var(--navy);
+    }
+
+    .nav-icon {
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .nav-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .nav-item.active .nav-label {
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0.65rem 1rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+    }
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .btn-navy {
+      background: var(--navy);
+      color: #ffffff;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), #c49e28);
+      color: #0b2545;
+      font-weight: 800;
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
+      border-radius: 8px;
+    }
+
+    /* Compact Scanner Card */
+    .scanner-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 1rem;
+    }
+
+    .scanner-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .preview-box {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 10px;
+      display: none;
+      margin-top: 8px;
+      background: #000000;
+    }
+
+    .ocr-loader {
+      display: none;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--navy);
+      background: #f0fdf4;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    /* Form Inputs */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 540px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .form-group.full {
       grid-column: 1 / -1;
     }
 
-    .ocr-form-group label {
-      font-size: 0.72rem;
+    .form-group label {
+      font-size: 0.7rem;
       font-weight: 700;
-      color: #cbd5e1;
+      color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
 
-    .ocr-form-group input, .ocr-form-group textarea, .ocr-form-group select {
-      background: rgba(255, 255, 255, 0.95);
-      color: #0f172a;
-      border: 1px solid rgba(255,255,255,0.4);
-      padding: 0.6rem 0.8rem;
-      border-radius: var(--radius-sm);
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--text);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 2px rgba(11,37,69,0.1);
+    }
+
+    /* Search & Filter Bar */
+    .search-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0.85rem;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 0.6rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
       font-size: 0.85rem;
       font-family: inherit;
       outline: none;
     }
 
-    .ocr-form-group input:focus, .ocr-form-group textarea:focus {
-      background: #ffffff;
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 0 2px rgba(212,175,55,0.4);
+    .search-input:focus {
+      border-color: var(--navy);
     }
 
-    /* Card Grid */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .biz-card {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-sm);
+    /* Native Card Lists */
+    .items-list {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.25s ease;
-      position: relative;
+      gap: 10px;
     }
 
-    .biz-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      border-color: #cbd5e1;
+    .card-item {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0.95rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .biz-card-header {
+    .card-item-header {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 0.85rem;
     }
 
-    .biz-card-avatar {
-      width: 44px;
-      height: 44px;
+    .card-item-avatar {
+      width: 38px;
+      height: 38px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #0b2545, #1e3a8a);
-      color: var(--accent-gold);
+      background: #f1f5f9;
+      color: var(--navy);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 800;
       flex-shrink: 0;
     }
 
-    .biz-card-title {
-      flex: 1;
-    }
-
-    .biz-card-name {
-      font-size: 1rem;
+    .card-item-title {
+      font-size: 0.92rem;
       font-weight: 800;
-      color: var(--primary-navy);
+      color: var(--navy);
     }
 
-    .biz-card-company {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #059669;
+    .card-item-sub {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--green-dark);
       margin-top: 1px;
     }
 
-    .biz-card-role {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-    }
-
-    .biz-card-details {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 0.8rem;
-      color: #334155;
-      padding: 0.75rem 0;
-      border-top: 1px solid #f1f5f9;
-      border-bottom: 1px solid #f1f5f9;
-      margin-bottom: 0.85rem;
-    }
-
-    .biz-detail-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .biz-detail-icon {
-      color: var(--text-light);
-      width: 16px;
-      text-align: center;
-    }
-
-    .biz-card-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-    }
-
-    /* Table Design */
-    .data-table-wrapper {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      overflow-x: auto;
-    }
-
-    table.data-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.84rem;
-    }
-
-    table.data-table th {
-      background: #f8fafc;
-      padding: 0.85rem 1rem;
-      font-weight: 700;
-      color: #475569;
-      border-bottom: 1px solid var(--border-color);
-      text-transform: uppercase;
+    .card-item-meta {
       font-size: 0.72rem;
-      letter-spacing: 0.04em;
+      color: var(--muted);
     }
 
-    table.data-table td {
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid #f1f5f9;
-      color: #1e293b;
-      vertical-align: middle;
-    }
-
-    table.data-table tr:hover td {
-      background: #f8fafc;
-    }
-
-    /* Status Badges */
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 3px 9px;
+      padding: 2px 7px;
       border-radius: 99px;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 700;
+      white-space: nowrap;
     }
 
-    .badge-success { background: #dcfce7; color: #15803d; }
-    .badge-warning { background: #fef3c7; color: #b45309; }
-    .badge-info { background: #e0f2fe; color: #0369a1; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-blue { background: #e0f2fe; color: #0369a1; }
+    .badge-amber { background: #fef3c7; color: #b45309; }
+    .badge-red { background: #fee2e2; color: #b91c1c; }
     .badge-purple { background: #f3e8ff; color: #7e22ce; }
-    .badge-danger { background: #fee2e2; color: #b91c1c; }
 
-    /* Modal / Dialog */
-    .modal-overlay {
+    .quick-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-top: 8px;
+      border-top: 1px solid #f1f5f9;
+      overflow-x: auto;
+    }
+
+    /* Modal Sheet */
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(11, 37, 69, 0.65);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
       z-index: 2000;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      padding: 1rem;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease;
     }
 
-    .modal-overlay.active {
+    .modal-backdrop.open {
       opacity: 1;
       pointer-events: auto;
     }
 
-    .modal-window {
+    .modal-sheet {
       background: #ffffff;
-      border-radius: var(--radius-xl);
-      max-width: 680px;
       width: 100%;
+      max-width: 580px;
       max-height: 90vh;
+      border-radius: 20px 20px 0 0;
+      padding: 1.25rem 1rem calc(1rem + var(--safe-bottom)) 1rem;
       overflow-y: auto;
-      box-shadow: var(--shadow-lg);
-      padding: 1.75rem;
-      position: relative;
-      transform: scale(0.95);
-      transition: transform 0.2s ease;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .modal-overlay.active .modal-window {
-      transform: scale(1);
+    @media (min-width: 640px) {
+      .modal-backdrop {
+        align-items: center;
+        padding: 1rem;
+      }
+      .modal-sheet {
+        border-radius: 20px;
+        padding: 1.5rem;
+      }
     }
 
-    .modal-close {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      background: #f1f5f9;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #64748b;
+    .modal-backdrop.open .modal-sheet {
+      transform: translateY(0);
     }
 
-    .modal-close:hover {
-      background: #e2e8f0;
-      color: #0f172a;
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 99px;
+      margin: 0 auto 12px auto;
     }
 
-    /* Google Apps Script Code Box */
-    .code-box {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      font-family: 'SFMono-Regular', Consolas, Monaco, monospace;
-      font-size: 0.78rem;
-      overflow-x: auto;
-      position: relative;
-      max-height: 250px;
-    }
-
-    .copy-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: rgba(255,255,255,0.15);
-      color: #ffffff;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.72rem;
-      cursor: pointer;
-    }
-
-    .copy-btn:hover { background: rgba(255,255,255,0.3); }
-
-    /* Toast Notification */
+    /* Toast */
     #toast {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: calc(76px + var(--safe-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
       background: #0b2545;
       color: #ffffff;
-      padding: 0.85rem 1.4rem;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      font-size: 0.86rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transform: translateY(100px);
+      gap: 6px;
       opacity: 0;
-      transition: all 0.3s ease;
+      pointer-events: none;
+      transition: all 0.25s ease;
       z-index: 3000;
-      border: 1px solid var(--accent-gold);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
     }
 
     #toast.show {
-      transform: translateY(0);
+      transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
-  <header>
-    <a href="index.html" class="brand-section">
-      <div class="brand-logo">🏛️</div>
-      <div class="brand-text">
-        <h1>YAKIN GRUP</h1>
-        <p>Müşteri ve Proje Rehberi</p>
+  <!-- Top App Header -->
+  <header class="app-header">
+    <a href="index.html" class="brand-box">
+      <div class="brand-icon">📇</div>
+      <div>
+        <div class="brand-title">YAKIN GRUP</div>
+        <div class="brand-sub">Müşteri ve Proje Rehberi</div>
       </div>
     </a>
 
     <div class="header-actions">
-      <a href="https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" target="_blank" class="btn btn-green btn-sm" title="Google Sheet dosyasını doğrudan yeni sekmede aç">
-        📊 Google Sheets'i Aç ↗
+      <div class="sync-pill" onclick="syncAllToGoogleSheets()" title="Google Sheets ile Senkronize Et">
+        <span class="sync-dot"></span>
+        <span>Sheets</span>
+      </div>
+      <a href="https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" target="_blank" class="icon-btn" title="Google E-Tabloyu Aç">
+        📊
       </a>
-      <button class="btn btn-gold btn-sm" onclick="openAppsScriptModal()">
-        ⚡ Sheets Webhook Kurulumu
-      </button>
-      <a href="index.html" class="btn btn-outline btn-sm">
-        🏠 Ana Sayfaya Dön
+      <a href="index.html" class="icon-btn" title="Ana Sayfaya Dön">
+        ✕
       </a>
     </div>
   </header>
 
-  <!-- Sheet Sync Alert Banner -->
-  <div class="sheet-sync-banner">
-    <div class="sheet-sync-info">
-      <div class="sheet-status-dot"></div>
-      <span><strong>Google Sheets Entegrasyonu:</strong> <code>1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI</code> sayfasına bağlı.</span>
-    </div>
-    <div style="display: flex; gap: 8px;">
-      <button onclick="syncAllToGoogleSheets()" class="btn btn-gold btn-sm" style="padding: 2px 8px; font-size: 0.72rem;">
-        🔄 Tüm Verileri Sheets'e Aktar
-      </button>
-    </div>
-  </div>
+  <!-- Main Content Container -->
+  <main class="container">
 
-  <!-- Main Tabs Navigation -->
-  <nav class="portal-nav">
-    <button class="tab-btn active" onclick="switchTab('tab-cards')">
-      <span>📇</span> Kartvizit OCR & Müşteriler <span class="tab-badge" id="badge-cards">0</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('tab-projects')">
-      <span>🏗️</span> İnşaat Projeleri <span class="tab-badge" id="badge-projects">0</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('tab-accounts')">
-      <span>📑</span> Cari Kartları <span class="tab-badge" id="badge-accounts">0</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('tab-docs')">
-      <span>📁</span> Proje Dökümanları & Arşiv <span class="tab-badge" id="badge-docs">0</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('tab-stock')">
-      <span>📦</span> Stok & Malzeme Takibi <span class="tab-badge" id="badge-stock">0</span>
-    </button>
-  </nav>
+    <!-- ========================================== -->
+    <!-- 1. KARTVİZİT TAB -->
+    <!-- ========================================== -->
+    <div id="tab-cards" class="tab-pane active">
 
-  <!-- Main Workspace Area -->
-  <main>
+      <!-- Scanner Box -->
+      <div class="scanner-card">
+        <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none;" onchange="handleCardSelected(event)">
+        <input type="file" id="gallery-input" accept="image/*" style="display:none;" onchange="handleCardSelected(event)">
 
-    <!-- SEKME 1: KARTVİZİT OCR & MÜŞTERİLER -->
-    <div id="tab-cards" class="tab-content active">
-      
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#ede9fe; color:#7c3aed;">📇</div>
-          <div>
-            <div class="stat-title">Toplam Kartvizit</div>
-            <div class="stat-value" id="stat-total-cards">0</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#ecfdf5; color:#059669;">🏢</div>
-          <div>
-            <div class="stat-title">Kayıtlı Firma</div>
-            <div class="stat-value" id="stat-total-companies">0</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#e0f2fe; color:#0284c7;">📱</div>
-          <div>
-            <div class="stat-title">Doğrudan İletişim</div>
-            <div class="stat-value" id="stat-total-phones">0</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fef3c7; color:#d97706;">📊</div>
-          <div>
-            <div class="stat-title">Sheets Senkron</div>
-            <div class="stat-value" style="font-size: 1rem; color: #10b981;">● Aktif</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live OCR Scanner Card -->
-      <div class="ocr-scanner-wrapper">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-          <div>
-            <h2 style="font-size: 1.25rem; font-family: var(--font-heading); font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-              <span>📸</span> Telefondan/Kameradan Kartvizit Tara & OCR Oku
-            </h2>
-            <p style="font-size: 0.8rem; color: #93c5fd; margin-top: 2px;">
-              Kartvizit fotoğrafını kameradan çekin veya yükleyin. Yapay zeka & OCR metinleri okuyup otomatik olarak ayrıştırsın.
-            </p>
-          </div>
-          <span style="background: rgba(212,175,55,0.2); color: var(--accent-gold); font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--accent-gold);">
-            ⚡ Akıllı OCR v5
-          </span>
+        <div class="scanner-actions-grid">
+          <button type="button" class="btn btn-gold" onclick="document.getElementById('camera-input').click()">
+            📸 Fotoğraf Çek
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('gallery-input').click()">
+            🖼️ Galeri
+          </button>
         </div>
 
-        <div class="ocr-layout">
-          <!-- Sol Dropzone / Camera -->
-          <div>
-            <input type="file" id="card-camera-input" accept="image/*" capture="environment" style="display: none;" onchange="handleCardImageSelected(event)">
-            <input type="file" id="card-file-input" accept="image/*" style="display: none;" onchange="handleCardImageSelected(event)">
+        <img id="card-preview" class="preview-box" alt="Önizleme">
+        <div id="ocr-loader" class="ocr-loader">🔍 Kartvizit taranıyor, metinler okunuyor...</div>
 
-            <div class="ocr-dropzone" id="ocr-dropzone" onclick="document.getElementById('card-file-input').click()">
-              <div style="font-size: 2.2rem; margin-bottom: 6px;">📷</div>
-              <div style="font-weight: 800; font-size: 0.95rem;">Fotoğraf Çek veya Görsel Sürükle</div>
-              <div style="font-size: 0.75rem; color: #cbd5e1; margin-top: 4px;">PNG, JPG, HEIC veya WebP formatı</div>
-
-              <div style="display: flex; gap: 8px; justify-content: center; margin-top: 12px;" onclick="event.stopPropagation()">
-                <button type="button" class="btn btn-gold btn-sm" onclick="document.getElementById('card-camera-input').click()">
-                  📱 Kamera ile Çek
-                </button>
-                <button type="button" class="btn btn-outline btn-sm" style="color: #0b2545;" onclick="document.getElementById('card-file-input').click()">
-                  🖼️ Galeriden Seç
-                </button>
-              </div>
-
-              <img id="card-preview" class="ocr-preview-img" alt="Kartvizit Önizleme">
+        <!-- Scanned Card Form -->
+        <form id="card-form" onsubmit="saveCard(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Ad Soyad *</label>
+              <input type="text" id="card-name" required placeholder="Kişi adı">
             </div>
-
-            <div class="progress-bar-container" id="ocr-progress-container">
-              <div class="progress-bar-fill" id="ocr-progress-fill"></div>
+            <div class="form-group">
+              <label>Şirket *</label>
+              <input type="text" id="card-company" required placeholder="Firma adı">
             </div>
-            <div class="ocr-status" id="ocr-status-text"></div>
+            <div class="form-group">
+              <label>Unvan</label>
+              <input type="text" id="card-role" placeholder="Direktör, Mimar...">
+            </div>
+            <div class="form-group">
+              <label>Telefon</label>
+              <input type="tel" id="card-phone" placeholder="0532...">
+            </div>
+            <div class="form-group">
+              <label>E-Posta</label>
+              <input type="email" id="card-email" placeholder="ornek@sirket.com">
+            </div>
+            <div class="form-group">
+              <label>Kategori</label>
+              <select id="card-category">
+                <option value="Müşteri">Müşteri</option>
+                <option value="Yatırımcı">Yatırımcı</option>
+                <option value="Mimar / Mühendis">Mimar / Mühendis</option>
+                <option value="Tedarikçi">Tedarikçi</option>
+                <option value="Taşeron">Taşeron</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Not</label>
+              <input type="text" id="card-notes" placeholder="Proje ilgisi veya notlar...">
+            </div>
           </div>
 
-          <!-- Sağ: Form & Kayıt -->
-          <div>
-            <form id="ocr-card-form" onsubmit="saveScannedCard(event)">
-              <div class="ocr-form-grid">
-                <div class="ocr-form-group">
-                  <label>Ad Soyad / İlgili Kişi *</label>
-                  <input type="text" id="ocr-name" required placeholder="Örn: Ahmet Yılmaz">
-                </div>
-                <div class="ocr-form-group">
-                  <label>Firma Ünvanı *</label>
-                  <input type="text" id="ocr-company" required placeholder="Örn: Atlas Holding A.Ş.">
-                </div>
-                <div class="ocr-form-group">
-                  <label>Ünvan / Pozisyon</label>
-                  <input type="text" id="ocr-role" placeholder="Örn: Proje Direktörü">
-                </div>
-                <div class="ocr-form-group">
-                  <label>Telefon Numarası</label>
-                  <input type="tel" id="ocr-phone" placeholder="Örn: +90 532 000 00 00">
-                </div>
-                <div class="ocr-form-group">
-                  <label>E-Posta Adresi</label>
-                  <input type="email" id="ocr-email" placeholder="Örn: ahmet@atlasholding.com">
-                </div>
-                <div class="ocr-form-group">
-                  <label>Web Sitesi</label>
-                  <input type="text" id="ocr-website" placeholder="Örn: www.atlasholding.com">
-                </div>
-                <div class="ocr-form-group full-width">
-                  <label>Adres & Lokasyon</label>
-                  <input type="text" id="ocr-address" placeholder="Örn: Dilovası OSB 4. Cadde No:12 Kocaeli">
-                </div>
-                <div class="ocr-form-group">
-                  <label>Vergi Dairesi / VKN</label>
-                  <input type="text" id="ocr-tax" placeholder="Örn: Büyük Mükellefler / 1234567890">
-                </div>
-                <div class="ocr-form-group">
-                  <label>Kategori / Etiket</label>
-                  <select id="ocr-category">
-                    <option value="Müşteri">Müşteri (İşveren)</option>
-                    <option value="Yatırımcı">Yatırımcı / Fon</option>
-                    <option value="Mimar / Mühendis">Mimar / Mühendis</option>
-                    <option value="Tedarikçi">Tedarikçi / Üretici</option>
-                    <option value="Taşeron">Taşeron Firma</option>
-                    <option value="Resmi Kurum">Resmi Kurum / Belediye</option>
-                  </select>
-                </div>
-                <div class="ocr-form-group full-width">
-                  <label>Kartvizit Notları</label>
-                  <input type="text" id="ocr-notes" placeholder="Görüşme notları veya proje ilgisi...">
-                </div>
-              </div>
-
-              <div style="display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end;">
-                <button type="button" class="btn btn-outline btn-sm" style="color: #ffffff; border-color: rgba(255,255,255,0.4);" onclick="resetOcrForm()">
-                  Temizle
-                </button>
-                <button type="submit" class="btn btn-gold">
-                  💾 Kartviziti Kaydet & Google Sheets'e Ekle
-                </button>
-              </div>
-            </form>
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button type="submit" class="btn btn-navy btn-full">
+              💾 Kaydet & Sheets'e Aktar
+            </button>
           </div>
-        </div>
+        </form>
       </div>
 
-      <!-- Toolbar -->
-      <div class="panel-toolbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-cards" placeholder="Kartvizitlerde kişi, firma, telefon ara..." oninput="filterCards()">
-        </div>
-        <div class="filter-group">
-          <select id="filter-card-category" class="filter-select" onchange="filterCards()">
-            <option value="">Tüm Kategoriler</option>
-            <option value="Müşteri">Müşteriler</option>
-            <option value="Yatırımcı">Yatırımcılar</option>
-            <option value="Mimar / Mühendis">Mimar / Mühendis</option>
-            <option value="Tedarikçi">Tedarikçiler</option>
-            <option value="Taşeron">Taşeronlar</option>
-          </select>
-          <button class="btn btn-green btn-sm" onclick="exportCardsToGoogleSheet()">
-            📊 Sheets'e Aktar
-          </button>
-          <button class="btn btn-primary btn-sm" onclick="downloadAllVcf()">
-            📇 Toplu vCard (.vcf)
-          </button>
-        </div>
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input type="text" id="search-cards" class="search-input" placeholder="Kartvizitlerde ara..." oninput="renderCards()">
+        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()">
+          CSV
+        </button>
       </div>
 
-      <!-- Cards Grid -->
-      <div class="cards-grid" id="cards-container">
-      </div>
+      <!-- Cards List -->
+      <div class="items-list" id="cards-list"></div>
     </div>
 
 
-    <!-- SEKME 2: İNŞAAT PROJELERİ -->
-    <div id="tab-projects" class="tab-content">
-      
-      <div class="panel-toolbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-projects" placeholder="Proje adı, lokasyon veya işveren ara..." oninput="renderProjects()">
-        </div>
-        <div class="filter-group">
-          <select id="filter-project-status" class="filter-select" onchange="renderProjects()">
-            <option value="">Tüm Aşamalar</option>
-            <option value="Planlama">Planlama & Fizibilite</option>
-            <option value="Ruhsat">Ruhsat & Onay</option>
-            <option value="Kaba İnşaat">Kaba İnşaat</option>
-            <option value="İnce İşler">İnce İşler & Montaj</option>
-            <option value="Tamamlandı">Tamamlandı</option>
-          </select>
-          <button class="btn btn-primary" onclick="openNewProjectModal()">
-            ➕ Yeni İnşaat Projesi Ekle
-          </button>
-          <button class="btn btn-green btn-sm" onclick="exportProjectsToGoogleSheet()">
-            📊 Sheets'e Aktar
-          </button>
-        </div>
+    <!-- ========================================== -->
+    <!-- 2. PROJELER TAB -->
+    <!-- ========================================== -->
+    <div id="tab-projects" class="tab-pane">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+        <input type="text" id="search-projects" class="search-input" placeholder="Proje ara..." oninput="renderProjects()" style="margin-bottom: 0;">
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-project')" style="margin-left: 8px;">
+          ➕ Yeni Proje
+        </button>
       </div>
 
-      <div class="data-table-wrapper">
-        <table class="data-table" id="projects-table">
-          <thead>
-            <tr>
-              <th>Proje Kodu / Adı</th>
-              <th>Proje Tipi</th>
-              <th>İşveren / Yatırımcı</th>
-              <th>Lokasyon</th>
-              <th>Bütçe</th>
-              <th>İlerleme</th>
-              <th>Durum</th>
-              <th style="text-align: right;">İşlemler</th>
-            </tr>
-          </thead>
-          <tbody id="projects-table-body">
-          </tbody>
-        </table>
-      </div>
+      <div class="items-list" id="projects-list"></div>
     </div>
 
 
-    <!-- SEKME 3: CARİ KARTLARI -->
-    <div id="tab-accounts" class="tab-content">
-      
-      <div class="panel-toolbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-accounts" placeholder="Cari ünvan, vergi no, kişi ara..." oninput="renderAccounts()">
-        </div>
-        <div class="filter-group">
-          <select id="filter-account-type" class="filter-select" onchange="renderAccounts()">
-            <option value="">Tüm Cari Tipleri</option>
-            <option value="Müşteri">Müşteriler</option>
-            <option value="Tedarikçi">Tedarikçiler</option>
-            <option value="Taşeron">Taşeronlar</option>
-          </select>
-          <button class="btn btn-primary" onclick="openNewAccountModal()">
-            ➕ Yeni Cari Kartı Ekle
-          </button>
-          <button class="btn btn-green btn-sm" onclick="exportAccountsToGoogleSheet()">
-            📊 Sheets'e Aktar
-          </button>
-        </div>
+    <!-- ========================================== -->
+    <!-- 3. CARİLER TAB -->
+    <!-- ========================================== -->
+    <div id="tab-accounts" class="tab-pane">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+        <input type="text" id="search-accounts" class="search-input" placeholder="Cari ara..." oninput="renderAccounts()" style="margin-bottom: 0;">
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="margin-left: 8px;">
+          ➕ Yeni Cari
+        </button>
       </div>
 
-      <div class="data-table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Firma Ünvanı / Cari Adı</th>
-              <th>Cari Tipi</th>
-              <th>İlgili Kişi</th>
-              <th>Vergi Dairesi & VKN</th>
-              <th>Telefon & E-Posta</th>
-              <th>Bakiye</th>
-              <th style="text-align: right;">İşlemler</th>
-            </tr>
-          </thead>
-          <tbody id="accounts-table-body">
-          </tbody>
-        </table>
-      </div>
+      <div class="items-list" id="accounts-list"></div>
     </div>
 
 
-    <!-- SEKME 4: PROJE DÖKÜMANLARI & ARŞİV -->
-    <div id="tab-docs" class="tab-content">
-      
-      <div class="panel-toolbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-docs" placeholder="Döküman adı, proje veya belge no ara..." oninput="renderDocuments()">
-        </div>
-        <div class="filter-group">
-          <select id="filter-doc-type" class="filter-select" onchange="renderDocuments()">
-            <option value="">Tüm Döküman Tipleri</option>
-            <option value="Mimari Proje">Mimari Proje (DWG/PDF)</option>
-            <option value="Statik Rapor">Statik & Zemin Raporu</option>
-            <option value="Ruhsat & İmar">Ruhsat & İmar Durumu</option>
-            <option value="Sözleşme & Şartname">Sözleşme & Şartname</option>
-            <option value="Hakediş & Metraj">Hakediş & Metraj Cetveli</option>
-            <option value="Teklif Dosyası">Teklif & Maliyet Tablosu</option>
-          </select>
-          <button class="btn btn-primary" onclick="openNewDocModal()">
-            ➕ Yeni Döküman Yükle / Bağla
-          </button>
-          <button class="btn btn-green btn-sm" onclick="exportDocsToGoogleSheet()">
-            📊 Sheets'e Aktar
-          </button>
-        </div>
+    <!-- ========================================== -->
+    <!-- 4. EVRAKLAR TAB -->
+    <!-- ========================================== -->
+    <div id="tab-docs" class="tab-pane">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+        <input type="text" id="search-docs" class="search-input" placeholder="Evrak ara..." oninput="renderDocs()" style="margin-bottom: 0;">
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-doc')" style="margin-left: 8px;">
+          ➕ Evrak Ekle
+        </button>
       </div>
 
-      <div class="cards-grid" id="docs-container">
-      </div>
+      <div class="items-list" id="docs-list"></div>
     </div>
 
 
-    <!-- SEKME 5: STOK & MALZEME YÖNETİMİ -->
-    <div id="tab-stock" class="tab-content">
-      
-      <div class="panel-toolbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-stock" placeholder="Stok kodu, malzeme adı, kategori ara..." oninput="renderStock()">
-        </div>
-        <div class="filter-group">
-          <select id="filter-stock-category" class="filter-select" onchange="renderStock()">
-            <option value="">Tüm Kategoriler</option>
-            <option value="İnşaat & Kaba">İnşaat & Kaba Yapı</option>
-            <option value="Enerji & Solar">Enerji & Solar Sistemler</option>
-            <option value="Konstrüksiyon">Konstrüksiyon & Çelik</option>
-            <option value="Elektrik & Tesisat">Elektrik & Tesisat</option>
-            <option value="İzolasyon & Boya">İzolasyon & Boya</option>
-          </select>
-          <button class="btn btn-primary" onclick="openNewStockModal()">
-            ➕ Yeni Stok / Malzeme Ekle
-          </button>
-          <button class="btn btn-green btn-sm" onclick="exportStockToGoogleSheet()">
-            📊 Sheets'e Aktar
-          </button>
-        </div>
+    <!-- ========================================== -->
+    <!-- 5. STOK TAB -->
+    <!-- ========================================== -->
+    <div id="tab-stock" class="tab-pane">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+        <input type="text" id="search-stock" class="search-input" placeholder="Stok ara..." oninput="renderStock()" style="margin-bottom: 0;">
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-stock')" style="margin-left: 8px;">
+          ➕ Stok Ekle
+        </button>
       </div>
 
-      <div class="data-table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Stok Kodu</th>
-              <th>Malzeme / Ekipman Adı</th>
-              <th>Kategori</th>
-              <th>Mevcut Miktar</th>
-              <th>Kritik Eşik</th>
-              <th>Birim Alış / Maliyet</th>
-              <th>Birim Satış Fiyatı</th>
-              <th>Durum</th>
-              <th style="text-align: right;">İşlemler</th>
-            </tr>
-          </thead>
-          <tbody id="stock-table-body">
-          </tbody>
-        </table>
-      </div>
+      <div class="items-list" id="stock-list"></div>
     </div>
 
   </main>
 
 
-  <!-- MODAL: GOOGLE APPS SCRIPT WEBHOOK KURULUMU -->
-  <div class="modal-overlay" id="modal-appsscript">
-    <div class="modal-window">
-      <button class="modal-close" onclick="closeModal('modal-appsscript')">×</button>
-      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 0.5rem;">
-        ⚡ Google Sheets Doğrudan Yazma & Senkronizasyon Kurulumu
-      </h3>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-        Bu panelden çektiğiniz kartvizitleri, inşaat projelerini, cari kartları ve stokları Google Drive / Sheets'e otomatik yazdırmak için 2 dakikalık kurulum adımı:
-      </p>
-
-      <ol style="font-size: 0.82rem; color: #334155; padding-left: 1.25rem; margin-bottom: 1rem; line-height: 1.6;">
-        <li><a href="https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" target="_blank" style="color: #0284c7; font-weight: 700;">Google E-Tablonuzu Açın</a></li>
-        <li>Üst menüden <strong>Uzantılar &gt; Apps Komut Dosyası (Extensions &gt; Apps Script)</strong> seçin.</li>
-        <li>Aşağıdaki hazır Google Apps Script kodunu yapıştırın ve <strong>Dağıt &gt; Yeni Dağıtım (Deploy as Web App)</strong> deyin. (Erişim: <em>"Herkes / Anyone"</em>).</li>
-        <li>Oluşan Web App URL'sini aşağıdaki kutuya yapıştırıp "Kaydet"e basın.</li>
-      </ol>
-
-      <div style="margin-bottom: 1rem;">
-        <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Google Apps Script Web App URL (Aktif & Bağlı)</label>
-        <input type="url" id="gas-webhook-url" value="https://script.google.com/macros/s/AKfycbyryoSZ78jH4BDgQOEN-AsUAtIIbFen6nr_EuANgTJ5i24MDr38EiHf74UIvhmP88qb/exec" placeholder="https://script.google.com/macros/s/.../exec" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 0.85rem; margin-top: 4px;">
-      </div>
-
-      <div class="code-box">
-        <button class="copy-btn" onclick="copyAppsScriptCode()">📋 Kodu Kopyala</button>
-<pre id="gas-code-content">function doPost(e) {
-  try {
-    var data = JSON.parse(e.postData.contents);
-    var sheetName = data.sheet || "Müşteriler";
-    var row = data.row || [];
-    
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName(sheetName);
-    if (!sheet) {
-      sheet = ss.insertSheet(sheetName);
-    }
-    
-    sheet.appendRow(row);
-    
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "success", message: "Kayıt başarıyla eklendi." }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "error", error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}</pre>
-      </div>
-
-      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem;">
-        <button class="btn btn-outline" onclick="closeModal('modal-appsscript')">Kapat</button>
-        <button class="btn btn-primary" onclick="saveWebhookUrl()">Kaydet & Test Et</button>
-      </div>
-    </div>
-  </div>
+  <!-- ========================================== -->
+  <!-- NATIVE BOTTOM NAVIGATION -->
+  <!-- ========================================== -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchNav('tab-cards')">
+      <span class="nav-icon">📇</span>
+      <span class="nav-label">Kartvizit</span>
+    </button>
+    <button class="nav-item" onclick="switchNav('tab-projects')">
+      <span class="nav-icon">🏗️</span>
+      <span class="nav-label">Projeler</span>
+    </button>
+    <button class="nav-item" onclick="switchNav('tab-accounts')">
+      <span class="nav-icon">📑</span>
+      <span class="nav-label">Cariler</span>
+    </button>
+    <button class="nav-item" onclick="switchNav('tab-docs')">
+      <span class="nav-icon">📁</span>
+      <span class="nav-label">Evraklar</span>
+    </button>
+    <button class="nav-item" onclick="switchNav('tab-stock')">
+      <span class="nav-icon">📦</span>
+      <span class="nav-label">Stok</span>
+    </button>
+  </nav>
 
 
-  <!-- MODAL: YENİ İNŞAAT PROJESİ -->
-  <div class="modal-overlay" id="modal-project">
-    <div class="modal-window">
-      <button class="modal-close" onclick="closeModal('modal-project')">×</button>
-      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 1.25rem;">
-        🏗️ Yeni İnşaat Projesi Tanımla
-      </h3>
-      <form id="form-new-project" onsubmit="saveNewProject(event)">
-        <div class="ocr-form-grid">
-          <div class="ocr-form-group">
+  <!-- ========================================== -->
+  <!-- MODAL: YENİ PROJE -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-new-project">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni İnşaat Projesi</h3>
+      <form onsubmit="saveProject(event)">
+        <div class="form-grid">
+          <div class="form-group">
             <label>Proje Kodu *</label>
-            <input type="text" id="prj-code" required placeholder="Örn: PRJ-2026-01">
+            <input type="text" id="p-code" required placeholder="PRJ-2026-01">
           </div>
-          <div class="ocr-form-group">
+          <div class="form-group">
             <label>Proje Adı *</label>
-            <input type="text" id="prj-name" required placeholder="Örn: Bağdat Caddesi Kentsel Dönüşüm">
+            <input type="text" id="p-name" required placeholder="Proje Başlığı">
           </div>
-          <div class="ocr-form-group">
-            <label>Proje Tipi</label>
-            <select id="prj-type">
-              <option value="Kentsel Dönüşüm">Kentsel Dönüşüm (Konut)</option>
-              <option value="Güneş Enerji Santrali (GES)">Güneş Enerji Santrali (GES)</option>
-              <option value="Ticari & Ofis">Ticari & Ofis Yapısı</option>
-              <option value="Villa / Lüks Konut">Villa / Lüks Konut</option>
-              <option value="Sanayi & Fabrika">Sanayi & Fabrika Binası</option>
+          <div class="form-group">
+            <label>Tipi</label>
+            <select id="p-type">
+              <option value="Kentsel Dönüşüm">Kentsel Dönüşüm</option>
+              <option value="GES Santrali">GES Santrali</option>
+              <option value="Villa / Konut">Villa / Konut</option>
+              <option value="Ticari & Sanayi">Ticari & Sanayi</option>
             </select>
           </div>
-          <div class="ocr-form-group">
-            <label>İşveren / Yatırımcı</label>
-            <input type="text" id="prj-client" placeholder="Örn: Atlas Holding A.Ş.">
+          <div class="form-group">
+            <label>İşveren</label>
+            <input type="text" id="p-client" placeholder="İşveren firma">
           </div>
-          <div class="ocr-form-group">
-            <label>Lokasyon / Şehir</label>
-            <input type="text" id="prj-location" placeholder="Örn: Kadıköy / İstanbul">
+          <div class="form-group">
+            <label>Lokasyon</label>
+            <input type="text" id="p-loc" placeholder="Kadıköy / İstanbul">
           </div>
-          <div class="ocr-form-group">
-            <label>Sözleşme / Proje Bütçesi</label>
-            <input type="text" id="prj-budget" placeholder="Örn: 18.500.000 ₺">
+          <div class="form-group">
+            <label>Bütçe</label>
+            <input type="text" id="p-budget" placeholder="15.000.000 ₺">
           </div>
-          <div class="ocr-form-group">
-            <label>Tamamlanma Yüzdesi (%)</label>
-            <input type="number" id="prj-progress" min="0" max="100" value="15">
+          <div class="form-group">
+            <label>İlerleme (%): <span id="p-prog-val">25</span>%</label>
+            <input type="range" id="p-prog" min="0" max="100" value="25" oninput="document.getElementById('p-prog-val').textContent=this.value">
           </div>
-          <div class="ocr-form-group">
-            <label>Aşama / Durum</label>
-            <select id="prj-status">
-              <option value="Planlama">Planlama & Fizibilite</option>
-              <option value="Ruhsat">Ruhsat & Proje Onayı</option>
+          <div class="form-group">
+            <label>Aşama</label>
+            <select id="p-status">
+              <option value="Planlama">Planlama</option>
+              <option value="Ruhsat">Ruhsat</option>
               <option value="Kaba İnşaat">Kaba İnşaat</option>
-              <option value="İnce İşler">İnce İşler & Montaj</option>
+              <option value="İnce İşler">İnce İşler</option>
               <option value="Tamamlandı">Tamamlandı</option>
             </select>
           </div>
-          <div class="ocr-form-group full-width">
-            <label>Şantiye Şefi & Proje Detayları</label>
-            <textarea id="prj-details" rows="2" placeholder="Proje notları, şantiye şefi iletişim bilgileri..."></textarea>
-          </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem;">
-          <button type="button" class="btn btn-outline" onclick="closeModal('modal-project')">Vazgeç</button>
-          <button type="submit" class="btn btn-gold">Kaydet & Sheets'e Ekle</button>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-project')">Vazgeç</button>
+          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
   </div>
 
 
-  <!-- MODAL: YENİ CARİ KARTI -->
-  <div class="modal-overlay" id="modal-account">
-    <div class="modal-window">
-      <button class="modal-close" onclick="closeModal('modal-account')">×</button>
-      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 1.25rem;">
-        📑 Yeni Cari Hesap Kartı
-      </h3>
-      <form id="form-new-account" onsubmit="saveNewAccount(event)">
-        <div class="ocr-form-grid">
-          <div class="ocr-form-group full-width">
+  <!-- ========================================== -->
+  <!-- MODAL: YENİ CARİ -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-new-account">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Cari Kartı</h3>
+      <form onsubmit="saveAccount(event)">
+        <div class="form-grid">
+          <div class="form-group full">
             <label>Firma Ünvanı *</label>
-            <input type="text" id="acc-company" required placeholder="Örn: Kaya İnşaat San. Tic. Ltd. Şti.">
+            <input type="text" id="a-company" required placeholder="Firma Adı">
           </div>
-          <div class="ocr-form-group">
+          <div class="form-group">
             <label>Cari Tipi</label>
-            <select id="acc-type">
-              <option value="Müşteri">Müşteri (Alıcı)</option>
-              <option value="Tedarikçi">Tedarikçi (Satıcı)</option>
-              <option value="Taşeron">Taşeron Firma</option>
+            <select id="a-type">
+              <option value="Müşteri">Müşteri</option>
+              <option value="Tedarikçi">Tedarikçi</option>
+              <option value="Taşeron">Taşeron</option>
             </select>
           </div>
-          <div class="ocr-form-group">
-            <label>İlgili Kişi</label>
-            <input type="text" id="acc-contact" placeholder="Örn: Mehmet Kaya">
+          <div class="form-group">
+            <label>Yetkili Kişi</label>
+            <input type="text" id="a-contact" placeholder="İlgili Adı">
           </div>
-          <div class="ocr-form-group">
-            <label>Vergi Dairesi</label>
-            <input type="text" id="acc-tax-office" placeholder="Örn: Kadıköy V.D.">
-          </div>
-          <div class="ocr-form-group">
-            <label>VKN / TCKN</label>
-            <input type="text" id="acc-tax-no" placeholder="Örn: 5820194812">
-          </div>
-          <div class="ocr-form-group">
+          <div class="form-group">
             <label>Telefon</label>
-            <input type="tel" id="acc-phone" placeholder="Örn: +90 216 555 0101">
+            <input type="tel" id="a-phone" placeholder="0216...">
           </div>
-          <div class="ocr-form-group">
-            <label>E-Posta</label>
-            <input type="email" id="acc-email" placeholder="Örn: muhasebe@kayainsaat.com">
-          </div>
-          <div class="ocr-form-group full-width">
-            <label>Adres</label>
-            <input type="text" id="acc-address" placeholder="Örn: Acıbadem Mah. Çeçen Sok. No:4 Üsküdar/İstanbul">
+          <div class="form-group">
+            <label>VKN / Vergi Dairesi</label>
+            <input type="text" id="a-tax" placeholder="Kadıköy V.D. / 1234567890">
           </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem;">
-          <button type="button" class="btn btn-outline" onclick="closeModal('modal-account')">Vazgeç</button>
-          <button type="submit" class="btn btn-gold">Cari Kartı Kaydet</button>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-account')">Vazgeç</button>
+          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
   </div>
 
 
-  <!-- MODAL: YENİ DÖKÜMAN YÜKLE -->
-  <div class="modal-overlay" id="modal-doc">
-    <div class="modal-window">
-      <button class="modal-close" onclick="closeModal('modal-doc')">×</button>
-      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 1.25rem;">
-        📁 Proje Dökümanı Ekle / Drive Linki Bağla
-      </h3>
-      <form id="form-new-doc" onsubmit="saveNewDocument(event)">
-        <div class="ocr-form-grid">
-          <div class="ocr-form-group full-width">
-            <label>Döküman / Belge Başlığı *</label>
-            <input type="text" id="doc-title" required placeholder="Örn: Mimari Ruhsat Projesi Rev-03">
+  <!-- ========================================== -->
+  <!-- MODAL: YENİ EVRAK -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-new-doc">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Proje Evrakı</h3>
+      <form onsubmit="saveDoc(event)">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Evrak Başlığı *</label>
+            <input type="text" id="d-title" required placeholder="Örn: Mimari Ruhsat Projesi">
           </div>
-          <div class="ocr-form-group">
-            <label>Döküman Türü</label>
-            <select id="doc-type">
-              <option value="Mimari Proje">Mimari Proje (DWG/PDF)</option>
-              <option value="Statik Rapor">Statik & Zemin Raporu</option>
-              <option value="Ruhsat & İmar">Ruhsat & İmar Durumu</option>
-              <option value="Sözleşme & Şartname">Sözleşme & Şartname</option>
-              <option value="Hakediş & Metraj">Hakediş & Metraj Cetveli</option>
-              <option value="Teklif Dosyası">Teklif & Maliyet Tablosu</option>
+          <div class="form-group">
+            <label>Türü</label>
+            <select id="d-type">
+              <option value="Mimari Proje">Mimari Proje</option>
+              <option value="Statik Rapor">Statik Rapor</option>
+              <option value="Ruhsat Belgesi">Ruhsat Belgesi</option>
+              <option value="Sözleşme & Şartname">Sözleşme</option>
+              <option value="Hakediş">Hakediş</option>
             </select>
           </div>
-          <div class="ocr-form-group">
-            <label>İlgili İnşaat Projesi</label>
-            <select id="doc-project-select">
-            </select>
+          <div class="form-group">
+            <label>İlgili Proje</label>
+            <select id="d-project-select"></select>
           </div>
-          <div class="ocr-form-group full-width">
-            <label>Google Drive / Dosya Bağlantı Linki (URL)</label>
-            <input type="url" id="doc-drive-url" placeholder="https://drive.google.com/file/d/...">
-          </div>
-          <div class="ocr-form-group full-width">
-            <label>Açıklama & Revizyon Notu</label>
-            <input type="text" id="doc-notes" placeholder="Belediye onaylı son revizyon...">
+          <div class="form-group full">
+            <label>Drive / Dosya Linki</label>
+            <input type="url" id="d-url" placeholder="https://drive.google.com/...">
           </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem;">
-          <button type="button" class="btn btn-outline" onclick="closeModal('modal-doc')">Vazgeç</button>
-          <button type="submit" class="btn btn-gold">Dökümanı Kaydet</button>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-doc')">Vazgeç</button>
+          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
   </div>
 
 
-  <!-- MODAL: YENİ STOK MALZEME -->
-  <div class="modal-overlay" id="modal-stock">
-    <div class="modal-window">
-      <button class="modal-close" onclick="closeModal('modal-stock')">×</button>
-      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 1.25rem;">
-        📦 Yeni Stok / Malzeme Kartı
-      </h3>
-      <form id="form-new-stock" onsubmit="saveNewStock(event)">
-        <div class="ocr-form-grid">
-          <div class="ocr-form-group">
+  <!-- ========================================== -->
+  <!-- MODAL: YENİ STOK -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-new-stock">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Malzeme / Stok</h3>
+      <form onsubmit="saveStock(event)">
+        <div class="form-grid">
+          <div class="form-group">
             <label>Stok Kodu *</label>
-            <input type="text" id="stk-code" required placeholder="Örn: STK-DM-14">
+            <input type="text" id="s-code" required placeholder="STK-01">
           </div>
-          <div class="ocr-form-group">
+          <div class="form-group">
             <label>Malzeme Adı *</label>
-            <input type="text" id="stk-name" required placeholder="Örn: B420C Nervürlü İnşaat Demiri Ø14mm">
+            <input type="text" id="s-name" required placeholder="Örn: İnşaat Demiri Ø14">
           </div>
-          <div class="ocr-form-group">
-            <label>Kategori</label>
-            <select id="stk-category">
-              <option value="İnşaat & Kaba">İnşaat & Kaba Yapı</option>
-              <option value="Enerji & Solar">Enerji & Solar Sistemler</option>
-              <option value="Konstrüksiyon">Konstrüksiyon & Çelik</option>
-              <option value="Elektrik & Tesisat">Elektrik & Tesisat</option>
-              <option value="İzolasyon & Boya">İzolasyon & Boya</option>
-            </select>
+          <div class="form-group">
+            <label>Miktar</label>
+            <input type="number" id="s-qty" value="10" min="0">
           </div>
-          <div class="ocr-form-group">
+          <div class="form-group">
             <label>Birim</label>
-            <input type="text" id="stk-unit" value="Ton" placeholder="Örn: Ton, Adet, m², m³">
+            <input type="text" id="s-unit" value="Ton" placeholder="Ton, Adet, m³">
           </div>
-          <div class="ocr-form-group">
-            <label>Mevcut Stok Miktarı</label>
-            <input type="number" id="stk-qty" value="25" min="0">
-          </div>
-          <div class="ocr-form-group">
-            <label>Kritik Eşik</label>
-            <input type="number" id="stk-min" value="5" min="0">
-          </div>
-          <div class="ocr-form-group">
-            <label>Birim Alış / Maliyet</label>
-            <input type="text" id="stk-cost" placeholder="Örn: 24.500 ₺">
-          </div>
-          <div class="ocr-form-group">
-            <label>Birim Satış Fiyatı</label>
-            <input type="text" id="stk-price" placeholder="Örn: 28.000 ₺">
+          <div class="form-group">
+            <label>Fiyat</label>
+            <input type="text" id="s-price" placeholder="25.000 ₺">
           </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem;">
-          <button type="button" class="btn btn-outline" onclick="closeModal('modal-stock')">Vazgeç</button>
-          <button type="submit" class="btn btn-gold">Stok Kartını Kaydet</button>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-stock')">Vazgeç</button>
+          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
   </div>
 
 
-  <!-- MODAL: QR KOD VCARD GÖRÜNTÜLEYİCİ -->
-  <div class="modal-overlay" id="modal-qrcode">
-    <div class="modal-window" style="max-width: 420px; text-align: center;">
-      <button class="modal-close" onclick="closeModal('modal-qrcode')">×</button>
-      <h3 id="qr-modal-title" style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 0.5rem;">
-        vCard QR Kodu
-      </h3>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-        Telefon kamerasını tutarak kişiyi doğrudan rehbere kaydedin.
-      </p>
-
-      <div id="qrcode-target" style="display: flex; justify-content: center; margin-bottom: 1.25rem; padding: 1rem; background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-color);"></div>
-
-      <div id="qr-modal-contact-details" style="font-size: 0.82rem; color: #334155; margin-bottom: 1.25rem; text-align: left; background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-md);"></div>
-
-      <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('modal-qrcode')">Tamam</button>
+  <!-- QR MODAL -->
+  <div class="modal-backdrop" id="modal-qr">
+    <div class="modal-sheet" style="text-align: center;">
+      <div class="sheet-handle"></div>
+      <h3 id="qr-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px;">vCard QR</h3>
+      <div id="qrcode-box" style="display: inline-block; padding: 10px; background: #fff; border-radius: 12px; margin: 10px 0;"></div>
+      <div id="qr-sub" style="font-size: 0.8rem; color: var(--muted); margin-bottom: 14px;"></div>
+      <button class="btn btn-secondary btn-full" onclick="closeModal('modal-qr')">Kapat</button>
     </div>
   </div>
 
-
-  <!-- Toast Alert -->
+  <!-- Toast -->
   <div id="toast">
     <span id="toast-icon">✅</span>
-    <span id="toast-text">İşlem başarıyla tamamlandı.</span>
+    <span id="toast-msg">Kaydedildi</span>
   </div>
+
 
   <script>
     /* ================================================================
-       YAKIN GRUP KURUMSAL PORTAL JAVASCRIPT MOTORU
+       MÜŞTERİ VE PROJE REHBERİ - HAFİF & NATIVE MOTOR
        ================================================================ */
 
-    const GOOGLE_SHEET_ID = "1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI";
-    const STORAGE_KEY_CARDS = "yakin_portal_cards_v1";
-    const STORAGE_KEY_PROJECTS = "yakin_portal_projects_v1";
-    const STORAGE_KEY_ACCOUNTS = "yakin_portal_accounts_v1";
-    const STORAGE_KEY_DOCS = "yakin_portal_docs_v1";
-    const STORAGE_KEY_STOCK = "yakin_portal_stock_v1";
-    const STORAGE_KEY_WEBHOOK = "yakin_portal_gas_webhook";
-    const DEFAULT_GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyryoSZ78jH4BDgQOEN-AsUAtIIbFen6nr_EuANgTJ5i24MDr38EiHf74UIvhmP88qb/exec";
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyryoSZ78jH4BDgQOEN-AsUAtIIbFen6nr_EuANgTJ5i24MDr38EiHf74UIvhmP88qb/exec";
 
-    // Initial Initial Data
-    const initialCards = [
-      {
-        id: "c-101",
-        name: "Ahmet Yılmaz",
-        company: "Atlas Holding A.Ş.",
-        role: "Yatırımlar Direktörü",
-        phone: "+90 262 555 0199",
-        email: "ahmet.yilmaz@atlasholding.com",
-        website: "www.atlasholding.com",
-        address: "Dilovası OSB 4. Cadde No: 12 Kocaeli / Türkiye",
-        tax: "Büyük Mükellefler / 1234567890",
-        category: "Müşteri",
-        notes: "1.2 MWp Çatı GES EPC projesi görüşmesi yapıldı.",
-        createdAt: "2026-09-10"
-      },
-      {
-        id: "c-102",
-        name: "David Miller",
-        company: "Solaris Global Energy LLC",
-        role: "Procurement Director",
-        phone: "+1 302 555 0142",
-        email: "dmiller@solarisglobal.com",
-        website: "www.solarisglobal.com",
-        address: "1209 Orange St, Wilmington, DE 19801, USA",
-        tax: "US-987654321",
-        category: "Yatırımcı",
-        notes: "CIF Hamburg PV modül ihracatı.",
-        createdAt: "2026-09-12"
-      },
-      {
-        id: "c-103",
-        name: "Mimar Selin Çelik",
-        company: "Artı Mimarlık & Tasarım",
-        role: "Kurucu Mimar",
-        phone: "+90 216 444 1289",
-        email: "selin@artimimarlik.com.tr",
-        website: "www.artimimarlik.com.tr",
-        address: "Bağdat Cad. No: 284 Kadıköy / İstanbul",
-        tax: "Kadıköy V.D. / 8839102451",
-        category: "Mimar / Mühendis",
-        notes: "Kadıköy kentsel dönüşüm mimari proje müellifi.",
-        createdAt: "2026-09-15"
-      }
+    // Initial Data
+    const defaultCards = [
+      { id: "c1", name: "Ahmet Yılmaz", company: "Atlas Holding A.Ş.", role: "Yatırımlar Direktörü", phone: "+90 262 555 0199", email: "ahmet.yilmaz@atlasholding.com", category: "Müşteri", notes: "1.2 MWp Çatı GES projesi", date: "2026-09-10" },
+      { id: "c2", name: "David Miller", company: "Solaris Global Energy LLC", role: "Procurement Director", phone: "+1 302 555 0142", email: "dmiller@solarisglobal.com", category: "Yatırımcı", notes: "CIF Hamburg ihracatı", date: "2026-09-12" },
+      { id: "c3", name: "Mimar Selin Çelik", company: "Artı Mimarlık", role: "Kurucu", phone: "+90 216 444 1289", email: "selin@artimimarlik.com", category: "Mimar / Mühendis", notes: "Bağdat Cad. kentsel dönüşüm", date: "2026-09-15" }
     ];
 
-    const initialProjects = [
-      {
-        id: "prj-1",
-        code: "PRJ-2026-01",
-        name: "Bağdat Caddesi Kentsel Dönüşüm Rezidans",
-        type: "Kentsel Dönüşüm",
-        client: "Kat Malikleri & Yakın Grup Ortaklığı",
-        location: "Kadıköy / İstanbul",
-        budget: "45.000.000 ₺",
-        progress: 65,
-        status: "Kaba İnşaat",
-        details: "14 katlı 28 daireli lüks konut projesi. Zemin iyileştirme tamamlandı, 9. kat betonu atılıyor."
-      },
-      {
-        id: "prj-2",
-        code: "PRJ-2026-02",
-        name: "Dilovası OSB 1.2 MWp Çatı Güneş Santrali (GES)",
-        type: "Güneş Enerji Santrali (GES)",
-        client: "Atlas Holding A.Ş.",
-        location: "Kocaeli Dilovası",
-        budget: "$228.798 USD",
-        progress: 85,
-        status: "İnce İşler",
-        details: "2182 adet 550W TOPCon panel montajı bitti. İnvertör ve TEDAŞ kabul testleri sürüyor."
-      },
-      {
-        id: "prj-3",
-        code: "PRJ-2026-03",
-        name: "Yalıkavak Özel Taş Villa & Peyzaj Projesi",
-        type: "Villa / Lüks Konut",
-        client: "Ege Yatırım Grubu",
-        location: "Bodrum / Muğla",
-        budget: "32.000.000 ₺",
-        progress: 25,
-        status: "Ruhsat",
-        details: "Ruhsat onaylandı, temel kazısı ve istinat duvarı çalışmaları başlatıldı."
-      }
+    const defaultProjects = [
+      { id: "p1", code: "PRJ-2026-01", name: "Bağdat Caddesi Kentsel Dönüşüm", type: "Kentsel Dönüşüm", client: "Kat Malikleri", location: "Kadıköy", budget: "45M ₺", progress: 65, status: "Kaba İnşaat" },
+      { id: "p2", code: "PRJ-2026-02", name: "Dilovası 1.2 MWp Çatı GES", type: "GES Santrali", client: "Atlas Holding", location: "Kocaeli", budget: "$228K", progress: 85, status: "İnce İşler" },
+      { id: "p3", code: "PRJ-2026-03", name: "Yalıkavak Taş Villa", type: "Villa / Konut", client: "Ege Yatırım", location: "Bodrum", budget: "32M ₺", progress: 25, status: "Ruhsat" }
     ];
 
-    const initialAccounts = [
-      {
-        id: "acc-1",
-        company: "Atlas Holding A.Ş.",
-        type: "Müşteri",
-        contact: "Ahmet Yılmaz",
-        taxOffice: "Büyük Mükellefler V.D.",
-        taxNo: "1234567890",
-        phone: "+90 262 555 0199",
-        email: "muhasebe@atlasholding.com",
-        address: "Dilovası OSB No: 12 Kocaeli",
-        balance: "+1.450.000 ₺ (Alacak)"
-      },
-      {
-        id: "acc-2",
-        company: "Betonsa Hazır Beton San. A.Ş.",
-        type: "Tedarikçi",
-        contact: "Cemil Arslan",
-        taxOffice: "Marmara Kurumlar V.D.",
-        taxNo: "1892019482",
-        phone: "+90 216 555 8800",
-        email: "siparis@betonsa.com.tr",
-        address: "Kartal / İstanbul",
-        balance: "-320.000 ₺ (Borç)"
-      },
-      {
-        id: "acc-3",
-        company: "Demirören Çelik & Haddecilik Ltd.",
-        type: "Tedarikçi",
-        contact: "Hakan Demir",
-        taxOffice: "Gebze V.D.",
-        taxNo: "2948192041",
-        phone: "+90 262 640 1020",
-        email: "satis@demirorencelik.com",
-        address: "Gebze / Kocaeli",
-        balance: "0,00 ₺ (Mutabık)"
-      }
+    const defaultAccounts = [
+      { id: "a1", company: "Atlas Holding A.Ş.", type: "Müşteri", contact: "Ahmet Yılmaz", phone: "+90 262 555 0199", tax: "Büyük Mükellefler / 1234567890" },
+      { id: "a2", company: "Betonsa Hazır Beton A.Ş.", type: "Tedarikçi", contact: "Cemil Arslan", phone: "+90 216 555 8800", tax: "Marmara / 1892019482" },
+      { id: "a3", company: "Demirören Haddecilik", type: "Tedarikçi", contact: "Hakan Demir", phone: "+90 262 640 1020", tax: "Gebze / 2948192041" }
     ];
 
-    const initialDocs = [
-      {
-        id: "doc-1",
-        title: "Kadıköy Rezidans — Onaylı Mimari Uygulama Projesi (Rev-04)",
-        type: "Mimari Proje",
-        projectName: "Bağdat Caddesi Kentsel Dönüşüm Rezidans",
-        driveUrl: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing",
-        notes: "Kadıköy Belediyesi İmar Müdürlüğü onaylı, DWG ve PDF formatında.",
-        date: "2026-08-20"
-      },
-      {
-        id: "doc-2",
-        title: "Atlas Holding GES — TEDAŞ Bağlantı ve Statik Onay Raporu",
-        type: "Statik Rapor",
-        projectName: "Dilovası OSB 1.2 MWp Çatı Güneş Santrali (GES)",
-        driveUrl: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing",
-        notes: "Çatı taşıyıcı kenet sistem statik hesap raporu ve rüzgar testi.",
-        date: "2026-09-02"
-      }
+    const defaultDocs = [
+      { id: "d1", title: "Kadıköy — Onaylı Mimari Proje (Rev-04)", type: "Mimari Proje", project: "Bağdat Caddesi Kentsel Dönüşüm", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" },
+      { id: "d2", title: "Atlas Holding GES — Statik Hesap Raporu", type: "Statik Rapor", project: "Dilovası 1.2 MWp Çatı GES", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" }
     ];
 
-    const initialStock = [
-      {
-        id: "stk-1",
-        code: "STK-DM-14",
-        name: "B420C Nervürlü İnşaat Demiri Ø14mm",
-        category: "İnşaat & Kaba",
-        qty: 48,
-        min: 10,
-        unit: "Ton",
-        cost: "24.500 ₺",
-        price: "27.800 ₺",
-        status: "Yeterli"
-      },
-      {
-        id: "stk-2",
-        code: "STK-PV-550",
-        name: "550W Tier-1 TOPCon Solar Güneş Paneli",
-        category: "Enerji & Solar",
-        qty: 2400,
-        min: 200,
-        unit: "Adet",
-        cost: "$72 USD",
-        price: "$95 USD",
-        status: "Yeterli"
-      },
-      {
-        id: "stk-3",
-        code: "STK-BTN-C35",
-        name: "C35/45 Hazır Beton (Katkılı & Su Geçirimsiz)",
-        category: "İnşaat & Kaba",
-        qty: 3,
-        min: 20,
-        unit: "m³",
-        cost: "2.650 ₺",
-        price: "3.100 ₺",
-        status: "Kritik"
-      }
+    const defaultStock = [
+      { id: "s1", code: "STK-DM-14", name: "B420C İnşaat Demiri Ø14mm", qty: 48, unit: "Ton", price: "27.800 ₺", status: "Yeterli" },
+      { id: "s2", code: "STK-PV-550", name: "550W TOPCon Solar Panel", qty: 2400, unit: "Adet", price: "$95 USD", status: "Yeterli" },
+      { id: "s3", code: "STK-BTN-C35", name: "C35/45 Hazır Beton", qty: 3, unit: "m³", price: "3.100 ₺", status: "Kritik" }
     ];
 
-    // Data Loaders
-    function loadData(key, fallback) {
-      try {
-        const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : fallback;
-      } catch(e) {
-        return fallback;
-      }
+    function getStore(k, fb) {
+      try { const d = localStorage.getItem(k); return d ? JSON.parse(d) : fb; } catch(e) { return fb; }
+    }
+    function setStore(k, val) {
+      try { localStorage.setItem(k, JSON.stringify(val)); } catch(e) {}
     }
 
-    function saveData(key, data) {
-      try {
-        localStorage.setItem(key, JSON.stringify(data));
-      } catch(e) {
-        console.error("Storage save error", e);
-      }
+    let cards = getStore('yg_cards_lite', defaultCards);
+    let projects = getStore('yg_projects_lite', defaultProjects);
+    let accounts = getStore('yg_accounts_lite', defaultAccounts);
+    let docs = getStore('yg_docs_lite', defaultDocs);
+    let stock = getStore('yg_stock_lite', defaultStock);
+
+    // Bottom Navigation Switcher
+    function switchNav(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) targetPane.classList.add('active');
+
+      const clickedBtn = Array.from(document.querySelectorAll('.nav-item')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (clickedBtn) clickedBtn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    let cardsData = loadData(STORAGE_KEY_CARDS, initialCards);
-    let projectsData = loadData(STORAGE_KEY_PROJECTS, initialProjects);
-    let accountsData = loadData(STORAGE_KEY_ACCOUNTS, initialAccounts);
-    let docsData = loadData(STORAGE_KEY_DOCS, initialDocs);
-    let stockData = loadData(STORAGE_KEY_STOCK, initialStock);
-
-    // Tab Switcher
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-
-      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
-      if (activeBtn) activeBtn.classList.add('active');
-
-      const target = document.getElementById(tabId);
-      if (target) target.classList.add('active');
+    // Modal Sheet Handlers
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('open');
+      if (id === 'modal-new-doc') populateDocProjectSelect();
     }
-
-    // Modal Handlers
-    function openModal(modalId) {
-      const el = document.getElementById(modalId);
-      if (el) el.classList.add('active');
-    }
-    function closeModal(modalId) {
-      const el = document.getElementById(modalId);
-      if (el) el.classList.remove('active');
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('open');
     }
 
     // Toast
     function showToast(msg, icon = '✅') {
-      const toast = document.getElementById('toast');
+      const t = document.getElementById('toast');
       document.getElementById('toast-icon').textContent = icon;
-      document.getElementById('toast-text').textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3500);
-    }
-
-    // Update Badges & Stats
-    function updateStats() {
-      document.getElementById('badge-cards').textContent = cardsData.length;
-      document.getElementById('badge-projects').textContent = projectsData.length;
-      document.getElementById('badge-accounts').textContent = accountsData.length;
-      document.getElementById('badge-docs').textContent = docsData.length;
-      document.getElementById('badge-stock').textContent = stockData.length;
-
-      document.getElementById('stat-total-cards').textContent = cardsData.length;
-      const companies = new Set(cardsData.map(c => c.company.trim()).filter(Boolean));
-      document.getElementById('stat-total-companies').textContent = companies.size;
-      const phones = cardsData.filter(c => c.phone && c.phone.trim().length > 5);
-      document.getElementById('stat-total-phones').textContent = phones.length;
-
-      populateProjectSelectInDocs();
+      document.getElementById('toast-msg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
     }
 
     /* ================================================================
-       OCR & KARTVİZİT TARAMA MOTORU (TESSERACT.JS)
+       1. KARTVİZİT & OCR
        ================================================================ */
-
-    async function handleCardImageSelected(event) {
-      const file = event.target.files[0];
+    async function handleCardSelected(e) {
+      const file = e.target.files[0];
       if (!file) return;
 
       const preview = document.getElementById('card-preview');
-      const progressContainer = document.getElementById('ocr-progress-container');
-      const progressBar = document.getElementById('ocr-progress-fill');
-      const statusText = document.getElementById('ocr-status-text');
+      const loader = document.getElementById('ocr-loader');
 
-      // Show preview
       const reader = new FileReader();
-      reader.onload = function(e) {
-        preview.src = e.target.result;
+      reader.onload = function(evt) {
+        preview.src = evt.target.result;
         preview.style.display = 'block';
       };
       reader.readAsDataURL(file);
 
-      // Start OCR
-      progressContainer.style.display = 'block';
-      progressBar.style.width = '10%';
-      statusText.textContent = "🔍 Yapay Zeka & OCR başlatılıyor (Türkçe & İngilizce)...";
+      loader.style.display = 'block';
+      loader.textContent = '🔍 OCR ile metinler okunuyor...';
 
       try {
         const worker = await Tesseract.createWorker('tur+eng');
-        
-        statusText.textContent = "📖 Kartvizit metinleri taranıyor ve okunuyor...";
-        progressBar.style.width = '45%';
-
         const ret = await worker.recognize(file);
-        progressBar.style.width = '85%';
-        statusText.textContent = "⚙️ Alanlar (İsim, Şirket, Tel, E-posta) otomatik ayrıştırılıyor...";
-
-        const fullText = ret.data.text;
-        console.log("OCR Raw Text:\n", fullText);
-
-        parseOcrText(fullText);
-
-        progressBar.style.width = '100%';
-        statusText.textContent = "✅ Kartvizit başarıyla okundu! Lütfen bilgileri kontrol edip kaydedin.";
-        showToast("Kartvizit metni başarıyla okundu!", "⚡");
-
+        parseCardText(ret.data.text);
         await worker.terminate();
-      } catch (err) {
-        console.error("OCR Hatası:", err);
-        statusText.textContent = "⚠️ Otomatik okuma tamamlanamadı. Bilgileri manuel girebilirsiniz.";
-        showToast("Görsel okunamadı, manuel doldurabilirsiniz.", "⚠️");
+        loader.textContent = '✅ Kartvizit başarıyla okundu!';
+        showToast('Kartvizit okundu!', '⚡');
+      } catch(err) {
+        console.error(err);
+        loader.textContent = '⚠️ Otomatik okunamadı, manuel girebilirsiniz.';
       }
     }
 
-    // Smart Text Parser for Turkish Business Cards
-    function parseOcrText(text) {
+    function parseCardText(text) {
       const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 1);
+      const emailMatch = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/i);
+      const phoneMatch = text.match(/(\+?\d{1,3}[\s-]?)?(\(?\d{3}\)?[\s-]?)?[\d\s-]{6,12}/);
 
-      let foundEmail = "";
-      let foundPhone = "";
-      let foundWebsite = "";
-      let foundTax = "";
-      let foundCompany = "";
-      let foundName = "";
+      if (emailMatch) document.getElementById('card-email').value = emailMatch[1];
+      if (phoneMatch) document.getElementById('card-phone').value = phoneMatch[0].trim();
 
-      // Regexes
-      const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/i;
-      const webRegex = /(www\.[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|https?:\/\/[^\s]+)/i;
-      const phoneRegex = /(\+?\d{1,3}[\s-]?)?(\(?\d{3}\)?[\s-]?)?[\d\s-]{6,12}/;
-
-      for (const line of lines) {
-        // Email
-        if (!foundEmail && emailRegex.test(line)) {
-          foundEmail = line.match(emailRegex)[1];
-        }
-        // Website
-        if (!foundWebsite && webRegex.test(line)) {
-          foundWebsite = line.match(webRegex)[1];
-        }
-        // Phone
-        if (!foundPhone && (line.toLowerCase().includes('tel') || line.toLowerCase().includes('gsm') || line.toLowerCase().includes('mob') || line.includes('+90') || line.startsWith('05') || line.startsWith('5'))) {
-          const match = line.match(phoneRegex);
-          if (match) foundPhone = match[0].trim();
-        }
-        // Company
-        if (!foundCompany && (line.includes('A.Ş') || line.includes('Ltd') || line.includes('Şti') || line.includes('Holding') || line.includes('Grup') || line.includes('Group') || line.includes('İnşaat') || line.includes('Mimarlık') || line.includes('Enerji') || line.includes('Sanayi') || line.includes('Ticaret'))) {
-          foundCompany = line;
-        }
-        // Tax
-        if (!foundTax && (line.toLowerCase().includes('v.d') || line.toLowerCase().includes('vergi') || line.toLowerCase().includes('vkn'))) {
-          foundTax = line;
+      for (const l of lines) {
+        if (!document.getElementById('card-company').value && (l.includes('A.Ş') || l.includes('Ltd') || l.includes('Holding') || l.includes('İnşaat') || l.includes('Mimarlık') || l.includes('Grup'))) {
+          document.getElementById('card-company').value = l;
         }
       }
-
-      // Name estimation: Often 1st or 2nd non-company line
-      for (const line of lines) {
-        if (line !== foundCompany && line !== foundEmail && line !== foundWebsite && !line.match(/\d{4}/) && line.split(' ').length >= 2 && line.split(' ').length <= 4) {
-          if (!line.toLowerCase().includes('sanayi') && !line.toLowerCase().includes('ticaret') && !line.toLowerCase().includes('cad') && !line.toLowerCase().includes('mah')) {
-            foundName = line;
+      for (const l of lines) {
+        if (l !== document.getElementById('card-company').value && !l.includes('@') && !l.match(/\d{4}/) && l.split(' ').length >= 2 && l.split(' ').length <= 4) {
+          if (!document.getElementById('card-name').value) {
+            document.getElementById('card-name').value = l;
             break;
           }
         }
       }
-
-      // Set input values
-      if (foundName) document.getElementById('ocr-name').value = foundName;
-      if (foundCompany) document.getElementById('ocr-company').value = foundCompany;
-      if (foundPhone) document.getElementById('ocr-phone').value = foundPhone;
-      if (foundEmail) document.getElementById('ocr-email').value = foundEmail;
-      if (foundWebsite) document.getElementById('ocr-website').value = foundWebsite;
-      if (foundTax) document.getElementById('ocr-tax').value = foundTax;
-      document.getElementById('ocr-notes').value = "Taranan Metin Özeti: " + lines.slice(0, 3).join(' | ');
     }
 
-    function resetOcrForm() {
-      document.getElementById('ocr-card-form').reset();
-      document.getElementById('card-preview').style.display = 'none';
-      document.getElementById('ocr-status-text').textContent = '';
-      document.getElementById('ocr-progress-container').style.display = 'none';
-    }
-
-    function saveScannedCard(event) {
-      event.preventDefault();
-
-      const newCard = {
-        id: "c-" + Date.now(),
-        name: document.getElementById('ocr-name').value.trim(),
-        company: document.getElementById('ocr-company').value.trim(),
-        role: document.getElementById('ocr-role').value.trim(),
-        phone: document.getElementById('ocr-phone').value.trim(),
-        email: document.getElementById('ocr-email').value.trim(),
-        website: document.getElementById('ocr-website').value.trim(),
-        address: document.getElementById('ocr-address').value.trim(),
-        tax: document.getElementById('ocr-tax').value.trim(),
-        category: document.getElementById('ocr-category').value,
-        notes: document.getElementById('ocr-notes').value.trim(),
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-
-      cardsData.unshift(newCard);
-      saveData(STORAGE_KEY_CARDS, cardsData);
-
-      // Also create a Cari Kartı automatically if it doesn't exist
-      const existsAcc = accountsData.some(a => a.company.toLowerCase() === newCard.company.toLowerCase());
-      if (!existsAcc && newCard.company) {
-        accountsData.unshift({
-          id: "acc-" + Date.now(),
-          company: newCard.company,
-          type: newCard.category === 'Tedarikçi' ? 'Tedarikçi' : 'Müşteri',
-          contact: newCard.name + (newCard.role ? ' — ' + newCard.role : ''),
-          taxOffice: newCard.tax ? newCard.tax.split('/')[0] : '',
-          taxNo: newCard.tax && newCard.tax.includes('/') ? newCard.tax.split('/')[1] : '',
-          phone: newCard.phone,
-          email: newCard.email,
-          address: newCard.address,
-          balance: "0,00 ₺ (Yeni Cari)"
-        });
-        saveData(STORAGE_KEY_ACCOUNTS, accountsData);
-      }
-
-      // Send to Google Sheets Webhook in background
-      sendRowToGoogleSheets("Müşteriler", [
-        newCard.createdAt,
-        newCard.name,
-        newCard.company,
-        newCard.role,
-        newCard.phone,
-        newCard.email,
-        newCard.website,
-        newCard.address,
-        newCard.tax,
-        newCard.category,
-        newCard.notes
-      ]);
-
-      renderCards();
-      renderAccounts();
-      updateStats();
-      resetOcrForm();
-      showToast("Kartvizit kaydedildi ve Google Sheets'e eklendi!", "📇");
-    }
-
-    function renderCards(filterList = null) {
-      const container = document.getElementById('cards-container');
-      const list = filterList || cardsData;
-
-      if (list.length === 0) {
-        container.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: #ffffff; border-radius: var(--radius-lg); border: 1px dashed var(--border-color); color: var(--text-muted);">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📇</div>
-            <div style="font-weight: 800; font-size: 1rem; color: var(--primary-navy);">Kayıtlı Kartvizit Bulunamadı</div>
-            <p style="font-size: 0.82rem; margin-top: 4px;">Yukarıdaki kameradan veya görsel yükleyerek yeni kartvizit ekleyebilirsiniz.</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = list.map(c => `
-        <div class="biz-card">
-          <div>
-            <div class="biz-card-header">
-              <div class="biz-card-avatar">${c.name ? c.name.charAt(0).toUpperCase() : 'K'}</div>
-              <div class="biz-card-title">
-                <div class="biz-card-name">${escapeHtml(c.name)}</div>
-                <div class="biz-card-company">${escapeHtml(c.company || 'Şirket Belirtilmedi')}</div>
-                <div class="biz-card-role">${escapeHtml(c.role || c.category || 'Müşteri')}</div>
-              </div>
-              <span class="badge badge-success">${escapeHtml(c.category || 'Müşteri')}</span>
-            </div>
-
-            <div class="biz-card-details">
-              ${c.phone ? `
-                <div class="biz-detail-row">
-                  <span class="biz-detail-icon">📞</span>
-                  <a href="tel:${c.phone}" style="color: inherit; text-decoration: none; font-weight: 600;">${escapeHtml(c.phone)}</a>
-                </div>
-              ` : ''}
-              ${c.email ? `
-                <div class="biz-detail-row">
-                  <span class="biz-detail-icon">✉️</span>
-                  <a href="mailto:${c.email}" style="color: #0284c7; text-decoration: none;">${escapeHtml(c.email)}</a>
-                </div>
-              ` : ''}
-              ${c.website ? `
-                <div class="biz-detail-row">
-                  <span class="biz-detail-icon">🌐</span>
-                  <a href="${c.website.startsWith('http') ? c.website : 'https://' + c.website}" target="_blank" style="color: #0284c7; text-decoration: none;">${escapeHtml(c.website)}</a>
-                </div>
-              ` : ''}
-              ${c.address ? `
-                <div class="biz-detail-row">
-                  <span class="biz-detail-icon">📍</span>
-                  <span style="font-size: 0.76rem;">${escapeHtml(c.address)}</span>
-                </div>
-              ` : ''}
-              ${c.notes ? `
-                <div class="biz-detail-row" style="color: #64748b; font-style: italic; font-size: 0.74rem;">
-                  <span class="biz-detail-icon">📝</span>
-                  <span>${escapeHtml(c.notes)}</span>
-                </div>
-              ` : ''}
-            </div>
-          </div>
-
-          <div class="biz-card-actions">
-            <div style="display: flex; gap: 4px;">
-              <button class="btn btn-outline btn-sm" onclick="showCardQr('${c.id}')" title="Kişi QR Kodunu Göster">
-                📱 QR Kod
-              </button>
-              <button class="btn btn-outline btn-sm" onclick="downloadSingleVcf('${c.id}')" title="vCard (.vcf) olarak İndir">
-                ⬇️ vCard
-              </button>
-              ${c.phone ? `
-                <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}" target="_blank" class="btn btn-green btn-sm" title="WhatsApp Mesaj Gönder">
-                  💬 WP
-                </a>
-              ` : ''}
-            </div>
-            <button class="btn btn-outline btn-sm" style="color: #ef4444; border-color: #fee2e2;" onclick="deleteCard('${c.id}')" title="Sil">
-              🗑️
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function filterCards() {
-      const q = document.getElementById('search-cards').value.toLowerCase().trim();
-      const cat = document.getElementById('filter-card-category').value;
-
-      const filtered = cardsData.filter(c => {
-        const matchesQ = !q || (c.name && c.name.toLowerCase().includes(q)) || (c.company && c.company.toLowerCase().includes(q)) || (c.phone && c.phone.includes(q)) || (c.email && c.email.toLowerCase().includes(q));
-        const matchesCat = !cat || c.category === cat;
-        return matchesQ && matchesCat;
-      });
-
-      renderCards(filtered);
-    }
-
-    function deleteCard(id) {
-      if (!confirm("Bu kartviziti silmek istediğinize emin misiniz?")) return;
-      cardsData = cardsData.filter(c => c.id !== id);
-      saveData(STORAGE_KEY_CARDS, cardsData);
-      renderCards();
-      updateStats();
-      showToast("Kartvizit silindi.", "🗑️");
-    }
-
-    // QR Code Modal for Card
-    function showCardQr(id) {
-      const card = cardsData.find(c => c.id === id);
-      if (!card) return;
-
-      document.getElementById('qr-modal-title').textContent = card.name + " — " + card.company;
-      document.getElementById('qr-modal-contact-details').innerHTML = `
-        <div><strong>Ad Soyad:</strong> ${escapeHtml(card.name)}</div>
-        <div><strong>Firma:</strong> ${escapeHtml(card.company)}</div>
-        <div><strong>Telefon:</strong> ${escapeHtml(card.phone || '-')}</div>
-        <div><strong>E-Posta:</strong> ${escapeHtml(card.email || '-')}</div>
-      `;
-
-      const vcardText = generateVcardString(card);
-      const target = document.getElementById('qrcode-target');
-      target.innerHTML = '';
-      new QRCode(target, {
-        text: vcardText,
-        width: 180,
-        height: 180,
-        colorDark: "#0b2545",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.M
-      });
-
-      openModal('modal-qrcode');
-    }
-
-    function generateVcardString(c) {
-      return `BEGIN:VCARD
-VERSION:3.0
-N:${c.name};;;;
-FN:${c.name}
-ORG:${c.company};
-TITLE:${c.role || ''}
-TEL;TYPE=WORK,VOICE:${c.phone || ''}
-EMAIL;TYPE=PREF,INTERNET:${c.email || ''}
-URL:${c.website || ''}
-ADR;TYPE=WORK:;;${c.address || ''};;;;
-NOTE:${c.notes || ''}
-END:VCARD`;
-    }
-
-    function downloadSingleVcf(id) {
-      const card = cardsData.find(c => c.id === id);
-      if (!card) return;
-      const vcard = generateVcardString(card);
-      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${card.name.replace(/\s+/g, '_')}_YakinGrup.vcf`;
-      link.click();
-      showToast("vCard dosyası indirildi!", "📇");
-    }
-
-    function downloadAllVcf() {
-      if (cardsData.length === 0) return alert("İndirilecek kartvizit bulunamadı.");
-      const allVcf = cardsData.map(c => generateVcardString(c)).join('\n\n');
-      const blob = new Blob([allVcf], { type: 'text/vcard;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `Yakin_Grup_Tum_Kartvizitler.vcf`;
-      link.click();
-      showToast("Tüm kartvizitler tek .vcf olarak indirildi!", "📇");
-    }
-
-    /* ================================================================
-       İNŞAAT PROJELERİ MOTORU
-       ================================================================ */
-
-    function renderProjects() {
-      const q = document.getElementById('search-projects').value.toLowerCase().trim();
-      const statusFilter = document.getElementById('filter-project-status').value;
-      const tbody = document.getElementById('projects-table-body');
-
-      const filtered = projectsData.filter(p => {
-        const matchesQ = !q || p.name.toLowerCase().includes(q) || p.client.toLowerCase().includes(q) || p.location.toLowerCase().includes(q) || p.code.toLowerCase().includes(q);
-        const matchesS = !statusFilter || p.status === statusFilter;
-        return matchesQ && matchesS;
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 2rem; color: #64748b;">Kayıtlı inşaat projesi bulunamadı.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(p => `
-        <tr>
-          <td>
-            <div style="font-weight: 800; color: var(--primary-navy);">${escapeHtml(p.name)}</div>
-            <div style="font-size: 0.72rem; color: #64748b; font-family: monospace;">${escapeHtml(p.code)}</div>
-          </td>
-          <td><span class="badge badge-purple">${escapeHtml(p.type)}</span></td>
-          <td><strong>${escapeHtml(p.client)}</strong></td>
-          <td>📍 ${escapeHtml(p.location)}</td>
-          <td><strong style="color: #059669;">${escapeHtml(p.budget)}</strong></td>
-          <td style="min-width: 120px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div style="flex: 1; height: 7px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
-                <div style="height: 100%; width: ${p.progress}%; background: linear-gradient(90deg, #10b981, #059669);"></div>
-              </div>
-              <span style="font-size: 0.74rem; font-weight: 800;">%${p.progress}</span>
-            </div>
-          </td>
-          <td>
-            <span class="badge ${p.status === 'Tamamlandı' ? 'badge-success' : p.status === 'Kaba İnşaat' ? 'badge-warning' : 'badge-info'}">
-              ${escapeHtml(p.status)}
-            </span>
-          </td>
-          <td style="text-align: right;">
-            <button class="btn btn-outline btn-sm" onclick="filterDocsByProject('${p.name}')" title="Proje Dökümanlarını Gör">
-              📁 Dökümanlar
-            </button>
-            <button class="btn btn-outline btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')">
-              🗑️
-            </button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function openNewProjectModal() {
-      document.getElementById('form-new-project').reset();
-      openModal('modal-project');
-    }
-
-    function saveNewProject(event) {
-      event.preventDefault();
-      const newPrj = {
-        id: "prj-" + Date.now(),
-        code: document.getElementById('prj-code').value.trim(),
-        name: document.getElementById('prj-name').value.trim(),
-        type: document.getElementById('prj-type').value,
-        client: document.getElementById('prj-client').value.trim() || 'Yakın Grup',
-        location: document.getElementById('prj-location').value.trim() || 'İstanbul',
-        budget: document.getElementById('prj-budget').value.trim() || '0 ₺',
-        progress: parseInt(document.getElementById('prj-progress').value) || 0,
-        status: document.getElementById('prj-status').value,
-        details: document.getElementById('prj-details').value.trim()
-      };
-
-      projectsData.unshift(newPrj);
-      saveData(STORAGE_KEY_PROJECTS, projectsData);
-
-      sendRowToGoogleSheets("İnşaat Projeleri", [
-        new Date().toISOString().split('T')[0],
-        newPrj.code,
-        newPrj.name,
-        newPrj.type,
-        newPrj.client,
-        newPrj.location,
-        newPrj.budget,
-        `%${newPrj.progress}`,
-        newPrj.status,
-        newPrj.details
-      ]);
-
-      closeModal('modal-project');
-      renderProjects();
-      updateStats();
-      showToast("İnşaat projesi kaydedildi & Google Sheets'e eklendi!", "🏗️");
-    }
-
-    function deleteProject(id) {
-      if (!confirm("Bu inşaat projesini silmek istediğinize emin misiniz?")) return;
-      projectsData = projectsData.filter(p => p.id !== id);
-      saveData(STORAGE_KEY_PROJECTS, projectsData);
-      renderProjects();
-      updateStats();
-      showToast("Proje silindi.", "🗑️");
-    }
-
-    /* ================================================================
-       CARİ KARTLARI MOTORU
-       ================================================================ */
-
-    function renderAccounts() {
-      const q = document.getElementById('search-accounts').value.toLowerCase().trim();
-      const typeFilter = document.getElementById('filter-account-type').value;
-      const tbody = document.getElementById('accounts-table-body');
-
-      const filtered = accountsData.filter(a => {
-        const matchesQ = !q || a.company.toLowerCase().includes(q) || (a.contact && a.contact.toLowerCase().includes(q)) || (a.taxNo && a.taxNo.includes(q));
-        const matchesT = !typeFilter || a.type === typeFilter;
-        return matchesQ && matchesT;
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 2rem; color: #64748b;">Kayıtlı cari kartı bulunamadı.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(a => `
-        <tr>
-          <td>
-            <div style="font-weight: 800; color: var(--primary-navy);">${escapeHtml(a.company)}</div>
-            <div style="font-size: 0.72rem; color: #64748b;">${escapeHtml(a.address || '')}</div>
-          </td>
-          <td><span class="badge ${a.type === 'Müşteri' ? 'badge-success' : a.type === 'Tedarikçi' ? 'badge-info' : 'badge-warning'}">${escapeHtml(a.type)}</span></td>
-          <td><strong>${escapeHtml(a.contact || '-')}</strong></td>
-          <td>
-            <div>${escapeHtml(a.taxOffice || '-')}</div>
-            <div style="font-size: 0.72rem; color: #64748b; font-family: monospace;">VKN: ${escapeHtml(a.taxNo || '-')}</div>
-          </td>
-          <td>
-            <div>${escapeHtml(a.phone || '-')}</div>
-            <div style="font-size: 0.72rem; color: #0284c7;">${escapeHtml(a.email || '')}</div>
-          </td>
-          <td><strong style="color: ${a.balance && a.balance.includes('Borç') ? '#ef4444' : '#059669'};">${escapeHtml(a.balance || '0,00 ₺')}</strong></td>
-          <td style="text-align: right;">
-            <button class="btn btn-outline btn-sm" style="color: #ef4444;" onclick="deleteAccount('${a.id}')">
-              🗑️
-            </button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function openNewAccountModal() {
-      document.getElementById('form-new-account').reset();
-      openModal('modal-account');
-    }
-
-    function saveNewAccount(event) {
-      event.preventDefault();
-      const newAcc = {
-        id: "acc-" + Date.now(),
-        company: document.getElementById('acc-company').value.trim(),
-        type: document.getElementById('acc-type').value,
-        contact: document.getElementById('acc-contact').value.trim(),
-        taxOffice: document.getElementById('acc-tax-office').value.trim(),
-        taxNo: document.getElementById('acc-tax-no').value.trim(),
-        phone: document.getElementById('acc-phone').value.trim(),
-        email: document.getElementById('acc-email').value.trim(),
-        address: document.getElementById('acc-address').value.trim(),
-        balance: "0,00 ₺ (Yeni Cari)"
-      };
-
-      accountsData.unshift(newAcc);
-      saveData(STORAGE_KEY_ACCOUNTS, accountsData);
-
-      sendRowToGoogleSheets("Cari Kartları", [
-        new Date().toISOString().split('T')[0],
-        newAcc.company,
-        newAcc.type,
-        newAcc.contact,
-        newAcc.taxOffice,
-        newAcc.taxNo,
-        newAcc.phone,
-        newAcc.email,
-        newAcc.address,
-        newAcc.balance
-      ]);
-
-      closeModal('modal-account');
-      renderAccounts();
-      updateStats();
-      showToast("Cari hesap kartı kaydedildi & Google Sheets'e eklendi!", "📑");
-    }
-
-    function deleteAccount(id) {
-      if (!confirm("Bu cari kartı silmek istediğinize emin misiniz?")) return;
-      accountsData = accountsData.filter(a => a.id !== id);
-      saveData(STORAGE_KEY_ACCOUNTS, accountsData);
-      renderAccounts();
-      updateStats();
-      showToast("Cari kart silindi.", "🗑️");
-    }
-
-    /* ================================================================
-       PROJE DÖKÜMANLARI & ARŞİV MOTORU
-       ================================================================ */
-
-    function populateProjectSelectInDocs() {
-      const select = document.getElementById('doc-project-select');
-      if (!select) return;
-      select.innerHTML = projectsData.map(p => `<option value="${escapeHtml(p.name)}">${escapeHtml(p.name)} (${p.code})</option>`).join('');
-    }
-
-    function renderDocuments(filterList = null) {
-      const container = document.getElementById('docs-container');
-      const q = document.getElementById('search-docs').value.toLowerCase().trim();
-      const typeFilter = document.getElementById('filter-doc-type').value;
-
-      const list = filterList || docsData.filter(d => {
-        const matchesQ = !q || d.title.toLowerCase().includes(q) || d.projectName.toLowerCase().includes(q) || (d.notes && d.notes.toLowerCase().includes(q));
-        const matchesT = !typeFilter || d.type === typeFilter;
-        return matchesQ && matchesT;
-      });
-
-      if (list.length === 0) {
-        container.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: #ffffff; border-radius: var(--radius-lg); border: 1px dashed var(--border-color); color: var(--text-muted);">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📁</div>
-            <div style="font-weight: 800; font-size: 1rem; color: var(--primary-navy);">Kayıtlı Proje Dökümanı Bulunamadı</div>
-            <p style="font-size: 0.82rem; margin-top: 4px;">Mimari, statik veya şartname dosyalarını Drive bağlantısı ile ekleyebilirsiniz.</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = list.map(d => `
-        <div class="biz-card">
-          <div>
-            <div class="biz-card-header">
-              <div class="biz-card-avatar" style="background: #e0f2fe; color: #0284c7;">📄</div>
-              <div class="biz-card-title">
-                <div class="biz-card-name" style="font-size: 0.95rem;">${escapeHtml(d.title)}</div>
-                <div class="biz-card-company" style="color: #0b2545;">🏗️ ${escapeHtml(d.projectName)}</div>
-                <div class="biz-card-role">${escapeHtml(d.date || '')}</div>
-              </div>
-              <span class="badge badge-info">${escapeHtml(d.type)}</span>
-            </div>
-
-            <div class="biz-card-details">
-              ${d.notes ? `<div>📝 <em>${escapeHtml(d.notes)}</em></div>` : ''}
-              <div style="display: flex; align-items: center; gap: 6px; font-size: 0.76rem; color: #059669; font-weight: 700; margin-top: 4px;">
-                <span>☁️ Google Drive & Bulut Arşivinde</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="biz-card-actions">
-            <a href="${d.driveUrl || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing'}" target="_blank" class="btn btn-primary btn-sm">
-              👁️ Dökümanı Aç / İndir ↗
-            </a>
-            <button class="btn btn-outline btn-sm" style="color: #ef4444;" onclick="deleteDoc('${d.id}')">
-              🗑️
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function filterDocsByProject(projectName) {
-      switchTab('tab-docs');
-      document.getElementById('search-docs').value = projectName;
-      renderDocuments();
-    }
-
-    function openNewDocModal() {
-      populateProjectSelectInDocs();
-      document.getElementById('form-new-doc').reset();
-      openModal('modal-doc');
-    }
-
-    function saveNewDocument(event) {
-      event.preventDefault();
-      const newDoc = {
-        id: "doc-" + Date.now(),
-        title: document.getElementById('doc-title').value.trim(),
-        type: document.getElementById('doc-type').value,
-        projectName: document.getElementById('doc-project-select').value,
-        driveUrl: document.getElementById('doc-drive-url').value.trim() || `https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing`,
-        notes: document.getElementById('doc-notes').value.trim(),
+    function saveCard(e) {
+      e.preventDefault();
+      const newC = {
+        id: 'c_' + Date.now(),
+        name: document.getElementById('card-name').value.trim(),
+        company: document.getElementById('card-company').value.trim(),
+        role: document.getElementById('card-role').value.trim(),
+        phone: document.getElementById('card-phone').value.trim(),
+        email: document.getElementById('card-email').value.trim(),
+        category: document.getElementById('card-category').value,
+        notes: document.getElementById('card-notes').value.trim(),
         date: new Date().toISOString().split('T')[0]
       };
 
-      docsData.unshift(newDoc);
-      saveData(STORAGE_KEY_DOCS, docsData);
+      cards.unshift(newC);
+      setStore('yg_cards_lite', cards);
 
-      sendRowToGoogleSheets("Proje Dökümanları", [
-        newDoc.date,
-        newDoc.title,
-        newDoc.type,
-        newDoc.projectName,
-        newDoc.driveUrl,
-        newDoc.notes
+      // Auto Send to Google Sheets Webhook
+      postToWebhook('Müşteriler', [
+        newC.date, newC.name, newC.company, newC.role, newC.phone, newC.email, newC.category, newC.notes
       ]);
 
-      closeModal('modal-doc');
-      renderDocuments();
-      updateStats();
-      showToast("Proje dökümanı kaydedildi & Google Sheets'e eklendi!", "📁");
+      renderCards();
+      document.getElementById('card-form').reset();
+      document.getElementById('card-preview').style.display = 'none';
+      document.getElementById('ocr-loader').style.display = 'none';
+      showToast('Kartvizit kaydedildi & Sheets ile senkronize!', '📇');
     }
 
-    function deleteDoc(id) {
-      if (!confirm("Bu döküman kaydını silmek istediğinize emin misiniz?")) return;
-      docsData = docsData.filter(d => d.id !== id);
-      saveData(STORAGE_KEY_DOCS, docsData);
-      renderDocuments();
-      updateStats();
-      showToast("Döküman kaydı silindi.", "🗑️");
-    }
+    function renderCards() {
+      const q = document.getElementById('search-cards').value.toLowerCase().trim();
+      const list = document.getElementById('cards-list');
 
-    /* ================================================================
-       STOK & MALZEME MOTORU
-       ================================================================ */
-
-    function renderStock() {
-      const q = document.getElementById('search-stock').value.toLowerCase().trim();
-      const catFilter = document.getElementById('filter-stock-category').value;
-      const tbody = document.getElementById('stock-table-body');
-
-      const filtered = stockData.filter(s => {
-        const matchesQ = !q || s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q);
-        const matchesC = !catFilter || s.category === catFilter;
-        return matchesQ && matchesC;
-      });
+      const filtered = cards.filter(c => !q || (c.name && c.name.toLowerCase().includes(q)) || (c.company && c.company.toLowerCase().includes(q)) || (c.phone && c.phone.includes(q)));
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding: 2rem; color: #64748b;">Kayıtlı stok/malzeme bulunamadı.</td></tr>`;
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Kayıt bulunamadı.</div>`;
         return;
       }
 
-      tbody.innerHTML = filtered.map(s => {
-        const isCritical = s.qty <= s.min;
-        return `
-          <tr>
-            <td><strong style="font-family: monospace; color: var(--primary-navy);">${escapeHtml(s.code)}</strong></td>
-            <td><strong>${escapeHtml(s.name)}</strong></td>
-            <td><span class="badge badge-purple">${escapeHtml(s.category)}</span></td>
-            <td><strong style="font-size: 1rem; color: ${isCritical ? '#ef4444' : '#059669'};">${s.qty} ${escapeHtml(s.unit)}</strong></td>
-            <td>${s.min} ${escapeHtml(s.unit)}</td>
-            <td>${escapeHtml(s.cost || '-')}</td>
-            <td><strong style="color: #0b2545;">${escapeHtml(s.price || '-')}</strong></td>
-            <td>
-              <span class="badge ${isCritical ? 'badge-danger' : 'badge-success'}">
-                ${isCritical ? '⚠️ Kritik Stok' : '● Yeterli'}
-              </span>
-            </td>
-            <td style="text-align: right;">
-              <button class="btn btn-outline btn-sm" style="color: #ef4444;" onclick="deleteStock('${s.id}')">
-                🗑️
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      list.innerHTML = filtered.map(c => `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div style="display:flex; gap: 10px; align-items: center;">
+              <div class="card-item-avatar">${c.name ? c.name.charAt(0).toUpperCase() : 'K'}</div>
+              <div>
+                <div class="card-item-title">${escapeHtml(c.name)}</div>
+                <div class="card-item-sub">${escapeHtml(c.company)}</div>
+                <div class="card-item-meta">${escapeHtml(c.role || c.category)}</div>
+              </div>
+            </div>
+            <span class="badge badge-green">${escapeHtml(c.category)}</span>
+          </div>
+
+          ${c.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic;">📝 ${escapeHtml(c.notes)}</div>` : ''}
+
+          <div class="quick-actions-row">
+            ${c.phone ? `
+              <a href="tel:${c.phone}" class="btn btn-secondary btn-sm">📞 Ara</a>
+              <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
+            ` : ''}
+            ${c.email ? `<a href="mailto:${c.email}" class="btn btn-secondary btn-sm">✉️ E-Posta</a>` : ''}
+            <button class="btn btn-secondary btn-sm" onclick="showCardQr('${c.id}')">📱 QR</button>
+            <button class="btn btn-secondary btn-sm" onclick="downloadVcf('${c.id}')">⬇️ vCard</button>
+            <button class="btn btn-secondary btn-sm" style="color: #ef4444; margin-left: auto;" onclick="deleteCard('${c.id}')">🗑️</button>
+          </div>
+        </div>
+      `).join('');
     }
 
-    function openNewStockModal() {
-      document.getElementById('form-new-stock').reset();
-      openModal('modal-stock');
+    function deleteCard(id) {
+      if (!confirm('Silinsin mi?')) return;
+      cards = cards.filter(c => c.id !== id);
+      setStore('yg_cards_lite', cards);
+      renderCards();
+      showToast('Silindi');
     }
 
-    function saveNewStock(event) {
-      event.preventDefault();
-      const newStk = {
-        id: "stk-" + Date.now(),
-        code: document.getElementById('stk-code').value.trim(),
-        name: document.getElementById('stk-name').value.trim(),
-        category: document.getElementById('stk-category').value,
-        unit: document.getElementById('stk-unit').value.trim() || 'Adet',
-        qty: parseFloat(document.getElementById('stk-qty').value) || 0,
-        min: parseFloat(document.getElementById('stk-min').value) || 0,
-        cost: document.getElementById('stk-cost').value.trim(),
-        price: document.getElementById('stk-price').value.trim(),
-        status: (parseFloat(document.getElementById('stk-qty').value) <= parseFloat(document.getElementById('stk-min').value)) ? 'Kritik' : 'Yeterli'
-      };
+    function showCardQr(id) {
+      const c = cards.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById('qr-title').textContent = c.name;
+      document.getElementById('qr-sub').textContent = `${c.company} — ${c.phone || ''}`;
 
-      stockData.unshift(newStk);
-      saveData(STORAGE_KEY_STOCK, stockData);
-
-      sendRowToGoogleSheets("Stok", [
-        new Date().toISOString().split('T')[0],
-        newStk.code,
-        newStk.name,
-        newStk.category,
-        newStk.qty,
-        newStk.unit,
-        newStk.min,
-        newStk.cost,
-        newStk.price,
-        newStk.status
-      ]);
-
-      closeModal('modal-stock');
-      renderStock();
-      updateStats();
-      showToast("Stok kartı kaydedildi & Google Sheets'e eklendi!", "📦");
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\nTEL:${c.phone||''}\nEMAIL:${c.email||''}\nEND:VCARD`;
+      const box = document.getElementById('qrcode-box');
+      box.innerHTML = '';
+      new QRCode(box, { text: vcard, width: 160, height: 160, colorDark: "#0b2545" });
+      openModal('modal-qr');
     }
 
-    function deleteStock(id) {
-      if (!confirm("Bu stok kartını silmek istediğinize emin misiniz?")) return;
-      stockData = stockData.filter(s => s.id !== id);
-      saveData(STORAGE_KEY_STOCK, stockData);
-      renderStock();
-      updateStats();
-      showToast("Stok kartı silindi.", "🗑️");
+    function downloadVcf(id) {
+      const c = cards.find(x => x.id === id);
+      if (!c) return;
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\nTEL:${c.phone||''}\nEMAIL:${c.email||''}\nEND:VCARD`;
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${c.name.replace(/\s+/g,'_')}.vcf`;
+      a.click();
+      showToast('vCard İndirildi');
+    }
+
+    function exportCardsCsv() {
+      const rows = [
+        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Kategori", "Notlar"],
+        ...cards.map(c => [c.date, c.name, c.company, c.role, c.phone, c.email, c.category, c.notes])
+      ];
+      downloadCsv("Yakin_Grup_Musteriler.csv", rows);
     }
 
     /* ================================================================
-       GOOGLE SHEETS / GOOGLE APPS SCRIPT ENTEGRASYONU
+       2. PROJELER
        ================================================================ */
+    function renderProjects() {
+      const q = document.getElementById('search-projects').value.toLowerCase().trim();
+      const list = document.getElementById('projects-list');
 
-    function openAppsScriptModal() {
-      const savedWebhook = localStorage.getItem(STORAGE_KEY_WEBHOOK) || DEFAULT_GAS_WEBHOOK_URL;
-      document.getElementById('gas-webhook-url').value = savedWebhook;
-      openModal('modal-appsscript');
-    }
+      const filtered = projects.filter(p => !q || p.name.toLowerCase().includes(q) || p.client.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
 
-    function saveWebhookUrl() {
-      const url = document.getElementById('gas-webhook-url').value.trim() || DEFAULT_GAS_WEBHOOK_URL;
-      localStorage.setItem(STORAGE_KEY_WEBHOOK, url);
-      closeModal('modal-appsscript');
-      showToast("Apps Script Webhook URL başarıyla kaydedildi!", "⚡");
-    }
-
-    function copyAppsScriptCode() {
-      const code = document.getElementById('gas-code-content').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        showToast("Apps Script kodu panoya kopyalandı!", "📋");
-      }).catch(() => {
-        showToast("Kopyalama başarısız, lütfen metni seçip kopyalayın.", "⚠️");
-      });
-    }
-
-    async function sendRowToGoogleSheets(sheetName, rowArray) {
-      const webhookUrl = localStorage.getItem(STORAGE_KEY_WEBHOOK) || DEFAULT_GAS_WEBHOOK_URL;
-      if (!webhookUrl) {
-        console.log(`[Google Sheets Local Cache]: ${sheetName} sekmesine yazıldı.`);
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Proje bulunamadı.</div>`;
         return;
       }
 
+      list.innerHTML = filtered.map(p => `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div>
+              <div class="card-item-title">${escapeHtml(p.name)}</div>
+              <div class="card-item-meta">${escapeHtml(p.code)} • ${escapeHtml(p.client)} • 📍 ${escapeHtml(p.location)}</div>
+            </div>
+            <span class="badge ${p.status === 'Tamamlandı' ? 'badge-green' : 'badge-blue'}">${escapeHtml(p.status)}</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
+            <div style="flex:1; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
+              <div style="height:100%; width:${p.progress}%; background: var(--green);"></div>
+            </div>
+            <span style="font-size: 0.75rem; font-weight: 800;">%${p.progress}</span>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem;">
+            <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget)}</strong>
+            <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${p.name}')">📁 Evrakları Aç</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function saveProject(e) {
+      e.preventDefault();
+      const newP = {
+        id: 'p_' + Date.now(),
+        code: document.getElementById('p-code').value.trim(),
+        name: document.getElementById('p-name').value.trim(),
+        type: document.getElementById('p-type').value,
+        client: document.getElementById('p-client').value.trim(),
+        location: document.getElementById('p-loc').value.trim(),
+        budget: document.getElementById('p-budget').value.trim(),
+        progress: parseInt(document.getElementById('p-prog').value) || 0,
+        status: document.getElementById('p-status').value
+      };
+
+      projects.unshift(newP);
+      setStore('yg_projects_lite', projects);
+
+      postToWebhook('İnşaat Projeleri', [
+        new Date().toISOString().split('T')[0], newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, `%${newP.progress}`, newP.status
+      ]);
+
+      closeModal('modal-new-project');
+      renderProjects();
+      showToast('Proje eklendi');
+    }
+
+    /* ================================================================
+       3. CARİLER
+       ================================================================ */
+    function renderAccounts() {
+      const q = document.getElementById('search-accounts').value.toLowerCase().trim();
+      const list = document.getElementById('accounts-list');
+
+      const filtered = accounts.filter(a => !q || a.company.toLowerCase().includes(q) || (a.contact && a.contact.toLowerCase().includes(q)));
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Cari bulunamadı.</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(a => `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div>
+              <div class="card-item-title">${escapeHtml(a.company)}</div>
+              <div class="card-item-meta">${escapeHtml(a.contact || '')} • ${escapeHtml(a.tax || '')}</div>
+            </div>
+            <span class="badge ${a.type === 'Müşteri' ? 'badge-green' : 'badge-blue'}">${escapeHtml(a.type)}</span>
+          </div>
+          ${a.phone ? `
+            <div class="quick-actions-row">
+              <a href="tel:${a.phone}" class="btn btn-secondary btn-sm">📞 ${escapeHtml(a.phone)}</a>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function saveAccount(e) {
+      e.preventDefault();
+      const newA = {
+        id: 'a_' + Date.now(),
+        company: document.getElementById('a-company').value.trim(),
+        type: document.getElementById('a-type').value,
+        contact: document.getElementById('a-contact').value.trim(),
+        phone: document.getElementById('a-phone').value.trim(),
+        tax: document.getElementById('a-tax').value.trim()
+      };
+
+      accounts.unshift(newA);
+      setStore('yg_accounts_lite', accounts);
+
+      postToWebhook('Cari Kartları', [
+        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.tax
+      ]);
+
+      closeModal('modal-new-account');
+      renderAccounts();
+      showToast('Cari eklendi');
+    }
+
+    /* ================================================================
+       4. EVRAKLAR
+       ================================================================ */
+    function populateDocProjectSelect() {
+      const sel = document.getElementById('d-project-select');
+      if (!sel) return;
+      sel.innerHTML = projects.map(p => `<option value="${escapeHtml(p.name)}">${escapeHtml(p.name)}</option>`).join('');
+    }
+
+    function renderDocs(customFilter = null) {
+      const q = customFilter || document.getElementById('search-docs').value.toLowerCase().trim();
+      const list = document.getElementById('docs-list');
+
+      const filtered = docs.filter(d => !q || d.title.toLowerCase().includes(q) || d.project.toLowerCase().includes(q));
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Evrak bulunamadı.</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(d => `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div>
+              <div class="card-item-title">${escapeHtml(d.title)}</div>
+              <div class="card-item-sub">🏗️ ${escapeHtml(d.project)}</div>
+            </div>
+            <span class="badge badge-purple">${escapeHtml(d.type)}</span>
+          </div>
+          <div style="display:flex; justify-content: flex-end; margin-top: 4px;">
+            <a href="${d.url}" target="_blank" class="btn btn-navy btn-sm">👁️ Evrakı Aç ↗</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterDocsToProject(projName) {
+      switchNav('tab-docs');
+      document.getElementById('search-docs').value = projName;
+      renderDocs(projName.toLowerCase());
+    }
+
+    function saveDoc(e) {
+      e.preventDefault();
+      const newD = {
+        id: 'd_' + Date.now(),
+        title: document.getElementById('d-title').value.trim(),
+        type: document.getElementById('d-type').value,
+        project: document.getElementById('d-project-select').value,
+        url: document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing'
+      };
+
+      docs.unshift(newD);
+      setStore('yg_docs_lite', docs);
+
+      postToWebhook('Proje Dökümanları', [
+        new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.url
+      ]);
+
+      closeModal('modal-new-doc');
+      renderDocs();
+      showToast('Evrak eklendi');
+    }
+
+    /* ================================================================
+       5. STOK
+       ================================================================ */
+    function renderStock() {
+      const q = document.getElementById('search-stock').value.toLowerCase().trim();
+      const list = document.getElementById('stock-list');
+
+      const filtered = stock.filter(s => !q || s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q));
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Stok kaydı bulunamadı.</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(s => `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div>
+              <div class="card-item-title">${escapeHtml(s.name)}</div>
+              <div class="card-item-meta">${escapeHtml(s.code)} • ${escapeHtml(s.price || '')}</div>
+            </div>
+            <span class="badge ${s.status === 'Kritik' ? 'badge-red' : 'badge-green'}">${escapeHtml(s.status)}</span>
+          </div>
+          <div style="font-size: 0.95rem; font-weight: 800; color: var(--navy);">
+            ${s.qty} ${escapeHtml(s.unit)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function saveStock(e) {
+      e.preventDefault();
+      const newS = {
+        id: 's_' + Date.now(),
+        code: document.getElementById('s-code').value.trim(),
+        name: document.getElementById('s-name').value.trim(),
+        qty: parseFloat(document.getElementById('s-qty').value) || 0,
+        unit: document.getElementById('s-unit').value.trim(),
+        price: document.getElementById('s-price').value.trim(),
+        status: (parseFloat(document.getElementById('s-qty').value) <= 5) ? 'Kritik' : 'Yeterli'
+      };
+
+      stock.unshift(newS);
+      setStore('yg_stock_lite', stock);
+
+      postToWebhook('Stok', [
+        new Date().toISOString().split('T')[0], newS.code, newS.name, newS.qty, newS.unit, newS.price, newS.status
+      ]);
+
+      closeModal('modal-new-stock');
+      renderStock();
+      showToast('Stok eklendi');
+    }
+
+    /* ================================================================
+       BULUT / GOOGLE SHEETS WEBHOOK
+       ================================================================ */
+    async function postToWebhook(sheetName, rowArray) {
       try {
-        await fetch(webhookUrl, {
+        await fetch(GAS_WEBHOOK_URL, {
           method: 'POST',
           mode: 'no-cors',
           cache: 'no-cache',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
-          body: JSON.stringify({
-            sheet: sheetName,
-            row: rowArray
-          })
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ sheet: sheetName, row: rowArray })
         });
-        console.log(`[Google Sheets Webhook Sync Success]: ${sheetName} ->`, rowArray);
-      } catch (err) {
-        console.error("Google Sheets POST Hatası:", err);
+        console.log(`[Synced]: ${sheetName}`);
+      } catch(err) {
+        console.error("Sync error", err);
       }
     }
 
     function syncAllToGoogleSheets() {
-      showToast("Tüm veriler Google Sheets formatına hazırlanıyor...", "🔄");
-
-      cardsData.forEach(c => {
-        sendRowToGoogleSheets("Müşteriler", [
-          c.createdAt, c.name, c.company, c.role, c.phone, c.email, c.website, c.address, c.tax, c.category, c.notes
-        ]);
-      });
-
-      projectsData.forEach(p => {
-        sendRowToGoogleSheets("İnşaat Projeleri", [
-          new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status, p.details
-        ]);
-      });
-
-      accountsData.forEach(a => {
-        sendRowToGoogleSheets("Cari Kartları", [
-          new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.taxOffice, a.taxNo, a.phone, a.email, a.address, a.balance
-        ]);
-      });
-
-      stockData.forEach(s => {
-        sendRowToGoogleSheets("Stok", [
-          new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.min, s.cost, s.price, s.status
-        ]);
-      });
-
-      setTimeout(() => {
-        showToast("Tüm veriler Google Sheets'e başarıyla senkronize edildi!", "✅");
-      }, 1500);
+      showToast('Sheets senkronizasyonu başladı...', '🔄');
+      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.phone, c.email, c.category, c.notes]));
+      projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status]));
+      accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.tax]));
+      stock.forEach(s => postToWebhook('Stok', [new Date().toISOString().split('T')[0], s.code, s.name, s.qty, s.unit, s.price, s.status]));
+      setTimeout(() => showToast('Tüm veriler Google Sheets ile güncellendi!'), 1500);
     }
 
-    function exportCardsToGoogleSheet() {
-      exportToCsv("Yakin_Grup_Musteriler.csv", [
-        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Web", "Adres", "Vergi No", "Kategori", "Notlar"],
-        ...cardsData.map(c => [c.createdAt, c.name, c.company, c.role, c.phone, c.email, c.website, c.address, c.tax, c.category, c.notes])
-      ]);
-    }
-
-    function exportProjectsToGoogleSheet() {
-      exportToCsv("Yakin_Grup_Insaat_Projeleri.csv", [
-        ["Tarih", "Proje Kodu", "Proje Adı", "Tipi", "İşveren", "Lokasyon", "Bütçe", "İlerleme", "Durum", "Detaylar"],
-        ...projectsData.map(p => [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status, p.details])
-      ]);
-    }
-
-    function exportAccountsToGoogleSheet() {
-      exportToCsv("Yakin_Grup_Cari_Kartlari.csv", [
-        ["Tarih", "Firma Ünvanı", "Cari Tipi", "İlgili Kişi", "Vergi Dairesi", "VKN/TCKN", "Telefon", "E-Posta", "Adres", "Bakiye"],
-        ...accountsData.map(a => [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.taxOffice, a.taxNo, a.phone, a.email, a.address, a.balance])
-      ]);
-    }
-
-    function exportDocsToGoogleSheet() {
-      exportToCsv("Yakin_Grup_Proje_Dokumanlari.csv", [
-        ["Tarih", "Döküman Adı", "Türü", "İlgili Proje", "Drive Linki", "Notlar"],
-        ...docsData.map(d => [d.date, d.title, d.type, d.projectName, d.driveUrl, d.notes])
-      ]);
-    }
-
-    function exportStockToGoogleSheet() {
-      exportToCsv("Yakin_Grup_Stok_Envanter.csv", [
-        ["Tarih", "Stok Kodu", "Malzeme Adı", "Kategori", "Miktar", "Birim", "Kritik Eşik", "Birim Alış", "Birim Satış", "Durum"],
-        ...stockData.map(s => [new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.min, s.cost, s.price, s.status])
-      ]);
-    }
-
-    function exportToCsv(filename, rows) {
-      const processRow = function (row) {
-        return row.map(val => {
-          let str = (val === null || val === undefined) ? '' : String(val);
-          let result = str.replace(/"/g, '""');
-          if (result.search(/("|,|\n)/g) >= 0) result = '"' + result + '"';
-          return result;
-        }).join(';');
-      };
-
-      const csvContent = "\uFEFF" + rows.map(processRow).join('\r\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      link.click();
-      showToast(`${filename} indirildi & Google Sheets ile %100 uyumlu!`, "📊");
+    function downloadCsv(filename, rows) {
+      const csv = "\uFEFF" + rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(';')).join('\r\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
     }
 
     function escapeHtml(str) {
       if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    // Drag and drop for OCR
-    const dropzone = document.getElementById('ocr-dropzone');
-    if (dropzone) {
-      ['dragenter', 'dragover'].forEach(eventName => {
-        dropzone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          dropzone.classList.add('dragover');
-        }, false);
-      });
-      ['dragleave', 'drop'].forEach(eventName => {
-        dropzone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          dropzone.classList.remove('dragover');
-        }, false);
-      });
-      dropzone.addEventListener('drop', (e) => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files && files[0]) {
-          handleCardImageSelected({ target: { files: files } });
-        }
-      });
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     // Init
@@ -2747,9 +1486,8 @@ END:VCARD`;
       renderCards();
       renderProjects();
       renderAccounts();
-      renderDocuments();
+      renderDocs();
       renderStock();
-      updateStats();
     });
   </script>
 </body>
