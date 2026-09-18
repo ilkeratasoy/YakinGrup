@@ -1167,13 +1167,13 @@
        MÜŞTERİ VE PROJE REHBERİ - HAFİF & NATIVE MOTOR
        ================================================================ */
 
-    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwPT02M12bHdhNrVzPXNluU_KIBAx3F3QHnZP0uTitdt0qVkKbSQCI_Qn_pbktQaC6t/exec";
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxxXPW7xTRM8uvTGN2HYlDH5PpuRyM6tCZ3-x6rVRZmOY3Dpk0AS-I3Vq0LfG9-b8MVSA/exec";
     const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
-      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu')) return custom.trim();
+      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe')) return custom.trim();
       return GAS_WEBHOOK_URL;
     }
 
