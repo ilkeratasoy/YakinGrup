@@ -1123,21 +1123,34 @@
     </div>
   </div>
 
-  <!-- SETTINGS MODAL: GEMINI VISION AI KEY -->
+  <!-- SETTINGS MODAL: GEMINI VISION & GOOGLE SHEETS WEBHOOK -->
   <div class="modal-backdrop" id="modal-settings">
-    <div class="modal-sheet">
+    <div class="modal-sheet" style="max-height: 90vh;">
       <div class="sheet-handle"></div>
-      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 6px;">🧠 Yapay Zeka (Vision AI) Ayarı</h3>
-      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; line-height: 1.5;">
-        Kartvizitleri %99 doğrulukla okumak için Google Gemini API anahtarınızı buraya kaydedebilirsiniz. Bu cihazda güvenle saklanır.
-      </p>
-      <div class="form-group" style="margin-bottom: 12px;">
-        <label>Gemini API Anahtarı</label>
-        <input type="password" id="gemini-key-input" placeholder="API Anahtarınızı yapıştırın..." style="font-family: monospace; font-size: 0.8rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 6px;">⚙️ Entegrasyon & Ayarlar</h3>
+      
+      <!-- Gemini Key Section -->
+      <div style="margin-bottom: 14px;">
+        <label style="font-size: 0.78rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px;">🧠 Gemini 3.6 Flash API Anahtarı</label>
+        <input type="password" id="gemini-key-input" placeholder="API Anahtarınızı yapıştırın..." style="font-family: monospace; font-size: 0.8rem; width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;">
+        <span style="font-size: 0.7rem; color: var(--muted);">Kartvizit ve fatura okumada kullanılır (Varsayılan aktif).</span>
       </div>
-      <div style="display: flex; gap: 8px;">
+
+      <!-- Google Sheets Webhook Section -->
+      <div style="margin-bottom: 14px;">
+        <label style="font-size: 0.78rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px;">📊 Google Sheets Webhook URL</label>
+        <input type="url" id="webhook-url-input" placeholder="https://script.google.com/macros/s/.../exec" style="font-family: monospace; font-size: 0.78rem; width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+          <span style="font-size: 0.7rem; color: var(--muted);">Verilerin yazılacağı Apps Script Web App adresi.</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="copyAppsScriptCode()" style="font-size: 0.68rem; padding: 4px 8px;">
+            📋 Apps Script Kodu
+          </button>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
         <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-settings')">Kapat</button>
-        <button type="button" class="btn btn-navy btn-full" onclick="saveGeminiKey()">💾 Kaydet</button>
+        <button type="button" class="btn btn-navy btn-full" onclick="saveSettings()">💾 Ayarları Kaydet</button>
       </div>
     </div>
   </div>
@@ -1155,7 +1168,12 @@
        ================================================================ */
 
     const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyryoSZ78jH4BDgQOEN-AsUAtIIbFen6nr_EuANgTJ5i24MDr38EiHf74UIvhmP88qb/exec";
+    const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
+
+    function getWebhookUrl() {
+      return localStorage.getItem(WEBHOOK_STORAGE_KEY) || GAS_WEBHOOK_URL;
+    }
 
     // Initial Data
     const defaultCards = [
@@ -1245,16 +1263,70 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    function saveGeminiKey() {
-      const val = document.getElementById('gemini-key-input').value.trim();
-      if (val) {
-        localStorage.setItem(GEMINI_STORAGE_KEY, val);
-        showToast('Yapay Zeka API anahtarı kaydedildi!', '🧠');
+    const APPS_SCRIPT_TEMPLATE = `function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheetName = data.sheet || "Alış Faturaları";
+    var row = data.row || [];
+    
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName(sheetName);
+    
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+      if (sheetName === "Alış Faturaları") {
+        sheet.appendRow(["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah", "KDV Tutarı", "Toplam Tutar", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Açıklama"]);
+        sheet.getRange(1, 1, 1, 13).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+      } else if (sheetName === "Müşteriler") {
+        sheet.appendRow(["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Kategori", "Notlar"]);
+        sheet.getRange(1, 1, 1, 8).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+      } else if (sheetName === "İnşaat Projeleri") {
+        sheet.appendRow(["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "İlerleme", "Durum"]);
+        sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+      } else if (sheetName === "Cari Kartları") {
+        sheet.appendRow(["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "Vergi Dairesi / No"]);
+        sheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+      } else if (sheetName === "Stok") {
+        sheet.appendRow(["Tarih", "Stok Kodu", "Malzeme Adı", "Miktar", "Birim", "Fiyat", "Durum"]);
+        sheet.getRange(1, 1, 1, 7).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+      }
+    }
+    
+    sheet.appendRow(row);
+    return ContentService.createTextOutput(JSON.stringify({ status: "success", sheet: sheetName }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+
+    function copyAppsScriptCode() {
+      navigator.clipboard.writeText(APPS_SCRIPT_TEMPLATE).then(() => {
+        showToast('Apps Script kodu panoya kopyalandı! 📋');
+      }).catch(() => {
+        prompt("Aşağıdaki kodu kopyalayıp Google Sheets Apps Script'e yapıştırın:", APPS_SCRIPT_TEMPLATE);
+      });
+    }
+
+    function saveSettings() {
+      const gKey = document.getElementById('gemini-key-input').value.trim();
+      const wUrl = document.getElementById('webhook-url-input').value.trim();
+
+      if (gKey) {
+        localStorage.setItem(GEMINI_STORAGE_KEY, gKey);
       } else {
         localStorage.removeItem(GEMINI_STORAGE_KEY);
-        showToast('API anahtarı temizlendi');
       }
+
+      if (wUrl) {
+        localStorage.setItem(WEBHOOK_STORAGE_KEY, wUrl);
+      } else {
+        localStorage.removeItem(WEBHOOK_STORAGE_KEY);
+      }
+
       closeModal('modal-settings');
+      showToast('Ayarlar başarıyla kaydedildi!', '⚙️');
     }
 
     /* ================================================================
@@ -2339,8 +2411,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
        BULUT / GOOGLE SHEETS WEBHOOK
        ================================================================ */
     async function postToWebhook(sheetName, rowArray) {
+      const url = getWebhookUrl();
+      if (!url) return;
       try {
-        await fetch(GAS_WEBHOOK_URL, {
+        await fetch(url, {
           method: 'POST',
           mode: 'no-cors',
           cache: 'no-cache',
@@ -2382,6 +2456,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const activeKey = getGeminiApiKey();
       const inputEl = document.getElementById('gemini-key-input');
       if (inputEl) inputEl.value = activeKey;
+
+      const webhookEl = document.getElementById('webhook-url-input');
+      if (webhookEl) webhookEl.value = getWebhookUrl();
 
       renderCards();
       renderProjects();
