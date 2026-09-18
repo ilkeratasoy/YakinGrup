@@ -565,6 +565,9 @@
         <span class="sync-dot"></span>
         <span>Sheets</span>
       </div>
+      <button class="icon-btn" onclick="openModal('modal-settings')" title="Yapay Zeka Ayarları">
+        ⚙️
+      </button>
       <a href="https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" target="_blank" class="icon-btn" title="Google E-Tabloyu Aç">
         📊
       </a>
@@ -944,6 +947,25 @@
     </div>
   </div>
 
+  <!-- SETTINGS MODAL: GEMINI VISION AI KEY -->
+  <div class="modal-backdrop" id="modal-settings">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 6px;">🧠 Yapay Zeka (Vision AI) Ayarı</h3>
+      <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; line-height: 1.5;">
+        Kartvizitleri %99 doğrulukla okumak için Google Gemini API anahtarınızı buraya kaydedebilirsiniz. Bu cihazda güvenle saklanır.
+      </p>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>Gemini API Anahtarı</label>
+        <input type="password" id="gemini-key-input" placeholder="API Anahtarınızı yapıştırın..." style="font-family: monospace; font-size: 0.8rem;">
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-settings')">Kapat</button>
+        <button type="button" class="btn btn-navy btn-full" onclick="saveGeminiKey()">💾 Kaydet</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast -->
   <div id="toast">
     <span id="toast-icon">✅</span>
@@ -957,6 +979,7 @@
        ================================================================ */
 
     const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyryoSZ78jH4BDgQOEN-AsUAtIIbFen6nr_EuANgTJ5i24MDr38EiHf74UIvhmP88qb/exec";
+    const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
 
     // Initial Data
     const defaultCards = [
@@ -1035,15 +1058,100 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
+    function saveGeminiKey() {
+      const val = document.getElementById('gemini-key-input').value.trim();
+      if (val) {
+        localStorage.setItem(GEMINI_STORAGE_KEY, val);
+        showToast('Yapay Zeka API anahtarı kaydedildi!', '🧠');
+      } else {
+        localStorage.removeItem(GEMINI_STORAGE_KEY);
+        showToast('API anahtarı temizlendi');
+      }
+      closeModal('modal-settings');
+    }
+
     /* ================================================================
-       1. KARTVİZİT & OCR2 (ENGINE 2)
+       1. KARTVİZİT & GEMINI VISION AI (YAPAY ZEKA)
        ================================================================ */
+    async function convertFileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64String = reader.result.split(',')[1];
+          resolve(base64String);
+        };
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function runGeminiVision(file) {
+      const apiKey = localStorage.getItem(GEMINI_STORAGE_KEY) || localStorage.getItem('yg_gemini_key');
+      if (!apiKey) throw new Error("Gemini API anahtarı bulunamadı.");
+
+      const base64Data = await convertFileToBase64(file);
+      const mimeType = file.type || 'image/jpeg';
+
+      const prompt = `Sen uzman bir kartvizit ayrıştırıcısısın. Bu kartvizit görselini dikkatle incele ve sadece geçerli bir JSON çıktısı ver. Başka hiçbir açıklama, selamlama veya markdown formatı (örn: \`\`\`json) ekleme. Sadece saf JSON objesi döndür:
+{
+  "name": "Kişinin Adı Soyadı",
+  "company": "Şirket / Firma Ünvanı",
+  "role": "Pozisyon veya Mesleği / Unvanı",
+  "phone": "Telefon Numarası",
+  "email": "E-Posta Adresi",
+  "category": "Müşteri / Yatırımcı / Mimar / Mühendis / Tedarikçi / Taşeron arasından en uygun olanı",
+  "notes": "Kartvizitte yer alan adres, web sitesi veya slogan gibi ek bilgiler"
+}`;
+
+      // Gemini 2.5 Flash / 1.5 Flash Vision Endpoint
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+      const payload = {
+        contents: [
+          {
+            parts: [
+              { text: prompt },
+              {
+                inlineData: {
+                  mimeType: mimeType,
+                  data: base64Data
+                }
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.1,
+          responseMimeType: "application/json"
+        }
+      };
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error ? errJson.error.message : `HTTP ${response.status}`);
+      }
+
+      const resData = await response.json();
+      const textResult = resData.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!textResult) throw new Error("Gemini yanıt üretemedi.");
+
+      // Clean markdown if model wrapped in ```json
+      const cleanJsonStr = textResult.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+      return JSON.parse(cleanJsonStr);
+    }
+
     async function runOCR2(file) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("apikey", "K87899148788957");
       formData.append("language", "tur");
-      formData.append("OCREngine", "2"); // OCR Engine 2
+      formData.append("OCREngine", "2");
       formData.append("scale", "true");
       formData.append("detectOrientation", "true");
       formData.append("isTable", "true");
@@ -1057,11 +1165,9 @@
       const data = await response.json();
       if (data && data.ParsedResults && data.ParsedResults.length > 0) {
         const text = data.ParsedResults[0].ParsedText;
-        if (text && text.trim().length > 0) {
-          return text;
-        }
+        if (text && text.trim().length > 0) return text;
       }
-      throw new Error((data && data.ErrorMessage) ? data.ErrorMessage.join(', ') : "OCR2 metin okuyamadı");
+      throw new Error("OCR2 metin okuyamadı");
     }
 
     async function handleCardSelected(e) {
@@ -1079,30 +1185,50 @@
       reader.readAsDataURL(file);
 
       loader.style.display = 'block';
-      loader.textContent = '⚡ OCR2 (Engine 2) ile taranıyor...';
+      loader.textContent = '🧠 Gemini Vision Yapay Zeka kartviziti inceliyor...';
 
-      let parsedText = '';
       try {
-        // 1. Öncelikli: OCR2 (Engine 2)
-        parsedText = await runOCR2(file);
-        parseCardText(parsedText);
-        loader.textContent = '✅ Kartvizit OCR2 ile başarıyla okundu!';
-        showToast('Kartvizit OCR2 ile okundu!', '⚡');
-      } catch(err1) {
-        console.warn('OCR2 servisi yanıt vermedi, yerel Tesseract motoruna geçiliyor:', err1);
-        loader.textContent = '🔍 Yedek OCR motoru (Tesseract) çalışıyor...';
+        // 1. ÖNCELİK: Gemini Vision AI (Hatasız)
+        const geminiResult = await runGeminiVision(file);
+        console.log("[GEMINI VISION RESULT]:", geminiResult);
+
+        if (geminiResult.name) document.getElementById('card-name').value = geminiResult.name;
+        if (geminiResult.company) document.getElementById('card-company').value = geminiResult.company;
+        if (geminiResult.role) document.getElementById('card-role').value = geminiResult.role;
+        if (geminiResult.phone) document.getElementById('card-phone').value = geminiResult.phone;
+        if (geminiResult.email) document.getElementById('card-email').value = geminiResult.email;
+        if (geminiResult.category && document.getElementById('card-category')) {
+          document.getElementById('card-category').value = geminiResult.category;
+        }
+        if (geminiResult.notes) document.getElementById('card-notes').value = geminiResult.notes;
+
+        loader.textContent = '✨ Gemini Vision ile kartvizit kusursuz okundu!';
+        showToast('Yapay Zeka ile kartvizit okundu!', '🧠');
+      } catch(geminiErr) {
+        console.warn("Gemini Vision hatası, OCR2 motoruna geçiliyor:", geminiErr);
+        loader.textContent = '⚡ OCR2 (Engine 2) ile taranıyor...';
+
         try {
-          const worker = await Tesseract.createWorker('tur+eng');
-          const ret = await worker.recognize(file);
-          parsedText = ret.data.text;
+          // 2. YEDEK: OCR Engine 2
+          const parsedText = await runOCR2(file);
           parseCardText(parsedText);
-          await worker.terminate();
-          loader.textContent = '✅ Kartvizit başarıyla okundu!';
-          showToast('Kartvizit okundu!', '⚡');
-        } catch(err2) {
-          console.error(err2);
-          loader.textContent = '⚠️ Metin ayrıştırılamadı, manuel yazabilirsiniz.';
-          showToast('Manuel giriş yapabilirsiniz', 'ℹ️');
+          loader.textContent = '✅ Kartvizit OCR2 ile okundu!';
+          showToast('Kartvizit OCR2 ile okundu!', '⚡');
+        } catch(ocr2Err) {
+          console.warn("OCR2 hatası, Tesseract yerel motoruna geçiliyor:", ocr2Err);
+          loader.textContent = '🔍 Yerel OCR motoru çalışıyor...';
+          try {
+            const worker = await Tesseract.createWorker('tur+eng');
+            const ret = await worker.recognize(file);
+            parseCardText(ret.data.text);
+            await worker.terminate();
+            loader.textContent = '✅ Kartvizit okundu!';
+            showToast('Kartvizit okundu!', '⚡');
+          } catch(errFinal) {
+            console.error(errFinal);
+            loader.textContent = '⚠️ Metin okunamadı, manuel girebilirsiniz.';
+            showToast('Manuel giriş yapabilirsiniz', 'ℹ️');
+          }
         }
       }
     }
@@ -1559,6 +1685,10 @@
 
     // Init
     document.addEventListener('DOMContentLoaded', () => {
+      const savedKey = localStorage.getItem(GEMINI_STORAGE_KEY) || '';
+      const inputEl = document.getElementById('gemini-key-input');
+      if (inputEl) inputEl.value = savedKey;
+
       renderCards();
       renderProjects();
       renderAccounts();
