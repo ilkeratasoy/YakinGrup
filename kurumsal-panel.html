@@ -278,6 +278,24 @@
       border-radius: 8px;
     }
 
+    .filter-pill {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .filter-pill.active {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
     /* Compact Scanner Card */
     .scanner-card {
       background: #ffffff;
@@ -698,7 +716,49 @@
 
 
     <!-- ========================================== -->
-    <!-- 4. EVRAKLAR TAB -->
+    <!-- 4. ALIŞ FATURALARI TAB -->
+    <!-- ========================================== -->
+    <div id="tab-invoices" class="tab-pane">
+      <!-- Özet Göstergeler (Dashboard Metrics) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 0.85rem;">
+        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center;">
+          <div style="font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase;">Toplam Alış</div>
+          <div id="stat-inv-total" style="font-size: 0.88rem; font-weight: 800; color: var(--navy); margin-top: 2px;">₺0</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center;">
+          <div style="font-size: 0.65rem; font-weight: 700; color: #d97706; text-transform: uppercase;">Bekleyen</div>
+          <div id="stat-inv-pending" style="font-size: 0.88rem; font-weight: 800; color: #d97706; margin-top: 2px;">₺0</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center;">
+          <div style="font-size: 0.65rem; font-weight: 700; color: var(--green-dark); text-transform: uppercase;">Toplam KDV</div>
+          <div id="stat-inv-vat" style="font-size: 0.88rem; font-weight: 800; color: var(--green-dark); margin-top: 2px;">₺0</div>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div style="display: flex; gap: 8px; margin-bottom: 0.75rem; align-items: center;">
+        <input type="text" id="search-invoices" class="search-input" placeholder="Fatura veya firma ara..." oninput="renderInvoices()" style="margin-bottom: 0; flex: 1;">
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-invoice')">
+          ➕ Fatura Ekle
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="exportInvoicesCsv()">
+          CSV
+        </button>
+      </div>
+
+      <!-- Filter Pills -->
+      <div style="display: flex; gap: 6px; margin-bottom: 0.85rem; overflow-x: auto; padding-bottom: 2px;">
+        <button class="filter-pill active" onclick="setInvoiceFilter('all', this)">Tümü</button>
+        <button class="filter-pill" onclick="setInvoiceFilter('Bekliyor', this)">⏳ Bekleyenler</button>
+        <button class="filter-pill" onclick="setInvoiceFilter('Ödendi', this)">✅ Ödenenler</button>
+      </div>
+
+      <div class="items-list" id="invoices-list"></div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 5. EVRAKLAR TAB -->
     <!-- ========================================== -->
     <div id="tab-docs" class="tab-pane">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
@@ -713,7 +773,7 @@
 
 
     <!-- ========================================== -->
-    <!-- 5. STOK TAB -->
+    <!-- 6. STOK TAB -->
     <!-- ========================================== -->
     <div id="tab-stock" class="tab-pane">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
@@ -744,6 +804,10 @@
     <button class="nav-item" onclick="switchNav('tab-accounts')">
       <span class="nav-icon">📑</span>
       <span class="nav-label">Cariler</span>
+    </button>
+    <button class="nav-item" onclick="switchNav('tab-invoices')">
+      <span class="nav-icon">🧾</span>
+      <span class="nav-label">Faturalar</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-docs')">
       <span class="nav-icon">📁</span>
@@ -903,6 +967,113 @@
 
 
   <!-- ========================================== -->
+  <!-- MODAL: YENİ ALIŞ FATURASI & YAPAY ZEKA TARAYICI -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-new-invoice">
+    <div class="modal-sheet" style="max-height: 90vh;">
+      <div class="sheet-handle"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0;">🧾 Yeni Alış Faturası</h3>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-new-invoice')" style="padding: 4px 8px;">✕</button>
+      </div>
+
+      <!-- AI Fatura Tarayıcı Butonları -->
+      <div style="background: #f1f5f9; border: 1.5px dashed #94a3b8; border-radius: 12px; padding: 12px; margin-bottom: 14px; text-align: center;">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--navy); margin-bottom: 8px;">
+          🧠 Yapay Zeka ile Fatura Tara (Gemini 3.6 Flash)
+        </div>
+        <div style="display: flex; gap: 8px; justify-content: center;">
+          <label class="btn btn-navy btn-sm" style="cursor: pointer;">
+            📷 Fotoğraf Çek
+            <input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleInvoiceSelected(event)">
+          </label>
+          <label class="btn btn-secondary btn-sm" style="cursor: pointer;">
+            🖼️ Galeri / Dosya
+            <input type="file" accept="image/*,application/pdf" style="display: none;" onchange="handleInvoiceSelected(event)">
+          </label>
+        </div>
+        <div id="invoice-ocr-loader" style="display: none; margin-top: 8px; font-size: 0.76rem; font-weight: 700; color: #2563eb;"></div>
+        <img id="invoice-preview" src="" style="display: none; max-height: 130px; border-radius: 8px; margin: 8px auto 0; border: 1px solid var(--border); object-fit: contain;">
+      </div>
+
+      <form onsubmit="saveInvoice(event)">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Tedarikçi / Cari Firma Adı *</label>
+            <input type="text" id="inv-vendor" required placeholder="Örn: Akçansa Çimento A.Ş.">
+          </div>
+
+          <div class="form-group">
+            <label>Vergi No / VKN</label>
+            <input type="text" id="inv-tax" placeholder="10 Haneli VKN">
+          </div>
+          <div class="form-group">
+            <label>Fatura No *</label>
+            <input type="text" id="inv-no" required placeholder="Örn: GIB2026000001234">
+          </div>
+
+          <div class="form-group">
+            <label>Fatura Tarihi *</label>
+            <input type="date" id="inv-date" required>
+          </div>
+          <div class="form-group">
+            <label>İlgili Proje *</label>
+            <select id="inv-project" required></select>
+          </div>
+
+          <div class="form-group">
+            <label>KDV Hariç Matrah (₺)</label>
+            <input type="number" step="0.01" id="inv-subtotal" placeholder="0.00" oninput="calculateInvoiceTotal()">
+          </div>
+          <div class="form-group">
+            <label>KDV Tutarı (₺)</label>
+            <input type="number" step="0.01" id="inv-vat" placeholder="0.00" oninput="calculateInvoiceTotal()">
+          </div>
+
+          <div class="form-group full">
+            <label>Genel Toplam Tutar (₺) *</label>
+            <input type="number" step="0.01" id="inv-total" required placeholder="0.00" style="font-weight: 800; font-size: 1.05rem; color: var(--navy);">
+          </div>
+
+          <div class="form-group">
+            <label>Vade Tarihi</label>
+            <input type="date" id="inv-due-date">
+          </div>
+          <div class="form-group">
+            <label>Ödeme Durumu</label>
+            <select id="inv-status">
+              <option value="Bekliyor">⏳ Bekliyor</option>
+              <option value="Ödendi">✅ Ödendi</option>
+              <option value="Kısmi Ödendi">⚠️ Kısmi Ödendi</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Ödeme Yöntemi</label>
+            <select id="inv-method">
+              <option value="Banka Havale / EFT">Banka Havale / EFT</option>
+              <option value="Çek">Çek</option>
+              <option value="Kredi Kartı">Kredi Kartı</option>
+              <option value="Nakit">Nakit</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Açıklama / Mal-Hizmet Detayı</label>
+            <input type="text" id="inv-desc" placeholder="Örn: 40 m³ Hazır Beton C35 dökümü...">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 14px;">
+          <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-invoice')">Vazgeç</button>
+          <button type="submit" class="btn btn-navy btn-full">💾 Kaydet & Sheets'e Aktar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
   <!-- MODAL: YENİ STOK -->
   <!-- ========================================== -->
   <div class="modal-backdrop" id="modal-new-stock">
@@ -1016,6 +1187,11 @@
       { id: "s3", code: "STK-BTN-C35", name: "C35/45 Hazır Beton", qty: 3, unit: "m³", price: "3.100 ₺", status: "Kritik" }
     ];
 
+    const defaultInvoices = [
+      { id: "inv1", no: "EFA2026000004128", vendor: "Betonsa Hazır Beton A.Ş.", tax: "1892019482", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-09-14", subtotal: 124000, vat: 24800, total: 148800, dueDate: "2026-10-14", status: "Bekliyor", method: "Banka Havale / EFT", desc: "C35/45 Hazır Beton dökümü (40 m³)" },
+      { id: "inv2", no: "GIB2026000012891", vendor: "Demirören Haddecilik", tax: "2948192041", project: "Dilovası 1.2 MWp Çatı GES", date: "2026-09-10", subtotal: 310000, vat: 62000, total: 372000, dueDate: "2026-09-25", status: "Ödendi", method: "Çek", desc: "Konstrüksiyon profilleri ve bağlantı elemanları" }
+    ];
+
     function getStore(k, fb) {
       try { const d = localStorage.getItem(k); return d ? JSON.parse(d) : fb; } catch(e) { return fb; }
     }
@@ -1026,6 +1202,7 @@
     let cards = getStore('yg_cards_lite', defaultCards);
     let projects = getStore('yg_projects_lite', defaultProjects);
     let accounts = getStore('yg_accounts_lite', defaultAccounts);
+    let invoices = getStore('yg_invoices_lite', defaultInvoices);
     let docs = getStore('yg_docs_lite', defaultDocs);
     let stock = getStore('yg_stock_lite', defaultStock);
 
@@ -1048,6 +1225,11 @@
       const el = document.getElementById(id);
       if (el) el.classList.add('open');
       if (id === 'modal-new-doc') populateDocProjectSelect();
+      if (id === 'modal-new-invoice') {
+        populateInvoiceProjectSelect();
+        const dInput = document.getElementById('inv-date');
+        if (dInput && !dInput.value) dInput.value = new Date().toISOString().split('T')[0];
+      }
     }
     function closeModal(id) {
       const el = document.getElementById(id);
@@ -1737,7 +1919,306 @@
     }
 
     /* ================================================================
-       4. EVRAKLAR
+       4. ALIŞ FATURALARI (YAPAY ZEKA & MUHASEBE)
+       ================================================================ */
+    let invoiceFilter = 'all';
+
+    function setInvoiceFilter(f, btn) {
+      invoiceFilter = f;
+      document.querySelectorAll('#tab-invoices .filter-pill').forEach(el => el.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderInvoices();
+    }
+
+    function populateInvoiceProjectSelect() {
+      const sel = document.getElementById('inv-project');
+      if (!sel) return;
+      const opts = ['Genel Yönetim / Merkez', ...projects.map(p => p.name)];
+      sel.innerHTML = opts.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+    }
+
+    function calculateInvoiceTotal() {
+      const sub = parseFloat(document.getElementById('inv-subtotal').value) || 0;
+      const vat = parseFloat(document.getElementById('inv-vat').value) || 0;
+      if (sub > 0 || vat > 0) {
+        document.getElementById('inv-total').value = (sub + vat).toFixed(2);
+      }
+    }
+
+    async function handleInvoiceSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const preview = document.getElementById('invoice-preview');
+      const loader = document.getElementById('invoice-ocr-loader');
+
+      loader.style.display = 'block';
+      loader.textContent = '🔍 Fatura taranıyor ve optimize ediliyor...';
+
+      try {
+        const prep = await preprocessAndScan(file);
+        if (preview) {
+          preview.src = prep.previewUrl;
+          preview.style.display = 'block';
+        }
+
+        loader.textContent = '🧠 Gemini 3.6 Flash faturayı inceliyor (Matrah, KDV, Tedarikçi)...';
+
+        const apiKey = getGeminiApiKey();
+        if (!apiKey) throw new Error("Gemini API anahtarı bulunamadı.");
+
+        const prompt = `Sen uzman bir kurumsal muhasebeci ve fatura ayrıştırıcısısın. Bu fatura veya fiş görselini detaylıca analiz et ve sadece saf bir JSON objesi döndür. Başka hiçbir açıklama veya markdown biçimi (örn: \`\`\`json) ekleme:
+{
+  "vendor": "Faturayı kesen satıcı veya tedarikçi firma ünvanı",
+  "taxNo": "Satıcının VKN (Vergi Kimlik No) veya TCKN",
+  "invoiceNo": "Fatura Numarası (Örn: GIB2026..., ETTN veya Belge No)",
+  "date": "Fatura Tarihi (YYYY-AA-GG formatında, örn: 2026-09-18)",
+  "subtotal": 0.0,
+  "vat": 0.0,
+  "total": 0.0,
+  "description": "Faturadaki mal veya hizmetlerin kısa özeti (örn: Hazır beton, demir vb.)"
+}
+Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sayısal (float) olarak ver, TL simgesi veya harf koyma.`;
+
+        const models = ['gemini-3.6-flash', 'gemini-flash-latest', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
+        let invoiceData = null;
+
+        for (const m of models) {
+          try {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`;
+            const payload = {
+              contents: [{
+                parts: [
+                  { text: prompt },
+                  { inlineData: { mimeType: 'image/jpeg', data: prep.base64Data } }
+                ]
+              }],
+              generationConfig: {
+                temperature: 0.1,
+                responseMimeType: "application/json"
+              }
+            };
+
+            const resp = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            if (!resp.ok) continue;
+            const resData = await resp.json();
+            const textResult = resData.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (textResult) {
+              const cleanJsonStr = textResult.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+              invoiceData = JSON.parse(cleanJsonStr);
+              break;
+            }
+          } catch(err) {
+            console.warn(`Fatura model ${m} hatası:`, err);
+          }
+        }
+
+        if (invoiceData) {
+          if (invoiceData.vendor) document.getElementById('inv-vendor').value = invoiceData.vendor;
+          if (invoiceData.taxNo) document.getElementById('inv-tax').value = invoiceData.taxNo;
+          if (invoiceData.invoiceNo) document.getElementById('inv-no').value = invoiceData.invoiceNo;
+          if (invoiceData.date) document.getElementById('inv-date').value = invoiceData.date;
+          if (invoiceData.subtotal) document.getElementById('inv-subtotal').value = parseFloat(invoiceData.subtotal) || 0;
+          if (invoiceData.vat) document.getElementById('inv-vat').value = parseFloat(invoiceData.vat) || 0;
+          if (invoiceData.total) document.getElementById('inv-total').value = parseFloat(invoiceData.total) || 0;
+          if (invoiceData.description) document.getElementById('inv-desc').value = invoiceData.description;
+
+          loader.textContent = '✨ Yapay zeka faturayı kusursuz ayrıştırdı!';
+          showToast('Fatura bilgileri otomatik dolduruldu!', '🧾');
+        } else {
+          loader.textContent = '⚠️ Fatura yapay zeka ile okunamadı, bilgileri elle kontrol ediniz.';
+        }
+      } catch(err) {
+        console.error("Invoice scan error:", err);
+        loader.textContent = '⚠️ Fatura okunamadı, bilgileri elle girebilirsiniz.';
+      }
+    }
+
+    function saveInvoice(e) {
+      e.preventDefault();
+      const newInv = {
+        id: 'inv_' + Date.now(),
+        vendor: document.getElementById('inv-vendor').value.trim(),
+        tax: document.getElementById('inv-tax').value.trim(),
+        no: document.getElementById('inv-no').value.trim(),
+        date: document.getElementById('inv-date').value,
+        project: document.getElementById('inv-project').value,
+        subtotal: parseFloat(document.getElementById('inv-subtotal').value) || 0,
+        vat: parseFloat(document.getElementById('inv-vat').value) || 0,
+        total: parseFloat(document.getElementById('inv-total').value) || 0,
+        dueDate: document.getElementById('inv-due-date').value,
+        status: document.getElementById('inv-status').value,
+        method: document.getElementById('inv-method').value,
+        desc: document.getElementById('inv-desc').value.trim()
+      };
+
+      invoices.unshift(newInv);
+      setStore('yg_invoices_lite', invoices);
+
+      postToWebhook('Alış Faturaları', [
+        new Date().toISOString().split('T')[0],
+        newInv.date,
+        newInv.no,
+        newInv.vendor,
+        newInv.tax,
+        newInv.project,
+        newInv.subtotal,
+        newInv.vat,
+        newInv.total,
+        newInv.dueDate,
+        newInv.status,
+        newInv.method,
+        newInv.desc
+      ]);
+
+      closeModal('modal-new-invoice');
+      renderInvoices();
+      showToast('Fatura kaydedildi & Sheets ile senkronize!', '🧾');
+
+      // Reset Form
+      const prevEl = document.getElementById('invoice-preview');
+      if (prevEl) prevEl.style.display = 'none';
+      const loadEl = document.getElementById('invoice-ocr-loader');
+      if (loadEl) loadEl.style.display = 'none';
+      e.target.reset();
+    }
+
+    function renderInvoices() {
+      const q = (document.getElementById('search-invoices')?.value || '').toLowerCase().trim();
+      const list = document.getElementById('invoices-list');
+      if (!list) return;
+
+      // Stats
+      let totalSum = 0;
+      let pendingSum = 0;
+      let vatSum = 0;
+
+      invoices.forEach(inv => {
+        const tot = parseFloat(inv.total) || 0;
+        const v = parseFloat(inv.vat) || 0;
+        totalSum += tot;
+        vatSum += v;
+        if (inv.status === 'Bekliyor' || inv.status === 'Kısmi Ödendi') {
+          pendingSum += tot;
+        }
+      });
+
+      const statTotal = document.getElementById('stat-inv-total');
+      const statPending = document.getElementById('stat-inv-pending');
+      const statVat = document.getElementById('stat-inv-vat');
+      if (statTotal) statTotal.textContent = totalSum.toLocaleString('tr-TR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' ₺';
+      if (statPending) statPending.textContent = pendingSum.toLocaleString('tr-TR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' ₺';
+      if (statVat) statVat.textContent = vatSum.toLocaleString('tr-TR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' ₺';
+
+      // Filtered List
+      const filtered = invoices.filter(inv => {
+        const matchesFilter = (invoiceFilter === 'all') || (inv.status === invoiceFilter);
+        const matchesQ = !q || 
+          (inv.vendor && inv.vendor.toLowerCase().includes(q)) || 
+          (inv.no && inv.no.toLowerCase().includes(q)) || 
+          (inv.project && inv.project.toLowerCase().includes(q)) ||
+          (inv.desc && inv.desc.toLowerCase().includes(q));
+        return matchesFilter && matchesQ;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Fatura kaydı bulunamadı.</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(inv => {
+        const isPaid = inv.status === 'Ödendi';
+        const badgeClass = isPaid ? 'badge-green' : (inv.status === 'Kısmi Ödendi' ? 'badge-gold' : 'badge-red');
+        const badgeIcon = isPaid ? '✅' : '⏳';
+        const formattedTotal = (parseFloat(inv.total) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const formattedVat = (parseFloat(inv.vat) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const formattedSub = (parseFloat(inv.subtotal) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        return `
+          <div class="card-item" style="border-left: 4px solid ${isPaid ? 'var(--green)' : '#f59e0b'};">
+            <div class="card-item-header">
+              <div style="flex: 1; min-width: 0;">
+                <div class="card-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  ${escapeHtml(inv.vendor)}
+                </div>
+                <div class="card-item-meta">
+                  <span>${escapeHtml(inv.no)}</span> • <span>${escapeHtml(inv.date || '')}</span>
+                </div>
+              </div>
+              <span class="badge ${badgeClass}" onclick="toggleInvoiceStatus('${inv.id}')" style="cursor: pointer; user-select: none;" title="Durumu Değiştir">
+                ${badgeIcon} ${escapeHtml(inv.status)}
+              </span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 8px 0 6px 0;">
+              <span style="font-size: 0.76rem; color: var(--muted); font-weight: 600;">
+                📍 ${escapeHtml(inv.project || 'Merkez')}
+              </span>
+              <span style="font-size: 1.15rem; font-weight: 800; color: var(--navy);">
+                ${formattedTotal} ₺
+              </span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); background: #f8fafc; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px;">
+              <span>Matrah: ${formattedSub} ₺</span>
+              <span>KDV: ${formattedVat} ₺</span>
+              <span>Vade: ${escapeHtml(inv.dueDate || '-')}</span>
+            </div>
+
+            ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 8px; font-style: italic;">📝 ${escapeHtml(inv.desc)}</div>` : ''}
+
+            <div class="card-item-actions" style="margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 6px;">
+              <span style="font-size: 0.72rem; color: var(--muted); display: inline-flex; align-items: center; gap: 4px;">
+                💳 ${escapeHtml(inv.method || 'Havale')}
+              </span>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn btn-secondary btn-sm" onclick="toggleInvoiceStatus('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;">
+                  ${isPaid ? 'Bekliyor Yap' : 'Ödendi İşaretle'}
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem; color: var(--danger);">
+                  Sil
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleInvoiceStatus(id) {
+      const inv = invoices.find(i => i.id === id);
+      if (!inv) return;
+      inv.status = (inv.status === 'Ödendi') ? 'Bekliyor' : 'Ödendi';
+      setStore('yg_invoices_lite', invoices);
+      renderInvoices();
+      showToast(`Fatura ${inv.status} olarak güncellendi!`, '🧾');
+    }
+
+    function deleteInvoice(id) {
+      if (!confirm("Bu faturayı silmek istediğinize emin misiniz?")) return;
+      invoices = invoices.filter(i => i.id !== id);
+      setStore('yg_invoices_lite', invoices);
+      renderInvoices();
+      showToast('Fatura silindi');
+    }
+
+    function exportInvoicesCsv() {
+      const rows = [
+        ['ID', 'Fatura No', 'Tedarikçi / Cari', 'VKN/TC', 'İlgili Proje', 'Fatura Tarihi', 'KDV Hariç Matrah', 'KDV Tutarı', 'Toplam Tutar', 'Vade Tarihi', 'Ödeme Durumu', 'Ödeme Yöntemi', 'Açıklama'],
+        ...invoices.map(inv => [
+          inv.id, inv.no, inv.vendor, inv.tax, inv.project, inv.date, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc
+        ])
+      ];
+      downloadCsv(`YakinGrup_Alis_Faturalari_${new Date().toISOString().split('T')[0]}.csv`, rows);
+    }
+
+    /* ================================================================
+       5. EVRAKLAR
        ================================================================ */
     function populateDocProjectSelect() {
       const sel = document.getElementById('d-project-select');
@@ -1877,6 +2358,7 @@
       cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.phone, c.email, c.category, c.notes]));
       projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status]));
       accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.tax]));
+      invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc]));
       stock.forEach(s => postToWebhook('Stok', [new Date().toISOString().split('T')[0], s.code, s.name, s.qty, s.unit, s.price, s.status]));
       setTimeout(() => showToast('Tüm veriler Google Sheets ile güncellendi!'), 1500);
     }
@@ -1904,6 +2386,8 @@
       renderCards();
       renderProjects();
       renderAccounts();
+      renderInvoices();
+      populateInvoiceProjectSelect();
       renderDocs();
       renderStock();
     });
