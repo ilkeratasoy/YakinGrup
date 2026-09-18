@@ -1036,8 +1036,34 @@
     }
 
     /* ================================================================
-       1. KARTVİZİT & OCR
+       1. KARTVİZİT & OCR2 (ENGINE 2)
        ================================================================ */
+    async function runOCR2(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("apikey", "K87899148788957");
+      formData.append("language", "tur");
+      formData.append("OCREngine", "2"); // OCR Engine 2
+      formData.append("scale", "true");
+      formData.append("detectOrientation", "true");
+      formData.append("isTable", "true");
+
+      const response = await fetch("https://api.ocr.space/parse/image", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) throw new Error("OCR2 sunucu hatası");
+      const data = await response.json();
+      if (data && data.ParsedResults && data.ParsedResults.length > 0) {
+        const text = data.ParsedResults[0].ParsedText;
+        if (text && text.trim().length > 0) {
+          return text;
+        }
+      }
+      throw new Error((data && data.ErrorMessage) ? data.ErrorMessage.join(', ') : "OCR2 metin okuyamadı");
+    }
+
     async function handleCardSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1053,41 +1079,91 @@
       reader.readAsDataURL(file);
 
       loader.style.display = 'block';
-      loader.textContent = '🔍 OCR ile metinler okunuyor...';
+      loader.textContent = '⚡ OCR2 (Engine 2) ile taranıyor...';
 
+      let parsedText = '';
       try {
-        const worker = await Tesseract.createWorker('tur+eng');
-        const ret = await worker.recognize(file);
-        parseCardText(ret.data.text);
-        await worker.terminate();
-        loader.textContent = '✅ Kartvizit başarıyla okundu!';
-        showToast('Kartvizit okundu!', '⚡');
-      } catch(err) {
-        console.error(err);
-        loader.textContent = '⚠️ Otomatik okunamadı, manuel girebilirsiniz.';
+        // 1. Öncelikli: OCR2 (Engine 2)
+        parsedText = await runOCR2(file);
+        parseCardText(parsedText);
+        loader.textContent = '✅ Kartvizit OCR2 ile başarıyla okundu!';
+        showToast('Kartvizit OCR2 ile okundu!', '⚡');
+      } catch(err1) {
+        console.warn('OCR2 servisi yanıt vermedi, yerel Tesseract motoruna geçiliyor:', err1);
+        loader.textContent = '🔍 Yedek OCR motoru (Tesseract) çalışıyor...';
+        try {
+          const worker = await Tesseract.createWorker('tur+eng');
+          const ret = await worker.recognize(file);
+          parsedText = ret.data.text;
+          parseCardText(parsedText);
+          await worker.terminate();
+          loader.textContent = '✅ Kartvizit başarıyla okundu!';
+          showToast('Kartvizit okundu!', '⚡');
+        } catch(err2) {
+          console.error(err2);
+          loader.textContent = '⚠️ Metin ayrıştırılamadı, manuel yazabilirsiniz.';
+          showToast('Manuel giriş yapabilirsiniz', 'ℹ️');
+        }
       }
     }
 
     function parseCardText(text) {
+      if (!text) return;
+      console.log("[OCR2 RAW]:", text);
       const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 1);
-      const emailMatch = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/i);
-      const phoneMatch = text.match(/(\+?\d{1,3}[\s-]?)?(\(?\d{3}\)?[\s-]?)?[\d\s-]{6,12}/);
 
-      if (emailMatch) document.getElementById('card-email').value = emailMatch[1];
+      // Email
+      const emailMatch = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,})/i);
+      if (emailMatch) document.getElementById('card-email').value = emailMatch[1].trim();
+
+      // Phone (Turkish & International)
+      const phoneMatch = text.match(/(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}|\b05\d{2}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b|\b5\d{2}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b/);
       if (phoneMatch) document.getElementById('card-phone').value = phoneMatch[0].trim();
 
+      // Company Keywords
+      const compKeys = ['A.Ş', 'A.S', 'LTD', 'ŞTİ', 'STI', 'HOLDING', 'HOLDİNG', 'İNŞAAT', 'INSAAT', 'MİMARLIK', 'MIMARLIK', 'MÜHENDİSLİK', 'MUHENDISLIK', 'GRUP', 'GROUP', 'ENERJİ', 'ENERJI', 'SANAYİ', 'SANAYI', 'TİCARET', 'TICARET'];
       for (const l of lines) {
-        if (!document.getElementById('card-company').value && (l.includes('A.Ş') || l.includes('Ltd') || l.includes('Holding') || l.includes('İnşaat') || l.includes('Mimarlık') || l.includes('Grup'))) {
-          document.getElementById('card-company').value = l;
-        }
-      }
-      for (const l of lines) {
-        if (l !== document.getElementById('card-company').value && !l.includes('@') && !l.match(/\d{4}/) && l.split(' ').length >= 2 && l.split(' ').length <= 4) {
-          if (!document.getElementById('card-name').value) {
-            document.getElementById('card-name').value = l;
+        const up = l.toUpperCase();
+        if (compKeys.some(k => up.includes(k))) {
+          if (!document.getElementById('card-company').value) {
+            document.getElementById('card-company').value = l.replace(/[|*]/g, '').trim();
             break;
           }
         }
+      }
+
+      // Role Keywords
+      const roleKeys = ['DİREKTÖR', 'DIREKTOR', 'MÜDÜR', 'MUDUR', 'MİMAR', 'MIMAR', 'MÜHENDİS', 'MUHENDIS', 'KURUCU', 'YÖNETİCİ', 'YONETICI', 'BAŞKAN', 'BASKAN', 'CEO', 'CTO', 'CFO', 'GENEL MÜDÜR', 'ORTAK', 'PARTNER', 'CO-FOUNDER', 'FOUNDER'];
+      for (const l of lines) {
+        const up = l.toUpperCase();
+        if (roleKeys.some(k => up.includes(k))) {
+          if (!document.getElementById('card-role').value) {
+            document.getElementById('card-role').value = l.replace(/[|*]/g, '').trim();
+            break;
+          }
+        }
+      }
+
+      // Name Detection: 2-3 words title-like line, not company, not email, not phone
+      for (const l of lines) {
+        const clean = l.replace(/[^a-zA-ZğüşıöçĞÜŞİÖÇ\s]/g, '').trim();
+        const words = clean.split(/\s+/);
+        const up = l.toUpperCase();
+        const isComp = compKeys.some(k => up.includes(k));
+        const isRole = roleKeys.some(k => up.includes(k));
+
+        if (!isComp && !isRole && !l.includes('@') && !l.match(/\d/) && words.length >= 2 && words.length <= 4) {
+          if (!document.getElementById('card-name').value) {
+            document.getElementById('card-name').value = clean;
+            break;
+          }
+        }
+      }
+
+      // Notes summary
+      const notesField = document.getElementById('card-notes');
+      if (notesField && !notesField.value) {
+        notesField.value = "OCR2 ile okundu (" + new Date().toLocaleDateString('tr-TR') + ")";
       }
     }
 
