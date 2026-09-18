@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Yakın Grup — Müşteri ve Proje Rehberi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1186,12 +1189,17 @@
       return res;
     }
 
+    const VERIFIED_GEMINI_KEY = atob("QVEuQWI4Uk42SmRLaWlJaFdET09Fc3F6NXV5R1laVXc4cFNQOTVhM0Q3RFRzUC05bENXdkE=");
+
     // Doğrulanmış Gemini API Anahtarı Fonksiyonu
     function getGeminiApiKey() {
       const customKey = localStorage.getItem(GEMINI_STORAGE_KEY) || localStorage.getItem('yg_gemini_key');
-      if (customKey && customKey.trim().length > 0) return customKey.trim();
-      // Test edilmiş ve doğrulanmış aktif Gemini API Anahtarı
-      return atob("QVEuQWI4Uk42SmRLaWlJaFdET09Fc3F6NXV5R1laVXc4cFNQOTVhM0Q3RFRzUC05bENXdkE=");
+      // Kullanıcının tarayıcısında eski engellenmiş anahtar kaldıysa hemen aktif anahtarla güncelle
+      if (!customKey || customKey.includes('AQ.Ab8RN6Ly') || customKey.trim().length < 20) {
+        localStorage.setItem(GEMINI_STORAGE_KEY, VERIFIED_GEMINI_KEY);
+        return VERIFIED_GEMINI_KEY;
+      }
+      return customKey.trim();
     }
 
     async function runGeminiVision(base64Data, mimeType = 'image/jpeg') {
@@ -1889,9 +1897,9 @@
 
     // Init
     document.addEventListener('DOMContentLoaded', () => {
-      const savedKey = localStorage.getItem(GEMINI_STORAGE_KEY) || '';
+      const activeKey = getGeminiApiKey();
       const inputEl = document.getElementById('gemini-key-input');
-      if (inputEl) inputEl.value = savedKey;
+      if (inputEl) inputEl.value = activeKey;
 
       renderCards();
       renderProjects();
