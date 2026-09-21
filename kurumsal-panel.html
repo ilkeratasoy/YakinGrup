@@ -1292,6 +1292,9 @@ function doPost(e) {
       } else if (sheetName === "Cari Kartları") {
         sheet.appendRow(["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "Vergi Dairesi / No"]);
         sheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+      } else if (sheetName === "Proje Dökümanları") {
+        sheet.appendRow(["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Belge / Link URL"]);
+        sheet.getRange(1, 1, 1, 5).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
       } else if (sheetName === "Stok") {
         sheet.appendRow(["Tarih", "Stok Kodu", "Malzeme Adı", "Miktar", "Birim", "Fiyat", "Durum"]);
         sheet.getRange(1, 1, 1, 7).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
@@ -1299,6 +1302,13 @@ function doPost(e) {
     }
     
     sheet.appendRow(row);
+    // Kolon genişliklerini otomatik düzenle
+    try {
+      var lastCol = sheet.getLastColumn();
+      for (var c = 1; c <= lastCol; c++) {
+        sheet.autoResizeColumn(c);
+      }
+    } catch(e) {}
     return ContentService.createTextOutput(JSON.stringify({ status: "success", sheet: sheetName }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
@@ -2439,6 +2449,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status]));
       accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.tax]));
       invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc]));
+      docs.forEach(d => postToWebhook('Proje Dökümanları', [new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.url]));
       stock.forEach(s => postToWebhook('Stok', [new Date().toISOString().split('T')[0], s.code, s.name, s.qty, s.unit, s.price, s.status]));
       setTimeout(() => showToast('Tüm veriler Google Sheets ile güncellendi!'), 1500);
     }
