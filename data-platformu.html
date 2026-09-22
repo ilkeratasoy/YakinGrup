@@ -1166,7 +1166,15 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 8px; margin-top: 8px;">
+      <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border);">
+        <label style="font-size: 0.78rem; font-weight: 700; color: #dc2626; display: block; margin-bottom: 4px;">🧹 Tablo ve Sayfayı Sıfırla</label>
+        <p style="font-size: 0.7rem; color: var(--muted); margin-bottom: 8px;">Tüm sekmeleri ve yerel hafızayı temizler, her kategori için sadece 1 adet temiz örnek içerik bırakır.</p>
+        <button type="button" class="btn btn-secondary btn-full" onclick="resetAllToSingleSample()" style="border-color: #fca5a5; color: #dc2626; font-size: 0.76rem;">
+          🗑️ Tek Örnek İçeriğe Sıfırla & Sheets'i Temizle
+        </button>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 14px;">
         <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-settings')">Kapat</button>
         <button type="button" class="btn btn-navy btn-full" onclick="saveSettings()">💾 Ayarları Kaydet</button>
       </div>
@@ -1195,46 +1203,53 @@
       return GAS_WEBHOOK_URL;
     }
 
-    // Initial Data
+    // Initial Data - Tek Örnek İçerik
     const defaultCards = [
-      { id: "c1", name: "Ahmet Yılmaz", company: "Atlas Holding A.Ş.", role: "Yatırımlar Direktörü", phone: "+90 262 555 0199", email: "ahmet.yilmaz@atlasholding.com", category: "Müşteri", notes: "1.2 MWp Çatı GES projesi", date: "2026-09-10" },
-      { id: "c2", name: "David Miller", company: "Solaris Global Energy LLC", role: "Procurement Director", phone: "+1 302 555 0142", email: "dmiller@solarisglobal.com", category: "Yatırımcı", notes: "CIF Hamburg ihracatı", date: "2026-09-12" },
-      { id: "c3", name: "Mimar Selin Çelik", company: "Artı Mimarlık", role: "Kurucu", phone: "+90 216 444 1289", email: "selin@artimimarlik.com", category: "Mimar / Mühendis", notes: "Bağdat Cad. kentsel dönüşüm", date: "2026-09-15" }
+      { id: "c1", name: "Ahmet Yılmaz", company: "Atlas Holding A.Ş.", role: "Yatırımlar Direktörü", phone: "+90 262 555 0199", email: "ahmet.yilmaz@atlasholding.com", category: "Müşteri", notes: "1.2 MWp Çatı GES projesi", date: "2026-09-10" }
     ];
 
     const defaultProjects = [
-      { id: "p1", code: "PRJ-2026-01", name: "Bağdat Caddesi Kentsel Dönüşüm", type: "Kentsel Dönüşüm", client: "Kat Malikleri", location: "Kadıköy", budget: "45M ₺", progress: 65, status: "Kaba İnşaat" },
-      { id: "p2", code: "PRJ-2026-02", name: "Dilovası 1.2 MWp Çatı GES", type: "GES Santrali", client: "Atlas Holding", location: "Kocaeli", budget: "$228K", progress: 85, status: "İnce İşler" },
-      { id: "p3", code: "PRJ-2026-03", name: "Yalıkavak Taş Villa", type: "Villa / Konut", client: "Ege Yatırım", location: "Bodrum", budget: "32M ₺", progress: 25, status: "Ruhsat" }
+      { id: "p1", code: "PRJ-2026-01", name: "Bağdat Caddesi Kentsel Dönüşüm", type: "Kentsel Dönüşüm", client: "Kat Malikleri", location: "Kadıköy", budget: "45M ₺", progress: 65, status: "Kaba İnşaat" }
     ];
 
     const defaultAccounts = [
-      { id: "a1", company: "Atlas Holding A.Ş.", type: "Müşteri", contact: "Ahmet Yılmaz", phone: "+90 262 555 0199", tax: "Büyük Mükellefler / 1234567890" },
-      { id: "a2", company: "Betonsa Hazır Beton A.Ş.", type: "Tedarikçi", contact: "Cemil Arslan", phone: "+90 216 555 8800", tax: "Marmara / 1892019482" },
-      { id: "a3", company: "Demirören Haddecilik", type: "Tedarikçi", contact: "Hakan Demir", phone: "+90 262 640 1020", tax: "Gebze / 2948192041" }
+      { id: "a1", company: "Betonsa Hazır Beton A.Ş.", type: "Tedarikçi", contact: "Cemil Arslan", phone: "+90 216 555 8800", tax: "Marmara / 1892019482" }
     ];
 
     const defaultDocs = [
-      { id: "d1", title: "Kadıköy — Onaylı Mimari Proje (Rev-04)", type: "Mimari Proje", project: "Bağdat Caddesi Kentsel Dönüşüm", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" },
-      { id: "d2", title: "Atlas Holding GES — Statik Hesap Raporu", type: "Statik Rapor", project: "Dilovası 1.2 MWp Çatı GES", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" }
+      { id: "d1", title: "Kadıköy — Onaylı Mimari Proje (Rev-04)", type: "Mimari Proje", project: "Bağdat Caddesi Kentsel Dönüşüm", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" }
     ];
 
     const defaultStock = [
-      { id: "s1", code: "STK-DM-14", name: "B420C İnşaat Demiri Ø14mm", qty: 48, unit: "Ton", price: "27.800 ₺", status: "Yeterli" },
-      { id: "s2", code: "STK-PV-550", name: "550W TOPCon Solar Panel", qty: 2400, unit: "Adet", price: "$95 USD", status: "Yeterli" },
-      { id: "s3", code: "STK-BTN-C35", name: "C35/45 Hazır Beton", qty: 3, unit: "m³", price: "3.100 ₺", status: "Kritik" }
+      { id: "s1", code: "STK-DM-14", name: "B420C İnşaat Demiri Ø14mm", qty: 48, unit: "Ton", price: "27.800 ₺", status: "Yeterli" }
     ];
 
     const defaultInvoices = [
-      { id: "inv1", no: "EFA2026000004128", vendor: "Betonsa Hazır Beton A.Ş.", tax: "1892019482", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-09-14", subtotal: 124000, vat: 24800, total: 148800, dueDate: "2026-10-14", status: "Bekliyor", method: "Banka Havale / EFT", desc: "C35/45 Hazır Beton dökümü (40 m³)" },
-      { id: "inv2", no: "GIB2026000012891", vendor: "Demirören Haddecilik", tax: "2948192041", project: "Dilovası 1.2 MWp Çatı GES", date: "2026-09-10", subtotal: 310000, vat: 62000, total: 372000, dueDate: "2026-09-25", status: "Ödendi", method: "Çek", desc: "Konstrüksiyon profilleri ve bağlantı elemanları" }
+      { id: "inv1", no: "EFA2026000004128", vendor: "Betonsa Hazır Beton A.Ş.", tax: "1892019482", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-09-14", subtotal: 124000, vat: 24800, total: 148800, dueDate: "2026-10-14", status: "Bekliyor", method: "Banka Havale / EFT", desc: "C35/45 Hazır Beton dökümü (40 m³)" }
     ];
 
     function getStore(k, fb) {
-      try { const d = localStorage.getItem(k); return d ? JSON.parse(d) : fb; } catch(e) { return fb; }
+      try {
+        const d = localStorage.getItem(k);
+        return d ? JSON.parse(d) : fb;
+      } catch(e) {
+        return fb;
+      }
     }
     function setStore(k, val) {
       try { localStorage.setItem(k, JSON.stringify(val)); } catch(e) {}
+    }
+
+    // Tek sefere mahsus eski çoklu örnek verileri temizleyip tek örnek yapısına geçiş kontrolü
+    const SEED_VERSION_KEY = "yg_seed_v2_single";
+    if (localStorage.getItem(SEED_VERSION_KEY) !== "done") {
+      setStore('yg_cards_lite', defaultCards);
+      setStore('yg_projects_lite', defaultProjects);
+      setStore('yg_accounts_lite', defaultAccounts);
+      setStore('yg_invoices_lite', defaultInvoices);
+      setStore('yg_docs_lite', defaultDocs);
+      setStore('yg_stock_lite', defaultStock);
+      localStorage.setItem(SEED_VERSION_KEY, "done");
     }
 
     let cards = getStore('yg_cards_lite', defaultCards);
@@ -1290,10 +1305,65 @@
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    // Tabloyu tamamen sıfırlayıp sadece 1 adet temiz örnek bırakma fonksiyonu
+    if (data.action === "resetSheets") {
+      var sheetConfigs = [
+        {
+          name: "Alış Faturaları",
+          headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah", "KDV Tutarı", "Toplam Tutar", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Açıklama"],
+          sample: ["2026-09-22", "2026-09-14", "EFA2026000004128", "Betonsa Hazır Beton A.Ş.", "1892019482", "Bağdat Caddesi Kentsel Dönüşüm", 124000, 24800, 148800, "2026-10-14", "Bekliyor", "Banka Havale / EFT", "C35/45 Hazır Beton dökümü (40 m³)"]
+        },
+        {
+          name: "Müşteriler",
+          headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Kategori", "Notlar"],
+          sample: ["2026-09-10", "Ahmet Yılmaz", "Atlas Holding A.Ş.", "Yatırımlar Direktörü", "+90 262 555 0199", "ahmet.yilmaz@atlasholding.com", "Müşteri", "1.2 MWp Çatı GES projesi"]
+        },
+        {
+          name: "İnşaat Projeleri",
+          headers: ["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "İlerleme", "Durum"],
+          sample: ["2026-09-22", "PRJ-2026-01", "Bağdat Caddesi Kentsel Dönüşüm", "Kentsel Dönüşüm", "Kat Malikleri", "Kadıköy", "45M ₺", "%65", "Kaba İnşaat"]
+        },
+        {
+          name: "Cari Kartları",
+          headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "Vergi Dairesi / No"],
+          sample: ["2026-09-22", "Betonsa Hazır Beton A.Ş.", "Tedarikçi", "Cemil Arslan", "+90 216 555 8800", "Marmara / 1892019482"]
+        },
+        {
+          name: "Proje Dökümanları",
+          headers: ["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Belge / Link URL"],
+          sample: ["2026-09-22", "Kadıköy — Onaylı Mimari Proje (Rev-04)", "Mimari Proje", "Bağdat Caddesi Kentsel Dönüşüm", "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing"]
+        },
+        {
+          name: "Stok",
+          headers: ["Tarih", "Stok Kodu", "Malzeme Adı", "Miktar", "Birim", "Fiyat", "Durum"],
+          sample: ["2026-09-22", "STK-DM-14", "B420C İnşaat Demiri Ø14mm", 48, "Ton", "27.800 ₺", "Yeterli"]
+        }
+      ];
+
+      sheetConfigs.forEach(function(cfg) {
+        var s = ss.getSheetByName(cfg.name);
+        if (!s) {
+          s = ss.insertSheet(cfg.name);
+        } else {
+          s.clear();
+        }
+        s.appendRow(cfg.headers);
+        s.getRange(1, 1, 1, cfg.headers.length).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+        s.appendRow(cfg.sample);
+        for (var c = 1; c <= cfg.headers.length; c++) {
+          try { s.autoResizeColumn(c); } catch(err) {}
+        }
+      });
+
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Tüm sayfalar tek örnek içerikle sıfırlandı!" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
     var sheetName = data.sheet || "Alış Faturaları";
     var row = data.row || [];
     
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(sheetName);
     
     if (!sheet) {
@@ -2459,6 +2529,51 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       } catch(err) {
         console.error("Sync error", err);
       }
+    }
+
+    async function resetAllToSingleSample() {
+      if (!confirm("E-tablo ve platformdaki tüm fazla örnekler temizlenecek, her kategori için sadece 1 adet temiz örnek bırakılacak. Devam etmek istiyor musunuz?")) return;
+
+      cards = [...defaultCards];
+      projects = [...defaultProjects];
+      accounts = [...defaultAccounts];
+      invoices = [...defaultInvoices];
+      docs = [...defaultDocs];
+      stock = [...defaultStock];
+
+      setStore('yg_cards_lite', cards);
+      setStore('yg_projects_lite', projects);
+      setStore('yg_accounts_lite', accounts);
+      setStore('yg_invoices_lite', invoices);
+      setStore('yg_docs_lite', docs);
+      setStore('yg_stock_lite', stock);
+
+      renderCards();
+      renderProjects();
+      renderAccounts();
+      renderInvoices();
+      renderDocs();
+      renderStock();
+
+      showToast('E-tablo sıfırlanıyor...', '🧹');
+
+      const url = getWebhookUrl();
+      if (url) {
+        try {
+          await fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'resetSheets' })
+          });
+        } catch(e) {
+          console.error(e);
+        }
+      }
+
+      closeModal('modal-settings');
+      setTimeout(() => showToast('Platform ve Google Sheets tek örnekle sıfırlandı! ✅'), 1200);
     }
 
     function syncAllToGoogleSheets() {
