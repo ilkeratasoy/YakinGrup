@@ -250,18 +250,8 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1;
-  color: #0b2545;
 }
-.logo-bold {
-  font-weight: 900;
-  color: #437734;
-}
-.global-footer .logo-text {
-  color: #ffffff;
-}
-.global-footer .logo-bold {
-  color: #528e40;
-}
+.logo-bold { font-weight: 900; }
 .nav-menu { display: flex; gap: 2rem; }
 .nav-menu a {
   font-family: var(--font-heading);
