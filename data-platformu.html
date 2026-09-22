@@ -77,24 +77,37 @@
     }
 
     .brand-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: var(--navy);
-      color: var(--gold);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
-      font-weight: 800;
+      position: relative;
+    }
+
+    .brand-emblem-img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      transform: rotate(14deg);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: drop-shadow(0 2px 4px rgba(45, 106, 79, 0.25));
+    }
+
+    .brand-box:hover .brand-emblem-img {
+      transform: rotate(18deg) scale(1.08);
     }
 
     .brand-title {
       font-family: var(--heading);
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-weight: 800;
       color: var(--navy);
       line-height: 1.1;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-title-grup {
+      color: #3b7a57;
+      font-weight: 900;
     }
 
     .brand-sub {
@@ -576,9 +589,11 @@
   <!-- Top App Header -->
   <header class="app-header">
     <a href="index.html" class="brand-box">
-      <div class="brand-icon">📇</div>
+      <div class="brand-icon">
+        <img src="assets/images/brand-emblem.png" alt="Yakın Grup" class="brand-emblem-img">
+      </div>
       <div>
-        <div class="brand-title">YAKIN GRUP</div>
+        <div class="brand-title">YAKIN <span class="brand-title-grup">GRUP</span></div>
         <div class="brand-sub">Data Platformu</div>
       </div>
     </a>
