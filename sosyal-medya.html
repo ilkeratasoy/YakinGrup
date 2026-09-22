@@ -875,7 +875,7 @@
     <div class="brand-wrap">
       <img src="assets/images/brand-emblem.png" alt="Yakın Grup" class="brand-logo">
       <div>
-        <div class="brand-title">YAKIN GRUP</div>
+        <div class="brand-title">YAKIN <span style="color: #437734; font-weight: 900;">GRUP</span></div>
         <span class="brand-badge">1 YILLIK İÇERİK TAKVİMİ & SENKRONİZASYON</span>
       </div>
     </div>
@@ -2246,7 +2246,10 @@
       ctx.fillStyle = '#0b2545';
       ctx.font = '800 28px Manrope, sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText('YAKIN GRUP', 62, 30);
+      ctx.fillText('YAKIN ', 62, 30);
+      const yakinWidth = ctx.measureText('YAKIN ').width;
+      ctx.fillStyle = '#437734';
+      ctx.fillText('GRUP', 62 + yakinWidth, 30);
 
       // Subtitle / Business Units
       ctx.fillStyle = '#64748b';

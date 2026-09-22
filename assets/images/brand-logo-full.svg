@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" width="100%" height="100%">
+  <!-- Emblem on Left -->
+  <g transform="translate(10, 5) scale(0.75)">
+    <!-- Leaf 1 (Left) -->
+    <path d="M 52 105 C 50 85, 30 65, 18 48 C 14 42, 12 30, 18 20 C 24 10, 36 8, 45 14 C 58 22, 64 45, 60 70 C 58 85, 54 98, 52 105 Z" fill="#437734"/>
+    <path d="M 28 32 C 38 48, 48 68, 52 92" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+    <!-- Leaf 2 (Right) -->
+    <path d="M 56 105 C 57 82, 68 55, 84 35 C 92 25, 102 18, 110 24 C 117 30, 115 42, 108 52 C 98 67, 80 86, 60 102 C 58 104, 56 105, 56 105 Z" fill="#528e40"/>
+    <path d="M 96 38 C 84 56, 72 76, 62 96" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="115" y="65" font-family="'Manrope', 'Inter', -apple-system, sans-serif" font-size="44" font-weight="700" letter-spacing="3" fill="#0b2545">YAKIN </text>
+  <text x="275" y="65" font-family="'Manrope', 'Inter', -apple-system, sans-serif" font-size="44" font-weight="900" letter-spacing="3" fill="#437734">GRUP</text>
+</svg>
