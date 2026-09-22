@@ -656,8 +656,12 @@
               <input type="text" id="card-role" placeholder="Direktör, Mimar...">
             </div>
             <div class="form-group">
-              <label>Telefon</label>
-              <input type="tel" id="card-phone" placeholder="0532...">
+              <label>Cep Telefonu (GSM / WhatsApp)</label>
+              <input type="tel" id="card-mobile" placeholder="+90 (533) 210 93 28">
+            </div>
+            <div class="form-group">
+              <label>Ofis / Sabit Telefon</label>
+              <input type="tel" id="card-office" placeholder="444 7 339 veya 0212...">
             </div>
             <div class="form-group">
               <label>E-Posta</label>
@@ -1202,7 +1206,7 @@
 
     // Initial Data - Tek Örnek İçerik
     const defaultCards = [
-      { id: "c1", name: "Ahmet Yılmaz", company: "Atlas Holding A.Ş.", role: "Yatırımlar Direktörü", phone: "+90 262 555 0199", email: "ahmet.yilmaz@atlasholding.com", category: "Müşteri", notes: "1.2 MWp Çatı GES projesi", date: "2026-09-10" }
+      { id: "c1", name: "Bora Güzey", company: "Enka Data Solutions", role: "Data Center Sales Manager", mobile: "+90 (533) 210 93 28", office: "444 7 339", phone: "+90 (533) 210 93 28", email: "bora.guzey@enka.com", category: "Müşteri", notes: "Balmumcu Mah., Beşiktaş, İstanbul", date: "2026-09-22" }
     ];
 
     const defaultProjects = [
@@ -1237,15 +1241,10 @@
       try { localStorage.setItem(k, JSON.stringify(val)); } catch(e) {}
     }
 
-    // Tek sefere mahsus eski çoklu örnek verileri temizleyip tek örnek yapısına geçiş kontrolü
-    const SEED_VERSION_KEY = "yg_seed_v2_single";
+    // Tek sefere mahsus eski tekli telefon verisini yeni ayrıştırılmış yapıya geçirme kontrolü
+    const SEED_VERSION_KEY = "yg_seed_v3_split_phone";
     if (localStorage.getItem(SEED_VERSION_KEY) !== "done") {
       setStore('yg_cards_lite', defaultCards);
-      setStore('yg_projects_lite', defaultProjects);
-      setStore('yg_accounts_lite', defaultAccounts);
-      setStore('yg_invoices_lite', defaultInvoices);
-      setStore('yg_docs_lite', defaultDocs);
-      setStore('yg_stock_lite', defaultStock);
       localStorage.setItem(SEED_VERSION_KEY, "done");
     }
 
@@ -1314,8 +1313,8 @@ function doPost(e) {
         },
         {
           name: "Müşteriler",
-          headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Kategori", "Notlar"],
-          sample: ["2026-09-10", "Ahmet Yılmaz", "Atlas Holding A.Ş.", "Yatırımlar Direktörü", "+90 262 555 0199", "ahmet.yilmaz@atlasholding.com", "Müşteri", "1.2 MWp Çatı GES projesi"]
+          headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Notlar"],
+          sample: ["2026-09-22", "Bora Güzey", "Enka Data Solutions", "Data Center Sales Manager", "+90 (533) 210 93 28", "444 7 339", "bora.guzey@enka.com", "Müşteri", "Balmumcu Mah., Beşiktaş, İstanbul"]
         },
         {
           name: "İnşaat Projeleri",
@@ -1369,8 +1368,8 @@ function doPost(e) {
         sheet.appendRow(["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah", "KDV Tutarı", "Toplam Tutar", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Açıklama"]);
         sheet.getRange(1, 1, 1, 13).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
       } else if (sheetName === "Müşteriler") {
-        sheet.appendRow(["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Kategori", "Notlar"]);
-        sheet.getRange(1, 1, 1, 8).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+        sheet.appendRow(["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Notlar"]);
+        sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
       } else if (sheetName === "İnşaat Projeleri") {
         sheet.appendRow(["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "İlerleme", "Durum"]);
         sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
@@ -1530,10 +1529,13 @@ function doPost(e) {
         } else if (key === 'TITLE' || key.startsWith('TITLE;')) {
           res.role = val;
         } else if (key.startsWith('TEL')) {
-          if (!res.phone || key.includes('CELL') || key.includes('MOBILE')) {
-            res.phone = val;
+          if (key.includes('CELL') || key.includes('MOBILE') || val.includes('05') || val.includes('+905') || val.startsWith('5')) {
+            res.mobilePhone = val;
+          } else if (key.includes('WORK') || key.includes('OFFICE') || val.startsWith('444') || val.startsWith('02') || val.startsWith('03')) {
+            res.officePhone = val;
           } else {
-            res.notes = (res.notes ? res.notes + ' | ' : '') + 'İş Tel: ' + val;
+            if (!res.mobilePhone) res.mobilePhone = val;
+            else res.officePhone = val;
           }
         } else if (key.startsWith('EMAIL')) {
           res.email = val;
@@ -1566,10 +1568,11 @@ function doPost(e) {
   "name": "Kişinin Adı Soyadı",
   "company": "Şirket / Firma Ünvanı",
   "role": "Pozisyon veya Mesleği / Unvanı",
-  "phone": "Telefon Numarası",
+  "mobilePhone": "Kişisel Cep Telefonu veya GSM Numarası (örn: +90 533 210 93 28 veya 05xx)",
+  "officePhone": "Şirket / Ofis / Santral / Sabit Hat Numarası (örn: 444 7 339 veya 0212/0216 santral)",
   "email": "E-Posta Adresi",
   "category": "Müşteri / Yatırımcı / Mimar / Mühendis / Tedarikçi / Taşeron arasından en uygun olanı",
-  "notes": "Kartvizitte yer alan adres veya ek bilgiler"
+  "notes": "Kartvizitte yer alan adres veya web sitesi bilgisi"
 }`;
 
       // En güncel ve hızlı Google Gemini modelleri (Öncelik 3.6-Flash)
@@ -1672,7 +1675,8 @@ function doPost(e) {
             if (vcard.name) document.getElementById('card-name').value = vcard.name;
             if (vcard.company) document.getElementById('card-company').value = vcard.company;
             if (vcard.role) document.getElementById('card-role').value = vcard.role;
-            if (vcard.phone) document.getElementById('card-phone').value = vcard.phone;
+            if (vcard.mobilePhone) document.getElementById('card-mobile').value = vcard.mobilePhone;
+            if (vcard.officePhone) document.getElementById('card-office').value = vcard.officePhone;
             if (vcard.email) document.getElementById('card-email').value = vcard.email;
             if (vcard.notes) document.getElementById('card-notes').value = vcard.notes;
 
@@ -1693,7 +1697,16 @@ function doPost(e) {
             if (geminiResult.name) document.getElementById('card-name').value = geminiResult.name;
             if (geminiResult.company) document.getElementById('card-company').value = geminiResult.company;
             if (geminiResult.role) document.getElementById('card-role').value = geminiResult.role;
-            if (geminiResult.phone) document.getElementById('card-phone').value = geminiResult.phone;
+            if (geminiResult.mobilePhone) {
+              document.getElementById('card-mobile').value = geminiResult.mobilePhone;
+            } else if (geminiResult.phone && (geminiResult.phone.includes('5') || geminiResult.phone.startsWith('05'))) {
+              document.getElementById('card-mobile').value = geminiResult.phone;
+            }
+            if (geminiResult.officePhone) {
+              document.getElementById('card-office').value = geminiResult.officePhone;
+            } else if (geminiResult.phone && !geminiResult.mobilePhone && !geminiResult.phone.startsWith('05')) {
+              document.getElementById('card-office').value = geminiResult.phone;
+            }
             if (geminiResult.email) document.getElementById('card-email').value = geminiResult.email;
             if (geminiResult.category && document.getElementById('card-category')) {
               document.getElementById('card-category').value = geminiResult.category;
@@ -1754,17 +1767,27 @@ function doPost(e) {
         document.getElementById('card-email').value = foundEmail;
       }
 
-      // 2. Telefon Numaraları (Cep ve Sabit Hatları Ayıkla)
-      const phoneMatches = text.match(/(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}|\b05\d{2}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b|\b5\d{2}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b/g) || [];
-      if (phoneMatches.length > 0) {
-        // Öncelik Cep Telefonuna (05xx veya 5xx)
-        const mobile = phoneMatches.find(p => p.includes('5') || p.startsWith('05') || p.startsWith('+905'));
-        if (mobile) {
-          document.getElementById('card-phone').value = mobile.trim();
+      // 2. Telefon Numaraları (Cep ve Sabit Hatları Ayrı Ayrı Ayıkla)
+      const phoneMatches = text.match(/(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}|\b444\s?\d\s?\d{3}\b|\b05\d{2}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b|\b5\d{2}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b|\b0\d{3}[-.\s]?\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b/g) || [];
+      
+      let mobileFound = '';
+      let officeFound = '';
+
+      phoneMatches.forEach(p => {
+        const clean = p.replace(/\s+/g, ' ').trim();
+        const digits = clean.replace(/[^0-9]/g, '');
+        // 444'lü veya alan kodlu (0212, 0216, 0312 vb.) sabit hat
+        if (clean.startsWith('444') || digits.startsWith('444') || digits.startsWith('02') || digits.startsWith('03') || digits.startsWith('04')) {
+          if (!officeFound) officeFound = clean;
+        } else if (digits.includes('5') || clean.includes('53') || clean.includes('54') || clean.includes('55') || clean.includes('50')) {
+          if (!mobileFound) mobileFound = clean;
         } else {
-          document.getElementById('card-phone').value = phoneMatches[0].trim();
+          if (!officeFound) officeFound = clean;
         }
-      }
+      });
+
+      if (mobileFound) document.getElementById('card-mobile').value = mobileFound;
+      if (officeFound) document.getElementById('card-office').value = officeFound;
 
       // 3. Şirket / Kurum Tespiti
       const compKeys = [
@@ -1862,12 +1885,17 @@ function doPost(e) {
 
     function saveCard(e) {
       e.preventDefault();
+      const mobileVal = document.getElementById('card-mobile').value.trim();
+      const officeVal = document.getElementById('card-office').value.trim();
+
       const newC = {
         id: 'c_' + Date.now(),
         name: document.getElementById('card-name').value.trim(),
         company: document.getElementById('card-company').value.trim(),
         role: document.getElementById('card-role').value.trim(),
-        phone: document.getElementById('card-phone').value.trim(),
+        mobile: mobileVal,
+        office: officeVal,
+        phone: mobileVal || officeVal, // geriye dönük uyumluluk
         email: document.getElementById('card-email').value.trim(),
         category: document.getElementById('card-category').value,
         notes: document.getElementById('card-notes').value.trim(),
@@ -1877,9 +1905,9 @@ function doPost(e) {
       cards.unshift(newC);
       setStore('yg_cards_lite', cards);
 
-      // Auto Send to Google Sheets Webhook
+      // Auto Send to Google Sheets Webhook (9 sütun: Cep ve Ofis ayrı kolonlarda)
       postToWebhook('Müşteriler', [
-        newC.date, newC.name, newC.company, newC.role, newC.phone, newC.email, newC.category, newC.notes
+        newC.date, newC.name, newC.company, newC.role, newC.mobile, newC.office, newC.email, newC.category, newC.notes
       ]);
 
       renderCards();
@@ -1914,13 +1942,25 @@ function doPost(e) {
             <span class="badge badge-green">${escapeHtml(c.category)}</span>
           </div>
 
-          ${c.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic;">📝 ${escapeHtml(c.notes)}</div>` : ''}
+          ${(c.mobile || c.office || c.phone) ? `
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 4px 0; font-size: 0.75rem;">
+              ${c.mobile ? `<span style="background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:6px; border:1px solid #a7f3d0; font-weight:600;">📱 Cep: ${escapeHtml(c.mobile)}</span>` : ''}
+              ${c.office ? `<span style="background:#f1f5f9; color:#334155; padding:2px 8px; border-radius:6px; border:1px solid #cbd5e1; font-weight:600;">☎️ Ofis: ${escapeHtml(c.office)}</span>` : ''}
+              ${(!c.mobile && !c.office && c.phone) ? `<span style="background:#f1f5f9; color:#334155; padding:2px 8px; border-radius:6px; border:1px solid #cbd5e1; font-weight:600;">📞 Tel: ${escapeHtml(c.phone)}</span>` : ''}
+            </div>
+          ` : ''}
+
+          ${c.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(c.notes)}</div>` : ''}
 
           <div class="quick-actions-row">
-            ${c.phone ? `
-              <a href="tel:${c.phone}" class="btn btn-secondary btn-sm">📞 Ara</a>
-              <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
-            ` : ''}
+            ${c.mobile ? `
+              <a href="tel:${c.mobile.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">📱 Cepten Ara</a>
+              <a href="https://wa.me/${c.mobile.replace(/[^0-9]/g, '').replace(/^0/, '90')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
+            ` : (c.phone ? `
+              <a href="tel:${c.phone.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">📞 Ara</a>
+              <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '').replace(/^0/, '90')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
+            ` : '')}
+            ${c.office ? `<a href="tel:${c.office.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">☎️ Ofisi Ara</a>` : ''}
             ${c.email ? `<a href="mailto:${c.email}" class="btn btn-secondary btn-sm">✉️ E-Posta</a>` : ''}
             <button class="btn btn-secondary btn-sm" onclick="showCardQr('${c.id}')">📱 QR</button>
             <button class="btn btn-secondary btn-sm" onclick="downloadVcf('${c.id}')">⬇️ vCard</button>
@@ -1942,9 +1982,13 @@ function doPost(e) {
       const c = cards.find(x => x.id === id);
       if (!c) return;
       document.getElementById('qr-title').textContent = c.name;
-      document.getElementById('qr-sub').textContent = `${c.company} — ${c.phone || ''}`;
+      document.getElementById('qr-sub').textContent = `${c.company} — ${c.mobile || c.office || c.phone || ''}`;
 
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\nTEL:${c.phone||''}\nEMAIL:${c.email||''}\nEND:VCARD`;
+      const cellLine = c.mobile ? `TEL;TYPE=CELL:${c.mobile}\n` : '';
+      const workLine = c.office ? `TEL;TYPE=WORK:${c.office}\n` : '';
+      const fallbackLine = (!c.mobile && !c.office && c.phone) ? `TEL:${c.phone}\n` : '';
+
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\nEND:VCARD`;
       const box = document.getElementById('qrcode-box');
       box.innerHTML = '';
       new QRCode(box, { text: vcard, width: 160, height: 160, colorDark: "#0b2545" });
@@ -1954,7 +1998,11 @@ function doPost(e) {
     function downloadVcf(id) {
       const c = cards.find(x => x.id === id);
       if (!c) return;
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\nTEL:${c.phone||''}\nEMAIL:${c.email||''}\nEND:VCARD`;
+      const cellLine = c.mobile ? `TEL;TYPE=CELL:${c.mobile}\n` : '';
+      const workLine = c.office ? `TEL;TYPE=WORK:${c.office}\n` : '';
+      const fallbackLine = (!c.mobile && !c.office && c.phone) ? `TEL:${c.phone}\n` : '';
+
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\nEND:VCARD`;
       const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -1965,8 +2013,8 @@ function doPost(e) {
 
     function exportCardsCsv() {
       const rows = [
-        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Telefon", "E-Posta", "Kategori", "Notlar"],
-        ...cards.map(c => [c.date, c.name, c.company, c.role, c.phone, c.email, c.category, c.notes])
+        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Notlar"],
+        ...cards.map(c => [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.notes])
       ];
       downloadCsv("Yakin_Grup_Musteriler.csv", rows);
     }
@@ -2575,7 +2623,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     function syncAllToGoogleSheets() {
       showToast('Sheets senkronizasyonu başladı...', '🔄');
-      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.phone, c.email, c.category, c.notes]));
+      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.notes]));
       projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status]));
       accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.tax]));
       invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc]));
