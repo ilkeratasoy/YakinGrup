@@ -1315,6 +1315,45 @@
       try { localStorage.setItem(k, JSON.stringify(val)); } catch(e) {}
     }
 
+    const DELETED_STORAGE_KEY = "yg_deleted_records_v1";
+
+    function getDeletedRecords() {
+      try {
+        const d = localStorage.getItem(DELETED_STORAGE_KEY);
+        return d ? JSON.parse(d) : {};
+      } catch(e) {
+        return {};
+      }
+    }
+
+    function markAsDeleted(sheetName, key) {
+      if (!key) return;
+      const del = getDeletedRecords();
+      if (!del[sheetName]) del[sheetName] = [];
+      const norm = String(key).trim().toLowerCase();
+      if (!del[sheetName].includes(norm)) {
+        del[sheetName].push(norm);
+      }
+      try { localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(del)); } catch(e) {}
+    }
+
+    function isRecordDeleted(sheetName, key) {
+      if (!key) return false;
+      const del = getDeletedRecords();
+      if (!del[sheetName]) return false;
+      const norm = String(key).trim().toLowerCase();
+      return del[sheetName].includes(norm);
+    }
+
+    function unmarkDeleted(sheetName, key) {
+      if (!key) return;
+      const del = getDeletedRecords();
+      if (!del[sheetName]) return;
+      const norm = String(key).trim().toLowerCase();
+      del[sheetName] = del[sheetName].filter(k => k !== norm);
+      try { localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(del)); } catch(e) {}
+    }
+
     // Tek sefere mahsus eski verileri yeni ayrıştırılmış yapıya geçirme kontrolü
     const SEED_VERSION_KEY = "yg_seed_v4_refined_fields";
     if (localStorage.getItem(SEED_VERSION_KEY) !== "done") {
@@ -1521,9 +1560,50 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 3. Normal veri ekleme (appendRow)
+    // 3. Satır Silme (deleteRow)
+    if (data.action === "deleteRow") {
+      var delSheetName = data.sheet || "Müşteriler";
+      var delSheet = ss.getSheetByName(delSheetName);
+      var deletedCount = 0;
+      if (delSheet) {
+        var lastRow = delSheet.getLastRow();
+        if (lastRow > 1) {
+          var range = delSheet.getRange(1, 1, lastRow, delSheet.getLastColumn());
+          var values = range.getValues();
+          var headers = values[0];
+          var colIdx = -1;
+          var matchCol = (data.matchColumn || "").toString().trim().toLowerCase();
+          var matchVal = (data.matchValue || "").toString().trim().toLowerCase();
+
+          for (var c = 0; c < headers.length; c++) {
+            if (headers[c].toString().trim().toLowerCase() === matchCol) {
+              colIdx = c;
+              break;
+            }
+          }
+
+          // Eşleşen satırı bulup tablodan tamamen sil (en alttan yukarıya ara)
+          for (var r = lastRow - 1; r >= 1; r--) {
+            var val = values[r][colIdx >= 0 ? colIdx : 1];
+            if (val && val.toString().trim().toLowerCase() === matchVal) {
+              delSheet.deleteRow(r + 1);
+              deletedCount++;
+              break;
+            }
+          }
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", action: "deleteRow", deleted: deletedCount }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 4. Normal veri ekleme (appendRow)
     var sheetName = data.sheet || "Müşteriler";
-    var row = data.row || [];
+    var row = data.row;
+    if (!row || !Array.isArray(row) || row.length === 0) {
+      return ContentService.createTextOutput(JSON.stringify({ status: "ignored", message: "Boş satır eklenmedi" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
     var sheet = ss.getSheetByName(sheetName);
     
     // İlgili sheet yoksa oluştur ve başlıklarını yaz
@@ -2087,6 +2167,11 @@ function doPost(e) {
       cards.unshift(newC);
       setStore('yg_cards_lite', cards);
 
+      unmarkDeleted('Müşteriler', newC.name);
+      if (newC.mobile) unmarkDeleted('Müşteriler', newC.mobile);
+      if (newC.office) unmarkDeleted('Müşteriler', newC.office);
+      if (newC.email) unmarkDeleted('Müşteriler', newC.email);
+
       // Auto Send to Google Sheets Webhook (10 sütun: Adres ve Notlar ayrı kolonlarda)
       postToWebhook('Müşteriler', [
         newC.date, newC.name, newC.company, newC.role, newC.mobile, newC.office, newC.email, newC.category, newC.address, newC.notes
@@ -2154,11 +2239,22 @@ function doPost(e) {
     }
 
     function deleteCard(id) {
-      if (!confirm('Silinsin mi?')) return;
-      cards = cards.filter(c => c.id !== id);
+      const c = cards.find(x => x.id === id);
+      if (!c) return;
+      if (!confirm(`"${c.name}" kartviziti silinsin mi?`)) return;
+
+      markAsDeleted('Müşteriler', c.name);
+      if (c.mobile) markAsDeleted('Müşteriler', c.mobile);
+      if (c.office) markAsDeleted('Müşteriler', c.office);
+      if (c.phone) markAsDeleted('Müşteriler', c.phone);
+      if (c.email) markAsDeleted('Müşteriler', c.email);
+
+      cards = cards.filter(x => x.id !== id);
       setStore('yg_cards_lite', cards);
       renderCards();
-      showToast('Silindi');
+
+      postDeleteToWebhook('Müşteriler', 'Ad Soyad', c.name);
+      showToast(`"${c.name}" silindi ✅`);
     }
 
     function showCardQr(id) {
@@ -2247,10 +2343,31 @@ function doPost(e) {
 
           <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem;">
             <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget)}</strong>
-            <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${p.name}')">📁 Evrakları Aç</button>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${p.name}')">📁 Evrakları Aç</button>
+              <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')">🗑️</button>
+            </div>
           </div>
         </div>
       `).join('');
+    }
+
+    function deleteProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+      if (!confirm(`"${p.name}" projesi silinsin mi?`)) return;
+
+      markAsDeleted('İnşaat Projeleri', p.name);
+      if (p.code) markAsDeleted('İnşaat Projeleri', p.code);
+
+      projects = projects.filter(x => x.id !== id);
+      setStore('yg_projects_lite', projects);
+      renderProjects();
+      populateDocProjectSelect();
+      populateInvoiceProjectSelect();
+
+      postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name);
+      showToast(`"${p.name}" silindi ✅`);
     }
 
     function saveProject(e) {
@@ -2272,6 +2389,9 @@ function doPost(e) {
 
       projects.unshift(newP);
       setStore('yg_projects_lite', projects);
+
+      unmarkDeleted('İnşaat Projeleri', newP.name);
+      if (newP.code) unmarkDeleted('İnşaat Projeleri', newP.code);
 
       postToWebhook('İnşaat Projeleri', [
         new Date().toISOString().split('T')[0], newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate, `%${newP.progress}`, newP.status, newP.notes
@@ -2323,11 +2443,17 @@ function doPost(e) {
     }
 
     function deleteAccount(id) {
-      if (!confirm('Cari kartı silinsin mi?')) return;
-      accounts = accounts.filter(a => a.id !== id);
+      const a = accounts.find(x => x.id === id);
+      if (!a) return;
+      if (!confirm(`"${a.company}" cari kartı silinsin mi?`)) return;
+
+      markAsDeleted('Cari Kartları', a.company);
+      accounts = accounts.filter(x => x.id !== id);
       setStore('yg_accounts_lite', accounts);
       renderAccounts();
-      showToast('Cari kartı silindi');
+
+      postDeleteToWebhook('Cari Kartları', 'Firma Adı', a.company);
+      showToast(`"${a.company}" silindi ✅`);
     }
 
     function saveAccount(e) {
@@ -2351,6 +2477,8 @@ function doPost(e) {
 
       accounts.unshift(newA);
       setStore('yg_accounts_lite', accounts);
+
+      unmarkDeleted('Cari Kartları', newA.company);
 
       postToWebhook('Cari Kartları', [
         new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, newA.notes
@@ -2505,6 +2633,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       invoices.unshift(newInv);
       setStore('yg_invoices_lite', invoices);
 
+      unmarkDeleted('Alış Faturaları', newInv.no);
+
       postToWebhook('Alış Faturaları', [
         new Date().toISOString().split('T')[0],
         newInv.date,
@@ -2648,11 +2778,18 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     }
 
     function deleteInvoice(id) {
-      if (!confirm("Bu faturayı silmek istediğinize emin misiniz?")) return;
+      const inv = invoices.find(i => i.id === id);
+      if (!inv) return;
+      if (!confirm(`"${inv.no}" numaralı faturayı silmek istediğinize emin misiniz?`)) return;
+
+      markAsDeleted('Alış Faturaları', inv.no);
+
       invoices = invoices.filter(i => i.id !== id);
       setStore('yg_invoices_lite', invoices);
       renderInvoices();
-      showToast('Fatura silindi');
+
+      postDeleteToWebhook('Alış Faturaları', 'Fatura No', inv.no);
+      showToast(`"${inv.no}" fatura silindi ✅`);
     }
 
     function exportInvoicesCsv() {
@@ -2700,8 +2837,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             </div>
           ` : ''}
           ${d.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(d.notes)}</div>` : ''}
-          <div style="display:flex; justify-content: flex-end; margin-top: 4px;">
+          <div style="display:flex; justify-content: flex-end; gap: 6px; margin-top: 4px;">
             <a href="${d.url}" target="_blank" class="btn btn-navy btn-sm">👁️ Evrakı Aç ↗</a>
+            <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteDoc('${d.id}')">🗑️</button>
           </div>
         </div>
       `).join('');
@@ -2711,6 +2849,21 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       switchNav('tab-docs');
       document.getElementById('search-docs').value = projName;
       renderDocs(projName.toLowerCase());
+    }
+
+    function deleteDoc(id) {
+      const d = docs.find(x => x.id === id);
+      if (!d) return;
+      if (!confirm(`"${d.title}" dökümanı silinsin mi?`)) return;
+
+      markAsDeleted('Proje Dökümanları', d.title);
+
+      docs = docs.filter(x => x.id !== id);
+      setStore('yg_docs_lite', docs);
+      renderDocs();
+
+      postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', d.title);
+      showToast(`"${d.title}" silindi ✅`);
     }
 
     function saveDoc(e) {
@@ -2728,6 +2881,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       docs.unshift(newD);
       setStore('yg_docs_lite', docs);
+
+      unmarkDeleted('Proje Dökümanları', newD.title);
 
       postToWebhook('Proje Dökümanları', [
         new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.date, newD.expiry, newD.url, newD.notes
@@ -2762,7 +2917,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                 ${s.location ? ` • <span>📍 ${escapeHtml(s.location)}</span>` : ''}
               </div>
             </div>
-            <span class="badge ${s.status === 'Kritik' ? 'badge-red' : 'badge-green'}">${escapeHtml(s.status)}</span>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="badge ${s.status === 'Kritik' ? 'badge-red' : 'badge-green'}">${escapeHtml(s.status)}</span>
+              <button class="btn btn-secondary btn-sm" style="color: #ef4444; padding: 2px 7px;" onclick="deleteStock('${s.id}')">🗑️</button>
+            </div>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 4px 0;">
             <div style="font-size: 1.05rem; font-weight: 800; color: var(--navy);">
@@ -2775,6 +2933,22 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           ${s.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(s.notes)}</div>` : ''}
         </div>
       `).join('');
+    }
+
+    function deleteStock(id) {
+      const s = stock.find(x => x.id === id);
+      if (!s) return;
+      if (!confirm(`"${s.name}" stok kalemi silinsin mi?`)) return;
+
+      markAsDeleted('Stok', s.name);
+      if (s.code) markAsDeleted('Stok', s.code);
+
+      stock = stock.filter(x => x.id !== id);
+      setStore('yg_stock_lite', stock);
+      renderStock();
+
+      postDeleteToWebhook('Stok', 'Malzeme Adı', s.name);
+      showToast(`"${s.name}" silindi ✅`);
     }
 
     function saveStock(e) {
@@ -2802,6 +2976,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       stock.unshift(newS);
       setStore('yg_stock_lite', stock);
+
+      unmarkDeleted('Stok', newS.name);
+      if (newS.code) unmarkDeleted('Stok', newS.code);
 
       postToWebhook('Stok', [
         new Date().toISOString().split('T')[0], newS.code, newS.name, newS.category, newS.qty, newS.unit, newS.price, newS.totalValue, newS.location, newS.status, newS.notes
@@ -2836,8 +3013,32 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       }
     }
 
+    async function postDeleteToWebhook(sheetName, matchColumn, matchValue) {
+      const url = getWebhookUrl();
+      if (!url || !matchValue) return;
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          cache: 'no-cache',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'deleteRow',
+            sheet: sheetName,
+            matchColumn: matchColumn,
+            matchValue: matchValue
+          })
+        });
+        console.log(`[Delete Synced]: ${sheetName} -> ${matchColumn}: ${matchValue}`);
+      } catch(err) {
+        console.error("Delete sync error", err);
+      }
+    }
+
     async function resetAllToSingleSample() {
       if (!confirm("E-tablo ve platformdaki tüm fazla örnekler temizlenecek, her kategori için sadece 1 adet temiz örnek bırakılacak. Devam etmek istiyor musunuz?")) return;
+
+      try { localStorage.removeItem(DELETED_STORAGE_KEY); } catch(e) {}
 
       cards = [...defaultCards];
       projects = [...defaultProjects];
@@ -2958,55 +3159,77 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
           // 1. Müşteriler
           if (d['Müşteriler'] && d['Müşteriler'].length > 0) {
-            cards = d['Müşteriler'].map((r, idx) => {
-              const mob = cleanText(r['Cep Telefonu']) || (idx === 0 ? "+90 (533) 210 93 28" : "");
-              const off = cleanText(r['Ofis / Sabit Tel']);
-              return {
-                id: 'c_' + idx,
-                date: cleanDate(r['Tarih']),
-                name: cleanText(r['Ad Soyad']),
-                company: cleanText(r['Firma']),
-                role: cleanText(r['Unvan']),
-                mobile: mob,
-                office: off,
-                phone: mob || off,
-                email: cleanText(r['E-Posta']),
-                category: cleanText(r['Kategori'], 'Müşteri'),
-                address: cleanText(r['Adres']),
-                notes: cleanText(r['Notlar'])
-              };
-            });
+            cards = d['Müşteriler']
+              .filter(r => {
+                const name = cleanText(r['Ad Soyad']);
+                const mob = cleanText(r['Cep Telefonu']);
+                const off = cleanText(r['Ofis / Sabit Tel']);
+                const email = cleanText(r['E-Posta']);
+                if (!name && !mob && !off && !email) return false;
+                if (isRecordDeleted('Müşteriler', name)) return false;
+                if (mob && isRecordDeleted('Müşteriler', mob)) return false;
+                if (off && isRecordDeleted('Müşteriler', off)) return false;
+                if (email && isRecordDeleted('Müşteriler', email)) return false;
+                return true;
+              })
+              .map((r, idx) => {
+                const mob = cleanText(r['Cep Telefonu']) || (idx === 0 ? "+90 (533) 210 93 28" : "");
+                const off = cleanText(r['Ofis / Sabit Tel']);
+                return {
+                  id: 'c_' + idx,
+                  date: cleanDate(r['Tarih']),
+                  name: cleanText(r['Ad Soyad']),
+                  company: cleanText(r['Firma']),
+                  role: cleanText(r['Unvan']),
+                  mobile: mob,
+                  office: off,
+                  phone: mob || off,
+                  email: cleanText(r['E-Posta']),
+                  category: cleanText(r['Kategori'], 'Müşteri'),
+                  address: cleanText(r['Adres']),
+                  notes: cleanText(r['Notlar'])
+                };
+              });
             setStore('yg_cards_lite', cards);
             renderCards();
           }
 
           // 2. İnşaat Projeleri
           if (d['İnşaat Projeleri'] && d['İnşaat Projeleri'].length > 0) {
-            projects = d['İnşaat Projeleri'].map((r, idx) => {
-              let prg = r['İlerleme'];
-              let numPrg = 0;
-              if (typeof prg === 'number') {
-                numPrg = prg <= 1 && prg > 0 ? Math.round(prg * 100) : Math.round(prg);
-              } else if (prg) {
-                const parsed = parseFloat(String(prg).replace('%', '').trim());
-                numPrg = !isNaN(parsed) ? (parsed <= 1 && parsed > 0 ? Math.round(parsed * 100) : Math.round(parsed)) : 0;
-              }
-              return {
-                id: 'p_' + idx,
-                date: cleanDate(r['Tarih']),
-                code: cleanText(r['Proje Kodu']),
-                name: cleanText(r['Proje Adı']),
-                type: cleanText(r['Türü']),
-                client: cleanText(r['İşveren']),
-                location: cleanText(r['Konum']),
-                budget: cleanText(r['Bütçe']),
-                startDate: cleanDate(r['Başlangıç Tarihi']),
-                endDate: cleanDate(r['Teslim Tarihi']),
-                progress: numPrg,
-                status: cleanText(r['Durum'], 'Planlama'),
-                notes: cleanText(r['Proje Notları'])
-              };
-            });
+            projects = d['İnşaat Projeleri']
+              .filter(r => {
+                const name = cleanText(r['Proje Adı']);
+                const code = cleanText(r['Proje Kodu']);
+                if (!name && !code) return false;
+                if (name && isRecordDeleted('İnşaat Projeleri', name)) return false;
+                if (code && isRecordDeleted('İnşaat Projeleri', code)) return false;
+                return true;
+              })
+              .map((r, idx) => {
+                let prg = r['İlerleme'];
+                let numPrg = 0;
+                if (typeof prg === 'number') {
+                  numPrg = prg <= 1 && prg > 0 ? Math.round(prg * 100) : Math.round(prg);
+                } else if (prg) {
+                  const parsed = parseFloat(String(prg).replace('%', '').trim());
+                  numPrg = !isNaN(parsed) ? (parsed <= 1 && parsed > 0 ? Math.round(parsed * 100) : Math.round(parsed)) : 0;
+                }
+                return {
+                  id: 'p_' + idx,
+                  date: cleanDate(r['Tarih']),
+                  code: cleanText(r['Proje Kodu']),
+                  name: cleanText(r['Proje Adı']),
+                  type: cleanText(r['Türü']),
+                  client: cleanText(r['İşveren']),
+                  location: cleanText(r['Konum']),
+                  budget: cleanText(r['Bütçe']),
+                  startDate: cleanDate(r['Başlangıç Tarihi']),
+                  endDate: cleanDate(r['Teslim Tarihi']),
+                  progress: numPrg,
+                  status: cleanText(r['Durum'], 'Planlama'),
+                  notes: cleanText(r['Proje Notları'])
+                };
+              });
             setStore('yg_projects_lite', projects);
             renderProjects();
             populateDocProjectSelect();
@@ -3015,82 +3238,112 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
           // 3. Cari Kartları
           if (d['Cari Kartları'] && d['Cari Kartları'].length > 0) {
-            accounts = d['Cari Kartları'].map((r, idx) => {
-              const ph = cleanText(r['Telefon']) || (idx === 0 ? "+90 (216) 555 88 00" : "");
-              const vDaire = cleanText(r['Vergi Dairesi']);
-              const vNo = cleanText(r['VKN / TCKN']);
-              return {
-                id: 'a_' + idx,
-                company: cleanText(r['Firma Adı']),
-                type: cleanText(r['Cari Türü'], 'Müşteri'),
-                contact: cleanText(r['Yetkili Kişi']),
-                phone: ph,
-                email: cleanText(r['E-Posta']),
-                taxOffice: vDaire,
-                taxNo: vNo,
-                tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
-                address: cleanText(r['Açık Adres']),
-                notes: cleanText(r['Notlar / IBAN'])
-              };
-            });
+            accounts = d['Cari Kartları']
+              .filter(r => {
+                const comp = cleanText(r['Firma Adı']);
+                if (!comp) return false;
+                if (isRecordDeleted('Cari Kartları', comp)) return false;
+                return true;
+              })
+              .map((r, idx) => {
+                const ph = cleanText(r['Telefon']) || (idx === 0 ? "+90 (216) 555 88 00" : "");
+                const vDaire = cleanText(r['Vergi Dairesi']);
+                const vNo = cleanText(r['VKN / TCKN']);
+                return {
+                  id: 'a_' + idx,
+                  company: cleanText(r['Firma Adı']),
+                  type: cleanText(r['Cari Türü'], 'Müşteri'),
+                  contact: cleanText(r['Yetkili Kişi']),
+                  phone: ph,
+                  email: cleanText(r['E-Posta']),
+                  taxOffice: vDaire,
+                  taxNo: vNo,
+                  tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
+                  address: cleanText(r['Açık Adres']),
+                  notes: cleanText(r['Notlar / IBAN'])
+                };
+              });
             setStore('yg_accounts_lite', accounts);
             renderAccounts();
           }
 
           // 4. Alış Faturaları
           if (d['Alış Faturaları'] && d['Alış Faturaları'].length > 0) {
-            invoices = d['Alış Faturaları'].map((r, idx) => ({
-              id: 'inv_' + idx,
-              regDate: cleanDate(r['Kayıt Tarihi']),
-              date: cleanDate(r['Fatura Tarihi']),
-              no: cleanText(r['Fatura No']),
-              vendor: cleanText(r['Tedarikçi / Cari']),
-              tax: cleanText(r['VKN / TCKN']),
-              project: cleanText(r['İlgili Proje']),
-              subtotal: parseFloat(r['KDV Hariç Matrah (₺)'] || r['KDV Hariç Matrah']) || 0,
-              vat: parseFloat(r['KDV Tutarı (₺)'] || r['KDV Tutarı']) || 0,
-              total: parseFloat(r['Toplam Tutar (₺)'] || r['Toplam Tutar']) || 0,
-              dueDate: cleanDate(r['Vade Tarihi']),
-              status: cleanText(r['Ödeme Durumu'], 'Bekliyor'),
-              method: cleanText(r['Ödeme Yöntemi'], 'Banka Havale / EFT'),
-              desc: cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama']),
-              notes: cleanText(r['Özel Notlar'])
-            }));
+            invoices = d['Alış Faturaları']
+              .filter(r => {
+                const fNo = cleanText(r['Fatura No']);
+                if (!fNo) return false;
+                if (isRecordDeleted('Alış Faturaları', fNo)) return false;
+                return true;
+              })
+              .map((r, idx) => ({
+                id: 'inv_' + idx,
+                regDate: cleanDate(r['Kayıt Tarihi']),
+                date: cleanDate(r['Fatura Tarihi']),
+                no: cleanText(r['Fatura No']),
+                vendor: cleanText(r['Tedarikçi / Cari']),
+                tax: cleanText(r['VKN / TCKN']),
+                project: cleanText(r['İlgili Proje']),
+                subtotal: parseFloat(r['KDV Hariç Matrah (₺)'] || r['KDV Hariç Matrah']) || 0,
+                vat: parseFloat(r['KDV Tutarı (₺)'] || r['KDV Tutarı']) || 0,
+                total: parseFloat(r['Toplam Tutar (₺)'] || r['Toplam Tutar']) || 0,
+                dueDate: cleanDate(r['Vade Tarihi']),
+                status: cleanText(r['Ödeme Durumu'], 'Bekliyor'),
+                method: cleanText(r['Ödeme Yöntemi'], 'Banka Havale / EFT'),
+                desc: cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama']),
+                notes: cleanText(r['Özel Notlar'])
+              }));
             setStore('yg_invoices_lite', invoices);
             renderInvoices();
           }
 
           // 5. Proje Dökümanları
           if (d['Proje Dökümanları'] && d['Proje Dökümanları'].length > 0) {
-            docs = d['Proje Dökümanları'].map((r, idx) => ({
-              id: 'd_' + idx,
-              title: cleanText(r['Evrak Başlığı']),
-              type: cleanText(r['Evrak / Proje Türü']),
-              project: cleanText(r['İlgili Proje']),
-              date: cleanDate(r['Evrak Tarihi']),
-              expiry: cleanDate(r['Geçerlilik Tarihi']),
-              url: cleanText(r['Belge / Link URL']),
-              notes: cleanText(r['Evrak Notu / Açıklama'])
-            }));
+            docs = d['Proje Dökümanları']
+              .filter(r => {
+                const title = cleanText(r['Evrak Başlığı']);
+                if (!title) return false;
+                if (isRecordDeleted('Proje Dökümanları', title)) return false;
+                return true;
+              })
+              .map((r, idx) => ({
+                id: 'd_' + idx,
+                title: cleanText(r['Evrak Başlığı']),
+                type: cleanText(r['Evrak / Proje Türü']),
+                project: cleanText(r['İlgili Proje']),
+                date: cleanDate(r['Evrak Tarihi']),
+                expiry: cleanDate(r['Geçerlilik Tarihi']),
+                url: cleanText(r['Belge / Link URL']),
+                notes: cleanText(r['Evrak Notu / Açıklama'])
+              }));
             setStore('yg_docs_lite', docs);
             renderDocs();
           }
 
           // 6. Stok
           if (d['Stok'] && d['Stok'].length > 0) {
-            stock = d['Stok'].map((r, idx) => ({
-              id: 's_' + idx,
-              code: cleanText(r['Stok Kodu']),
-              name: cleanText(r['Malzeme Adı']),
-              category: cleanText(r['Kategori'], 'Demir & Çelik'),
-              qty: parseFloat(r['Mevcut Miktar'] || r['Miktar']) || 0,
-              unit: cleanText(r['Birim'], 'Adet'),
-              price: cleanText(r['Birim Fiyat (₺)'] || r['Fiyat']),
-              totalValue: cleanText(r['Toplam Değer (₺)']),
-              location: cleanText(r['Depo / Konum']),
-              status: cleanText(r['Durum'], 'Yeterli'),
-              notes: cleanText(r['Notlar / Detay'])
-            }));
+            stock = d['Stok']
+              .filter(r => {
+                const name = cleanText(r['Malzeme Adı']);
+                const code = cleanText(r['Stok Kodu']);
+                if (!name && !code) return false;
+                if (name && isRecordDeleted('Stok', name)) return false;
+                if (code && isRecordDeleted('Stok', code)) return false;
+                return true;
+              })
+              .map((r, idx) => ({
+                id: 's_' + idx,
+                code: cleanText(r['Stok Kodu']),
+                name: cleanText(r['Malzeme Adı']),
+                category: cleanText(r['Kategori'], 'Demir & Çelik'),
+                qty: parseFloat(r['Mevcut Miktar'] || r['Miktar']) || 0,
+                unit: cleanText(r['Birim'], 'Adet'),
+                price: cleanText(r['Birim Fiyat (₺)'] || r['Fiyat']),
+                totalValue: cleanText(r['Toplam Değer (₺)']),
+                location: cleanText(r['Depo / Konum']),
+                status: cleanText(r['Durum'], 'Yeterli'),
+                notes: cleanText(r['Notlar / Detay'])
+              }));
             setStore('yg_stock_lite', stock);
             renderStock();
           }
