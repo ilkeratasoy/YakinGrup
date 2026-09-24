@@ -1268,13 +1268,13 @@
        MÜŞTERİ VE PROJE REHBERİ - HAFİF & NATIVE MOTOR
        ================================================================ */
 
-    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyV-gDIeNXsDcNeqex_ZhCPvIdmYj_tGaLGlhyz0fyQHsABK8TZLmK-9stq0JYs8vA8JA/exec";
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxOMaCiB19C65gwhiebhfybP2y-N5Nskqv59XyBOeUM4PRSTNIhhhvkpLhpHvNXd-Br/exec";
     const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
-      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbxxXPW7') && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe') && !custom.includes('AKfycbwmtXft')) return custom.trim();
+      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbxxXPW7') && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe') && !custom.includes('AKfycbwmtXft') && !custom.includes('AKfycbyV')) return custom.trim();
       return GAS_WEBHOOK_URL;
     }
 
@@ -1455,11 +1455,15 @@ function doGet(e) {
 
 // Google E-Tablo açıldığında menü çubuğuna '🏛️ Yakın Grup' menüsü ekler
 function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu('🏛️ Yakın Grup')
-    .addItem('📌 Sheet Başlıklarını ve Formatlarını Oluştur', 'setupHeaders')
-    .addItem('🧹 Sayfaları Sıfırla (1 Temiz Örnek Bırak)', 'resetSheets')
-    .addToUi();
+  try {
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu('🏛️ Yakın Grup')
+      .addItem('📌 Sheet Başlıklarını ve Formatlarını Oluştur', 'setupHeaders')
+      .addItem('🧹 Sayfaları Sıfırla (1 Temiz Örnek Bırak)', 'resetSheets')
+      .addToUi();
+  } catch(err) {
+    Logger.log("onOpen UI context: " + err);
+  }
 }
 
 var SHEET_CONFIGS = [
