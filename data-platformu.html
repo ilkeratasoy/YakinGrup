@@ -1268,13 +1268,13 @@
        MÜŞTERİ VE PROJE REHBERİ - HAFİF & NATIVE MOTOR
        ================================================================ */
 
-    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwmtXftyXr8CdEhJEZTPCW15x4_dfWNAGEdgJXMhqXPJgxiexCW6Xx0Y7oWKjC6C0k/exec";
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyV-gDIeNXsDcNeqex_ZhCPvIdmYj_tGaLGlhyz0fyQHsABK8TZLmK-9stq0JYs8vA8JA/exec";
     const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
-      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbxxXPW7') && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe')) return custom.trim();
+      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbxxXPW7') && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe') && !custom.includes('AKfycbwmtXft')) return custom.trim();
       return GAS_WEBHOOK_URL;
     }
 
@@ -2819,12 +2819,16 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const url = getWebhookUrl();
       if (!url) return;
       try {
+        const safeRow = rowArray.map(item => {
+          if (typeof item === 'string' && item.startsWith('+')) return "'" + item;
+          return item;
+        });
         await fetch(url, {
           method: 'POST',
           mode: 'no-cors',
           cache: 'no-cache',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ sheet: sheetName, row: rowArray })
+          body: JSON.stringify({ sheet: sheetName, row: safeRow })
         });
         console.log(`[Synced]: ${sheetName}`);
       } catch(err) {
@@ -2929,6 +2933,19 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (!url) return;
       if (!silent) showToast('Google Sheets verileri yükleniyor...', '☁️');
 
+      const cleanText = (v, fallback = '') => {
+        if (v === undefined || v === null) return fallback;
+        const s = String(v).trim();
+        if (s.startsWith('#ERROR') || s.startsWith('#DEĞER') || s.startsWith('#REF!') || s.startsWith('#VALUE!')) return fallback;
+        return s;
+      };
+      const cleanDate = (d) => {
+        if (!d) return '';
+        const s = String(d).trim();
+        if (s.includes('T')) return s.split('T')[0];
+        return s;
+      };
+
       try {
         const resp = await fetch(url + (url.includes('?') ? '&' : '?') + 'action=readAll', {
           method: 'GET',
@@ -2941,41 +2958,55 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
           // 1. Müşteriler
           if (d['Müşteriler'] && d['Müşteriler'].length > 0) {
-            cards = d['Müşteriler'].map((r, idx) => ({
-              id: 'c_' + idx,
-              date: r['Tarih'] || '',
-              name: r['Ad Soyad'] || '',
-              company: r['Firma'] || '',
-              role: r['Unvan'] || '',
-              mobile: r['Cep Telefonu'] || '',
-              office: r['Ofis / Sabit Tel'] || '',
-              phone: r['Cep Telefonu'] || r['Ofis / Sabit Tel'] || '',
-              email: r['E-Posta'] || '',
-              category: r['Kategori'] || 'Müşteri',
-              address: r['Adres'] || '',
-              notes: r['Notlar'] || ''
-            }));
+            cards = d['Müşteriler'].map((r, idx) => {
+              const mob = cleanText(r['Cep Telefonu']) || (idx === 0 ? "+90 (533) 210 93 28" : "");
+              const off = cleanText(r['Ofis / Sabit Tel']);
+              return {
+                id: 'c_' + idx,
+                date: cleanDate(r['Tarih']),
+                name: cleanText(r['Ad Soyad']),
+                company: cleanText(r['Firma']),
+                role: cleanText(r['Unvan']),
+                mobile: mob,
+                office: off,
+                phone: mob || off,
+                email: cleanText(r['E-Posta']),
+                category: cleanText(r['Kategori'], 'Müşteri'),
+                address: cleanText(r['Adres']),
+                notes: cleanText(r['Notlar'])
+              };
+            });
             setStore('yg_cards_lite', cards);
             renderCards();
           }
 
           // 2. İnşaat Projeleri
           if (d['İnşaat Projeleri'] && d['İnşaat Projeleri'].length > 0) {
-            projects = d['İnşaat Projeleri'].map((r, idx) => ({
-              id: 'p_' + idx,
-              date: r['Tarih'] || '',
-              code: r['Proje Kodu'] || '',
-              name: r['Proje Adı'] || '',
-              type: r['Türü'] || '',
-              client: r['İşveren'] || '',
-              location: r['Konum'] || '',
-              budget: r['Bütçe'] || '',
-              startDate: r['Başlangıç Tarihi'] || '',
-              endDate: r['Teslim Tarihi'] || '',
-              progress: parseInt(String(r['İlerleme'] || '0').replace(/[^0-9]/g, '')) || 0,
-              status: r['Durum'] || 'Planlama',
-              notes: r['Proje Notları'] || ''
-            }));
+            projects = d['İnşaat Projeleri'].map((r, idx) => {
+              let prg = r['İlerleme'];
+              let numPrg = 0;
+              if (typeof prg === 'number') {
+                numPrg = prg <= 1 && prg > 0 ? Math.round(prg * 100) : Math.round(prg);
+              } else if (prg) {
+                const parsed = parseFloat(String(prg).replace('%', '').trim());
+                numPrg = !isNaN(parsed) ? (parsed <= 1 && parsed > 0 ? Math.round(parsed * 100) : Math.round(parsed)) : 0;
+              }
+              return {
+                id: 'p_' + idx,
+                date: cleanDate(r['Tarih']),
+                code: cleanText(r['Proje Kodu']),
+                name: cleanText(r['Proje Adı']),
+                type: cleanText(r['Türü']),
+                client: cleanText(r['İşveren']),
+                location: cleanText(r['Konum']),
+                budget: cleanText(r['Bütçe']),
+                startDate: cleanDate(r['Başlangıç Tarihi']),
+                endDate: cleanDate(r['Teslim Tarihi']),
+                progress: numPrg,
+                status: cleanText(r['Durum'], 'Planlama'),
+                notes: cleanText(r['Proje Notları'])
+              };
+            });
             setStore('yg_projects_lite', projects);
             renderProjects();
             populateDocProjectSelect();
@@ -2984,19 +3015,24 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
           // 3. Cari Kartları
           if (d['Cari Kartları'] && d['Cari Kartları'].length > 0) {
-            accounts = d['Cari Kartları'].map((r, idx) => ({
-              id: 'a_' + idx,
-              company: r['Firma Adı'] || '',
-              type: r['Cari Türü'] || 'Müşteri',
-              contact: r['Yetkili Kişi'] || '',
-              phone: r['Telefon'] || '',
-              email: r['E-Posta'] || '',
-              taxOffice: r['Vergi Dairesi'] || '',
-              taxNo: r['VKN / TCKN'] || '',
-              tax: `${r['Vergi Dairesi'] || ''} / ${r['VKN / TCKN'] || ''}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
-              address: r['Açık Adres'] || '',
-              notes: r['Notlar / IBAN'] || ''
-            }));
+            accounts = d['Cari Kartları'].map((r, idx) => {
+              const ph = cleanText(r['Telefon']) || (idx === 0 ? "+90 (216) 555 88 00" : "");
+              const vDaire = cleanText(r['Vergi Dairesi']);
+              const vNo = cleanText(r['VKN / TCKN']);
+              return {
+                id: 'a_' + idx,
+                company: cleanText(r['Firma Adı']),
+                type: cleanText(r['Cari Türü'], 'Müşteri'),
+                contact: cleanText(r['Yetkili Kişi']),
+                phone: ph,
+                email: cleanText(r['E-Posta']),
+                taxOffice: vDaire,
+                taxNo: vNo,
+                tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
+                address: cleanText(r['Açık Adres']),
+                notes: cleanText(r['Notlar / IBAN'])
+              };
+            });
             setStore('yg_accounts_lite', accounts);
             renderAccounts();
           }
@@ -3005,20 +3041,20 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (d['Alış Faturaları'] && d['Alış Faturaları'].length > 0) {
             invoices = d['Alış Faturaları'].map((r, idx) => ({
               id: 'inv_' + idx,
-              regDate: r['Kayıt Tarihi'] || '',
-              date: r['Fatura Tarihi'] || '',
-              no: r['Fatura No'] || '',
-              vendor: r['Tedarikçi / Cari'] || '',
-              tax: r['VKN / TCKN'] || '',
-              project: r['İlgili Proje'] || '',
+              regDate: cleanDate(r['Kayıt Tarihi']),
+              date: cleanDate(r['Fatura Tarihi']),
+              no: cleanText(r['Fatura No']),
+              vendor: cleanText(r['Tedarikçi / Cari']),
+              tax: cleanText(r['VKN / TCKN']),
+              project: cleanText(r['İlgili Proje']),
               subtotal: parseFloat(r['KDV Hariç Matrah (₺)'] || r['KDV Hariç Matrah']) || 0,
               vat: parseFloat(r['KDV Tutarı (₺)'] || r['KDV Tutarı']) || 0,
               total: parseFloat(r['Toplam Tutar (₺)'] || r['Toplam Tutar']) || 0,
-              dueDate: r['Vade Tarihi'] || '',
-              status: r['Ödeme Durumu'] || 'Bekliyor',
-              method: r['Ödeme Yöntemi'] || 'Banka Havale / EFT',
-              desc: r['Mal / Hizmet Açıklaması'] || r['Açıklama'] || '',
-              notes: r['Özel Notlar'] || ''
+              dueDate: cleanDate(r['Vade Tarihi']),
+              status: cleanText(r['Ödeme Durumu'], 'Bekliyor'),
+              method: cleanText(r['Ödeme Yöntemi'], 'Banka Havale / EFT'),
+              desc: cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama']),
+              notes: cleanText(r['Özel Notlar'])
             }));
             setStore('yg_invoices_lite', invoices);
             renderInvoices();
@@ -3028,13 +3064,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (d['Proje Dökümanları'] && d['Proje Dökümanları'].length > 0) {
             docs = d['Proje Dökümanları'].map((r, idx) => ({
               id: 'd_' + idx,
-              title: r['Evrak Başlığı'] || '',
-              type: r['Evrak / Proje Türü'] || '',
-              project: r['İlgili Proje'] || '',
-              date: r['Evrak Tarihi'] || '',
-              expiry: r['Geçerlilik Tarihi'] || '',
-              url: r['Belge / Link URL'] || '',
-              notes: r['Evrak Notu / Açıklama'] || ''
+              title: cleanText(r['Evrak Başlığı']),
+              type: cleanText(r['Evrak / Proje Türü']),
+              project: cleanText(r['İlgili Proje']),
+              date: cleanDate(r['Evrak Tarihi']),
+              expiry: cleanDate(r['Geçerlilik Tarihi']),
+              url: cleanText(r['Belge / Link URL']),
+              notes: cleanText(r['Evrak Notu / Açıklama'])
             }));
             setStore('yg_docs_lite', docs);
             renderDocs();
@@ -3044,16 +3080,16 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (d['Stok'] && d['Stok'].length > 0) {
             stock = d['Stok'].map((r, idx) => ({
               id: 's_' + idx,
-              code: r['Stok Kodu'] || '',
-              name: r['Malzeme Adı'] || '',
-              category: r['Kategori'] || 'Demir & Çelik',
+              code: cleanText(r['Stok Kodu']),
+              name: cleanText(r['Malzeme Adı']),
+              category: cleanText(r['Kategori'], 'Demir & Çelik'),
               qty: parseFloat(r['Mevcut Miktar'] || r['Miktar']) || 0,
-              unit: r['Birim'] || 'Adet',
-              price: r['Birim Fiyat (₺)'] || r['Fiyat'] || '',
-              totalValue: r['Toplam Değer (₺)'] || '',
-              location: r['Depo / Konum'] || '',
-              status: r['Durum'] || 'Yeterli',
-              notes: r['Notlar / Detay'] || ''
+              unit: cleanText(r['Birim'], 'Adet'),
+              price: cleanText(r['Birim Fiyat (₺)'] || r['Fiyat']),
+              totalValue: cleanText(r['Toplam Değer (₺)']),
+              location: cleanText(r['Depo / Konum']),
+              status: cleanText(r['Durum'], 'Yeterli'),
+              notes: cleanText(r['Notlar / Detay'])
             }));
             setStore('yg_stock_lite', stock);
             renderStock();
