@@ -1242,6 +1242,14 @@
       </div>
 
       <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border);">
+        <label style="font-size: 0.78rem; font-weight: 700; color: #b45309; display: block; margin-bottom: 4px;">⚡ Tarayıcı Önbelleğini (Cache) Sıfırla</label>
+        <p style="font-size: 0.7rem; color: var(--muted); margin-bottom: 8px;">Farklı tarayıcı veya cihazlarda eski veriler kalmışsa önbelleği temizleyip sayfayı taze sürümle yeniden başlatır.</p>
+        <button type="button" class="btn btn-secondary btn-full" onclick="forceHardRefresh()" style="border-color: #fde68a; color: #b45309; font-size: 0.76rem; background: #fffbeb;">
+          🔄 Önbelleği Temizle & Taze Başlat
+        </button>
+      </div>
+
+      <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border);">
         <label style="font-size: 0.78rem; font-weight: 700; color: #dc2626; display: block; margin-bottom: 4px;">🧹 Tablo ve Sayfayı Sıfırla</label>
         <p style="font-size: 0.7rem; color: var(--muted); margin-bottom: 8px;">Tüm sekmeleri ve yerel hafızayı temizler, her kategori için sadece 1 adet temiz örnek içerik bırakır.</p>
         <button type="button" class="btn btn-secondary btn-full" onclick="resetAllToSingleSample()" style="border-color: #fca5a5; color: #dc2626; font-size: 0.76rem;">
@@ -1274,7 +1282,8 @@
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
-      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbxxXPW7') && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe') && !custom.includes('AKfycbwmtXft') && !custom.includes('AKfycbyV')) return custom.trim();
+      if (custom && custom.includes('AKfycbxOMaCi')) return custom.trim();
+      if (custom) localStorage.removeItem(WEBHOOK_STORAGE_KEY);
       return GAS_WEBHOOK_URL;
     }
 
@@ -1354,16 +1363,18 @@
       try { localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(del)); } catch(e) {}
     }
 
-    // Tek sefere mahsus eski verileri yeni ayrıştırılmış yapıya geçirme kontrolü
-    const SEED_VERSION_KEY = "yg_seed_v4_refined_fields";
-    if (localStorage.getItem(SEED_VERSION_KEY) !== "done") {
-      setStore('yg_cards_lite', defaultCards);
-      setStore('yg_projects_lite', defaultProjects);
-      setStore('yg_accounts_lite', defaultAccounts);
-      setStore('yg_docs_lite', defaultDocs);
-      setStore('yg_stock_lite', defaultStock);
-      setStore('yg_invoices_lite', defaultInvoices);
-      localStorage.setItem(SEED_VERSION_KEY, "done");
+    // Otomatik Sürüm Kontrolü - Tüm tarayıcılarda eski önbelleği temizleyip canlı Sheets ile eşitleme
+    const APP_BUILD_VERSION = "2026-09-24_v5_clean_sync";
+    if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
+      localStorage.removeItem(WEBHOOK_STORAGE_KEY);
+      localStorage.removeItem('yg_cards_lite');
+      localStorage.removeItem('yg_projects_lite');
+      localStorage.removeItem('yg_accounts_lite');
+      localStorage.removeItem('yg_docs_lite');
+      localStorage.removeItem('yg_stock_lite');
+      localStorage.removeItem('yg_invoices_lite');
+      localStorage.removeItem(DELETED_STORAGE_KEY);
+      localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
     }
 
     let cards = getStore('yg_cards_lite', defaultCards);
@@ -3091,6 +3102,27 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setTimeout(() => showToast('Platform ve Google Sheets tek örnekle sıfırlandı! ✅'), 1200);
     }
 
+    function forceHardRefresh() {
+      localStorage.removeItem(WEBHOOK_STORAGE_KEY);
+      localStorage.removeItem('yg_cards_lite');
+      localStorage.removeItem('yg_projects_lite');
+      localStorage.removeItem('yg_accounts_lite');
+      localStorage.removeItem('yg_docs_lite');
+      localStorage.removeItem('yg_stock_lite');
+      localStorage.removeItem('yg_invoices_lite');
+      localStorage.removeItem(DELETED_STORAGE_KEY);
+      localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
+      if ('caches' in window) {
+        try {
+          caches.keys().then(names => names.forEach(name => caches.delete(name)));
+        } catch(e) {}
+      }
+      showToast('Önbellek temizlendi, taze başlatılıyor...', '🔄');
+      setTimeout(() => {
+        window.location.href = window.location.pathname + '?v=' + Date.now();
+      }, 400);
+    }
+
     async function sendSetupHeadersToSheets() {
       const url = getWebhookUrl();
       if (!url) {
@@ -3157,9 +3189,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       };
 
       try {
-        const resp = await fetch(url + (url.includes('?') ? '&' : '?') + 'action=readAll', {
+        const bustUrl = url + (url.includes('?') ? '&' : '?') + 'action=readAll&_t=' + Date.now();
+        const resp = await fetch(bustUrl, {
           method: 'GET',
-          cache: 'no-cache'
+          cache: 'no-store'
         });
         if (!resp.ok) return;
         const resJson = await resp.json();
