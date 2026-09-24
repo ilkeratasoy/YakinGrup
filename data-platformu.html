@@ -1287,30 +1287,13 @@
       return GAS_WEBHOOK_URL;
     }
 
-    // Initial Data - Tek Örnek İçerik (Kusursuz Ayrıştırılmış Kolonlar)
-    const defaultCards = [
-      { id: "c1", name: "Bora Güzey", company: "Enka Data Solutions", role: "Data Center Sales Manager", mobile: "+90 (533) 210 93 28", office: "444 7 339", phone: "+90 (533) 210 93 28", email: "bora.guzey@enka.com", category: "Müşteri", address: "Balmumcu Mah., Barbaros Bulvarı No:142, Beşiktaş, İstanbul", notes: "Veri merkezi ve enerji altyapı işleri için görüşüldü.", date: "2026-09-24" }
-    ];
-
-    const defaultProjects = [
-      { id: "p1", code: "PRJ-2026-01", name: "Bağdat Caddesi Kentsel Dönüşüm", type: "Kentsel Dönüşüm", client: "Kat Malikleri", location: "Kadıköy / İstanbul", budget: "45.000.000 ₺", startDate: "2026-01-15", endDate: "2027-06-30", progress: 65, status: "Kaba İnşaat", notes: "Zemin kat betonarme imalatları sürüyor." }
-    ];
-
-    const defaultAccounts = [
-      { id: "a1", company: "Betonsa Hazır Beton A.Ş.", type: "Tedarikçi", contact: "Cemil Arslan", phone: "+90 (216) 555 88 00", email: "siparis@betonsa.com.tr", taxOffice: "Marmara Kurumlar V.D.", taxNo: "1892019482", tax: "Marmara Kurumlar / 1892019482", address: "Ayazağa Mah. Kemerburgaz Cad. No:12, Sarıyer / İstanbul", notes: "Hazır beton alımları 45 gün vadeli cari anlaşma." }
-    ];
-
-    const defaultDocs = [
-      { id: "d1", title: "Kadıköy — Onaylı Mimari Proje (Rev-04)", type: "Mimari Proje", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-08-10", expiry: "2028-08-10", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing", notes: "Kadıköy Belediyesi İmar Müdürlüğü onaylı revize paftalar" }
-    ];
-
-    const defaultStock = [
-      { id: "s1", code: "STK-DM-14", name: "B420C İnşaat Demiri Ø14mm", category: "Demir & Çelik", location: "Kadıköy Şantiye Sahası", qty: 48, unit: "Ton", price: "27.800 ₺", totalValue: "1.334.400 ₺", minQty: 5, status: "Yeterli", notes: "İçdaş marka nervürlü inşaat demiri, fabrika sertifikalı" }
-    ];
-
-    const defaultInvoices = [
-      { id: "inv1", no: "EFA2026000004128", vendor: "Betonsa Hazır Beton A.Ş.", tax: "1892019482", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-09-14", subtotal: 124000, vat: 24800, total: 148800, dueDate: "2026-10-14", status: "Bekliyor", method: "Banka Havale / EFT", desc: "C35/45 Hazır Beton dökümü (40 m³)", notes: "1. hakediş beton dökümü faturası" }
-    ];
+    // Başlangıç Verileri - Tamamen Temiz Boş Sayfa (Kullanıcı Girişi İçin Sıfırlanmış)
+    const defaultCards = [];
+    const defaultProjects = [];
+    const defaultAccounts = [];
+    const defaultDocs = [];
+    const defaultStock = [];
+    const defaultInvoices = [];
 
     function getStore(k, fb) {
       try {
@@ -1363,8 +1346,8 @@
       try { localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(del)); } catch(e) {}
     }
 
-    // Otomatik Sürüm Kontrolü - Tüm tarayıcılarda eski önbelleği temizleyip canlı Sheets ile eşitleme
-    const APP_BUILD_VERSION = "2026-09-24_v5_clean_sync";
+    // Otomatik Sürüm Kontrolü - Tüm tarayıcılarda eski önbelleği temizleyip sıfır tertemiz sayfa açma
+    const APP_BUILD_VERSION = "2026-09-24_v6_clean_slate";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       localStorage.removeItem(WEBHOOK_STORAGE_KEY);
       localStorage.removeItem('yg_cards_lite');
@@ -3208,6 +3191,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                 const off = cleanText(r['Ofis / Sabit Tel']);
                 const email = cleanText(r['E-Posta']);
                 if (!name && !mob && !off && !email) return false;
+                if (name === "Bora Güzey") return false; // Eski test verisini yoksay
                 if (isRecordDeleted('Müşteriler', name)) return false;
                 if (mob && isRecordDeleted('Müşteriler', mob)) return false;
                 if (off && isRecordDeleted('Müşteriler', off)) return false;
@@ -3215,7 +3199,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                 return true;
               })
               .map((r, idx) => {
-                const mob = cleanText(r['Cep Telefonu']) || (idx === 0 ? "+90 (533) 210 93 28" : "");
+                const mob = cleanText(r['Cep Telefonu']);
                 const off = cleanText(r['Ofis / Sabit Tel']);
                 return {
                   id: 'c_' + idx,
@@ -3243,6 +3227,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                 const name = cleanText(r['Proje Adı']);
                 const code = cleanText(r['Proje Kodu']);
                 if (!name && !code) return false;
+                if (name === "Bağdat Caddesi Kentsel Dönüşüm" || code === "PRJ-2026-01") return false; // Eski test verisini yoksay
                 if (name && isRecordDeleted('İnşaat Projeleri', name)) return false;
                 if (code && isRecordDeleted('İnşaat Projeleri', code)) return false;
                 return true;
@@ -3284,11 +3269,12 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               .filter(r => {
                 const comp = cleanText(r['Firma Adı']);
                 if (!comp) return false;
+                if (comp === "Betonsa Hazır Beton A.Ş.") return false; // Eski test verisini yoksay
                 if (isRecordDeleted('Cari Kartları', comp)) return false;
                 return true;
               })
               .map((r, idx) => {
-                const ph = cleanText(r['Telefon']) || (idx === 0 ? "+90 (216) 555 88 00" : "");
+                const ph = cleanText(r['Telefon']);
                 const vDaire = cleanText(r['Vergi Dairesi']);
                 const vNo = cleanText(r['VKN / TCKN']);
                 return {
@@ -3315,6 +3301,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               .filter(r => {
                 const fNo = cleanText(r['Fatura No']);
                 if (!fNo) return false;
+                if (fNo === "EFA2026000004128") return false; // Eski test verisini yoksay
                 if (isRecordDeleted('Alış Faturaları', fNo)) return false;
                 return true;
               })
@@ -3345,6 +3332,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               .filter(r => {
                 const title = cleanText(r['Evrak Başlığı']);
                 if (!title) return false;
+                if (title.includes("Kadıköy — Onaylı Mimari")) return false; // Eski test verisini yoksay
                 if (isRecordDeleted('Proje Dökümanları', title)) return false;
                 return true;
               })
@@ -3369,6 +3357,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                 const name = cleanText(r['Malzeme Adı']);
                 const code = cleanText(r['Stok Kodu']);
                 if (!name && !code) return false;
+                if (code === "STK-DM-14" || name.includes("B420C")) return false; // Eski test verisini yoksay
                 if (name && isRecordDeleted('Stok', name)) return false;
                 if (code && isRecordDeleted('Stok', code)) return false;
                 return true;
