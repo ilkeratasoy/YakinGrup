@@ -678,8 +678,12 @@
               </select>
             </div>
             <div class="form-group full">
-              <label>Not</label>
-              <input type="text" id="card-notes" placeholder="Proje ilgisi veya notlar...">
+              <label>📍 Açık Adres</label>
+              <input type="text" id="card-address" placeholder="İlçe, İl / Cadde, Mahalle, No...">
+            </div>
+            <div class="form-group full">
+              <label>📝 Notlar / Özel Detaylar</label>
+              <input type="text" id="card-notes" placeholder="Görüşme notları, proje ilgisi, web sitesi...">
             </div>
           </div>
 
@@ -878,6 +882,14 @@
             <input type="text" id="p-budget" placeholder="15.000.000 ₺">
           </div>
           <div class="form-group">
+            <label>Başlangıç Tarihi</label>
+            <input type="date" id="p-start">
+          </div>
+          <div class="form-group">
+            <label>Teslim Tarihi</label>
+            <input type="date" id="p-end">
+          </div>
+          <div class="form-group">
             <label>İlerleme (%): <span id="p-prog-val">25</span>%</label>
             <input type="range" id="p-prog" min="0" max="100" value="25" oninput="document.getElementById('p-prog-val').textContent=this.value">
           </div>
@@ -890,6 +902,10 @@
               <option value="İnce İşler">İnce İşler</option>
               <option value="Tamamlandı">Tamamlandı</option>
             </select>
+          </div>
+          <div class="form-group full">
+            <label>📝 Proje Notları / Açıklama</label>
+            <input type="text" id="p-notes" placeholder="Şantiye notları, imalat aşaması veya özel açıklamalar...">
           </div>
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
@@ -924,15 +940,31 @@
           </div>
           <div class="form-group">
             <label>Yetkili Kişi</label>
-            <input type="text" id="a-contact" placeholder="İlgili Adı">
+            <input type="text" id="a-contact" placeholder="İlgili Adı Soyadı">
           </div>
           <div class="form-group">
             <label>Telefon</label>
-            <input type="tel" id="a-phone" placeholder="0216...">
+            <input type="tel" id="a-phone" placeholder="0216... veya 0532...">
           </div>
           <div class="form-group">
-            <label>VKN / Vergi Dairesi</label>
-            <input type="text" id="a-tax" placeholder="Kadıköy V.D. / 1234567890">
+            <label>E-Posta</label>
+            <input type="email" id="a-email" placeholder="muhasebe@firma.com">
+          </div>
+          <div class="form-group">
+            <label>Vergi Dairesi</label>
+            <input type="text" id="a-tax-office" placeholder="Kadıköy V.D.">
+          </div>
+          <div class="form-group">
+            <label>VKN / TCKN</label>
+            <input type="text" id="a-tax-no" placeholder="10 Haneli VKN">
+          </div>
+          <div class="form-group full">
+            <label>📍 Açık Adres</label>
+            <input type="text" id="a-address" placeholder="Merkez veya şantiye teslim adresi">
+          </div>
+          <div class="form-group full">
+            <label>📝 Notlar / Banka IBAN</label>
+            <input type="text" id="a-notes" placeholder="Vade koşulu, IBAN bilgisi veya özel cari notu...">
           </div>
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
@@ -971,9 +1003,21 @@
             <label>İlgili Proje</label>
             <select id="d-project-select"></select>
           </div>
+          <div class="form-group">
+            <label>Evrak Tarihi</label>
+            <input type="date" id="d-date">
+          </div>
+          <div class="form-group">
+            <label>Geçerlilik / Bitiş Tarihi</label>
+            <input type="date" id="d-expiry">
+          </div>
           <div class="form-group full">
             <label>Drive / Dosya Linki</label>
             <input type="url" id="d-url" placeholder="https://drive.google.com/...">
+          </div>
+          <div class="form-group full">
+            <label>📝 Evrak Notu / Revizyon Açıklaması</label>
+            <input type="text" id="d-notes" placeholder="Onay makamı, revizyon no veya özel not...">
           </div>
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
@@ -1078,8 +1122,12 @@
           </div>
 
           <div class="form-group full">
-            <label>Açıklama / Mal-Hizmet Detayı</label>
+            <label>Mal / Hizmet Detayı</label>
             <input type="text" id="inv-desc" placeholder="Örn: 40 m³ Hazır Beton C35 dökümü...">
+          </div>
+          <div class="form-group full">
+            <label>📝 Özel Not / Dekont / Hakediş No</label>
+            <input type="text" id="inv-notes" placeholder="Ödeme onay notu, dekont no veya hakediş detayları...">
           </div>
         </div>
 
@@ -1110,16 +1158,40 @@
             <input type="text" id="s-name" required placeholder="Örn: İnşaat Demiri Ø14">
           </div>
           <div class="form-group">
-            <label>Miktar</label>
+            <label>Kategori</label>
+            <select id="s-category">
+              <option value="Demir & Çelik">Demir & Çelik</option>
+              <option value="Hazır Beton & Çimento">Hazır Beton & Çimento</option>
+              <option value="Kaba Yapı">Kaba Yapı</option>
+              <option value="İnce Yapı">İnce Yapı</option>
+              <option value="Tesisat & Mekanik">Tesisat & Mekanik</option>
+              <option value="Elektrik & GES">Elektrik & GES</option>
+              <option value="Yalıtım & Kimyasallar">Yalıtım & Kimyasallar</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Depo / Konum</label>
+            <input type="text" id="s-location" placeholder="Kadıköy Şantiye Sahası">
+          </div>
+          <div class="form-group">
+            <label>Mevcut Miktar</label>
             <input type="number" id="s-qty" value="10" min="0">
           </div>
           <div class="form-group">
             <label>Birim</label>
-            <input type="text" id="s-unit" value="Ton" placeholder="Ton, Adet, m³">
+            <input type="text" id="s-unit" value="Ton" placeholder="Ton, Adet, m³, Torba">
           </div>
           <div class="form-group">
-            <label>Fiyat</label>
-            <input type="text" id="s-price" placeholder="25.000 ₺">
+            <label>Birim Fiyat (₺)</label>
+            <input type="text" id="s-price" placeholder="27.800 ₺">
+          </div>
+          <div class="form-group">
+            <label>Kritik Seviye</label>
+            <input type="number" id="s-min-qty" value="5" min="0" placeholder="Minimum stok miktarı">
+          </div>
+          <div class="form-group full">
+            <label>📝 Notlar / Kalite / Parti No</label>
+            <input type="text" id="s-notes" placeholder="Fabrika kalite sertifikası, menşei veya özel not...">
           </div>
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
@@ -1159,9 +1231,11 @@
       <div style="margin-bottom: 14px;">
         <label style="font-size: 0.78rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px;">📊 Google Sheets Webhook URL</label>
         <input type="url" id="webhook-url-input" placeholder="https://script.google.com/macros/s/.../exec" style="font-family: monospace; font-size: 0.78rem; width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
-          <span style="font-size: 0.7rem; color: var(--muted);">Verilerin yazılacağı Apps Script Web App adresi.</span>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="copyAppsScriptCode()" style="font-size: 0.68rem; padding: 4px 8px;">
+        <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 8px;">
+          <button type="button" class="btn btn-navy btn-sm" onclick="sendSetupHeadersToSheets()" style="font-size: 0.72rem; padding: 6px 10px; flex: 1;">
+            📌 Sheet Başlıklarını Tabloya Yaz
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="copyAppsScriptCode()" style="font-size: 0.72rem; padding: 6px 10px;">
             📋 Apps Script Kodu
           </button>
         </div>
@@ -1204,29 +1278,29 @@
       return GAS_WEBHOOK_URL;
     }
 
-    // Initial Data - Tek Örnek İçerik
+    // Initial Data - Tek Örnek İçerik (Kusursuz Ayrıştırılmış Kolonlar)
     const defaultCards = [
-      { id: "c1", name: "Bora Güzey", company: "Enka Data Solutions", role: "Data Center Sales Manager", mobile: "+90 (533) 210 93 28", office: "444 7 339", phone: "+90 (533) 210 93 28", email: "bora.guzey@enka.com", category: "Müşteri", notes: "Balmumcu Mah., Beşiktaş, İstanbul", date: "2026-09-22" }
+      { id: "c1", name: "Bora Güzey", company: "Enka Data Solutions", role: "Data Center Sales Manager", mobile: "+90 (533) 210 93 28", office: "444 7 339", phone: "+90 (533) 210 93 28", email: "bora.guzey@enka.com", category: "Müşteri", address: "Balmumcu Mah., Barbaros Bulvarı No:142, Beşiktaş, İstanbul", notes: "Veri merkezi ve enerji altyapı işleri için görüşüldü.", date: "2026-09-24" }
     ];
 
     const defaultProjects = [
-      { id: "p1", code: "PRJ-2026-01", name: "Bağdat Caddesi Kentsel Dönüşüm", type: "Kentsel Dönüşüm", client: "Kat Malikleri", location: "Kadıköy", budget: "45M ₺", progress: 65, status: "Kaba İnşaat" }
+      { id: "p1", code: "PRJ-2026-01", name: "Bağdat Caddesi Kentsel Dönüşüm", type: "Kentsel Dönüşüm", client: "Kat Malikleri", location: "Kadıköy / İstanbul", budget: "45.000.000 ₺", startDate: "2026-01-15", endDate: "2027-06-30", progress: 65, status: "Kaba İnşaat", notes: "Zemin kat betonarme imalatları sürüyor." }
     ];
 
     const defaultAccounts = [
-      { id: "a1", company: "Betonsa Hazır Beton A.Ş.", type: "Tedarikçi", contact: "Cemil Arslan", phone: "+90 216 555 8800", tax: "Marmara / 1892019482" }
+      { id: "a1", company: "Betonsa Hazır Beton A.Ş.", type: "Tedarikçi", contact: "Cemil Arslan", phone: "+90 (216) 555 88 00", email: "siparis@betonsa.com.tr", taxOffice: "Marmara Kurumlar V.D.", taxNo: "1892019482", tax: "Marmara Kurumlar / 1892019482", address: "Ayazağa Mah. Kemerburgaz Cad. No:12, Sarıyer / İstanbul", notes: "Hazır beton alımları 45 gün vadeli cari anlaşma." }
     ];
 
     const defaultDocs = [
-      { id: "d1", title: "Kadıköy — Onaylı Mimari Proje (Rev-04)", type: "Mimari Proje", project: "Bağdat Caddesi Kentsel Dönüşüm", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing" }
+      { id: "d1", title: "Kadıköy — Onaylı Mimari Proje (Rev-04)", type: "Mimari Proje", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-08-10", expiry: "2028-08-10", url: "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing", notes: "Kadıköy Belediyesi İmar Müdürlüğü onaylı revize paftalar" }
     ];
 
     const defaultStock = [
-      { id: "s1", code: "STK-DM-14", name: "B420C İnşaat Demiri Ø14mm", qty: 48, unit: "Ton", price: "27.800 ₺", status: "Yeterli" }
+      { id: "s1", code: "STK-DM-14", name: "B420C İnşaat Demiri Ø14mm", category: "Demir & Çelik", location: "Kadıköy Şantiye Sahası", qty: 48, unit: "Ton", price: "27.800 ₺", totalValue: "1.334.400 ₺", minQty: 5, status: "Yeterli", notes: "İçdaş marka nervürlü inşaat demiri, fabrika sertifikalı" }
     ];
 
     const defaultInvoices = [
-      { id: "inv1", no: "EFA2026000004128", vendor: "Betonsa Hazır Beton A.Ş.", tax: "1892019482", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-09-14", subtotal: 124000, vat: 24800, total: 148800, dueDate: "2026-10-14", status: "Bekliyor", method: "Banka Havale / EFT", desc: "C35/45 Hazır Beton dökümü (40 m³)" }
+      { id: "inv1", no: "EFA2026000004128", vendor: "Betonsa Hazır Beton A.Ş.", tax: "1892019482", project: "Bağdat Caddesi Kentsel Dönüşüm", date: "2026-09-14", subtotal: 124000, vat: 24800, total: 148800, dueDate: "2026-10-14", status: "Bekliyor", method: "Banka Havale / EFT", desc: "C35/45 Hazır Beton dökümü (40 m³)", notes: "1. hakediş beton dökümü faturası" }
     ];
 
     function getStore(k, fb) {
@@ -1241,10 +1315,15 @@
       try { localStorage.setItem(k, JSON.stringify(val)); } catch(e) {}
     }
 
-    // Tek sefere mahsus eski tekli telefon verisini yeni ayrıştırılmış yapıya geçirme kontrolü
-    const SEED_VERSION_KEY = "yg_seed_v3_split_phone";
+    // Tek sefere mahsus eski verileri yeni ayrıştırılmış yapıya geçirme kontrolü
+    const SEED_VERSION_KEY = "yg_seed_v4_refined_fields";
     if (localStorage.getItem(SEED_VERSION_KEY) !== "done") {
       setStore('yg_cards_lite', defaultCards);
+      setStore('yg_projects_lite', defaultProjects);
+      setStore('yg_accounts_lite', defaultAccounts);
+      setStore('yg_docs_lite', defaultDocs);
+      setStore('yg_stock_lite', defaultStock);
+      setStore('yg_invoices_lite', defaultInvoices);
       localStorage.setItem(SEED_VERSION_KEY, "done");
     }
 
@@ -1294,8 +1373,100 @@
       setTimeout(() => t.classList.remove('show'), 2500);
     }
 
-    const APPS_SCRIPT_TEMPLATE = `function doGet(e) {
+    const APPS_SCRIPT_TEMPLATE = `// ====================================================================
+// YAKIN GRUP DATA PLATFORMU - GOOGLE SHEETS ENTEGRASYON KODU
+// ====================================================================
+
+function doGet(e) {
   return ContentService.createTextOutput("✅ Yakın Grup Google Sheets Webhook Aktif ve Çalışıyor!").setMimeType(ContentService.MimeType.TEXT);
+}
+
+// Google E-Tablo açıldığında menü çubuğuna '🏛️ Yakın Grup' menüsü ekler
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('🏛️ Yakın Grup')
+    .addItem('📌 Sheet Başlıklarını ve Formatlarını Oluştur', 'setupHeaders')
+    .addItem('🧹 Sayfaları Sıfırla (1 Temiz Örnek Bırak)', 'resetSheets')
+    .addToUi();
+}
+
+var SHEET_CONFIGS = [
+  {
+    name: "Müşteriler",
+    headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Adres", "Notlar"],
+    sample: ["2026-09-24", "Bora Güzey", "Enka Data Solutions", "Data Center Sales Manager", "+90 (533) 210 93 28", "444 7 339", "bora.guzey@enka.com", "Müşteri", "Balmumcu Mah., Barbaros Bulvarı No:142, Beşiktaş, İstanbul", "Veri merkezi ve enerji altyapı işleri için görüşüldü."]
+  },
+  {
+    name: "Alış Faturaları",
+    headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah (₺)", "KDV Tutarı (₺)", "Toplam Tutar (₺)", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Mal / Hizmet Açıklaması", "Özel Notlar"],
+    sample: ["2026-09-24", "2026-09-14", "EFA2026000004128", "Betonsa Hazır Beton A.Ş.", "1892019482", "Bağdat Caddesi Kentsel Dönüşüm", 124000, 24800, 148800, "2026-10-14", "Bekliyor", "Banka Havale / EFT", "C35/45 Hazır Beton dökümü (40 m³)", "1. hakediş beton dökümü faturası"]
+  },
+  {
+    name: "Proje Dökümanları",
+    headers: ["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Evrak Tarihi", "Geçerlilik Tarihi", "Belge / Link URL", "Evrak Notu / Açıklama"],
+    sample: ["2026-09-24", "Kadıköy — Onaylı Mimari Proje (Rev-04)", "Mimari Proje", "Bağdat Caddesi Kentsel Dönüşüm", "2026-08-10", "2028-08-10", "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing", "Kadıköy Belediyesi İmar Müdürlüğü onaylı revize paftalar"]
+  },
+  {
+    name: "Stok",
+    headers: ["Tarih", "Stok Kodu", "Malzeme Adı", "Kategori", "Mevcut Miktar", "Birim", "Birim Fiyat (₺)", "Toplam Değer (₺)", "Depo / Konum", "Durum", "Notlar / Detay"],
+    sample: ["2026-09-24", "STK-DM-14", "B420C İnşaat Demiri Ø14mm", "Demir & Çelik", 48, "Ton", "27.800 ₺", "1.334.400 ₺", "Kadıköy Şantiye Sahası", "Yeterli", "İçdaş marka nervürlü inşaat demiri, fabrika sertifikalı"]
+  },
+  {
+    name: "İnşaat Projeleri",
+    headers: ["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "Başlangıç Tarihi", "Teslim Tarihi", "İlerleme", "Durum", "Proje Notları"],
+    sample: ["2026-09-24", "PRJ-2026-01", "Bağdat Caddesi Kentsel Dönüşüm", "Kentsel Dönüşüm", "Kat Malikleri", "Kadıköy / İstanbul", "45.000.000 ₺", "2026-01-15", "2027-06-30", "%65", "Kaba İnşaat", "Zemin kat betonarme imalatları sürüyor."]
+  },
+  {
+    name: "Cari Kartları",
+    headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "E-Posta", "Vergi Dairesi", "VKN / TCKN", "Açık Adres", "Notlar / IBAN"],
+    sample: ["2026-09-24", "Betonsa Hazır Beton A.Ş.", "Tedarikçi", "Cemil Arslan", "+90 (216) 555 88 00", "siparis@betonsa.com.tr", "Marmara Kurumlar V.D.", "1892019482", "Ayazağa Mah. Kemerburgaz Cad. No:12, Sarıyer / İstanbul", "Hazır beton alımları 45 gün vadeli cari anlaşma."]
+  }
+];
+
+// Tüm sayfaların başlıklarını ve formatlarını oluşturan fonksiyon
+function setupHeaders() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  SHEET_CONFIGS.forEach(function(cfg) {
+    var s = ss.getSheetByName(cfg.name);
+    if (!s) {
+      s = ss.insertSheet(cfg.name);
+    }
+    // İlk satıra başlıkları yaz ve biçimlendir
+    s.getRange(1, 1, 1, cfg.headers.length).setValues([cfg.headers]);
+    s.getRange(1, 1, 1, cfg.headers.length)
+      .setFontWeight("bold")
+      .setBackground("#0b2545")
+      .setFontColor("#ffffff")
+      .setHorizontalAlignment("center");
+    s.setFrozenRows(1);
+    for (var c = 1; c <= cfg.headers.length; c++) {
+      try { s.autoResizeColumn(c); } catch(err) {}
+    }
+  });
+}
+
+// Tüm sayfaları temizleyip sadece başlıklar ve 1 temiz örnek bırakan fonksiyon
+function resetSheets() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  SHEET_CONFIGS.forEach(function(cfg) {
+    var s = ss.getSheetByName(cfg.name);
+    if (!s) {
+      s = ss.insertSheet(cfg.name);
+    } else {
+      s.clear();
+    }
+    s.appendRow(cfg.headers);
+    s.getRange(1, 1, 1, cfg.headers.length)
+      .setFontWeight("bold")
+      .setBackground("#0b2545")
+      .setFontColor("#ffffff")
+      .setHorizontalAlignment("center");
+    s.setFrozenRows(1);
+    s.appendRow(cfg.sample);
+    for (var c = 1; c <= cfg.headers.length; c++) {
+      try { s.autoResizeColumn(c); } catch(err) {}
+    }
+  });
 }
 
 function doPost(e) {
@@ -1303,96 +1474,55 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
-    // Tabloyu tamamen sıfırlayıp sadece 1 adet temiz örnek bırakma fonksiyonu
+    // 1. Sadece başlıkları oluştur / eşitle komutu
+    if (data.action === "setupHeaders") {
+      setupHeaders();
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Tüm sheet başlıkları başarıyla oluşturuldu!" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 2. Tabloyu tamamen sıfırlayıp sadece 1 adet temiz örnek bırakma fonksiyonu
     if (data.action === "resetSheets") {
-      var sheetConfigs = [
-        {
-          name: "Alış Faturaları",
-          headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah", "KDV Tutarı", "Toplam Tutar", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Açıklama"],
-          sample: ["2026-09-22", "2026-09-14", "EFA2026000004128", "Betonsa Hazır Beton A.Ş.", "1892019482", "Bağdat Caddesi Kentsel Dönüşüm", 124000, 24800, 148800, "2026-10-14", "Bekliyor", "Banka Havale / EFT", "C35/45 Hazır Beton dökümü (40 m³)"]
-        },
-        {
-          name: "Müşteriler",
-          headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Notlar"],
-          sample: ["2026-09-22", "Bora Güzey", "Enka Data Solutions", "Data Center Sales Manager", "+90 (533) 210 93 28", "444 7 339", "bora.guzey@enka.com", "Müşteri", "Balmumcu Mah., Beşiktaş, İstanbul"]
-        },
-        {
-          name: "İnşaat Projeleri",
-          headers: ["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "İlerleme", "Durum"],
-          sample: ["2026-09-22", "PRJ-2026-01", "Bağdat Caddesi Kentsel Dönüşüm", "Kentsel Dönüşüm", "Kat Malikleri", "Kadıköy", "45M ₺", "%65", "Kaba İnşaat"]
-        },
-        {
-          name: "Cari Kartları",
-          headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "Vergi Dairesi / No"],
-          sample: ["2026-09-22", "Betonsa Hazır Beton A.Ş.", "Tedarikçi", "Cemil Arslan", "+90 216 555 8800", "Marmara / 1892019482"]
-        },
-        {
-          name: "Proje Dökümanları",
-          headers: ["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Belge / Link URL"],
-          sample: ["2026-09-22", "Kadıköy — Onaylı Mimari Proje (Rev-04)", "Mimari Proje", "Bağdat Caddesi Kentsel Dönüşüm", "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing"]
-        },
-        {
-          name: "Stok",
-          headers: ["Tarih", "Stok Kodu", "Malzeme Adı", "Miktar", "Birim", "Fiyat", "Durum"],
-          sample: ["2026-09-22", "STK-DM-14", "B420C İnşaat Demiri Ø14mm", 48, "Ton", "27.800 ₺", "Yeterli"]
-        }
-      ];
-
-      sheetConfigs.forEach(function(cfg) {
-        var s = ss.getSheetByName(cfg.name);
-        if (!s) {
-          s = ss.insertSheet(cfg.name);
-        } else {
-          s.clear();
-        }
-        s.appendRow(cfg.headers);
-        s.getRange(1, 1, 1, cfg.headers.length).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
-        s.appendRow(cfg.sample);
-        for (var c = 1; c <= cfg.headers.length; c++) {
-          try { s.autoResizeColumn(c); } catch(err) {}
-        }
-      });
-
+      resetSheets();
       return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Tüm sayfalar tek örnek içerikle sıfırlandı!" }))
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    var sheetName = data.sheet || "Alış Faturaları";
+    // 3. Normal veri ekleme (appendRow)
+    var sheetName = data.sheet || "Müşteriler";
     var row = data.row || [];
-    
     var sheet = ss.getSheetByName(sheetName);
     
+    // İlgili sheet yoksa oluştur ve başlıklarını yaz
     if (!sheet) {
       sheet = ss.insertSheet(sheetName);
-      if (sheetName === "Alış Faturaları") {
-        sheet.appendRow(["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah", "KDV Tutarı", "Toplam Tutar", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Açıklama"]);
-        sheet.getRange(1, 1, 1, 13).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
-      } else if (sheetName === "Müşteriler") {
-        sheet.appendRow(["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Notlar"]);
-        sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
-      } else if (sheetName === "İnşaat Projeleri") {
-        sheet.appendRow(["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "İlerleme", "Durum"]);
-        sheet.getRange(1, 1, 1, 9).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
-      } else if (sheetName === "Cari Kartları") {
-        sheet.appendRow(["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "Vergi Dairesi / No"]);
-        sheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
-      } else if (sheetName === "Proje Dökümanları") {
-        sheet.appendRow(["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Belge / Link URL"]);
-        sheet.getRange(1, 1, 1, 5).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
-      } else if (sheetName === "Stok") {
-        sheet.appendRow(["Tarih", "Stok Kodu", "Malzeme Adı", "Miktar", "Birim", "Fiyat", "Durum"]);
-        sheet.getRange(1, 1, 1, 7).setFontWeight("bold").setBackground("#0b2545").setFontColor("#ffffff");
+    }
+
+    // Eğer sheet boşsa veya ilk satırda başlık yoksa otomatik başlık ekle
+    if (sheet.getLastRow() === 0) {
+      var matchedCfg = SHEET_CONFIGS.find(function(c) { return c.name === sheetName; });
+      if (matchedCfg) {
+        sheet.appendRow(matchedCfg.headers);
+        sheet.getRange(1, 1, 1, matchedCfg.headers.length)
+          .setFontWeight("bold")
+          .setBackground("#0b2545")
+          .setFontColor("#ffffff")
+          .setHorizontalAlignment("center");
+        sheet.setFrozenRows(1);
       }
     }
     
+    // Veri satırını ekle
     sheet.appendRow(row);
+
     // Kolon genişliklerini otomatik düzenle
     try {
       var lastCol = sheet.getLastColumn();
       for (var c = 1; c <= lastCol; c++) {
         sheet.autoResizeColumn(c);
       }
-    } catch(e) {}
+    } catch(err) {}
+
     return ContentService.createTextOutput(JSON.stringify({ status: "success", sheet: sheetName }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
@@ -1540,7 +1670,9 @@ function doPost(e) {
         } else if (key.startsWith('EMAIL')) {
           res.email = val;
         } else if (key.startsWith('ADR')) {
-          res.notes = (res.notes ? res.notes + ' | ' : '') + 'Adres: ' + val.replace(/;/g, ' ').trim();
+          res.address = val.replace(/;/g, ' ').trim();
+        } else if (key.startsWith('NOTE')) {
+          res.notes = val.replace(/;/g, ' ').trim();
         }
       });
       return res;
@@ -1572,7 +1704,8 @@ function doPost(e) {
   "officePhone": "Şirket / Ofis / Santral / Sabit Hat Numarası (örn: 444 7 339 veya 0212/0216 santral)",
   "email": "E-Posta Adresi",
   "category": "Müşteri / Yatırımcı / Mimar / Mühendis / Tedarikçi / Taşeron arasından en uygun olanı",
-  "notes": "Kartvizitte yer alan adres veya web sitesi bilgisi"
+  "address": "Kartvizitte yer alan açık adres (İlçe, İl, Cadde, Mahalle, No)",
+  "notes": "Kartvizitte yer alan özel notlar, web sitesi veya spesifik detaylar (adres hariç)"
 }`;
 
       // En güncel ve hızlı Google Gemini modelleri (Öncelik 3.6-Flash)
@@ -1678,6 +1811,7 @@ function doPost(e) {
             if (vcard.mobilePhone) document.getElementById('card-mobile').value = vcard.mobilePhone;
             if (vcard.officePhone) document.getElementById('card-office').value = vcard.officePhone;
             if (vcard.email) document.getElementById('card-email').value = vcard.email;
+            if (vcard.address) document.getElementById('card-address').value = vcard.address;
             if (vcard.notes) document.getElementById('card-notes').value = vcard.notes;
 
             loader.textContent = '✨ Kartvizit QR Kod (vCard) ile %100 kusursuz okundu!';
@@ -1711,6 +1845,7 @@ function doPost(e) {
             if (geminiResult.category && document.getElementById('card-category')) {
               document.getElementById('card-category').value = geminiResult.category;
             }
+            if (geminiResult.address) document.getElementById('card-address').value = geminiResult.address;
             if (geminiResult.notes) document.getElementById('card-notes').value = geminiResult.notes;
 
             loader.textContent = '✨ Gemini Vision ile kartvizit kusursuz okundu!';
@@ -1876,7 +2011,20 @@ function doPost(e) {
         document.getElementById('card-name').value = foundName;
       }
 
-      // 6. Notlar Özeti
+      // 6. Adres Tespiti (Açık Adres Ayrı Alana)
+      const addrKeys = ['MAH.', 'MAHALLESİ', 'MAHALLESI', 'CAD.', 'CADDESİ', 'CADDESI', 'SOK.', 'SOKAK', 'SOKAGI', 'BULVAR', 'BULVARI', 'NO:', 'KAT:', 'KAPI NO', 'PLAZA', 'İŞ MERKEZİ', 'IS MERKEZI', 'ŞİŞLİ', 'KADIKÖY', 'BEŞİKTAŞ', 'LEVENT', 'MASLAK', 'ATAŞEHİR', 'ÜMRANİYE', 'İSTANBUL', 'ANKARA', 'İZMİR'];
+      let foundAddress = '';
+      for (const l of lines) {
+        const up = l.toUpperCase();
+        if (addrKeys.some(k => up.includes(k))) {
+          foundAddress = (foundAddress ? foundAddress + ', ' : '') + l.replace(/[|*]/g, '').trim();
+        }
+      }
+      if (foundAddress && !document.getElementById('card-address').value) {
+        document.getElementById('card-address').value = foundAddress;
+      }
+
+      // 7. Notlar Özeti (Adresten Bağımsız Spesifik Not)
       const notesField = document.getElementById('card-notes');
       if (notesField && !notesField.value) {
         notesField.value = "Taranma Tarihi: " + new Date().toLocaleDateString('tr-TR');
@@ -1898,6 +2046,7 @@ function doPost(e) {
         phone: mobileVal || officeVal, // geriye dönük uyumluluk
         email: document.getElementById('card-email').value.trim(),
         category: document.getElementById('card-category').value,
+        address: document.getElementById('card-address').value.trim(),
         notes: document.getElementById('card-notes').value.trim(),
         date: new Date().toISOString().split('T')[0]
       };
@@ -1905,9 +2054,9 @@ function doPost(e) {
       cards.unshift(newC);
       setStore('yg_cards_lite', cards);
 
-      // Auto Send to Google Sheets Webhook (9 sütun: Cep ve Ofis ayrı kolonlarda)
+      // Auto Send to Google Sheets Webhook (10 sütun: Adres ve Notlar ayrı kolonlarda)
       postToWebhook('Müşteriler', [
-        newC.date, newC.name, newC.company, newC.role, newC.mobile, newC.office, newC.email, newC.category, newC.notes
+        newC.date, newC.name, newC.company, newC.role, newC.mobile, newC.office, newC.email, newC.category, newC.address, newC.notes
       ]);
 
       renderCards();
@@ -1950,6 +2099,7 @@ function doPost(e) {
             </div>
           ` : ''}
 
+          ${c.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">📍 ${escapeHtml(c.address)}</div>` : ''}
           ${c.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(c.notes)}</div>` : ''}
 
           <div class="quick-actions-row">
@@ -1987,8 +2137,10 @@ function doPost(e) {
       const cellLine = c.mobile ? `TEL;TYPE=CELL:${c.mobile}\n` : '';
       const workLine = c.office ? `TEL;TYPE=WORK:${c.office}\n` : '';
       const fallbackLine = (!c.mobile && !c.office && c.phone) ? `TEL:${c.phone}\n` : '';
+      const adrLine = c.address ? `ADR;TYPE=WORK:;;${c.address.replace(/[\r\n]+/g, ' ')};;;;\n` : '';
+      const noteLine = c.notes ? `NOTE:${c.notes.replace(/[\r\n]+/g, ' ')}\n` : '';
 
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\nEND:VCARD`;
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\n${adrLine}${noteLine}END:VCARD`;
       const box = document.getElementById('qrcode-box');
       box.innerHTML = '';
       new QRCode(box, { text: vcard, width: 160, height: 160, colorDark: "#0b2545" });
@@ -2001,8 +2153,10 @@ function doPost(e) {
       const cellLine = c.mobile ? `TEL;TYPE=CELL:${c.mobile}\n` : '';
       const workLine = c.office ? `TEL;TYPE=WORK:${c.office}\n` : '';
       const fallbackLine = (!c.mobile && !c.office && c.phone) ? `TEL:${c.phone}\n` : '';
+      const adrLine = c.address ? `ADR;TYPE=WORK:;;${c.address.replace(/[\r\n]+/g, ' ')};;;;\n` : '';
+      const noteLine = c.notes ? `NOTE:${c.notes.replace(/[\r\n]+/g, ' ')}\n` : '';
 
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\nEND:VCARD`;
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\n${adrLine}${noteLine}END:VCARD`;
       const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -2013,8 +2167,8 @@ function doPost(e) {
 
     function exportCardsCsv() {
       const rows = [
-        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Notlar"],
-        ...cards.map(c => [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.notes])
+        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Adres", "Notlar"],
+        ...cards.map(c => [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || ''])
       ];
       downloadCsv("Yakin_Grup_Musteriler.csv", rows);
     }
@@ -2050,6 +2204,14 @@ function doPost(e) {
             <span style="font-size: 0.75rem; font-weight: 800;">%${p.progress}</span>
           </div>
 
+          ${(p.startDate || p.endDate) ? `
+            <div style="font-size: 0.73rem; color: var(--muted); margin: 3px 0;">
+              📅 Başlangıç: ${escapeHtml(p.startDate || '-')} — Teslim: ${escapeHtml(p.endDate || '-')}
+            </div>
+          ` : ''}
+
+          ${p.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(p.notes)}</div>` : ''}
+
           <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem;">
             <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget)}</strong>
             <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${p.name}')">📁 Evrakları Aç</button>
@@ -2068,15 +2230,18 @@ function doPost(e) {
         client: document.getElementById('p-client').value.trim(),
         location: document.getElementById('p-loc').value.trim(),
         budget: document.getElementById('p-budget').value.trim(),
+        startDate: document.getElementById('p-start')?.value || '',
+        endDate: document.getElementById('p-end')?.value || '',
         progress: parseInt(document.getElementById('p-prog').value) || 0,
-        status: document.getElementById('p-status').value
+        status: document.getElementById('p-status').value,
+        notes: document.getElementById('p-notes')?.value.trim() || ''
       };
 
       projects.unshift(newP);
       setStore('yg_projects_lite', projects);
 
       postToWebhook('İnşaat Projeleri', [
-        new Date().toISOString().split('T')[0], newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, `%${newP.progress}`, newP.status
+        new Date().toISOString().split('T')[0], newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate, `%${newP.progress}`, newP.status, newP.notes
       ]);
 
       closeModal('modal-new-project');
@@ -2103,40 +2268,64 @@ function doPost(e) {
           <div class="card-item-header">
             <div>
               <div class="card-item-title">${escapeHtml(a.company)}</div>
-              <div class="card-item-meta">${escapeHtml(a.contact || '')} • ${escapeHtml(a.tax || '')}</div>
+              <div class="card-item-meta">
+                ${a.contact ? `<span>👤 ${escapeHtml(a.contact)}</span> • ` : ''}
+                ${a.taxOffice ? `<span>🏛️ ${escapeHtml(a.taxOffice)}</span> • ` : ''}
+                ${a.taxNo ? `<span>VKN: ${escapeHtml(a.taxNo)}</span>` : (a.tax ? `<span>${escapeHtml(a.tax)}</span>` : '')}
+              </div>
             </div>
             <span class="badge ${a.type === 'Müşteri' ? 'badge-green' : 'badge-blue'}">${escapeHtml(a.type)}</span>
           </div>
-          ${a.phone ? `
-            <div class="quick-actions-row">
-              <a href="tel:${a.phone}" class="btn btn-secondary btn-sm">📞 ${escapeHtml(a.phone)}</a>
-            </div>
-          ` : ''}
+
+          ${a.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">📍 ${escapeHtml(a.address)}</div>` : ''}
+          ${a.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(a.notes)}</div>` : ''}
+
+          <div class="quick-actions-row">
+            ${a.phone ? `<a href="tel:${a.phone}" class="btn btn-secondary btn-sm">📞 ${escapeHtml(a.phone)}</a>` : ''}
+            ${a.email ? `<a href="mailto:${a.email}" class="btn btn-secondary btn-sm">✉️ ${escapeHtml(a.email)}</a>` : ''}
+            <button class="btn btn-secondary btn-sm" style="color: #ef4444; margin-left: auto;" onclick="deleteAccount('${a.id}')">🗑️</button>
+          </div>
         </div>
       `).join('');
     }
 
+    function deleteAccount(id) {
+      if (!confirm('Cari kartı silinsin mi?')) return;
+      accounts = accounts.filter(a => a.id !== id);
+      setStore('yg_accounts_lite', accounts);
+      renderAccounts();
+      showToast('Cari kartı silindi');
+    }
+
     function saveAccount(e) {
       e.preventDefault();
+      const taxOfficeVal = (document.getElementById('a-tax-office')?.value || '').trim();
+      const taxNoVal = (document.getElementById('a-tax-no')?.value || '').trim();
+
       const newA = {
         id: 'a_' + Date.now(),
         company: document.getElementById('a-company').value.trim(),
         type: document.getElementById('a-type').value,
         contact: document.getElementById('a-contact').value.trim(),
         phone: document.getElementById('a-phone').value.trim(),
-        tax: document.getElementById('a-tax').value.trim()
+        email: (document.getElementById('a-email')?.value || '').trim(),
+        taxOffice: taxOfficeVal,
+        taxNo: taxNoVal,
+        tax: `${taxOfficeVal} / ${taxNoVal}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
+        address: (document.getElementById('a-address')?.value || '').trim(),
+        notes: (document.getElementById('a-notes')?.value || '').trim()
       };
 
       accounts.unshift(newA);
       setStore('yg_accounts_lite', accounts);
 
       postToWebhook('Cari Kartları', [
-        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.tax
+        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, newA.notes
       ]);
 
       closeModal('modal-new-account');
       renderAccounts();
-      showToast('Cari eklendi');
+      showToast('Cari kartı eklendi');
     }
 
     /* ================================================================
@@ -2273,9 +2462,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         vat: parseFloat(document.getElementById('inv-vat').value) || 0,
         total: parseFloat(document.getElementById('inv-total').value) || 0,
         dueDate: document.getElementById('inv-due-date').value,
+        dueDate: document.getElementById('inv-due-date').value,
         status: document.getElementById('inv-status').value,
         method: document.getElementById('inv-method').value,
-        desc: document.getElementById('inv-desc').value.trim()
+        desc: document.getElementById('inv-desc').value.trim(),
+        notes: (document.getElementById('inv-notes')?.value || '').trim()
       };
 
       invoices.unshift(newInv);
@@ -2294,7 +2485,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         newInv.dueDate,
         newInv.status,
         newInv.method,
-        newInv.desc
+        newInv.desc,
+        newInv.notes
       ]);
 
       closeModal('modal-new-invoice');
@@ -2343,7 +2535,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           (inv.vendor && inv.vendor.toLowerCase().includes(q)) || 
           (inv.no && inv.no.toLowerCase().includes(q)) || 
           (inv.project && inv.project.toLowerCase().includes(q)) ||
-          (inv.desc && inv.desc.toLowerCase().includes(q));
+          (inv.desc && inv.desc.toLowerCase().includes(q)) ||
+          (inv.notes && inv.notes.toLowerCase().includes(q));
         return matchesFilter && matchesQ;
       });
 
@@ -2391,7 +2584,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               <span>Vade: ${escapeHtml(inv.dueDate || '-')}</span>
             </div>
 
-            ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 8px; font-style: italic;">📝 ${escapeHtml(inv.desc)}</div>` : ''}
+            ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 4px; font-style: italic;">📝 ${escapeHtml(inv.desc)}</div>` : ''}
+            ${inv.notes ? `<div style="font-size: 0.73rem; color: #1e293b; margin-bottom: 6px;">📌 Not: ${escapeHtml(inv.notes)}</div>` : ''}
 
             <div class="card-item-actions" style="margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 6px;">
               <span style="font-size: 0.72rem; color: var(--muted); display: inline-flex; align-items: center; gap: 4px;">
@@ -2430,9 +2624,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     function exportInvoicesCsv() {
       const rows = [
-        ['ID', 'Fatura No', 'Tedarikçi / Cari', 'VKN/TC', 'İlgili Proje', 'Fatura Tarihi', 'KDV Hariç Matrah', 'KDV Tutarı', 'Toplam Tutar', 'Vade Tarihi', 'Ödeme Durumu', 'Ödeme Yöntemi', 'Açıklama'],
+        ['ID', 'Fatura No', 'Tedarikçi / Cari', 'VKN/TC', 'İlgili Proje', 'Fatura Tarihi', 'KDV Hariç Matrah', 'KDV Tutarı', 'Toplam Tutar', 'Vade Tarihi', 'Ödeme Durumu', 'Ödeme Yöntemi', 'Mal / Hizmet Açıklaması', 'Özel Notlar'],
         ...invoices.map(inv => [
-          inv.id, inv.no, inv.vendor, inv.tax, inv.project, inv.date, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc
+          inv.id, inv.no, inv.vendor, inv.tax, inv.project, inv.date, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc || '', inv.notes || ''
         ])
       ];
       downloadCsv(`YakinGrup_Alis_Faturalari_${new Date().toISOString().split('T')[0]}.csv`, rows);
@@ -2467,6 +2661,12 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             </div>
             <span class="badge badge-purple">${escapeHtml(d.type)}</span>
           </div>
+          ${(d.date || d.expiry) ? `
+            <div style="font-size: 0.72rem; color: var(--muted); margin: 3px 0;">
+              📅 Evrak: ${escapeHtml(d.date || '-')} ${d.expiry ? `• ⏳ Geçerlilik: ${escapeHtml(d.expiry)}` : ''}
+            </div>
+          ` : ''}
+          ${d.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(d.notes)}</div>` : ''}
           <div style="display:flex; justify-content: flex-end; margin-top: 4px;">
             <a href="${d.url}" target="_blank" class="btn btn-navy btn-sm">👁️ Evrakı Aç ↗</a>
           </div>
@@ -2487,14 +2687,17 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         title: document.getElementById('d-title').value.trim(),
         type: document.getElementById('d-type').value,
         project: document.getElementById('d-project-select').value,
-        url: document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing'
+        date: document.getElementById('d-date')?.value || '',
+        expiry: document.getElementById('d-expiry')?.value || '',
+        url: document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing',
+        notes: (document.getElementById('d-notes')?.value || '').trim()
       };
 
       docs.unshift(newD);
       setStore('yg_docs_lite', docs);
 
       postToWebhook('Proje Dökümanları', [
-        new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.url
+        new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.date, newD.expiry, newD.url, newD.notes
       ]);
 
       closeModal('modal-new-doc');
@@ -2509,7 +2712,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const q = document.getElementById('search-stock').value.toLowerCase().trim();
       const list = document.getElementById('stock-list');
 
-      const filtered = stock.filter(s => !q || s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q));
+      const filtered = stock.filter(s => !q || s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q) || (s.category && s.category.toLowerCase().includes(q)));
 
       if (filtered.length === 0) {
         list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Stok kaydı bulunamadı.</div>`;
@@ -2521,34 +2724,54 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           <div class="card-item-header">
             <div>
               <div class="card-item-title">${escapeHtml(s.name)}</div>
-              <div class="card-item-meta">${escapeHtml(s.code)} • ${escapeHtml(s.price || '')}</div>
+              <div class="card-item-meta">
+                <span>${escapeHtml(s.code)}</span> • <span>${escapeHtml(s.category || 'Malzeme')}</span>
+                ${s.location ? ` • <span>📍 ${escapeHtml(s.location)}</span>` : ''}
+              </div>
             </div>
             <span class="badge ${s.status === 'Kritik' ? 'badge-red' : 'badge-green'}">${escapeHtml(s.status)}</span>
           </div>
-          <div style="font-size: 0.95rem; font-weight: 800; color: var(--navy);">
-            ${s.qty} ${escapeHtml(s.unit)}
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 4px 0;">
+            <div style="font-size: 1.05rem; font-weight: 800; color: var(--navy);">
+              ${s.qty} ${escapeHtml(s.unit)}
+            </div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--green-dark);">
+              ${escapeHtml(s.price || '')} ${s.totalValue ? `<span style="font-size: 0.72rem; color: var(--muted); font-weight: normal;">(Toplam: ${escapeHtml(s.totalValue)})</span>` : ''}
+            </div>
           </div>
+          ${s.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(s.notes)}</div>` : ''}
         </div>
       `).join('');
     }
 
     function saveStock(e) {
       e.preventDefault();
+      const qtyVal = parseFloat(document.getElementById('s-qty').value) || 0;
+      const minQtyVal = parseFloat(document.getElementById('s-min-qty')?.value) || 5;
+      const priceVal = (document.getElementById('s-price')?.value || '').trim();
+      const rawPriceNum = parseFloat(priceVal.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0;
+      const calcTotalValue = rawPriceNum > 0 ? (qtyVal * rawPriceNum).toLocaleString('tr-TR', { maximumFractionDigits: 0 }) + ' ₺' : '';
+
       const newS = {
         id: 's_' + Date.now(),
         code: document.getElementById('s-code').value.trim(),
         name: document.getElementById('s-name').value.trim(),
-        qty: parseFloat(document.getElementById('s-qty').value) || 0,
+        category: document.getElementById('s-category')?.value || 'Demir & Çelik',
+        location: (document.getElementById('s-location')?.value || '').trim(),
+        qty: qtyVal,
         unit: document.getElementById('s-unit').value.trim(),
-        price: document.getElementById('s-price').value.trim(),
-        status: (parseFloat(document.getElementById('s-qty').value) <= 5) ? 'Kritik' : 'Yeterli'
+        price: priceVal,
+        totalValue: calcTotalValue,
+        minQty: minQtyVal,
+        status: (qtyVal <= minQtyVal) ? 'Kritik' : 'Yeterli',
+        notes: (document.getElementById('s-notes')?.value || '').trim()
       };
 
       stock.unshift(newS);
       setStore('yg_stock_lite', stock);
 
       postToWebhook('Stok', [
-        new Date().toISOString().split('T')[0], newS.code, newS.name, newS.qty, newS.unit, newS.price, newS.status
+        new Date().toISOString().split('T')[0], newS.code, newS.name, newS.category, newS.qty, newS.unit, newS.price, newS.totalValue, newS.location, newS.status, newS.notes
       ]);
 
       closeModal('modal-new-stock');
@@ -2621,14 +2844,36 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setTimeout(() => showToast('Platform ve Google Sheets tek örnekle sıfırlandı! ✅'), 1200);
     }
 
+    async function sendSetupHeadersToSheets() {
+      const url = getWebhookUrl();
+      if (!url) {
+        showToast('Webhook URL tanımlı değil!', '⚠️');
+        return;
+      }
+      showToast('Sheet başlıkları Google Sheets ile eşitleniyor...', '📌');
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          cache: 'no-cache',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'setupHeaders' })
+        });
+        showToast('Başlıklar Google Sheets tablolarına yazıldı! ✅');
+      } catch(err) {
+        console.error(err);
+        showToast('Webhook bağlantı hatası!', '⚠️');
+      }
+    }
+
     function syncAllToGoogleSheets() {
       showToast('Sheets senkronizasyonu başladı...', '🔄');
-      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.notes]));
-      projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, `%${p.progress}`, p.status]));
-      accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.tax]));
-      invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc]));
-      docs.forEach(d => postToWebhook('Proje Dökümanları', [new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.url]));
-      stock.forEach(s => postToWebhook('Stok', [new Date().toISOString().split('T')[0], s.code, s.name, s.qty, s.unit, s.price, s.status]));
+      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || '']));
+      projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate || '', p.endDate || '', `%${p.progress}`, p.status, p.notes || '']));
+      accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email || '', a.taxOffice || '', a.taxNo || a.tax || '', a.address || '', a.notes || '']));
+      invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc || '', inv.notes || '']));
+      docs.forEach(d => postToWebhook('Proje Dökümanları', [new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date || '', d.expiry || '', d.url, d.notes || '']));
+      stock.forEach(s => postToWebhook('Stok', [new Date().toISOString().split('T')[0], s.code, s.name, s.category || '', s.qty, s.unit, s.price, s.totalValue || '', s.location || '', s.status, s.notes || '']));
       setTimeout(() => showToast('Tüm veriler Google Sheets ile güncellendi!'), 1500);
     }
 
