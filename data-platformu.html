@@ -1276,13 +1276,13 @@
        MÜŞTERİ VE PROJE REHBERİ - HAFİF & NATIVE MOTOR
        ================================================================ */
 
-    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxOMaCiB19C65gwhiebhfybP2y-N5Nskqv59XyBOeUM4PRSTNIhhhvkpLhpHvNXd-Br/exec";
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwg6DlYRkTwnPaAki8KygD7ZxETuOUbr-k0Y6aFQt_Jc3yIh8TtXBK9IOrayMr13-lh/exec";
     const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
-      if (custom && custom.includes('AKfycbxOMaCi')) return custom.trim();
+      if (custom && custom.includes('AKfycbwg6DlYR')) return custom.trim();
       if (custom) localStorage.removeItem(WEBHOOK_STORAGE_KEY);
       return GAS_WEBHOOK_URL;
     }
@@ -1347,7 +1347,7 @@
     }
 
     // Otomatik Sürüm Kontrolü - Tüm tarayıcılarda eski önbelleği temizleyip sıfır tertemiz sayfa açma
-    const APP_BUILD_VERSION = "2026-09-24_v6_clean_slate";
+    const APP_BUILD_VERSION = "2026-09-24_v7_clean_production";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       localStorage.removeItem(WEBHOOK_STORAGE_KEY);
       localStorage.removeItem('yg_cards_lite');
