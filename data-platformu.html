@@ -1543,6 +1543,11 @@ function resetSheets() {
 
 function doPost(e) {
   try {
+    // Editörden doğrudan çalıştırıldığında veya hata ayıklandığında e parametresi boş gelir
+    if (!e || !e.postData || !e.postData.contents) {
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "doPost fonksiyonu çalışır durumda (Editör testi başarılı)." }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
     var data = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
