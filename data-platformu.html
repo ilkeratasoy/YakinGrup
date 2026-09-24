@@ -599,9 +599,9 @@
     </a>
 
     <div class="header-actions">
-      <div class="sync-pill" onclick="syncAllToGoogleSheets()" title="Google Sheets ile Senkronize Et">
+      <div class="sync-pill" onclick="loadFromGoogleSheets()" title="Google Sheets ile Canlı Eşitle (Verileri Çek)">
         <span class="sync-dot"></span>
-        <span>Sheets</span>
+        <span>Canlı Eşitle</span>
       </div>
       <button class="icon-btn" onclick="openModal('modal-settings')" title="Yapay Zeka Ayarları">
         ⚙️
@@ -1268,13 +1268,13 @@
        MÜŞTERİ VE PROJE REHBERİ - HAFİF & NATIVE MOTOR
        ================================================================ */
 
-    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxxXPW7xTRM8uvTGN2HYlDH5PpuRyM6tCZ3-x6rVRZmOY3Dpk0AS-I3Vq0LfG9-b8MVSA/exec";
+    const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwmtXftyXr8CdEhJEZTPCW15x4_dfWNAGEdgJXMhqXPJgxiexCW6Xx0Y7oWKjC6C0k/exec";
     const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
-      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe')) return custom.trim();
+      if (custom && custom.trim().length > 20 && !custom.includes('AKfycbxxXPW7') && !custom.includes('AKfycbyryoSZ') && !custom.includes('AKfycbwdyu') && !custom.includes('AKfycbwPT02M') && !custom.includes('AKfycbxL8Ffe')) return custom.trim();
       return GAS_WEBHOOK_URL;
     }
 
@@ -1378,6 +1378,39 @@
 // ====================================================================
 
 function doGet(e) {
+  var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : "";
+  
+  // Tüm verileri JSON olarak oku ve web/mobil cihazlara gönder (Bulut DB)
+  if (action === "readAll") {
+    try {
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      var result = {};
+      SHEET_CONFIGS.forEach(function(cfg) {
+        var s = ss.getSheetByName(cfg.name);
+        if (!s) { result[cfg.name] = []; return; }
+        var data = s.getDataRange().getValues();
+        if (data.length <= 1) { result[cfg.name] = []; return; }
+        var headers = data[0];
+        var rows = [];
+        for (var i = 1; i < data.length; i++) {
+          var r = data[i];
+          if (!r[0] && !r[1] && !r[2]) continue;
+          var obj = {};
+          for (var c = 0; c < headers.length; c++) {
+            obj[headers[c]] = r[c];
+          }
+          rows.push(obj);
+        }
+        result[cfg.name] = rows;
+      });
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", data: result }))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
   return ContentService.createTextOutput("✅ Yakın Grup Google Sheets Webhook Aktif ve Çalışıyor!").setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -2891,6 +2924,148 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    async function loadFromGoogleSheets(silent = false) {
+      const url = getWebhookUrl();
+      if (!url) return;
+      if (!silent) showToast('Google Sheets verileri yükleniyor...', '☁️');
+
+      try {
+        const resp = await fetch(url + (url.includes('?') ? '&' : '?') + 'action=readAll', {
+          method: 'GET',
+          cache: 'no-cache'
+        });
+        if (!resp.ok) return;
+        const resJson = await resp.json();
+        if (resJson && resJson.status === 'success' && resJson.data) {
+          const d = resJson.data;
+
+          // 1. Müşteriler
+          if (d['Müşteriler'] && d['Müşteriler'].length > 0) {
+            cards = d['Müşteriler'].map((r, idx) => ({
+              id: 'c_' + idx,
+              date: r['Tarih'] || '',
+              name: r['Ad Soyad'] || '',
+              company: r['Firma'] || '',
+              role: r['Unvan'] || '',
+              mobile: r['Cep Telefonu'] || '',
+              office: r['Ofis / Sabit Tel'] || '',
+              phone: r['Cep Telefonu'] || r['Ofis / Sabit Tel'] || '',
+              email: r['E-Posta'] || '',
+              category: r['Kategori'] || 'Müşteri',
+              address: r['Adres'] || '',
+              notes: r['Notlar'] || ''
+            }));
+            setStore('yg_cards_lite', cards);
+            renderCards();
+          }
+
+          // 2. İnşaat Projeleri
+          if (d['İnşaat Projeleri'] && d['İnşaat Projeleri'].length > 0) {
+            projects = d['İnşaat Projeleri'].map((r, idx) => ({
+              id: 'p_' + idx,
+              date: r['Tarih'] || '',
+              code: r['Proje Kodu'] || '',
+              name: r['Proje Adı'] || '',
+              type: r['Türü'] || '',
+              client: r['İşveren'] || '',
+              location: r['Konum'] || '',
+              budget: r['Bütçe'] || '',
+              startDate: r['Başlangıç Tarihi'] || '',
+              endDate: r['Teslim Tarihi'] || '',
+              progress: parseInt(String(r['İlerleme'] || '0').replace(/[^0-9]/g, '')) || 0,
+              status: r['Durum'] || 'Planlama',
+              notes: r['Proje Notları'] || ''
+            }));
+            setStore('yg_projects_lite', projects);
+            renderProjects();
+            populateDocProjectSelect();
+            populateInvoiceProjectSelect();
+          }
+
+          // 3. Cari Kartları
+          if (d['Cari Kartları'] && d['Cari Kartları'].length > 0) {
+            accounts = d['Cari Kartları'].map((r, idx) => ({
+              id: 'a_' + idx,
+              company: r['Firma Adı'] || '',
+              type: r['Cari Türü'] || 'Müşteri',
+              contact: r['Yetkili Kişi'] || '',
+              phone: r['Telefon'] || '',
+              email: r['E-Posta'] || '',
+              taxOffice: r['Vergi Dairesi'] || '',
+              taxNo: r['VKN / TCKN'] || '',
+              tax: `${r['Vergi Dairesi'] || ''} / ${r['VKN / TCKN'] || ''}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
+              address: r['Açık Adres'] || '',
+              notes: r['Notlar / IBAN'] || ''
+            }));
+            setStore('yg_accounts_lite', accounts);
+            renderAccounts();
+          }
+
+          // 4. Alış Faturaları
+          if (d['Alış Faturaları'] && d['Alış Faturaları'].length > 0) {
+            invoices = d['Alış Faturaları'].map((r, idx) => ({
+              id: 'inv_' + idx,
+              regDate: r['Kayıt Tarihi'] || '',
+              date: r['Fatura Tarihi'] || '',
+              no: r['Fatura No'] || '',
+              vendor: r['Tedarikçi / Cari'] || '',
+              tax: r['VKN / TCKN'] || '',
+              project: r['İlgili Proje'] || '',
+              subtotal: parseFloat(r['KDV Hariç Matrah (₺)'] || r['KDV Hariç Matrah']) || 0,
+              vat: parseFloat(r['KDV Tutarı (₺)'] || r['KDV Tutarı']) || 0,
+              total: parseFloat(r['Toplam Tutar (₺)'] || r['Toplam Tutar']) || 0,
+              dueDate: r['Vade Tarihi'] || '',
+              status: r['Ödeme Durumu'] || 'Bekliyor',
+              method: r['Ödeme Yöntemi'] || 'Banka Havale / EFT',
+              desc: r['Mal / Hizmet Açıklaması'] || r['Açıklama'] || '',
+              notes: r['Özel Notlar'] || ''
+            }));
+            setStore('yg_invoices_lite', invoices);
+            renderInvoices();
+          }
+
+          // 5. Proje Dökümanları
+          if (d['Proje Dökümanları'] && d['Proje Dökümanları'].length > 0) {
+            docs = d['Proje Dökümanları'].map((r, idx) => ({
+              id: 'd_' + idx,
+              title: r['Evrak Başlığı'] || '',
+              type: r['Evrak / Proje Türü'] || '',
+              project: r['İlgili Proje'] || '',
+              date: r['Evrak Tarihi'] || '',
+              expiry: r['Geçerlilik Tarihi'] || '',
+              url: r['Belge / Link URL'] || '',
+              notes: r['Evrak Notu / Açıklama'] || ''
+            }));
+            setStore('yg_docs_lite', docs);
+            renderDocs();
+          }
+
+          // 6. Stok
+          if (d['Stok'] && d['Stok'].length > 0) {
+            stock = d['Stok'].map((r, idx) => ({
+              id: 's_' + idx,
+              code: r['Stok Kodu'] || '',
+              name: r['Malzeme Adı'] || '',
+              category: r['Kategori'] || 'Demir & Çelik',
+              qty: parseFloat(r['Mevcut Miktar'] || r['Miktar']) || 0,
+              unit: r['Birim'] || 'Adet',
+              price: r['Birim Fiyat (₺)'] || r['Fiyat'] || '',
+              totalValue: r['Toplam Değer (₺)'] || '',
+              location: r['Depo / Konum'] || '',
+              status: r['Durum'] || 'Yeterli',
+              notes: r['Notlar / Detay'] || ''
+            }));
+            setStore('yg_stock_lite', stock);
+            renderStock();
+          }
+
+          if (!silent) showToast('Google Sheets verileri başarıyla yüklendi! ☁️');
+        }
+      } catch(err) {
+        console.warn("Google Sheets canlı okuma hatası:", err);
+      }
+    }
+
     // Init
     document.addEventListener('DOMContentLoaded', () => {
       const activeKey = getGeminiApiKey();
@@ -2907,6 +3082,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       populateInvoiceProjectSelect();
       renderDocs();
       renderStock();
+
+      // Açılışta Google Sheets'ten canlı verileri otomatik çek (Tüm cihazlar güncel kalsın)
+      loadFromGoogleSheets(true);
     });
   </script>
 </body>
