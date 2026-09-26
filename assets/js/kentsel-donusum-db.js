@@ -85,6 +85,7 @@
         landArea: 3825,
         unitCount: 56,
         existingGroundUnitsCount: 0,
+        existingFloorCount: 4,
         shopCount: 8,
         existingUnitAvgNet: 70.5,
         existingUnitPriceM2: 60000,

@@ -15,6 +15,7 @@ const KD_PRESETS = {
     existingBuildingArea: 2200,
     unitCount: 20,
     existingGroundUnitsCount: 0,
+    existingFloorCount: 6,
     shopCount: 0,
     existingUnitAvgNet: 95,
     existingUnitPriceM2: 85000,
@@ -48,6 +49,7 @@ const KD_PRESETS = {
     existingBuildingArea: 1100,
     unitCount: 8,
     existingGroundUnitsCount: 0,
+    existingFloorCount: 4,
     shopCount: 0,
     existingUnitAvgNet: 110,
     existingUnitPriceM2: 120000,
@@ -80,6 +82,7 @@ const KD_PRESETS = {
     existingBuildingArea: 3100,
     unitCount: 24,
     existingGroundUnitsCount: 0,
+    existingFloorCount: 8,
     shopCount: 2,
     existingUnitAvgNet: 105,
     existingUnitPriceM2: 55000,
@@ -112,6 +115,7 @@ const KD_PRESETS = {
     existingBuildingArea: 2100,
     unitCount: 16,
     existingGroundUnitsCount: 0,
+    existingFloorCount: 5,
     shopCount: 4,
     existingUnitAvgNet: 90,
     existingUnitPriceM2: 38000,
@@ -144,6 +148,7 @@ const KD_PRESETS = {
     existingBuildingArea: 5350,
     unitCount: 56,
     existingGroundUnitsCount: 0,
+    existingFloorCount: 4,
     shopCount: 8,
     existingUnitAvgNet: 70.5,
     existingUnitPriceM2: 60000,
@@ -466,6 +471,7 @@ class KentselDonusumEngine {
       existingBuildingArea: 2200,
       unitCount: 20,
       existingGroundUnitsCount: 0,
+      existingFloorCount: 6,
       shopCount: 0,
       existingUnitAvgNet: 95,
       existingUnitPriceM2: 85000,
@@ -528,15 +534,42 @@ class KentselDonusumEngine {
     const existingGroundUnitsCount = Math.max(0, parseInt(this.state.existingGroundUnitsCount) || 0);
     const totalSections = Math.max(1, unitCount + shopCount);
     const avgNet = parseFloat(this.state.existingUnitAvgNet) || 95;
-    const unitsPerFloor = parseInt(this.state.unitsPerNormalFloor) || 3;
+    
+    // Kat sayısı belirleme (Mevcut kat sayısı veya proje normal kat sayısı)
+    let autoNormalKat = 8;
+    if (this.state.hmax) {
+      const match = String(this.state.hmax).match(/(\d+)/);
+      if (match) autoNormalKat = parseInt(match[1]);
+    }
+    const floorCount = Math.max(1, parseInt(this.state.existingFloorCount) || parseInt(this.state.customNormalFloorCount) || autoNormalKat || 6);
+
+    // Zemin kat konutları düşüldükten sonra kalan daireleri kat sayısına eşit/dengeli dağıt
+    const remainingUnitsCount = Math.max(0, unitCount - existingGroundUnitsCount);
+    const floorAssignments = [];
+    if (floorCount > 0 && remainingUnitsCount > 0) {
+      const baseUnitsPerFloor = Math.floor(remainingUnitsCount / floorCount);
+      const remainder = remainingUnitsCount % floorCount;
+
+      for (let f = 1; f <= floorCount; f++) {
+        const countForFloor = baseUnitsPerFloor + (f <= remainder ? 1 : 0);
+        for (let c = 1; c <= countForFloor; c++) {
+          floorAssignments.push({ floor: f, doorOnFloor: c, totalOnFloor: countForFloor });
+        }
+      }
+    }
     
     let id = 1;
 
     for (let i = 1; i <= unitCount; i++) {
       const existing = oldMap.get(id);
       const isGround = i <= existingGroundUnitsCount;
-      const normalFloorIdx = isGround ? 0 : Math.min(Math.ceil((i - existingGroundUnitsCount) / unitsPerFloor), 12);
-      const floor = isGround ? 0 : normalFloorIdx;
+      let floor = 0;
+      if (!isGround) {
+        const assignIdx = i - existingGroundUnitsCount - 1;
+        floor = (assignIdx >= 0 && assignIdx < floorAssignments.length)
+          ? floorAssignments[assignIdx].floor
+          : Math.min(Math.ceil((i - existingGroundUnitsCount) / 3), floorCount);
+      }
       let netM2, brutM2, name, customSet = false;
 
       const defaultName = floor === 0 
@@ -700,7 +733,7 @@ class KentselDonusumEngine {
       this.state.customNormalSlabManuallySet = true;
     }
 
-    if (key === 'unitCount' || key === 'shopCount' || key === 'existingGroundUnitsCount') {
+    if (key === 'unitCount' || key === 'shopCount' || key === 'existingGroundUnitsCount' || key === 'existingFloorCount' || key === 'customNormalFloorCount') {
       const u = parseInt(this.state.unitCount) || 0;
       const s = parseInt(this.state.shopCount) || 0;
       this.state.ownerCount = u + s;
@@ -1278,6 +1311,7 @@ class KentselDonusumEngine {
       existingSummary: {
         units: existingUnits,
         groundUnits: Math.max(0, parseInt(s.existingGroundUnitsCount) || 0),
+        floorCount: Math.max(1, parseInt(s.existingFloorCount) || parseInt(s.customNormalFloorCount) || 6),
         shops: existingShops,
         totalSections: existingTotalSections,
         totalNetM2: existingTotalNet,

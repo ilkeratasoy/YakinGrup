@@ -492,6 +492,11 @@
             </div>
 
             <div class="form-group">
+              <label class="form-label" for="inp-existingFloorCount">Mevcut Kat Sayısı <span class="helper-tag">Normal Kat</span></label>
+              <input type="number" min="1" max="30" id="inp-existingFloorCount" class="form-input" value="6" oninput="handleInputChange('existingFloorCount', this.value)">
+            </div>
+
+            <div class="form-group">
               <label class="form-label" for="inp-shopCount">Mevcut Dükkan / Ticari</label>
               <input type="number" id="inp-shopCount" class="form-input" value="0" oninput="handleInputChange('shopCount', this.value)">
             </div>
@@ -2253,6 +2258,7 @@
       setVal('inp-landArea', s.landArea);
       setVal('inp-unitCount', s.unitCount);
       setVal('inp-existingGroundUnits', s.existingGroundUnitsCount !== undefined ? s.existingGroundUnitsCount : 0);
+      setVal('inp-existingFloorCount', s.existingFloorCount !== undefined ? s.existingFloorCount : (s.customNormalFloorCount || 6));
       setVal('inp-shopCount', s.shopCount);
       setVal('inp-existingAvgNet', s.existingUnitAvgNet);
       setVal('inp-existingPriceM2', s.existingUnitPriceM2);
