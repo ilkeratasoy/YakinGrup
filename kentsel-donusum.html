@@ -1023,7 +1023,8 @@
 
         <div class="finance-comparison-grid">
           <!-- MODEL 1: Kat Karşılığı -->
-          <div class="model-card" id="card-m1">
+          <div class="model-card" id="card-m1" onclick="selectFinanceModel('model1')">
+            <span class="model-select-badge">✓ SEÇİLEN MODEL</span>
             <div>
               <div class="model-header">
                 <h4>Model 1: Kat Karşılığı</h4>
@@ -1039,11 +1040,13 @@
             <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
               Müteahhit finansman ve 24 aylık piyasa riskini üstlenir; maliyet bağımsız bölüm payı ile karşılanır.
             </div>
+            <button type="button" class="btn btn-sm btn-outline model-select-btn" id="btn-select-model1" onclick="selectFinanceModel('model1', true, event)" style="margin-top: 10px; width: 100%; font-weight: 700;">Bu Modeli Seç & İlerle ➔</button>
           </div>
 
           <!-- MODEL 2: Yarısı Bizden -->
-          <div class="model-card recommended" id="card-m2">
+          <div class="model-card recommended active" id="card-m2" onclick="selectFinanceModel('model2')">
             <div class="model-ribbon">⭐ ÖNERİLEN MODEL</div>
+            <span class="model-select-badge">✓ SEÇİLEN MODEL</span>
             <div>
               <div class="model-header">
                 <h4>Model 2: Yarısı Bizden</h4>
@@ -1059,10 +1062,12 @@
             <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
               İstanbul için geçerlidir. 875k Hibe + 875k Kredi (1.750.000 TL) müteahhide hakedişle ödenir; 125.000 TL taşınma desteği doğrudan malike aktarılır.
             </div>
+            <button type="button" class="btn btn-sm btn-primary model-select-btn" id="btn-select-model2" onclick="selectFinanceModel('model2', true, event)" style="margin-top: 10px; width: 100%; font-weight: 700;">✓ Seçili Model • İlerle ➔</button>
           </div>
 
           <!-- MODEL 3: İADŞP (Dünya Bankası Kredisi) -->
-          <div class="model-card" id="card-m3">
+          <div class="model-card" id="card-m3" onclick="selectFinanceModel('model3')">
+            <span class="model-select-badge">✓ SEÇİLEN MODEL</span>
             <div>
               <div class="model-header">
                 <h4>Model 3: Dünya Bankası İADŞP</h4>
@@ -1078,10 +1083,12 @@
             <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
               7 pilot ilde geçerli, 15 yıl vadeli avantajlı kentsel dönüşüm kredisi modelidir.
             </div>
+            <button type="button" class="btn btn-sm btn-outline model-select-btn" id="btn-select-model3" onclick="selectFinanceModel('model3', true, event)" style="margin-top: 10px; width: 100%; font-weight: 700;">Bu Modeli Seç & İlerle ➔</button>
           </div>
 
           <!-- MODEL 4: Özkaynak + Taahhüt -->
-          <div class="model-card" id="card-m4">
+          <div class="model-card" id="card-m4" onclick="selectFinanceModel('model4')">
+            <span class="model-select-badge">✓ SEÇİLEN MODEL</span>
             <div>
               <div class="model-header">
                 <h4>Model 4: Özkaynak / Malik</h4>
@@ -1097,6 +1104,7 @@
             <div style="font-size: 0.7rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 6px;">
               Tüm finansmanı malikler karşılar, müteahhit saf inşaat yapım taahhüt kârı alır.
             </div>
+            <button type="button" class="btn btn-sm btn-outline model-select-btn" id="btn-select-model4" onclick="selectFinanceModel('model4', true, event)" style="margin-top: 10px; width: 100%; font-weight: 700;">Bu Modeli Seç & İlerle ➔</button>
           </div>
         </div>
       </div>
@@ -1347,10 +1355,10 @@
           </div>
         </div>
 
-        <!-- Yarısı Bizden & Taşınma Desteği Bilgi Bandı -->
-        <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1rem; font-size: 0.78rem; color: #1e40af; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
+        <!-- Model Bilgi Bandı -->
+        <div id="stage4-model-info-banner" style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1rem; font-size: 0.78rem; color: #1e40af; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;">
           <span style="font-size: 1.2rem; line-height: 1;">ℹ️</span>
-          <div>
+          <div id="stage4-model-info-text">
             <strong>Yarısı Bizden Hibe & Kredi vs. Taşınma Desteği Hükmü:</strong>
             İstanbul projelerinde konut başına <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong> doğrudan inşaat yapım maliyetini karşılamak üzere <strong>müteahhit hakedişine</strong> aktarılır. Hak sahibi maliğe sağlanan <strong>125.000 TL Taşınma Desteği</strong> ise inşaat yapım hesabından düşülmeyip <strong>doğrudan malikin kendi banka hesabına nakit</strong> olarak ödenmektedir.
           </div>
@@ -2243,6 +2251,26 @@
       }
     }
 
+    function selectFinanceModel(modelKey, advanceToStage4 = false, event = null) {
+      if (event) {
+        event.stopPropagation();
+      }
+      if (window.KDEngine) {
+        window.KDEngine.updateField('selectedFinanceModel', modelKey);
+        renderUI();
+        if (advanceToStage4) {
+          switchStage(4);
+          const modelNames = {
+            model1: 'Model 1 (Kat Karşılığı)',
+            model2: 'Model 2 (Yarısı Bizden)',
+            model3: 'Model 3 (Dünya Bankası İADŞP)',
+            model4: 'Model 4 (Özkaynak / Malik)'
+          };
+          showToastNotification(`✓ ${modelNames[modelKey] || modelKey} seçildi ve teklif tablosuna aktarıldı.`);
+        }
+      }
+    }
+
     function syncInputsWithState() {
       const s = window.KDEngine.state;
       const setVal = (id, val) => {
@@ -2463,6 +2491,32 @@
 
       const m4 = res.models.model4_Ozkaynak;
       setText('m4-owner-pay', eng.formatCurrency(m4.ownerPaymentPerUnit));
+
+      // 4 Model Kartı Aktiflik ve Seçim Durumları
+      const activeModelKey = eng.state.selectedFinanceModel || (res.supports.isIstanbul ? 'model2' : (res.supports.isIADSPEligible ? 'model3' : 'model1'));
+      ['model1', 'model2', 'model3', 'model4'].forEach(mKey => {
+        const cardId = mKey === 'model1' ? 'card-m1' : (mKey === 'model2' ? 'card-m2' : (mKey === 'model3' ? 'card-m3' : 'card-m4'));
+        const cardEl = document.getElementById(cardId);
+        const btnEl = document.getElementById(`btn-select-${mKey}`);
+        const isSelected = (mKey === activeModelKey);
+
+        if (cardEl) {
+          if (isSelected) {
+            cardEl.classList.add('active');
+          } else {
+            cardEl.classList.remove('active');
+          }
+        }
+        if (btnEl) {
+          if (isSelected) {
+            btnEl.className = 'btn btn-sm btn-primary model-select-btn';
+            btnEl.innerHTML = '✓ Seçili Model • İlerle ➔';
+          } else {
+            btnEl.className = 'btn btn-sm btn-outline model-select-btn';
+            btnEl.innerHTML = 'Bu Modeli Seç & İlerle ➔';
+          }
+        }
+      });
 
       // Risk & Süre Detayları
       const fin = res.financials;
@@ -2702,20 +2756,74 @@
         }
       }
 
+      // Stage 4 Model Bilgi Bandı
+      const stage4Banner = document.getElementById('stage4-model-info-banner');
+      if (stage4Banner) {
+        if (activeModelKey === 'model1') {
+          stage4Banner.innerHTML = `
+            <span style="font-size: 1.2rem; line-height: 1;">🤝</span>
+            <div>
+              <strong>Seçilen Model: Kat Karşılığı İnşaat Sözleşmesi (Malik Nakit Ödemesiz):</strong>
+              Bu modelde kat maliklerinden hiçbir nakit katkı veya ek ödeme talep edilmez (<strong>0 TL Ek Ödeme</strong>). İnşaat yapım maliyeti ve yüklenici kârı, sözleşme oranında müteahhide bırakılan bağımsız bölümlerin satışından karşılanır.
+            </div>
+          `;
+          stage4Banner.style.background = '#f0fdf4';
+          stage4Banner.style.borderColor = '#bbf7d0';
+          stage4Banner.style.color = '#166534';
+        } else if (activeModelKey === 'model2') {
+          stage4Banner.innerHTML = `
+            <span style="font-size: 1.2rem; line-height: 1;">🏛️</span>
+            <div>
+              <strong>Seçilen Model: Yarısı Bizden Kampanyası (Devlet Hibe & Kredi Desteği):</strong>
+              Hak sahibi konutlar için <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong> doğrudan müteahhit hakedişine aktarılır. Ayrıca her bağımsız bölüme <strong>125.000 TL Taşınma Desteği</strong> doğrudan hak sahibinin banka hesabına nakit ödenir.
+            </div>
+          `;
+          stage4Banner.style.background = '#eff6ff';
+          stage4Banner.style.borderColor = '#bfdbfe';
+          stage4Banner.style.color = '#1e40af';
+        } else if (activeModelKey === 'model3') {
+          stage4Banner.innerHTML = `
+            <span style="font-size: 1.2rem; line-height: 1;">🏦</span>
+            <div>
+              <strong>Seçilen Model: Dünya Bankası İADŞP Kentsel Dönüşüm Finansmanı:</strong>
+              Bağımsız bölüm başına <strong>3.000.000 TL'ye kadar, aylık %0,69 faiz ve 180 ay vadeli (ilk 12 ay ödemesiz)</strong> uygun dönüşüm kredisi kullanılır. Malikler yapım payını 15 yıllık düşük faizli taksitlerle geri öder.
+            </div>
+          `;
+          stage4Banner.style.background = '#fefce8';
+          stage4Banner.style.borderColor = '#fef08a';
+          stage4Banner.style.color = '#854d0e';
+        } else if (activeModelKey === 'model4') {
+          stage4Banner.innerHTML = `
+            <span style="font-size: 1.2rem; line-height: 1;">🏗️</span>
+            <div>
+              <strong>Seçilen Model: Özkaynak / Malik Finansmanı (%15 Taahhüt Kârı):</strong>
+              İnşaat yapım bedelinin tamamı kat malikleri tarafından nakit karşılanır. Yüklenici yalnızca %15 saf inşaat yapım taahhüt kârı alır. Yeni üretilen bağımsız bölümlerin <strong>%100'ü maliklerin mülkiyetinde</strong> kalır.
+            </div>
+          `;
+          stage4Banner.style.background = '#faf5ff';
+          stage4Banner.style.borderColor = '#e9d5ff';
+          stage4Banner.style.color = '#6b21a8';
+        }
+      }
+
       let supportTxt = "";
-      if (res.supports.isIstanbul) {
+      if (activeModelKey === 'model1') {
         supportTxt = `
-          Taşınmaz İstanbul il sınırları içerisinde yer aldığından <strong>Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong>; ticari dükkanlar için <strong>437.500 TL Hibe + 437.500 TL Kredi (Toplam 875.000 TL)</strong> inşaat yapım bedelini karşılamak üzere doğrudan <strong>yüklenici/müteahhit hakedişine</strong> aktarılacaktır.
+          Proje <strong>Model 1: Kat Karşılığı İnşaat Sözleşmesi</strong> modeliyle %${m1.contractorSharePct} Müteahhit Payı ve %${100 - m1.contractorSharePct} Malik Payı dengesiyle finanse edilmektedir. Kat maliklerinden hiçbir nakit katkı veya ek yapım bedeli talep edilmeyecek (<strong>0 TL Ek Ödeme</strong>); tüm şantiye, ruhsat ve imalat maliyetleri müteahhit payındaki bağımsız bölümlerle karşılanacaktır.
+        `;
+      } else if (activeModelKey === 'model2') {
+        supportTxt = `
+          Taşınmaz <strong>Model 2: Yarısı Bizden Kampanyası</strong> kapsamında hak sahibi her bir konut için <strong>875.000 TL Hibe + 875.000 TL Kredi (Toplam 1.750.000 TL)</strong>; ticari dükkanlar için <strong>437.500 TL Hibe + 437.500 TL Kredi (Toplam 875.000 TL)</strong> inşaat yapım bedelini karşılamak üzere doğrudan <strong>yüklenici/müteahhit hakedişine</strong> aktarılacaktır.
           <br><br>
           Ayrıca hak sahibi her bir bağımsız bölüm malikine <strong>125.000 TL Taşınma ve Tahliye Desteği</strong> inşaat maliyetinden düşülmeyip <strong>doğrudan malikin kendi banka hesabına nakit</strong> olarak ödenecektir. Proje genelinde toplam <strong>${eng.formatCurrency(res.supports.ybd.totalInsaatHakedisFinancing || (res.existingSummary.units * 1750000 + res.existingSummary.shops * 875000))}</strong> inşaat hakediş finansmanı kullanılacak ve maliklere toplam <strong>${eng.formatCurrency(res.supports.ybd.totalTahliye)}</strong> nakit taşınma yardımı aktarılacaktır.
         `;
-      } else if (res.supports.isIADSPEligible) {
+      } else if (activeModelKey === 'model3') {
         supportTxt = `
-          Taşınmaz Dünya Bankası finansmanlı <strong>İklim ve Afetlere Dayanıklı Şehirler Projesi (İADŞP)</strong> pilot illerinden ${eng.state.city} sınırlarında yer almaktadır. Bağımsız bölüm başına (konut ve dükkanlar dahil) <strong>3.000.000 TL'ye kadar, aylık %0,69 faiz ve 180 ay vadeli (ilk 12 ay ödemesiz)</strong> uygun dönüşüm kredisi kullanılabilmektedir. Toplam finansman kapasitesi <strong>${eng.formatCurrency(res.supports.iadsp.totalFinancing)}</strong> düzeyindedir.
+          Taşınmaz Dünya Bankası finansmanlı <strong>Model 3: İklim ve Afetlere Dayanıklı Şehirler Projesi (İADŞP)</strong> pilot il dönüşüm protokolü kapsamında bağımsız bölüm başına <strong>3.000.000 TL'ye kadar, aylık %0,69 faiz ve 180 ay vadeli (ilk 12 ay ödemesiz)</strong> uygun dönüşüm kredisi ile finanse edilmektedir. Toplam kredi hacmi <strong>${eng.formatCurrency(m3.totalCredit)}</strong> düzeyindedir.
         `;
-      } else {
+      } else if (activeModelKey === 'model4') {
         supportTxt = `
-          Proje Kat Karşılığı İnşaat Sözleşmesi modeliyle %${m1.contractorSharePct} Müteahhit Payı ve %${100 - m1.contractorSharePct} Malik Payı dengesiyle finanse edilecek, maliklerden hiçbir nakit katkı talep edilmeyecektir.
+          Proje <strong>Model 4: Özkaynak / Malik Finansmanı</strong> kapsamında kat malikleri kurulunun nakit katkısıyla finanse edilmektedir. Yüklenici yalnızca %15 saf inşaat yapım taahhüt kârı alacak olup, yeni üretilen tüm bağımsız bölümlerin <strong>%100'ü kat maliklerinin mülkiyetinde</strong> kalacaktır.
         `;
       }
       const elSuppTxt = document.getElementById('prop-support-text');

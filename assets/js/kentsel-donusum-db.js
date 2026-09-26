@@ -107,6 +107,7 @@
         groundFloorShopsCount: 8,
         groundFloorUnitsCount: 0,
         selectedScenario: 'B',
+        selectedFinanceModel: 'model2',
         applyContractorMargin: true,
         contractorMarginPct: 35
       }

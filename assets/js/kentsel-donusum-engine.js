@@ -496,6 +496,7 @@ class KentselDonusumEngine {
       groundFloorUnitsCount: 0,
 
       selectedScenario: 'B',
+      selectedFinanceModel: 'model2',
       projectMonths: 22,
       contractorSharePctInput: 55,
       contractorMarginPct: 35,
@@ -1149,15 +1150,22 @@ class KentselDonusumEngine {
     let decisionIcon = "🟢";
     let decisionText = "PROJEYİ AL";
     let decisionRationale = "";
-    let recommendedModel = "";
 
-    if (isIstanbul) {
-      recommendedModel = `Yarısı Bizden + %${model2_ContractorSharePct} Müteahhit Payı / Malik Katkısı`;
-    } else if (isIADSPEligible) {
-      recommendedModel = `Dünya Bankası İADŞP Finansmanı (3M TL/Bölüm) + Taahhüt`;
-    } else {
-      recommendedModel = `%${model1_ContractorSharePct} Kat Karşılığı Modeli`;
+    const defaultRecommendedModelKey = isIstanbul ? 'model2' : (isIADSPEligible ? 'model3' : 'model1');
+    const activeModelKey = s.selectedFinanceModel || defaultRecommendedModelKey;
+    s.selectedFinanceModel = activeModelKey;
+
+    let selectedModelTitle = "";
+    if (activeModelKey === 'model1') {
+      selectedModelTitle = `Model 1: %${model1_ContractorSharePct} Kat Karşılığı Modeli (Malik Nakit Ödemesiz)`;
+    } else if (activeModelKey === 'model2') {
+      selectedModelTitle = `Model 2: Yarısı Bizden + %${model2_ContractorSharePct} Müteahhit Payı / Malik Katkısı`;
+    } else if (activeModelKey === 'model3') {
+      selectedModelTitle = `Model 3: Dünya Bankası İADŞP Finansmanı (3M TL/Bölüm • %0,69 Faiz)`;
+    } else if (activeModelKey === 'model4') {
+      selectedModelTitle = `Model 4: Özkaynak / Malik Finansmanı (%15 Müteahhit Taahhüt Kârı)`;
     }
+    const recommendedModel = selectedModelTitle;
 
     if (totalRiskScore >= 75 && model1_ContractorROI >= 24 && parseFloat(s.majorityPct) >= 60) {
       decision = "AL";
@@ -1228,23 +1236,48 @@ class KentselDonusumEngine {
       const newGrossM2 = Math.round(newNetM2 * 1.25);
       const newVal = newGrossM2 * newPrice;
       
-      const hibeShare = isIstanbul ? (isShop ? ybdHibePerShop : ybdHibePerUnit) : 0;
-      const krediShare = isIstanbul ? (isShop ? ybdKrediPerShop : ybdKrediPerUnit) : (isIADSPEligible ? iadspMaxKrediPerUnit : 0);
-      const tahliyeShare = isIstanbul ? (isShop ? ybdTahliyePerShop : ybdTahliyePerUnit) : 0;
-      
-      const constructionSupport = isIstanbul ? (hibeShare + krediShare) : (isIADSPEligible ? krediShare : 0);
-      const tahliyeSupportToOwner = isIstanbul ? tahliyeShare : 0;
-      
+      let hibeShare = 0;
+      let krediShare = 0;
+      let tahliyeShare = 0;
+      let constructionSupport = 0;
+      let tahliyeSupportToOwner = 0;
       let extraPay = 0;
-      if (isIstanbul) {
-        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
-      } else if (isIADSPEligible) {
-        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - krediShare));
-      } else {
+
+      if (activeModelKey === 'model1') {
+        // Model 1: Kat Karşılığı — Malik nakit ödemez! (0 TL)
+        hibeShare = 0;
+        krediShare = 0;
+        tahliyeShare = 0;
+        constructionSupport = 0;
+        tahliyeSupportToOwner = 0;
         extraPay = 0;
+      } else if (activeModelKey === 'model2') {
+        // Model 2: Yarısı Bizden
+        hibeShare = isShop ? ybdHibePerShop : ybdHibePerUnit;
+        krediShare = isShop ? ybdKrediPerShop : ybdKrediPerUnit;
+        tahliyeShare = isShop ? ybdTahliyePerShop : ybdTahliyePerUnit;
+        constructionSupport = hibeShare + krediShare;
+        tahliyeSupportToOwner = tahliyeShare;
+        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+      } else if (activeModelKey === 'model3') {
+        // Model 3: Dünya Bankası İADŞP Kredisi
+        hibeShare = 0;
+        krediShare = iadspMaxKrediPerUnit;
+        tahliyeShare = 0;
+        constructionSupport = Math.min(iadspMaxKrediPerUnit, Math.round(totalProjectCost / existingTotalSections));
+        tahliyeSupportToOwner = 0;
+        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+      } else if (activeModelKey === 'model4') {
+        // Model 4: Özkaynak / Malik Finansmanı
+        hibeShare = 0;
+        krediShare = 0;
+        tahliyeShare = 0;
+        constructionSupport = 0;
+        tahliyeSupportToOwner = 0;
+        extraPay = Math.round(model4_OwnerPaymentPerUnit);
       }
       
-      const netGain = (newVal - existingVal) - extraPay;
+      const netGain = (newVal - existingVal) - extraPay + tahliyeSupportToOwner;
       const ownerROI = (existingVal + extraPay) > 0 ? ((netGain / (existingVal + extraPay)) * 100) : 0;
 
       return {
@@ -1372,6 +1405,9 @@ class KentselDonusumEngine {
       },
 
       models: {
+        activeModelKey: activeModelKey,
+        recommendedModelKey: defaultRecommendedModelKey,
+        selectedModelTitle: selectedModelTitle,
         model1_KatKarsiligi: {
           name: "Model 1: Kat Karşılığı (Risk Düzeltilmiş)",
           contractorSharePct: model1_ContractorSharePct,
