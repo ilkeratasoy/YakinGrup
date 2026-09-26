@@ -607,7 +607,8 @@ class KentselDonusumEngine {
         existingGrossM2: brutM2,
         landShareRatio: (100 / totalSections).toFixed(2),
         agreed: id <= Math.ceil(totalSections * (this.state.majorityPct / 100)),
-        customNetManuallySet: customSet
+        customNetManuallySet: customSet,
+        customDiscountTL: (existing && existing.customDiscountTL !== undefined) ? (parseFloat(existing.customDiscountTL) || 0) : 0
       });
       id++;
     }
@@ -637,7 +638,8 @@ class KentselDonusumEngine {
         existingGrossM2: brutM2,
         landShareRatio: (100 / totalSections).toFixed(2),
         agreed: id <= Math.ceil(totalSections * (this.state.majorityPct / 100)),
-        customNetManuallySet: customSet
+        customNetManuallySet: customSet,
+        customDiscountTL: (existing && existing.customDiscountTL !== undefined) ? (parseFloat(existing.customDiscountTL) || 0) : 0
       });
       id++;
     }
@@ -653,7 +655,8 @@ class KentselDonusumEngine {
         existingGrossM2: Math.round(avgNet * 1.25),
         landShareRatio: "100.00",
         agreed: true,
-        customNetManuallySet: false
+        customNetManuallySet: false,
+        customDiscountTL: 0
       });
     }
 
@@ -690,6 +693,30 @@ class KentselDonusumEngine {
       owner.name = name;
       this.calculate();
     }
+  }
+
+  updateOwnerDiscount(id, discountTL) {
+    const val = Math.max(0, parseFloat(discountTL) || 0);
+    const owner = (this.state.owners || []).find(o => o.id === id);
+    if (owner) {
+      owner.customDiscountTL = val;
+      this.calculate();
+    }
+  }
+
+  distributeUniformDiscount(discountTL) {
+    const val = Math.max(0, parseFloat(discountTL) || 0);
+    (this.state.owners || []).forEach(o => {
+      o.customDiscountTL = val;
+    });
+    this.calculate();
+  }
+
+  resetAllDiscounts() {
+    (this.state.owners || []).forEach(o => {
+      o.customDiscountTL = 0;
+    });
+    this.calculate();
   }
 
   distributeUniformNetM2(netM2) {
@@ -1241,6 +1268,7 @@ class KentselDonusumEngine {
       let tahliyeShare = 0;
       let constructionSupport = 0;
       let tahliyeSupportToOwner = 0;
+      let baseExtraPay = 0;
       let extraPay = 0;
 
       if (activeModelKey === 'model1') {
@@ -1250,6 +1278,7 @@ class KentselDonusumEngine {
         tahliyeShare = 0;
         constructionSupport = 0;
         tahliyeSupportToOwner = 0;
+        baseExtraPay = 0;
         extraPay = 0;
       } else if (activeModelKey === 'model2') {
         // Model 2: Yarısı Bizden
@@ -1258,7 +1287,9 @@ class KentselDonusumEngine {
         tahliyeShare = isShop ? ybdTahliyePerShop : ybdTahliyePerUnit;
         constructionSupport = hibeShare + krediShare;
         tahliyeSupportToOwner = tahliyeShare;
-        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+        baseExtraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+        const discount = Math.max(0, parseFloat(o.customDiscountTL) || 0);
+        extraPay = Math.max(0, baseExtraPay - discount);
       } else if (activeModelKey === 'model3') {
         // Model 3: Dünya Bankası İADŞP Kredisi
         hibeShare = 0;
@@ -1266,7 +1297,9 @@ class KentselDonusumEngine {
         tahliyeShare = 0;
         constructionSupport = Math.min(iadspMaxKrediPerUnit, Math.round(totalProjectCost / existingTotalSections));
         tahliyeSupportToOwner = 0;
-        extraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+        baseExtraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+        const discount = Math.max(0, parseFloat(o.customDiscountTL) || 0);
+        extraPay = Math.max(0, baseExtraPay - discount);
       } else if (activeModelKey === 'model4') {
         // Model 4: Özkaynak / Malik Finansmanı
         hibeShare = 0;
@@ -1274,9 +1307,12 @@ class KentselDonusumEngine {
         tahliyeShare = 0;
         constructionSupport = 0;
         tahliyeSupportToOwner = 0;
-        extraPay = Math.round(model4_OwnerPaymentPerUnit);
+        baseExtraPay = Math.round(model4_OwnerPaymentPerUnit);
+        const discount = Math.max(0, parseFloat(o.customDiscountTL) || 0);
+        extraPay = Math.max(0, baseExtraPay - discount);
       }
       
+      const discount = Math.max(0, parseFloat(o.customDiscountTL) || 0);
       const netGain = (newVal - existingVal) - extraPay + tahliyeSupportToOwner;
       const ownerROI = (existingVal + extraPay) > 0 ? ((netGain / (existingVal + extraPay)) * 100) : 0;
 
@@ -1298,6 +1334,8 @@ class KentselDonusumEngine {
         constructionSupport: constructionSupport,
         totalSupport: constructionSupport,
         tahliyeSupportToOwner: tahliyeSupportToOwner,
+        baseExtraPayment: baseExtraPay,
+        customDiscountTL: discount,
         extraPayment: extraPay,
         netGain: netGain,
         roiPct: ownerROI

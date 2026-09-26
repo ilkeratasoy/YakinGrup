@@ -1365,6 +1365,15 @@
         </div>
 
         <div class="table-responsive">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+            <div style="font-size: 0.76rem; color: #475569; font-weight: 600;">
+              💡 <em>Mevcut Net metrajları mavi kutucuklardan, Malike özel ek ödeme iskontolarını ise yeşil kutucuklardan doğrudan güncelleyebilirsiniz.</em>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-outline btn-sm" onclick="promptBulkDiscount()" style="font-size: 0.72rem; padding: 3px 8px; font-weight: 700; border-color: #059669; color: #047857; background: #ecfdf5;">⚡ Toplu İskonto Uygula</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="resetAllDiscounts()" style="font-size: 0.72rem; padding: 3px 8px; font-weight: 600; color: #64748b;">🔄 İskontoları Sıfırla</button>
+            </div>
+          </div>
           <table class="data-table" id="owner-balance-table">
             <thead>
               <tr>
@@ -1378,7 +1387,7 @@
                 <th>Yeni Mülk Değeri</th>
                 <th>İnşaat Hakediş Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0369a1;">(Hibe + Kredi Müteahhite)</span></th>
                 <th>Taşınma Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0891b2;">(Doğrudan Malike)</span></th>
-                <th>Malik Ek Ödeme</th>
+                <th>Malik Ek Ödeme<br><span style="font-size: 0.68rem; font-weight: normal; color: #059669;">(İskonto Uygulanabilir)</span></th>
                 <th>Net Kazanç</th>
                 <th>Malik ROI</th>
               </tr>
@@ -2624,8 +2633,30 @@
                 </span>
               ` : `<span style="color: #94a3b8; font-size: 0.72rem;">-</span>`}
             </td>
-            <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
-              ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
+            <td>
+              ${activeModelKey === 'model1' ? `
+                <span style="display: inline-block; padding: 3px 7px; border-radius: 4px; font-size: 0.75rem; font-weight: 800; background: #ecfdf5; color: #166534; border: 1px solid #bbf7d0;">
+                  0 TL
+                  <div style="font-size: 0.63rem; font-weight: normal; color: #15803d;">(Kat Karşılığı)</div>
+                </span>
+              ` : `
+                <div style="display: flex; flex-direction: column; gap: 3px; min-width: 145px;">
+                  <div style="display: inline-flex; align-items: center; gap: 3px;">
+                    <input type="number" step="10000" min="0" class="form-input owner-discount-input"
+                      data-owner-id="${o.id}"
+                      value="${o.customDiscountTL || 0}"
+                      onchange="handleOwnerDiscountChange(${o.id}, this.value)"
+                      placeholder="0"
+                      title="Malik İskonto Tutarı (TL)"
+                      style="width: 86px; font-size: 0.78rem; font-weight: 700; text-align: right; padding: 2px 4px; height: 26px; border: 1.5px solid #10b981; border-radius: 4px; background: #f0fdf4; color: #047857;">
+                    <span style="font-size: 0.68rem; font-weight: 700; color: #059669; white-space: nowrap;">TL İskonto</span>
+                  </div>
+                  <div style="font-size: 0.79rem; font-weight: 800; color: ${o.extraPayment > 0 ? '#b91c1c' : '#15803d'}; display: flex; align-items: baseline; gap: 4px;">
+                    <span>${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}</span>
+                    ${o.customDiscountTL > 0 ? `<span style="font-size: 0.65rem; font-weight: 600; color: #64748b; text-decoration: line-through;">(${eng.formatCurrency(o.baseExtraPayment)})</span>` : ''}
+                  </div>
+                </div>
+              `}
             </td>
             <td style="color: var(--brand-accent-hover); font-weight: 800;">${eng.formatCurrency(o.netGain)}</td>
             <td><strong>${eng.formatPct(o.roiPct)}</strong></td>
@@ -2732,6 +2763,9 @@
             <td style="font-weight: 700; color: #0369a1;">${eng.formatCurrency(o.constructionSupport)}</td>
             <td style="color: #0891b2; font-weight: 700;">${o.tahliyeSupportToOwner > 0 ? eng.formatCurrency(o.tahliyeSupportToOwner) : '-'}</td>
             <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
+              ${o.customDiscountTL > 0 ? `
+                <div style="font-size: 0.63rem; color: #059669; font-weight: 700;">-${eng.formatCurrency(o.customDiscountTL)} İsk.</div>
+              ` : ''}
               ${o.extraPayment > 0 ? eng.formatCurrency(o.extraPayment) : '0 TL'}
             </td>
             <td style="color: #15803d; font-weight: 800; text-align: right; background: rgba(34, 197, 94, 0.08);">${eng.formatCurrency(o.netGain)}</td>
@@ -2744,12 +2778,16 @@
           const totalConstruction = (res.ownersTable || []).reduce((acc, o) => acc + (o.constructionSupport || 0), 0);
           const totalTahliye = (res.ownersTable || []).reduce((acc, o) => acc + (o.tahliyeSupportToOwner || 0), 0);
           const totalExtraPayment = (res.ownersTable || []).reduce((acc, o) => acc + (o.extraPayment || 0), 0);
+          const totalDiscount = (res.ownersTable || []).reduce((acc, o) => acc + (o.customDiscountTL || 0), 0);
           propOwnerTfoot.innerHTML = `
             <tr>
               <td colspan="6" style="text-align: right; font-weight: 800; padding: 4px 6px;">PROJE GENELİ TOPLAM:</td>
               <td style="color: #0369a1; font-weight: 800; padding: 4px 2px;">${eng.formatCurrency(totalConstruction)}</td>
               <td style="color: #0891b2; font-weight: 800; padding: 4px 2px;">${eng.formatCurrency(totalTahliye)}</td>
-              <td style="color: ${totalExtraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 800; padding: 4px 2px;">${eng.formatCurrency(totalExtraPayment)}</td>
+              <td style="color: ${totalExtraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 800; padding: 4px 2px;">
+                ${eng.formatCurrency(totalExtraPayment)}
+                ${totalDiscount > 0 ? `<div style="font-size: 0.62rem; color: #059669; font-weight: 700;">(Toplam İsk: -${eng.formatCurrency(totalDiscount)})</div>` : ''}
+              </td>
               <td style="color: #15803d; font-weight: 800; text-align: right; background: rgba(34, 197, 94, 0.12); padding: 4px 6px;">${eng.formatCurrency(totalNetGain)}</td>
             </tr>
           `;
@@ -2939,6 +2977,35 @@
         window.KDEngine.calculate();
         renderUI();
         showToastNotification('🔄 Bağımsız bölüm metrajları varsayılan kat varyasyonuna sıfırlandı.');
+      }
+    }
+
+    function handleOwnerDiscountChange(id, val) {
+      if (window.KDEngine) {
+        window.KDEngine.updateOwnerDiscount(id, val);
+        renderUI();
+      }
+    }
+
+    function promptBulkDiscount() {
+      const currentDis = (window.KDEngine && window.KDEngine.state.owners && window.KDEngine.state.owners[0]) 
+        ? (window.KDEngine.state.owners[0].customDiscountTL || 0) : 0;
+      const input = prompt("Tüm maliklere uygulanacak iskonto tutarını (TL) giriniz:", currentDis ? String(currentDis) : "100000");
+      if (input !== null) {
+        const val = parseFloat(String(input).replace(/\./g, '').replace(/,/g, '.')) || 0;
+        if (window.KDEngine) {
+          window.KDEngine.distributeUniformDiscount(val);
+          renderUI();
+          showToastNotification(`⚡ Tüm bağımsız bölümlere ${val.toLocaleString('tr-TR')} TL iskonto uygulandı.`);
+        }
+      }
+    }
+
+    function resetAllDiscounts() {
+      if (window.KDEngine) {
+        window.KDEngine.resetAllDiscounts();
+        renderUI();
+        showToastNotification('🔄 Tüm malik iskontoları sıfırlandı.');
       }
     }
 
