@@ -33,6 +33,9 @@ const KD_PRESETS = {
     majorityPct: 75,
     customGroundSlab: 298,
     customNormalSlab: 342,
+    customBasementSlab: 350,
+    basementFloorCount: 1,
+    customParkingArea: 260,
     customNormalFloorCount: 8,
     unitsPerNormalFloor: 3,
     groundFloorShopsCount: 0,
@@ -66,6 +69,9 @@ const KD_PRESETS = {
     majorityPct: 100,
     customGroundSlab: 168,
     customNormalSlab: 195,
+    customBasementSlab: 195,
+    basementFloorCount: 1,
+    customParkingArea: 150,
     customNormalFloorCount: 5,
     unitsPerNormalFloor: 2,
     groundFloorShopsCount: 0,
@@ -99,6 +105,9 @@ const KD_PRESETS = {
     majorityPct: 80,
     customGroundSlab: 480,
     customNormalSlab: 550,
+    customBasementSlab: 550,
+    basementFloorCount: 1,
+    customParkingArea: 400,
     customNormalFloorCount: 9,
     unitsPerNormalFloor: 3,
     groundFloorShopsCount: 2,
@@ -132,6 +141,9 @@ const KD_PRESETS = {
     majorityPct: 65,
     customGroundSlab: 332,
     customNormalSlab: 382,
+    customBasementSlab: 382,
+    basementFloorCount: 1,
+    customParkingArea: 280,
     customNormalFloorCount: 6,
     unitsPerNormalFloor: 3,
     groundFloorShopsCount: 4,
@@ -166,6 +178,9 @@ const KD_PRESETS = {
     majorityPct: 100,
     customGroundSlab: 1338,
     customNormalSlab: 1338,
+    customBasementSlab: 1338,
+    basementFloorCount: 1,
+    customParkingArea: 1000,
     customNormalFloorCount: 4,
     unitsPerNormalFloor: 5,
     groundFloorShopsCount: 8,
@@ -490,6 +505,9 @@ class KentselDonusumEngine {
       
       customGroundSlab: 298,
       customNormalSlab: 342,
+      customBasementSlab: 350,
+      basementFloorCount: 1,
+      customParkingArea: 260,
       customNormalFloorCount: 8,
       unitsPerNormalFloor: 3,
       groundFloorShopsCount: 0,
@@ -765,6 +783,14 @@ class KentselDonusumEngine {
         this.state.customGroundSlab = autoTaban;
         this.state.customNormalSlab = Math.round(autoTaban * 1.15);
       }
+      if (!this.state.customBasementSlabManuallySet) {
+        this.state.customBasementSlab = Math.round(autoTaban * 1.15);
+      }
+      if (!this.state.customParkingAreaManuallySet) {
+        const bSlab = parseFloat(this.state.customBasementSlab) || Math.round(autoTaban * 1.15);
+        const bFloors = parseInt(this.state.basementFloorCount) || 1;
+        this.state.customParkingArea = Math.round(bSlab * bFloors * 0.75);
+      }
     }
 
     if (key === 'customGroundSlab') {
@@ -773,10 +799,38 @@ class KentselDonusumEngine {
       if (gSlab > 0 && !this.state.customNormalSlabManuallySet) {
         this.state.customNormalSlab = Math.round(gSlab * 1.15);
       }
+      if (gSlab > 0 && !this.state.customBasementSlabManuallySet) {
+        this.state.customBasementSlab = Math.round(gSlab * 1.15);
+        if (!this.state.customParkingAreaManuallySet) {
+          const bFloors = parseInt(this.state.basementFloorCount) || 1;
+          this.state.customParkingArea = Math.round(this.state.customBasementSlab * bFloors * 0.75);
+        }
+      }
     }
 
     if (key === 'customNormalSlab') {
       this.state.customNormalSlabManuallySet = true;
+    }
+
+    if (key === 'customBasementSlab') {
+      this.state.customBasementSlabManuallySet = true;
+      if (!this.state.customParkingAreaManuallySet) {
+        const bSlab = parseFloat(value) || 0;
+        const bFloors = parseInt(this.state.basementFloorCount) || 1;
+        this.state.customParkingArea = Math.round(bSlab * bFloors * 0.75);
+      }
+    }
+
+    if (key === 'basementFloorCount') {
+      if (!this.state.customParkingAreaManuallySet) {
+        const bSlab = parseFloat(this.state.customBasementSlab) || 0;
+        const bFloors = parseInt(value) || 1;
+        this.state.customParkingArea = Math.round(bSlab * bFloors * 0.75);
+      }
+    }
+
+    if (key === 'customParkingArea') {
+      this.state.customParkingAreaManuallySet = true;
     }
 
     if (key === 'unitCount' || key === 'shopCount' || key === 'existingGroundUnitsCount' || key === 'existingFloorCount' || key === 'customNormalFloorCount') {
@@ -823,6 +877,17 @@ class KentselDonusumEngine {
     const autoNormalKatBrut = Math.round(tabanAlani * 1.15);
     const normalKatBrut = (parseFloat(s.customNormalSlab) > 0) ? parseFloat(s.customNormalSlab) : autoNormalKatBrut;
     const normalKatNet = Math.round(normalKatBrut * 0.82);
+
+    // Bodrum Kat Tabliyesi & Kapalı Otopark Hesabı
+    const autoBasementSlab = Math.round(tabanAlani * 1.15);
+    const basementSlab = (parseFloat(s.customBasementSlab) > 0) ? parseFloat(s.customBasementSlab) : autoBasementSlab;
+    const basementFloorCount = (parseInt(s.basementFloorCount) > 0) ? parseInt(s.basementFloorCount) : 1;
+    const totalBasementArea = Math.round(basementSlab * basementFloorCount);
+
+    const autoParkingArea = Math.round(totalBasementArea * 0.75);
+    const parkingArea = (parseFloat(s.customParkingArea) > 0) ? parseFloat(s.customParkingArea) : autoParkingArea;
+    const siginakVeOrtakAlan = Math.max(0, totalBasementArea - parkingArea);
+    const bodrumOtoparkTotalArea = Math.max(totalBasementArea, parkingArea);
     
     let autoNormalKatSayisi = 8;
     if (s.hmax) {
@@ -832,16 +897,12 @@ class KentselDonusumEngine {
     const normalKatSayisi = (parseInt(s.customNormalFloorCount) > 0) ? parseInt(s.customNormalFloorCount) : autoNormalKatSayisi;
     const unitsPerNormalFloor = (parseInt(s.unitsPerNormalFloor) > 0) ? parseInt(s.unitsPerNormalFloor) : 2;
 
-    const normalFloorUnitNetM2 = Math.max(25, Math.round(normalKatNet / unitsPerNormalFloor));
-    const normalFloorUnitGrossM2 = Math.round(normalFloorUnitNetM2 * 1.25);
-    const normalFloorRoomType = getRoomType(normalFloorUnitNetM2);
-
     const normalKatlarDaireSayisi = normalKatSayisi * unitsPerNormalFloor;
     const normalKatlarNetToplam = normalKatSayisi * normalKatNet;
 
     const emsaleDahilAlan = (emsal > 0 && landArea > 0) ? (landArea * emsal) : ((normalKatSayisi * normalKatBrut) + tabanAlani);
     const emsalDisiAlan = emsaleDahilAlan * 0.30;
-    const bodrumOtoparkSiginak = emsaleDahilAlan * 0.32;
+    const bodrumOtoparkSiginak = bodrumOtoparkTotalArea;
     const toplamInsaatAlani = emsaleDahilAlan + emsalDisiAlan + bodrumOtoparkSiginak;
     const toplamSatilabilirBrutAlan = (normalKatSayisi * normalKatBrut) + tabanAlani;
 
@@ -873,12 +934,51 @@ class KentselDonusumEngine {
     const totalNewResidentialUnits = normalKatlarDaireSayisi + groundFloorUnits;
     const totalNewSections = totalNewResidentialUnits + groundFloorShops;
 
+    // Otopark Alanının Toplam Bağımsız Bölüm Sayısına Bölünerek Daire Başına Dağıtılması
+    const parkingSharePerUnit = totalNewSections > 0 ? (parkingArea / totalNewSections) : 0;
+    const parkingSharePerUnitRounded = Math.round(parkingSharePerUnit * 10) / 10;
+
+    const normalFloorUnitNetM2 = Math.max(25, Math.round(normalKatNet / unitsPerNormalFloor));
+    const normalFloorUnitBaseGrossM2 = Math.round(normalFloorUnitNetM2 * 1.25);
+    const normalFloorUnitGrossM2 = normalFloorUnitBaseGrossM2 + Math.round(parkingSharePerUnit);
+    const normalFloorRoomType = getRoomType(normalFloorUnitNetM2);
+
     const contractorUnits = Math.max(0, totalNewResidentialUnits - existingUnits);
     const contractorShops = Math.max(0, groundFloorShops - existingShops);
     const contractorTotalSections = contractorUnits + contractorShops;
 
     // Kat Kat Bağımsız Bölüm & Cephe Dağılım Çizelgesi (Floor & Facade Schedule)
     const floorSchedule = [];
+
+    // 0a. Bodrum Kat(lar) & Kapalı Otopark
+    floorSchedule.push({
+      floorIndex: -1,
+      floorName: basementFloorCount > 1 ? `${basementFloorCount} Katlı Bodrum & Otopark` : `Bodrum Kat & Otopark`,
+      slabGrossM2: basementSlab,
+      slabNetM2: parkingArea,
+      floorCount: basementFloorCount,
+      totalArea: totalBasementArea,
+      parkingArea: parkingArea,
+      parkingSharePerUnit: parkingSharePerUnitRounded,
+      commonArea: siginakVeOrtakAlan,
+      shopsCount: 0,
+      unitsCount: 0,
+      totalFloorSections: 0,
+      unitAvgNetM2: parkingSharePerUnitRounded,
+      summaryText: `Bodrum: ${totalBasementArea} m² (${basementFloorCount} Kat) • Otopark: ${parkingArea} m² (Bölüm Başı Pay: +${parkingSharePerUnitRounded} m²) • Ortak/Sığınak: ${siginakVeOrtakAlan} m²`,
+      isBasement: true,
+      units: [
+        {
+          doorNo: 'P',
+          type: 'Kapalı Otopark & Sığınak',
+          netM2: parkingArea,
+          grossM2: totalBasementArea,
+          facade: 'Bodrum Kapalı Otopark Alanı',
+          ownerName: `Her Bağımsız Bölüme +${parkingSharePerUnitRounded} m² Tahsisli Otopark Payı`,
+          isOwner: true
+        }
+      ]
+    });
     
     // Zemin Kat
     const zeminUnitsList = [];
@@ -1305,7 +1405,9 @@ class KentselDonusumEngine {
         allocatedDescription = `${allocatedFloor}. Kat • Daire ${allocatedDoorNo} (${allocatedRoomType} • ${allocatedFacade})`;
       }
       
-      const newGrossM2 = Math.round(newNetM2 * 1.25);
+      const baseGrossM2 = Math.round(newNetM2 * (isShop ? 1.30 : 1.25));
+      const parkingShareAdded = Math.round(parkingSharePerUnit);
+      const newGrossM2 = baseGrossM2 + parkingShareAdded;
       const newVal = newGrossM2 * newPrice;
       
       let hibeShare = 0;
@@ -1365,6 +1467,8 @@ class KentselDonusumEngine {
         ...o,
         existingValue: existingVal,
         newNetM2: Math.max(25, newNetM2),
+        baseGrossM2: Math.max(30, baseGrossM2),
+        parkingShareM2: parkingSharePerUnitRounded,
         newGrossM2: Math.max(35, newGrossM2),
         newValue: newVal,
         allocatedFloor,
@@ -1399,9 +1503,17 @@ class KentselDonusumEngine {
       unitsPerNormalFloor,
       normalFloorUnitNetM2,
       normalFloorUnitGrossM2,
+      normalFloorUnitBaseGrossM2,
       normalFloorRoomType,
       normalKatlarDaireSayisi,
       normalKatlarNetToplam,
+      basementSlab,
+      basementFloorCount,
+      totalBasementArea,
+      parkingArea,
+      parkingSharePerUnit: parkingSharePerUnitRounded,
+      siginakVeOrtakAlan,
+      bodrumOtoparkTotalArea,
       groundFloorShops,
       groundFloorUnits,
       targetShopNetTotal,
@@ -1438,6 +1550,10 @@ class KentselDonusumEngine {
       activeScenario,
       
       costs: {
+        basementConstructionArea: totalBasementArea,
+        parkingArea: parkingArea,
+        parkingSharePerUnit: parkingSharePerUnitRounded,
+        subterraneanArea: bodrumOtoparkTotalArea,
         demolition: costDemolition,
         permits: costPermits,
         rough: costRough,

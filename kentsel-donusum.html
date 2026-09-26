@@ -685,6 +685,27 @@
               </div>
 
               <div class="form-group">
+                <label class="form-label" for="inp-basement-slab">Bodrum Kat Brüt Tabliyesi <span class="helper-tag" style="background: #e0f2fe; color: #0369a1;">Bodrum Alanı</span></label>
+                <div class="input-suffix-group">
+                  <input type="number" id="inp-basement-slab" class="form-input" value="350" oninput="handleInputChange('customBasementSlab', this.value)">
+                  <span class="suffix-text">m²</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-basement-floor-count">Bodrum Kat Sayısı <span class="helper-tag">Kat Adedi</span></label>
+                <input type="number" min="1" max="10" id="inp-basement-floor-count" class="form-input" value="1" oninput="handleInputChange('basementFloorCount', this.value)">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inp-parking-area">Kapalı Otopark Alanı <span class="helper-tag" style="color: var(--brand-accent); font-weight: 700;">🚗 Tahsisli Otopark</span></label>
+                <div class="input-suffix-group">
+                  <input type="number" id="inp-parking-area" class="form-input" value="260" oninput="handleInputChange('customParkingArea', this.value)">
+                  <span class="suffix-text">m²</span>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label class="form-label" for="inp-normal-floor-count">Normal Kat Sayısı <span class="helper-tag">Kat Adedi</span></label>
                 <input type="number" min="1" max="50" id="inp-normal-floor-count" class="form-input" value="8" oninput="handleInputChange('customNormalFloorCount', this.value)">
               </div>
@@ -722,6 +743,7 @@
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.75rem;">
               <div>Zemin Tabliyesi: <strong id="lbl-quick-taban">-</strong> <span id="lbl-quick-zemin-net" style="color: #64748b; font-size: 0.7rem;"></span></div>
               <div>Normal Kat Tabliyesi: <strong id="lbl-quick-normalkat">-</strong> <span id="lbl-quick-normal-net" style="color: #64748b; font-size: 0.7rem;"></span></div>
+              <div>Bodrum & Otopark: <strong id="lbl-quick-bodrum">-</strong> <span id="lbl-quick-otopark-payi" style="color: #0284c7; font-weight: 700; font-size: 0.7rem;"></span></div>
               <div>Kat & Daire Planı: <strong id="lbl-quick-kat-plani" style="color: var(--brand-primary);">-</strong></div>
               <div>Daire Başı Net Alan: <strong id="lbl-quick-daire-net" style="color: var(--brand-accent-hover);">-</strong></div>
               <div>Toplam Yapı Alanı: <strong id="lbl-quick-toplaminsaat" style="color: var(--brand-primary);">-</strong></div>
@@ -935,6 +957,19 @@
           <span class="card-badge green">Bakanlık 3 Şubat 2026 Tebliği + Piyasa Benchmark</span>
         </div>
 
+        <div id="cost-table-area-breakdown" style="padding: 10px 14px; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; margin-bottom: 12px; font-size: 0.77rem; color: #166534; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 1rem;">🏗️</span>
+            <strong>Yapı İnşaat Hacmi:</strong>
+            <span>Üst Yapı (Zemin+Katlar): <strong id="lbl-cost-upper-area">-</strong></span>
+            <span>•</span>
+            <span>Bodrum & Otopark: <strong id="lbl-cost-sub-area">-</strong></span>
+            <span>•</span>
+            <span>Toplam İmalat: <strong id="lbl-cost-total-area" style="color: var(--brand-primary); font-size: 0.82rem;">-</strong></span>
+          </div>
+          <span style="background: #ffffff; border: 1.5px solid #16a34a; padding: 3px 10px; border-radius: 6px; font-weight: 800; color: #15803d; font-size: 0.75rem;" id="lbl-cost-parking-share-badge">🚗 Bölüm Başı Otopark: -</span>
+        </div>
+
         <div class="table-responsive">
           <table class="data-table">
             <thead>
@@ -962,8 +997,8 @@
                 <td id="cost-p-permits">-</td>
               </tr>
               <tr>
-                <td><strong>C. Kaba İnşaat</strong></td>
-                <td>Hafriyat iksa, C35/40 hazır beton, nervürlü inşaat demiri, endüstriyel kalıp, çatı</td>
+                <td><strong>C. Kaba İnşaat & Taşıyıcı Sistem</strong></td>
+                <td>Hafriyat iksa, C35/40 beton, nervürlü donatı, kalıp, çatı (<span id="lbl-cost-kaba-desc" style="color: #0369a1; font-weight: 700;">Bodrum Kat + Otopark + Üst Yapı</span>)</td>
                 <td id="cost-u-rough">-</td>
                 <td id="cost-t-rough"><strong>-</strong></td>
                 <td id="cost-p-rough">-</td>
@@ -1456,7 +1491,7 @@
                 <th>Mevcut Değer</th>
                 <th>Tahsis Edilen Yeni Daire / Kat</th>
                 <th>Cephe & Oda Tipi</th>
-                <th>Yeni Net / Brüt</th>
+                <th>Yeni Net / Brüt<br><span style="font-size: 0.68rem; font-weight: normal; color: #0284c7;">(+Otopark Payı Dahil)</span></th>
                 <th>Yeni Mülk Değeri</th>
                 <th>İnşaat Hakediş Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0369a1;">(Hibe + Kredi Müteahhite)</span></th>
                 <th>Taşınma Desteği<br><span style="font-size: 0.68rem; font-weight: normal; color: #0891b2;">(Doğrudan Malike)</span></th>
@@ -1555,6 +1590,7 @@
             <tr><td><strong>Arsa Alanı:</strong></td><td id="prop-t-land">-</td></tr>
             <tr><td><strong>Emsal (KAKS) & TAKS:</strong></td><td id="prop-t-kaks">-</td></tr>
             <tr><td><strong>Zemin Tabliyesi / Normal Kat:</strong></td><td id="prop-t-slabs">-</td></tr>
+            <tr><td><strong>Bodrum Kat & Kapalı Otopark:</strong></td><td id="prop-t-basement">-</td></tr>
             <tr><td><strong>Toplam İnşaat Alanı:</strong></td><td id="prop-t-gross">-</td></tr>
             <tr><td><strong>Satılabilir Brüt Alan:</strong></td><td id="prop-t-saleable">-</td></tr>
           </table>
@@ -1635,7 +1671,7 @@
                 <th style="width: 8%;">Mevcut Net</th>
                 <th style="width: 14%;">Tahsis Edilen Daire / Kat</th>
                 <th style="width: 8%;">Cephe & Yön</th>
-                <th style="width: 10%;">Yeni Net / Brüt</th>
+                <th style="width: 11%;">Yeni Net / Brüt<br><span style="font-size: 0.65rem; font-weight: normal; color: #0284c7;">(+Otopark Dahil)</span></th>
                 <th style="width: 10%;">İnşaat Desteği</th>
                 <th style="width: 9%;">Taşınma Desteği</th>
                 <th style="width: 9%;">Malik Ek Ödeme</th>
@@ -2385,6 +2421,9 @@
       setVal('inp-titleStatus', s.titleStatus);
       setVal('inp-ground-slab', s.customGroundSlab !== undefined ? s.customGroundSlab : Math.round(s.landArea * s.taks));
       setVal('inp-normal-slab', s.customNormalSlab !== undefined ? s.customNormalSlab : Math.round(s.landArea * s.taks * 1.15));
+      setVal('inp-basement-slab', s.customBasementSlab !== undefined ? s.customBasementSlab : 350);
+      setVal('inp-basement-floor-count', s.basementFloorCount !== undefined ? s.basementFloorCount : 1);
+      setVal('inp-parking-area', s.customParkingArea !== undefined ? s.customParkingArea : 260);
       setVal('inp-normal-floor-count', s.customNormalFloorCount !== undefined ? s.customNormalFloorCount : 8);
       setVal('inp-units-per-floor', s.unitsPerNormalFloor !== undefined ? s.unitsPerNormalFloor : 3);
       setVal('inp-ground-shops', s.groundFloorShopsCount !== undefined ? s.groundFloorShopsCount : s.shopCount);
@@ -2458,10 +2497,19 @@
       setText('lbl-quick-zemin-net', `(Net ${res.zeminKatNetAlani} m²)`);
       setText('lbl-quick-normalkat', eng.formatM2(res.normalKatBrut));
       setText('lbl-quick-normal-net', `(Net ${res.normalKatNet} m²)`);
+      setText('lbl-quick-bodrum', `${eng.formatM2(res.totalBasementArea)} (${res.basementFloorCount} Kat)`);
+      setText('lbl-quick-otopark-payi', `🚗 Otopark: ${eng.formatM2(res.parkingArea)} (+${res.parkingSharePerUnit} m²/bölüm)`);
       setText('lbl-quick-kat-plani', `Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire)`);
       setText('lbl-quick-daire-net', `~${res.normalFloorUnitNetM2} m² Net / Daire`);
       setText('lbl-quick-toplaminsaat', eng.formatM2(res.toplamInsaatAlani));
       setText('lbl-quick-satilabilir', eng.formatM2(res.toplamSatilabilirBrutAlan));
+
+      // Stage 2 İnşaat Yapım Metrajları Bilgi Şeridi
+      const upperArea = res.toplamSatilabilirBrutAlan || ((res.normalKatSayisi * res.normalKatBrut) + res.tabanAlani);
+      setText('lbl-cost-upper-area', eng.formatM2(upperArea));
+      setText('lbl-cost-sub-area', `${eng.formatM2(res.totalBasementArea)} (${res.basementFloorCount} Kat • Otopark: ${eng.formatM2(res.parkingArea)})`);
+      setText('lbl-cost-total-area', eng.formatM2(res.toplamInsaatAlani));
+      setText('lbl-cost-parking-share-badge', `🚗 Bölüm Başı Otopark: +${res.parkingSharePerUnit} m²`);
 
       const exSumm = res.existingSummary;
       setText('lbl-quick-badge-bolum', `${exSumm.totalSections} Mevcut Bölüm (${exSumm.units} Daire + ${exSumm.shops} Dükkan)`);
@@ -2768,7 +2816,13 @@
               <div style="font-size: 0.65rem; color: #64748b;">${o.allocatedRoomType}</div>
             </td>
             <td style="color: var(--brand-accent-hover); font-weight: 700;">
-              ${o.newNetM2} m² <span style="font-size: 0.7rem; color: #64748b; font-weight: normal;">(Brüt: ${o.newGrossM2} m²)</span>
+              ${o.newNetM2} m² Net
+              <div style="font-size: 0.72rem; color: #1e293b; font-weight: 800; margin-top: 1px;">
+                Brüt: ${o.newGrossM2} m²
+              </div>
+              <div style="font-size: 0.65rem; color: #0284c7; font-weight: 700;">
+                (+${o.parkingShareM2} m² Otopark Payı)
+              </div>
             </td>
             <td style="color: var(--status-success); font-weight: 700;">${eng.formatCurrency(o.newValue)}</td>
             <td style="font-weight: 700; color: #0369a1;">
@@ -2823,6 +2877,7 @@
       setText('prop-t-land', eng.formatM2(res.landArea));
       setText('prop-t-kaks', `KAKS: ${eng.state.kaks} | TAKS: ${eng.state.taks}`);
       setText('prop-t-slabs', `Zemin: ${eng.formatM2(res.tabanAlani)} | Kat: ${eng.formatM2(res.normalKatBrut)}`);
+      setText('prop-t-basement', `${eng.formatM2(res.totalBasementArea)} (${res.basementFloorCount} Kat) • Otopark: ${eng.formatM2(res.parkingArea)} (+${res.parkingSharePerUnit} m²/bölüm)`);
       setText('prop-t-gross', eng.formatM2(res.toplamInsaatAlani));
       setText('prop-t-saleable', eng.formatM2(res.toplamSatilabilirBrutAlan));
       setText('prop-t-cost', eng.formatCurrency(res.costs.effectiveCost));
@@ -2836,7 +2891,7 @@
         : `Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup;`;
 
       const exSum = `
-        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong> ve Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong> olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire • ${res.normalFloorRoomType}) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. ${contractorOffsetTxt} Projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
+        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong>, Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong>, Bodrum Kat Tabliyesi <strong>${eng.formatM2(res.basementSlab)}</strong> (${res.basementFloorCount} Kat Bodrum, Toplam <strong>${eng.formatM2(res.totalBasementArea)}</strong>) ve <strong>${eng.formatM2(res.parkingArea)}</strong> kapalı otopark alanı olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire • ${res.normalFloorRoomType}) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam kapalı otopark alanı bağımsız bölüm adedine bölünerek her bağımsız bölüme brüt alan dahilinde <strong>+${res.parkingSharePerUnit} m²</strong> tahsisli otopark payı ilave edilmiştir. ${contractorOffsetTxt} Projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
       `;
       const elExSum = document.getElementById('prop-executive-summary');
       if (elExSum) elExSum.innerHTML = exSum;
@@ -2913,7 +2968,15 @@
             <td style="font-weight: 700; color: #0f172a;">${o.existingNetM2} m²</td>
             <td style="color: var(--brand-primary); font-weight: 700;">${o.allocatedDescription}</td>
             <td style="color: #0369a1; font-weight: 700;">${o.allocatedFacade}</td>
-            <td style="font-weight: 700;">${o.newNetM2} m² <span style="font-weight: 400; font-size: 0.68rem; color: #64748b;">(${o.newGrossM2} m²)</span></td>
+            <td style="font-weight: 700;">
+              ${o.newNetM2} m² Net
+              <div style="font-size: 0.69rem; font-weight: 800; color: #1e293b; margin-top: 1px;">
+                Brüt: ${o.newGrossM2} m²
+              </div>
+              <div style="font-size: 0.63rem; font-weight: 700; color: #0284c7;">
+                (+${o.parkingShareM2} m² Otopark)
+              </div>
+            </td>
             <td style="font-weight: 700; color: #0369a1;">${eng.formatCurrency(o.constructionSupport)}</td>
             <td style="color: #0891b2; font-weight: 700;">${o.tahliyeSupportToOwner > 0 ? eng.formatCurrency(o.tahliyeSupportToOwner) : '-'}</td>
             <td style="color: ${o.extraPayment > 0 ? 'var(--status-danger)' : 'var(--status-success)'}; font-weight: 700;">
