@@ -943,6 +943,16 @@ class KentselDonusumEngine {
     const normalFloorUnitGrossM2 = normalFloorUnitBaseGrossM2 + Math.round(parkingSharePerUnit);
     const normalFloorRoomType = getRoomType(normalFloorUnitNetM2);
 
+    const zNet = groundFloorUnits > 0 ? Math.round(zeminKatNetAlani / groundFloorUnits) : 0;
+    const zGross = Math.round(zNet * 1.25) + Math.round(parkingSharePerUnit);
+    const zRoomType = getRoomType(zNet);
+
+    const existingGroundUnits = Math.min(existingUnits, Math.max(0, parseInt(s.existingGroundUnitsCount) || 0));
+    const groundOwnerUnits = Math.min(existingGroundUnits, groundFloorUnits);
+    const groundContractorUnits = Math.max(0, groundFloorUnits - groundOwnerUnits);
+    const normalMaliksCount = Math.max(0, existingUnits - groundOwnerUnits);
+    const normalContractorUnits = Math.max(0, normalKatlarDaireSayisi - normalMaliksCount);
+
     const contractorUnits = Math.max(0, totalNewResidentialUnits - existingUnits);
     const contractorShops = Math.max(0, groundFloorShops - existingShops);
     const contractorTotalSections = contractorUnits + contractorShops;
@@ -983,25 +993,53 @@ class KentselDonusumEngine {
     // Zemin Kat
     const zeminUnitsList = [];
     for (let sIdx = 1; sIdx <= groundFloorShops; sIdx++) {
+      const isOwnerShop = sIdx <= existingShops;
       zeminUnitsList.push({
         doorNo: sIdx,
         type: "Ticari Dükkan",
         netM2: targetShopAvgNet,
-        grossM2: Math.round(targetShopAvgNet * 1.25),
+        grossM2: Math.round(targetShopAvgNet * 1.25) + Math.round(parkingSharePerUnit),
         facade: "Cadde / Vitrin Cephesi",
-        ownerName: sIdx <= existingShops ? `Dükkan Malik ${sIdx}` : `🏷️ Yüklenici Dükkan ${sIdx - existingShops}`
+        ownerName: isOwnerShop ? `Dükkan Malik ${sIdx}` : `🏷️ Yüklenici Dükkan ${sIdx - existingShops}`,
+        isOwner: isOwnerShop
       });
     }
+
+
     for (let uIdx = 1; uIdx <= groundFloorUnits; uIdx++) {
-      const zNet = Math.round(zeminKatNetAlani / Math.max(1, groundFloorUnits));
+      const isOwnerUnit = uIdx <= groundOwnerUnits;
+      let ownerLabel = "";
+      if (isOwnerUnit) {
+        const malikObj = (s.owners && s.owners[uIdx - 1]);
+        ownerLabel = malikObj ? malikObj.name : `Malik ${uIdx} (Daire ${uIdx} • Zemin Kat)`;
+      } else {
+        const cZeminIdx = uIdx - groundOwnerUnits;
+        ownerLabel = `🏷️ Yüklenici Zemin Satış ${cZeminIdx}`;
+      }
+
       zeminUnitsList.push({
         doorNo: groundFloorShops + uIdx,
-        type: getRoomType(zNet),
+        type: zRoomType,
         netM2: zNet,
-        grossM2: Math.round(zNet * 1.25),
-        facade: "Bahçe / Zemin Cephesi",
-        ownerName: `Zemin Konut ${uIdx}`
+        grossM2: zGross,
+        facade: (uIdx % 2 === 1) ? "Bahçe / Zemin (Güney)" : "Bahçe / Zemin (Batı)",
+        facadeBadge: "🌿 Zemin/Bahçe",
+        facadeDesc: "Bahçe & Peyzaj Cephesi • Müstakil Zemin Kullanımı",
+        facadeView: "İç Bahçe & Peyzaj",
+        ownerName: ownerLabel,
+        isOwner: isOwnerUnit
       });
+    }
+
+    let zeminSummary = "";
+    if (groundFloorShops > 0 && groundFloorUnits > 0) {
+      zeminSummary = `${groundFloorShops} Dükkan + ${groundFloorUnits} Konut (${groundOwnerUnits} Malik Payı + ${groundContractorUnits} Yüklenici Satış)`;
+    } else if (groundFloorShops > 0) {
+      zeminSummary = `${groundFloorShops} Dükkan (Net ~${targetShopAvgNet} m²)`;
+    } else if (groundFloorUnits > 0) {
+      zeminSummary = groundContractorUnits > 0 
+        ? `${groundFloorUnits} Konut (${groundOwnerUnits} Malik Payı + ${groundContractorUnits} Yüklenici Satış • Net ~${zNet} m²)` 
+        : `${groundFloorUnits} Konut (${groundOwnerUnits} Malik Payı • Net ~${zNet} m²)`;
     }
 
     floorSchedule.push({
@@ -1012,24 +1050,35 @@ class KentselDonusumEngine {
       shopsCount: groundFloorShops,
       unitsCount: groundFloorUnits,
       totalFloorSections: groundFloorShops + groundFloorUnits,
-      unitAvgNetM2: groundFloorShops > 0 ? targetShopAvgNet : (groundFloorUnits > 0 ? Math.round(zeminKatNetAlani / groundFloorUnits) : 0),
-      summaryText: groundFloorShops > 0 ? `${groundFloorShops} Dükkan (Net ~${targetShopAvgNet} m²)` : `${groundFloorUnits} Konut`,
+      unitAvgNetM2: groundFloorShops > 0 ? targetShopAvgNet : zNet,
+      summaryText: zeminSummary,
       units: zeminUnitsList
     });
 
     // Normal Katlar (1..N Kat)
-    let runningResidentialCounter = 0;
+    let runningNormalMalikIdx = 0;
+    let runningContractorCount = groundContractorUnits;
+
     for (let f = 1; f <= normalKatSayisi; f++) {
       const floorUnits = [];
       for (let u = 1; u <= unitsPerNormalFloor; u++) {
-        runningResidentialCounter++;
+        runningNormalMalikIdx++;
         const facadeObj = FACADE_DIRECTIONS[(u - 1) % FACADE_DIRECTIONS.length];
-        const isOwner = runningResidentialCounter <= existingUnits;
-        const ownerLabel = isOwner ? `Malik ${runningResidentialCounter}` : `🏷️ Yüklenici Satış ${runningResidentialCounter - existingUnits}`;
+        const isOwner = runningNormalMalikIdx <= normalMaliksCount;
+        let ownerLabel = "";
+
+        if (isOwner) {
+          const globalMalikId = groundOwnerUnits + runningNormalMalikIdx;
+          const malikObj = (s.owners && s.owners[globalMalikId - 1]);
+          ownerLabel = malikObj ? malikObj.name : `Malik ${globalMalikId}`;
+        } else {
+          runningContractorCount++;
+          ownerLabel = `🏷️ Yüklenici Satış ${runningContractorCount}`;
+        }
         
         floorUnits.push({
           doorNo: u,
-          globalUnitNo: runningResidentialCounter,
+          globalUnitNo: groundFloorUnits + (f - 1) * unitsPerNormalFloor + u,
           type: normalFloorRoomType,
           netM2: normalFloorUnitNetM2,
           grossM2: normalFloorUnitGrossM2,
@@ -1191,15 +1240,23 @@ class KentselDonusumEngine {
       ? parseFloat(s.customContractorUnitPrice)
       : defaultContractorUnitPrice;
 
+    const defaultGroundContractorUnitPrice = (zGross > 0)
+      ? Math.round(zGross * (parseFloat(s.newUnitPriceM2) || 145000))
+      : defaultContractorUnitPrice;
+    const groundUnitPrice = (parseFloat(s.customContractorUnitPrice) > 0 && normalFloorUnitGrossM2 > 0)
+      ? Math.round(contractorUnitPrice * (zGross / normalFloorUnitGrossM2))
+      : defaultGroundContractorUnitPrice;
+
+    const defaultContractorShopGross = Math.round(targetShopAvgNet * 1.25) + Math.round(parkingSharePerUnit);
     const defaultContractorShopPrice = (targetShopAvgNet > 0)
-      ? Math.round(targetShopAvgNet * 1.25 * (parseFloat(s.newUnitPriceM2) || 145000) * 1.50)
+      ? Math.round(defaultContractorShopGross * (parseFloat(s.newUnitPriceM2) || 145000) * 1.50)
       : Math.round(defaultContractorUnitPrice * 1.50);
 
     const contractorShopPrice = (parseFloat(s.customContractorShopPrice) > 0)
       ? parseFloat(s.customContractorShopPrice)
       : defaultContractorShopPrice;
 
-    const contractorTotalApartmentSales = contractorUnits * contractorUnitPrice;
+    const contractorTotalApartmentSales = (groundContractorUnits * groundUnitPrice) + (normalContractorUnits * contractorUnitPrice);
     const contractorTotalShopSales = contractorShops * contractorShopPrice;
     const contractorTotalSalesRevenue = contractorTotalApartmentSales + contractorTotalShopSales;
 
@@ -1392,17 +1449,29 @@ class KentselDonusumEngine {
         allocatedDescription = `Zemin Kat • Dükkan ${allocatedDoorNo} (Net ${newNetM2} m² • Cadde Cepheli)`;
       } else {
         assignedResidentialCounter++;
-        allocatedFloor = Math.min(normalKatSayisi, Math.floor((assignedResidentialCounter - 1) / unitsPerNormalFloor) + 1);
-        allocatedDoorNo = ((assignedResidentialCounter - 1) % unitsPerNormalFloor) + 1;
-        
-        const ratioToAvg = (avgNet > 0) ? (o.existingNetM2 / avgNet) : 1.0;
-        newNetM2 = Math.round(normalFloorUnitNetM2 * (0.85 + 0.15 * ratioToAvg));
-        allocatedRoomType = getRoomType(newNetM2);
-        
-        const facadeObj = FACADE_DIRECTIONS[(allocatedDoorNo - 1) % FACADE_DIRECTIONS.length];
-        allocatedFacade = facadeObj.name;
-        allocatedFacadeDetail = facadeObj.desc;
-        allocatedDescription = `${allocatedFloor}. Kat • Daire ${allocatedDoorNo} (${allocatedRoomType} • ${allocatedFacade})`;
+        const isGroundMalik = assignedResidentialCounter <= groundOwnerUnits;
+        if (isGroundMalik) {
+          allocatedFloor = 0;
+          allocatedDoorNo = groundFloorShops + assignedResidentialCounter;
+          newNetM2 = zNet || Math.round(zeminKatNetAlani / Math.max(1, groundFloorUnits));
+          allocatedRoomType = getRoomType(newNetM2);
+          allocatedFacade = (assignedResidentialCounter % 2 === 1) ? "Bahçe / Zemin (Güney)" : "Bahçe / Zemin (Batı)";
+          allocatedFacadeDetail = "Zemin Kat Müstakil Bahçe / Peyzaj Cephesi";
+          allocatedDescription = `Zemin Kat • Daire ${allocatedDoorNo} (${allocatedRoomType} • Bahçe Cepheli)`;
+        } else {
+          const normalMalikIdx = assignedResidentialCounter - groundOwnerUnits - 1;
+          allocatedFloor = Math.min(normalKatSayisi, Math.floor(normalMalikIdx / unitsPerNormalFloor) + 1);
+          allocatedDoorNo = (normalMalikIdx % unitsPerNormalFloor) + 1;
+          
+          const ratioToAvg = (avgNet > 0) ? (o.existingNetM2 / avgNet) : 1.0;
+          newNetM2 = Math.round(normalFloorUnitNetM2 * (0.85 + 0.15 * ratioToAvg));
+          allocatedRoomType = getRoomType(newNetM2);
+          
+          const facadeObj = FACADE_DIRECTIONS[(allocatedDoorNo - 1) % FACADE_DIRECTIONS.length];
+          allocatedFacade = facadeObj.name;
+          allocatedFacadeDetail = facadeObj.desc;
+          allocatedDescription = `${allocatedFloor}. Kat • Daire ${allocatedDoorNo} (${allocatedRoomType} • ${allocatedFacade})`;
+        }
       }
       
       const baseGrossM2 = Math.round(newNetM2 * (isShop ? 1.30 : 1.25));
@@ -1578,11 +1647,17 @@ class KentselDonusumEngine {
         netCostPerM2: netCostPerM2,
 
         // Yüklenici Daire Satış Geliri & Düşümü
+        groundOwnerUnits: groundOwnerUnits,
+        groundContractorUnits: groundContractorUnits,
+        normalMaliksCount: normalMaliksCount,
+        normalContractorUnits: normalContractorUnits,
         contractorUnits: contractorUnits,
         contractorShops: contractorShops,
         contractorTotalSections: contractorTotalSections,
         contractorUnitPrice: contractorUnitPrice,
         defaultContractorUnitPrice: defaultContractorUnitPrice,
+        groundUnitPrice: groundUnitPrice,
+        defaultGroundContractorUnitPrice: defaultGroundContractorUnitPrice,
         contractorShopPrice: contractorShopPrice,
         defaultContractorShopPrice: defaultContractorShopPrice,
         contractorTotalApartmentSales: contractorTotalApartmentSales,
