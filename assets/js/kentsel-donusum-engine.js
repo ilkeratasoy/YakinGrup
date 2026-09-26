@@ -14,6 +14,7 @@ const KD_PRESETS = {
     landArea: 850,
     existingBuildingArea: 2200,
     unitCount: 20,
+    existingGroundUnitsCount: 0,
     shopCount: 0,
     existingUnitAvgNet: 95,
     existingUnitPriceM2: 85000,
@@ -46,6 +47,7 @@ const KD_PRESETS = {
     landArea: 480,
     existingBuildingArea: 1100,
     unitCount: 8,
+    existingGroundUnitsCount: 0,
     shopCount: 0,
     existingUnitAvgNet: 110,
     existingUnitPriceM2: 120000,
@@ -77,6 +79,7 @@ const KD_PRESETS = {
     landArea: 1200,
     existingBuildingArea: 3100,
     unitCount: 24,
+    existingGroundUnitsCount: 0,
     shopCount: 2,
     existingUnitAvgNet: 105,
     existingUnitPriceM2: 55000,
@@ -108,6 +111,7 @@ const KD_PRESETS = {
     landArea: 950,
     existingBuildingArea: 2100,
     unitCount: 16,
+    existingGroundUnitsCount: 0,
     shopCount: 4,
     existingUnitAvgNet: 90,
     existingUnitPriceM2: 38000,
@@ -127,6 +131,39 @@ const KD_PRESETS = {
     customNormalFloorCount: 6,
     unitsPerNormalFloor: 3,
     groundFloorShopsCount: 4,
+    groundFloorUnitsCount: 0
+  },
+  buyukcekmece_ydy: {
+    name: "İstanbul Büyükçekmece — YDY Construction Inc. 430M ₺ Kentsel Dönüşüm & Çarşı",
+    city: "İstanbul",
+    district: "Büyükçekmece",
+    neighborhood: "Atatürk Mah. / Palmiye Meydanı (E-5 Cepheli)",
+    ada: "2665",
+    parsel: "1",
+    landArea: 3825,
+    existingBuildingArea: 5350,
+    unitCount: 56,
+    existingGroundUnitsCount: 0,
+    shopCount: 8,
+    existingUnitAvgNet: 70.5,
+    existingUnitPriceM2: 60000,
+    existingRentMonthly: 24000,
+    ownerCount: 64,
+    titleStatus: "Kat Mülkiyeti",
+    specSegment: "orta",
+    kaks: 1.90,
+    taks: 0.35,
+    hmax: "Z+4 Kat",
+    usageType: "Karma (Konut + Ticaret)",
+    newUnitPriceM2: 64000,
+    newRentMonthly: 38000,
+    soilCategory: "ZF (Orta Sağlam Zemin)",
+    majorityPct: 100,
+    customGroundSlab: 1338,
+    customNormalSlab: 1338,
+    customNormalFloorCount: 4,
+    unitsPerNormalFloor: 5,
+    groundFloorShopsCount: 8,
     groundFloorUnitsCount: 0
   }
 };
@@ -428,6 +465,7 @@ class KentselDonusumEngine {
       landArea: 850,
       existingBuildingArea: 2200,
       unitCount: 20,
+      existingGroundUnitsCount: 0,
       shopCount: 0,
       existingUnitAvgNet: 95,
       existingUnitPriceM2: 85000,
@@ -487,6 +525,7 @@ class KentselDonusumEngine {
     const list = [];
     const unitCount = parseInt(this.state.unitCount) >= 0 ? parseInt(this.state.unitCount) : 20;
     const shopCount = parseInt(this.state.shopCount) >= 0 ? parseInt(this.state.shopCount) : 0;
+    const existingGroundUnitsCount = Math.max(0, parseInt(this.state.existingGroundUnitsCount) || 0);
     const totalSections = Math.max(1, unitCount + shopCount);
     const avgNet = parseFloat(this.state.existingUnitAvgNet) || 95;
     const unitsPerFloor = parseInt(this.state.unitsPerNormalFloor) || 3;
@@ -495,19 +534,33 @@ class KentselDonusumEngine {
 
     for (let i = 1; i <= unitCount; i++) {
       const existing = oldMap.get(id);
-      const floor = Math.min(Math.ceil(i / unitsPerFloor), 12);
+      const isGround = i <= existingGroundUnitsCount;
+      const normalFloorIdx = isGround ? 0 : Math.min(Math.ceil((i - existingGroundUnitsCount) / unitsPerFloor), 12);
+      const floor = isGround ? 0 : normalFloorIdx;
       let netM2, brutM2, name, customSet = false;
+
+      const defaultName = floor === 0 
+        ? `Malik ${i} (Daire ${i} • Zemin Kat)` 
+        : `Malik ${i} (Daire ${i} • Kat ${floor})`;
 
       if (existing && existing.customNetManuallySet) {
         netM2 = existing.existingNetM2;
         brutM2 = existing.existingGrossM2;
-        name = existing.name || `Malik ${i} (Daire ${i} • Kat ${floor})`;
+        if (existing.name && !/^Malik \d+ \(Daire \d+ • (Kat \d+|Zemin Kat)\)$/.test(existing.name)) {
+          name = existing.name;
+        } else {
+          name = defaultName;
+        }
         customSet = true;
       } else {
         const variation = (i % 3 === 0 ? 8 : (i % 3 === 1 ? -6 : 0));
         netM2 = Math.max(30, Math.round(avgNet + variation));
         brutM2 = Math.round(netM2 * 1.25);
-        name = existing ? existing.name : `Malik ${i} (Daire ${i} • Kat ${floor})`;
+        if (existing && existing.name && !/^Malik \d+ \(Daire \d+ • (Kat \d+|Zemin Kat)\)$/.test(existing.name)) {
+          name = existing.name;
+        } else {
+          name = defaultName;
+        }
       }
       
       list.push({
@@ -647,7 +700,7 @@ class KentselDonusumEngine {
       this.state.customNormalSlabManuallySet = true;
     }
 
-    if (key === 'unitCount' || key === 'shopCount') {
+    if (key === 'unitCount' || key === 'shopCount' || key === 'existingGroundUnitsCount') {
       const u = parseInt(this.state.unitCount) || 0;
       const s = parseInt(this.state.shopCount) || 0;
       this.state.ownerCount = u + s;
@@ -1224,6 +1277,7 @@ class KentselDonusumEngine {
       
       existingSummary: {
         units: existingUnits,
+        groundUnits: Math.max(0, parseInt(s.existingGroundUnitsCount) || 0),
         shops: existingShops,
         totalSections: existingTotalSections,
         totalNetM2: existingTotalNet,
