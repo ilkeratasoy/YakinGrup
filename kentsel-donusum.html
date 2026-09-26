@@ -867,6 +867,64 @@
         </div>
       </div>
 
+      <!-- Yükleniciye Kalan Daire / Bölüm Satış Fiyatları & Maliyetten Düşüş Paneli -->
+      <div class="card" id="card-contractor-revenue-deduct" style="margin-bottom: 1.25rem; background: #f0fdf4; border: 1.5px solid #86efac;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 1.4rem;">🏷️</span>
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 0.9rem; font-weight: 800; color: #166534;">
+                  Yükleniciye (Müteahhide) Kalan Daire / Bölüm Satış Fiyatları
+                </span>
+                <span id="badge-contractor-units-count" style="background: #dcfce7; color: #15803d; border: 1px solid #86efac; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 9999px;">
+                  4 Daire + 0 Dükkan
+                </span>
+              </div>
+              <div style="font-size: 0.74rem; color: #15803d; margin-top: 2px;">
+                Müteahhide kalan dairelerin satış değerini girin; toplam hasılatı genel inşaat maliyetinden düşerek malik ek ödemelerini hafifletin.
+              </div>
+            </div>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #166534; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="chk-deduct-contractor-revenue" checked onchange="handleContractorRevenueDeductToggle(this.checked)" style="width: 18px; height: 18px; accent-color: #16a34a; cursor: pointer;">
+              <span>Maliyetten Düş (Malik Payını Azalt)</span>
+            </label>
+
+            <!-- Daire Başı Fiyat Girişi -->
+            <div id="box-contractor-unit-price" style="display: flex; align-items: center; gap: 6px;">
+              <label for="inp-contractor-unit-price" style="font-size: 0.78rem; font-weight: 700; color: #166534;">Daire Satış Fiyatı:</label>
+              <div style="display: inline-flex; align-items: center; gap: 3px;">
+                <input type="number" id="inp-contractor-unit-price" step="100000" min="0" class="form-input" 
+                  onchange="handleContractorUnitPriceChange(this.value)"
+                  placeholder="0"
+                  style="width: 130px; font-size: 0.82rem; font-weight: 800; text-align: right; padding: 4px 8px; border: 1.5px solid #16a34a; border-radius: 6px; background: #ffffff; color: #166534;">
+                <span style="font-size: 0.74rem; font-weight: 700; color: #166534;">TL</span>
+              </div>
+            </div>
+
+            <!-- Dükkan Başı Fiyat Girişi (Eğer Dükkan Varsa) -->
+            <div id="box-contractor-shop-price" style="display: none; align-items: center; gap: 6px;">
+              <label for="inp-contractor-shop-price" style="font-size: 0.78rem; font-weight: 700; color: #166534;">Dükkan Satış Fiyatı:</label>
+              <div style="display: inline-flex; align-items: center; gap: 3px;">
+                <input type="number" id="inp-contractor-shop-price" step="100000" min="0" class="form-input" 
+                  onchange="handleContractorShopPriceChange(this.value)"
+                  placeholder="0"
+                  style="width: 130px; font-size: 0.82rem; font-weight: 800; text-align: right; padding: 4px 8px; border: 1.5px solid #16a34a; border-radius: 6px; background: #ffffff; color: #166534;">
+                <span style="font-size: 0.74rem; font-weight: 700; color: #166534;">TL</span>
+              </div>
+            </div>
+
+            <!-- Toplam Düşülen Gelir Rozeti -->
+            <div id="badge-contractor-revenue-total" style="display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 800; background: #166534; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+              Maliyetten Düşüldü
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 2026 Detaylı Maliyet Motoru -->
       <div class="card">
         <div class="card-header">
@@ -951,6 +1009,21 @@
                 <td id="cost-u-margin" style="color: var(--brand-primary); font-weight: 700;">-</td>
                 <td id="cost-t-margin" style="color: var(--brand-primary); font-weight: 800;">-</td>
                 <td id="cost-p-margin" style="color: var(--brand-primary); font-weight: 700;">-</td>
+              </tr>
+              <tr id="row-cost-gross-subtotal" style="background: #f8fafc; border-top: 1.5px solid #cbd5e1; font-weight: 700; display: none;">
+                <td colspan="2"><strong id="cost-lbl-gross">PROJE BRÜT TEKLİF BEDELİ (İnşaat + Yüklenici Marjı)</strong></td>
+                <td id="cost-u-gross">-</td>
+                <td id="cost-t-gross" style="font-weight: 800; color: #1e3a8a;">-</td>
+                <td id="cost-p-gross">%100.0</td>
+              </tr>
+              <tr id="row-cost-contractor-deduct" style="background: #ecfdf5; border-top: 1px dashed #86efac; border-bottom: 1.5px solid #86efac; display: none;">
+                <td><strong style="color: #15803d;">J. Yüklenici Daire Satış Geliri (Maliyet İndirimi)</strong></td>
+                <td id="cost-desc-contractor-deduct" style="font-size: 0.74rem; color: #166534;">
+                  Müteahhide kalan dairelerin satış bedeli genel inşaat maliyetinden tenzil edilmiştir.
+                </td>
+                <td id="cost-u-contractor-deduct" style="color: #15803d; font-weight: 700;">-</td>
+                <td id="cost-t-contractor-deduct" style="color: #15803d; font-weight: 800;">-</td>
+                <td id="cost-p-contractor-deduct" style="color: #15803d; font-weight: 700;">-</td>
               </tr>
               <tr class="total-row">
                 <td colspan="2"><strong id="cost-lbl-total">TOPLAM PROJE TEKLİF BEDELİ (%35 Yüklenici Marjı Dahil)</strong></td>
@@ -2442,7 +2515,7 @@
         if (lblMarginTag) lblMarginTag.textContent = `%${c.contractorMarginPct}`;
         setText('cost-u-margin', Math.round(c.contractorMargin / totalArea).toLocaleString('tr-TR') + ' TL');
         setText('cost-t-margin', eng.formatCurrency(c.contractorMargin));
-        setText('cost-p-margin', '%' + ((c.contractorMargin / c.totalProjectCost) * 100).toFixed(1));
+        setText('cost-p-margin', '%' + ((c.contractorMargin / c.grossProjectCost) * 100).toFixed(1));
         
         if (badgeMargin) {
           badgeMargin.style.display = 'inline-flex';
@@ -2450,9 +2523,6 @@
           badgeMargin.style.color = '#065f46';
           badgeMargin.style.borderColor = '#a7f3d0';
           badgeMargin.textContent = `+%${c.contractorMarginPct} Marj Aktif (${eng.formatCurrency(c.contractorMargin)})`;
-        }
-        if (lblCostTotal) {
-          lblCostTotal.textContent = `TOPLAM PROJE TEKLİF BEDELİ (%${c.contractorMarginPct} Yüklenici Marjı Dahil)`;
         }
       } else {
         if (rowMargin) rowMargin.style.display = 'none';
@@ -2463,13 +2533,93 @@
           badgeMargin.style.borderColor = '#cbd5e1';
           badgeMargin.textContent = 'Yalın Yapım Maliyeti (Marj %0)';
         }
-        if (lblCostTotal) {
+      }
+
+      // Yükleniciye Kalan Daire Satış Geliri & Düşüş Paneli UI Senkronizasyonu
+      const chkContractorDeduct = document.getElementById('chk-deduct-contractor-revenue');
+      if (chkContractorDeduct) chkContractorDeduct.checked = (eng.state.deductContractorRevenue !== false);
+
+      const inpContUnitPrice = document.getElementById('inp-contractor-unit-price');
+      if (inpContUnitPrice) {
+        inpContUnitPrice.value = c.contractorUnitPrice;
+      }
+
+      const inpContShopPrice = document.getElementById('inp-contractor-shop-price');
+      const boxContShopPrice = document.getElementById('box-contractor-shop-price');
+      if (boxContShopPrice) {
+        if (c.contractorShops > 0) {
+          boxContShopPrice.style.display = 'flex';
+          if (inpContShopPrice) inpContShopPrice.value = c.contractorShopPrice;
+        } else {
+          boxContShopPrice.style.display = 'none';
+        }
+      }
+
+      const badgeContCount = document.getElementById('badge-contractor-units-count');
+      if (badgeContCount) {
+        badgeContCount.textContent = `${c.contractorUnits} Daire${c.contractorShops > 0 ? ` + ${c.contractorShops} Dükkan` : ''} (Toplam ${c.contractorTotalSections} Bölüm)`;
+      }
+
+      const badgeContTotal = document.getElementById('badge-contractor-revenue-total');
+      if (badgeContTotal) {
+        if (c.isContractorRevenueDeducted && c.contractorSalesOffset > 0) {
+          badgeContTotal.style.background = '#166534';
+          badgeContTotal.style.color = '#ffffff';
+          badgeContTotal.textContent = `- ${eng.formatCurrency(c.contractorSalesOffset)} Maliyetten Düşüldü`;
+        } else if (!c.isContractorRevenueDeducted && c.contractorTotalSalesRevenue > 0) {
+          badgeContTotal.style.background = '#fef3c7';
+          badgeContTotal.style.color = '#92400e';
+          badgeContTotal.textContent = `İndirim Kapalı (${eng.formatCurrency(c.contractorTotalSalesRevenue)})`;
+        } else {
+          badgeContTotal.style.background = '#f1f5f9';
+          badgeContTotal.style.color = '#64748b';
+          badgeContTotal.textContent = 'Müteahhit Dairesi Yok (0 TL)';
+        }
+      }
+
+      // Maliyet Tablosu: Brüt Teklif Ara Toplamı
+      const rowGross = document.getElementById('row-cost-gross-subtotal');
+      if (rowGross) {
+        if (c.isContractorRevenueDeducted && c.contractorSalesOffset > 0) {
+          rowGross.style.display = '';
+          setText('cost-u-gross', Math.round(c.grossCostPerM2).toLocaleString('tr-TR') + ' TL/m²');
+          setText('cost-t-gross', eng.formatCurrency(c.grossProjectCost));
+          setText('cost-p-gross', '%100.0');
+        } else {
+          rowGross.style.display = 'none';
+        }
+      }
+
+      // Maliyet Tablosu: Yüklenici Satış Geliri İndirim Satırı
+      const rowDeduct = document.getElementById('row-cost-contractor-deduct');
+      const descDeduct = document.getElementById('cost-desc-contractor-deduct');
+      if (rowDeduct) {
+        if (c.isContractorRevenueDeducted && c.contractorSalesOffset > 0) {
+          rowDeduct.style.display = '';
+          if (descDeduct) {
+            descDeduct.textContent = `Müteahhide kalan ${c.contractorUnits} daire${c.contractorShops > 0 ? ` + ${c.contractorShops} dükkan` : ''} satış hasılatı (${eng.formatCurrency(c.contractorSalesOffset)}) maliyetten düşülmüştür.`;
+          }
+          setText('cost-u-contractor-deduct', '-' + Math.round(c.contractorSalesOffset / totalArea).toLocaleString('tr-TR') + ' TL/m²');
+          setText('cost-t-contractor-deduct', '-' + eng.formatCurrency(c.contractorSalesOffset));
+          setText('cost-p-contractor-deduct', '-%' + ((c.contractorSalesOffset / c.grossProjectCost) * 100).toFixed(1));
+        } else {
+          rowDeduct.style.display = 'none';
+        }
+      }
+
+      // Net Proje Maliyet Başlığı ve Tutarı
+      if (lblCostTotal) {
+        if (c.isContractorRevenueDeducted && c.contractorSalesOffset > 0) {
+          lblCostTotal.textContent = 'NET PROJE YAPIM BEDELİ (MALİKLER HESABINA ESAS)';
+        } else if (c.isMarginActive && c.contractorMargin > 0) {
+          lblCostTotal.textContent = `TOPLAM PROJE TEKLİF BEDELİ (%${c.contractorMarginPct} Yüklenici Marjı Dahil)`;
+        } else {
           lblCostTotal.textContent = 'TOPLAM YALIN PROJE YAPIM MALİYETİ (Marj Hariç)';
         }
       }
 
       setText('cost-u-total', Math.round(c.costPerM2).toLocaleString('tr-TR') + ' TL/m²');
-      setText('cost-t-total', eng.formatCurrency(c.totalProjectCost));
+      setText('cost-t-total', eng.formatCurrency(c.effectiveCost));
 
       // Stage 3 Karar Banner & Modeller
       const dec = res.decision;
@@ -2675,14 +2825,18 @@
       setText('prop-t-slabs', `Zemin: ${eng.formatM2(res.tabanAlani)} | Kat: ${eng.formatM2(res.normalKatBrut)}`);
       setText('prop-t-gross', eng.formatM2(res.toplamInsaatAlani));
       setText('prop-t-saleable', eng.formatM2(res.toplamSatilabilirBrutAlan));
-      setText('prop-t-cost', eng.formatCurrency(res.costs.totalProjectCost));
+      setText('prop-t-cost', eng.formatCurrency(res.costs.effectiveCost));
       setText('prop-t-costm2', Math.round(res.costs.costPerM2).toLocaleString('tr-TR') + ' TL/m²');
       setText('prop-t-revenue', eng.formatCurrency(res.financials.projectTotalSalesValue));
       setText('prop-t-time', `${eng.state.projectMonths} Ay (İskan Dahil)`);
       setText('prop-t-layout', `Z+${res.normalKatSayisi} Kat (${res.unitsPerNormalFloor} Daire/Kat • Net ~${res.normalFloorUnitNetM2} m²)`);
 
+      const contractorOffsetTxt = (res.costs.isContractorRevenueDeducted && res.costs.contractorSalesOffset > 0)
+        ? `Toplam proje brüt yapım maliyeti <strong>${eng.formatCurrency(res.costs.grossProjectCost)}</strong> olup, yükleniciye kalan ${res.costs.contractorUnits} adet dairenin satış geliri (<strong>${eng.formatCurrency(res.costs.contractorSalesOffset)}</strong>) maliyetten düşülerek malikler hesabına esas net yapım bedeli <strong>${eng.formatCurrency(res.costs.netProjectCost)}</strong> seviyesine çekilmiştir.`
+        : `Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup;`;
+
       const exSum = `
-        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong> ve Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong> olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire • ${res.normalFloorRoomType}) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. Toplam proje yapım maliyeti <strong>${eng.formatCurrency(res.costs.totalProjectCost)}</strong> olup, projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
+        ${eng.state.city} ili ${eng.state.district} ilçesi, ${eng.state.ada} Ada ${eng.state.parsel} Parsel üzerinde bulunan ${eng.formatM2(res.landArea)} arsa alanlı taşınmaz üzerinde 2026 kentsel dönüşüm mevzuatı kapsamında yapılan fizibilite neticesinde; Zemin Tabliyesi <strong>${eng.formatM2(res.tabanAlani)}</strong> ve Normal Kat Tabliyesi <strong>${eng.formatM2(res.normalKatBrut)}</strong> olmak üzere, Zemin + ${res.normalKatSayisi} Kat (Katta ${res.unitsPerNormalFloor} Daire • ${res.normalFloorRoomType}) mimari planı doğrultusunda toplam <strong>${eng.formatM2(res.toplamInsaatAlani)}</strong> inşaat alanında <strong>${res.totalNewResidentialUnits} konut ve ${res.groundFloorShops} dükkan (Toplam ${res.totalNewSections} bağımsız bölüm)</strong> üretimi planlanmıştır. ${contractorOffsetTxt} Projenin tamamlanması sonrası hasılat değeri <strong>${eng.formatCurrency(res.financials.projectTotalSalesValue)}</strong> seviyesine ulaşacaktır.
       `;
       const elExSum = document.getElementById('prop-executive-summary');
       if (elExSum) elExSum.innerHTML = exSum;
@@ -2869,7 +3023,7 @@
 
       // Bottom Bar
       setText('bar-gross-area', eng.formatM2(res.toplamInsaatAlani));
-      setText('bar-total-cost', eng.formatCurrency(res.costs.totalProjectCost));
+      setText('bar-total-cost', eng.formatCurrency(res.costs.effectiveCost));
       setText('bar-rec-model', res.decision.recommendedModel);
       setText('bar-roi', eng.formatPct(m1.contractorROI));
 
@@ -3006,6 +3160,27 @@
         window.KDEngine.resetAllDiscounts();
         renderUI();
         showToastNotification('🔄 Tüm malik iskontoları sıfırlandı.');
+      }
+    }
+
+    function handleContractorUnitPriceChange(val) {
+      if (window.KDEngine) {
+        window.KDEngine.updateContractorUnitPrice(val);
+        renderUI();
+      }
+    }
+
+    function handleContractorShopPriceChange(val) {
+      if (window.KDEngine) {
+        window.KDEngine.updateContractorShopPrice(val);
+        renderUI();
+      }
+    }
+
+    function handleContractorRevenueDeductToggle(checked) {
+      if (window.KDEngine) {
+        window.KDEngine.toggleContractorRevenueDeduct(checked);
+        renderUI();
       }
     }
 

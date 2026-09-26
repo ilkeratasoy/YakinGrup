@@ -501,6 +501,9 @@ class KentselDonusumEngine {
       contractorSharePctInput: 55,
       contractorMarginPct: 35,
       applyContractorMargin: true,
+      deductContractorRevenue: true,
+      customContractorUnitPrice: null,
+      customContractorShopPrice: null,
       signatory: 'eylul',
       stampMode: 'both',
       
@@ -716,6 +719,21 @@ class KentselDonusumEngine {
     (this.state.owners || []).forEach(o => {
       o.customDiscountTL = 0;
     });
+    this.calculate();
+  }
+
+  updateContractorUnitPrice(price) {
+    this.state.customContractorUnitPrice = Math.max(0, parseFloat(price) || 0);
+    this.calculate();
+  }
+
+  updateContractorShopPrice(price) {
+    this.state.customContractorShopPrice = Math.max(0, parseFloat(price) || 0);
+    this.calculate();
+  }
+
+  toggleContractorRevenueDeduct(active) {
+    this.state.deductContractorRevenue = !!active;
     this.calculate();
   }
 
@@ -1066,7 +1084,34 @@ class KentselDonusumEngine {
     const costContractorMargin = baseConstructionCost * (marginPct / 100);
 
     const totalProjectCost = baseConstructionCost + costContractorMargin;
-    const costPerM2Total = totalProjectCost / (toplamInsaatAlani || 1);
+    
+    // 4b. YÜKLENİCİYE KALAN DAİRE & BÖLÜM SATIŞ GELİRİ DÜŞÜMÜ
+    const defaultContractorUnitPrice = Math.round(normalFloorUnitGrossM2 * (parseFloat(s.newUnitPriceM2) || 145000));
+    const contractorUnitPrice = (parseFloat(s.customContractorUnitPrice) > 0)
+      ? parseFloat(s.customContractorUnitPrice)
+      : defaultContractorUnitPrice;
+
+    const defaultContractorShopPrice = (targetShopAvgNet > 0)
+      ? Math.round(targetShopAvgNet * 1.25 * (parseFloat(s.newUnitPriceM2) || 145000) * 1.50)
+      : Math.round(defaultContractorUnitPrice * 1.50);
+
+    const contractorShopPrice = (parseFloat(s.customContractorShopPrice) > 0)
+      ? parseFloat(s.customContractorShopPrice)
+      : defaultContractorShopPrice;
+
+    const contractorTotalApartmentSales = contractorUnits * contractorUnitPrice;
+    const contractorTotalShopSales = contractorShops * contractorShopPrice;
+    const contractorTotalSalesRevenue = contractorTotalApartmentSales + contractorTotalShopSales;
+
+    const isContractorDeductionActive = (s.deductContractorRevenue !== false && contractorTotalSections > 0);
+    const contractorSalesOffset = isContractorDeductionActive ? contractorTotalSalesRevenue : 0;
+
+    const netProjectCost = Math.max(0, totalProjectCost - contractorSalesOffset);
+    const grossCostPerM2 = totalProjectCost / (toplamInsaatAlani || 1);
+    const netCostPerM2 = netProjectCost / (toplamInsaatAlani || 1);
+
+    const effectiveCost = isContractorDeductionActive ? netProjectCost : totalProjectCost;
+    const costPerM2Total = effectiveCost / (toplamInsaatAlani || 1);
 
     // 5. DEVLET DESTEKLERİ & YARISI BİZDEN MOTORU
     const normCity = (s.city || "").replace(/İ/g, "i").replace(/I/g, "ı").toLowerCase();
@@ -1122,21 +1167,21 @@ class KentselDonusumEngine {
     const model1_ContractorNetProfit = model1_ContractorRevenue - totalProjectCost;
     const model1_ContractorROI = (model1_ContractorNetProfit / (totalProjectCost || 1)) * 100;
 
-    const model2_NetCostAfterSupport = Math.max(0, totalProjectCost - ybdInsaatHakedisToplam);
+    const model2_NetCostAfterSupport = Math.max(0, effectiveCost - ybdInsaatHakedisToplam);
     const model2_OwnerPaymentPerUnit = (eligibleYBDUnits + eligibleYBDShops) > 0 
       ? (model2_NetCostAfterSupport / (eligibleYBDUnits + eligibleYBDShops)) 
-      : (totalProjectCost / existingTotalSections);
+      : (effectiveCost / existingTotalSections);
     const model2_ContractorSharePct = Math.max(0, Math.round((model2_NetCostAfterSupport / (activeScenario.totalProjectValue || 1)) * 100));
     const model2_ContractorProfit = (totalProjectCost * UNIT_COSTS_2026.contractorProfitTargetPct);
     const model2_ContractorROI = UNIT_COSTS_2026.contractorProfitTargetPct * 100;
 
-    const model3_CreditUsedTotal = Math.min(totalProjectCost, totalIADSPFinancing);
-    const model3_RemainingCost = Math.max(0, totalProjectCost - model3_CreditUsedTotal);
-    const model3_OwnerPaymentPerUnit = isIADSPEligible ? (model3_RemainingCost / existingTotalSections) : (totalProjectCost / existingTotalSections);
+    const model3_CreditUsedTotal = Math.min(effectiveCost, totalIADSPFinancing);
+    const model3_RemainingCost = Math.max(0, effectiveCost - model3_CreditUsedTotal);
+    const model3_OwnerPaymentPerUnit = isIADSPEligible ? (model3_RemainingCost / existingTotalSections) : (effectiveCost / existingTotalSections);
     const model3_ContractorProfit = totalProjectCost * UNIT_COSTS_2026.contractorProfitTargetPct;
     const model3_ContractorROI = UNIT_COSTS_2026.contractorProfitTargetPct * 100;
 
-    const model4_OwnerPaymentPerUnit = (totalProjectCost * 1.15) / existingTotalSections;
+    const model4_OwnerPaymentPerUnit = (effectiveCost * (s.applyContractorMargin ? 1.0 : 1.15)) / existingTotalSections;
     const model4_ContractorNetProfit = totalProjectCost * 0.15;
     const model4_ContractorROI = 15.0;
 
@@ -1287,7 +1332,7 @@ class KentselDonusumEngine {
         tahliyeShare = isShop ? ybdTahliyePerShop : ybdTahliyePerUnit;
         constructionSupport = hibeShare + krediShare;
         tahliyeSupportToOwner = tahliyeShare;
-        baseExtraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+        baseExtraPay = Math.max(0, Math.round((effectiveCost / existingTotalSections) - constructionSupport));
         const discount = Math.max(0, parseFloat(o.customDiscountTL) || 0);
         extraPay = Math.max(0, baseExtraPay - discount);
       } else if (activeModelKey === 'model3') {
@@ -1295,9 +1340,9 @@ class KentselDonusumEngine {
         hibeShare = 0;
         krediShare = iadspMaxKrediPerUnit;
         tahliyeShare = 0;
-        constructionSupport = Math.min(iadspMaxKrediPerUnit, Math.round(totalProjectCost / existingTotalSections));
+        constructionSupport = Math.min(iadspMaxKrediPerUnit, Math.round(effectiveCost / existingTotalSections));
         tahliyeSupportToOwner = 0;
-        baseExtraPay = Math.max(0, Math.round((totalProjectCost / existingTotalSections) - constructionSupport));
+        baseExtraPay = Math.max(0, Math.round((effectiveCost / existingTotalSections) - constructionSupport));
         const discount = Math.max(0, parseFloat(o.customDiscountTL) || 0);
         extraPay = Math.max(0, baseExtraPay - discount);
       } else if (activeModelKey === 'model4') {
@@ -1408,8 +1453,27 @@ class KentselDonusumEngine {
         contractorMarginPct: marginPct,
         contractorMargin: costContractorMargin,
         isMarginActive: marginPct > 0,
+        grossProjectCost: totalProjectCost,
         totalProjectCost: totalProjectCost,
-        costPerM2: costPerM2Total
+        netProjectCost: netProjectCost,
+        effectiveCost: effectiveCost,
+        costPerM2: costPerM2Total,
+        grossCostPerM2: grossCostPerM2,
+        netCostPerM2: netCostPerM2,
+
+        // Yüklenici Daire Satış Geliri & Düşümü
+        contractorUnits: contractorUnits,
+        contractorShops: contractorShops,
+        contractorTotalSections: contractorTotalSections,
+        contractorUnitPrice: contractorUnitPrice,
+        defaultContractorUnitPrice: defaultContractorUnitPrice,
+        contractorShopPrice: contractorShopPrice,
+        defaultContractorShopPrice: defaultContractorShopPrice,
+        contractorTotalApartmentSales: contractorTotalApartmentSales,
+        contractorTotalShopSales: contractorTotalShopSales,
+        contractorTotalSalesRevenue: contractorTotalSalesRevenue,
+        contractorSalesOffset: contractorSalesOffset,
+        isContractorRevenueDeducted: isContractorDeductionActive
       },
 
       supports: {
