@@ -492,6 +492,143 @@
     .badge-red { background: #fee2e2; color: #b91c1c; }
     .badge-purple { background: #f3e8ff; color: #7e22ce; }
 
+    /* Sector Badges & Grouping */
+    .badge-sector {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      font-weight: 700;
+      gap: 3px;
+    }
+    .badge-sector-insaat { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+    .badge-sector-mimarlik { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .badge-sector-muhendislik { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-sector-gayrimenkul { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .badge-sector-malzeme { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-sector-taseron { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+    .badge-sector-mep { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .badge-sector-finans { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge-sector-hukuk { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+    .badge-sector-bilisim { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+    /* Sector Filter Container & Pills */
+    .sector-filter-container {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .sector-pills-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+    }
+    .sector-pills-row::-webkit-scrollbar {
+      height: 4px;
+    }
+    .sector-pills-row::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .sector-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #f8fafc;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .sector-pill:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: var(--navy);
+    }
+    .sector-pill.active {
+      background: var(--navy);
+      color: #ffffff;
+      border-color: var(--navy);
+      box-shadow: 0 2px 8px rgba(11, 37, 69, 0.25);
+    }
+    .sector-pill .pill-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .sector-pill.active .pill-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* View Mode Switcher */
+    .btn-view-mode {
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-view-mode.active {
+      background: var(--navy);
+      color: #ffffff;
+      border-color: var(--navy);
+    }
+
+    /* Sector Separator Block in Grouped View */
+    .sector-group-block {
+      margin-bottom: 18px;
+    }
+    .sector-separator-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--navy);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .sector-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 0.86rem;
+      color: var(--navy);
+    }
+    .sector-count-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      background: #ffffff;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    .sector-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .quick-actions-row {
       display: flex;
       align-items: center;
@@ -653,7 +790,24 @@
             </div>
             <div class="form-group">
               <label>Unvan</label>
-              <input type="text" id="card-role" placeholder="Direktör, Mimar...">
+              <input type="text" id="card-role" placeholder="Direktör, Mimar, Satış Müdürü...">
+            </div>
+            <div class="form-group">
+              <label>🏢 Sektör / Faaliyet Alanı *</label>
+              <select id="card-sector" onchange="toggleCustomSector(this)">
+                <option value="İnşaat & Taahhüt">🏗️ İnşaat & Taahhüt</option>
+                <option value="Mimarlık & Tasarım">📐 Mimarlık & Tasarım</option>
+                <option value="Mühendislik & Müşavirlik">⚙️ Mühendislik & Müşavirlik</option>
+                <option value="Gayrimenkul & Yatırım">🏢 Gayrimenkul & Yatırım</option>
+                <option value="Yapı Malzemeleri & Tedarik">🧱 Yapı Malzemeleri & Tedarik</option>
+                <option value="Taşeron & Uygulama">🔨 Taşeron & Uygulama</option>
+                <option value="Elektrik & Mekanik (MEP)">⚡ Elektrik & Mekanik</option>
+                <option value="Finans & Bankacılık">💰 Finans & Bankacılık</option>
+                <option value="Hukuk & Danışmanlık">⚖️ Hukuk & Danışmanlık</option>
+                <option value="Bilişim & Teknoloji">💻 Bilişim & Teknoloji</option>
+                <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
+              </select>
+              <input type="text" id="card-sector-custom" placeholder="Özel sektör adı yazın..." style="display:none; margin-top:4px;">
             </div>
             <div class="form-group">
               <label>Cep Telefonu (GSM / WhatsApp)</label>
@@ -675,6 +829,7 @@
                 <option value="Mimar / Mühendis">Mimar / Mühendis</option>
                 <option value="Tedarikçi">Tedarikçi</option>
                 <option value="Taşeron">Taşeron</option>
+                <option value="İş Ortağı">İş Ortağı</option>
               </select>
             </div>
             <div class="form-group full">
@@ -695,12 +850,33 @@
         </form>
       </div>
 
-      <!-- Search Bar -->
-      <div class="search-bar">
-        <input type="text" id="search-cards" class="search-input" placeholder="Kartvizitlerde ara..." oninput="renderCards()">
-        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()">
-          CSV
+      <!-- Search & Export Bar -->
+      <div class="search-bar" style="margin-bottom: 8px;">
+        <input type="text" id="search-cards" class="search-input" placeholder="İsim, firma, unvan veya sektörde ara..." oninput="renderCards()">
+        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()" title="CSV Olarak İndir">
+          📥 CSV
         </button>
+      </div>
+
+      <!-- Sector Filter Container & View Mode Controls -->
+      <div class="sector-filter-container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+          <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
+            <span>🏢 Sektörel Seperasyon</span>
+            <span id="active-sector-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
+          </span>
+          <div style="display:flex; gap: 4px;">
+            <button type="button" id="btn-view-grouped" class="btn-view-mode active" onclick="setCardViewMode('grouped')" title="Sektörlere Göre Gruplanmış Görünüm">
+              📑 Gruplu
+            </button>
+            <button type="button" id="btn-view-flat" class="btn-view-mode" onclick="setCardViewMode('flat')" title="Tümünü Düz Liste Görünümü">
+              📋 Düz Liste
+            </button>
+          </div>
+        </div>
+        <div class="sector-pills-row" id="sector-pills">
+          <!-- Dynamic Sector Pills -->
+        </div>
       </div>
 
       <!-- Cards List -->
@@ -1346,17 +1522,18 @@
       try { localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(del)); } catch(e) {}
     }
 
-    // Otomatik Sürüm Kontrolü - Tüm tarayıcılarda eski önbelleği temizleyip sıfır tertemiz sayfa açma
-    const APP_BUILD_VERSION = "2026-09-24_v7_clean_production";
+    // Otomatik Sürüm Kontrolü
+    const APP_BUILD_VERSION = "2026-09-28_v8_sector_separation";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
-      localStorage.removeItem(WEBHOOK_STORAGE_KEY);
-      localStorage.removeItem('yg_cards_lite');
-      localStorage.removeItem('yg_projects_lite');
-      localStorage.removeItem('yg_accounts_lite');
-      localStorage.removeItem('yg_docs_lite');
-      localStorage.removeItem('yg_stock_lite');
-      localStorage.removeItem('yg_invoices_lite');
-      localStorage.removeItem(DELETED_STORAGE_KEY);
+      try {
+        const existingCards = JSON.parse(localStorage.getItem('yg_cards_lite') || '[]');
+        if (Array.isArray(existingCards) && existingCards.length > 0) {
+          existingCards.forEach(c => {
+            if (!c.sector) c.sector = 'İnşaat & Taahhüt';
+          });
+          localStorage.setItem('yg_cards_lite', JSON.stringify(existingCards));
+        }
+      } catch(e) {}
       localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
     }
 
@@ -1452,8 +1629,8 @@ function onOpen() {
   try {
     var ui = SpreadsheetApp.getUi();
     ui.createMenu('🏛️ Yakın Grup')
-      .addItem('📌 Sheet Başlıklarını ve Formatlarını Oluştur', 'setupHeaders')
-      .addItem('🧹 Sayfaları Sıfırla (1 Temiz Örnek Bırak)', 'resetSheets')
+      .addItem('📌 Sheet Başlıklarını Oluştur', 'setupHeaders')
+      .addItem('🧹 Tüm Verileri Temizle (0 Kayıt - Temiz Başlangıç)', 'resetSheets')
       .addToUi();
   } catch(err) {
     Logger.log("onOpen UI context: " + err);
@@ -1463,33 +1640,27 @@ function onOpen() {
 var SHEET_CONFIGS = [
   {
     name: "Müşteriler",
-    headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Adres", "Notlar"],
-    sample: ["2026-09-24", "Bora Güzey", "Enka Data Solutions", "Data Center Sales Manager", "+90 (533) 210 93 28", "444 7 339", "bora.guzey@enka.com", "Müşteri", "Balmumcu Mah., Barbaros Bulvarı No:142, Beşiktaş, İstanbul", "Veri merkezi ve enerji altyapı işleri için görüşüldü."]
+    headers: ["Tarih", "Ad Soyad", "Firma", "Unvan", "Sektör", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Adres", "Notlar"]
   },
   {
     name: "Alış Faturaları",
-    headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah (₺)", "KDV Tutarı (₺)", "Toplam Tutar (₺)", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Mal / Hizmet Açıklaması", "Özel Notlar"],
-    sample: ["2026-09-24", "2026-09-14", "EFA2026000004128", "Betonsa Hazır Beton A.Ş.", "1892019482", "Bağdat Caddesi Kentsel Dönüşüm", 124000, 24800, 148800, "2026-10-14", "Bekliyor", "Banka Havale / EFT", "C35/45 Hazır Beton dökümü (40 m³)", "1. hakediş beton dökümü faturası"]
+    headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah (₺)", "KDV Tutarı (₺)", "Toplam Tutar (₺)", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Mal / Hizmet Açıklaması", "Özel Notlar"]
   },
   {
     name: "Proje Dökümanları",
-    headers: ["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Evrak Tarihi", "Geçerlilik Tarihi", "Belge / Link URL", "Evrak Notu / Açıklama"],
-    sample: ["2026-09-24", "Kadıköy — Onaylı Mimari Proje (Rev-04)", "Mimari Proje", "Bağdat Caddesi Kentsel Dönüşüm", "2026-08-10", "2028-08-10", "https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing", "Kadıköy Belediyesi İmar Müdürlüğü onaylı revize paftalar"]
+    headers: ["Kayıt Tarihi", "Evrak Başlığı", "Evrak / Proje Türü", "İlgili Proje", "Evrak Tarihi", "Geçerlilik Tarihi", "Belge / Link URL", "Evrak Notu / Açıklama"]
   },
   {
     name: "Stok",
-    headers: ["Tarih", "Stok Kodu", "Malzeme Adı", "Kategori", "Mevcut Miktar", "Birim", "Birim Fiyat (₺)", "Toplam Değer (₺)", "Depo / Konum", "Durum", "Notlar / Detay"],
-    sample: ["2026-09-24", "STK-DM-14", "B420C İnşaat Demiri Ø14mm", "Demir & Çelik", 48, "Ton", "27.800 ₺", "1.334.400 ₺", "Kadıköy Şantiye Sahası", "Yeterli", "İçdaş marka nervürlü inşaat demiri, fabrika sertifikalı"]
+    headers: ["Tarih", "Stok Kodu", "Malzeme Adı", "Kategori", "Mevcut Miktar", "Birim", "Birim Fiyat (₺)", "Toplam Değer (₺)", "Depo / Konum", "Durum", "Notlar / Detay"]
   },
   {
     name: "İnşaat Projeleri",
-    headers: ["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "Başlangıç Tarihi", "Teslim Tarihi", "İlerleme", "Durum", "Proje Notları"],
-    sample: ["2026-09-24", "PRJ-2026-01", "Bağdat Caddesi Kentsel Dönüşüm", "Kentsel Dönüşüm", "Kat Malikleri", "Kadıköy / İstanbul", "45.000.000 ₺", "2026-01-15", "2027-06-30", "%65", "Kaba İnşaat", "Zemin kat betonarme imalatları sürüyor."]
+    headers: ["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "Başlangıç Tarihi", "Teslim Tarihi", "İlerleme", "Durum", "Proje Notları"]
   },
   {
     name: "Cari Kartları",
-    headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "E-Posta", "Vergi Dairesi", "VKN / TCKN", "Açık Adres", "Notlar / IBAN"],
-    sample: ["2026-09-24", "Betonsa Hazır Beton A.Ş.", "Tedarikçi", "Cemil Arslan", "+90 (216) 555 88 00", "siparis@betonsa.com.tr", "Marmara Kurumlar V.D.", "1892019482", "Ayazağa Mah. Kemerburgaz Cad. No:12, Sarıyer / İstanbul", "Hazır beton alımları 45 gün vadeli cari anlaşma."]
+    headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "E-Posta", "Vergi Dairesi", "VKN / TCKN", "Açık Adres", "Notlar / IBAN"]
   }
 ];
 
@@ -1515,7 +1686,7 @@ function setupHeaders() {
   });
 }
 
-// Tüm sayfaları temizleyip sadece başlıklar ve 1 temiz örnek bırakan fonksiyon
+// Tüm sayfaları temizleyip sadece başlıkları bırakan fonksiyon (0 Kayıt)
 function resetSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   SHEET_CONFIGS.forEach(function(cfg) {
@@ -1532,7 +1703,6 @@ function resetSheets() {
       .setFontColor("#ffffff")
       .setHorizontalAlignment("center");
     s.setFrozenRows(1);
-    s.appendRow(cfg.sample);
     for (var c = 1; c <= cfg.headers.length; c++) {
       try { s.autoResizeColumn(c); } catch(err) {}
     }
@@ -1816,10 +1986,11 @@ function doPost(e) {
   "name": "Kişinin Adı Soyadı",
   "company": "Şirket / Firma Ünvanı",
   "role": "Pozisyon veya Mesleği / Unvanı",
+  "sector": "İnşaat & Taahhüt / Mimarlık & Tasarım / Mühendislik & Müşavirlik / Gayrimenkul & Yatırım / Yapı Malzemeleri & Tedarik / Taşeron & Uygulama / Elektrik & Mekanik (MEP) / Finans & Bankacılık / Hukuk & Danışmanlık / Bilişim & Teknoloji / Diğer arasından en uygun olanı",
   "mobilePhone": "Kişisel Cep Telefonu veya GSM Numarası (örn: +90 533 210 93 28 veya 05xx)",
   "officePhone": "Şirket / Ofis / Santral / Sabit Hat Numarası (örn: 444 7 339 veya 0212/0216 santral)",
   "email": "E-Posta Adresi",
-  "category": "Müşteri / Yatırımcı / Mimar / Mühendis / Tedarikçi / Taşeron arasından en uygun olanı",
+  "category": "Müşteri / Yatırımcı / Mimar / Mühendis / Tedarikçi / Taşeron / İş Ortağı arasından en uygun olanı",
   "address": "Kartvizitte yer alan açık adres (İlçe, İl, Cadde, Mahalle, No)",
   "notes": "Kartvizitte yer alan özel notlar, web sitesi veya spesifik detaylar (adres hariç)"
 }`;
@@ -1958,6 +2129,24 @@ function doPost(e) {
               document.getElementById('card-office').value = geminiResult.phone;
             }
             if (geminiResult.email) document.getElementById('card-email').value = geminiResult.email;
+            if (geminiResult.sector && document.getElementById('card-sector')) {
+              const secSel = document.getElementById('card-sector');
+              // Option eşleşmesi var mı kontrol et, yoksa DİĞER yapıp özel inputa yaz
+              let matched = false;
+              for (let i = 0; i < secSel.options.length; i++) {
+                if (secSel.options[i].value.toLowerCase().includes(geminiResult.sector.toLowerCase()) || 
+                    geminiResult.sector.toLowerCase().includes(secSel.options[i].value.toLowerCase())) {
+                  secSel.selectedIndex = i;
+                  matched = true;
+                  break;
+                }
+              }
+              if (!matched) {
+                secSel.value = 'DİĞER';
+                const cust = document.getElementById('card-sector-custom');
+                if (cust) { cust.style.display = 'block'; cust.value = geminiResult.sector; }
+              }
+            }
             if (geminiResult.category && document.getElementById('card-category')) {
               document.getElementById('card-category').value = geminiResult.category;
             }
@@ -2145,75 +2334,188 @@ function doPost(e) {
       if (notesField && !notesField.value) {
         notesField.value = "Taranma Tarihi: " + new Date().toLocaleDateString('tr-TR');
       }
-    }
 
-    function saveCard(e) {
-      e.preventDefault();
-      const mobileVal = document.getElementById('card-mobile').value.trim();
-      const officeVal = document.getElementById('card-office').value.trim();
-
-      const newC = {
-        id: 'c_' + Date.now(),
-        name: document.getElementById('card-name').value.trim(),
-        company: document.getElementById('card-company').value.trim(),
-        role: document.getElementById('card-role').value.trim(),
-        mobile: mobileVal,
-        office: officeVal,
-        phone: mobileVal || officeVal, // geriye dönük uyumluluk
-        email: document.getElementById('card-email').value.trim(),
-        category: document.getElementById('card-category').value,
-        address: document.getElementById('card-address').value.trim(),
-        notes: document.getElementById('card-notes').value.trim(),
-        date: new Date().toISOString().split('T')[0]
-      };
-
-      cards.unshift(newC);
-      setStore('yg_cards_lite', cards);
-
-      unmarkDeleted('Müşteriler', newC.name);
-      if (newC.mobile) unmarkDeleted('Müşteriler', newC.mobile);
-      if (newC.office) unmarkDeleted('Müşteriler', newC.office);
-      if (newC.email) unmarkDeleted('Müşteriler', newC.email);
-
-      // Auto Send to Google Sheets Webhook (10 sütun: Adres ve Notlar ayrı kolonlarda)
-      postToWebhook('Müşteriler', [
-        newC.date, newC.name, newC.company, newC.role, newC.mobile, newC.office, newC.email, newC.category, newC.address, newC.notes
-      ]);
-
-      renderCards();
-      document.getElementById('card-form').reset();
-      document.getElementById('card-preview').style.display = 'none';
-      document.getElementById('ocr-loader').style.display = 'none';
-      showToast('Kartvizit kaydedildi & Sheets ile senkronize!', '📇');
-    }
-
-    function renderCards() {
-      const q = document.getElementById('search-cards').value.toLowerCase().trim();
-      const list = document.getElementById('cards-list');
-
-      const filtered = cards.filter(c => !q || (c.name && c.name.toLowerCase().includes(q)) || (c.company && c.company.toLowerCase().includes(q)) || (c.phone && c.phone.includes(q)));
-
-      if (filtered.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Kayıt bulunamadı.</div>`;
-        return;
+      // 8. Sektör Tespiti (Akıllı Kural Motoru)
+      let detectedSector = '';
+      const textUpper = text.toUpperCase();
+      if (textUpper.includes('MİMAR') || textUpper.includes('MIMAR') || textUpper.includes('İÇ MİMAR') || textUpper.includes('IC MIMAR') || textUpper.includes('DESIGN') || textUpper.includes('TASARIM')) {
+        detectedSector = 'Mimarlık & Tasarım';
+      } else if (textUpper.includes('MÜHENDİS') || textUpper.includes('MUHENDIS') || textUpper.includes('STATİK') || textUpper.includes('JEOTEKNİK') || textUpper.includes('DENETİM') || textUpper.includes('MÜŞAVİR')) {
+        detectedSector = 'Mühendislik & Müşavirlik';
+      } else if (textUpper.includes('GAYRİMENKUL') || textUpper.includes('GAYRIMENKUL') || textUpper.includes('EMLAK') || textUpper.includes('REAL ESTATE') || textUpper.includes('PORTFÖY')) {
+        detectedSector = 'Gayrimenkul & Yatırım';
+      } else if (textUpper.includes('BETON') || textUpper.includes('ÇİMENTO') || textUpper.includes('DEMİR') || textUpper.includes('ÇELİK') || textUpper.includes('SERAMİK') || textUpper.includes('YALITIM') || textUpper.includes('BOYA') || textUpper.includes('MERMER') || textUpper.includes('MADEN')) {
+        detectedSector = 'Yapı Malzemeleri & Tedarik';
+      } else if (textUpper.includes('ELEKTRİK') || textUpper.includes('ELEKTRIK') || textUpper.includes('MEKANİK') || textUpper.includes('MEKANIK') || textUpper.includes('HVAC') || textUpper.includes('TESİSAT') || textUpper.includes('ENERJİ')) {
+        detectedSector = 'Elektrik & Mekanik (MEP)';
+      } else if (textUpper.includes('FAKTORİNG') || textUpper.includes('FAKTORING') || textUpper.includes('BANK') || textUpper.includes('BANKA') || textUpper.includes('FİNANS') || textUpper.includes('LEASING')) {
+        detectedSector = 'Finans & Bankacılık';
+      } else if (textUpper.includes('AVUKAT') || textUpper.includes('HUKUK') || textUpper.includes('LAW') || textUpper.includes('DANIŞMANLIK') || textUpper.includes('SMMM') || textUpper.includes('YMM')) {
+        detectedSector = 'Hukuk & Danışmanlık';
+      } else if (textUpper.includes('YAZILIM') || textUpper.includes('BİLİŞİM') || textUpper.includes('TEKNOLOJİ') || textUpper.includes('SOFTWARE') || textUpper.includes('DATA')) {
+        detectedSector = 'Bilişim & Teknoloji';
+      } else if (textUpper.includes('İNŞAAT') || textUpper.includes('INSAAT') || textUpper.includes('TAAHHÜT') || textUpper.includes('TAAHHUT') || textUpper.includes('YAPI') || textUpper.includes('ŞANTİYE') || textUpper.includes('MÜTEAHHİT')) {
+        detectedSector = 'İnşaat & Taahhüt';
+      } else if (textUpper.includes('TAŞERON') || textUpper.includes('TASERON') || textUpper.includes('UYGULAMA')) {
+        detectedSector = 'Taşeron & Uygulama';
       }
 
-      list.innerHTML = filtered.map(c => `
-        <div class="card-item">
+      if (detectedSector) {
+        const secSelect = document.getElementById('card-sector');
+        if (secSelect) {
+          secSelect.value = detectedSector;
+        }
+      }
+    }
+
+    /* ================================================================
+       SEKTÖREL SEPERASYON & GRUPLAMA MOTORU
+       ================================================================ */
+    let activeSectorFilter = 'ALL';
+    let cardViewMode = 'grouped'; // 'grouped' veya 'flat'
+
+    const STANDARD_SECTORS = [
+      { name: "İnşaat & Taahhüt", icon: "🏗️", css: "badge-sector-insaat" },
+      { name: "Mimarlık & Tasarım", icon: "📐", css: "badge-sector-mimarlik" },
+      { name: "Mühendislik & Müşavirlik", icon: "⚙️", css: "badge-sector-muhendislik" },
+      { name: "Gayrimenkul & Yatırım", icon: "🏢", css: "badge-sector-gayrimenkul" },
+      { name: "Yapı Malzemeleri & Tedarik", icon: "🧱", css: "badge-sector-malzeme" },
+      { name: "Taşeron & Uygulama", icon: "🔨", css: "badge-sector-taseron" },
+      { name: "Elektrik & Mekanik (MEP)", icon: "⚡", css: "badge-sector-mep" },
+      { name: "Finans & Bankacılık", icon: "💰", css: "badge-sector-finans" },
+      { name: "Hukuk & Danışmanlık", icon: "⚖️", css: "badge-sector-hukuk" },
+      { name: "Bilişim & Teknoloji", icon: "💻", css: "badge-sector-bilisim" },
+      { name: "Diğer", icon: "📦", css: "badge-sector" }
+    ];
+
+    function getSectorMeta(secName) {
+      if (!secName) return { name: "Genel", icon: "🏢", css: "badge-sector" };
+      const trimmed = secName.trim();
+      const found = STANDARD_SECTORS.find(s => s.name.toLowerCase() === trimmed.toLowerCase());
+      if (found) return found;
+      const lower = trimmed.toLowerCase();
+      if (lower.includes('inşaat') || lower.includes('insaat') || lower.includes('taahhüt')) return STANDARD_SECTORS[0];
+      if (lower.includes('mimar') || lower.includes('tasarım')) return STANDARD_SECTORS[1];
+      if (lower.includes('mühendis') || lower.includes('muhendis') || lower.includes('statik')) return STANDARD_SECTORS[2];
+      if (lower.includes('gayrimenkul') || lower.includes('emlak') || lower.includes('yatırım')) return STANDARD_SECTORS[3];
+      if (lower.includes('malzeme') || lower.includes('beton') || lower.includes('demir') || lower.includes('tedarik')) return STANDARD_SECTORS[4];
+      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('uygulama')) return STANDARD_SECTORS[5];
+      if (lower.includes('elektrik') || lower.includes('mekanik') || lower.includes('mep') || lower.includes('tesisat')) return STANDARD_SECTORS[6];
+      if (lower.includes('finans') || lower.includes('banka') || lower.includes('faktoring')) return STANDARD_SECTORS[7];
+      if (lower.includes('hukuk') || lower.includes('avukat') || lower.includes('müşavir')) return STANDARD_SECTORS[8];
+      if (lower.includes('bilişim') || lower.includes('yazılım') || lower.includes('teknoloji')) return STANDARD_SECTORS[9];
+      return { name: trimmed, icon: "🏷️", css: "badge-sector" };
+    }
+
+    function toggleCustomSector(sel) {
+      const cust = document.getElementById('card-sector-custom');
+      if (!cust) return;
+      if (sel.value === 'DİĞER') {
+        cust.style.display = 'block';
+        cust.focus();
+      } else {
+        cust.style.display = 'none';
+      }
+    }
+
+    function getSelectedSector() {
+      const sel = document.getElementById('card-sector');
+      if (!sel) return 'Genel';
+      if (sel.value === 'DİĞER') {
+        const cust = document.getElementById('card-sector-custom');
+        return (cust && cust.value.trim()) ? cust.value.trim() : 'Diğer';
+      }
+      return sel.value || 'Genel';
+    }
+
+    function setCardViewMode(mode) {
+      cardViewMode = mode;
+      document.querySelectorAll('.btn-view-mode').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(mode === 'grouped' ? 'btn-view-grouped' : 'btn-view-flat');
+      if (activeBtn) activeBtn.classList.add('active');
+      renderCards();
+    }
+
+    function filterBySector(sec) {
+      activeSectorFilter = sec;
+      renderCards();
+    }
+
+    function renderSectorPills() {
+      const container = document.getElementById('sector-pills');
+      if (!container) return;
+
+      const q = (document.getElementById('search-cards') ? document.getElementById('search-cards').value : '').toLowerCase().trim();
+      const baseFiltered = cards.filter(c => !q || 
+        (c.name && c.name.toLowerCase().includes(q)) || 
+        (c.company && c.company.toLowerCase().includes(q)) || 
+        (c.phone && c.phone.includes(q)) ||
+        (c.role && c.role.toLowerCase().includes(q)) ||
+        (c.sector && c.sector.toLowerCase().includes(q)) ||
+        (c.notes && c.notes.toLowerCase().includes(q))
+      );
+
+      const counts = {};
+      baseFiltered.forEach(c => {
+        const s = (c.sector || 'Genel').trim();
+        counts[s] = (counts[s] || 0) + 1;
+      });
+
+      let pillsHtml = `
+        <button type="button" class="sector-pill ${activeSectorFilter === 'ALL' ? 'active' : ''}" onclick="filterBySector('ALL')">
+          <span>🌐 Tüm Sektörler</span>
+          <span class="pill-badge">${baseFiltered.length}</span>
+        </button>
+      `;
+
+      const presentSectors = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+      const displaySectors = new Set(presentSectors);
+
+      if (presentSectors.length === 0) {
+        STANDARD_SECTORS.slice(0, 6).forEach(s => displaySectors.add(s.name));
+      }
+
+      displaySectors.forEach(secName => {
+        const meta = getSectorMeta(secName);
+        const cnt = counts[secName] || 0;
+        const isActive = activeSectorFilter.toLowerCase() === secName.toLowerCase();
+        pillsHtml += `
+          <button type="button" class="sector-pill ${isActive ? 'active' : ''}" onclick="filterBySector('${escapeHtml(secName)}')">
+            <span>${meta.icon} ${escapeHtml(secName)}</span>
+            <span class="pill-badge">${cnt}</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = pillsHtml;
+
+      const countEl = document.getElementById('active-sector-count');
+      if (countEl) {
+        countEl.textContent = activeSectorFilter === 'ALL' ? `${baseFiltered.length} Toplam` : `${counts[activeSectorFilter] || 0} Kayıt`;
+      }
+    }
+
+    function renderCardItemHtml(c) {
+      const secMeta = getSectorMeta(c.sector);
+      return `
+        <div class="card-item" id="card-${c.id}">
           <div class="card-item-header">
             <div style="display:flex; gap: 10px; align-items: center;">
               <div class="card-item-avatar">${c.name ? c.name.charAt(0).toUpperCase() : 'K'}</div>
               <div>
                 <div class="card-item-title">${escapeHtml(c.name)}</div>
                 <div class="card-item-sub">${escapeHtml(c.company)}</div>
-                <div class="card-item-meta">${escapeHtml(c.role || c.category)}</div>
+                <div class="card-item-meta">${escapeHtml(c.role || '')}</div>
               </div>
             </div>
-            <span class="badge badge-green">${escapeHtml(c.category)}</span>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+              <span class="badge ${secMeta.css}" title="Sektör: ${escapeHtml(c.sector || 'Genel')}">${secMeta.icon} ${escapeHtml(c.sector || 'Genel')}</span>
+              <span class="badge badge-green">${escapeHtml(c.category || 'Müşteri')}</span>
+            </div>
           </div>
 
           ${(c.mobile || c.office || c.phone) ? `
-            <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 4px 0; font-size: 0.75rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 6px 0; font-size: 0.75rem;">
               ${c.mobile ? `<span style="background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:6px; border:1px solid #a7f3d0; font-weight:600;">📱 Cep: ${escapeHtml(c.mobile)}</span>` : ''}
               ${c.office ? `<span style="background:#f1f5f9; color:#334155; padding:2px 8px; border-radius:6px; border:1px solid #cbd5e1; font-weight:600;">☎️ Ofis: ${escapeHtml(c.office)}</span>` : ''}
               ${(!c.mobile && !c.office && c.phone) ? `<span style="background:#f1f5f9; color:#334155; padding:2px 8px; border-radius:6px; border:1px solid #cbd5e1; font-weight:600;">📞 Tel: ${escapeHtml(c.phone)}</span>` : ''}
@@ -2233,12 +2535,168 @@ function doPost(e) {
             ` : '')}
             ${c.office ? `<a href="tel:${c.office.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">☎️ Ofisi Ara</a>` : ''}
             ${c.email ? `<a href="mailto:${c.email}" class="btn btn-secondary btn-sm">✉️ E-Posta</a>` : ''}
+            <button class="btn btn-secondary btn-sm" onclick="changeCardSector('${c.id}')" title="Sektörü Değiştir / Düzenle">🏢 Sektör</button>
             <button class="btn btn-secondary btn-sm" onclick="showCardQr('${c.id}')">📱 QR</button>
             <button class="btn btn-secondary btn-sm" onclick="downloadVcf('${c.id}')">⬇️ vCard</button>
             <button class="btn btn-secondary btn-sm" style="color: #ef4444; margin-left: auto;" onclick="deleteCard('${c.id}')">🗑️</button>
           </div>
         </div>
-      `).join('');
+      `;
+    }
+
+    function changeCardSector(id) {
+      const c = cards.find(x => x.id === id);
+      if (!c) return;
+      const current = c.sector || 'İnşaat & Taahhüt';
+      const promptText = `"${c.name}" (${c.company}) kartvizitinin sektörünü güncelleyin:\n\nÖrnekler:\n• İnşaat & Taahhüt\n• Mimarlık & Tasarım\n• Mühendislik & Müşavirlik\n• Gayrimenkul & Yatırım\n• Yapı Malzemeleri & Tedarik\n• Taşeron & Uygulama\n• Elektrik & Mekanik (MEP)\n• Finans & Bankacılık\n• Hukuk & Danışmanlık\n• Bilişim & Teknoloji\n• Diğer`;
+      const newSec = prompt(promptText, current);
+      if (newSec && newSec.trim() && newSec.trim() !== current) {
+        c.sector = newSec.trim();
+        setStore('yg_cards_lite', cards);
+        renderCards();
+        postToWebhook('Müşteriler', [
+          c.date || new Date().toISOString().split('T')[0],
+          c.name, c.company, c.role || '', c.sector,
+          c.mobile || '', c.office || '', c.email || '',
+          c.category || 'Müşteri', c.address || '', c.notes || ''
+        ]);
+        showToast(`Sektör güncellendi: ${c.sector}`, '🏢');
+      }
+    }
+
+    function saveCard(e) {
+      e.preventDefault();
+      const mobileVal = document.getElementById('card-mobile').value.trim();
+      const officeVal = document.getElementById('card-office').value.trim();
+      const sectorVal = getSelectedSector();
+
+      const newC = {
+        id: 'c_' + Date.now(),
+        name: document.getElementById('card-name').value.trim(),
+        company: document.getElementById('card-company').value.trim(),
+        role: document.getElementById('card-role').value.trim(),
+        sector: sectorVal,
+        mobile: mobileVal,
+        office: officeVal,
+        phone: mobileVal || officeVal,
+        email: document.getElementById('card-email').value.trim(),
+        category: document.getElementById('card-category').value,
+        address: document.getElementById('card-address').value.trim(),
+        notes: document.getElementById('card-notes').value.trim(),
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      cards.unshift(newC);
+      setStore('yg_cards_lite', cards);
+
+      unmarkDeleted('Müşteriler', newC.name);
+      if (newC.mobile) unmarkDeleted('Müşteriler', newC.mobile);
+      if (newC.office) unmarkDeleted('Müşteriler', newC.office);
+      if (newC.email) unmarkDeleted('Müşteriler', newC.email);
+
+      // Auto Send to Google Sheets Webhook (11 sütun: Sektör ayrımı ile birlikte)
+      postToWebhook('Müşteriler', [
+        newC.date, newC.name, newC.company, newC.role, newC.sector, newC.mobile, newC.office, newC.email, newC.category, newC.address, newC.notes
+      ]);
+
+      renderCards();
+      document.getElementById('card-form').reset();
+      const custInput = document.getElementById('card-sector-custom');
+      if (custInput) custInput.style.display = 'none';
+      document.getElementById('card-preview').style.display = 'none';
+      document.getElementById('ocr-loader').style.display = 'none';
+      showToast(`Kartvizit (${newC.sector}) kaydedildi & Sheets ile senkronize!`, '📇');
+    }
+
+    function renderCards() {
+      const q = (document.getElementById('search-cards') ? document.getElementById('search-cards').value : '').toLowerCase().trim();
+      const list = document.getElementById('cards-list');
+      if (!list) return;
+
+      renderSectorPills();
+
+      let filtered = cards.filter(c => !q || 
+        (c.name && c.name.toLowerCase().includes(q)) || 
+        (c.company && c.company.toLowerCase().includes(q)) || 
+        (c.phone && c.phone.includes(q)) ||
+        (c.role && c.role.toLowerCase().includes(q)) ||
+        (c.sector && c.sector.toLowerCase().includes(q)) ||
+        (c.notes && c.notes.toLowerCase().includes(q))
+      );
+
+      if (activeSectorFilter !== 'ALL') {
+        filtered = filtered.filter(c => (c.sector || 'Genel').toLowerCase() === activeSectorFilter.toLowerCase());
+      }
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.85rem; background: #ffffff; border-radius: 12px; border: 1px dashed var(--border);">
+            <div style="font-size: 2rem; margin-bottom: 6px;">📇</div>
+            <div style="font-weight: 600; color: var(--navy); margin-bottom: 4px;">
+              ${activeSectorFilter !== 'ALL' ? `"${escapeHtml(activeSectorFilter)}" sektöründe kayıt bulunamadı.` : 'Henüz kartvizit kaydı bulunmuyor.'}
+            </div>
+            <div style="font-size: 0.75rem; color: var(--muted);">Yeni bir kartvizit tarayarak veya formu doldurarak ekleyebilirsiniz.</div>
+            ${activeSectorFilter !== 'ALL' ? `<button class="btn btn-secondary btn-sm" style="margin-top: 10px;" onclick="filterBySector('ALL')">🌐 Tüm Sektörleri Göster</button>` : ''}
+          </div>
+        `;
+        return;
+      }
+
+      // Grouped View
+      if (cardViewMode === 'grouped' && activeSectorFilter === 'ALL') {
+        const groups = {};
+        filtered.forEach(c => {
+          const sec = (c.sector || 'Genel').trim();
+          if (!groups[sec]) groups[sec] = [];
+          groups[sec].push(c);
+        });
+
+        const sortedSecNames = Object.keys(groups).sort((a,b) => groups[b].length - groups[a].length);
+
+        let html = '';
+        sortedSecNames.forEach(secName => {
+          const secCards = groups[secName];
+          const meta = getSectorMeta(secName);
+          html += `
+            <div class="sector-group-block">
+              <div class="sector-separator-header">
+                <div class="sector-title-wrap">
+                  <span style="font-size: 1.15rem;">${meta.icon}</span>
+                  <span>${escapeHtml(secName)}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="sector-count-tag">${secCards.length} Kartvizit</span>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 0.7rem;" onclick="filterBySector('${escapeHtml(secName)}')">
+                    Yalnızca Bu Sektör 🔍
+                  </button>
+                </div>
+              </div>
+              <div class="sector-cards-container">
+                ${secCards.map(c => renderCardItemHtml(c)).join('')}
+              </div>
+            </div>
+          `;
+        });
+
+        list.innerHTML = html;
+      } else {
+        // Flat List (or filtered to single sector)
+        let headerHtml = '';
+        if (activeSectorFilter !== 'ALL') {
+          const meta = getSectorMeta(activeSectorFilter);
+          headerHtml = `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:8px 12px; margin-bottom:12px; font-size:0.8rem; color:#065f46;">
+              <span style="font-weight:700;">${meta.icon} ${escapeHtml(activeSectorFilter)} Sektörü (${filtered.length} Kartvizit)</span>
+              <button class="btn btn-secondary btn-sm" style="padding:2px 8px; font-size:0.7rem;" onclick="filterBySector('ALL')">✕ Filtreyi Kaldır</button>
+            </div>
+          `;
+        }
+        list.innerHTML = headerHtml + `
+          <div class="sector-cards-container">
+            ${filtered.map(c => renderCardItemHtml(c)).join('')}
+          </div>
+        `;
+      }
     }
 
     function deleteCard(id) {
@@ -2264,15 +2722,16 @@ function doPost(e) {
       const c = cards.find(x => x.id === id);
       if (!c) return;
       document.getElementById('qr-title').textContent = c.name;
-      document.getElementById('qr-sub').textContent = `${c.company} — ${c.mobile || c.office || c.phone || ''}`;
+      document.getElementById('qr-sub').textContent = `${c.company} — ${c.sector || ''} — ${c.mobile || c.office || c.phone || ''}`;
 
       const cellLine = c.mobile ? `TEL;TYPE=CELL:${c.mobile}\n` : '';
       const workLine = c.office ? `TEL;TYPE=WORK:${c.office}\n` : '';
       const fallbackLine = (!c.mobile && !c.office && c.phone) ? `TEL:${c.phone}\n` : '';
       const adrLine = c.address ? `ADR;TYPE=WORK:;;${c.address.replace(/[\r\n]+/g, ' ')};;;;\n` : '';
       const noteLine = c.notes ? `NOTE:${c.notes.replace(/[\r\n]+/g, ' ')}\n` : '';
+      const catLine = c.sector ? `CATEGORIES:${c.sector}\n` : '';
 
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\n${adrLine}${noteLine}END:VCARD`;
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${catLine}${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\n${adrLine}${noteLine}END:VCARD`;
       const box = document.getElementById('qrcode-box');
       box.innerHTML = '';
       new QRCode(box, { text: vcard, width: 160, height: 160, colorDark: "#0b2545" });
@@ -2287,8 +2746,9 @@ function doPost(e) {
       const fallbackLine = (!c.mobile && !c.office && c.phone) ? `TEL:${c.phone}\n` : '';
       const adrLine = c.address ? `ADR;TYPE=WORK:;;${c.address.replace(/[\r\n]+/g, ' ')};;;;\n` : '';
       const noteLine = c.notes ? `NOTE:${c.notes.replace(/[\r\n]+/g, ' ')}\n` : '';
+      const catLine = c.sector ? `CATEGORIES:${c.sector}\n` : '';
 
-      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\n${adrLine}${noteLine}END:VCARD`;
+      const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${c.name}\nORG:${c.company}\nTITLE:${c.role||''}\n${catLine}${cellLine}${workLine}${fallbackLine}EMAIL:${c.email||''}\n${adrLine}${noteLine}END:VCARD`;
       const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -2299,10 +2759,10 @@ function doPost(e) {
 
     function exportCardsCsv() {
       const rows = [
-        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Adres", "Notlar"],
-        ...cards.map(c => [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || ''])
+        ["Tarih", "Ad Soyad", "Firma", "Unvan", "Sektör", "Cep Telefonu", "Ofis / Sabit Tel", "E-Posta", "Kategori", "Adres", "Notlar"],
+        ...cards.map(c => [c.date, c.name, c.company, c.role, c.sector || 'Genel', c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || ''])
       ];
-      downloadCsv("Yakin_Grup_Musteriler.csv", rows);
+      downloadCsv("Yakin_Grup_Musteriler_Kartvizitler.csv", rows);
     }
 
     /* ================================================================
@@ -3130,7 +3590,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     function syncAllToGoogleSheets() {
       showToast('Sheets senkronizasyonu başladı...', '🔄');
-      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || '']));
+      cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.sector || 'İnşaat & Taahhüt', c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || '']));
       projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate || '', p.endDate || '', `%${p.progress}`, p.status, p.notes || '']));
       accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email || '', a.taxOffice || '', a.taxNo || a.tax || '', a.address || '', a.notes || '']));
       invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc || '', inv.notes || '']));
@@ -3207,6 +3667,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                   name: cleanText(r['Ad Soyad']),
                   company: cleanText(r['Firma']),
                   role: cleanText(r['Unvan']),
+                  sector: cleanText(r['Sektör']) || 'İnşaat & Taahhüt',
                   mobile: mob,
                   office: off,
                   phone: mob || off,
