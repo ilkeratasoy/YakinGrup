@@ -511,6 +511,24 @@
     .badge-sector-hukuk { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
     .badge-sector-bilisim { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
 
+    /* Invoice Category Badges & Styles */
+    .badge-inv-cat {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      font-weight: 700;
+      gap: 3px;
+    }
+    .badge-inv-akaryakit { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .badge-inv-gida { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-inv-kirtasiye { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-inv-yapi { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+    .badge-inv-taseron { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+    .badge-inv-enerji { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .badge-inv-nakliye { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .badge-inv-bilisim { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .badge-inv-danismanlik { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+
     /* Sector Filter Container & Pills */
     .sector-filter-container {
       background: #ffffff;
@@ -945,11 +963,32 @@
         </button>
       </div>
 
-      <!-- Filter Pills -->
-      <div style="display: flex; gap: 6px; margin-bottom: 0.85rem; overflow-x: auto; padding-bottom: 2px;">
+      <!-- Status Filter Pills -->
+      <div style="display: flex; gap: 6px; margin-bottom: 0.75rem; overflow-x: auto; padding-bottom: 2px;">
         <button class="filter-pill active" onclick="setInvoiceFilter('all', this)">Tümü</button>
         <button class="filter-pill" onclick="setInvoiceFilter('Bekliyor', this)">⏳ Bekleyenler</button>
         <button class="filter-pill" onclick="setInvoiceFilter('Ödendi', this)">✅ Ödenenler</button>
+      </div>
+
+      <!-- Invoice Category Separation Container -->
+      <div class="sector-filter-container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+          <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
+            <span>🧾 Harcama / Gider Seperasyonu</span>
+            <span id="active-inv-category-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
+          </span>
+          <div style="display:flex; gap: 4px;">
+            <button type="button" id="btn-inv-view-grouped" class="btn-view-mode active" onclick="setInvoiceViewMode('grouped')" title="Kategoriye Göre Gruplanmış Ayrıştırma">
+              📑 Gruplu
+            </button>
+            <button type="button" id="btn-inv-view-flat" class="btn-view-mode" onclick="setInvoiceViewMode('flat')" title="Düz Liste Görünümü">
+              📋 Düz Liste
+            </button>
+          </div>
+        </div>
+        <div class="sector-pills-row" id="invoice-category-pills">
+          <!-- Dynamic Category Pills with counts & amounts -->
+        </div>
       </div>
 
       <div class="items-list" id="invoices-list"></div>
@@ -1251,6 +1290,23 @@
             <input type="text" id="inv-no" required placeholder="Örn: GIB2026000001234">
           </div>
 
+          <div class="form-group full">
+            <label>🏷️ Harcama / Gider Kategorisi *</label>
+            <select id="inv-category" onchange="toggleCustomInvoiceCategory(this)">
+              <option value="Akaryakıt & Ulaşım">⛽ Akaryakıt & Ulaşım (Benzin, Mazot, Araç)</option>
+              <option value="Gıda & Mutfak">🍏 Gıda & Mutfak (Market, Yemek, Şantiye)</option>
+              <option value="Kırtasiye & Ofis">📎 Kırtasiye & Ofis (Kağıt, Toner, Büro)</option>
+              <option value="İnşaat & Yapı Malzemeleri">🧱 İnşaat & Yapı Malzemeleri</option>
+              <option value="Taşeron & İşçilik">🔨 Taşeron & İşçilik / Montaj</option>
+              <option value="Elektrik, Su & Abonelik">⚡ Elektrik, Su, Doğalgaz & İletişim</option>
+              <option value="Nakliye & Hafriyat">🚚 Nakliye, Hafriyat & Lojistik</option>
+              <option value="Bilişim & Yazılım">💻 Bilişim, Yazılım & Donanım</option>
+              <option value="Danışmanlık & Hizmet">⚖️ Danışmanlık, Müşavirlik & Hizmet</option>
+              <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
+            </select>
+            <input type="text" id="inv-category-custom" placeholder="Özel kategori adı yazın..." style="display:none; margin-top:4px;">
+          </div>
+
           <div class="form-group">
             <label>Fatura Tarihi *</label>
             <input type="date" id="inv-date" required>
@@ -1522,8 +1578,41 @@
       try { localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(del)); } catch(e) {}
     }
 
+    // Akıllı Harcama / Fatura Kategorisi Çıkarıcı
+    function inferInvoiceCategory(vendor = '', desc = '') {
+      const text = ((vendor || '') + ' ' + (desc || '')).toUpperCase();
+      if (text.includes('PETROL') || text.includes('OPET') || text.includes('SHELL') || text.includes('BP') || text.includes('TOTAL') || text.includes('AYTEMİZ') || text.includes('AYTEMIZ') || text.includes('AKARYAKIT') || text.includes('MAZOT') || text.includes('BENZIN') || text.includes('BENZİN') || text.includes('YAKIT') || text.includes('OTOGAZ') || text.includes('LPG') || text.includes('HGS') || text.includes('OGS') || text.includes('OTOPARK') || text.includes('LASTİK') || text.includes('LASTIK') || text.includes('OTO')) {
+        return 'Akaryakıt & Ulaşım';
+      }
+      if (text.includes('YEMEK') || text.includes('GIDA') || text.includes('MARKET') || text.includes('MİGROS') || text.includes('MIGROS') || text.includes('CARREFOUR') || text.includes('BİM') || text.includes('BIM') || text.includes('A101') || text.includes('ŞOK') || text.includes('SOK') || text.includes('METRO GROSS') || text.includes('RESTORAN') || text.includes('LOKANTA') || text.includes('CAFE') || text.includes('KAFE') || text.includes('FIRIN') || text.includes('KASAP') || text.includes('SODEXO') || text.includes('MULTINET') || text.includes('TICKET') || text.includes('METROPOL') || text.includes('MUTFAK') || text.includes('İÇECEK') || text.includes('ICECEK')) {
+        return 'Gıda & Mutfak';
+      }
+      if (text.includes('KIRTASİYE') || text.includes('KIRTASIYE') || text.includes('D&R') || text.includes('OFİS') || text.includes('OFIS') || text.includes('BÜRO') || text.includes('BURO') || text.includes('KAĞIT') || text.includes('KAGIT') || text.includes('TONER') || text.includes('KARTUŞ') || text.includes('KARTUS') || text.includes('FOTOKOPİ') || text.includes('FOTOKOPI') || text.includes('MATBAA') || text.includes('OZALİT') || text.includes('OZALIT') || text.includes('KALEM') || text.includes('DEFTER')) {
+        return 'Kırtasiye & Ofis';
+      }
+      if (text.includes('BETON') || text.includes('DEMİR') || text.includes('DEMIR') || text.includes('ÇİMENTO') || text.includes('CIMENTO') || text.includes('SERAMİK') || text.includes('SERAMIK') || text.includes('ÇELİK') || text.includes('CELIK') || text.includes('TUĞLA') || text.includes('TUGLA') || text.includes('YALITIM') || text.includes('BOYA') || text.includes('HARÇ') || text.includes('HARC') || text.includes('ALÇI') || text.includes('ALCI') || text.includes('KİREÇ') || text.includes('KIREC') || text.includes('MERMER') || text.includes('GRANİT') || text.includes('GRANIT') || text.includes('AHŞAP') || text.includes('AHSAP') || text.includes('PARKE') || text.includes('YAPI') || text.includes('MADEN')) {
+        return 'İnşaat & Yapı Malzemeleri';
+      }
+      if (text.includes('TAŞERON') || text.includes('TASERON') || text.includes('İŞÇİLİK') || text.includes('ISCILIK') || text.includes('İSKELE') || text.includes('ISKELE') || text.includes('KALIP') || text.includes('SIVA') || text.includes('MONTAJ') || text.includes('HAKEDİŞ') || text.includes('HAKEDIS') || text.includes('YAPIM')) {
+        return 'Taşeron & İşçilik';
+      }
+      if (text.includes('ENERJİSA') || text.includes('ENERJISA') || text.includes('CK BOĞAZİÇİ') || text.includes('BEDAŞ') || text.includes('BEDAS') || text.includes('İSKİ') || text.includes('ISKI') || text.includes('İGDAŞ') || text.includes('IGDAS') || text.includes('ELEKTRİK') || text.includes('ELEKTRIK') || text.includes('DOĞALGAZ') || text.includes('DOGALGAZ') || text.includes('TURKCELL') || text.includes('VODAFONE') || text.includes('TÜRK TELEKOM') || text.includes('TURK TELEKOM') || text.includes('TTNET') || text.includes('İNTERNET') || text.includes('INTERNET') || text.includes('FATURA')) {
+        return 'Elektrik, Su & Abonelik';
+      }
+      if (text.includes('NAKLİYE') || text.includes('NAKLIYE') || text.includes('LOJİSTİK') || text.includes('LOJISTIK') || text.includes('HAFRİYAT') || text.includes('HAFRIYAT') || text.includes('VİNÇ') || text.includes('VINC') || text.includes('MOLOZ') || text.includes('KARGO') || text.includes('TAŞIMA') || text.includes('TASIMA') || text.includes('SEVKİYAT') || text.includes('SEVKIYAT')) {
+        return 'Nakliye & Hafriyat';
+      }
+      if (text.includes('YAZILIM') || text.includes('BİLİŞİM') || text.includes('BILISIM') || text.includes('HOSTING') || text.includes('DOMAIN') || text.includes('SUNUCU') || text.includes('CLOUD') || text.includes('BİLGİSAYAR') || text.includes('BILGISAYAR') || text.includes('MICROSOFT') || text.includes('GOOGLE') || text.includes('APPLE')) {
+        return 'Bilişim & Yazılım';
+      }
+      if (text.includes('AVUKAT') || text.includes('HUKUK') || text.includes('MALİ MÜŞAVİR') || text.includes('MALI MUSAVIR') || text.includes('DENETİM') || text.includes('DENETIM') || text.includes('YMM') || text.includes('SMMM') || text.includes('DANIŞMANLIK') || text.includes('DANISMANLIK') || text.includes('NOTER') || text.includes('SİGORTA') || text.includes('SIGORTA')) {
+        return 'Danışmanlık & Hizmet';
+      }
+      return 'Diğer / Genel';
+    }
+
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-09-28_v8_sector_separation";
+    const APP_BUILD_VERSION = "2026-09-29_v9_invoice_separation";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const existingCards = JSON.parse(localStorage.getItem('yg_cards_lite') || '[]');
@@ -1532,6 +1621,14 @@
             if (!c.sector) c.sector = 'İnşaat & Taahhüt';
           });
           localStorage.setItem('yg_cards_lite', JSON.stringify(existingCards));
+        }
+
+        const existingInvoices = JSON.parse(localStorage.getItem('yg_invoices_lite') || '[]');
+        if (Array.isArray(existingInvoices) && existingInvoices.length > 0) {
+          existingInvoices.forEach(inv => {
+            if (!inv.category) inv.category = inferInvoiceCategory(inv.vendor, inv.desc);
+          });
+          localStorage.setItem('yg_invoices_lite', JSON.stringify(existingInvoices));
         }
       } catch(e) {}
       localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
@@ -1644,7 +1741,7 @@ var SHEET_CONFIGS = [
   },
   {
     name: "Alış Faturaları",
-    headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah (₺)", "KDV Tutarı (₺)", "Toplam Tutar (₺)", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Mal / Hizmet Açıklaması", "Özel Notlar"]
+    headers: ["Kayıt Tarihi", "Fatura Tarihi", "Fatura No", "Kategori", "Tedarikçi / Cari", "VKN / TCKN", "İlgili Proje", "KDV Hariç Matrah (₺)", "KDV Tutarı (₺)", "Toplam Tutar (₺)", "Vade Tarihi", "Ödeme Durumu", "Ödeme Yöntemi", "Mal / Hizmet Açıklaması", "Özel Notlar"]
   },
   {
     name: "Proje Dökümanları",
@@ -3007,10 +3104,11 @@ function doPost(e) {
   "taxNo": "Satıcının VKN (Vergi Kimlik No) veya TCKN",
   "invoiceNo": "Fatura Numarası (Örn: GIB2026..., ETTN veya Belge No)",
   "date": "Fatura Tarihi (YYYY-AA-GG formatında, örn: 2026-09-18)",
+  "category": "Akaryakıt & Ulaşım / Gıda & Mutfak / Kırtasiye & Ofis / İnşaat & Yapı Malzemeleri / Taşeron & İşçilik / Elektrik, Su & Abonelik / Nakliye & Hafriyat / Bilişim & Yazılım / Danışmanlık & Hizmet / Diğer arasından faturadaki mal ve hizmete en uygun olanı",
   "subtotal": 0.0,
   "vat": 0.0,
   "total": 0.0,
-  "description": "Faturadaki mal veya hizmetlerin kısa özeti (örn: Hazır beton, demir vb.)"
+  "description": "Faturadaki mal veya hizmetlerin kısa özeti (örn: Benzin, Mazot, Market, Kırtasiye, Hazır beton vb.)"
 }
 Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sayısal (float) olarak ver, TL simgesi veya harf koyma.`;
 
@@ -3062,8 +3160,28 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (invoiceData.total) document.getElementById('inv-total').value = parseFloat(invoiceData.total) || 0;
           if (invoiceData.description) document.getElementById('inv-desc').value = invoiceData.description;
 
-          loader.textContent = '✨ Yapay zeka faturayı kusursuz ayrıştırdı!';
-          showToast('Fatura bilgileri otomatik dolduruldu!', '🧾');
+          // Kategori Otomatik Seçimi (Yapay Zeka + Akıllı Çıkarım)
+          const detectedCat = invoiceData.category || inferInvoiceCategory(invoiceData.vendor, invoiceData.description);
+          const catSel = document.getElementById('inv-category');
+          if (catSel) {
+            let matched = false;
+            for (let i = 0; i < catSel.options.length; i++) {
+              if (catSel.options[i].value.toLowerCase().includes(detectedCat.toLowerCase()) || 
+                  detectedCat.toLowerCase().includes(catSel.options[i].value.toLowerCase())) {
+                catSel.selectedIndex = i;
+                matched = true;
+                break;
+              }
+            }
+            if (!matched) {
+              catSel.value = 'DİĞER';
+              const cust = document.getElementById('inv-category-custom');
+              if (cust) { cust.style.display = 'block'; cust.value = detectedCat; }
+            }
+          }
+
+          loader.textContent = '✨ Yapay zeka faturayı ve harcama kategorisini kusursuz ayrıştırdı!';
+          showToast(`Fatura (${detectedCat}) otomatik dolduruldu!`, '🧾');
         } else {
           loader.textContent = '⚠️ Fatura yapay zeka ile okunamadı, bilgileri elle kontrol ediniz.';
         }
@@ -3073,19 +3191,257 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       }
     }
 
+    /* ================================================================
+       FATURA / HARCAMA KATEGORİSİ SEPERASYON MOTORU
+       ================================================================ */
+    let activeInvoiceCategoryFilter = 'ALL';
+    let invoiceViewMode = 'grouped'; // 'grouped' | 'flat'
+
+    const STANDARD_INVOICE_CATEGORIES = [
+      { name: "Akaryakıt & Ulaşım", icon: "⛽", css: "badge-inv-akaryakit" },
+      { name: "Gıda & Mutfak", icon: "🍏", css: "badge-inv-gida" },
+      { name: "Kırtasiye & Ofis", icon: "📎", css: "badge-inv-kirtasiye" },
+      { name: "İnşaat & Yapı Malzemeleri", icon: "🧱", css: "badge-inv-yapi" },
+      { name: "Taşeron & İşçilik", icon: "🔨", css: "badge-inv-taseron" },
+      { name: "Elektrik, Su & Abonelik", icon: "⚡", css: "badge-inv-enerji" },
+      { name: "Nakliye & Hafriyat", icon: "🚚", css: "badge-inv-nakliye" },
+      { name: "Bilişim & Yazılım", icon: "💻", css: "badge-inv-bilisim" },
+      { name: "Danışmanlık & Hizmet", icon: "⚖️", css: "badge-inv-danismanlik" },
+      { name: "Diğer / Genel", icon: "📦", css: "badge-inv-cat" }
+    ];
+
+    function getInvoiceCategoryMeta(catName) {
+      if (!catName) return { name: "Genel Gider", icon: "📦", css: "badge-inv-cat" };
+      const trimmed = catName.trim();
+      const found = STANDARD_INVOICE_CATEGORIES.find(c => c.name.toLowerCase() === trimmed.toLowerCase());
+      if (found) return found;
+      const lower = trimmed.toLowerCase();
+      if (lower.includes('akaryakıt') || lower.includes('akaryakit') || lower.includes('benzin') || lower.includes('yakıt')) return STANDARD_INVOICE_CATEGORIES[0];
+      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market')) return STANDARD_INVOICE_CATEGORIES[1];
+      if (lower.includes('kırtasiye') || lower.includes('kirtasiye') || lower.includes('ofis') || lower.includes('büro')) return STANDARD_INVOICE_CATEGORIES[2];
+      if (lower.includes('yapı') || lower.includes('yapi') || lower.includes('inşaat') || lower.includes('insaat') || lower.includes('beton') || lower.includes('demir')) return STANDARD_INVOICE_CATEGORIES[3];
+      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES[4];
+      if (lower.includes('elektrik') || lower.includes('su') || lower.includes('enerji') || lower.includes('abonelik')) return STANDARD_INVOICE_CATEGORIES[5];
+      if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES[6];
+      if (lower.includes('bilişim') || lower.includes('bilisim') || lower.includes('yazılım') || lower.includes('donanım')) return STANDARD_INVOICE_CATEGORIES[7];
+      if (lower.includes('danışmanlık') || lower.includes('hizmet') || lower.includes('müşavir') || lower.includes('hukuk')) return STANDARD_INVOICE_CATEGORIES[8];
+      return { name: trimmed, icon: "🏷️", css: "badge-inv-cat" };
+    }
+
+    function toggleCustomInvoiceCategory(sel) {
+      const cust = document.getElementById('inv-category-custom');
+      if (!cust) return;
+      if (sel.value === 'DİĞER') {
+        cust.style.display = 'block';
+        cust.focus();
+      } else {
+        cust.style.display = 'none';
+      }
+    }
+
+    function getSelectedInvoiceCategory() {
+      const sel = document.getElementById('inv-category');
+      if (!sel) return 'Genel Gider';
+      if (sel.value === 'DİĞER') {
+        const cust = document.getElementById('inv-category-custom');
+        return (cust && cust.value.trim()) ? cust.value.trim() : 'Diğer / Genel';
+      }
+      return sel.value || 'Genel Gider';
+    }
+
+    function setInvoiceViewMode(mode) {
+      invoiceViewMode = mode;
+      document.querySelectorAll('#tab-invoices .btn-view-mode').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(mode === 'grouped' ? 'btn-inv-view-grouped' : 'btn-inv-view-flat');
+      if (activeBtn) activeBtn.classList.add('active');
+      renderInvoices();
+    }
+
+    function filterInvoiceByCategory(cat) {
+      activeInvoiceCategoryFilter = cat;
+      renderInvoices();
+    }
+
+    function renderInvoiceCategoryPills() {
+      const container = document.getElementById('invoice-category-pills');
+      if (!container) return;
+
+      const q = (document.getElementById('search-invoices')?.value || '').toLowerCase().trim();
+      const baseFiltered = invoices.filter(inv => {
+        const matchesStatus = (invoiceFilter === 'all') || (inv.status === invoiceFilter);
+        const matchesQ = !q || 
+          (inv.vendor && inv.vendor.toLowerCase().includes(q)) || 
+          (inv.no && inv.no.toLowerCase().includes(q)) || 
+          (inv.project && inv.project.toLowerCase().includes(q)) ||
+          (inv.desc && inv.desc.toLowerCase().includes(q)) ||
+          (inv.notes && inv.notes.toLowerCase().includes(q)) ||
+          (inv.category && inv.category.toLowerCase().includes(q));
+        return matchesStatus && matchesQ;
+      });
+
+      const counts = {};
+      const sums = {};
+      baseFiltered.forEach(inv => {
+        const cat = (inv.category || 'Diğer / Genel').trim();
+        counts[cat] = (counts[cat] || 0) + 1;
+        sums[cat] = (sums[cat] || 0) + (parseFloat(inv.total) || 0);
+      });
+
+      let pillsHtml = `
+        <button type="button" class="sector-pill ${activeInvoiceCategoryFilter === 'ALL' ? 'active' : ''}" onclick="filterInvoiceByCategory('ALL')">
+          <span>🌐 Tüm Kategoriler</span>
+          <span class="pill-badge">${baseFiltered.length}</span>
+        </button>
+      `;
+
+      const presentCategories = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+      const displayCategories = new Set(presentCategories);
+
+      if (presentCategories.length === 0) {
+        STANDARD_INVOICE_CATEGORIES.slice(0, 6).forEach(c => displayCategories.add(c.name));
+      }
+
+      displayCategories.forEach(catName => {
+        const meta = getInvoiceCategoryMeta(catName);
+        const cnt = counts[catName] || 0;
+        const total = sums[catName] || 0;
+        const isActive = activeInvoiceCategoryFilter.toLowerCase() === catName.toLowerCase();
+        const shortTotal = total > 0 ? ` • ${total.toLocaleString('tr-TR', { maximumFractionDigits: 0 })}₺` : '';
+        pillsHtml += `
+          <button type="button" class="sector-pill ${isActive ? 'active' : ''}" onclick="filterInvoiceByCategory('${escapeHtml(catName)}')">
+            <span>${meta.icon} ${escapeHtml(catName)}</span>
+            <span class="pill-badge">${cnt}${shortTotal}</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = pillsHtml;
+
+      const countEl = document.getElementById('active-inv-category-count');
+      if (countEl) {
+        if (activeInvoiceCategoryFilter === 'ALL') {
+          countEl.textContent = `${baseFiltered.length} Fatura`;
+        } else {
+          const s = sums[activeInvoiceCategoryFilter] || 0;
+          countEl.textContent = `${counts[activeInvoiceCategoryFilter] || 0} Fatura • ${s.toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ₺`;
+        }
+      }
+    }
+
+    function renderInvoiceCardHtml(inv) {
+      const isPaid = inv.status === 'Ödendi';
+      const badgeClass = isPaid ? 'badge-green' : (inv.status === 'Kısmi Ödendi' ? 'badge-gold' : 'badge-red');
+      const badgeIcon = isPaid ? '✅' : '⏳';
+      const catMeta = getInvoiceCategoryMeta(inv.category);
+      const formattedTotal = (parseFloat(inv.total) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const formattedVat = (parseFloat(inv.vat) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const formattedSub = (parseFloat(inv.subtotal) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      return `
+        <div class="card-item" style="border-left: 4px solid ${isPaid ? 'var(--green)' : '#f59e0b'};">
+          <div class="card-item-header">
+            <div style="flex: 1; min-width: 0;">
+              <div class="card-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${escapeHtml(inv.vendor)}
+              </div>
+              <div class="card-item-meta">
+                <span>${escapeHtml(inv.no)}</span> • <span>${escapeHtml(inv.date || '')}</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+              <span class="badge ${catMeta.css}" title="Gider Kategorisi: ${escapeHtml(inv.category || 'Genel Gider')}">
+                ${catMeta.icon} ${escapeHtml(inv.category || 'Genel Gider')}
+              </span>
+              <span class="badge ${badgeClass}" onclick="toggleInvoiceStatus('${inv.id}')" style="cursor: pointer; user-select: none;" title="Durumu Değiştir">
+                ${badgeIcon} ${escapeHtml(inv.status)}
+              </span>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 8px 0 6px 0;">
+            <span style="font-size: 0.76rem; color: var(--muted); font-weight: 600;">
+              📍 ${escapeHtml(inv.project || 'Merkez')}
+            </span>
+            <span style="font-size: 1.15rem; font-weight: 800; color: var(--navy);">
+              ${formattedTotal} ₺
+            </span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); background: #f8fafc; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px;">
+            <span>Matrah: ${formattedSub} ₺</span>
+            <span>KDV: ${formattedVat} ₺</span>
+            <span>Vade: ${escapeHtml(inv.dueDate || '-')}</span>
+          </div>
+
+          ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 4px; font-style: italic;">📝 ${escapeHtml(inv.desc)}</div>` : ''}
+          ${inv.notes ? `<div style="font-size: 0.73rem; color: #1e293b; margin-bottom: 6px;">📌 Not: ${escapeHtml(inv.notes)}</div>` : ''}
+
+          <div class="card-item-actions" style="margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 6px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size: 0.72rem; color: var(--muted); display: inline-flex; align-items: center; gap: 4px;">
+              💳 ${escapeHtml(inv.method || 'Havale')}
+            </span>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-secondary btn-sm" onclick="changeInvoiceCategory('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;" title="Kategoriyi Değiştir">
+                🏷️ Kategori
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleInvoiceStatus('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;">
+                ${isPaid ? 'Bekliyor Yap' : 'Ödendi İşaretle'}
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem; color: var(--danger);">
+                🗑️
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function changeInvoiceCategory(id) {
+      const inv = invoices.find(x => x.id === id);
+      if (!inv) return;
+      const current = inv.category || 'İnşaat & Yapı Malzemeleri';
+      const promptText = `"${inv.vendor}" (${inv.no}) faturasının gider kategorisini güncelleyin:\n\nÖrnekler:\n• Akaryakıt & Ulaşım\n• Gıda & Mutfak\n• Kırtasiye & Ofis\n• İnşaat & Yapı Malzemeleri\n• Taşeron & İşçilik\n• Elektrik, Su & Abonelik\n• Nakliye & Hafriyat\n• Bilişim & Yazılım\n• Danışmanlık & Hizmet\n• Diğer`;
+      const newCat = prompt(promptText, current);
+      if (newCat && newCat.trim() && newCat.trim() !== current) {
+        inv.category = newCat.trim();
+        setStore('yg_invoices_lite', invoices);
+        renderInvoices();
+        postToWebhook('Alış Faturaları', [
+          inv.regDate || new Date().toISOString().split('T')[0],
+          inv.date,
+          inv.no,
+          inv.category,
+          inv.vendor,
+          inv.tax || '',
+          inv.project || '',
+          inv.subtotal || 0,
+          inv.vat || 0,
+          inv.total || 0,
+          inv.dueDate || '',
+          inv.status || 'Bekliyor',
+          inv.method || 'Banka Havale / EFT',
+          inv.desc || '',
+          inv.notes || ''
+        ]);
+        showToast(`Fatura kategorisi güncellendi: ${inv.category}`, '🏷️');
+      }
+    }
+
     function saveInvoice(e) {
       e.preventDefault();
+      const catVal = getSelectedInvoiceCategory();
       const newInv = {
         id: 'inv_' + Date.now(),
+        regDate: new Date().toISOString().split('T')[0],
+        date: document.getElementById('inv-date').value,
+        no: document.getElementById('inv-no').value.trim(),
+        category: catVal,
         vendor: document.getElementById('inv-vendor').value.trim(),
         tax: document.getElementById('inv-tax').value.trim(),
-        no: document.getElementById('inv-no').value.trim(),
-        date: document.getElementById('inv-date').value,
         project: document.getElementById('inv-project').value,
         subtotal: parseFloat(document.getElementById('inv-subtotal').value) || 0,
         vat: parseFloat(document.getElementById('inv-vat').value) || 0,
         total: parseFloat(document.getElementById('inv-total').value) || 0,
-        dueDate: document.getElementById('inv-due-date').value,
         dueDate: document.getElementById('inv-due-date').value,
         status: document.getElementById('inv-status').value,
         method: document.getElementById('inv-method').value,
@@ -3099,9 +3455,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       unmarkDeleted('Alış Faturaları', newInv.no);
 
       postToWebhook('Alış Faturaları', [
-        new Date().toISOString().split('T')[0],
+        newInv.regDate,
         newInv.date,
         newInv.no,
+        newInv.category,
         newInv.vendor,
         newInv.tax,
         newInv.project,
@@ -3117,13 +3474,15 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       closeModal('modal-new-invoice');
       renderInvoices();
-      showToast('Fatura kaydedildi & Sheets ile senkronize!', '🧾');
+      showToast(`Fatura (${newInv.category}) kaydedildi & Sheets ile senkronize!`, '🧾');
 
       // Reset Form
       const prevEl = document.getElementById('invoice-preview');
       if (prevEl) prevEl.style.display = 'none';
       const loadEl = document.getElementById('invoice-ocr-loader');
       if (loadEl) loadEl.style.display = 'none';
+      const custInput = document.getElementById('inv-category-custom');
+      if (custInput) custInput.style.display = 'none';
       e.target.reset();
     }
 
@@ -3132,7 +3491,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const list = document.getElementById('invoices-list');
       if (!list) return;
 
-      // Stats
+      renderInvoiceCategoryPills();
+
+      // Stats calculation
       let totalSum = 0;
       let pendingSum = 0;
       let vatSum = 0;
@@ -3155,80 +3516,97 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (statVat) statVat.textContent = vatSum.toLocaleString('tr-TR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' ₺';
 
       // Filtered List
-      const filtered = invoices.filter(inv => {
-        const matchesFilter = (invoiceFilter === 'all') || (inv.status === invoiceFilter);
+      let filtered = invoices.filter(inv => {
+        const matchesStatus = (invoiceFilter === 'all') || (inv.status === invoiceFilter);
         const matchesQ = !q || 
           (inv.vendor && inv.vendor.toLowerCase().includes(q)) || 
           (inv.no && inv.no.toLowerCase().includes(q)) || 
           (inv.project && inv.project.toLowerCase().includes(q)) ||
           (inv.desc && inv.desc.toLowerCase().includes(q)) ||
-          (inv.notes && inv.notes.toLowerCase().includes(q));
-        return matchesFilter && matchesQ;
+          (inv.notes && inv.notes.toLowerCase().includes(q)) ||
+          (inv.category && inv.category.toLowerCase().includes(q));
+        return matchesStatus && matchesQ;
       });
 
+      if (activeInvoiceCategoryFilter !== 'ALL') {
+        filtered = filtered.filter(inv => (inv.category || 'Diğer / Genel').toLowerCase() === activeInvoiceCategoryFilter.toLowerCase());
+      }
+
       if (filtered.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Fatura kaydı bulunamadı.</div>`;
+        list.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.85rem; background: #ffffff; border-radius: 12px; border: 1px dashed var(--border);">
+            <div style="font-size: 2rem; margin-bottom: 6px;">🧾</div>
+            <div style="font-weight: 600; color: var(--navy); margin-bottom: 4px;">
+              ${activeInvoiceCategoryFilter !== 'ALL' ? `"${escapeHtml(activeInvoiceCategoryFilter)}" kategorisinde fatura bulunamadı.` : 'Fatura kaydı bulunamadı.'}
+            </div>
+            ${activeInvoiceCategoryFilter !== 'ALL' ? `<button class="btn btn-secondary btn-sm" style="margin-top: 10px;" onclick="filterInvoiceByCategory('ALL')">🌐 Tüm Kategorileri Göster</button>` : ''}
+          </div>
+        `;
         return;
       }
 
-      list.innerHTML = filtered.map(inv => {
-        const isPaid = inv.status === 'Ödendi';
-        const badgeClass = isPaid ? 'badge-green' : (inv.status === 'Kısmi Ödendi' ? 'badge-gold' : 'badge-red');
-        const badgeIcon = isPaid ? '✅' : '⏳';
-        const formattedTotal = (parseFloat(inv.total) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const formattedVat = (parseFloat(inv.vat) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const formattedSub = (parseFloat(inv.subtotal) || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      // Grouped View (Kategori Seperasyonu)
+      if (invoiceViewMode === 'grouped' && activeInvoiceCategoryFilter === 'ALL') {
+        const groups = {};
+        const sums = {};
+        filtered.forEach(inv => {
+          const cat = (inv.category || 'Diğer / Genel').trim();
+          if (!groups[cat]) {
+            groups[cat] = [];
+            sums[cat] = 0;
+          }
+          groups[cat].push(inv);
+          sums[cat] += (parseFloat(inv.total) || 0);
+        });
 
-        return `
-          <div class="card-item" style="border-left: 4px solid ${isPaid ? 'var(--green)' : '#f59e0b'};">
-            <div class="card-item-header">
-              <div style="flex: 1; min-width: 0;">
-                <div class="card-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  ${escapeHtml(inv.vendor)}
+        const sortedCatNames = Object.keys(groups).sort((a,b) => sums[b] - sums[a]);
+
+        let html = '';
+        sortedCatNames.forEach(catName => {
+          const catInvoices = groups[catName];
+          const catTotal = sums[catName];
+          const meta = getInvoiceCategoryMeta(catName);
+          html += `
+            <div class="sector-group-block">
+              <div class="sector-separator-header">
+                <div class="sector-title-wrap">
+                  <span style="font-size: 1.15rem;">${meta.icon}</span>
+                  <span>${escapeHtml(catName)}</span>
                 </div>
-                <div class="card-item-meta">
-                  <span>${escapeHtml(inv.no)}</span> • <span>${escapeHtml(inv.date || '')}</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="sector-count-tag">${catInvoices.length} Fatura • ${catTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺</span>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 0.7rem;" onclick="filterInvoiceByCategory('${escapeHtml(catName)}')">
+                    Yalnızca Bu Kategori 🔍
+                  </button>
                 </div>
               </div>
-              <span class="badge ${badgeClass}" onclick="toggleInvoiceStatus('${inv.id}')" style="cursor: pointer; user-select: none;" title="Durumu Değiştir">
-                ${badgeIcon} ${escapeHtml(inv.status)}
-              </span>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 8px 0 6px 0;">
-              <span style="font-size: 0.76rem; color: var(--muted); font-weight: 600;">
-                📍 ${escapeHtml(inv.project || 'Merkez')}
-              </span>
-              <span style="font-size: 1.15rem; font-weight: 800; color: var(--navy);">
-                ${formattedTotal} ₺
-              </span>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); background: #f8fafc; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px;">
-              <span>Matrah: ${formattedSub} ₺</span>
-              <span>KDV: ${formattedVat} ₺</span>
-              <span>Vade: ${escapeHtml(inv.dueDate || '-')}</span>
-            </div>
-
-            ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 4px; font-style: italic;">📝 ${escapeHtml(inv.desc)}</div>` : ''}
-            ${inv.notes ? `<div style="font-size: 0.73rem; color: #1e293b; margin-bottom: 6px;">📌 Not: ${escapeHtml(inv.notes)}</div>` : ''}
-
-            <div class="card-item-actions" style="margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 6px;">
-              <span style="font-size: 0.72rem; color: var(--muted); display: inline-flex; align-items: center; gap: 4px;">
-                💳 ${escapeHtml(inv.method || 'Havale')}
-              </span>
-              <div style="display: flex; gap: 6px;">
-                <button class="btn btn-secondary btn-sm" onclick="toggleInvoiceStatus('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;">
-                  ${isPaid ? 'Bekliyor Yap' : 'Ödendi İşaretle'}
-                </button>
-                <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem; color: var(--danger);">
-                  Sil
-                </button>
+              <div class="sector-cards-container">
+                ${catInvoices.map(inv => renderInvoiceCardHtml(inv)).join('')}
               </div>
             </div>
+          `;
+        });
+
+        list.innerHTML = html;
+      } else {
+        // Flat List
+        let headerHtml = '';
+        if (activeInvoiceCategoryFilter !== 'ALL') {
+          const meta = getInvoiceCategoryMeta(activeInvoiceCategoryFilter);
+          const catSum = filtered.reduce((acc, curr) => acc + (parseFloat(curr.total) || 0), 0);
+          headerHtml = `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:8px 12px; margin-bottom:12px; font-size:0.8rem; color:#065f46;">
+              <span style="font-weight:700;">${meta.icon} ${escapeHtml(activeInvoiceCategoryFilter)} (${filtered.length} Fatura • ${catSum.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺)</span>
+              <button class="btn btn-secondary btn-sm" style="padding:2px 8px; font-size:0.7rem;" onclick="filterInvoiceByCategory('ALL')">✕ Filtreyi Kaldır</button>
+            </div>
+          `;
+        }
+        list.innerHTML = headerHtml + `
+          <div class="sector-cards-container">
+            ${filtered.map(inv => renderInvoiceCardHtml(inv)).join('')}
           </div>
         `;
-      }).join('');
+      }
     }
 
     function toggleInvoiceStatus(id) {
@@ -3257,9 +3635,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     function exportInvoicesCsv() {
       const rows = [
-        ['ID', 'Fatura No', 'Tedarikçi / Cari', 'VKN/TC', 'İlgili Proje', 'Fatura Tarihi', 'KDV Hariç Matrah', 'KDV Tutarı', 'Toplam Tutar', 'Vade Tarihi', 'Ödeme Durumu', 'Ödeme Yöntemi', 'Mal / Hizmet Açıklaması', 'Özel Notlar'],
+        ['ID', 'Fatura No', 'Kategori / Gider Türü', 'Tedarikçi / Cari', 'VKN/TC', 'İlgili Proje', 'Fatura Tarihi', 'KDV Hariç Matrah', 'KDV Tutarı', 'Toplam Tutar', 'Vade Tarihi', 'Ödeme Durumu', 'Ödeme Yöntemi', 'Mal / Hizmet Açıklaması', 'Özel Notlar'],
         ...invoices.map(inv => [
-          inv.id, inv.no, inv.vendor, inv.tax, inv.project, inv.date, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc || '', inv.notes || ''
+          inv.id, inv.no, inv.category || 'Genel Gider', inv.vendor, inv.tax, inv.project, inv.date, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc || '', inv.notes || ''
         ])
       ];
       downloadCsv(`YakinGrup_Alis_Faturalari_${new Date().toISOString().split('T')[0]}.csv`, rows);
@@ -3593,7 +3971,23 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.sector || 'İnşaat & Taahhüt', c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || '']));
       projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate || '', p.endDate || '', `%${p.progress}`, p.status, p.notes || '']));
       accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email || '', a.taxOffice || '', a.taxNo || a.tax || '', a.address || '', a.notes || '']));
-      invoices.forEach(inv => postToWebhook('Alış Faturaları', [new Date().toISOString().split('T')[0], inv.date, inv.no, inv.vendor, inv.tax, inv.project, inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method, inv.desc || '', inv.notes || '']));
+      invoices.forEach(inv => postToWebhook('Alış Faturaları', [
+        inv.regDate || new Date().toISOString().split('T')[0],
+        inv.date,
+        inv.no,
+        inv.category || inferInvoiceCategory(inv.vendor, inv.desc) || 'Diğer',
+        inv.vendor,
+        inv.tax || '',
+        inv.project || '',
+        inv.subtotal || 0,
+        inv.vat || 0,
+        inv.total || 0,
+        inv.dueDate || '',
+        inv.status || 'Bekliyor',
+        inv.method || 'Banka Havale / EFT',
+        inv.desc || '',
+        inv.notes || ''
+      ]));
       docs.forEach(d => postToWebhook('Proje Dökümanları', [new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date || '', d.expiry || '', d.url, d.notes || '']));
       stock.forEach(s => postToWebhook('Stok', [new Date().toISOString().split('T')[0], s.code, s.name, s.category || '', s.qty, s.unit, s.price, s.totalValue || '', s.location || '', s.status, s.notes || '']));
       setTimeout(() => showToast('Tüm veriler Google Sheets ile güncellendi!'), 1500);
@@ -3766,23 +4160,29 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                 if (isRecordDeleted('Alış Faturaları', fNo)) return false;
                 return true;
               })
-              .map((r, idx) => ({
-                id: 'inv_' + idx,
-                regDate: cleanDate(r['Kayıt Tarihi']),
-                date: cleanDate(r['Fatura Tarihi']),
-                no: cleanText(r['Fatura No']),
-                vendor: cleanText(r['Tedarikçi / Cari']),
-                tax: cleanText(r['VKN / TCKN']),
-                project: cleanText(r['İlgili Proje']),
-                subtotal: parseFloat(r['KDV Hariç Matrah (₺)'] || r['KDV Hariç Matrah']) || 0,
-                vat: parseFloat(r['KDV Tutarı (₺)'] || r['KDV Tutarı']) || 0,
-                total: parseFloat(r['Toplam Tutar (₺)'] || r['Toplam Tutar']) || 0,
-                dueDate: cleanDate(r['Vade Tarihi']),
-                status: cleanText(r['Ödeme Durumu'], 'Bekliyor'),
-                method: cleanText(r['Ödeme Yöntemi'], 'Banka Havale / EFT'),
-                desc: cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama']),
-                notes: cleanText(r['Özel Notlar'])
-              }));
+              .map((r, idx) => {
+                const vendorStr = cleanText(r['Tedarikçi / Cari']);
+                const descStr = cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama']);
+                const catStr = cleanText(r['Kategori']) || inferInvoiceCategory(vendorStr, descStr);
+                return {
+                  id: 'inv_' + idx,
+                  regDate: cleanDate(r['Kayıt Tarihi']),
+                  date: cleanDate(r['Fatura Tarihi']),
+                  no: cleanText(r['Fatura No']),
+                  category: catStr,
+                  vendor: vendorStr,
+                  tax: cleanText(r['VKN / TCKN']),
+                  project: cleanText(r['İlgili Proje']),
+                  subtotal: parseFloat(r['KDV Hariç Matrah (₺)'] || r['KDV Hariç Matrah']) || 0,
+                  vat: parseFloat(r['KDV Tutarı (₺)'] || r['KDV Tutarı']) || 0,
+                  total: parseFloat(r['Toplam Tutar (₺)'] || r['Toplam Tutar']) || 0,
+                  dueDate: cleanDate(r['Vade Tarihi']),
+                  status: cleanText(r['Ödeme Durumu'], 'Bekliyor'),
+                  method: cleanText(r['Ödeme Yöntemi'], 'Banka Havale / EFT'),
+                  desc: descStr,
+                  notes: cleanText(r['Özel Notlar'])
+                };
+              });
             setStore('yg_invoices_lite', invoices);
             renderInvoices();
           }
