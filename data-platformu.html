@@ -1503,11 +1503,14 @@
           <div class="form-group">
             <label>Türü</label>
             <select id="d-type">
+              <option value="Teklif">Teklif</option>
+              <option value="Şartname">Şartname</option>
+              <option value="Sözleşme">Sözleşme</option>
               <option value="Mimari Proje">Mimari Proje</option>
               <option value="Statik Rapor">Statik Rapor</option>
               <option value="Ruhsat Belgesi">Ruhsat Belgesi</option>
-              <option value="Sözleşme & Şartname">Sözleşme</option>
               <option value="Hakediş">Hakediş</option>
+              <option value="Diğer">Diğer</option>
             </select>
           </div>
           <div class="form-group">
@@ -2023,6 +2026,8 @@
         if (!editingDocId) {
           const tEl = document.getElementById('modal-doc-title'); if (tEl) tEl.textContent = 'Yeni Proje Evrakı';
           const bEl = document.getElementById('btn-save-doc'); if (bEl) bEl.textContent = 'Kaydet';
+          const formEl = document.querySelector('#modal-new-doc form');
+          if (formEl) formEl.reset();
         }
       }
       if (id === 'modal-new-todo') {
@@ -4756,11 +4761,30 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       sel.innerHTML = projects.map(p => `<option value="${escapeHtml(p.name)}">${escapeHtml(p.name)}</option>`).join('');
     }
 
+
+    function getDocTypeBadge(type) {
+      if (!type) return '<span class="badge badge-purple">Evrak</span>';
+      const t = type.toLowerCase();
+      if (t.includes('teklif')) return '<span class="badge badge-amber" style="background:#fef3c7; color:#b45309; font-weight:700;">📑 Teklif</span>';
+      if (t.includes('şartname') || t.includes('sartname')) return '<span class="badge badge-purple" style="background:#f3e8ff; color:#7e22ce; font-weight:700;">📜 Şartname</span>';
+      if (t.includes('sözleşme') || t.includes('sozlesme')) return '<span class="badge badge-green" style="background:#dcfce7; color:#15803d; font-weight:700;">✍️ Sözleşme</span>';
+      if (t.includes('ruhsat')) return '<span class="badge badge-green">🏛️ Ruhsat Belgesi</span>';
+      if (t.includes('hakediş') || t.includes('hakedis')) return '<span class="badge badge-amber">💰 Hakediş</span>';
+      if (t.includes('mimari')) return '<span class="badge badge-blue">📐 Mimari Proje</span>';
+      if (t.includes('statik')) return '<span class="badge badge-purple">🧱 Statik Rapor</span>';
+      return `<span class="badge badge-purple">${escapeHtml(type)}</span>`;
+    }
+
     function renderDocs(customFilter = null) {
       const q = customFilter || document.getElementById('search-docs').value.toLowerCase().trim();
       const list = document.getElementById('docs-list');
 
-      const filtered = docs.filter(d => !q || d.title.toLowerCase().includes(q) || d.project.toLowerCase().includes(q));
+      const filtered = docs.filter(d => !q || 
+        d.title.toLowerCase().includes(q) || 
+        d.project.toLowerCase().includes(q) || 
+        (d.type && d.type.toLowerCase().includes(q)) ||
+        (d.notes && d.notes.toLowerCase().includes(q))
+      );
 
       if (filtered.length === 0) {
         list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Evrak bulunamadı.</div>`;
@@ -4774,7 +4798,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               <div class="card-item-title">${escapeHtml(d.title)}</div>
               <div class="card-item-sub">🏗️ ${escapeHtml(d.project)}</div>
             </div>
-            <span class="badge badge-purple">${escapeHtml(d.type)}</span>
+            ${getDocTypeBadge(d.type)}
           </div>
           ${(d.date || d.expiry) ? `
             <div style="font-size: 0.72rem; color: var(--muted); margin: 3px 0;">
@@ -4802,7 +4826,26 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       document.getElementById('btn-save-doc').textContent = '💾 Değişiklikleri Güncelle';
 
       document.getElementById('d-title').value = d.title || '';
-      document.getElementById('d-type').value = d.type || 'Mimari Proje';
+
+      const typeSelect = document.getElementById('d-type');
+      let targetType = d.type || 'Mimari Proje';
+      if (typeSelect) {
+        let matched = false;
+        for (let i = 0; i < typeSelect.options.length; i++) {
+          if (typeSelect.options[i].value.toLowerCase() === targetType.toLowerCase()) {
+            typeSelect.selectedIndex = i;
+            matched = true;
+            break;
+          }
+        }
+        if (!matched) {
+          if (targetType.includes('Şartname') || targetType.includes('Sartname')) typeSelect.value = 'Şartname';
+          else if (targetType.includes('Teklif')) typeSelect.value = 'Teklif';
+          else if (targetType.includes('Sözleşme') || targetType.includes('Sozlesme')) typeSelect.value = 'Sözleşme';
+          else typeSelect.value = 'Diğer';
+        }
+      }
+
       if (d.project) document.getElementById('d-project-select').value = d.project;
       document.getElementById('d-date').value = d.date || '';
       document.getElementById('d-expiry').value = d.expiry || '';
