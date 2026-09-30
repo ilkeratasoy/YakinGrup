@@ -957,8 +957,11 @@
           </div>
 
           <div style="display: flex; gap: 8px; margin-top: 10px;">
-            <button type="submit" class="btn btn-navy btn-full">
+            <button type="submit" id="btn-save-card" class="btn btn-navy btn-full">
               💾 Kaydet & Sheets'e Aktar
+            </button>
+            <button type="button" id="btn-cancel-card-edit" class="btn btn-secondary btn-sm" onclick="cancelCardEdit()" style="display:none; white-space:nowrap;">
+              ✕ İptal
             </button>
           </div>
         </form>
@@ -1219,7 +1222,7 @@
   <div class="modal-backdrop" id="modal-new-project">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni İnşaat Projesi</h3>
+      <h3 id="modal-project-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni İnşaat Projesi</h3>
       <form onsubmit="saveProject(event)">
         <div class="form-grid">
           <div class="form-group">
@@ -1280,7 +1283,7 @@
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-project')">Vazgeç</button>
-          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
+          <button type="submit" id="btn-save-project" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
@@ -1293,7 +1296,7 @@
   <div class="modal-backdrop" id="modal-new-account">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Cari Kartı</h3>
+      <h3 id="modal-account-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Cari Kartı</h3>
       <form onsubmit="saveAccount(event)">
         <div class="form-grid">
           <div class="form-group full">
@@ -1339,7 +1342,7 @@
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-account')">Vazgeç</button>
-          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
+          <button type="submit" id="btn-save-account" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
@@ -1352,7 +1355,7 @@
   <div class="modal-backdrop" id="modal-new-doc">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Proje Evrakı</h3>
+      <h3 id="modal-doc-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Proje Evrakı</h3>
       <form onsubmit="saveDoc(event)">
         <div class="form-grid">
           <div class="form-group full">
@@ -1392,7 +1395,7 @@
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-doc')">Vazgeç</button>
-          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
+          <button type="submit" id="btn-save-doc" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
@@ -1406,7 +1409,7 @@
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0;">✅ Yeni Görev / Yapılacak İş</h3>
+        <h3 id="modal-todo-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0;">✅ Yeni Görev / Yapılacak İş</h3>
         <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-new-todo')" style="padding: 4px 8px;">✕</button>
       </div>
       <form onsubmit="saveTodo(event)">
@@ -1444,7 +1447,7 @@
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-todo')">Vazgeç</button>
-          <button type="submit" class="btn btn-navy btn-full">Görevi Kaydet</button>
+          <button type="submit" id="btn-save-todo" class="btn btn-navy btn-full">Görevi Kaydet</button>
         </div>
       </form>
     </div>
@@ -1458,7 +1461,7 @@
     <div class="modal-sheet" style="max-height: 90vh;">
       <div class="sheet-handle"></div>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0;">🧾 Yeni Alış Faturası</h3>
+        <h3 id="modal-invoice-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0;">🧾 Yeni Alış Faturası</h3>
         <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-new-invoice')" style="padding: 4px 8px;">✕</button>
       </div>
 
@@ -1572,7 +1575,7 @@
 
         <div style="display: flex; gap: 8px; margin-top: 14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-invoice')">Vazgeç</button>
-          <button type="submit" class="btn btn-navy btn-full">💾 Kaydet & Sheets'e Aktar</button>
+          <button type="submit" id="btn-save-invoice" class="btn btn-navy btn-full">💾 Kaydet & Sheets'e Aktar</button>
         </div>
       </form>
     </div>
@@ -1585,7 +1588,7 @@
   <div class="modal-backdrop" id="modal-new-stock">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-      <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Malzeme / Stok</h3>
+      <h3 id="modal-stock-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni Malzeme / Stok</h3>
       <form onsubmit="saveStock(event)">
         <div class="form-grid">
           <div class="form-group">
@@ -1635,7 +1638,7 @@
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-stock')">Vazgeç</button>
-          <button type="submit" class="btn btn-navy btn-full">Kaydet</button>
+          <button type="submit" id="btn-save-stock" class="btn btn-navy btn-full">Kaydet</button>
         </div>
       </form>
     </div>
@@ -1864,21 +1867,71 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Modal Sheet Handlers
+    // Modal Sheet Handlers & Editing States
+    let editingCardId = null;
+    let editingProjectId = null;
+    let editingAccountId = null;
+    let editingDocId = null;
+    let editingTodoId = null;
+    let editingInvoiceId = null;
+    let editingStockId = null;
+
     function openModal(id) {
       const el = document.getElementById(id);
       if (el) el.classList.add('open');
-      if (id === 'modal-new-doc') populateDocProjectSelect();
-      if (id === 'modal-new-todo') populateTodoProjectSelect();
+
+      if (id === 'modal-new-doc') {
+        populateDocProjectSelect();
+        if (!editingDocId) {
+          const tEl = document.getElementById('modal-doc-title'); if (tEl) tEl.textContent = 'Yeni Proje Evrakı';
+          const bEl = document.getElementById('btn-save-doc'); if (bEl) bEl.textContent = 'Kaydet';
+        }
+      }
+      if (id === 'modal-new-todo') {
+        populateTodoProjectSelect();
+        if (!editingTodoId) {
+          const tEl = document.getElementById('modal-todo-title'); if (tEl) tEl.textContent = '✅ Yeni Görev / Yapılacak İş';
+          const bEl = document.getElementById('btn-save-todo'); if (bEl) bEl.textContent = 'Görevi Kaydet';
+        }
+      }
+      if (id === 'modal-new-project') {
+        if (!editingProjectId) {
+          const tEl = document.getElementById('modal-project-title'); if (tEl) tEl.textContent = 'Yeni İnşaat Projesi';
+          const bEl = document.getElementById('btn-save-project'); if (bEl) bEl.textContent = 'Kaydet';
+        }
+      }
+      if (id === 'modal-new-account') {
+        if (!editingAccountId) {
+          const tEl = document.getElementById('modal-account-title'); if (tEl) tEl.textContent = 'Yeni Cari Kartı';
+          const bEl = document.getElementById('btn-save-account'); if (bEl) bEl.textContent = 'Kaydet';
+        }
+      }
       if (id === 'modal-new-invoice') {
         populateInvoiceProjectSelect();
-        const dInput = document.getElementById('inv-date');
-        if (dInput && !dInput.value) dInput.value = new Date().toISOString().split('T')[0];
+        if (!editingInvoiceId) {
+          const tEl = document.getElementById('modal-invoice-title'); if (tEl) tEl.textContent = '🧾 Yeni Alış Faturası';
+          const bEl = document.getElementById('btn-save-invoice'); if (bEl) bEl.textContent = "💾 Kaydet & Sheets'e Aktar";
+          const dInput = document.getElementById('inv-date');
+          if (dInput && !dInput.value) dInput.value = new Date().toISOString().split('T')[0];
+        }
+      }
+      if (id === 'modal-new-stock') {
+        if (!editingStockId) {
+          const tEl = document.getElementById('modal-stock-title'); if (tEl) tEl.textContent = 'Yeni Malzeme / Stok';
+          const bEl = document.getElementById('btn-save-stock'); if (bEl) bEl.textContent = 'Kaydet';
+        }
       }
     }
+
     function closeModal(id) {
       const el = document.getElementById(id);
       if (el) el.classList.remove('open');
+      if (id === 'modal-new-doc') editingDocId = null;
+      if (id === 'modal-new-todo') editingTodoId = null;
+      if (id === 'modal-new-project') editingProjectId = null;
+      if (id === 'modal-new-account') editingAccountId = null;
+      if (id === 'modal-new-invoice') editingInvoiceId = null;
+      if (id === 'modal-new-stock') editingStockId = null;
     }
 
     // Toast
@@ -2846,13 +2899,69 @@ function doPost(e) {
             ` : '')}
             ${c.office ? `<a href="tel:${c.office.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">☎️ Ofisi Ara</a>` : ''}
             ${c.email ? `<a href="mailto:${c.email}" class="btn btn-secondary btn-sm">✉️ E-Posta</a>` : ''}
-            <button class="btn btn-secondary btn-sm" onclick="changeCardSector('${c.id}')" title="Sektörü Değiştir / Düzenle">🏢 Sektör</button>
+            <button class="btn btn-secondary btn-sm" onclick="changeCardSector('${c.id}')" title="Sektörü Değiştir">🏢 Sektör</button>
+            <button class="btn btn-secondary btn-sm" onclick="editCard('${c.id}')" title="Kartviziti Düzenle">✏️ Düzenle</button>
             <button class="btn btn-secondary btn-sm" onclick="showCardQr('${c.id}')">📱 QR</button>
             <button class="btn btn-secondary btn-sm" onclick="downloadVcf('${c.id}')">⬇️ vCard</button>
             <button class="btn btn-secondary btn-sm" style="color: #ef4444; margin-left: auto;" onclick="deleteCard('${c.id}')">🗑️</button>
           </div>
         </div>
       `;
+    }
+
+    function editCard(id) {
+      const c = cards.find(x => x.id === id);
+      if (!c) return;
+      editingCardId = id;
+
+      document.getElementById('card-name').value = c.name || '';
+      document.getElementById('card-company').value = c.company || '';
+      document.getElementById('card-role').value = c.role || '';
+      
+      const secSel = document.getElementById('card-sector');
+      if (secSel) {
+        let matched = false;
+        for (let i = 0; i < secSel.options.length; i++) {
+          if (secSel.options[i].value === c.sector) {
+            secSel.selectedIndex = i;
+            matched = true;
+            break;
+          }
+        }
+        const cust = document.getElementById('card-sector-custom');
+        if (!matched && c.sector) {
+          secSel.value = 'DİĞER';
+          if (cust) { cust.style.display = 'block'; cust.value = c.sector; }
+        } else if (cust) {
+          cust.style.display = 'none';
+        }
+      }
+
+      document.getElementById('card-mobile').value = c.mobile || '';
+      document.getElementById('card-office').value = c.office || '';
+      document.getElementById('card-email').value = c.email || '';
+      document.getElementById('card-category').value = c.category || 'Müşteri';
+      document.getElementById('card-address').value = c.address || '';
+      document.getElementById('card-notes').value = c.notes || '';
+
+      const btnSave = document.getElementById('btn-save-card');
+      if (btnSave) btnSave.textContent = '💾 Kartviziti Güncelle';
+      const btnCancel = document.getElementById('btn-cancel-card-edit');
+      if (btnCancel) btnCancel.style.display = 'inline-flex';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('Kartvizit düzenleme modunda açıldı ✏️', 'ℹ️');
+    }
+
+    function cancelCardEdit() {
+      editingCardId = null;
+      document.getElementById('card-form').reset();
+      const cust = document.getElementById('card-sector-custom');
+      if (cust) cust.style.display = 'none';
+      const btnSave = document.getElementById('btn-save-card');
+      if (btnSave) btnSave.textContent = "💾 Kaydet & Sheets'e Aktar";
+      const btnCancel = document.getElementById('btn-cancel-card-edit');
+      if (btnCancel) btnCancel.style.display = 'none';
     }
 
     function changeCardSector(id) {
@@ -2880,6 +2989,37 @@ function doPost(e) {
       const mobileVal = document.getElementById('card-mobile').value.trim();
       const officeVal = document.getElementById('card-office').value.trim();
       const sectorVal = getSelectedSector();
+
+      if (editingCardId) {
+        const c = cards.find(x => x.id === editingCardId);
+        if (c) {
+          const oldName = c.name;
+          c.name = document.getElementById('card-name').value.trim();
+          c.company = document.getElementById('card-company').value.trim();
+          c.role = document.getElementById('card-role').value.trim();
+          c.sector = sectorVal;
+          c.mobile = mobileVal;
+          c.office = officeVal;
+          c.phone = mobileVal || officeVal;
+          c.email = document.getElementById('card-email').value.trim();
+          c.category = document.getElementById('card-category').value;
+          c.address = document.getElementById('card-address').value.trim();
+          c.notes = document.getElementById('card-notes').value.trim();
+
+          setStore('yg_cards_lite', cards);
+          renderCards();
+
+          postDeleteToWebhook('Müşteriler', 'Ad Soyad', oldName);
+          postToWebhook('Müşteriler', [
+            c.date || new Date().toISOString().split('T')[0],
+            c.name, c.company, c.role, c.sector, c.mobile, c.office, c.email, c.category, c.address, c.notes
+          ]);
+
+          cancelCardEdit();
+          showToast(`"${c.name}" kartviziti güncellendi! ✏️`);
+          return;
+        }
+      }
 
       const newC = {
         id: 'c_' + Date.now(),
@@ -3120,11 +3260,36 @@ function doPost(e) {
             <div style="display:flex; gap:6px; align-items:center;">
               <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${escapeHtml(p.name)}')">📁 Evraklar</button>
               <button class="btn btn-secondary btn-sm" onclick="filterTodosToProject('${escapeHtml(p.name)}')">✅ Görevler</button>
+              <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
               <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')">🗑️</button>
             </div>
           </div>
         </div>
       `).join('');
+    }
+
+    function editProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+      editingProjectId = id;
+
+      document.getElementById('modal-project-title').textContent = '✏️ Projeyi Düzenle';
+      document.getElementById('btn-save-project').textContent = '💾 Değişiklikleri Güncelle';
+
+      document.getElementById('p-code').value = p.code || '';
+      document.getElementById('p-name').value = p.name || '';
+      document.getElementById('p-type').value = p.type || 'Kentsel Dönüşüm';
+      document.getElementById('p-client').value = p.client || '';
+      document.getElementById('p-loc').value = p.location || '';
+      document.getElementById('p-budget').value = p.budget || '';
+      document.getElementById('p-start').value = p.startDate || '';
+      document.getElementById('p-end').value = p.endDate || '';
+      document.getElementById('p-prog').value = p.progress || 0;
+      document.getElementById('p-prog-val').textContent = p.progress || 0;
+      document.getElementById('p-status').value = p.status || 'Planlama';
+      document.getElementById('p-notes').value = p.notes || '';
+
+      openModal('modal-new-project');
     }
 
     function deleteProject(id) {
@@ -3147,6 +3312,41 @@ function doPost(e) {
 
     function saveProject(e) {
       e.preventDefault();
+
+      if (editingProjectId) {
+        const p = projects.find(x => x.id === editingProjectId);
+        if (p) {
+          const oldName = p.name;
+          const oldCode = p.code;
+          p.code = document.getElementById('p-code').value.trim();
+          p.name = document.getElementById('p-name').value.trim();
+          p.type = document.getElementById('p-type').value;
+          p.client = document.getElementById('p-client').value.trim();
+          p.location = document.getElementById('p-loc').value.trim();
+          p.budget = document.getElementById('p-budget').value.trim();
+          p.startDate = document.getElementById('p-start')?.value || '';
+          p.endDate = document.getElementById('p-end')?.value || '';
+          p.progress = parseInt(document.getElementById('p-prog').value) || 0;
+          p.status = document.getElementById('p-status').value;
+          p.notes = document.getElementById('p-notes')?.value.trim() || '';
+
+          setStore('yg_projects_lite', projects);
+          renderProjects();
+          populateDocProjectSelect();
+          populateInvoiceProjectSelect();
+
+          postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
+          postToWebhook('İnşaat Projeleri', [
+            new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate, `%${p.progress}`, p.status, p.notes
+          ]);
+
+          editingProjectId = null;
+          closeModal('modal-new-project');
+          showToast(`"${p.name}" projesi güncellendi! ✏️`);
+          return;
+        }
+      }
+
       const newP = {
         id: 'p_' + Date.now(),
         code: document.getElementById('p-code').value.trim(),
@@ -3211,10 +3411,32 @@ function doPost(e) {
           <div class="quick-actions-row">
             ${a.phone ? `<a href="tel:${a.phone}" class="btn btn-secondary btn-sm">📞 ${escapeHtml(a.phone)}</a>` : ''}
             ${a.email ? `<a href="mailto:${a.email}" class="btn btn-secondary btn-sm">✉️ ${escapeHtml(a.email)}</a>` : ''}
-            <button class="btn btn-secondary btn-sm" style="color: #ef4444; margin-left: auto;" onclick="deleteAccount('${a.id}')">🗑️</button>
+            <button class="btn btn-secondary btn-sm" style="margin-left: auto;" onclick="editAccount('${a.id}')" title="Cariyi Düzenle">✏️ Düzenle</button>
+            <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteAccount('${a.id}')" title="Cariyi Sil">🗑️</button>
           </div>
         </div>
       `).join('');
+    }
+
+    function editAccount(id) {
+      const a = accounts.find(x => x.id === id);
+      if (!a) return;
+
+      editingAccountId = id;
+      document.getElementById('modal-account-title').textContent = '✏️ Cari Kartı Düzenle';
+      document.getElementById('btn-save-account').textContent = '💾 Değişiklikleri Güncelle';
+
+      document.getElementById('a-company').value = a.company || '';
+      document.getElementById('a-type').value = a.type || 'Müşteri';
+      document.getElementById('a-contact').value = a.contact || '';
+      document.getElementById('a-phone').value = a.phone || '';
+      document.getElementById('a-email').value = a.email || '';
+      document.getElementById('a-tax-office').value = a.taxOffice || '';
+      document.getElementById('a-tax-no').value = a.taxNo || (a.tax || '');
+      document.getElementById('a-address').value = a.address || '';
+      document.getElementById('a-notes').value = a.notes || '';
+
+      openModal('modal-new-account');
     }
 
     function deleteAccount(id) {
@@ -3235,6 +3457,36 @@ function doPost(e) {
       e.preventDefault();
       const taxOfficeVal = (document.getElementById('a-tax-office')?.value || '').trim();
       const taxNoVal = (document.getElementById('a-tax-no')?.value || '').trim();
+
+      if (editingAccountId) {
+        const a = accounts.find(x => x.id === editingAccountId);
+        if (a) {
+          const oldCompany = a.company;
+          a.company = document.getElementById('a-company').value.trim();
+          a.type = document.getElementById('a-type').value;
+          a.contact = document.getElementById('a-contact').value.trim();
+          a.phone = document.getElementById('a-phone').value.trim();
+          a.email = (document.getElementById('a-email')?.value || '').trim();
+          a.taxOffice = taxOfficeVal;
+          a.taxNo = taxNoVal;
+          a.tax = `${taxOfficeVal} / ${taxNoVal}`.replace(/^\s*\/\s*|\s*\/\s*$/g, '');
+          a.address = (document.getElementById('a-address')?.value || '').trim();
+          a.notes = (document.getElementById('a-notes')?.value || '').trim();
+
+          setStore('yg_accounts_lite', accounts);
+          renderAccounts();
+
+          postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
+          postToWebhook('Cari Kartları', [
+            new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, a.notes
+          ]);
+
+          editingAccountId = null;
+          closeModal('modal-new-account');
+          showToast(`"${a.company}" cari kartı güncellendi! ✏️`);
+          return;
+        }
+      }
 
       const newA = {
         id: 'a_' + Date.now(),
@@ -3596,19 +3848,73 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               💳 ${escapeHtml(inv.method || 'Havale')}
             </span>
             <div style="display: flex; gap: 6px;">
+              <button class="btn btn-secondary btn-sm" onclick="editInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;" title="Faturayı Düzenle">
+                ✏️ Düzenle
+              </button>
               <button class="btn btn-secondary btn-sm" onclick="changeInvoiceCategory('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;" title="Kategoriyi Değiştir">
                 🏷️ Kategori
               </button>
               <button class="btn btn-secondary btn-sm" onclick="toggleInvoiceStatus('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;">
                 ${isPaid ? 'Bekliyor Yap' : 'Ödendi İşaretle'}
               </button>
-              <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem; color: var(--danger);">
+              <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem; color: var(--danger);" title="Faturayı Sil">
                 🗑️
               </button>
             </div>
           </div>
         </div>
       `;
+    }
+
+    function editInvoice(id) {
+      const inv = invoices.find(x => x.id === id);
+      if (!inv) return;
+
+      editingInvoiceId = id;
+      populateInvoiceProjectSelect();
+
+      document.getElementById('modal-invoice-title').textContent = '✏️ Faturayı Düzenle';
+      document.getElementById('btn-save-invoice').textContent = '💾 Değişiklikleri Güncelle';
+
+      document.getElementById('inv-vendor').value = inv.vendor || '';
+      document.getElementById('inv-tax').value = inv.tax || '';
+      document.getElementById('inv-no').value = inv.no || '';
+      document.getElementById('inv-date').value = inv.date || '';
+
+      const catSel = document.getElementById('inv-category');
+      const custInput = document.getElementById('inv-category-custom');
+      let catMatched = false;
+      if (catSel && inv.category) {
+        for (let i = 0; i < catSel.options.length; i++) {
+          if (catSel.options[i].value.toLowerCase().includes(inv.category.toLowerCase()) || 
+              inv.category.toLowerCase().includes(catSel.options[i].value.toLowerCase())) {
+            catSel.selectedIndex = i;
+            catMatched = true;
+            break;
+          }
+        }
+        if (!catMatched) {
+          catSel.value = 'DİĞER';
+          if (custInput) {
+            custInput.style.display = 'block';
+            custInput.value = inv.category;
+          }
+        } else if (custInput) {
+          custInput.style.display = 'none';
+        }
+      }
+
+      if (inv.project) document.getElementById('inv-project').value = inv.project;
+      document.getElementById('inv-subtotal').value = (inv.subtotal !== undefined && inv.subtotal !== null) ? inv.subtotal : '';
+      document.getElementById('inv-vat').value = (inv.vat !== undefined && inv.vat !== null) ? inv.vat : '';
+      document.getElementById('inv-total').value = (inv.total !== undefined && inv.total !== null) ? inv.total : '';
+      document.getElementById('inv-due-date').value = inv.dueDate || '';
+      document.getElementById('inv-status').value = inv.status || 'Bekliyor';
+      document.getElementById('inv-method').value = inv.method || 'Banka Havale / EFT';
+      document.getElementById('inv-desc').value = inv.desc || '';
+      document.getElementById('inv-notes').value = inv.notes || '';
+
+      openModal('modal-new-invoice');
     }
 
     function changeInvoiceCategory(id) {
@@ -3645,6 +3951,64 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     function saveInvoice(e) {
       e.preventDefault();
       const catVal = getSelectedInvoiceCategory();
+
+      if (editingInvoiceId) {
+        const inv = invoices.find(x => x.id === editingInvoiceId);
+        if (inv) {
+          const oldNo = inv.no;
+          inv.vendor = document.getElementById('inv-vendor').value.trim();
+          inv.tax = document.getElementById('inv-tax').value.trim();
+          inv.no = document.getElementById('inv-no').value.trim();
+          inv.category = catVal;
+          inv.date = document.getElementById('inv-date').value;
+          inv.project = document.getElementById('inv-project').value;
+          inv.subtotal = parseFloat(document.getElementById('inv-subtotal').value) || 0;
+          inv.vat = parseFloat(document.getElementById('inv-vat').value) || 0;
+          inv.total = parseFloat(document.getElementById('inv-total').value) || 0;
+          inv.dueDate = document.getElementById('inv-due-date').value;
+          inv.status = document.getElementById('inv-status').value;
+          inv.method = document.getElementById('inv-method').value;
+          inv.desc = document.getElementById('inv-desc').value.trim();
+          inv.notes = (document.getElementById('inv-notes')?.value || '').trim();
+
+          setStore('yg_invoices_lite', invoices);
+          renderInvoices();
+
+          postDeleteToWebhook('Alış Faturaları', 'Fatura No', oldNo);
+          postToWebhook('Alış Faturaları', [
+            inv.regDate || new Date().toISOString().split('T')[0],
+            inv.date,
+            inv.no,
+            inv.category,
+            inv.vendor,
+            inv.tax,
+            inv.project,
+            inv.subtotal,
+            inv.vat,
+            inv.total,
+            inv.dueDate,
+            inv.status,
+            inv.method,
+            inv.desc,
+            inv.notes
+          ]);
+
+          editingInvoiceId = null;
+          closeModal('modal-new-invoice');
+          showToast(`"${inv.no}" faturası güncellendi! ✏️`, '🧾');
+
+          // Reset Form
+          const prevEl = document.getElementById('invoice-preview');
+          if (prevEl) prevEl.style.display = 'none';
+          const loadEl = document.getElementById('invoice-ocr-loader');
+          if (loadEl) loadEl.style.display = 'none';
+          const custInput = document.getElementById('inv-category-custom');
+          if (custInput) custInput.style.display = 'none';
+          e.target.reset();
+          return;
+        }
+      }
+
       const newInv = {
         id: 'inv_' + Date.now(),
         regDate: new Date().toISOString().split('T')[0],
@@ -3895,10 +4259,32 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           ${d.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(d.notes)}</div>` : ''}
           <div style="display:flex; justify-content: flex-end; gap: 6px; margin-top: 4px;">
             <a href="${d.url}" target="_blank" class="btn btn-navy btn-sm">👁️ Evrakı Aç ↗</a>
-            <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteDoc('${d.id}')">🗑️</button>
+            <button class="btn btn-secondary btn-sm" onclick="editDoc('${d.id}')" title="Evrakı Düzenle">✏️ Düzenle</button>
+            <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteDoc('${d.id}')" title="Evrakı Sil">🗑️</button>
           </div>
         </div>
       `).join('');
+    }
+
+    function editDoc(id) {
+      const d = docs.find(x => x.id === id);
+      if (!d) return;
+
+      editingDocId = id;
+      populateDocProjectSelect();
+
+      document.getElementById('modal-doc-title').textContent = '✏️ Evrakı Düzenle';
+      document.getElementById('btn-save-doc').textContent = '💾 Değişiklikleri Güncelle';
+
+      document.getElementById('d-title').value = d.title || '';
+      document.getElementById('d-type').value = d.type || 'Mimari Proje';
+      if (d.project) document.getElementById('d-project-select').value = d.project;
+      document.getElementById('d-date').value = d.date || '';
+      document.getElementById('d-expiry').value = d.expiry || '';
+      document.getElementById('d-url').value = d.url || '';
+      document.getElementById('d-notes').value = d.notes || '';
+
+      openModal('modal-new-doc');
     }
 
     function filterDocsToProject(projName) {
@@ -3924,6 +4310,34 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     function saveDoc(e) {
       e.preventDefault();
+
+      if (editingDocId) {
+        const d = docs.find(x => x.id === editingDocId);
+        if (d) {
+          const oldTitle = d.title;
+          d.title = document.getElementById('d-title').value.trim();
+          d.type = document.getElementById('d-type').value;
+          d.project = document.getElementById('d-project-select').value;
+          d.date = document.getElementById('d-date')?.value || '';
+          d.expiry = document.getElementById('d-expiry')?.value || '';
+          d.url = document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing';
+          d.notes = (document.getElementById('d-notes')?.value || '').trim();
+
+          setStore('yg_docs_lite', docs);
+          renderDocs();
+
+          postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', oldTitle);
+          postToWebhook('Proje Dökümanları', [
+            new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date, d.expiry, d.url, d.notes
+          ]);
+
+          editingDocId = null;
+          closeModal('modal-new-doc');
+          showToast(`"${d.title}" dökümanı güncellendi! ✏️`);
+          return;
+        }
+      }
+
       const newD = {
         id: 'd_' + Date.now(),
         title: document.getElementById('d-title').value.trim(),
@@ -4096,12 +4510,37 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               </div>
               ${t.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top: 4px;">📝 ${escapeHtml(t.notes)}</div>` : ''}
             </div>
-            <button class="btn btn-secondary btn-sm" style="color: #ef4444; padding: 4px 8px; font-size:0.75rem;" onclick="deleteTodo('${t.id}')" title="Görevi Sil">
-              🗑️
-            </button>
+            <div style="display:flex; gap:4px; align-items:center;">
+              <button class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size:0.75rem;" onclick="editTodo('${t.id}')" title="Görevi Düzenle">
+                ✏️
+              </button>
+              <button class="btn btn-secondary btn-sm" style="color: #ef4444; padding: 4px 8px; font-size:0.75rem;" onclick="deleteTodo('${t.id}')" title="Görevi Sil">
+                🗑️
+              </button>
+            </div>
           </div>
         `;
       }).join('');
+    }
+
+    function editTodo(id) {
+      const t = todos.find(x => x.id === id);
+      if (!t) return;
+
+      editingTodoId = id;
+      populateTodoProjectSelect();
+
+      document.getElementById('modal-todo-title').textContent = '✏️ Görevi Düzenle';
+      document.getElementById('btn-save-todo').textContent = '💾 Değişiklikleri Güncelle';
+
+      document.getElementById('todo-title').value = t.title || '';
+      if (t.project) document.getElementById('todo-project-select').value = t.project;
+      document.getElementById('todo-priority').value = t.priority || 'Normal';
+      document.getElementById('todo-assignee').value = t.assignee || '';
+      document.getElementById('todo-due-date').value = t.dueDate || '';
+      document.getElementById('todo-notes').value = t.notes || '';
+
+      openModal('modal-new-todo');
     }
 
     function quickAddTodo(e) {
@@ -4139,6 +4578,45 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       e.preventDefault();
       const title = document.getElementById('todo-title').value.trim();
       if (!title) return;
+
+      if (editingTodoId) {
+        const t = todos.find(x => x.id === editingTodoId);
+        if (t) {
+          const oldTitle = t.title;
+          t.title = title;
+          t.project = document.getElementById('todo-project-select').value || 'Genel';
+          t.priority = document.getElementById('todo-priority').value || 'Normal';
+          t.assignee = (document.getElementById('todo-assignee')?.value || '').trim();
+          t.dueDate = document.getElementById('todo-due-date')?.value || '';
+          t.notes = (document.getElementById('todo-notes')?.value || '').trim();
+
+          setStore('yg_todos_lite', todos);
+          renderTodos();
+
+          postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
+          postToWebhook('Yapılacaklar', [
+            t.createdAt || new Date().toISOString().split('T')[0],
+            t.title,
+            t.project,
+            t.priority,
+            t.assignee,
+            t.dueDate,
+            t.completed ? 'Tamamlandı' : 'Bekliyor',
+            t.notes
+          ]);
+
+          editingTodoId = null;
+          closeModal('modal-new-todo');
+          showToast(`"${t.title}" görevi güncellendi! ✏️`, '✅');
+
+          // Reset form
+          document.getElementById('todo-title').value = '';
+          if (document.getElementById('todo-assignee')) document.getElementById('todo-assignee').value = '';
+          if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
+          if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
+          return;
+        }
+      }
 
       const newT = {
         id: 'todo_' + Date.now(),
@@ -4243,7 +4721,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             </div>
             <div style="display:flex; align-items:center; gap:6px;">
               <span class="badge ${s.status === 'Kritik' ? 'badge-red' : 'badge-green'}">${escapeHtml(s.status)}</span>
-              <button class="btn btn-secondary btn-sm" style="color: #ef4444; padding: 2px 7px;" onclick="deleteStock('${s.id}')">🗑️</button>
+              <button class="btn btn-secondary btn-sm" style="padding: 2px 7px;" onclick="editStock('${s.id}')" title="Stok Düzenle">✏️</button>
+              <button class="btn btn-secondary btn-sm" style="color: #ef4444; padding: 2px 7px;" onclick="deleteStock('${s.id}')" title="Stok Sil">🗑️</button>
             </div>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 4px 0;">
@@ -4257,6 +4736,27 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           ${s.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(s.notes)}</div>` : ''}
         </div>
       `).join('');
+    }
+
+    function editStock(id) {
+      const s = stock.find(x => x.id === id);
+      if (!s) return;
+
+      editingStockId = id;
+      document.getElementById('modal-stock-title').textContent = '✏️ Stok Kalemini Düzenle';
+      document.getElementById('btn-save-stock').textContent = '💾 Değişiklikleri Güncelle';
+
+      document.getElementById('s-code').value = s.code || '';
+      document.getElementById('s-name').value = s.name || '';
+      document.getElementById('s-category').value = s.category || 'Demir & Çelik';
+      document.getElementById('s-location').value = s.location || '';
+      document.getElementById('s-qty').value = (s.qty !== undefined && s.qty !== null) ? s.qty : 0;
+      document.getElementById('s-unit').value = s.unit || 'Ton';
+      document.getElementById('s-price').value = s.price || '';
+      document.getElementById('s-min-qty').value = (s.minQty !== undefined && s.minQty !== null) ? s.minQty : 5;
+      document.getElementById('s-notes').value = s.notes || '';
+
+      openModal('modal-new-stock');
     }
 
     function deleteStock(id) {
@@ -4282,6 +4782,37 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const priceVal = (document.getElementById('s-price')?.value || '').trim();
       const rawPriceNum = parseFloat(priceVal.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0;
       const calcTotalValue = rawPriceNum > 0 ? (qtyVal * rawPriceNum).toLocaleString('tr-TR', { maximumFractionDigits: 0 }) + ' ₺' : '';
+
+      if (editingStockId) {
+        const s = stock.find(x => x.id === editingStockId);
+        if (s) {
+          const oldName = s.name;
+          s.code = document.getElementById('s-code').value.trim();
+          s.name = document.getElementById('s-name').value.trim();
+          s.category = document.getElementById('s-category')?.value || 'Demir & Çelik';
+          s.location = (document.getElementById('s-location')?.value || '').trim();
+          s.qty = qtyVal;
+          s.unit = document.getElementById('s-unit').value.trim();
+          s.price = priceVal;
+          s.totalValue = calcTotalValue;
+          s.minQty = minQtyVal;
+          s.status = (qtyVal <= minQtyVal) ? 'Kritik' : 'Yeterli';
+          s.notes = (document.getElementById('s-notes')?.value || '').trim();
+
+          setStore('yg_stock_lite', stock);
+          renderStock();
+
+          postDeleteToWebhook('Stok', 'Malzeme Adı', oldName);
+          postToWebhook('Stok', [
+            new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.price, s.totalValue, s.location, s.status, s.notes
+          ]);
+
+          editingStockId = null;
+          closeModal('modal-new-stock');
+          showToast(`"${s.name}" stok kalemi güncellendi! ✏️`);
+          return;
+        }
+      }
 
       const newS = {
         id: 's_' + Date.now(),
