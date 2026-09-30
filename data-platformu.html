@@ -1220,10 +1220,18 @@
   <!-- MODAL: YENİ PROJE -->
   <!-- ========================================== -->
   <div class="modal-backdrop" id="modal-new-project">
-    <div class="modal-sheet">
+    <div class="modal-sheet" style="max-height: 92vh;">
       <div class="sheet-handle"></div>
-      <h3 id="modal-project-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 12px;">Yeni İnşaat Projesi</h3>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 id="modal-project-title" style="font-size: 1.1rem; font-weight: 800; color: var(--navy); margin: 0;">Yeni İnşaat Projesi</h3>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-new-project')" style="padding:4px 8px;">✕</button>
+      </div>
+
       <form onsubmit="saveProject(event)">
+        <!-- 1. GENEL PROJE BİLGİLERİ -->
+        <div style="font-size:0.78rem; font-weight:800; color:var(--navy); margin:6px 0 2px 0; border-bottom:1.5px solid #e2e8f0; padding-bottom:3px; display:flex; align-items:center; gap:5px;">
+          <span>🏗️ 1. Genel Proje Bilgileri</span>
+        </div>
         <div class="form-grid">
           <div class="form-group">
             <label>Proje Kodu *</label>
@@ -1237,21 +1245,21 @@
             <label>Tipi</label>
             <select id="p-type">
               <option value="Kentsel Dönüşüm">Kentsel Dönüşüm</option>
-              <option value="GES Santrali">GES Santrali</option>
               <option value="Villa / Konut">Villa / Konut</option>
+              <option value="GES Santrali">GES Santrali</option>
               <option value="Ticari & Sanayi">Ticari & Sanayi</option>
             </select>
           </div>
           <div class="form-group">
-            <label>İşveren</label>
-            <input type="text" id="p-client" placeholder="İşveren firma">
+            <label>İşveren / Yatırımcı</label>
+            <input type="text" id="p-client" placeholder="İşveren firma / Şahıs">
           </div>
           <div class="form-group">
-            <label>Lokasyon</label>
+            <label>Lokasyon / Şehir</label>
             <input type="text" id="p-loc" placeholder="Kadıköy / İstanbul">
           </div>
           <div class="form-group">
-            <label>Bütçe</label>
+            <label>Bütçe (₺)</label>
             <input type="text" id="p-budget" placeholder="15.000.000 ₺">
           </div>
           <div class="form-group">
@@ -1276,11 +1284,141 @@
               <option value="Tamamlandı">Tamamlandı</option>
             </select>
           </div>
+        </div>
+
+        <!-- 2. TAPU, ADA/PARSEL & TKGM SORGULAMA -->
+        <div style="font-size:0.78rem; font-weight:800; color:var(--navy); margin:14px 0 2px 0; border-bottom:1.5px solid #e2e8f0; padding-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+          <span>🗺️ 2. Tapu, Ada / Parsel & TKGM Sorgu</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openTkgmQueryFromForm()" style="padding:2px 8px; font-size:0.7rem; color:#2563eb;" title="TKGM Parsel Sorgu Sayfasını Aç">
+            🗺️ TKGM Parsel Sorgu ↗
+          </button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>İlçe</label>
+            <select id="p-district" onchange="handleProjectDistrictChange(this.value)">
+              <option value="">İlçe Seçiniz...</option>
+              <option value="Kadıköy">Kadıköy</option>
+              <option value="Maltepe">Maltepe</option>
+              <option value="Ataşehir">Ataşehir</option>
+              <option value="Üsküdar">Üsküdar</option>
+              <option value="Kartal">Kartal</option>
+              <option value="Beşiktaş">Beşiktaş</option>
+              <option value="Sarıyer">Sarıyer</option>
+              <option value="Şişli">Şişli</option>
+              <option value="Bakırköy">Bakırköy</option>
+              <option value="Büyükçekmece">Büyükçekmece</option>
+              <option value="Pendik">Pendik</option>
+              <option value="Beyoğlu">Beyoğlu</option>
+              <option value="Diğer">Diğer / Özel</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mahalle</label>
+            <input type="text" id="p-neighborhood" placeholder="Örn: Fenerbahçe Mah.">
+          </div>
+          <div class="form-group">
+            <label>Ada No</label>
+            <input type="text" id="p-ada" placeholder="Örn: 1042">
+          </div>
+          <div class="form-group">
+            <label>Parsel No</label>
+            <input type="text" id="p-parsel" placeholder="Örn: 18">
+          </div>
           <div class="form-group full">
-            <label>📝 Proje Notları / Açıklama</label>
+            <label>Arsa Yüzölçümü (m²)</label>
+            <input type="text" id="p-area" placeholder="Örn: 850 m²">
+          </div>
+        </div>
+
+        <!-- 3. BELEDİYE İMAR DURUMU & YÖNETMELİK PARAMETRELERİ -->
+        <div style="font-size:0.78rem; font-weight:800; color:var(--navy); margin:14px 0 2px 0; border-bottom:1.5px solid #e2e8f0; padding-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+          <span>🏛️ 3. Belediye İmar Durumu & Yönetmelik</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="applyMunicipalityStandards()" style="padding:2px 8px; font-size:0.7rem; color:#059669;" title="Seçili ilçenin yönetmelik standartlarını otomatik uygula">
+            ⚡ Standartları Uygula
+          </button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>İlgili Belediye</label>
+            <input type="text" id="p-municipality" placeholder="Kadıköy Belediyesi">
+          </div>
+          <div class="form-group">
+            <label>Belediye E-İmar Sitesi</label>
+            <div style="display:flex; gap:4px;">
+              <input type="url" id="p-imar-url" placeholder="https://keos.kadikoy.bel.tr/eimar/" style="flex:1;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="openImarUrlFromForm()" title="Belediye E-İmar Sayfasını Aç" style="padding:4px 8px;">↗</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>TAKS (Taban Alanı Katsayısı)</label>
+            <input type="text" id="p-taks" placeholder="Örn: 0.35">
+          </div>
+          <div class="form-group">
+            <label>KAKS / Emsal</label>
+            <input type="text" id="p-kaks" placeholder="Örn: 2.07">
+          </div>
+          <div class="form-group">
+            <label>Kat Adeti / Gabari (Hmax)</label>
+            <input type="text" id="p-floors" placeholder="Örn: 5 Kat / 15.50m">
+          </div>
+          <div class="form-group">
+            <label>Çekme Mesafeleri</label>
+            <input type="text" id="p-setbacks" placeholder="Örn: Ön: 5m • Yan: 3m • Arka: 3m">
+          </div>
+          <div class="form-group full">
+            <label>Yapılaşma Nizamı</label>
+            <select id="p-nizam">
+              <option value="Ayrık Nizam">Ayrık Nizam</option>
+              <option value="Bitişik Nizam">Bitişik Nizam</option>
+              <option value="Blok Nizam">Blok Nizam</option>
+              <option value="İkiz Nizam">İkiz Nizam</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4. APARTMAN / BİNA YÖNETİCİ BİLGİLERİ -->
+        <div style="font-size:0.78rem; font-weight:800; color:var(--navy); margin:14px 0 2px 0; border-bottom:1.5px solid #e2e8f0; padding-bottom:3px; display:flex; align-items:center; gap:5px;">
+          <span>🏢 4. Apartman & Yönetici İletişim Bilgileri</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Apartman / Mevcut Bina Adı</label>
+            <input type="text" id="p-building-name" placeholder="Örn: Menekşe Apartmanı">
+          </div>
+          <div class="form-group">
+            <label>Bağımsız Bölüm / Daire Sayısı</label>
+            <input type="text" id="p-unit-count" placeholder="Örn: 16 Daire + 2 Dükkan">
+          </div>
+          <div class="form-group">
+            <label>Yönetici Adı Soyadı</label>
+            <input type="text" id="p-manager-name" placeholder="Örn: Mehmet Özkan">
+          </div>
+          <div class="form-group">
+            <label>Yönetici Telefonu</label>
+            <input type="tel" id="p-manager-phone" placeholder="0532 123 45 67">
+          </div>
+          <div class="form-group full">
+            <label>Yönetici E-Postası</label>
+            <input type="email" id="p-manager-email" placeholder="yonetici@bina.com">
+          </div>
+          <div class="form-group full">
+            <label>Yönetim / Kat Malikleri Görüşme Notu</label>
+            <input type="text" id="p-manager-notes" placeholder="Toplantı tarihi, 2/3 çoğunluk durumu, imza süreci...">
+          </div>
+        </div>
+
+        <!-- 5. DİĞER AÇIKLAMA & NOTLAR -->
+        <div style="font-size:0.78rem; font-weight:800; color:var(--navy); margin:14px 0 2px 0; border-bottom:1.5px solid #e2e8f0; padding-bottom:3px;">
+          <span>📝 5. Genel Proje Notları</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Proje Notları / Açıklama</label>
             <input type="text" id="p-notes" placeholder="Şantiye notları, imalat aşaması veya özel açıklamalar...">
           </div>
         </div>
+
         <div style="display:flex; gap:8px; margin-top:14px;">
           <button type="button" class="btn btn-secondary btn-full" onclick="closeModal('modal-new-project')">Vazgeç</button>
           <button type="submit" id="btn-save-project" class="btn btn-navy btn-full">Kaydet</button>
@@ -1898,6 +2036,10 @@
         if (!editingProjectId) {
           const tEl = document.getElementById('modal-project-title'); if (tEl) tEl.textContent = 'Yeni İnşaat Projesi';
           const bEl = document.getElementById('btn-save-project'); if (bEl) bEl.textContent = 'Kaydet';
+          const formEl = document.querySelector('#modal-new-project form');
+          if (formEl) formEl.reset();
+          const progVal = document.getElementById('p-prog-val');
+          if (progVal) progVal.textContent = '25';
         }
       }
       if (id === 'modal-new-account') {
@@ -3217,55 +3359,341 @@ function doPost(e) {
     }
 
     /* ================================================================
-       2. PROJELER
+       2. İNŞAAT PROJELERİ & BELEDİYE İMAR ENTEGRASYONU
        ================================================================ */
-    function renderProjects() {
-      const q = document.getElementById('search-projects').value.toLowerCase().trim();
-      const list = document.getElementById('projects-list');
+    const MUNICIPALITY_IMAR_CONFIG = {
+      "Kadıköy": {
+        name: "Kadıköy Belediyesi",
+        imarUrl: "https://keos.kadikoy.bel.tr/eimar/",
+        taks: "0.35",
+        kaks: "2.07",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Maltepe": {
+        name: "Maltepe Belediyesi",
+        imarUrl: "https://e-imar.maltepe.bel.tr/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Ataşehir": {
+        name: "Ataşehir Belediyesi",
+        imarUrl: "https://e-imar.atasehir.bel.tr/",
+        taks: "0.35",
+        kaks: "1.80",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Üsküdar": {
+        name: "Üsküdar Belediyesi",
+        imarUrl: "https://e-imar.uskudar.bel.tr/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Kartal": {
+        name: "Kartal Belediyesi",
+        imarUrl: "https://e-imar.kartal.bel.tr/",
+        taks: "0.40",
+        kaks: "2.00",
+        floors: "6 Kat / 18.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Beşiktaş": {
+        name: "Beşiktaş Belediyesi",
+        imarUrl: "https://e-imar.besiktas.bel.tr/",
+        taks: "0.35",
+        kaks: "1.50",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Sarıyer": {
+        name: "Sarıyer Belediyesi",
+        imarUrl: "https://e-imar.sariyer.bel.tr/",
+        taks: "0.30",
+        kaks: "1.20",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 4.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Şişli": {
+        name: "Şişli Belediyesi",
+        imarUrl: "https://eimar.sisli.bel.tr/",
+        taks: "0.40",
+        kaks: "2.50",
+        floors: "6 Kat / 18.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik Nizam"
+      },
+      "Bakırköy": {
+        name: "Bakırköy Belediyesi",
+        imarUrl: "https://e-imar.bakirkoy.bel.tr/",
+        taks: "0.35",
+        kaks: "1.80",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Büyükçekmece": {
+        name: "Büyükçekmece Belediyesi",
+        imarUrl: "https://e-imar.bcekmece.bel.tr/",
+        taks: "0.30",
+        kaks: "1.50",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Pendik": {
+        name: "Pendik Belediyesi",
+        imarUrl: "https://e-imar.pendik.bel.tr/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Beyoğlu": {
+        name: "Beyoğlu Belediyesi",
+        imarUrl: "https://e-imar.beyoglu.bel.tr/",
+        taks: "0.40",
+        kaks: "2.20",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik Nizam"
+      }
+    };
 
-      const filtered = projects.filter(p => !q || p.name.toLowerCase().includes(q) || p.client.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
+    function handleProjectDistrictChange(district) {
+      if (!district) return;
+      const conf = MUNICIPALITY_IMAR_CONFIG[district];
+      const munInput = document.getElementById('p-municipality');
+      const urlInput = document.getElementById('p-imar-url');
+      const taksInput = document.getElementById('p-taks');
+      const kaksInput = document.getElementById('p-kaks');
+      const floorsInput = document.getElementById('p-floors');
+      const setbacksInput = document.getElementById('p-setbacks');
+      const nizamInput = document.getElementById('p-nizam');
+      const locInput = document.getElementById('p-loc');
+
+      if (locInput && !locInput.value && district !== 'Diğer') {
+        locInput.value = `${district} / İstanbul`;
+      }
+
+      if (conf) {
+        if (munInput) munInput.value = conf.name;
+        if (urlInput) urlInput.value = conf.imarUrl;
+        if (taksInput && !taksInput.value) taksInput.value = conf.taks;
+        if (kaksInput && !kaksInput.value) kaksInput.value = conf.kaks;
+        if (floorsInput && !floorsInput.value) floorsInput.value = conf.floors;
+        if (setbacksInput && !setbacksInput.value) setbacksInput.value = conf.setbacks;
+        if (nizamInput) nizamInput.value = conf.nizam;
+        showToast(`${district} imar standartları & E-İmar portali yüklendi! 🏛️`);
+      } else if (district === 'Diğer') {
+        if (munInput && !munInput.value) munInput.value = 'İlgili Belediye Başkanlığı';
+      }
+    }
+
+    function applyMunicipalityStandards() {
+      const dist = document.getElementById('p-district')?.value;
+      if (!dist || !MUNICIPALITY_IMAR_CONFIG[dist]) {
+        showToast('Lütfen önce listeden geçerli bir ilçe seçiniz.', 'ℹ️');
+        return;
+      }
+      const conf = MUNICIPALITY_IMAR_CONFIG[dist];
+      if (document.getElementById('p-municipality')) document.getElementById('p-municipality').value = conf.name;
+      if (document.getElementById('p-imar-url')) document.getElementById('p-imar-url').value = conf.imarUrl;
+      if (document.getElementById('p-taks')) document.getElementById('p-taks').value = conf.taks;
+      if (document.getElementById('p-kaks')) document.getElementById('p-kaks').value = conf.kaks;
+      if (document.getElementById('p-floors')) document.getElementById('p-floors').value = conf.floors;
+      if (document.getElementById('p-setbacks')) document.getElementById('p-setbacks').value = conf.setbacks;
+      if (document.getElementById('p-nizam')) document.getElementById('p-nizam').value = conf.nizam;
+      showToast(`${dist} yönetmelik imar parametreleri uygulandı! ⚡`);
+    }
+
+    function openTkgmQueryFromForm() {
+      const dist = document.getElementById('p-district')?.value || '';
+      const mah = document.getElementById('p-neighborhood')?.value || '';
+      const ada = document.getElementById('p-ada')?.value || '';
+      const parsel = document.getElementById('p-parsel')?.value || '';
+      openTkgmDirect(dist, mah, ada, parsel);
+    }
+
+    function openImarUrlFromForm() {
+      const url = document.getElementById('p-imar-url')?.value;
+      if (url && url.startsWith('http')) {
+        window.open(url, '_blank');
+      } else {
+        showToast('Geçerli bir E-İmar URL adresi giriniz veya listeden ilçe seçiniz.', '⚠️');
+      }
+    }
+
+    function openTkgmDirect(district, neighborhood, ada, parsel) {
+      const infoParts = [];
+      if (district) infoParts.push(district);
+      if (neighborhood) infoParts.push(neighborhood);
+      if (ada) infoParts.push(`Ada: ${ada}`);
+      if (parsel) infoParts.push(`Parsel: ${parsel}`);
+
+      if (infoParts.length > 0 && navigator.clipboard) {
+        navigator.clipboard.writeText(infoParts.join(' ')).catch(() => {});
+        showToast(`${infoParts.join(' ')} kopyalandı, TKGM açılıyor... 🗺️`);
+      } else {
+        showToast('TKGM Parsel Sorgu sayfası açılıyor... 🗺️');
+      }
+      window.open('https://parselsorgu.tkgm.gov.tr/', '_blank');
+    }
+
+    function renderProjects() {
+      const q = (document.getElementById('search-projects')?.value || '').toLowerCase().trim();
+      const list = document.getElementById('projects-list');
+      if (!list) return;
+
+      const filtered = projects.filter(p => {
+        if (!q) return true;
+        return (p.name && p.name.toLowerCase().includes(q)) ||
+               (p.client && p.client.toLowerCase().includes(q)) ||
+               (p.code && p.code.toLowerCase().includes(q)) ||
+               (p.location && p.location.toLowerCase().includes(q)) ||
+               (p.district && p.district.toLowerCase().includes(q)) ||
+               (p.neighborhood && p.neighborhood.toLowerCase().includes(q)) ||
+               (p.ada && p.ada.toLowerCase().includes(q)) ||
+               (p.parsel && p.parsel.toLowerCase().includes(q)) ||
+               (p.buildingName && p.buildingName.toLowerCase().includes(q)) ||
+               (p.managerName && p.managerName.toLowerCase().includes(q)) ||
+               (p.managerPhone && p.managerPhone.includes(q)) ||
+               (p.notes && p.notes.toLowerCase().includes(q));
+      });
 
       if (filtered.length === 0) {
         list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Proje bulunamadı.</div>`;
         return;
       }
 
-      list.innerHTML = filtered.map(p => `
-        <div class="card-item">
-          <div class="card-item-header">
-            <div>
-              <div class="card-item-title">${escapeHtml(p.name)}</div>
-              <div class="card-item-meta">${escapeHtml(p.code)} • ${escapeHtml(p.client)} • 📍 ${escapeHtml(p.location)}</div>
+      list.innerHTML = filtered.map(p => {
+        const hasLandInfo = !!(p.ada || p.parsel || p.district || p.neighborhood || p.area || p.imarUrl || p.taks || p.kaks);
+        const hasManagerInfo = !!(p.buildingName || p.managerName || p.managerPhone || p.managerEmail || p.unitCount);
+        const cleanPhoneDigits = p.managerPhone ? p.managerPhone.replace(/[^0-9]/g, '').replace(/^0/, '') : '';
+
+        return `
+          <div class="card-item">
+            <div class="card-item-header">
+              <div style="flex:1; min-width:0;">
+                <div class="card-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  ${escapeHtml(p.name)}
+                </div>
+                <div class="card-item-meta">
+                  <span>${escapeHtml(p.code)}</span> • <span>${escapeHtml(p.client || 'İşveren')}</span> • <span>📍 ${escapeHtml(p.location || (p.district ? p.district + ' / İstanbul' : 'İstanbul'))}</span>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+                <span class="badge ${p.type === 'Kentsel Dönüşüm' ? 'badge-purple' : 'badge-blue'}">${escapeHtml(p.type || 'Proje')}</span>
+                <span class="badge ${p.status === 'Tamamlandı' ? 'badge-green' : 'badge-amber'}">${escapeHtml(p.status)}</span>
+              </div>
             </div>
-            <span class="badge ${p.status === 'Tamamlandı' ? 'badge-green' : 'badge-blue'}">${escapeHtml(p.status)}</span>
+
+            <!-- İlerleme Çubuğu -->
+            <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0;">
+              <div style="flex:1; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
+                <div style="height:100%; width:${p.progress || 0}%; background: var(--green);"></div>
+              </div>
+              <span style="font-size: 0.75rem; font-weight: 800; color:var(--navy);">%${p.progress || 0}</span>
+            </div>
+
+            <!-- 1. ADA / PARSEL & İMAR BİLGİ KARTÇIĞI -->
+            ${hasLandInfo ? `
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                  <div>
+                    <span style="font-weight:800; color:var(--navy);">🗺️ Tapu & Parsel:</span>
+                    <span style="font-weight:600; color:#1e293b;">
+                      ${escapeHtml(p.district || '')}${p.neighborhood ? ' / ' + escapeHtml(p.neighborhood) : ''}
+                    </span>
+                    ${(p.ada || p.parsel) ? `<span style="background:#e2e8f0; padding:1px 6px; border-radius:6px; font-weight:700; margin-left:4px; color:#0f172a;">Ada: ${escapeHtml(p.ada || '-')} / Parsel: ${escapeHtml(p.parsel || '-')}</span>` : ''}
+                    ${p.area ? `<span style="color:var(--muted); font-size:0.7rem; margin-left:3px;">(${escapeHtml(p.area)} m²)</span>` : ''}
+                  </div>
+                  <div style="display:flex; gap:4px; flex-shrink:0;">
+                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openTkgmDirect('${escapeHtml(p.district||'')}', '${escapeHtml(p.neighborhood||'')}', '${escapeHtml(p.ada||'')}', '${escapeHtml(p.parsel||'')}')" title="TKGM Parsel Sorgu Sayfasını Aç">
+                      🗺️ TKGM ↗
+                    </button>
+                    ${p.imarUrl ? `
+                      <a href="${escapeHtml(p.imarUrl)}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Belediye E-İmar Sitesini Aç">
+                        🏛️ E-İmar ↗
+                      </a>
+                    ` : ''}
+                  </div>
+                </div>
+
+                ${(p.taks || p.kaks || p.floors || p.setbacks || p.nizam) ? `
+                  <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-top:5px; padding-top:5px; border-top:1px dashed #cbd5e1; font-size:0.71rem;">
+                    <span style="font-weight:700; color:var(--navy); margin-right:2px;">🏛️ İmar Durumu:</span>
+                    ${p.taks ? `<span class="badge" style="background:#f1f5f9; color:#334155;">TAKS: ${escapeHtml(p.taks)}</span>` : ''}
+                    ${p.kaks ? `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:800;">KAKS/Emsal: ${escapeHtml(p.kaks)}</span>` : ''}
+                    ${p.floors ? `<span class="badge" style="background:#fef3c7; color:#b45309;">${escapeHtml(p.floors)}</span>` : ''}
+                    ${p.setbacks ? `<span class="badge" style="background:#ede9fe; color:#6d28d9;" title="Çekme Mesafeleri">${escapeHtml(p.setbacks)}</span>` : ''}
+                    ${p.nizam ? `<span class="badge" style="background:#ecfdf5; color:#047857;">${escapeHtml(p.nizam)}</span>` : ''}
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
+
+            <!-- 2. APARTMAN / YÖNETİCİ İLETİŞİM KARTÇIĞI -->
+            ${hasManagerInfo ? `
+              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                  <div>
+                    <span style="font-weight:800; color:#14532d;">🏢 ${escapeHtml(p.buildingName || 'Bina / Apartman')}</span>
+                    ${p.unitCount ? `<span style="font-size:0.7rem; color:#166534; margin-left:4px; font-weight:600;">(${escapeHtml(p.unitCount)})</span>` : ''}
+                    ${p.managerName ? `<div style="font-size:0.72rem; color:#1e293b; margin-top:2px;">👤 Yönetici: <strong>${escapeHtml(p.managerName)}</strong></div>` : ''}
+                  </div>
+                  <div style="display:flex; gap:4px; align-items:center; flex-shrink:0;">
+                    ${p.managerPhone ? `
+                      <a href="tel:${escapeHtml(p.managerPhone)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Yöneticiyi Telefonla Ara">
+                        📞 Ara
+                      </a>
+                      <a href="https://wa.me/90${cleanPhoneDigits}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; color:#15803d; text-decoration:none;" title="WhatsApp İle Mesaj Gönder">
+                        💬 WA
+                      </a>
+                    ` : ''}
+                    ${p.managerEmail ? `
+                      <a href="mailto:${escapeHtml(p.managerEmail)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="E-Posta Gönder">
+                        ✉️
+                      </a>
+                    ` : ''}
+                  </div>
+                </div>
+                ${p.managerNotes ? `<div style="font-size:0.71rem; color:#166534; font-style:italic; margin-top:3px;">📝 ${escapeHtml(p.managerNotes)}</div>` : ''}
+              </div>
+            ` : ''}
+
+            ${(p.startDate || p.endDate) ? `
+              <div style="font-size: 0.72rem; color: var(--muted); margin: 1px 0;">
+                📅 Başlangıç: ${escapeHtml(p.startDate || '-')} — Teslim: ${escapeHtml(p.endDate || '-')}
+              </div>
+            ` : ''}
+
+            ${p.notes ? `<div style="font-size: 0.73rem; color: #475569; font-style: italic; margin: 1px 0 3px 0;">📝 ${escapeHtml(p.notes)}</div>` : ''}
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem; margin-top: 2px;">
+              <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget || '-')}</strong>
+              <div style="display:flex; gap:5px; align-items:center;">
+                <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${escapeHtml(p.name)}')">📁 Evraklar</button>
+                <button class="btn btn-secondary btn-sm" onclick="filterTodosToProject('${escapeHtml(p.name)}')">✅ Görevler</button>
+                <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
+                <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')" title="Projeyi Sil">🗑️</button>
+              </div>
+            </div>
           </div>
-
-          <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
-            <div style="flex:1; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
-              <div style="height:100%; width:${p.progress}%; background: var(--green);"></div>
-            </div>
-            <span style="font-size: 0.75rem; font-weight: 800;">%${p.progress}</span>
-          </div>
-
-          ${(p.startDate || p.endDate) ? `
-            <div style="font-size: 0.73rem; color: var(--muted); margin: 3px 0;">
-              📅 Başlangıç: ${escapeHtml(p.startDate || '-')} — Teslim: ${escapeHtml(p.endDate || '-')}
-            </div>
-          ` : ''}
-
-          ${p.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(p.notes)}</div>` : ''}
-
-          <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem;">
-            <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget)}</strong>
-            <div style="display:flex; gap:6px; align-items:center;">
-              <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${escapeHtml(p.name)}')">📁 Evraklar</button>
-              <button class="btn btn-secondary btn-sm" onclick="filterTodosToProject('${escapeHtml(p.name)}')">✅ Görevler</button>
-              <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
-              <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')">🗑️</button>
-            </div>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function editProject(id) {
@@ -3288,6 +3716,30 @@ function doPost(e) {
       document.getElementById('p-prog-val').textContent = p.progress || 0;
       document.getElementById('p-status').value = p.status || 'Planlama';
       document.getElementById('p-notes').value = p.notes || '';
+
+      // Tapu & Parsel
+      document.getElementById('p-district').value = p.district || '';
+      document.getElementById('p-neighborhood').value = p.neighborhood || '';
+      document.getElementById('p-ada').value = p.ada || '';
+      document.getElementById('p-parsel').value = p.parsel || '';
+      document.getElementById('p-area').value = p.area || '';
+
+      // Belediye & İmar
+      document.getElementById('p-municipality').value = p.municipality || '';
+      document.getElementById('p-imar-url').value = p.imarUrl || '';
+      document.getElementById('p-taks').value = p.taks || '';
+      document.getElementById('p-kaks').value = p.kaks || '';
+      document.getElementById('p-floors').value = p.floors || '';
+      document.getElementById('p-setbacks').value = p.setbacks || '';
+      document.getElementById('p-nizam').value = p.nizam || 'Ayrık Nizam';
+
+      // Apartman & Yönetici
+      document.getElementById('p-building-name').value = p.buildingName || '';
+      document.getElementById('p-unit-count').value = p.unitCount || '';
+      document.getElementById('p-manager-name').value = p.managerName || '';
+      document.getElementById('p-manager-phone').value = p.managerPhone || '';
+      document.getElementById('p-manager-email').value = p.managerEmail || '';
+      document.getElementById('p-manager-notes').value = p.managerNotes || '';
 
       openModal('modal-new-project');
     }
@@ -3313,6 +3765,27 @@ function doPost(e) {
     function saveProject(e) {
       e.preventDefault();
 
+      const districtVal = document.getElementById('p-district')?.value || '';
+      const neighborhoodVal = (document.getElementById('p-neighborhood')?.value || '').trim();
+      const adaVal = (document.getElementById('p-ada')?.value || '').trim();
+      const parselVal = (document.getElementById('p-parsel')?.value || '').trim();
+      const areaVal = (document.getElementById('p-area')?.value || '').trim();
+
+      const municipalityVal = (document.getElementById('p-municipality')?.value || '').trim();
+      const imarUrlVal = (document.getElementById('p-imar-url')?.value || '').trim();
+      const taksVal = (document.getElementById('p-taks')?.value || '').trim();
+      const kaksVal = (document.getElementById('p-kaks')?.value || '').trim();
+      const floorsVal = (document.getElementById('p-floors')?.value || '').trim();
+      const setbacksVal = (document.getElementById('p-setbacks')?.value || '').trim();
+      const nizamVal = document.getElementById('p-nizam')?.value || 'Ayrık Nizam';
+
+      const buildingNameVal = (document.getElementById('p-building-name')?.value || '').trim();
+      const unitCountVal = (document.getElementById('p-unit-count')?.value || '').trim();
+      const managerNameVal = (document.getElementById('p-manager-name')?.value || '').trim();
+      const managerPhoneVal = (document.getElementById('p-manager-phone')?.value || '').trim();
+      const managerEmailVal = (document.getElementById('p-manager-email')?.value || '').trim();
+      const managerNotesVal = (document.getElementById('p-manager-notes')?.value || '').trim();
+
       if (editingProjectId) {
         const p = projects.find(x => x.id === editingProjectId);
         if (p) {
@@ -3330,6 +3803,27 @@ function doPost(e) {
           p.status = document.getElementById('p-status').value;
           p.notes = document.getElementById('p-notes')?.value.trim() || '';
 
+          p.district = districtVal;
+          p.neighborhood = neighborhoodVal;
+          p.ada = adaVal;
+          p.parsel = parselVal;
+          p.area = areaVal;
+
+          p.municipality = municipalityVal;
+          p.imarUrl = imarUrlVal;
+          p.taks = taksVal;
+          p.kaks = kaksVal;
+          p.floors = floorsVal;
+          p.setbacks = setbacksVal;
+          p.nizam = nizamVal;
+
+          p.buildingName = buildingNameVal;
+          p.unitCount = unitCountVal;
+          p.managerName = managerNameVal;
+          p.managerPhone = managerPhoneVal;
+          p.managerEmail = managerEmailVal;
+          p.managerNotes = managerNotesVal;
+
           setStore('yg_projects_lite', projects);
           renderProjects();
           populateDocProjectSelect();
@@ -3337,7 +3831,12 @@ function doPost(e) {
 
           postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
           postToWebhook('İnşaat Projeleri', [
-            new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate, `%${p.progress}`, p.status, p.notes
+            new Date().toISOString().split('T')[0],
+            p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
+            `%${p.progress}`, p.status, p.notes,
+            p.district, p.neighborhood, p.ada, p.parsel, p.area,
+            p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
+            p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
           ]);
 
           editingProjectId = null;
@@ -3359,7 +3858,28 @@ function doPost(e) {
         endDate: document.getElementById('p-end')?.value || '',
         progress: parseInt(document.getElementById('p-prog').value) || 0,
         status: document.getElementById('p-status').value,
-        notes: document.getElementById('p-notes')?.value.trim() || ''
+        notes: document.getElementById('p-notes')?.value.trim() || '',
+
+        district: districtVal,
+        neighborhood: neighborhoodVal,
+        ada: adaVal,
+        parsel: parselVal,
+        area: areaVal,
+
+        municipality: municipalityVal,
+        imarUrl: imarUrlVal,
+        taks: taksVal,
+        kaks: kaksVal,
+        floors: floorsVal,
+        setbacks: setbacksVal,
+        nizam: nizamVal,
+
+        buildingName: buildingNameVal,
+        unitCount: unitCountVal,
+        managerName: managerNameVal,
+        managerPhone: managerPhoneVal,
+        managerEmail: managerEmailVal,
+        managerNotes: managerNotesVal
       };
 
       projects.unshift(newP);
@@ -3369,12 +3889,17 @@ function doPost(e) {
       if (newP.code) unmarkDeleted('İnşaat Projeleri', newP.code);
 
       postToWebhook('İnşaat Projeleri', [
-        new Date().toISOString().split('T')[0], newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate, `%${newP.progress}`, newP.status, newP.notes
+        new Date().toISOString().split('T')[0],
+        newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate,
+        `%${newP.progress}`, newP.status, newP.notes,
+        newP.district, newP.neighborhood, newP.ada, newP.parsel, newP.area,
+        newP.municipality, newP.imarUrl, newP.taks, newP.kaks, newP.floors, newP.setbacks, newP.nizam,
+        newP.buildingName, newP.unitCount, newP.managerName, newP.managerPhone, newP.managerEmail, newP.managerNotes
       ]);
 
       closeModal('modal-new-project');
       renderProjects();
-      showToast('Proje eklendi');
+      showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
     }
 
     /* ================================================================
