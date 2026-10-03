@@ -1964,7 +1964,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-09-30_v10_todolist";
+    const APP_BUILD_VERSION = "2026-10-03_v11_project_extended_fix";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const existingCards = JSON.parse(localStorage.getItem('yg_cards_lite') || '[]');
@@ -2113,8 +2113,10 @@ function doGet(e) {
           var r = data[i];
           if (!r[0] && !r[1] && !r[2]) continue;
           var obj = {};
-          for (var c = 0; c < headers.length; c++) {
-            obj[headers[c]] = r[c];
+          var colLen = Math.max(headers.length, r.length, (cfg.headers ? cfg.headers.length : 0));
+          for (var c = 0; c < colLen; c++) {
+            var colHeader = (c < headers.length && headers[c]) ? headers[c] : (cfg.headers && c < cfg.headers.length ? cfg.headers[c] : "col_" + c);
+            obj[colHeader] = r[c] !== undefined ? r[c] : "";
           }
           rows.push(obj);
         }
@@ -2163,7 +2165,10 @@ var SHEET_CONFIGS = [
   },
   {
     name: "İnşaat Projeleri",
-    headers: ["Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "Başlangıç Tarihi", "Teslim Tarihi", "İlerleme", "Durum", "Proje Notları"]
+    headers: [
+      "Tarih", "Proje Kodu", "Proje Adı", "Türü", "İşveren", "Konum", "Bütçe", "Başlangıç Tarihi", "Teslim Tarihi", "İlerleme", "Durum", "Proje Notları",
+      "İlçe", "Mahalle", "Ada No", "Parsel No", "Arsa Alanı", "İlgili Belediye", "E-İmar URL", "TAKS", "KAKS / Emsal", "Kat Adeti / Gabari", "Çekme Mesafeleri", "Yapılaşma Nizamı", "Apartman / Bina Adı", "Daire Sayısı", "Yönetici Adı", "Yönetici Telefonu", "Yönetici E-Postası", "Yönetici Notları"
+    ]
   },
   {
     name: "Cari Kartları",
@@ -3557,6 +3562,22 @@ function doPost(e) {
       window.open('https://parselsorgu.tkgm.gov.tr/', '_blank');
     }
 
+    function openTkgmForProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+      openTkgmDirect(p.district, p.neighborhood, p.ada, p.parsel);
+    }
+
+    function filterDocsForProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (p && p.name) filterDocsToProject(p.name);
+    }
+
+    function filterTodosForProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (p && p.name) filterTodosToProject(p.name);
+    }
+
     function renderProjects() {
       const q = (document.getElementById('search-projects')?.value || '').toLowerCase().trim();
       const list = document.getElementById('projects-list');
@@ -3584,9 +3605,9 @@ function doPost(e) {
       }
 
       list.innerHTML = filtered.map(p => {
-        const hasLandInfo = !!(p.ada || p.parsel || p.district || p.neighborhood || p.area || p.imarUrl || p.taks || p.kaks);
-        const hasManagerInfo = !!(p.buildingName || p.managerName || p.managerPhone || p.managerEmail || p.unitCount);
-        const cleanPhoneDigits = p.managerPhone ? p.managerPhone.replace(/[^0-9]/g, '').replace(/^0/, '') : '';
+        const hasLandInfo = !!(p.ada || p.parsel || p.district || p.neighborhood || p.area || p.imarUrl || p.taks || p.kaks || p.floors || p.setbacks || (p.nizam && p.nizam !== 'Ayrık Nizam'));
+        const hasManagerInfo = !!(p.buildingName || p.managerName || p.managerPhone || p.managerEmail || p.unitCount || p.managerNotes);
+        const cleanPhoneDigits = p.managerPhone ? p.managerPhone.replace(/[^0-9]/g, '').replace(/^(90|0)/, '') : '';
 
         return `
           <div class="card-item">
@@ -3626,7 +3647,7 @@ function doPost(e) {
                     ${p.area ? `<span style="color:var(--muted); font-size:0.7rem; margin-left:3px;">(${escapeHtml(p.area)} m²)</span>` : ''}
                   </div>
                   <div style="display:flex; gap:4px; flex-shrink:0;">
-                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openTkgmDirect('${escapeHtml(p.district||'')}', '${escapeHtml(p.neighborhood||'')}', '${escapeHtml(p.ada||'')}', '${escapeHtml(p.parsel||'')}')" title="TKGM Parsel Sorgu Sayfasını Aç">
+                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openTkgmForProject('${p.id}')" title="TKGM Parsel Sorgu Sayfasını Aç">
                       🗺️ TKGM ↗
                     </button>
                     ${p.imarUrl ? `
@@ -3690,8 +3711,8 @@ function doPost(e) {
             <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem; margin-top: 2px;">
               <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget || '-')}</strong>
               <div style="display:flex; gap:5px; align-items:center;">
-                <button class="btn btn-secondary btn-sm" onclick="filterDocsToProject('${escapeHtml(p.name)}')">📁 Evraklar</button>
-                <button class="btn btn-secondary btn-sm" onclick="filterTodosToProject('${escapeHtml(p.name)}')">✅ Görevler</button>
+                <button class="btn btn-secondary btn-sm" onclick="filterDocsForProject('${p.id}')">📁 Evraklar</button>
+                <button class="btn btn-secondary btn-sm" onclick="filterTodosForProject('${p.id}')">✅ Görevler</button>
                 <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
                 <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')" title="Projeyi Sil">🗑️</button>
               </div>
@@ -3767,7 +3788,7 @@ function doPost(e) {
       showToast(`"${p.name}" silindi ✅`);
     }
 
-    function saveProject(e) {
+    async function saveProject(e) {
       e.preventDefault();
 
       const districtVal = document.getElementById('p-district')?.value || '';
@@ -3834,25 +3855,31 @@ function doPost(e) {
           populateDocProjectSelect();
           populateInvoiceProjectSelect();
 
-          postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
-          postToWebhook('İnşaat Projeleri', [
-            new Date().toISOString().split('T')[0],
+          editingProjectId = null;
+          closeModal('modal-new-project');
+          showToast(`"${p.name}" projesi güncellendi! ✏️`);
+
+          if (oldName) {
+            await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
+          }
+          if (oldCode && oldCode !== p.code) {
+            await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
+          }
+          await postToWebhook('İnşaat Projeleri', [
+            p.date || new Date().toISOString().split('T')[0],
             p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
             `%${p.progress}`, p.status, p.notes,
             p.district, p.neighborhood, p.ada, p.parsel, p.area,
             p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
             p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
           ]);
-
-          editingProjectId = null;
-          closeModal('modal-new-project');
-          showToast(`"${p.name}" projesi güncellendi! ✏️`);
           return;
         }
       }
 
       const newP = {
         id: 'p_' + Date.now(),
+        date: new Date().toISOString().split('T')[0],
         code: document.getElementById('p-code').value.trim(),
         name: document.getElementById('p-name').value.trim(),
         type: document.getElementById('p-type').value,
@@ -3893,18 +3920,20 @@ function doPost(e) {
       unmarkDeleted('İnşaat Projeleri', newP.name);
       if (newP.code) unmarkDeleted('İnşaat Projeleri', newP.code);
 
-      postToWebhook('İnşaat Projeleri', [
-        new Date().toISOString().split('T')[0],
+      renderProjects();
+      populateDocProjectSelect();
+      populateInvoiceProjectSelect();
+      closeModal('modal-new-project');
+      showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
+
+      await postToWebhook('İnşaat Projeleri', [
+        newP.date,
         newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate,
         `%${newP.progress}`, newP.status, newP.notes,
         newP.district, newP.neighborhood, newP.ada, newP.parsel, newP.area,
         newP.municipality, newP.imarUrl, newP.taks, newP.kaks, newP.floors, newP.setbacks, newP.nizam,
         newP.buildingName, newP.unitCount, newP.managerName, newP.managerPhone, newP.managerEmail, newP.managerNotes
       ]);
-
-      closeModal('modal-new-project');
-      renderProjects();
-      showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
     }
 
     /* ================================================================
@@ -5555,7 +5584,38 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     function syncAllToGoogleSheets() {
       showToast('Sheets senkronizasyonu başladı...', '🔄');
       cards.forEach(c => postToWebhook('Müşteriler', [c.date, c.name, c.company, c.role, c.sector || 'İnşaat & Taahhüt', c.mobile || c.phone || '', c.office || '', c.email, c.category, c.address || '', c.notes || '']));
-      projects.forEach(p => postToWebhook('İnşaat Projeleri', [new Date().toISOString().split('T')[0], p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate || '', p.endDate || '', `%${p.progress}`, p.status, p.notes || '']));
+      projects.forEach(p => postToWebhook('İnşaat Projeleri', [
+        p.date || new Date().toISOString().split('T')[0],
+        p.code || '',
+        p.name || '',
+        p.type || 'Kentsel Dönüşüm',
+        p.client || '',
+        p.location || '',
+        p.budget || '',
+        p.startDate || '',
+        p.endDate || '',
+        `%${p.progress || 0}`,
+        p.status || 'Planlama',
+        p.notes || '',
+        p.district || '',
+        p.neighborhood || '',
+        p.ada || '',
+        p.parsel || '',
+        p.area || '',
+        p.municipality || '',
+        p.imarUrl || '',
+        p.taks || '',
+        p.kaks || '',
+        p.floors || '',
+        p.setbacks || '',
+        p.nizam || 'Ayrık Nizam',
+        p.buildingName || '',
+        p.unitCount || '',
+        p.managerName || '',
+        p.managerPhone || '',
+        p.managerEmail || '',
+        p.managerNotes || ''
+      ]));
       accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email || '', a.taxOffice || '', a.taxNo || a.tax || '', a.address || '', a.notes || '']));
       invoices.forEach(inv => postToWebhook('Alış Faturaları', [
         inv.regDate || new Date().toISOString().split('T')[0],
@@ -5673,6 +5733,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
           // 2. İnşaat Projeleri
           if (d['İnşaat Projeleri'] && d['İnşaat Projeleri'].length > 0) {
+            const localProjects = getStore('yg_projects_lite', []);
             projects = d['İnşaat Projeleri']
               .filter(r => {
                 const name = cleanText(r['Proje Adı']);
@@ -5692,22 +5753,73 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                   const parsed = parseFloat(String(prg).replace('%', '').trim());
                   numPrg = !isNaN(parsed) ? (parsed <= 1 && parsed > 0 ? Math.round(parsed * 100) : Math.round(parsed)) : 0;
                 }
+                const pCode = cleanText(r['Proje Kodu']);
+                const pName = cleanText(r['Proje Adı']);
+                const local = localProjects.find(lp => 
+                  (lp.code && pCode && lp.code.trim().toLowerCase() === pCode.toLowerCase()) ||
+                  (lp.name && pName && lp.name.trim().toLowerCase() === pName.toLowerCase()) ||
+                  (lp.id === 'p_' + idx)
+                );
+
+                const getVal = (keys, fallback = '') => {
+                  for (const k of keys) {
+                    if (r[k] !== undefined && r[k] !== null && String(r[k]).trim() !== '') {
+                      const cv = cleanText(r[k]);
+                      if (cv !== '') return cv;
+                    }
+                  }
+                  return (fallback !== undefined && fallback !== null) ? fallback : '';
+                };
+
                 return {
-                  id: 'p_' + idx,
-                  date: cleanDate(r['Tarih']),
-                  code: cleanText(r['Proje Kodu']),
-                  name: cleanText(r['Proje Adı']),
-                  type: cleanText(r['Türü']),
-                  client: cleanText(r['İşveren']),
-                  location: cleanText(r['Konum']),
-                  budget: cleanText(r['Bütçe']),
-                  startDate: cleanDate(r['Başlangıç Tarihi']),
-                  endDate: cleanDate(r['Teslim Tarihi']),
-                  progress: numPrg,
-                  status: cleanText(r['Durum'], 'Planlama'),
-                  notes: cleanText(r['Proje Notları'])
+                  id: (local && local.id) ? local.id : ('p_' + idx),
+                  date: cleanDate(r['Tarih']) || (local ? local.date : '') || '',
+                  code: pCode || (local ? local.code : '') || '',
+                  name: pName || (local ? local.name : '') || '',
+                  type: cleanText(r['Türü']) || (local ? local.type : '') || 'Kentsel Dönüşüm',
+                  client: cleanText(r['İşveren']) || (local ? local.client : '') || '',
+                  location: cleanText(r['Konum']) || (local ? local.location : '') || '',
+                  budget: cleanText(r['Bütçe']) || (local ? local.budget : '') || '',
+                  startDate: cleanDate(r['Başlangıç Tarihi']) || (local ? local.startDate : '') || '',
+                  endDate: cleanDate(r['Teslim Tarihi']) || (local ? local.endDate : '') || '',
+                  progress: numPrg || (local ? local.progress : 0) || 0,
+                  status: cleanText(r['Durum'], (local ? local.status : 'Planlama')),
+                  notes: cleanText(r['Proje Notları']) || (local ? local.notes : '') || '',
+
+                  district: getVal(['İlçe', 'col_12'], local ? local.district : ''),
+                  neighborhood: getVal(['Mahalle', 'col_13'], local ? local.neighborhood : ''),
+                  ada: getVal(['Ada No', 'Ada', 'col_14'], local ? local.ada : ''),
+                  parsel: getVal(['Parsel No', 'Parsel', 'col_15'], local ? local.parsel : ''),
+                  area: getVal(['Arsa Alanı', 'Arsa Alanı (m²)', 'Alan', 'col_16'], local ? local.area : ''),
+                  municipality: getVal(['İlgili Belediye', 'Belediye', 'col_17'], local ? local.municipality : ''),
+                  imarUrl: getVal(['E-İmar URL', 'Belediye E-İmar Sitesi', 'İmar URL', 'col_18'], local ? local.imarUrl : ''),
+                  taks: getVal(['TAKS', 'col_19'], local ? local.taks : ''),
+                  kaks: getVal(['KAKS / Emsal', 'KAKS', 'Emsal', 'col_20'], local ? local.kaks : ''),
+                  floors: getVal(['Kat Adeti / Gabari', 'Kat Adeti', 'Kat', 'Gabari', 'col_21'], local ? local.floors : ''),
+                  setbacks: getVal(['Çekme Mesafeleri', 'Çekme Mesafesi', 'Çekme', 'col_22'], local ? local.setbacks : ''),
+                  nizam: getVal(['Yapılaşma Nizamı', 'Nizam', 'col_23'], local ? local.nizam : 'Ayrık Nizam') || 'Ayrık Nizam',
+                  buildingName: getVal(['Apartman / Bina Adı', 'Bina Adı', 'Apartman Adı', 'Apartman', 'col_24'], local ? local.buildingName : ''),
+                  unitCount: getVal(['Daire Sayısı', 'Bağımsız Bölüm / Daire Sayısı', 'Bağımsız Bölüm', 'col_25'], local ? local.unitCount : ''),
+                  managerName: getVal(['Yönetici Adı', 'Yönetici Adı Soyadı', 'Yönetici', 'col_26'], local ? local.managerName : ''),
+                  managerPhone: getVal(['Yönetici Telefonu', 'Yönetici Telefon', 'Yönetici Tel', 'col_27'], local ? local.managerPhone : ''),
+                  managerEmail: getVal(['Yönetici E-Postası', 'Yönetici E-Posta', 'Yönetici Mail', 'col_28'], local ? local.managerEmail : ''),
+                  managerNotes: getVal(['Yönetici Notları', 'Yönetim / Kat Malikleri Görüşme Notu', 'Yönetici Notu', 'col_29'], local ? local.managerNotes : '')
                 };
               });
+
+            // Uzak veride henüz yer almayan yerel projeleri de koru
+            localProjects.forEach(lp => {
+              if (!lp || !lp.name) return;
+              if (isRecordDeleted('İnşaat Projeleri', lp.name) || (lp.code && isRecordDeleted('İnşaat Projeleri', lp.code))) return;
+              const exists = projects.some(p => 
+                (p.code && lp.code && p.code.trim().toLowerCase() === lp.code.trim().toLowerCase()) ||
+                (p.name && lp.name && p.name.trim().toLowerCase() === lp.name.trim().toLowerCase())
+              );
+              if (!exists) {
+                projects.push(lp);
+              }
+            });
+
             setStore('yg_projects_lite', projects);
             renderProjects();
             populateDocProjectSelect();
