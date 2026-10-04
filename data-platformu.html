@@ -2074,8 +2074,39 @@
       localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
     }
 
+    function makeProjectSlug(name) {
+      return String(name || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[ıİ]/g, 'i')
+        .replace(/[ğĞ]/g, 'g')
+        .replace(/[üÜ]/g, 'u')
+        .replace(/[şŞ]/g, 's')
+        .replace(/[öÖ]/g, 'o')
+        .replace(/[çÇ]/g, 'c')
+        .replace(/[^a-z0-9]/g, '_')
+        .replace(/_+/g, '_')
+        .replace(/^_|_$/g, '');
+    }
+
+    function sanitizeProjectIds(projList) {
+      if (!Array.isArray(projList)) return [];
+      const seen = new Set();
+      return projList.map((p, idx) => {
+        if (!p) return p;
+        let s = makeProjectSlug(p.name);
+        let targetId = 'p_' + (s || ('idx_' + idx));
+        if (seen.has(targetId)) {
+          targetId = targetId + '_' + idx;
+        }
+        seen.add(targetId);
+        p.id = targetId;
+        return p;
+      });
+    }
+
     let cards = getStore('yg_cards_lite', defaultCards);
-    let projects = getStore('yg_projects_lite', defaultProjects);
+    let projects = sanitizeProjectIds(getStore('yg_projects_lite', defaultProjects));
     let accounts = getStore('yg_accounts_lite', defaultAccounts);
     let invoices = getStore('yg_invoices_lite', defaultInvoices);
     let docs = getStore('yg_docs_lite', defaultDocs);
@@ -4211,7 +4242,6 @@ function doPost(e) {
       if (!confirm(`"${p.name}" projesi silinsin mi?`)) return;
 
       markAsDeleted('İnşaat Projeleri', p.name);
-      if (p.code) markAsDeleted('İnşaat Projeleri', p.code);
 
       projects = projects.filter(x => x.id !== id);
       setStore('yg_projects_lite', projects);
@@ -4318,11 +4348,12 @@ function doPost(e) {
         }
       }
 
+      const pNameInput = document.getElementById('p-name').value.trim();
       const newP = {
-        id: 'p_' + Date.now(),
+        id: 'p_' + (makeProjectSlug(pNameInput) || ('prj_' + Date.now())),
         date: new Date().toISOString().split('T')[0],
         code: document.getElementById('p-code').value.trim(),
-        name: document.getElementById('p-name').value.trim(),
+        name: pNameInput,
         type: document.getElementById('p-type').value,
         client: document.getElementById('p-client').value.trim(),
         location: document.getElementById('p-loc').value.trim(),
@@ -6525,9 +6556,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             }
 
             const local = localProjects.find(lp => 
-              (lp.code && pCode && lp.code.trim().toLowerCase() === pCode.toLowerCase()) ||
-              (lp.name && pName && lp.name.trim().toLowerCase() === pName.toLowerCase()) ||
-              (lp.id === 'p_' + idx)
+              lp && lp.name && pName && lp.name.trim().toLowerCase() === pName.trim().toLowerCase()
             );
 
             let munName = getSmartVal(['Belediye', 'İlgili Belediye', 'Belediyesi', 'col_17'], 17, local ? local.municipality : '');
@@ -6549,8 +6578,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               if (!setbacksVal) setbacksVal = conf.setbacks;
             }
 
+            const uniqueProjId = 'p_' + (makeProjectSlug(pName) || ('idx_' + idx));
+
             return {
-              id: (local && local.id) ? local.id : ('p_' + idx),
+              id: uniqueProjId,
               date: cleanDate(r['Tarih'] || r['col_0']) || (local ? local.date : '') || '',
               code: pCode || (local ? local.code : '') || '',
               name: pName || (local ? local.name : '') || '',
@@ -6590,12 +6621,12 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         // Uzak veride henüz yer almayan yerel projeleri de koru
         localProjects.forEach(lp => {
           if (!lp || !lp.name) return;
-          if (isRecordDeleted('İnşaat Projeleri', lp.name) || (lp.code && isRecordDeleted('İnşaat Projeleri', lp.code))) return;
+          if (isRecordDeleted('İnşaat Projeleri', lp.name)) return;
           const exists = projects.some(p => 
-            (p.code && lp.code && p.code.trim().toLowerCase() === lp.code.trim().toLowerCase()) ||
-            (p.name && lp.name && p.name.trim().toLowerCase() === lp.name.trim().toLowerCase())
+            p && p.name && lp.name && p.name.trim().toLowerCase() === lp.name.trim().toLowerCase()
           );
           if (!exists) {
+            lp.id = 'p_' + (makeProjectSlug(lp.name) || lp.id || ('gen_' + Math.random()));
             projects.push(lp);
           }
         });
