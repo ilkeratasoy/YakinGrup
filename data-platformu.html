@@ -1301,18 +1301,49 @@
             <label>İlçe</label>
             <select id="p-district" onchange="handleProjectDistrictChange(this.value)">
               <option value="">İlçe Seçiniz...</option>
-              <option value="Kadıköy">Kadıköy</option>
-              <option value="Maltepe">Maltepe</option>
-              <option value="Ataşehir">Ataşehir</option>
-              <option value="Üsküdar">Üsküdar</option>
-              <option value="Kartal">Kartal</option>
-              <option value="Beşiktaş">Beşiktaş</option>
-              <option value="Sarıyer">Sarıyer</option>
-              <option value="Şişli">Şişli</option>
-              <option value="Bakırköy">Bakırköy</option>
-              <option value="Büyükçekmece">Büyükçekmece</option>
-              <option value="Pendik">Pendik</option>
-              <option value="Beyoğlu">Beyoğlu</option>
+              <optgroup label="🏙️ Avrupa Yakası (Karşı)">
+                <option value="Küçükçekmece">Küçükçekmece</option>
+                <option value="Bakırköy">Bakırköy</option>
+                <option value="Beşiktaş">Beşiktaş</option>
+                <option value="Beylikdüzü">Beylikdüzü</option>
+                <option value="Beyoğlu">Beyoğlu</option>
+                <option value="Büyükçekmece">Büyükçekmece</option>
+                <option value="Avcılar">Avcılar</option>
+                <option value="Bağcılar">Bağcılar</option>
+                <option value="Bahçelievler">Bahçelievler</option>
+                <option value="Başakşehir">Başakşehir</option>
+                <option value="Bayrampaşa">Bayrampaşa</option>
+                <option value="Esenler">Esenler</option>
+                <option value="Esenyurt">Esenyurt</option>
+                <option value="Eyüpsultan">Eyüpsultan</option>
+                <option value="Fatih">Fatih</option>
+                <option value="Gaziosmanpaşa">Gaziosmanpaşa</option>
+                <option value="Güngören">Güngören</option>
+                <option value="Kâğıthane">Kâğıthane</option>
+                <option value="Sarıyer">Sarıyer</option>
+                <option value="Silivri">Silivri</option>
+                <option value="Sultangazi">Sultangazi</option>
+                <option value="Şişli">Şişli</option>
+                <option value="Zeytinburnu">Zeytinburnu</option>
+                <option value="Arnavutköy">Arnavutköy</option>
+                <option value="Çatalca">Çatalca</option>
+              </optgroup>
+              <optgroup label="🌊 Anadolu Yakası">
+                <option value="Kadıköy">Kadıköy</option>
+                <option value="Maltepe">Maltepe</option>
+                <option value="Ataşehir">Ataşehir</option>
+                <option value="Üsküdar">Üsküdar</option>
+                <option value="Kartal">Kartal</option>
+                <option value="Pendik">Pendik</option>
+                <option value="Ümraniye">Ümraniye</option>
+                <option value="Beykoz">Beykoz</option>
+                <option value="Çekmeköy">Çekmeköy</option>
+                <option value="Sancaktepe">Sancaktepe</option>
+                <option value="Sultanbeyli">Sultanbeyli</option>
+                <option value="Tuzla">Tuzla</option>
+                <option value="Şile">Şile</option>
+                <option value="Adalar">Adalar</option>
+              </optgroup>
               <option value="Diğer">Diğer / Özel</option>
             </select>
           </div>
@@ -3503,6 +3534,234 @@ function doPost(e) {
        2. İNŞAAT PROJELERİ & BELEDİYE İMAR ENTEGRASYONU
        ================================================================ */
     const MUNICIPALITY_IMAR_CONFIG = {
+      // 🏙️ AVRUPA YAKASI (KARŞI)
+      "Küçükçekmece": {
+        name: "Küçükçekmece Belediyesi",
+        imarUrl: "https://keos.kucukcekmece.bel.tr/eimar/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Bakırköy": {
+        name: "Bakırköy Belediyesi",
+        imarUrl: "https://e-imar.bakirkoy.bel.tr/",
+        taks: "0.35",
+        kaks: "1.80",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Beşiktaş": {
+        name: "Beşiktaş Belediyesi",
+        imarUrl: "https://e-imar.besiktas.bel.tr/",
+        taks: "0.35",
+        kaks: "1.50",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Beylikdüzü": {
+        name: "Beylikdüzü Belediyesi",
+        imarUrl: "https://eimar.beylikduzu.istanbul/",
+        taks: "0.30",
+        kaks: "1.60",
+        floors: "6 Kat / 18.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Beyoğlu": {
+        name: "Beyoğlu Belediyesi",
+        imarUrl: "https://e-imar.beyoglu.bel.tr/",
+        taks: "0.40",
+        kaks: "2.20",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik Nizam"
+      },
+      "Büyükçekmece": {
+        name: "Büyükçekmece Belediyesi",
+        imarUrl: "https://e-imar.bcekmece.bel.tr/",
+        taks: "0.30",
+        kaks: "1.50",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Avcılar": {
+        name: "Avcılar Belediyesi",
+        imarUrl: "https://keos.avcilar.bel.tr/eimar/",
+        taks: "0.35",
+        kaks: "1.80",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Bağcılar": {
+        name: "Bağcılar Belediyesi",
+        imarUrl: "https://eimar.bagcilar.bel.tr/",
+        taks: "0.40",
+        kaks: "2.00",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Bahçelievler": {
+        name: "Bahçelievler Belediyesi",
+        imarUrl: "https://e-imar.bahcelievler.bel.tr/",
+        taks: "0.40",
+        kaks: "2.20",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Başakşehir": {
+        name: "Başakşehir Belediyesi",
+        imarUrl: "https://e-imar.basaksehir.bel.tr/",
+        taks: "0.30",
+        kaks: "1.80",
+        floors: "6 Kat / 18.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 4.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Bayrampaşa": {
+        name: "Bayrampaşa Belediyesi",
+        imarUrl: "https://e-imar.bayrampasa.bel.tr/",
+        taks: "0.40",
+        kaks: "2.00",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik / Blok Nizam"
+      },
+      "Esenler": {
+        name: "Esenler Belediyesi",
+        imarUrl: "https://e-imar.esenler.bel.tr/",
+        taks: "0.40",
+        kaks: "2.00",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik / Blok Nizam"
+      },
+      "Esenyurt": {
+        name: "Esenyurt Belediyesi",
+        imarUrl: "https://eimar.esenyurt.bel.tr/",
+        taks: "0.35",
+        kaks: "2.00",
+        floors: "6 Kat / 18.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Eyüpsultan": {
+        name: "Eyüpsultan Belediyesi",
+        imarUrl: "https://e-imar.eyupsultan.bel.tr/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Fatih": {
+        name: "Fatih Belediyesi",
+        imarUrl: "https://e-imar.fatih.bel.tr/",
+        taks: "0.50",
+        kaks: "2.00",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik Nizam"
+      },
+      "Gaziosmanpaşa": {
+        name: "Gaziosmanpaşa Belediyesi",
+        imarUrl: "https://e-imar.gaziosmanpasa.bel.tr/",
+        taks: "0.40",
+        kaks: "2.00",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Güngören": {
+        name: "Güngören Belediyesi",
+        imarUrl: "https://e-imar.gungoren.bel.tr/",
+        taks: "0.40",
+        kaks: "2.20",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik / Blok Nizam"
+      },
+      "Kâğıthane": {
+        name: "Kâğıthane Belediyesi",
+        imarUrl: "https://e-imar.kagithane.istanbul/",
+        taks: "0.35",
+        kaks: "2.00",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Sarıyer": {
+        name: "Sarıyer Belediyesi",
+        imarUrl: "https://e-imar.sariyer.bel.tr/",
+        taks: "0.30",
+        kaks: "1.20",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 4.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Silivri": {
+        name: "Silivri Belediyesi",
+        imarUrl: "https://eimar.silivri.bel.tr/",
+        taks: "0.30",
+        kaks: "1.20",
+        floors: "3-4 Kat / 9.50m - 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Sultangazi": {
+        name: "Sultangazi Belediyesi",
+        imarUrl: "https://e-imar.sultangazi.bel.tr/",
+        taks: "0.40",
+        kaks: "2.00",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Şişli": {
+        name: "Şişli Belediyesi",
+        imarUrl: "https://eimar.sisli.bel.tr/",
+        taks: "0.40",
+        kaks: "2.50",
+        floors: "6 Kat / 18.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik Nizam"
+      },
+      "Zeytinburnu": {
+        name: "Zeytinburnu Belediyesi",
+        imarUrl: "https://e-imar.zeytinburnu.istanbul/",
+        taks: "0.40",
+        kaks: "2.20",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 0.00m • Yan: Bitişik",
+        nizam: "Bitişik / Blok Nizam"
+      },
+      "Arnavutköy": {
+        name: "Arnavutköy Belediyesi",
+        imarUrl: "https://e-imar.arnavutkoy.bel.tr/",
+        taks: "0.30",
+        kaks: "1.20",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Çatalca": {
+        name: "Çatalca Belediyesi",
+        imarUrl: "https://eimar.catalca.bel.tr/",
+        taks: "0.25",
+        kaks: "0.80",
+        floors: "3 Kat / 9.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 5.00m",
+        nizam: "Ayrık Nizam"
+      },
+
+      // 🌊 ANADOLU YAKASI
       "Kadıköy": {
         name: "Kadıköy Belediyesi",
         imarUrl: "https://keos.kadikoy.bel.tr/eimar/",
@@ -3548,51 +3807,6 @@ function doPost(e) {
         setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
         nizam: "Ayrık Nizam"
       },
-      "Beşiktaş": {
-        name: "Beşiktaş Belediyesi",
-        imarUrl: "https://e-imar.besiktas.bel.tr/",
-        taks: "0.35",
-        kaks: "1.50",
-        floors: "4 Kat / 12.50m",
-        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
-        nizam: "Ayrık Nizam"
-      },
-      "Sarıyer": {
-        name: "Sarıyer Belediyesi",
-        imarUrl: "https://e-imar.sariyer.bel.tr/",
-        taks: "0.30",
-        kaks: "1.20",
-        floors: "4 Kat / 12.50m",
-        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 4.00m",
-        nizam: "Ayrık Nizam"
-      },
-      "Şişli": {
-        name: "Şişli Belediyesi",
-        imarUrl: "https://eimar.sisli.bel.tr/",
-        taks: "0.40",
-        kaks: "2.50",
-        floors: "6 Kat / 18.50m",
-        setbacks: "Ön: 0.00m • Yan: Bitişik",
-        nizam: "Bitişik Nizam"
-      },
-      "Bakırköy": {
-        name: "Bakırköy Belediyesi",
-        imarUrl: "https://e-imar.bakirkoy.bel.tr/",
-        taks: "0.35",
-        kaks: "1.80",
-        floors: "5 Kat / 15.50m",
-        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
-        nizam: "Ayrık Nizam"
-      },
-      "Büyükçekmece": {
-        name: "Büyükçekmece Belediyesi",
-        imarUrl: "https://e-imar.bcekmece.bel.tr/",
-        taks: "0.30",
-        kaks: "1.50",
-        floors: "4 Kat / 12.50m",
-        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
-        nizam: "Ayrık Nizam"
-      },
       "Pendik": {
         name: "Pendik Belediyesi",
         imarUrl: "https://e-imar.pendik.bel.tr/",
@@ -3602,14 +3816,77 @@ function doPost(e) {
         setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
         nizam: "Ayrık Nizam"
       },
-      "Beyoğlu": {
-        name: "Beyoğlu Belediyesi",
-        imarUrl: "https://e-imar.beyoglu.bel.tr/",
-        taks: "0.40",
-        kaks: "2.20",
+      "Ümraniye": {
+        name: "Ümraniye Belediyesi",
+        imarUrl: "https://e-imar.umraniye.bel.tr/",
+        taks: "0.35",
+        kaks: "1.80",
         floors: "5 Kat / 15.50m",
-        setbacks: "Ön: 0.00m • Yan: Bitişik",
-        nizam: "Bitişik Nizam"
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Beykoz": {
+        name: "Beykoz Belediyesi",
+        imarUrl: "https://e-imar.beykoz.bel.tr/",
+        taks: "0.20",
+        kaks: "0.60",
+        floors: "2-3 Kat / 6.50m - 9.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 5.00m",
+        nizam: "Ayrık / Boğaziçi Görünüm"
+      },
+      "Çekmeköy": {
+        name: "Çekmeköy Belediyesi",
+        imarUrl: "https://eimar.cekmekoy.bel.tr/",
+        taks: "0.30",
+        kaks: "1.50",
+        floors: "4 Kat / 12.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Sancaktepe": {
+        name: "Sancaktepe Belediyesi",
+        imarUrl: "https://eimar.sancaktepe.bel.tr/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Sultanbeyli": {
+        name: "Sultanbeyli Belediyesi",
+        imarUrl: "https://eimar.sultanbeyli.bel.tr/",
+        taks: "0.35",
+        kaks: "1.75",
+        floors: "5 Kat / 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Tuzla": {
+        name: "Tuzla Belediyesi",
+        imarUrl: "https://e-imar.tuzla.bel.tr/",
+        taks: "0.35",
+        kaks: "1.60",
+        floors: "4-5 Kat / 12.50m - 15.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 3.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Şile": {
+        name: "Şile Belediyesi",
+        imarUrl: "https://eimar.sile.bel.tr/",
+        taks: "0.25",
+        kaks: "0.75",
+        floors: "2.5 Kat / 7.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 4.00m",
+        nizam: "Ayrık Nizam"
+      },
+      "Adalar": {
+        name: "Adalar Belediyesi",
+        imarUrl: "https://e-imar.adalar.bel.tr/",
+        taks: "0.25",
+        kaks: "0.60",
+        floors: "2 Kat / 6.50m",
+        setbacks: "Ön: 5.00m • Yan: 3.00m • Arka: 5.00m",
+        nizam: "Koruma Amaçlı İmar Planı"
       }
     };
 
