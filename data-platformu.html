@@ -2012,7 +2012,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-03_v12_invoice_stats_and_kdv_fix";
+    const APP_BUILD_VERSION = "2026-10-04_v13_todo_sheet_sync_fix";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const existingCards = JSON.parse(localStorage.getItem('yg_cards_lite') || '[]');
@@ -2151,6 +2151,30 @@
 // YAKIN GRUP DATA PLATFORMU - GOOGLE SHEETS ENTEGRASYON KODU
 // ====================================================================
 
+function findSheet(ss, name) {
+  if (!name) return ss.getActiveSheet();
+  var s = ss.getSheetByName(name);
+  if (s) return s;
+
+  var sheets = ss.getSheets();
+  var norm = name.toString().trim().toLowerCase().replace(/[\\s\\-_]/g, '');
+
+  for (var i = 0; i < sheets.length; i++) {
+    var curNorm = sheets[i].getName().trim().toLowerCase().replace(/[\\s\\-_]/g, '');
+    if (curNorm === norm) return sheets[i];
+  }
+
+  var todoAliases = ['todolist', 'yapilacaklar', 'todo', 'gorevler'];
+  if (todoAliases.indexOf(norm) !== -1) {
+    for (var j = 0; j < sheets.length; j++) {
+      var sNorm = sheets[j].getName().trim().toLowerCase().replace(/[\\s\\-_]/g, '');
+      if (todoAliases.indexOf(sNorm) !== -1) return sheets[j];
+    }
+  }
+
+  return null;
+}
+
 function doGet(e) {
   var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : "";
   
@@ -2160,7 +2184,7 @@ function doGet(e) {
       var ss = SpreadsheetApp.getActiveSpreadsheet();
       var result = {};
       SHEET_CONFIGS.forEach(function(cfg) {
-        var s = ss.getSheetByName(cfg.name);
+        var s = findSheet(ss, cfg.name);
         if (!s) { result[cfg.name] = []; return; }
         var data = s.getDataRange().getValues();
         if (data.length <= 1) { result[cfg.name] = []; return; }
@@ -2178,6 +2202,11 @@ function doGet(e) {
           rows.push(obj);
         }
         result[cfg.name] = rows;
+        if (cfg.aliases) {
+          cfg.aliases.forEach(function(alias) {
+            result[alias] = rows;
+          });
+        }
       });
       return ContentService.createTextOutput(JSON.stringify({ status: "success", data: result }))
         .setMimeType(ContentService.MimeType.JSON);
@@ -2232,8 +2261,9 @@ var SHEET_CONFIGS = [
     headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "E-Posta", "Vergi Dairesi", "VKN / TCKN", "Açık Adres", "Notlar / IBAN"]
   },
   {
-    name: "Yapılacaklar",
-    headers: ["Kayıt Tarihi", "Görev Başlığı", "İlgili Proje", "Öncelik", "Sorumlu", "Termin Tarihi", "Durum", "Notlar / Detay"]
+    name: "To Do list",
+    aliases: ["Yapılacaklar", "To Do List", "To-Do List", "TodoList"],
+    headers: ["Tarih", "To Do List", "Proje", "Öncelik", "Sorumlu Kişi", "Termin Bitiş", "Durum", "Not"]
   }
 ];
 
@@ -2241,7 +2271,7 @@ var SHEET_CONFIGS = [
 function setupHeaders() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   SHEET_CONFIGS.forEach(function(cfg) {
-    var s = ss.getSheetByName(cfg.name);
+    var s = findSheet(ss, cfg.name);
     if (!s) {
       s = ss.insertSheet(cfg.name);
     }
@@ -2263,7 +2293,7 @@ function setupHeaders() {
 function resetSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   SHEET_CONFIGS.forEach(function(cfg) {
-    var s = ss.getSheetByName(cfg.name);
+    var s = findSheet(ss, cfg.name);
     if (!s) {
       s = ss.insertSheet(cfg.name);
     } else {
@@ -2309,7 +2339,7 @@ function doPost(e) {
     // 3. Satır Silme (deleteRow)
     if (data.action === "deleteRow") {
       var delSheetName = data.sheet || "Müşteriler";
-      var delSheet = ss.getSheetByName(delSheetName);
+      var delSheet = findSheet(ss, delSheetName);
       var deletedCount = 0;
       if (delSheet) {
         var lastRow = delSheet.getLastRow();
@@ -2322,7 +2352,8 @@ function doPost(e) {
           var matchVal = (data.matchValue || "").toString().trim().toLowerCase();
 
           for (var c = 0; c < headers.length; c++) {
-            if (headers[c].toString().trim().toLowerCase() === matchCol) {
+            var h = headers[c].toString().trim().toLowerCase();
+            if (h === matchCol || (matchCol === "to do list" && (h === "görev başlığı" || h === "görev" || h === "başlık")) || (matchCol === "görev başlığı" && (h === "to do list" || h === "başlık"))) {
               colIdx = c;
               break;
             }
@@ -2343,14 +2374,55 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 4. Normal veri ekleme (appendRow)
+    // 4. Satır Güncelleme (updateRow - yerinde güncelleme)
+    if (data.action === "updateRow") {
+      var upSheetName = data.sheet || "To Do list";
+      var upSheet = findSheet(ss, upSheetName);
+      var updated = false;
+      var upRow = data.row;
+      if (upSheet && upRow && Array.isArray(upRow)) {
+        var uLastRow = upSheet.getLastRow();
+        if (uLastRow > 1) {
+          var uRange = upSheet.getRange(1, 1, uLastRow, upSheet.getLastColumn());
+          var uValues = uRange.getValues();
+          var uHeaders = uValues[0];
+          var uColIdx = -1;
+          var uMatchCol = (data.matchColumn || "").toString().trim().toLowerCase();
+          var uMatchVal = (data.matchValue || "").toString().trim().toLowerCase();
+
+          for (var uc = 0; uc < uHeaders.length; uc++) {
+            var uh = uHeaders[uc].toString().trim().toLowerCase();
+            if (uh === uMatchCol || (uMatchCol === "to do list" && (uh === "görev başlığı" || uh === "görev" || uh === "başlık")) || (uMatchCol === "görev başlığı" && (uh === "to do list" || uh === "başlık"))) {
+              uColIdx = uc;
+              break;
+            }
+          }
+
+          for (var ur = uLastRow - 1; ur >= 1; ur--) {
+            var uVal = uValues[ur][uColIdx >= 0 ? uColIdx : 1];
+            if (uVal && uVal.toString().trim().toLowerCase() === uMatchVal) {
+              upSheet.getRange(ur + 1, 1, 1, upRow.length).setValues([upRow]);
+              updated = true;
+              break;
+            }
+          }
+        }
+        if (!updated) {
+          upSheet.appendRow(upRow);
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", action: "updateRow", updated: updated }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 5. Normal veri ekleme (appendRow)
     var sheetName = data.sheet || "Müşteriler";
     var row = data.row;
     if (!row || !Array.isArray(row) || row.length === 0) {
       return ContentService.createTextOutput(JSON.stringify({ status: "ignored", message: "Boş satır eklenmedi" }))
         .setMimeType(ContentService.MimeType.JSON);
     }
-    var sheet = ss.getSheetByName(sheetName);
+    var sheet = findSheet(ss, sheetName);
     
     // İlgili sheet yoksa oluştur ve başlıklarını yaz
     if (!sheet) {
@@ -2359,7 +2431,9 @@ function doPost(e) {
 
     // Eğer sheet boşsa veya ilk satırda başlık yoksa otomatik başlık ekle
     if (sheet.getLastRow() === 0) {
-      var matchedCfg = SHEET_CONFIGS.find(function(c) { return c.name === sheetName; });
+      var matchedCfg = SHEET_CONFIGS.find(function(c) {
+        return c.name === sheetName || (c.aliases && c.aliases.indexOf(sheetName) !== -1);
+      });
       if (matchedCfg) {
         sheet.appendRow(matchedCfg.headers);
         sheet.getRange(1, 1, 1, matchedCfg.headers.length)
@@ -5381,7 +5455,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       openModal('modal-new-todo');
     }
 
-    function quickAddTodo(e) {
+    async function quickAddTodo(e) {
       if (e) e.preventDefault();
       const input = document.getElementById('quick-todo-input');
       const val = input ? input.value.trim() : '';
@@ -5404,15 +5478,17 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       input.value = '';
       renderTodos();
 
+      unmarkDeleted('To Do list', newT.title);
       unmarkDeleted('Yapılacaklar', newT.title);
-      postToWebhook('Yapılacaklar', [
+
+      await postToWebhook('To Do list', [
         newT.createdAt, newT.title, newT.project, newT.priority, newT.assignee, newT.dueDate, 'Bekliyor', newT.notes
       ]);
 
       showToast('Görev eklendi! 📋', '✅');
     }
 
-    function saveTodo(e) {
+    async function saveTodo(e) {
       e.preventDefault();
       const title = document.getElementById('todo-title').value.trim();
       if (!title) return;
@@ -5431,8 +5507,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           setStore('yg_todos_lite', todos);
           renderTodos();
 
-          postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
-          postToWebhook('Yapılacaklar', [
+          const rowData = [
             t.createdAt || new Date().toISOString().split('T')[0],
             t.title,
             t.project,
@@ -5441,7 +5516,15 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             t.dueDate,
             t.completed ? 'Tamamlandı' : 'Bekliyor',
             t.notes
-          ]);
+          ];
+
+          // Eski kaydı silip güncel kaydı ekle (veya updateRow)
+          await postDeleteToWebhook('To Do list', 'To Do List', oldTitle);
+          // Eski Yapılacaklar sekmesinde kalmış olabilecek kopyayı da temizle
+          postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
+          postDeleteToWebhook('Yapılacaklar', 'To Do List', oldTitle);
+
+          await postToWebhook('To Do list', rowData);
 
           editingTodoId = null;
           closeModal('modal-new-todo');
@@ -5471,10 +5554,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       todos.unshift(newT);
       setStore('yg_todos_lite', todos);
 
+      unmarkDeleted('To Do list', newT.title);
       unmarkDeleted('Yapılacaklar', newT.title);
-      postToWebhook('Yapılacaklar', [
-        newT.createdAt, newT.title, newT.project, newT.priority, newT.assignee, newT.dueDate, 'Bekliyor', newT.notes
-      ]);
 
       closeModal('modal-new-todo');
       renderTodos();
@@ -5485,16 +5566,22 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (document.getElementById('todo-assignee')) document.getElementById('todo-assignee').value = '';
       if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
       if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
+
+      await postToWebhook('To Do list', [
+        newT.createdAt, newT.title, newT.project, newT.priority, newT.assignee, newT.dueDate, 'Bekliyor', newT.notes
+      ]);
     }
 
-    function toggleTodoStatus(id) {
+    async function toggleTodoStatus(id) {
       const t = todos.find(x => x.id === id);
       if (!t) return;
       t.completed = !t.completed;
       setStore('yg_todos_lite', todos);
       renderTodos();
 
-      postToWebhook('Yapılacaklar', [
+      showToast(t.completed ? 'Görev tamamlandı! 🎉' : 'Görev bekliyor yapıldı', t.completed ? '✅' : '⏳');
+
+      const rowData = [
         t.createdAt || new Date().toISOString().split('T')[0],
         t.title,
         t.project || 'Genel',
@@ -5503,34 +5590,38 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         t.dueDate || '',
         t.completed ? 'Tamamlandı' : 'Bekliyor',
         t.notes || ''
-      ]);
+      ];
 
-      showToast(t.completed ? 'Görev tamamlandı! 🎉' : 'Görev bekliyor yapıldı', t.completed ? '✅' : '⏳');
+      // E-tabloda mükerrer satır oluşmaması için eski satırı silip güncel durumu ekle
+      await postDeleteToWebhook('To Do list', 'To Do List', t.title);
+      await postToWebhook('To Do list', rowData);
     }
 
-    function deleteTodo(id) {
+    async function deleteTodo(id) {
       const t = todos.find(x => x.id === id);
       if (!t) return;
       if (!confirm(`"${t.title}" görevini silmek istediğinize emin misiniz?`)) return;
 
+      markAsDeleted('To Do list', t.title);
       markAsDeleted('Yapılacaklar', t.title);
 
       todos = todos.filter(x => x.id !== id);
       setStore('yg_todos_lite', todos);
       renderTodos();
 
+      await postDeleteToWebhook('To Do list', 'To Do List', t.title);
       postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title);
       showToast(`"${t.title}" silindi ✅`);
     }
 
     function exportTodosCsv() {
       const rows = [
-        ['ID', 'Kayıt Tarihi', 'Görev Başlığı', 'İlgili Proje', 'Öncelik', 'Sorumlu', 'Termin Tarihi', 'Durum', 'Notlar'],
+        ['Tarih', 'To Do List', 'Proje', 'Öncelik', 'Sorumlu Kişi', 'Termin Bitiş', 'Durum', 'Not'],
         ...todos.map(t => [
-          t.id, t.createdAt || '', t.title, t.project || 'Genel', t.priority || 'Normal', t.assignee || '', t.dueDate || '', t.completed ? 'Tamamlandı' : 'Bekliyor', t.notes || ''
+          t.createdAt || '', t.title, t.project || 'Genel', t.priority || 'Normal', t.assignee || '', t.dueDate || '', t.completed ? 'Tamamlandı' : 'Bekliyor', t.notes || ''
         ])
       ];
-      downloadCsv(`YakinGrup_Yapilacaklar_${new Date().toISOString().split('T')[0]}.csv`, rows);
+      downloadCsv(`YakinGrup_ToDoList_${new Date().toISOString().split('T')[0]}.csv`, rows);
     }
 
     /* ================================================================
@@ -5728,6 +5819,33 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       }
     }
 
+    async function postUpdateToWebhook(sheetName, matchColumn, matchValue, rowArray) {
+      const url = getWebhookUrl();
+      if (!url || !matchValue) return;
+      try {
+        const safeRow = rowArray.map(item => {
+          if (typeof item === 'string' && item.startsWith('+')) return "'" + item;
+          return item;
+        });
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          cache: 'no-cache',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'updateRow',
+            sheet: sheetName,
+            matchColumn: matchColumn,
+            matchValue: matchValue,
+            row: safeRow
+          })
+        });
+        console.log(`[Update Synced]: ${sheetName} -> ${matchColumn}: ${matchValue}`);
+      } catch(err) {
+        console.error("Update sync error", err);
+      }
+    }
+
     async function resetAllToSingleSample() {
       if (!confirm("E-tablo ve platformdaki tüm fazla örnekler temizlenecek, her kategori için sadece 1 adet temiz örnek bırakılacak. Devam etmek istiyor musunuz?")) return;
 
@@ -5876,7 +5994,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         inv.notes || ''
       ]));
       docs.forEach(d => postToWebhook('Proje Dökümanları', [new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date || '', d.expiry || '', d.url, d.notes || '']));
-      todos.forEach(t => postToWebhook('Yapılacaklar', [
+      todos.forEach(t => postToWebhook('To Do list', [
         t.createdAt || new Date().toISOString().split('T')[0],
         t.title,
         t.project || 'Genel',
@@ -6205,29 +6323,100 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             renderDocs();
           }
 
-          // 6. Yapılacaklar (To-Do List)
-          if (d['Yapılacaklar'] && d['Yapılacaklar'].length > 0) {
-            todos = d['Yapılacaklar']
+          // 6. To Do List (Yapılacaklar)
+          let rawTodos = d['To Do list'] || d['To Do List'] || d['Yapılacaklar'] || [];
+
+          // Webhook henüz To Do list sekmesini döndürmüyorsa, Google Sheets GViz üzerinden doğrudan oku
+          if (!rawTodos || rawTodos.length === 0) {
+            try {
+              const gvizUrl = 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/gviz/tq?tqx=out:json&sheet=' + encodeURIComponent('To Do list');
+              const gvizResp = await fetch(gvizUrl, { cache: 'no-store' });
+              if (gvizResp && gvizResp.ok) {
+                const gvizText = await gvizResp.text();
+                const jsonStr = gvizText.substring(gvizText.indexOf('{'), gvizText.lastIndexOf('}') + 1);
+                const parsed = JSON.parse(jsonStr);
+                if (parsed && parsed.table && parsed.table.rows && parsed.table.rows.length > 0) {
+                  const cols = (parsed.table.cols || []).map(c => (c.label || '').trim());
+                  rawTodos = parsed.table.rows.map(r => {
+                    const obj = {};
+                    (r.c || []).forEach((cell, idx) => {
+                      const colName = cols[idx] || ('col_' + idx);
+                      obj[colName] = cell ? (cell.f !== undefined ? cell.f : (cell.v !== undefined ? cell.v : '')) : '';
+                    });
+                    return obj;
+                  });
+                }
+              }
+            } catch(gvizErr) {
+              console.warn('GViz To Do list fallback read error:', gvizErr);
+            }
+          }
+
+          if (rawTodos && rawTodos.length > 0) {
+            const localTodos = getStore('yg_todos_lite', []);
+
+            const getColVal = (rowObj, keys, fallback = '') => {
+              for (const k of keys) {
+                if (rowObj[k] !== undefined && rowObj[k] !== null && String(rowObj[k]).trim() !== '') {
+                  const cv = cleanText(rowObj[k]);
+                  if (cv !== '') return cv;
+                }
+              }
+              return fallback;
+            };
+
+            const mapped = rawTodos
               .filter(r => {
-                const title = cleanText(r['Görev Başlığı']);
+                const title = getColVal(r, ['To Do List', 'Görev Başlığı', 'Başlık', 'col_1']);
                 if (!title) return false;
-                if (isRecordDeleted('Yapılacaklar', title)) return false;
+                if (isRecordDeleted('To Do list', title) || isRecordDeleted('Yapılacaklar', title)) return false;
                 return true;
               })
               .map((r, idx) => {
-                const st = cleanText(r['Durum'], 'Bekliyor');
+                const title = getColVal(r, ['To Do List', 'Görev Başlığı', 'Başlık', 'col_1']);
+                const st = getColVal(r, ['Durum', 'col_6'], 'Bekliyor');
+                const pName = getColVal(r, ['Proje', 'İlgili Proje', 'col_2'], 'Genel');
+                const prio = getColVal(r, ['Öncelik ', 'Öncelik', 'col_3'], 'Normal');
+                const ass = getColVal(r, ['Sorumlu Kişi', 'Sorumlu', 'col_4'], '');
+                const due = cleanDate(getColVal(r, ['Termin Bitiş', 'Termin Tarihi', 'Termin', 'col_5'], ''));
+                const cDate = cleanDate(getColVal(r, ['Tarih', 'Kayıt Tarihi', 'col_0'], ''));
+                const notes = getColVal(r, ['Not', 'Notlar', 'Notlar / Detay', 'col_7'], '');
+
+                const local = localTodos.find(lt => lt && lt.title && lt.title.trim().toLowerCase() === title.trim().toLowerCase());
+
+                const isDone = (st.toLowerCase() === 'tamamlandı' || st.toLowerCase() === 'tamamlandi');
+
                 return {
-                  id: 'todo_' + idx,
-                  createdAt: cleanDate(r['Kayıt Tarihi']),
-                  title: cleanText(r['Görev Başlığı']),
-                  project: cleanText(r['İlgili Proje'], 'Genel'),
-                  priority: cleanText(r['Öncelik'], 'Normal'),
-                  assignee: cleanText(r['Sorumlu']),
-                  dueDate: cleanDate(r['Termin Tarihi']),
-                  completed: (st === 'Tamamlandı'),
-                  notes: cleanText(r['Notlar / Detay'])
+                  id: (local && local.id) ? local.id : ('todo_' + idx),
+                  createdAt: cDate || (local ? local.createdAt : '') || new Date().toISOString().split('T')[0],
+                  title: title,
+                  project: pName || (local ? local.project : 'Genel'),
+                  priority: prio || (local ? local.priority : 'Normal'),
+                  assignee: ass || (local ? local.assignee : ''),
+                  dueDate: due || (local ? local.dueDate : ''),
+                  completed: isDone || (local ? local.completed : false),
+                  notes: notes || (local ? local.notes : '')
                 };
               });
+
+            // Aynı başlıktaki mükerrer satırları ayıkla, en son güncel durumu koru
+            const uniqueMap = new Map();
+            mapped.forEach(item => {
+              const key = item.title.trim().toLowerCase();
+              uniqueMap.set(key, item);
+            });
+            todos = Array.from(uniqueMap.values());
+
+            // Henüz senkronize edilmemiş yerel görevleri koru
+            localTodos.forEach(lt => {
+              if (!lt || !lt.title) return;
+              if (isRecordDeleted('To Do list', lt.title) || isRecordDeleted('Yapılacaklar', lt.title)) return;
+              const exists = todos.some(t => t.title && t.title.trim().toLowerCase() === lt.title.trim().toLowerCase());
+              if (!exists) {
+                todos.push(lt);
+              }
+            });
+
             setStore('yg_todos_lite', todos);
             renderTodos();
           }
