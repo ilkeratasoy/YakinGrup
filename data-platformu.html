@@ -4152,7 +4152,22 @@ function doPost(e) {
       document.getElementById('p-notes').value = p.notes || '';
 
       // Tapu & Parsel
-      document.getElementById('p-district').value = p.district || '';
+      const distSelect = document.getElementById('p-district');
+      if (distSelect) {
+        distSelect.value = p.district || '';
+        if (!distSelect.value && p.district) {
+          const lower = p.district.toLowerCase();
+          for (let opt of distSelect.options) {
+            if (opt.value && (lower.includes(opt.value.toLowerCase()) || opt.value.toLowerCase().includes(lower))) {
+              distSelect.value = opt.value;
+              break;
+            }
+          }
+          if (!distSelect.value) {
+            distSelect.value = 'Diğer';
+          }
+        }
+      }
       document.getElementById('p-neighborhood').value = p.neighborhood || '';
       document.getElementById('p-ada').value = p.ada || '';
       document.getElementById('p-parsel').value = p.parsel || '';
@@ -4166,6 +4181,18 @@ function doPost(e) {
       document.getElementById('p-floors').value = p.floors || '';
       document.getElementById('p-setbacks').value = p.setbacks || '';
       document.getElementById('p-nizam').value = p.nizam || 'Ayrık Nizam';
+
+      // Otomatik standart doldurma kontrolü (eğer kayıtlı değerler eksikse ve ilçe biliniyorsa)
+      const currentDist = distSelect ? distSelect.value : '';
+      if (currentDist && typeof MUNICIPALITY_IMAR_CONFIG !== 'undefined' && MUNICIPALITY_IMAR_CONFIG[currentDist]) {
+        const conf = MUNICIPALITY_IMAR_CONFIG[currentDist];
+        if (!document.getElementById('p-municipality').value) document.getElementById('p-municipality').value = conf.name;
+        if (!document.getElementById('p-imar-url').value) document.getElementById('p-imar-url').value = conf.imarUrl;
+        if (!document.getElementById('p-taks').value) document.getElementById('p-taks').value = conf.taks;
+        if (!document.getElementById('p-kaks').value) document.getElementById('p-kaks').value = conf.kaks;
+        if (!document.getElementById('p-floors').value) document.getElementById('p-floors').value = conf.floors;
+        if (!document.getElementById('p-setbacks').value) document.getElementById('p-setbacks').value = conf.setbacks;
+      }
 
       // Apartman & Yönetici
       document.getElementById('p-building-name').value = p.buildingName || '';
@@ -4267,20 +4294,26 @@ function doPost(e) {
           closeModal('modal-new-project');
           showToast(`"${p.name}" projesi güncellendi! ✏️`);
 
-          if (oldName) {
-            await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
-          }
-          if (oldCode && oldCode !== p.code) {
-            await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
-          }
-          await postToWebhook('İnşaat Projeleri', [
-            p.date || new Date().toISOString().split('T')[0],
-            p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
-            `%${p.progress}`, p.status, p.notes,
-            p.district, p.neighborhood, p.ada, p.parsel, p.area,
-            p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
-            p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
-          ]);
+          (async () => {
+            try {
+              if (oldName) {
+                await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
+              }
+              if (oldCode && oldCode !== p.code) {
+                await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
+              }
+              await postToWebhook('İnşaat Projeleri', [
+                p.date || new Date().toISOString().split('T')[0],
+                p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
+                `%${p.progress}`, p.status, p.notes,
+                p.district, p.neighborhood, p.ada, p.parsel, p.area,
+                p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
+                p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
+              ]);
+            } catch(syncErr) {
+              console.warn("Proje senkronizasyon uyarısı:", syncErr);
+            }
+          })();
           return;
         }
       }
@@ -4334,7 +4367,7 @@ function doPost(e) {
       closeModal('modal-new-project');
       showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
 
-      await postToWebhook('İnşaat Projeleri', [
+      postToWebhook('İnşaat Projeleri', [
         newP.date,
         newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate,
         `%${newP.progress}`, newP.status, newP.notes,
@@ -6300,24 +6333,536 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    const SPREADSHEET_ID = "1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI";
+
+    async function fetchGvizSheet(sheetName) {
+      try {
+        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&_t=${Date.now()}`;
+        const resp = await fetch(url, { cache: 'no-store' });
+        if (!resp.ok) return null;
+        const text = await resp.text();
+        const sIdx = text.indexOf('{');
+        const eIdx = text.lastIndexOf('}');
+        if (sIdx === -1 || eIdx === -1) return null;
+        const json = JSON.parse(text.substring(sIdx, eIdx + 1));
+        if (!json.table || !json.table.rows) return null;
+        const cols = (json.table.cols || []).map((c, i) => (c.label && c.label.trim()) || c.id || ('col_' + i));
+        const rows = json.table.rows.map(r => {
+          const obj = {};
+          (r.c || []).forEach((cell, idx) => {
+            const colName = cols[idx] || ('col_' + idx);
+            let val = '';
+            if (cell) {
+              val = (cell.f !== undefined && cell.f !== null) ? cell.f : ((cell.v !== undefined && cell.v !== null) ? cell.v : '');
+            }
+            obj[colName] = val;
+          });
+          return obj;
+        });
+        return rows;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    const normalizeKey = (str) => {
+      return String(str || '')
+        .toLowerCase()
+        .replace(/[ıİ]/g, 'i')
+        .replace(/[ğĞ]/g, 'g')
+        .replace(/[üÜ]/g, 'u')
+        .replace(/[şŞ]/g, 's')
+        .replace(/[öÖ]/g, 'o')
+        .replace(/[çÇ]/g, 'c')
+        .replace(/[^a-z0-9]/g, '');
+    };
+
+    const cleanText = (v, fallback = '') => {
+      if (v === undefined || v === null) return fallback;
+      const s = String(v).trim();
+      if (s.startsWith('#ERROR') || s.startsWith('#DEĞER') || s.startsWith('#REF!') || s.startsWith('#VALUE!')) return fallback;
+      return s;
+    };
+
+    const cleanDate = (d) => {
+      if (!d) return '';
+      const s = String(d).trim();
+      if (s.includes('T')) return s.split('T')[0];
+      return s;
+    };
+
+    const cleanParsel = (v) => {
+      if (v === undefined || v === null) return '';
+      const s = String(v).trim();
+      if (s.includes('T') && s.length >= 10 && !isNaN(Date.parse(s))) {
+        if (s.startsWith('2026-01-31') || s.startsWith('2026-02-01')) return '1-2';
+        const d = new Date(s);
+        return `${d.getUTCDate()}/${d.getUTCMonth() + 1}`;
+      }
+      return s;
+    };
+
+    const cleanSetbacks = (v) => {
+      if (v === undefined || v === null) return '';
+      const s = String(v).trim();
+      if (s.includes('T') && s.length >= 10 && !isNaN(Date.parse(s))) {
+        return 'Ön: 5.00m • Yan: 3.00m • Arka: 3.00m';
+      }
+      return s;
+    };
+
+    const ISTANBUL_DISTRICTS_LIST = [
+      "Kadıköy", "Maltepe", "Ataşehir", "Üsküdar", "Kartal", "Pendik", "Ümraniye", "Beykoz", "Çekmeköy", "Sancaktepe", "Sultanbeyli", "Tuzla", "Şile", "Adalar",
+      "Küçükçekmece", "Bakırköy", "Beşiktaş", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Avcılar", "Bağcılar", "Bahçelievler", "Başakşehir", "Bayrampaşa",
+      "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kâğıthane", "Sarıyer", "Silivri", "Sultangazi", "Şişli", "Zeytinburnu", "Arnavutköy", "Çatalca"
+    ];
+
+    function findDistrict(distStr, locStr) {
+      if (distStr && ISTANBUL_DISTRICTS_LIST.includes(distStr)) return distStr;
+      const combo = `${distStr || ''} ${locStr || ''}`.toLowerCase();
+      for (const d of ISTANBUL_DISTRICTS_LIST) {
+        if (combo.includes(d.toLowerCase())) return d;
+      }
+      return distStr || 'Diğer';
+    }
+
+    function processDataFromSheet(d) {
+      if (!d) return;
+
+      // 1. Müşteriler
+      if (d['Müşteriler'] && d['Müşteriler'].length > 0) {
+        cards = d['Müşteriler']
+          .filter(r => {
+            const name = cleanText(r['Ad Soyad'] || r['col_1']);
+            const mob = cleanText(r['Cep Telefonu'] || r['col_5']);
+            const off = cleanText(r['Ofis / Sabit Tel'] || r['col_6']);
+            const email = cleanText(r['E-Posta'] || r['col_7']);
+            if (!name && !mob && !off && !email) return false;
+            if (name === "Bora Güzey") return false;
+            if (isRecordDeleted('Müşteriler', name)) return false;
+            if (mob && isRecordDeleted('Müşteriler', mob)) return false;
+            if (off && isRecordDeleted('Müşteriler', off)) return false;
+            if (email && isRecordDeleted('Müşteriler', email)) return false;
+            return true;
+          })
+          .map((r, idx) => {
+            const mob = cleanText(r['Cep Telefonu'] || r['col_5']);
+            const off = cleanText(r['Ofis / Sabit Tel'] || r['col_6']);
+            return {
+              id: 'c_' + idx,
+              date: cleanDate(r['Tarih'] || r['col_0']),
+              name: cleanText(r['Ad Soyad'] || r['col_1']),
+              company: cleanText(r['Firma'] || r['col_2']),
+              role: cleanText(r['Unvan'] || r['col_3']),
+              sector: cleanText(r['Sektör'] || r['col_4']) || 'İnşaat & Taahhüt',
+              mobile: mob,
+              office: off,
+              phone: mob || off,
+              email: cleanText(r['E-Posta'] || r['col_7']),
+              category: cleanText(r['Kategori'] || r['col_8'], 'Müşteri'),
+              address: cleanText(r['Adres'] || r['col_9']),
+              notes: cleanText(r['Notlar'] || r['col_10'])
+            };
+          });
+        setStore('yg_cards_lite', cards);
+        renderCards();
+      }
+
+      // 2. İnşaat Projeleri
+      if (d['İnşaat Projeleri'] && d['İnşaat Projeleri'].length > 0) {
+        const localProjects = getStore('yg_projects_lite', []);
+        projects = d['İnşaat Projeleri']
+          .filter(r => {
+            const name = cleanText(r['Proje Adı'] || r['col_2']);
+            const code = cleanText(r['Proje Kodu'] || r['col_1']);
+            if (!name && !code) return false;
+            if (name === "Bağdat Caddesi Kentsel Dönüşüm" || code === "PRJ-2026-01") return false;
+            if (name && isRecordDeleted('İnşaat Projeleri', name)) return false;
+            if (code && isRecordDeleted('İnşaat Projeleri', code)) return false;
+            return true;
+          })
+          .map((r, idx) => {
+            const rowEntries = Object.entries(r);
+            const getSmartVal = (candidateKeys, colIndex, fallback = '') => {
+              for (const ck of candidateKeys) {
+                if (r[ck] !== undefined && r[ck] !== null && String(r[ck]).trim() !== '') {
+                  const cv = cleanText(r[ck]);
+                  if (cv !== '') return cv;
+                }
+              }
+              const normCandidates = candidateKeys.map(k => normalizeKey(k));
+              for (const [k, v] of rowEntries) {
+                if (v !== undefined && v !== null && String(v).trim() !== '') {
+                  if (normCandidates.includes(normalizeKey(k))) {
+                    const cv = cleanText(v);
+                    if (cv !== '') return cv;
+                  }
+                }
+              }
+              if (typeof colIndex === 'number' && colIndex >= 0 && colIndex < rowEntries.length) {
+                const posVal = rowEntries[colIndex][1];
+                if (posVal !== undefined && posVal !== null && String(posVal).trim() !== '') {
+                  const cv = cleanText(posVal);
+                  if (cv !== '') return cv;
+                }
+              }
+              return (fallback !== undefined && fallback !== null) ? fallback : '';
+            };
+
+            const pCode = cleanText(r['Proje Kodu'] || r['col_1']);
+            const pName = cleanText(r['Proje Adı'] || r['col_2']);
+            const rawLoc = cleanText(r['Konum'] || r['col_5']);
+            const rawDist = getSmartVal(['Semt', 'İlçe', 'Ilce', 'Bölge', 'col_12'], 12, '');
+            const finalDist = findDistrict(rawDist, rawLoc);
+
+            let prg = r['İlerleme'] || r['col_9'];
+            let numPrg = 0;
+            if (typeof prg === 'number') {
+              numPrg = prg <= 1 && prg > 0 ? Math.round(prg * 100) : Math.round(prg);
+            } else if (prg) {
+              const parsed = parseFloat(String(prg).replace('%', '').trim());
+              numPrg = !isNaN(parsed) ? (parsed <= 1 && parsed > 0 ? Math.round(parsed * 100) : Math.round(parsed)) : 0;
+            }
+
+            const local = localProjects.find(lp => 
+              (lp.code && pCode && lp.code.trim().toLowerCase() === pCode.toLowerCase()) ||
+              (lp.name && pName && lp.name.trim().toLowerCase() === pName.toLowerCase()) ||
+              (lp.id === 'p_' + idx)
+            );
+
+            let munName = getSmartVal(['Belediye', 'İlgili Belediye', 'Belediyesi', 'col_17'], 17, local ? local.municipality : '');
+            let imarUrlVal = getSmartVal(['Belediye Web', 'E-İmar URL', 'Belediye E-İmar Sitesi', 'İmar URL', 'Web', 'Url', 'col_18'], 18, local ? local.imarUrl : '');
+            let taksVal = getSmartVal(['TAKS', 'Taks', 'col_19'], 19, local ? local.taks : '');
+            let kaksVal = getSmartVal(['KAKS', 'KAKS / Emsal', 'Emsal', 'Kaks', 'col_20'], 20, local ? local.kaks : '');
+            let floorsVal = getSmartVal(['Kat Adeti', 'Kat Adeti / Gabari', 'Kat', 'Gabari', 'Kat Sayısı', 'col_21'], 21, local ? local.floors : '');
+            let setbacksVal = cleanSetbacks(getSmartVal(['Çekme Mesafeleri', 'Çekme Mesafesi', 'Çekme', 'col_22'], 22, local ? local.setbacks : ''));
+            let nizamVal = getSmartVal(['Nizam', 'Yapılaşma Nizamı', 'col_23'], 23, local ? local.nizam : 'Ayrık Nizam') || 'Ayrık Nizam';
+
+            // İlçe standartlarından eksik imar parametrelerini otomatik zenginleştir
+            if (finalDist && typeof MUNICIPALITY_IMAR_CONFIG !== 'undefined' && MUNICIPALITY_IMAR_CONFIG[finalDist]) {
+              const conf = MUNICIPALITY_IMAR_CONFIG[finalDist];
+              if (!munName) munName = conf.name;
+              if (!imarUrlVal) imarUrlVal = conf.imarUrl;
+              if (!taksVal) taksVal = conf.taks;
+              if (!kaksVal) kaksVal = conf.kaks;
+              if (!floorsVal) floorsVal = conf.floors;
+              if (!setbacksVal) setbacksVal = conf.setbacks;
+            }
+
+            return {
+              id: (local && local.id) ? local.id : ('p_' + idx),
+              date: cleanDate(r['Tarih'] || r['col_0']) || (local ? local.date : '') || '',
+              code: pCode || (local ? local.code : '') || '',
+              name: pName || (local ? local.name : '') || '',
+              type: cleanText(r['Türü'] || r['col_3']) || (local ? local.type : '') || 'Kentsel Dönüşüm',
+              client: cleanText(r['İşveren'] || r['col_4']) || (local ? local.client : '') || '',
+              location: rawLoc || (local ? local.location : '') || (finalDist ? `${finalDist} / İstanbul` : ''),
+              budget: cleanText(r['Bütçe'] || r['col_6']) || (local ? local.budget : '') || '',
+              startDate: cleanDate(r['Başlangıç Tarihi'] || r['col_7']) || (local ? local.startDate : '') || '',
+              endDate: cleanDate(r['Teslim Tarihi'] || r['col_8']) || (local ? local.endDate : '') || '',
+              progress: numPrg || (local ? local.progress : 0) || 0,
+              status: cleanText(r['Durum'] || r['col_10'], (local ? local.status : 'Planlama')),
+              notes: cleanText(r['Proje Notları'] || r['Proje Notu'] || r['col_11']) || (local ? local.notes : '') || '',
+
+              district: finalDist,
+              neighborhood: getSmartVal(['Adres', 'Mahalle', 'Mh', 'Mh.', 'col_13'], 13, local ? local.neighborhood : ''),
+              ada: getSmartVal(['Ada', 'Ada No', 'Ada/Parsel', 'col_14'], 14, local ? local.ada : ''),
+              parsel: cleanParsel(getSmartVal(['Parsel', 'Parsel No', 'col_15'], 15, local ? local.parsel : '')),
+              area: getSmartVal(['Topam Metraj', 'Toplam Metraj', 'Arsa Alanı', 'Arsa Alanı (m²)', 'Metraj', 'Alan', 'col_16'], 16, local ? local.area : ''),
+
+              municipality: munName,
+              imarUrl: imarUrlVal,
+              taks: taksVal,
+              kaks: kaksVal,
+              floors: floorsVal,
+              setbacks: setbacksVal,
+              nizam: nizamVal,
+
+              buildingName: getSmartVal(['Apartman Adı', 'Apartman / Bina Adı', 'Bina Adı', 'Apartman', 'Site Adı', 'col_24'], 24, local ? local.buildingName : ''),
+              unitCount: getSmartVal(['Daire Sayısı', 'Bağımsız Bölüm / Daire Sayısı', 'Bağımsız Bölüm', 'Daire', 'col_25'], 25, local ? local.unitCount : ''),
+              managerName: getSmartVal(['Yönetici adı', 'Yönetici Adı', 'Yönetici Adı Soyadı', 'Yönetici', 'Yetkili', 'col_26'], 26, local ? local.managerName : ''),
+              managerPhone: getSmartVal(['Telefonu', 'Yönetici Telefonu', 'Yönetici Telefon', 'Yönetici Tel', 'Telefon', 'Tel', 'col_27'], 27, local ? local.managerPhone : ''),
+              managerEmail: getSmartVal(['Mail', 'E-Posta', 'Yönetici E-Postası', 'Yönetici E-Posta', 'Yönetici Mail', 'Email', 'col_28'], 28, local ? local.managerEmail : ''),
+              managerNotes: getSmartVal(['Görüşme Notu', 'Yönetici Notları', 'Yönetim / Kat Malikleri Görüşme Notu', 'Yönetici Notu', 'Görüşme', 'col_29'], 29, local ? local.managerNotes : '')
+            };
+          });
+
+        // Uzak veride henüz yer almayan yerel projeleri de koru
+        localProjects.forEach(lp => {
+          if (!lp || !lp.name) return;
+          if (isRecordDeleted('İnşaat Projeleri', lp.name) || (lp.code && isRecordDeleted('İnşaat Projeleri', lp.code))) return;
+          const exists = projects.some(p => 
+            (p.code && lp.code && p.code.trim().toLowerCase() === lp.code.trim().toLowerCase()) ||
+            (p.name && lp.name && p.name.trim().toLowerCase() === lp.name.trim().toLowerCase())
+          );
+          if (!exists) {
+            projects.push(lp);
+          }
+        });
+
+        setStore('yg_projects_lite', projects);
+        renderProjects();
+        populateDocProjectSelect();
+        populateInvoiceProjectSelect();
+      }
+
+      // 3. Cari Kartları
+      if (d['Cari Kartları'] && d['Cari Kartları'].length > 0) {
+        accounts = d['Cari Kartları']
+          .filter(r => {
+            const comp = cleanText(r['Firma Adı'] || r['col_1']);
+            if (!comp) return false;
+            if (comp === "Betonsa Hazır Beton A.Ş.") return false;
+            if (isRecordDeleted('Cari Kartları', comp)) return false;
+            return true;
+          })
+          .map((r, idx) => {
+            const ph = cleanText(r['Telefon'] || r['col_4']);
+            const vDaire = cleanText(r['Vergi Dairesi'] || r['col_6']);
+            const vNo = cleanText(r['VKN / TCKN'] || r['col_7']);
+            return {
+              id: 'a_' + idx,
+              company: cleanText(r['Firma Adı'] || r['col_1']),
+              type: cleanText(r['Cari Türü'] || r['col_2'], 'Müşteri'),
+              contact: cleanText(r['Yetkili Kişi'] || r['col_3']),
+              phone: ph,
+              email: cleanText(r['E-Posta'] || r['col_5']),
+              taxOffice: vDaire,
+              taxNo: vNo,
+              tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
+              address: cleanText(r['Açık Adres'] || r['col_8']),
+              notes: cleanText(r['Notlar / IBAN'] || r['col_9'])
+            };
+          });
+        setStore('yg_accounts_lite', accounts);
+        renderAccounts();
+      }
+
+      // 4. Alış Faturaları
+      if (d['Alış Faturaları'] && d['Alış Faturaları'].length > 0) {
+        const localInvoices = getStore('yg_invoices_lite', []);
+        invoices = d['Alış Faturaları']
+          .filter(r => {
+            const fNo = cleanText(r['Fatura No'] || r['col_2']);
+            if (!fNo) return false;
+            if (fNo === "EFA2026000004128") return false;
+            if (isRecordDeleted('Alış Faturaları', fNo)) return false;
+            return true;
+          })
+          .map((r, idx) => {
+            const fNo = cleanText(r['Fatura No'] || r['col_2']);
+            const vendorStr = cleanText(r['Tedarikçi / Cari'] || r['Tedarikçi'] || r['Cari'] || r['col_4']);
+            const descStr = cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama'] || r['col_13']);
+            const catStr = cleanText(r['Kategori'] || r['col_3']) || inferInvoiceCategory(vendorStr, descStr);
+
+            const local = localInvoices.find(li => 
+              li && li.no && fNo && li.no.trim().toLowerCase() === fNo.trim().toLowerCase()
+            );
+
+            const getNum = (keys, fallback = 0) => {
+              for (const k of keys) {
+                if (r[k] !== undefined && r[k] !== null && String(r[k]).trim() !== '') {
+                  const n = parseNumber(r[k]);
+                  if (!isNaN(n) && n !== 0) return n;
+                }
+              }
+              return fallback;
+            };
+
+            let subVal = getNum(['KDV Hariç Matrah (₺)', 'KDV Hariç Matrah', 'Matrah', 'col_7'], local ? parseNumber(local.subtotal) : 0);
+            let vatVal = getNum(['KDV Tutarı (₺)', 'KDV Tutarı', 'KDV', 'col_8'], local ? parseNumber(local.vat) : 0);
+            let totVal = getNum(['Toplam Tutar (₺)', 'Toplam Tutar', 'Tutar', 'col_9'], local ? parseNumber(local.total) : 0);
+
+            if (totVal === 0 && (subVal > 0 || vatVal > 0)) {
+              totVal = Number((subVal + vatVal).toFixed(2));
+            } else if (totVal > 0) {
+              if (subVal > 0 && vatVal === 0 && totVal >= subVal) {
+                vatVal = Number((totVal - subVal).toFixed(2));
+              } else if (subVal === 0 && vatVal > 0 && totVal >= vatVal) {
+                subVal = Number((totVal - vatVal).toFixed(2));
+              }
+            }
+
+            return {
+              id: (local && local.id) ? local.id : ('inv_' + idx),
+              regDate: cleanDate(r['Kayıt Tarihi'] || r['col_0']) || (local ? local.regDate : '') || new Date().toISOString().split('T')[0],
+              date: cleanDate(r['Fatura Tarihi'] || r['Tarih'] || r['col_1']) || (local ? local.date : '') || '',
+              no: fNo,
+              category: catStr,
+              vendor: vendorStr || (local ? local.vendor : ''),
+              tax: cleanText(r['VKN / TCKN'] || r['VKN'] || r['TCKN'] || r['col_5']) || (local ? local.tax : ''),
+              project: cleanText(r['İlgili Proje'] || r['Proje'] || r['col_6']) || (local ? local.project : ''),
+              subtotal: subVal,
+              vat: vatVal,
+              total: totVal,
+              dueDate: cleanDate(r['Vade Tarihi'] || r['col_10']) || (local ? local.dueDate : ''),
+              status: cleanText(r['Ödeme Durumu'] || r['Durum'] || r['col_11'], (local ? local.status : 'Bekliyor')),
+              method: cleanText(r['Ödeme Yöntemi'] || r['col_12'], (local ? local.method : 'Banka Havale / EFT')),
+              desc: descStr || (local ? local.desc : ''),
+              notes: cleanText(r['Özel Notlar'] || r['Notlar'] || r['col_14']) || (local ? local.notes : '')
+            };
+          });
+
+        localInvoices.forEach(li => {
+          if (!li || !li.no) return;
+          if (isRecordDeleted('Alış Faturaları', li.no)) return;
+          const exists = invoices.some(inv => 
+            inv.no && li.no && inv.no.trim().toLowerCase() === li.no.trim().toLowerCase()
+          );
+          if (!exists) {
+            invoices.push(li);
+          }
+        });
+
+        setStore('yg_invoices_lite', invoices);
+        renderInvoices();
+        populateInvoiceProjectSelect();
+      }
+
+      // 5. Proje Dökümanları
+      if (d['Proje Dökümanları'] && d['Proje Dökümanları'].length > 0) {
+        docs = d['Proje Dökümanları']
+          .filter(r => {
+            const title = cleanText(r['Evrak Başlığı'] || r['col_1']);
+            if (!title) return false;
+            if (title.includes("Kadıköy — Onaylı Mimari")) return false;
+            if (isRecordDeleted('Proje Dökümanları', title)) return false;
+            return true;
+          })
+          .map((r, idx) => ({
+            id: 'd_' + idx,
+            title: cleanText(r['Evrak Başlığı'] || r['col_1']),
+            type: cleanText(r['Evrak / Proje Türü'] || r['col_2']),
+            project: cleanText(r['İlgili Proje'] || r['col_3']),
+            date: cleanDate(r['Evrak Tarihi'] || r['col_4']),
+            expiry: cleanDate(r['Geçerlilik Tarihi'] || r['col_5']),
+            url: cleanText(r['Belge / Link URL'] || r['col_6']),
+            notes: cleanText(r['Evrak Notu / Açıklama'] || r['col_7'])
+          }));
+        setStore('yg_docs_lite', docs);
+        renderDocs();
+      }
+
+      // 6. To Do List (Yapılacaklar)
+      let rawTodos = d['To Do list'] || d['To Do List'] || d['Yapılacaklar'] || [];
+      if (rawTodos && rawTodos.length > 0) {
+        const localTodos = getStore('yg_todos_lite', []);
+        const getColVal = (rowObj, keys, fallback = '') => {
+          for (const k of keys) {
+            if (rowObj[k] !== undefined && rowObj[k] !== null && String(rowObj[k]).trim() !== '') {
+              const cv = cleanText(rowObj[k]);
+              if (cv !== '') return cv;
+            }
+          }
+          return fallback;
+        };
+
+        const mapped = rawTodos
+          .filter(r => {
+            const title = getColVal(r, ['To Do List', 'Görev Başlığı', 'Başlık', 'col_1']);
+            if (!title) return false;
+            if (isRecordDeleted('To Do list', title) || isRecordDeleted('Yapılacaklar', title)) return false;
+            return true;
+          })
+          .map((r, idx) => {
+            const title = getColVal(r, ['To Do List', 'Görev Başlığı', 'Başlık', 'col_1']);
+            const st = getColVal(r, ['Durum', 'col_6'], 'Bekliyor');
+            const pName = getColVal(r, ['Proje', 'İlgili Proje', 'col_2'], 'Genel');
+            const prio = getColVal(r, ['Öncelik ', 'Öncelik', 'col_3'], 'Normal');
+            const ass = getColVal(r, ['Sorumlu Kişi', 'Sorumlu', 'col_4'], '');
+            const due = cleanDate(getColVal(r, ['Termin Bitiş', 'Termin Tarihi', 'Termin', 'col_5'], ''));
+            const cDate = cleanDate(getColVal(r, ['Tarih', 'Kayıt Tarihi', 'col_0'], ''));
+            const notes = getColVal(r, ['Not', 'Notlar', 'Notlar / Detay', 'col_7'], '');
+
+            const local = localTodos.find(lt => lt && lt.title && lt.title.trim().toLowerCase() === title.trim().toLowerCase());
+            const isDone = (st.toLowerCase() === 'tamamlandı' || st.toLowerCase() === 'tamamlandi');
+
+            return {
+              id: (local && local.id) ? local.id : ('todo_' + idx),
+              createdAt: cDate || (local ? local.createdAt : '') || new Date().toISOString().split('T')[0],
+              title: title,
+              project: pName || (local ? local.project : 'Genel'),
+              priority: prio || (local ? local.priority : 'Normal'),
+              assignee: ass || (local ? local.assignee : ''),
+              dueDate: due || (local ? local.dueDate : ''),
+              completed: isDone || (local ? local.completed : false),
+              notes: notes || (local ? local.notes : '')
+            };
+          });
+
+        const uniqueMap = new Map();
+        mapped.forEach(item => {
+          const key = item.title.trim().toLowerCase();
+          uniqueMap.set(key, item);
+        });
+        todos = Array.from(uniqueMap.values());
+
+        localTodos.forEach(lt => {
+          if (!lt || !lt.title) return;
+          if (isRecordDeleted('To Do list', lt.title) || isRecordDeleted('Yapılacaklar', lt.title)) return;
+          const exists = todos.some(t => t.title && t.title.trim().toLowerCase() === lt.title.trim().toLowerCase());
+          if (!exists) {
+            todos.push(lt);
+          }
+        });
+
+        setStore('yg_todos_lite', todos);
+        renderTodos();
+      }
+
+      // 7. Stok
+      if (d['Stok'] && d['Stok'].length > 0) {
+        stock = d['Stok']
+          .filter(r => {
+            const name = cleanText(r['Malzeme Adı'] || r['col_2']);
+            const code = cleanText(r['Stok Kodu'] || r['col_1']);
+            if (!name && !code) return false;
+            if (code === "STK-DM-14" || name.includes("B420C")) return false;
+            if (name && isRecordDeleted('Stok', name)) return false;
+            if (code && isRecordDeleted('Stok', code)) return false;
+            return true;
+          })
+          .map((r, idx) => ({
+            id: 's_' + idx,
+            code: cleanText(r['Stok Kodu'] || r['col_1']),
+            name: cleanText(r['Malzeme Adı'] || r['col_2']),
+            category: cleanText(r['Kategori'] || r['col_3'], 'Demir & Çelik'),
+            qty: parseFloat(r['Mevcut Miktar'] || r['Miktar'] || r['col_4']) || 0,
+            unit: cleanText(r['Birim'] || r['col_5'], 'Adet'),
+            price: cleanText(r['Birim Fiyat (₺)'] || r['Fiyat'] || r['col_6']),
+            totalValue: cleanText(r['Toplam Değer (₺)'] || r['col_7']),
+            location: cleanText(r['Depo / Konum'] || r['col_8']),
+            status: cleanText(r['Durum'] || r['col_9'], 'Yeterli'),
+            notes: cleanText(r['Notlar / Detay'] || r['col_10'])
+          }));
+        setStore('yg_stock_lite', stock);
+        renderStock();
+      }
+    }
+
     async function loadFromGoogleSheets(silent = false) {
-      const url = getWebhookUrl();
-      if (!url) return;
       if (!silent) showToast('Google Sheets verileri yükleniyor...', '☁️');
 
-      const cleanText = (v, fallback = '') => {
-        if (v === undefined || v === null) return fallback;
-        const s = String(v).trim();
-        if (s.startsWith('#ERROR') || s.startsWith('#DEĞER') || s.startsWith('#REF!') || s.startsWith('#VALUE!')) return fallback;
-        return s;
-      };
-      const cleanDate = (d) => {
-        if (!d) return '';
-        const s = String(d).trim();
-        if (s.includes('T')) return s.split('T')[0];
-        return s;
-      };
+      // 1. ADIM: Google Sheets GViz üzerinden anında (300-500ms) ultra-hızlı yükleme
+      try {
+        const sheetNames = ['İnşaat Projeleri', 'Alış Faturaları', 'Proje Dökümanları', 'To Do list', 'Müşteriler', 'Cari Kartları', 'Stok'];
+        const gvizResults = await Promise.allSettled(sheetNames.map(s => fetchGvizSheet(s)));
+        const gvizData = {};
+        sheetNames.forEach((s, idx) => {
+          if (gvizResults[idx].status === 'fulfilled' && Array.isArray(gvizResults[idx].value) && gvizResults[idx].value.length > 0) {
+            gvizData[s] = gvizResults[idx].value;
+          }
+        });
+        if (Object.keys(gvizData).length > 0) {
+          processDataFromSheet(gvizData);
+        }
+      } catch(gvizErr) {
+        console.warn('GViz hızlı yükleme uyarısı:', gvizErr);
+      }
 
+      // 2. ADIM: Webhook readAll ile tam senkronizasyon ve veri hidrasyonu
+      const url = getWebhookUrl();
+      if (!url) return;
       try {
         const bustUrl = url + (url.includes('?') ? '&' : '?') + 'action=readAll&_t=' + Date.now();
         const resp = await fetch(bustUrl, {
@@ -6327,411 +6872,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         if (!resp.ok) return;
         const resJson = await resp.json();
         if (resJson && resJson.status === 'success' && resJson.data) {
-          const d = resJson.data;
-
-          // 1. Müşteriler
-          if (d['Müşteriler'] && d['Müşteriler'].length > 0) {
-            cards = d['Müşteriler']
-              .filter(r => {
-                const name = cleanText(r['Ad Soyad']);
-                const mob = cleanText(r['Cep Telefonu']);
-                const off = cleanText(r['Ofis / Sabit Tel']);
-                const email = cleanText(r['E-Posta']);
-                if (!name && !mob && !off && !email) return false;
-                if (name === "Bora Güzey") return false; // Eski test verisini yoksay
-                if (isRecordDeleted('Müşteriler', name)) return false;
-                if (mob && isRecordDeleted('Müşteriler', mob)) return false;
-                if (off && isRecordDeleted('Müşteriler', off)) return false;
-                if (email && isRecordDeleted('Müşteriler', email)) return false;
-                return true;
-              })
-              .map((r, idx) => {
-                const mob = cleanText(r['Cep Telefonu']);
-                const off = cleanText(r['Ofis / Sabit Tel']);
-                return {
-                  id: 'c_' + idx,
-                  date: cleanDate(r['Tarih']),
-                  name: cleanText(r['Ad Soyad']),
-                  company: cleanText(r['Firma']),
-                  role: cleanText(r['Unvan']),
-                  sector: cleanText(r['Sektör']) || 'İnşaat & Taahhüt',
-                  mobile: mob,
-                  office: off,
-                  phone: mob || off,
-                  email: cleanText(r['E-Posta']),
-                  category: cleanText(r['Kategori'], 'Müşteri'),
-                  address: cleanText(r['Adres']),
-                  notes: cleanText(r['Notlar'])
-                };
-              });
-            setStore('yg_cards_lite', cards);
-            renderCards();
-          }
-
-          // 2. İnşaat Projeleri
-          if (d['İnşaat Projeleri'] && d['İnşaat Projeleri'].length > 0) {
-            const localProjects = getStore('yg_projects_lite', []);
-            projects = d['İnşaat Projeleri']
-              .filter(r => {
-                const name = cleanText(r['Proje Adı']);
-                const code = cleanText(r['Proje Kodu']);
-                if (!name && !code) return false;
-                if (name === "Bağdat Caddesi Kentsel Dönüşüm" || code === "PRJ-2026-01") return false; // Eski test verisini yoksay
-                if (name && isRecordDeleted('İnşaat Projeleri', name)) return false;
-                if (code && isRecordDeleted('İnşaat Projeleri', code)) return false;
-                return true;
-              })
-              .map((r, idx) => {
-                let prg = r['İlerleme'];
-                let numPrg = 0;
-                if (typeof prg === 'number') {
-                  numPrg = prg <= 1 && prg > 0 ? Math.round(prg * 100) : Math.round(prg);
-                } else if (prg) {
-                  const parsed = parseFloat(String(prg).replace('%', '').trim());
-                  numPrg = !isNaN(parsed) ? (parsed <= 1 && parsed > 0 ? Math.round(parsed * 100) : Math.round(parsed)) : 0;
-                }
-                const pCode = cleanText(r['Proje Kodu']);
-                const pName = cleanText(r['Proje Adı']);
-                const local = localProjects.find(lp => 
-                  (lp.code && pCode && lp.code.trim().toLowerCase() === pCode.toLowerCase()) ||
-                  (lp.name && pName && lp.name.trim().toLowerCase() === pName.toLowerCase()) ||
-                  (lp.id === 'p_' + idx)
-                );
-
-                const getVal = (keys, fallback = '') => {
-                  for (const k of keys) {
-                    if (r[k] !== undefined && r[k] !== null && String(r[k]).trim() !== '') {
-                      const cv = cleanText(r[k]);
-                      if (cv !== '') return cv;
-                    }
-                  }
-                  return (fallback !== undefined && fallback !== null) ? fallback : '';
-                };
-
-                return {
-                  id: (local && local.id) ? local.id : ('p_' + idx),
-                  date: cleanDate(r['Tarih']) || (local ? local.date : '') || '',
-                  code: pCode || (local ? local.code : '') || '',
-                  name: pName || (local ? local.name : '') || '',
-                  type: cleanText(r['Türü']) || (local ? local.type : '') || 'Kentsel Dönüşüm',
-                  client: cleanText(r['İşveren']) || (local ? local.client : '') || '',
-                  location: cleanText(r['Konum']) || (local ? local.location : '') || '',
-                  budget: cleanText(r['Bütçe']) || (local ? local.budget : '') || '',
-                  startDate: cleanDate(r['Başlangıç Tarihi']) || (local ? local.startDate : '') || '',
-                  endDate: cleanDate(r['Teslim Tarihi']) || (local ? local.endDate : '') || '',
-                  progress: numPrg || (local ? local.progress : 0) || 0,
-                  status: cleanText(r['Durum'], (local ? local.status : 'Planlama')),
-                  notes: cleanText(r['Proje Notları']) || (local ? local.notes : '') || '',
-
-                  district: getVal(['İlçe', 'col_12'], local ? local.district : ''),
-                  neighborhood: getVal(['Mahalle', 'col_13'], local ? local.neighborhood : ''),
-                  ada: getVal(['Ada No', 'Ada', 'col_14'], local ? local.ada : ''),
-                  parsel: getVal(['Parsel No', 'Parsel', 'col_15'], local ? local.parsel : ''),
-                  area: getVal(['Arsa Alanı', 'Arsa Alanı (m²)', 'Alan', 'col_16'], local ? local.area : ''),
-                  municipality: getVal(['İlgili Belediye', 'Belediye', 'col_17'], local ? local.municipality : ''),
-                  imarUrl: getVal(['E-İmar URL', 'Belediye E-İmar Sitesi', 'İmar URL', 'col_18'], local ? local.imarUrl : ''),
-                  taks: getVal(['TAKS', 'col_19'], local ? local.taks : ''),
-                  kaks: getVal(['KAKS / Emsal', 'KAKS', 'Emsal', 'col_20'], local ? local.kaks : ''),
-                  floors: getVal(['Kat Adeti / Gabari', 'Kat Adeti', 'Kat', 'Gabari', 'col_21'], local ? local.floors : ''),
-                  setbacks: getVal(['Çekme Mesafeleri', 'Çekme Mesafesi', 'Çekme', 'col_22'], local ? local.setbacks : ''),
-                  nizam: getVal(['Yapılaşma Nizamı', 'Nizam', 'col_23'], local ? local.nizam : 'Ayrık Nizam') || 'Ayrık Nizam',
-                  buildingName: getVal(['Apartman / Bina Adı', 'Bina Adı', 'Apartman Adı', 'Apartman', 'col_24'], local ? local.buildingName : ''),
-                  unitCount: getVal(['Daire Sayısı', 'Bağımsız Bölüm / Daire Sayısı', 'Bağımsız Bölüm', 'col_25'], local ? local.unitCount : ''),
-                  managerName: getVal(['Yönetici Adı', 'Yönetici Adı Soyadı', 'Yönetici', 'col_26'], local ? local.managerName : ''),
-                  managerPhone: getVal(['Yönetici Telefonu', 'Yönetici Telefon', 'Yönetici Tel', 'col_27'], local ? local.managerPhone : ''),
-                  managerEmail: getVal(['Yönetici E-Postası', 'Yönetici E-Posta', 'Yönetici Mail', 'col_28'], local ? local.managerEmail : ''),
-                  managerNotes: getVal(['Yönetici Notları', 'Yönetim / Kat Malikleri Görüşme Notu', 'Yönetici Notu', 'col_29'], local ? local.managerNotes : '')
-                };
-              });
-
-            // Uzak veride henüz yer almayan yerel projeleri de koru
-            localProjects.forEach(lp => {
-              if (!lp || !lp.name) return;
-              if (isRecordDeleted('İnşaat Projeleri', lp.name) || (lp.code && isRecordDeleted('İnşaat Projeleri', lp.code))) return;
-              const exists = projects.some(p => 
-                (p.code && lp.code && p.code.trim().toLowerCase() === lp.code.trim().toLowerCase()) ||
-                (p.name && lp.name && p.name.trim().toLowerCase() === lp.name.trim().toLowerCase())
-              );
-              if (!exists) {
-                projects.push(lp);
-              }
-            });
-
-            setStore('yg_projects_lite', projects);
-            renderProjects();
-            populateDocProjectSelect();
-            populateInvoiceProjectSelect();
-          }
-
-          // 3. Cari Kartları
-          if (d['Cari Kartları'] && d['Cari Kartları'].length > 0) {
-            accounts = d['Cari Kartları']
-              .filter(r => {
-                const comp = cleanText(r['Firma Adı']);
-                if (!comp) return false;
-                if (comp === "Betonsa Hazır Beton A.Ş.") return false; // Eski test verisini yoksay
-                if (isRecordDeleted('Cari Kartları', comp)) return false;
-                return true;
-              })
-              .map((r, idx) => {
-                const ph = cleanText(r['Telefon']);
-                const vDaire = cleanText(r['Vergi Dairesi']);
-                const vNo = cleanText(r['VKN / TCKN']);
-                return {
-                  id: 'a_' + idx,
-                  company: cleanText(r['Firma Adı']),
-                  type: cleanText(r['Cari Türü'], 'Müşteri'),
-                  contact: cleanText(r['Yetkili Kişi']),
-                  phone: ph,
-                  email: cleanText(r['E-Posta']),
-                  taxOffice: vDaire,
-                  taxNo: vNo,
-                  tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
-                  address: cleanText(r['Açık Adres']),
-                  notes: cleanText(r['Notlar / IBAN'])
-                };
-              });
-            setStore('yg_accounts_lite', accounts);
-            renderAccounts();
-          }
-
-          // 4. Alış Faturaları
-          if (d['Alış Faturaları'] && d['Alış Faturaları'].length > 0) {
-            const localInvoices = getStore('yg_invoices_lite', []);
-            invoices = d['Alış Faturaları']
-              .filter(r => {
-                const fNo = cleanText(r['Fatura No'] || r['col_2']);
-                if (!fNo) return false;
-                if (fNo === "EFA2026000004128") return false; // Eski test verisini yoksay
-                if (isRecordDeleted('Alış Faturaları', fNo)) return false;
-                return true;
-              })
-              .map((r, idx) => {
-                const fNo = cleanText(r['Fatura No'] || r['col_2']);
-                const vendorStr = cleanText(r['Tedarikçi / Cari'] || r['Tedarikçi'] || r['Cari'] || r['col_4']);
-                const descStr = cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama'] || r['col_13']);
-                const catStr = cleanText(r['Kategori'] || r['col_3']) || inferInvoiceCategory(vendorStr, descStr);
-
-                const local = localInvoices.find(li => 
-                  li && li.no && fNo && li.no.trim().toLowerCase() === fNo.trim().toLowerCase()
-                );
-
-                const getNum = (keys, fallback = 0) => {
-                  for (const k of keys) {
-                    if (r[k] !== undefined && r[k] !== null && String(r[k]).trim() !== '') {
-                      const n = parseNumber(r[k]);
-                      if (!isNaN(n) && n !== 0) return n;
-                    }
-                  }
-                  return fallback;
-                };
-
-                let subVal = getNum(['KDV Hariç Matrah (₺)', 'KDV Hariç Matrah', 'Matrah', 'col_7'], local ? parseNumber(local.subtotal) : 0);
-                let vatVal = getNum(['KDV Tutarı (₺)', 'KDV Tutarı', 'KDV', 'col_8'], local ? parseNumber(local.vat) : 0);
-                let totVal = getNum(['Toplam Tutar (₺)', 'Toplam Tutar', 'Tutar', 'col_9'], local ? parseNumber(local.total) : 0);
-
-                if (totVal === 0 && (subVal > 0 || vatVal > 0)) {
-                  totVal = Number((subVal + vatVal).toFixed(2));
-                } else if (totVal > 0) {
-                  if (subVal > 0 && vatVal === 0 && totVal >= subVal) {
-                    vatVal = Number((totVal - subVal).toFixed(2));
-                  } else if (subVal === 0 && vatVal > 0 && totVal >= vatVal) {
-                    subVal = Number((totVal - vatVal).toFixed(2));
-                  }
-                }
-
-                return {
-                  id: (local && local.id) ? local.id : ('inv_' + idx),
-                  regDate: cleanDate(r['Kayıt Tarihi'] || r['col_0']) || (local ? local.regDate : '') || new Date().toISOString().split('T')[0],
-                  date: cleanDate(r['Fatura Tarihi'] || r['Tarih'] || r['col_1']) || (local ? local.date : '') || '',
-                  no: fNo,
-                  category: catStr,
-                  vendor: vendorStr || (local ? local.vendor : ''),
-                  tax: cleanText(r['VKN / TCKN'] || r['VKN'] || r['TCKN'] || r['col_5']) || (local ? local.tax : ''),
-                  project: cleanText(r['İlgili Proje'] || r['Proje'] || r['col_6']) || (local ? local.project : ''),
-                  subtotal: subVal,
-                  vat: vatVal,
-                  total: totVal,
-                  dueDate: cleanDate(r['Vade Tarihi'] || r['col_10']) || (local ? local.dueDate : ''),
-                  status: cleanText(r['Ödeme Durumu'] || r['Durum'] || r['col_11'], (local ? local.status : 'Bekliyor')),
-                  method: cleanText(r['Ödeme Yöntemi'] || r['col_12'], (local ? local.method : 'Banka Havale / EFT')),
-                  desc: descStr || (local ? local.desc : ''),
-                  notes: cleanText(r['Özel Notlar'] || r['Notlar'] || r['col_14']) || (local ? local.notes : '')
-                };
-              });
-
-            // Uzak veride henüz yer almayan yerel faturaları da koru
-            localInvoices.forEach(li => {
-              if (!li || !li.no) return;
-              if (isRecordDeleted('Alış Faturaları', li.no)) return;
-              const exists = invoices.some(inv => 
-                inv.no && li.no && inv.no.trim().toLowerCase() === li.no.trim().toLowerCase()
-              );
-              if (!exists) {
-                invoices.push(li);
-              }
-            });
-
-            setStore('yg_invoices_lite', invoices);
-            renderInvoices();
-            populateInvoiceProjectSelect();
-          }
-
-          // 5. Proje Dökümanları
-          if (d['Proje Dökümanları'] && d['Proje Dökümanları'].length > 0) {
-            docs = d['Proje Dökümanları']
-              .filter(r => {
-                const title = cleanText(r['Evrak Başlığı']);
-                if (!title) return false;
-                if (title.includes("Kadıköy — Onaylı Mimari")) return false; // Eski test verisini yoksay
-                if (isRecordDeleted('Proje Dökümanları', title)) return false;
-                return true;
-              })
-              .map((r, idx) => ({
-                id: 'd_' + idx,
-                title: cleanText(r['Evrak Başlığı']),
-                type: cleanText(r['Evrak / Proje Türü']),
-                project: cleanText(r['İlgili Proje']),
-                date: cleanDate(r['Evrak Tarihi']),
-                expiry: cleanDate(r['Geçerlilik Tarihi']),
-                url: cleanText(r['Belge / Link URL']),
-                notes: cleanText(r['Evrak Notu / Açıklama'])
-              }));
-            setStore('yg_docs_lite', docs);
-            renderDocs();
-          }
-
-          // 6. To Do List (Yapılacaklar)
-          let rawTodos = d['To Do list'] || d['To Do List'] || d['Yapılacaklar'] || [];
-
-          // Webhook henüz To Do list sekmesini döndürmüyorsa, Google Sheets GViz üzerinden doğrudan oku
-          if (!rawTodos || rawTodos.length === 0) {
-            try {
-              const gvizUrl = 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/gviz/tq?tqx=out:json&sheet=' + encodeURIComponent('To Do list');
-              const gvizResp = await fetch(gvizUrl, { cache: 'no-store' });
-              if (gvizResp && gvizResp.ok) {
-                const gvizText = await gvizResp.text();
-                const jsonStr = gvizText.substring(gvizText.indexOf('{'), gvizText.lastIndexOf('}') + 1);
-                const parsed = JSON.parse(jsonStr);
-                if (parsed && parsed.table && parsed.table.rows && parsed.table.rows.length > 0) {
-                  const cols = (parsed.table.cols || []).map(c => (c.label || '').trim());
-                  rawTodos = parsed.table.rows.map(r => {
-                    const obj = {};
-                    (r.c || []).forEach((cell, idx) => {
-                      const colName = cols[idx] || ('col_' + idx);
-                      obj[colName] = cell ? (cell.f !== undefined ? cell.f : (cell.v !== undefined ? cell.v : '')) : '';
-                    });
-                    return obj;
-                  });
-                }
-              }
-            } catch(gvizErr) {
-              console.warn('GViz To Do list fallback read error:', gvizErr);
-            }
-          }
-
-          if (rawTodos && rawTodos.length > 0) {
-            const localTodos = getStore('yg_todos_lite', []);
-
-            const getColVal = (rowObj, keys, fallback = '') => {
-              for (const k of keys) {
-                if (rowObj[k] !== undefined && rowObj[k] !== null && String(rowObj[k]).trim() !== '') {
-                  const cv = cleanText(rowObj[k]);
-                  if (cv !== '') return cv;
-                }
-              }
-              return fallback;
-            };
-
-            const mapped = rawTodos
-              .filter(r => {
-                const title = getColVal(r, ['To Do List', 'Görev Başlığı', 'Başlık', 'col_1']);
-                if (!title) return false;
-                if (isRecordDeleted('To Do list', title) || isRecordDeleted('Yapılacaklar', title)) return false;
-                return true;
-              })
-              .map((r, idx) => {
-                const title = getColVal(r, ['To Do List', 'Görev Başlığı', 'Başlık', 'col_1']);
-                const st = getColVal(r, ['Durum', 'col_6'], 'Bekliyor');
-                const pName = getColVal(r, ['Proje', 'İlgili Proje', 'col_2'], 'Genel');
-                const prio = getColVal(r, ['Öncelik ', 'Öncelik', 'col_3'], 'Normal');
-                const ass = getColVal(r, ['Sorumlu Kişi', 'Sorumlu', 'col_4'], '');
-                const due = cleanDate(getColVal(r, ['Termin Bitiş', 'Termin Tarihi', 'Termin', 'col_5'], ''));
-                const cDate = cleanDate(getColVal(r, ['Tarih', 'Kayıt Tarihi', 'col_0'], ''));
-                const notes = getColVal(r, ['Not', 'Notlar', 'Notlar / Detay', 'col_7'], '');
-
-                const local = localTodos.find(lt => lt && lt.title && lt.title.trim().toLowerCase() === title.trim().toLowerCase());
-
-                const isDone = (st.toLowerCase() === 'tamamlandı' || st.toLowerCase() === 'tamamlandi');
-
-                return {
-                  id: (local && local.id) ? local.id : ('todo_' + idx),
-                  createdAt: cDate || (local ? local.createdAt : '') || new Date().toISOString().split('T')[0],
-                  title: title,
-                  project: pName || (local ? local.project : 'Genel'),
-                  priority: prio || (local ? local.priority : 'Normal'),
-                  assignee: ass || (local ? local.assignee : ''),
-                  dueDate: due || (local ? local.dueDate : ''),
-                  completed: isDone || (local ? local.completed : false),
-                  notes: notes || (local ? local.notes : '')
-                };
-              });
-
-            // Aynı başlıktaki mükerrer satırları ayıkla, en son güncel durumu koru
-            const uniqueMap = new Map();
-            mapped.forEach(item => {
-              const key = item.title.trim().toLowerCase();
-              uniqueMap.set(key, item);
-            });
-            todos = Array.from(uniqueMap.values());
-
-            // Henüz senkronize edilmemiş yerel görevleri koru
-            localTodos.forEach(lt => {
-              if (!lt || !lt.title) return;
-              if (isRecordDeleted('To Do list', lt.title) || isRecordDeleted('Yapılacaklar', lt.title)) return;
-              const exists = todos.some(t => t.title && t.title.trim().toLowerCase() === lt.title.trim().toLowerCase());
-              if (!exists) {
-                todos.push(lt);
-              }
-            });
-
-            setStore('yg_todos_lite', todos);
-            renderTodos();
-          }
-
-          // 7. Stok
-          if (d['Stok'] && d['Stok'].length > 0) {
-            stock = d['Stok']
-              .filter(r => {
-                const name = cleanText(r['Malzeme Adı']);
-                const code = cleanText(r['Stok Kodu']);
-                if (!name && !code) return false;
-                if (code === "STK-DM-14" || name.includes("B420C")) return false; // Eski test verisini yoksay
-                if (name && isRecordDeleted('Stok', name)) return false;
-                if (code && isRecordDeleted('Stok', code)) return false;
-                return true;
-              })
-              .map((r, idx) => ({
-                id: 's_' + idx,
-                code: cleanText(r['Stok Kodu']),
-                name: cleanText(r['Malzeme Adı']),
-                category: cleanText(r['Kategori'], 'Demir & Çelik'),
-                qty: parseFloat(r['Mevcut Miktar'] || r['Miktar']) || 0,
-                unit: cleanText(r['Birim'], 'Adet'),
-                price: cleanText(r['Birim Fiyat (₺)'] || r['Fiyat']),
-                totalValue: cleanText(r['Toplam Değer (₺)']),
-                location: cleanText(r['Depo / Konum']),
-                status: cleanText(r['Durum'], 'Yeterli'),
-                notes: cleanText(r['Notlar / Detay'])
-              }));
-            setStore('yg_stock_lite', stock);
-            renderStock();
-          }
-
+          processDataFromSheet(resJson.data);
           if (!silent) showToast('Google Sheets verileri başarıyla yüklendi! ☁️');
         }
-      } catch(err) {
-        console.warn("Google Sheets canlı okuma hatası:", err);
+      } catch(webhookErr) {
+        console.warn('Google Sheets Webhook senkronizasyon hatası:', webhookErr);
       }
     }
 
