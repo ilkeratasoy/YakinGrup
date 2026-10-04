@@ -2053,10 +2053,106 @@
       return 'Diğer / Genel';
     }
 
+    function makeProjectSlug(name) {
+      return String(name || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[ıİ]/g, 'i')
+        .replace(/[ğĞ]/g, 'g')
+        .replace(/[üÜ]/g, 'u')
+        .replace(/[şŞ]/g, 's')
+        .replace(/[öÖ]/g, 'o')
+        .replace(/[çÇ]/g, 'c')
+        .replace(/[^a-z0-9]/g, '_')
+        .replace(/_+/g, '_')
+        .replace(/^_|_$/g, '');
+    }
+
+    function deduplicateProjects(projList) {
+      if (!Array.isArray(projList)) return [];
+      const result = [];
+      const seenSlugs = new Set();
+      const seenAptKeys = new Set();
+
+      for (const p of projList) {
+        if (!p) continue;
+        const rawName = (p.name || '').trim();
+        const rawCode = (p.code || '').trim();
+        const rawApt = (p.buildingName || '').trim().toLowerCase();
+        if (!rawName && !rawCode) continue;
+
+        if (rawName === "Bağdat Caddesi Kentsel Dönüşüm" || rawCode === "PRJ-2026-01") continue;
+
+        if (rawName && isRecordDeleted('İnşaat Projeleri', rawName)) continue;
+        if (rawCode && isRecordDeleted('İnşaat Projeleri', rawCode)) continue;
+
+        const lowerName = rawName.toLowerCase();
+        
+        // Özel Florya Cennet mükerrer kontrolü (Küçükçemece / Küçükçekmece varyasyonları)
+        if (lowerName.includes('florya cennet') || ((lowerName.includes('küçükçemece') || lowerName.includes('küçükçekmece')) && lowerName.includes('cennet'))) {
+          const alreadyHasFlorya = result.some(item => {
+            const iname = (item.name || '').toLowerCase();
+            const iapt = (item.buildingName || '').toLowerCase();
+            return iname.includes('florya cennet') || iapt.includes('florya cennet');
+          });
+          if (alreadyHasFlorya) {
+            continue;
+          }
+        }
+
+        // Slug / İsim bazlı mükerrer kontrolü
+        const slug = makeProjectSlug(rawName);
+        if (slug && seenSlugs.has(slug)) {
+          continue;
+        }
+
+        // Apartman Adı + İlçe bazlı kontrol (özellikle aynı bina için mükerrer kayıtlar)
+        const validApt = rawApt && rawApt.length >= 4 && rawApt !== 'bina' && rawApt !== 'apartman' && rawApt !== 'yok' && rawApt !== '-';
+        if (validApt) {
+          const dist = (p.district || '').toLowerCase().trim();
+          const aptKey = rawApt + (dist ? '_' + dist : '');
+          if (seenAptKeys.has(aptKey)) {
+            continue;
+          }
+          seenAptKeys.add(aptKey);
+        }
+
+        if (slug) seenSlugs.add(slug);
+        result.push(p);
+      }
+      return result;
+    }
+
+    function sanitizeProjectIds(projList) {
+      if (!Array.isArray(projList)) return [];
+      const deduped = deduplicateProjects(projList);
+      const seen = new Set();
+      return deduped.map((p, idx) => {
+        if (!p) return p;
+        let s = makeProjectSlug(p.name);
+        let targetId = 'p_' + (s || ('idx_' + idx));
+        if (seen.has(targetId)) {
+          targetId = targetId + '_' + idx;
+        }
+        seen.add(targetId);
+        p.id = targetId;
+        return p;
+      });
+    }
+
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-04_v13_todo_sheet_sync_fix";
+    const APP_BUILD_VERSION = "2026-10-04_v14_dedup_florya_cennet";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
+        markAsDeleted('İnşaat Projeleri', 'Küçükçemece Florya Cennet Mh.');
+        markAsDeleted('İnşaat Projeleri', 'Küçükçekmece Florya Cennet Mh.');
+
+        const existingProjects = JSON.parse(localStorage.getItem('yg_projects_lite') || '[]');
+        if (Array.isArray(existingProjects) && existingProjects.length > 0) {
+          const cleanedProjs = deduplicateProjects(existingProjects);
+          localStorage.setItem('yg_projects_lite', JSON.stringify(cleanedProjs));
+        }
+
         const existingCards = JSON.parse(localStorage.getItem('yg_cards_lite') || '[]');
         if (Array.isArray(existingCards) && existingCards.length > 0) {
           existingCards.forEach(c => {
@@ -2083,37 +2179,6 @@
         }
       } catch(e) {}
       localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
-    }
-
-    function makeProjectSlug(name) {
-      return String(name || '')
-        .trim()
-        .toLowerCase()
-        .replace(/[ıİ]/g, 'i')
-        .replace(/[ğĞ]/g, 'g')
-        .replace(/[üÜ]/g, 'u')
-        .replace(/[şŞ]/g, 's')
-        .replace(/[öÖ]/g, 'o')
-        .replace(/[çÇ]/g, 'c')
-        .replace(/[^a-z0-9]/g, '_')
-        .replace(/_+/g, '_')
-        .replace(/^_|_$/g, '');
-    }
-
-    function sanitizeProjectIds(projList) {
-      if (!Array.isArray(projList)) return [];
-      const seen = new Set();
-      return projList.map((p, idx) => {
-        if (!p) return p;
-        let s = makeProjectSlug(p.name);
-        let targetId = 'p_' + (s || ('idx_' + idx));
-        if (seen.has(targetId)) {
-          targetId = targetId + '_' + idx;
-        }
-        seen.add(targetId);
-        p.id = targetId;
-        return p;
-      });
     }
 
     let cards = getStore('yg_cards_lite', defaultCards);
@@ -4307,12 +4372,14 @@ function doPost(e) {
       if (!confirm(`"${p.name}" projesi silinsin mi?`)) return;
 
       markAsDeleted('İnşaat Projeleri', p.name);
+      if (p.code) markAsDeleted('İnşaat Projeleri', p.code);
 
       projects = projects.filter(x => x.id !== id);
       setStore('yg_projects_lite', projects);
       renderProjects();
       populateDocProjectSelect();
       populateInvoiceProjectSelect();
+      populateTodoProjectSelect();
 
       postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name);
       showToast(`"${p.name}" silindi ✅`);
@@ -6687,19 +6754,37 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         localProjects.forEach(lp => {
           if (!lp || !lp.name) return;
           if (isRecordDeleted('İnşaat Projeleri', lp.name)) return;
-          const exists = projects.some(p => 
-            p && p.name && lp.name && p.name.trim().toLowerCase() === lp.name.trim().toLowerCase()
-          );
+          if (lp.code && isRecordDeleted('İnşaat Projeleri', lp.code)) return;
+
+          const lpSlug = makeProjectSlug(lp.name);
+          const lpApt = (lp.buildingName || '').trim().toLowerCase();
+          const lpLow = (lp.name || '').toLowerCase();
+
+          const exists = projects.some(p => {
+            if (!p) return false;
+            const pSlug = makeProjectSlug(p.name);
+            const pApt = (p.buildingName || '').trim().toLowerCase();
+            const pLow = (p.name || '').toLowerCase();
+
+            if (pSlug && lpSlug && pSlug === lpSlug) return true;
+            if (p.name.trim().toLowerCase() === lp.name.trim().toLowerCase()) return true;
+            if (lpApt && pApt && lpApt === pApt && lpApt.length >= 4 && lpApt !== 'bina' && lpApt !== 'apartman' && lpApt !== 'yok' && lpApt !== '-') return true;
+            if (pLow.includes('florya cennet') && (lpLow.includes('florya cennet') || (lpLow.includes('cennet') && lpLow.includes('küçükçe')))) return true;
+            return false;
+          });
+
           if (!exists) {
-            lp.id = 'p_' + (makeProjectSlug(lp.name) || lp.id || ('gen_' + Math.random()));
+            lp.id = 'p_' + (lpSlug || lp.id || ('gen_' + Math.random()));
             projects.push(lp);
           }
         });
 
+        projects = sanitizeProjectIds(projects);
         setStore('yg_projects_lite', projects);
         renderProjects();
         populateDocProjectSelect();
         populateInvoiceProjectSelect();
+        populateTodoProjectSelect();
       }
 
       // 3. Cari Kartları
