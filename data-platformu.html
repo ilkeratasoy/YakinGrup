@@ -1005,9 +1005,18 @@
     <!-- 2. PROJELER TAB -->
     <!-- ========================================== -->
     <div id="tab-projects" class="tab-pane">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
-        <input type="text" id="search-projects" class="search-input" placeholder="Proje ara..." oninput="renderProjects()" style="margin-bottom: 0;">
-        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-project')" style="margin-left: 8px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 8px; flex-wrap: wrap;">
+        <input type="text" id="search-projects" class="search-input" placeholder="Proje ara (ad, tip, ilçe, ada/parsel)..." oninput="renderProjects()" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+        <select id="filter-project-type" onchange="renderProjects()" style="padding: 8px 10px; font-size: 0.78rem; border: 1.5px solid var(--border); border-radius: 8px; background: white; color: var(--navy); font-weight: 600; cursor: pointer;">
+          <option value="">Tüm Proje Tipleri</option>
+          <option value="Kentsel Dönüşüm">🏙️ Kentsel Dönüşüm</option>
+          <option value="Kat Karşılığı">🤝 Kat Karşılığı</option>
+          <option value="Arazi">🗺️ Arazi</option>
+          <option value="Villa / Konut">🏡 Villa / Konut</option>
+          <option value="GES Santrali">☀️ GES Santrali</option>
+          <option value="Ticari & Sanayi">🏭 Ticari & Sanayi</option>
+        </select>
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-project')" style="white-space: nowrap;">
           ➕ Yeni Proje
         </button>
       </div>
@@ -1248,6 +1257,8 @@
             <label>Tipi</label>
             <select id="p-type">
               <option value="Kentsel Dönüşüm">Kentsel Dönüşüm</option>
+              <option value="Kat Karşılığı">Kat Karşılığı</option>
+              <option value="Arazi">Arazi</option>
               <option value="Villa / Konut">Villa / Konut</option>
               <option value="GES Santrali">GES Santrali</option>
               <option value="Ticari & Sanayi">Ticari & Sanayi</option>
@@ -4017,16 +4028,40 @@ function doPost(e) {
       if (p && p.name) filterTodosToProject(p.name);
     }
 
+    function getProjectTypeBadge(type) {
+      const t = (type || 'Proje').trim();
+      const lower = t.toLowerCase();
+      if (lower.includes('kentsel')) {
+        return `<span class="badge badge-purple" style="background:#ede9fe; color:#6d28d9; border:1px solid #ddd6fe; font-weight:700;">🏙️ Kentsel Dönüşüm</span>`;
+      } else if (lower.includes('kat kar') || lower.includes('karşılığı') || lower.includes('karsiligi')) {
+        return `<span class="badge badge-amber" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; font-weight:700;">🤝 Kat Karşılığı</span>`;
+      } else if (lower.includes('arazi') || lower.includes('arsa')) {
+        return `<span class="badge badge-green" style="background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; font-weight:700;">🗺️ Arazi</span>`;
+      } else if (lower.includes('villa') || lower.includes('konut')) {
+        return `<span class="badge badge-blue" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; font-weight:700;">🏡 Villa / Konut</span>`;
+      } else if (lower.includes('ges') || lower.includes('güneş') || lower.includes('enerji')) {
+        return `<span class="badge" style="background:#fef9c3; color:#854d0e; border:1px solid #fef08a; font-weight:700;">☀️ GES Santrali</span>`;
+      } else if (lower.includes('ticari') || lower.includes('sanayi')) {
+        return `<span class="badge" style="background:#ffedd5; color:#c2410c; border:1px solid #fed7aa; font-weight:700;">🏭 Ticari & Sanayi</span>`;
+      }
+      return `<span class="badge badge-blue" style="font-weight:700;">${escapeHtml(t)}</span>`;
+    }
+
     function renderProjects() {
       const q = (document.getElementById('search-projects')?.value || '').toLowerCase().trim();
+      const typeFilter = (document.getElementById('filter-project-type')?.value || '').trim().toLowerCase();
       const list = document.getElementById('projects-list');
       if (!list) return;
 
       const filtered = projects.filter(p => {
+        if (typeFilter && (!p.type || !p.type.toLowerCase().includes(typeFilter))) {
+          return false;
+        }
         if (!q) return true;
         return (p.name && p.name.toLowerCase().includes(q)) ||
                (p.client && p.client.toLowerCase().includes(q)) ||
                (p.code && p.code.toLowerCase().includes(q)) ||
+               (p.type && p.type.toLowerCase().includes(q)) ||
                (p.location && p.location.toLowerCase().includes(q)) ||
                (p.district && p.district.toLowerCase().includes(q)) ||
                (p.neighborhood && p.neighborhood.toLowerCase().includes(q)) ||
@@ -4060,7 +4095,7 @@ function doPost(e) {
                 </div>
               </div>
               <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-                <span class="badge ${p.type === 'Kentsel Dönüşüm' ? 'badge-purple' : 'badge-blue'}">${escapeHtml(p.type || 'Proje')}</span>
+                ${getProjectTypeBadge(p.type)}
                 <span class="badge ${p.status === 'Tamamlandı' ? 'badge-green' : 'badge-amber'}">${escapeHtml(p.status)}</span>
               </div>
             </div>
@@ -4171,7 +4206,37 @@ function doPost(e) {
 
       document.getElementById('p-code').value = p.code || '';
       document.getElementById('p-name').value = p.name || '';
-      document.getElementById('p-type').value = p.type || 'Kentsel Dönüşüm';
+      
+      const pTypeSelect = document.getElementById('p-type');
+      if (pTypeSelect) {
+        pTypeSelect.value = p.type || 'Kentsel Dönüşüm';
+        if (!pTypeSelect.value && p.type) {
+          const lower = p.type.toLowerCase().trim();
+          for (let opt of pTypeSelect.options) {
+            if (opt.value && opt.value.toLowerCase().trim() === lower) {
+              pTypeSelect.value = opt.value;
+              break;
+            }
+          }
+          if (!pTypeSelect.value) {
+            if (lower.includes('kat kar') || lower.includes('karşılığı') || lower.includes('karsiligi')) {
+              pTypeSelect.value = 'Kat Karşılığı';
+            } else if (lower.includes('arazi') || lower.includes('arsa')) {
+              pTypeSelect.value = 'Arazi';
+            } else if (lower.includes('kentsel')) {
+              pTypeSelect.value = 'Kentsel Dönüşüm';
+            } else if (lower.includes('villa') || lower.includes('konut')) {
+              pTypeSelect.value = 'Villa / Konut';
+            } else if (lower.includes('ges') || lower.includes('enerji')) {
+              pTypeSelect.value = 'GES Santrali';
+            } else if (lower.includes('ticari') || lower.includes('sanayi')) {
+              pTypeSelect.value = 'Ticari & Sanayi';
+            } else {
+              pTypeSelect.value = 'Kentsel Dönüşüm';
+            }
+          }
+        }
+      }
       document.getElementById('p-client').value = p.client || '';
       document.getElementById('p-loc').value = p.location || '';
       document.getElementById('p-budget').value = p.budget || '';
