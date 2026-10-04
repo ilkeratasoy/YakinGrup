@@ -3990,20 +3990,22 @@ function doPost(e) {
           closeModal('modal-new-project');
           showToast(`"${p.name}" projesi güncellendi! ✏️`);
 
-          if (oldName) {
-            await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
-          }
-          if (oldCode && oldCode !== p.code) {
-            await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
-          }
-          await postToWebhook('İnşaat Projeleri', [
-            p.date || new Date().toISOString().split('T')[0],
-            p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
-            `%${p.progress}`, p.status, p.notes,
-            p.district, p.neighborhood, p.ada, p.parsel, p.area,
-            p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
-            p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
-          ]);
+          (async () => {
+            if (oldName) {
+              await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
+            }
+            if (oldCode && oldCode !== p.code) {
+              await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
+            }
+            await postToWebhook('İnşaat Projeleri', [
+              p.date || new Date().toISOString().split('T')[0],
+              p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
+              `%${p.progress}`, p.status, p.notes,
+              p.district, p.neighborhood, p.ada, p.parsel, p.area,
+              p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
+              p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
+            ]);
+          })();
           return;
         }
       }
@@ -4057,7 +4059,7 @@ function doPost(e) {
       closeModal('modal-new-project');
       showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
 
-      await postToWebhook('İnşaat Projeleri', [
+      postToWebhook('İnşaat Projeleri', [
         newP.date,
         newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate,
         `%${newP.progress}`, newP.status, newP.notes,
@@ -4166,14 +4168,16 @@ function doPost(e) {
           setStore('yg_accounts_lite', accounts);
           renderAccounts();
 
-          postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
-          postToWebhook('Cari Kartları', [
-            new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, a.notes
-          ]);
-
           editingAccountId = null;
           closeModal('modal-new-account');
           showToast(`"${a.company}" cari kartı güncellendi! ✏️`);
+
+          (async () => {
+            await postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
+            await postToWebhook('Cari Kartları', [
+              new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, a.notes
+            ]);
+          })();
           return;
         }
       }
@@ -4197,13 +4201,13 @@ function doPost(e) {
 
       unmarkDeleted('Cari Kartları', newA.company);
 
-      postToWebhook('Cari Kartları', [
-        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, newA.notes
-      ]);
-
       closeModal('modal-new-account');
       renderAccounts();
       showToast('Cari kartı eklendi');
+
+      postToWebhook('Cari Kartları', [
+        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, newA.notes
+      ]);
     }
 
     /* ================================================================
@@ -4753,26 +4757,28 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (custInput) custInput.style.display = 'none';
           e.target.reset();
 
-          if (oldNo) {
-            await postDeleteToWebhook('Alış Faturaları', 'Fatura No', oldNo);
-          }
-          await postToWebhook('Alış Faturaları', [
-            inv.regDate || new Date().toISOString().split('T')[0],
-            inv.date,
-            inv.no,
-            inv.category,
-            inv.vendor,
-            inv.tax,
-            inv.project,
-            inv.subtotal,
-            inv.vat,
-            inv.total,
-            inv.dueDate,
-            inv.status,
-            inv.method,
-            inv.desc,
-            inv.notes
-          ]);
+          (async () => {
+            if (oldNo) {
+              await postDeleteToWebhook('Alış Faturaları', 'Fatura No', oldNo);
+            }
+            await postToWebhook('Alış Faturaları', [
+              inv.regDate || new Date().toISOString().split('T')[0],
+              inv.date,
+              inv.no,
+              inv.category,
+              inv.vendor,
+              inv.tax,
+              inv.project,
+              inv.subtotal,
+              inv.vat,
+              inv.total,
+              inv.dueDate,
+              inv.status,
+              inv.method,
+              inv.desc,
+              inv.notes
+            ]);
+          })();
           return;
         }
       }
@@ -4814,7 +4820,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (custInput) custInput.style.display = 'none';
       e.target.reset();
 
-      await postToWebhook('Alış Faturaları', [
+      postToWebhook('Alış Faturaları', [
         newInv.regDate,
         newInv.date,
         newInv.no,
@@ -5238,14 +5244,16 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           setStore('yg_docs_lite', docs);
           renderDocs();
 
-          postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', oldTitle);
-          postToWebhook('Proje Dökümanları', [
-            new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date, d.expiry, d.url, d.notes
-          ]);
-
           editingDocId = null;
           closeModal('modal-new-doc');
           showToast(`"${d.title}" dökümanı güncellendi! ✏️`);
+
+          (async () => {
+            await postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', oldTitle);
+            await postToWebhook('Proje Dökümanları', [
+              new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date, d.expiry, d.url, d.notes
+            ]);
+          })();
           return;
         }
       }
@@ -5266,13 +5274,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       unmarkDeleted('Proje Dökümanları', newD.title);
 
-      postToWebhook('Proje Dökümanları', [
-        new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.date, newD.expiry, newD.url, newD.notes
-      ]);
-
       closeModal('modal-new-doc');
       renderDocs();
       showToast('Evrak eklendi');
+
+      postToWebhook('Proje Dökümanları', [
+        new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.date, newD.expiry, newD.url, newD.notes
+      ]);
     }
 
     /* ================================================================
@@ -5488,7 +5496,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       showToast('Görev eklendi! 📋', '✅');
     }
 
-    async function saveTodo(e) {
+    function saveTodo(e) {
       e.preventDefault();
       const title = document.getElementById('todo-title').value.trim();
       if (!title) return;
@@ -5518,14 +5526,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             t.notes
           ];
 
-          // Eski kaydı silip güncel kaydı ekle (veya updateRow)
-          await postDeleteToWebhook('To Do list', 'To Do List', oldTitle);
-          // Eski Yapılacaklar sekmesinde kalmış olabilecek kopyayı da temizle
-          postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
-          postDeleteToWebhook('Yapılacaklar', 'To Do List', oldTitle);
-
-          await postToWebhook('To Do list', rowData);
-
+          // TEK TIKLA ANINDA YANIT: Modalı ve formu beklemeden kapat
           editingTodoId = null;
           closeModal('modal-new-todo');
           showToast(`"${t.title}" görevi güncellendi! ✏️`, '✅');
@@ -5535,6 +5536,14 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (document.getElementById('todo-assignee')) document.getElementById('todo-assignee').value = '';
           if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
           if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
+
+          // Arka planda Sheets ile senkronize et (kullanıcıyı bekletmez)
+          (async () => {
+            await postDeleteToWebhook('To Do list', 'To Do List', oldTitle);
+            postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
+            postDeleteToWebhook('Yapılacaklar', 'To Do List', oldTitle);
+            await postToWebhook('To Do list', rowData);
+          })();
           return;
         }
       }
@@ -5567,12 +5576,12 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
       if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
 
-      await postToWebhook('To Do list', [
+      postToWebhook('To Do list', [
         newT.createdAt, newT.title, newT.project, newT.priority, newT.assignee, newT.dueDate, 'Bekliyor', newT.notes
       ]);
     }
 
-    async function toggleTodoStatus(id) {
+    function toggleTodoStatus(id) {
       const t = todos.find(x => x.id === id);
       if (!t) return;
       t.completed = !t.completed;
@@ -5592,12 +5601,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         t.notes || ''
       ];
 
-      // E-tabloda mükerrer satır oluşmaması için eski satırı silip güncel durumu ekle
-      await postDeleteToWebhook('To Do list', 'To Do List', t.title);
-      await postToWebhook('To Do list', rowData);
+      (async () => {
+        await postDeleteToWebhook('To Do list', 'To Do List', t.title);
+        await postToWebhook('To Do list', rowData);
+      })();
     }
 
-    async function deleteTodo(id) {
+    function deleteTodo(id) {
       const t = todos.find(x => x.id === id);
       if (!t) return;
       if (!confirm(`"${t.title}" görevini silmek istediğinize emin misiniz?`)) return;
@@ -5608,10 +5618,12 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       todos = todos.filter(x => x.id !== id);
       setStore('yg_todos_lite', todos);
       renderTodos();
-
-      await postDeleteToWebhook('To Do list', 'To Do List', t.title);
-      postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title);
       showToast(`"${t.title}" silindi ✅`);
+
+      (async () => {
+        await postDeleteToWebhook('To Do list', 'To Do List', t.title);
+        postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title);
+      })();
     }
 
     function exportTodosCsv() {
@@ -5731,14 +5743,16 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           setStore('yg_stock_lite', stock);
           renderStock();
 
-          postDeleteToWebhook('Stok', 'Malzeme Adı', oldName);
-          postToWebhook('Stok', [
-            new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.price, s.totalValue, s.location, s.status, s.notes
-          ]);
-
           editingStockId = null;
           closeModal('modal-new-stock');
           showToast(`"${s.name}" stok kalemi güncellendi! ✏️`);
+
+          (async () => {
+            await postDeleteToWebhook('Stok', 'Malzeme Adı', oldName);
+            await postToWebhook('Stok', [
+              new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.price, s.totalValue, s.location, s.status, s.notes
+            ]);
+          })();
           return;
         }
       }
@@ -5764,13 +5778,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       unmarkDeleted('Stok', newS.name);
       if (newS.code) unmarkDeleted('Stok', newS.code);
 
-      postToWebhook('Stok', [
-        new Date().toISOString().split('T')[0], newS.code, newS.name, newS.category, newS.qty, newS.unit, newS.price, newS.totalValue, newS.location, newS.status, newS.notes
-      ]);
-
       closeModal('modal-new-stock');
       renderStock();
       showToast('Stok eklendi');
+
+      postToWebhook('Stok', [
+        new Date().toISOString().split('T')[0], newS.code, newS.name, newS.category, newS.qty, newS.unit, newS.price, newS.totalValue, newS.location, newS.status, newS.notes
+      ]);
     }
 
     /* ================================================================
