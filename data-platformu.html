@@ -2141,9 +2141,11 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-04_v14_dedup_florya_cennet";
+    const APP_BUILD_VERSION = "2026-10-05_v15_sync_all_invoices";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
+        unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
+        localStorage.removeItem('yg_invoices_lite');
         markAsDeleted('İnşaat Projeleri', 'Küçükçemece Florya Cennet Mh.');
         markAsDeleted('İnşaat Projeleri', 'Küçükçekmece Florya Cennet Mh.');
 
@@ -6826,7 +6828,6 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           .filter(r => {
             const fNo = cleanText(r['Fatura No'] || r['col_2']);
             if (!fNo) return false;
-            if (fNo === "EFA2026000004128") return false;
             if (isRecordDeleted('Alış Faturaları', fNo)) return false;
             return true;
           })
