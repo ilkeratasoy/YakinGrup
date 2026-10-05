@@ -1029,9 +1029,25 @@
     <!-- 3. CARİLER TAB -->
     <!-- ========================================== -->
     <div id="tab-accounts" class="tab-pane">
+      <!-- Cari Finansal Özet Göstergeler -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 0.85rem;">
+        <div style="background: white; border: 1px solid #10b981; border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(16,185,129,0.06);">
+          <div style="font-size: 0.65rem; font-weight: 700; color: #047857; text-transform: uppercase;">Toplam Alacak</div>
+          <div id="stat-acc-receivable" style="font-size: 0.88rem; font-weight: 800; color: #047857; margin-top: 2px;">0,00 ₺</div>
+        </div>
+        <div style="background: white; border: 1px solid #ef4444; border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(239,68,68,0.06);">
+          <div style="font-size: 0.65rem; font-weight: 700; color: #b91c1c; text-transform: uppercase;">Toplam Verecek</div>
+          <div id="stat-acc-payable" style="font-size: 0.88rem; font-weight: 800; color: #b91c1c; margin-top: 2px;">0,00 ₺</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(11,37,69,0.04);">
+          <div style="font-size: 0.65rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Net Cari Bakiye</div>
+          <div id="stat-acc-balance" style="font-size: 0.88rem; font-weight: 800; color: var(--navy); margin-top: 2px;">0,00 ₺</div>
+        </div>
+      </div>
+
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
-        <input type="text" id="search-accounts" class="search-input" placeholder="Cari ara..." oninput="renderAccounts()" style="margin-bottom: 0;">
-        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="margin-left: 8px;">
+        <input type="text" id="search-accounts" class="search-input" placeholder="Cari veya firma ara..." oninput="renderAccounts()" style="margin-bottom: 0;">
+        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="margin-left: 8px; white-space: nowrap;">
           ➕ Yeni Cari
         </button>
       </div>
@@ -1521,6 +1537,35 @@
           <div class="form-group full">
             <label>📝 Notlar / Banka IBAN</label>
             <input type="text" id="a-notes" placeholder="Vade koşulu, IBAN bilgisi veya özel cari notu...">
+          </div>
+
+          <!-- Finansal Alacak / Verecek / Net Bakiye -->
+          <div class="form-group full" style="margin-top: 4px; padding-top: 10px; border-top: 1px dashed var(--border);">
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--navy); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span>💰 Cari Hesap & Finansal Bakiye</span>
+              <span id="account-invoices-hint" style="font-size: 0.72rem; font-weight: 600; color: var(--muted);"></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; font-weight: 700; color: #047857; margin-bottom: 4px;">
+                  <span>🟢 Toplam Alacak (₺)</span>
+                  <span style="font-size: 0.65rem; color: #10b981; font-weight: 700;">(Tahsil Edilecek)</span>
+                </label>
+                <input type="number" id="a-receivable" step="0.01" min="0" placeholder="0,00" oninput="updateAccountBalanceCalc()" style="font-weight: 700; color: #047857; width: 100%; box-sizing: border-box; padding: 0.55rem; border-radius: 8px; border: 1px solid #cbd5e1;">
+              </div>
+              <div>
+                <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; font-weight: 700; color: #b91c1c; margin-bottom: 4px;">
+                  <span>🔴 Toplam Verecek (₺)</span>
+                  <span style="font-size: 0.65rem; color: #ef4444; font-weight: 700;">(Ödenecek Borç)</span>
+                </label>
+                <input type="number" id="a-payable" step="0.01" min="0" placeholder="0,00" oninput="updateAccountBalanceCalc()" style="font-weight: 700; color: #b91c1c; width: 100%; box-sizing: border-box; padding: 0.55rem; border-radius: 8px; border: 1px solid #cbd5e1;">
+              </div>
+            </div>
+            <!-- Canlı Net Bakiye Özeti -->
+            <div id="account-balance-preview" style="margin-top: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
+              <span style="color: #475569; font-weight: 600;">Net Cari Bakiye:</span>
+              <span id="account-balance-badge" class="badge" style="font-size: 0.82rem; font-weight: 800; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1;">0,00 ₺ (Denk)</span>
+            </div>
           </div>
         </div>
         <div style="display:flex; gap:8px; margin-top:14px;">
@@ -2141,13 +2186,23 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-05_v15_sync_all_invoices";
+    const APP_BUILD_VERSION = "2026-10-05_v16_cari_alacak_verecek";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
         localStorage.removeItem('yg_invoices_lite');
         markAsDeleted('İnşaat Projeleri', 'Küçükçemece Florya Cennet Mh.');
         markAsDeleted('İnşaat Projeleri', 'Küçükçekmece Florya Cennet Mh.');
+
+        const existingAccounts = JSON.parse(localStorage.getItem('yg_accounts_lite') || '[]');
+        if (Array.isArray(existingAccounts) && existingAccounts.length > 0) {
+          existingAccounts.forEach(a => {
+            if (a.receivable === undefined) a.receivable = 0;
+            if (a.payable === undefined) a.payable = 0;
+            if (a.balance === undefined) a.balance = Number((parseNumber(a.receivable) - parseNumber(a.payable)).toFixed(2));
+          });
+          localStorage.setItem('yg_accounts_lite', JSON.stringify(existingAccounts));
+        }
 
         const existingProjects = JSON.parse(localStorage.getItem('yg_projects_lite') || '[]');
         if (Array.isArray(existingProjects) && existingProjects.length > 0) {
@@ -2248,6 +2303,10 @@
         if (!editingAccountId) {
           const tEl = document.getElementById('modal-account-title'); if (tEl) tEl.textContent = 'Yeni Cari Kartı';
           const bEl = document.getElementById('btn-save-account'); if (bEl) bEl.textContent = 'Kaydet';
+          const rEl = document.getElementById('a-receivable'); if (rEl) rEl.value = '';
+          const pEl = document.getElementById('a-payable'); if (pEl) pEl.value = '';
+          const hEl = document.getElementById('account-invoices-hint'); if (hEl) hEl.textContent = '';
+          updateAccountBalanceCalc();
         }
       }
       if (id === 'modal-new-invoice') {
@@ -2398,7 +2457,7 @@ var SHEET_CONFIGS = [
   },
   {
     name: "Cari Kartları",
-    headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "E-Posta", "Vergi Dairesi", "VKN / TCKN", "Açık Adres", "Notlar / IBAN"]
+    headers: ["Tarih", "Firma Adı", "Cari Türü", "Yetkili Kişi", "Telefon", "E-Posta", "Vergi Dairesi", "VKN / TCKN", "Açık Adres", "Notlar / IBAN", "Alacak (₺)", "Verecek (₺)", "Bakiye (₺)"]
   },
   {
     name: "To Do list",
@@ -4545,42 +4604,129 @@ function doPost(e) {
     /* ================================================================
        3. CARİLER
        ================================================================ */
-    function renderAccounts() {
-      const q = document.getElementById('search-accounts').value.toLowerCase().trim();
-      const list = document.getElementById('accounts-list');
+    function updateAccountBalanceCalc() {
+      const rec = parseNumber(document.getElementById('a-receivable')?.value || 0);
+      const pay = parseNumber(document.getElementById('a-payable')?.value || 0);
+      const bal = Number((rec - pay).toFixed(2));
+      const badge = document.getElementById('account-balance-badge');
+      if (!badge) return;
 
-      const filtered = accounts.filter(a => !q || a.company.toLowerCase().includes(q) || (a.contact && a.contact.toLowerCase().includes(q)));
+      const formattedBal = Math.abs(bal).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      if (bal > 0) {
+        badge.className = 'badge';
+        badge.innerHTML = `🟢 +${formattedBal} ₺ (Alacaklıyız)`;
+        badge.style.background = '#ecfdf5';
+        badge.style.color = '#059669';
+        badge.style.border = '1px solid #10b981';
+      } else if (bal < 0) {
+        badge.className = 'badge';
+        badge.innerHTML = `🔴 -${formattedBal} ₺ (Borçluyuz)`;
+        badge.style.background = '#fef2f2';
+        badge.style.color = '#dc2626';
+        badge.style.border = '1px solid #ef4444';
+      } else {
+        badge.className = 'badge';
+        badge.innerHTML = `⚪ 0,00 ₺ (Bakiye Denk)`;
+        badge.style.background = '#f1f5f9';
+        badge.style.color = '#64748b';
+        badge.style.border = '1px solid #cbd5e1';
+      }
+    }
+
+    function renderAccounts() {
+      const q = (document.getElementById('search-accounts')?.value || '').toLowerCase().trim();
+      const list = document.getElementById('accounts-list');
+      if (!list) return;
+
+      // Stats
+      let grandReceivable = 0;
+      let grandPayable = 0;
+
+      accounts.forEach(a => {
+        grandReceivable += parseNumber(a.receivable);
+        grandPayable += parseNumber(a.payable);
+      });
+
+      const grandBalance = Number((grandReceivable - grandPayable).toFixed(2));
+
+      const statRec = document.getElementById('stat-acc-receivable');
+      const statPay = document.getElementById('stat-acc-payable');
+      const statBal = document.getElementById('stat-acc-balance');
+
+      const formatCur = (num) => (num || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺';
+
+      if (statRec) statRec.textContent = formatCur(grandReceivable);
+      if (statPay) statPay.textContent = formatCur(grandPayable);
+      if (statBal) {
+        if (grandBalance > 0) {
+          statBal.textContent = `+${formatCur(grandBalance)}`;
+          statBal.style.color = '#047857';
+        } else if (grandBalance < 0) {
+          statBal.textContent = `-${formatCur(Math.abs(grandBalance))}`;
+          statBal.style.color = '#b91c1c';
+        } else {
+          statBal.textContent = `0,00 ₺`;
+          statBal.style.color = 'var(--navy)';
+        }
+      }
+
+      const filtered = accounts.filter(a => !q || a.company.toLowerCase().includes(q) || (a.contact && a.contact.toLowerCase().includes(q)) || (a.notes && a.notes.toLowerCase().includes(q)));
 
       if (filtered.length === 0) {
         list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Cari bulunamadı.</div>`;
         return;
       }
 
-      list.innerHTML = filtered.map(a => `
-        <div class="card-item">
-          <div class="card-item-header">
-            <div>
-              <div class="card-item-title">${escapeHtml(a.company)}</div>
-              <div class="card-item-meta">
-                ${a.contact ? `<span>👤 ${escapeHtml(a.contact)}</span> • ` : ''}
-                ${a.taxOffice ? `<span>🏛️ ${escapeHtml(a.taxOffice)}</span> • ` : ''}
-                ${a.taxNo ? `<span>VKN: ${escapeHtml(a.taxNo)}</span>` : (a.tax ? `<span>${escapeHtml(a.tax)}</span>` : '')}
+      list.innerHTML = filtered.map(a => {
+        const rec = parseNumber(a.receivable);
+        const pay = parseNumber(a.payable);
+        const bal = Number((rec - pay).toFixed(2));
+
+        let balBadgeHtml = '';
+        if (bal > 0) {
+          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">🟢 +${formatCur(bal)} (Alacaklı)</span>`;
+        } else if (bal < 0) {
+          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #fef2f2; color: #dc2626; padding: 2px 7px; border-radius: 5px; border: 1px solid #ef4444;">🔴 -${formatCur(Math.abs(bal))} (Borçlu)</span>`;
+        } else if (rec > 0 || pay > 0) {
+          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #f1f5f9; color: #64748b; padding: 2px 7px; border-radius: 5px; border: 1px solid #cbd5e1;">⚪ 0,00 ₺ (Denk)</span>`;
+        }
+
+        return `
+          <div class="card-item">
+            <div class="card-item-header">
+              <div>
+                <div class="card-item-title">${escapeHtml(a.company)}</div>
+                <div class="card-item-meta">
+                  ${a.contact ? `<span>👤 ${escapeHtml(a.contact)}</span> • ` : ''}
+                  ${a.taxOffice ? `<span>🏛️ ${escapeHtml(a.taxOffice)}</span> • ` : ''}
+                  ${a.taxNo ? `<span>VKN: ${escapeHtml(a.taxNo)}</span>` : (a.tax ? `<span>${escapeHtml(a.tax)}</span>` : '')}
+                </div>
               </div>
+              <span class="badge ${a.type === 'Müşteri' ? 'badge-green' : (a.type === 'Taşeron' ? 'badge-purple' : 'badge-blue')}">${escapeHtml(a.type)}</span>
             </div>
-            <span class="badge ${a.type === 'Müşteri' ? 'badge-green' : 'badge-blue'}">${escapeHtml(a.type)}</span>
-          </div>
 
-          ${a.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">📍 ${escapeHtml(a.address)}</div>` : ''}
-          ${a.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(a.notes)}</div>` : ''}
+            <!-- Finansal Alacak / Verecek Özeti -->
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 7px 10px; margin: 6px 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; flex-wrap: wrap; gap: 6px;">
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <span>🟢 Alacak: <strong style="color: #047857;">${formatCur(rec)}</strong></span>
+                <span>🔴 Verecek: <strong style="color: #b91c1c;">${formatCur(pay)}</strong></span>
+              </div>
+              <div>${balBadgeHtml || '<span style="font-size: 0.7rem; color: var(--muted); font-weight: 600;">Bakiye: 0,00 ₺</span>'}</div>
+            </div>
 
-          <div class="quick-actions-row">
-            ${a.phone ? `<a href="tel:${a.phone}" class="btn btn-secondary btn-sm">📞 ${escapeHtml(a.phone)}</a>` : ''}
-            ${a.email ? `<a href="mailto:${a.email}" class="btn btn-secondary btn-sm">✉️ ${escapeHtml(a.email)}</a>` : ''}
-            <button class="btn btn-secondary btn-sm" style="margin-left: auto;" onclick="editAccount('${a.id}')" title="Cariyi Düzenle">✏️ Düzenle</button>
-            <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteAccount('${a.id}')" title="Cariyi Sil">🗑️</button>
+            ${a.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">📍 ${escapeHtml(a.address)}</div>` : ''}
+            ${a.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(a.notes)}</div>` : ''}
+
+            <div class="quick-actions-row">
+              ${a.phone ? `<a href="tel:${a.phone}" class="btn btn-secondary btn-sm">📞 ${escapeHtml(a.phone)}</a>` : ''}
+              ${a.email ? `<a href="mailto:${a.email}" class="btn btn-secondary btn-sm">✉️ ${escapeHtml(a.email)}</a>` : ''}
+              <button class="btn btn-secondary btn-sm" style="margin-left: auto;" onclick="editAccount('${a.id}')" title="Cariyi Düzenle">✏️ Düzenle</button>
+              <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteAccount('${a.id}')" title="Cariyi Sil">🗑️</button>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function editAccount(id) {
@@ -4600,6 +4746,31 @@ function doPost(e) {
       document.getElementById('a-tax-no').value = a.taxNo || (a.tax || '');
       document.getElementById('a-address').value = a.address || '';
       document.getElementById('a-notes').value = a.notes || '';
+
+      const rInput = document.getElementById('a-receivable');
+      const pInput = document.getElementById('a-payable');
+      if (rInput) rInput.value = (a.receivable !== undefined && a.receivable !== null && a.receivable !== 0) ? a.receivable : '';
+      if (pInput) pInput.value = (a.payable !== undefined && a.payable !== null && a.payable !== 0) ? a.payable : '';
+      updateAccountBalanceCalc();
+
+      // İlgili alış faturaları analizi (Varsa bilgi ver)
+      const compName = (a.company || '').trim().toLowerCase();
+      const relatedInvoices = (typeof invoices !== 'undefined' && Array.isArray(invoices))
+        ? invoices.filter(inv => (inv.vendor || '').trim().toLowerCase() === compName)
+        : [];
+      const hintEl = document.getElementById('account-invoices-hint');
+      if (hintEl) {
+        if (relatedInvoices.length > 0) {
+          const invTotal = relatedInvoices.reduce((acc, inv) => acc + parseNumber(inv.total), 0);
+          const invPending = relatedInvoices.filter(inv => {
+            const s = (inv.status || '').toLowerCase();
+            return !s.includes('öden') && !s.includes('tamam');
+          }).reduce((acc, inv) => acc + parseNumber(inv.total), 0);
+          hintEl.innerHTML = `🧾 ${relatedInvoices.length} Fatura (Top: ${invTotal.toLocaleString('tr-TR', {maximumFractionDigits:2})} ₺ • Bekleyen: ${invPending.toLocaleString('tr-TR', {maximumFractionDigits:2})} ₺)`;
+        } else {
+          hintEl.innerHTML = '';
+        }
+      }
 
       openModal('modal-new-account');
     }
@@ -4622,6 +4793,9 @@ function doPost(e) {
       e.preventDefault();
       const taxOfficeVal = (document.getElementById('a-tax-office')?.value || '').trim();
       const taxNoVal = (document.getElementById('a-tax-no')?.value || '').trim();
+      const recVal = parseNumber(document.getElementById('a-receivable')?.value || 0);
+      const payVal = parseNumber(document.getElementById('a-payable')?.value || 0);
+      const balVal = Number((recVal - payVal).toFixed(2));
 
       if (editingAccountId) {
         const a = accounts.find(x => x.id === editingAccountId);
@@ -4637,6 +4811,9 @@ function doPost(e) {
           a.tax = `${taxOfficeVal} / ${taxNoVal}`.replace(/^\s*\/\s*|\s*\/\s*$/g, '');
           a.address = (document.getElementById('a-address')?.value || '').trim();
           a.notes = (document.getElementById('a-notes')?.value || '').trim();
+          a.receivable = recVal;
+          a.payable = payVal;
+          a.balance = balVal;
 
           setStore('yg_accounts_lite', accounts);
           renderAccounts();
@@ -4646,7 +4823,7 @@ function doPost(e) {
 
           postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
           postToWebhook('Cari Kartları', [
-            new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, a.notes
+            new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, a.notes, a.receivable, a.payable, a.balance
           ]);
           return;
         }
@@ -4663,7 +4840,10 @@ function doPost(e) {
         taxNo: taxNoVal,
         tax: `${taxOfficeVal} / ${taxNoVal}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
         address: (document.getElementById('a-address')?.value || '').trim(),
-        notes: (document.getElementById('a-notes')?.value || '').trim()
+        notes: (document.getElementById('a-notes')?.value || '').trim(),
+        receivable: recVal,
+        payable: payVal,
+        balance: balVal
       };
 
       accounts.unshift(newA);
@@ -4672,7 +4852,7 @@ function doPost(e) {
       unmarkDeleted('Cari Kartları', newA.company);
 
       postToWebhook('Cari Kartları', [
-        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, newA.notes
+        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, newA.notes, newA.receivable, newA.payable, newA.balance
       ]);
 
       closeModal('modal-new-account');
@@ -6450,8 +6630,21 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         p.managerPhone || '',
         p.managerEmail || '',
         p.managerNotes || ''
+      accounts.forEach(a => postToWebhook('Cari Kartları', [
+        new Date().toISOString().split('T')[0],
+        a.company,
+        a.type,
+        a.contact,
+        a.phone,
+        a.email || '',
+        a.taxOffice || '',
+        a.taxNo || a.tax || '',
+        a.address || '',
+        a.notes || '',
+        parseNumber(a.receivable),
+        parseNumber(a.payable),
+        Number((parseNumber(a.receivable) - parseNumber(a.payable)).toFixed(2))
       ]));
-      accounts.forEach(a => postToWebhook('Cari Kartları', [new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email || '', a.taxOffice || '', a.taxNo || a.tax || '', a.address || '', a.notes || '']));
       invoices.forEach(inv => postToWebhook('Alış Faturaları', [
         inv.regDate || new Date().toISOString().split('T')[0],
         inv.date,
@@ -6791,6 +6984,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       // 3. Cari Kartları
       if (d['Cari Kartları'] && d['Cari Kartları'].length > 0) {
+        const localAccounts = getStore('yg_accounts_lite', []);
         accounts = d['Cari Kartları']
           .filter(r => {
             const comp = cleanText(r['Firma Adı'] || r['col_1']);
@@ -6800,12 +6994,17 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             return true;
           })
           .map((r, idx) => {
+            const comp = cleanText(r['Firma Adı'] || r['col_1']);
+            const local = localAccounts.find(la => la && la.company && la.company.trim().toLowerCase() === comp.toLowerCase());
             const ph = cleanText(r['Telefon'] || r['col_4']);
             const vDaire = cleanText(r['Vergi Dairesi'] || r['col_6']);
             const vNo = cleanText(r['VKN / TCKN'] || r['col_7']);
+            const recVal = parseNumber(r['Alacak (₺)'] || r['Alacak'] || r['col_10'] !== undefined ? (r['Alacak (₺)'] || r['Alacak'] || r['col_10']) : (local ? local.receivable : 0));
+            const payVal = parseNumber(r['Verecek (₺)'] || r['Verecek'] || r['Borç'] || r['col_11'] !== undefined ? (r['Verecek (₺)'] || r['Verecek'] || r['Borç'] || r['col_11']) : (local ? local.payable : 0));
+            const balVal = parseNumber(r['Bakiye (₺)'] || r['Bakiye'] || r['col_12'] !== undefined ? (r['Bakiye (₺)'] || r['Bakiye'] || r['col_12']) : (recVal - payVal));
             return {
-              id: 'a_' + idx,
-              company: cleanText(r['Firma Adı'] || r['col_1']),
+              id: (local && local.id) ? local.id : ('a_' + idx),
+              company: comp,
               type: cleanText(r['Cari Türü'] || r['col_2'], 'Müşteri'),
               contact: cleanText(r['Yetkili Kişi'] || r['col_3']),
               phone: ph,
@@ -6814,9 +7013,20 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               taxNo: vNo,
               tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
               address: cleanText(r['Açık Adres'] || r['col_8']),
-              notes: cleanText(r['Notlar / IBAN'] || r['col_9'])
+              notes: cleanText(r['Notlar / IBAN'] || r['col_9']),
+              receivable: recVal,
+              payable: payVal,
+              balance: balVal
             };
           });
+
+        localAccounts.forEach(la => {
+          if (!la || !la.company) return;
+          if (isRecordDeleted('Cari Kartları', la.company)) return;
+          const exists = accounts.some(a => a.company && a.company.trim().toLowerCase() === la.company.trim().toLowerCase());
+          if (!exists) accounts.push(la);
+        });
+
         setStore('yg_accounts_lite', accounts);
         renderAccounts();
       }
