@@ -1030,26 +1030,36 @@
     <!-- ========================================== -->
     <div id="tab-accounts" class="tab-pane">
       <!-- Cari Finansal Özet Göstergeler -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 0.85rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 0.85rem;">
         <div style="background: white; border: 1px solid #10b981; border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(16,185,129,0.06);">
-          <div style="font-size: 0.65rem; font-weight: 700; color: #047857; text-transform: uppercase;">Toplam Alacak</div>
+          <div style="font-size: 0.65rem; font-weight: 700; color: #047857; text-transform: uppercase;">Toplam Bütçe / Alacak</div>
           <div id="stat-acc-receivable" style="font-size: 0.88rem; font-weight: 800; color: #047857; margin-top: 2px;">0,00 ₺</div>
+        </div>
+        <div style="background: white; border: 1px solid #3b82f6; border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(59,130,246,0.06);">
+          <div style="font-size: 0.65rem; font-weight: 700; color: #1d4ed8; text-transform: uppercase;">Tahsil Edilen</div>
+          <div id="stat-acc-collected" style="font-size: 0.88rem; font-weight: 800; color: #1d4ed8; margin-top: 2px;">0,00 ₺</div>
+          <div id="stat-acc-pct" style="font-size: 0.62rem; color: #3b82f6; font-weight: 700; margin-top: 2px;">%0 Tahsilat</div>
+        </div>
+        <div style="background: white; border: 1px solid #059669; border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(5,150,105,0.06);">
+          <div style="font-size: 0.65rem; font-weight: 700; color: #065f46; text-transform: uppercase;">Kalan Alacak</div>
+          <div id="stat-acc-remaining" style="font-size: 0.88rem; font-weight: 800; color: #065f46; margin-top: 2px;">0,00 ₺</div>
         </div>
         <div style="background: white; border: 1px solid #ef4444; border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(239,68,68,0.06);">
           <div style="font-size: 0.65rem; font-weight: 700; color: #b91c1c; text-transform: uppercase;">Toplam Verecek</div>
           <div id="stat-acc-payable" style="font-size: 0.88rem; font-weight: 800; color: #b91c1c; margin-top: 2px;">0,00 ₺</div>
         </div>
-        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px 6px; text-align: center; box-shadow: 0 2px 6px rgba(11,37,69,0.04);">
-          <div style="font-size: 0.65rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Net Cari Bakiye</div>
-          <div id="stat-acc-balance" style="font-size: 0.88rem; font-weight: 800; color: var(--navy); margin-top: 2px;">0,00 ₺</div>
-        </div>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
-        <input type="text" id="search-accounts" class="search-input" placeholder="Cari veya firma ara..." oninput="renderAccounts()" style="margin-bottom: 0;">
-        <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="margin-left: 8px; white-space: nowrap;">
-          ➕ Yeni Cari
-        </button>
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 0.85rem; flex-wrap: wrap;">
+        <input type="text" id="search-accounts" class="search-input" placeholder="Cari, müşteri veya proje ara..." oninput="renderAccounts()" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+        <div style="display: flex; gap: 6px; flex-shrink: 0;">
+          <button class="btn btn-secondary btn-sm" onclick="syncProjectsToAccounts(true)" title="Projelerdeki işveren ve bütçeleri cari kartlara otomatik aktarır veya günceller" style="white-space: nowrap; font-weight: 700;">
+            ⚡ Projelerden Eşitle
+          </button>
+          <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="white-space: nowrap;">
+            ➕ Yeni Cari
+          </button>
+        </div>
       </div>
 
       <div class="items-list" id="accounts-list"></div>
@@ -1499,8 +1509,8 @@
       <form onsubmit="saveAccount(event)">
         <div class="form-grid">
           <div class="form-group full">
-            <label>Firma Ünvanı *</label>
-            <input type="text" id="a-company" required placeholder="Firma Adı">
+            <label>Firma / Müşteri Ünvanı *</label>
+            <input type="text" id="a-company" required placeholder="Firma veya Müşteri Adı">
           </div>
           <div class="form-group">
             <label>Cari Tipi</label>
@@ -1508,6 +1518,16 @@
               <option value="Müşteri">Müşteri</option>
               <option value="Tedarikçi">Tedarikçi</option>
               <option value="Taşeron">Taşeron</option>
+              <option value="Danışman / Hizmet">Danışman / Hizmet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="display: flex; justify-content: space-between; align-items: center;">
+              <span>🏗️ İlgili İnşaat Projesi</span>
+              <span id="a-project-budget-hint" style="font-size: 0.68rem; color: #047857; font-weight: 700;"></span>
+            </label>
+            <select id="a-project" onchange="onAccountProjectSelectChange()">
+              <option value="">-- Proje Seçilmedi / Bağımsız --</option>
             </select>
           </div>
           <div class="form-group">
@@ -1526,9 +1546,9 @@
             <label>Vergi Dairesi</label>
             <input type="text" id="a-tax-office" placeholder="Kadıköy V.D.">
           </div>
-          <div class="form-group">
+          <div class="form-group full">
             <label>VKN / TCKN</label>
-            <input type="text" id="a-tax-no" placeholder="10 Haneli VKN">
+            <input type="text" id="a-tax-no" placeholder="10 Haneli VKN veya 11 Haneli TCKN">
           </div>
           <div class="form-group full">
             <label>📍 Açık Adres</label>
@@ -1539,21 +1559,28 @@
             <input type="text" id="a-notes" placeholder="Vade koşulu, IBAN bilgisi veya özel cari notu...">
           </div>
 
-          <!-- Finansal Alacak / Verecek / Net Bakiye -->
+          <!-- Finansal Alacak / Tahsilat / Verecek / Net Bakiye -->
           <div class="form-group full" style="margin-top: 4px; padding-top: 10px; border-top: 1px dashed var(--border);">
             <div style="font-size: 0.85rem; font-weight: 800; color: var(--navy); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-              <span>💰 Cari Hesap & Finansal Bakiye</span>
+              <span>💰 Cari Finansmanı, Bütçe & Tahsilat Durumu</span>
               <span id="account-invoices-hint" style="font-size: 0.72rem; font-weight: 600; color: var(--muted);"></span>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div>
                 <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; font-weight: 700; color: #047857; margin-bottom: 4px;">
                   <span>🟢 Toplam Alacak (₺)</span>
-                  <span style="font-size: 0.65rem; color: #10b981; font-weight: 700;">(Tahsil Edilecek)</span>
+                  <span style="font-size: 0.65rem; color: #10b981; font-weight: 700;">(Sözleşme Bütçesi)</span>
                 </label>
                 <input type="number" id="a-receivable" step="0.01" min="0" placeholder="0,00" oninput="updateAccountBalanceCalc()" style="font-weight: 700; color: #047857; width: 100%; box-sizing: border-box; padding: 0.55rem; border-radius: 8px; border: 1px solid #cbd5e1;">
               </div>
               <div>
+                <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; font-weight: 700; color: #2563eb; margin-bottom: 4px;">
+                  <span>💵 Tahsil Edilen Tutar (₺)</span>
+                  <span style="font-size: 0.65rem; color: #3b82f6; font-weight: 700;">(Tahsilat)</span>
+                </label>
+                <input type="number" id="a-collected" step="0.01" min="0" placeholder="0,00" oninput="updateAccountBalanceCalc()" style="font-weight: 700; color: #2563eb; width: 100%; box-sizing: border-box; padding: 0.55rem; border-radius: 8px; border: 1px solid #93c5fd;">
+              </div>
+              <div class="full" style="grid-column: span 2;">
                 <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; font-weight: 700; color: #b91c1c; margin-bottom: 4px;">
                   <span>🔴 Toplam Verecek (₺)</span>
                   <span style="font-size: 0.65rem; color: #ef4444; font-weight: 700;">(Ödenecek Borç)</span>
@@ -1561,10 +1588,20 @@
                 <input type="number" id="a-payable" step="0.01" min="0" placeholder="0,00" oninput="updateAccountBalanceCalc()" style="font-weight: 700; color: #b91c1c; width: 100%; box-sizing: border-box; padding: 0.55rem; border-radius: 8px; border: 1px solid #cbd5e1;">
               </div>
             </div>
-            <!-- Canlı Net Bakiye Özeti -->
-            <div id="account-balance-preview" style="margin-top: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
-              <span style="color: #475569; font-weight: 600;">Net Cari Bakiye:</span>
-              <span id="account-balance-badge" class="badge" style="font-size: 0.82rem; font-weight: 800; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1;">0,00 ₺ (Denk)</span>
+            <!-- Canlı Kalan Alacak & İlerleme Özeti -->
+            <div id="account-balance-preview" style="margin-top: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; font-size: 0.8rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                <span style="color: #475569; font-weight: 600;">⏳ Kalan Alacak (Bakiye):</span>
+                <span id="account-remaining-rec" style="font-size: 0.92rem; font-weight: 800; color: #047857;">0,00 ₺</span>
+              </div>
+              <!-- İlerleme Çubuğu -->
+              <div style="background: #e2e8f0; border-radius: 999px; height: 7px; overflow: hidden; margin-bottom: 6px;">
+                <div id="account-progress-bar" style="background: linear-gradient(90deg, #3b82f6, #10b981); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; color: #64748b;">
+                <span id="account-progress-text">%0 Tahsil Edildi</span>
+                <span id="account-balance-badge" class="badge" style="font-size: 0.75rem; font-weight: 800; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1;">⚪ 0,00 ₺ (Denk)</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2021,6 +2058,49 @@
       return isNaN(num) ? 0 : num;
     }
 
+    function parseBudgetNumber(val) {
+      if (val === null || val === undefined) return 0;
+      if (typeof val === 'number') return isNaN(val) ? 0 : val;
+      let str = String(val).trim();
+      if (!str) return 0;
+      let multiplier = 1;
+      if (/\b(M|MN|MİLYON|MILYON)\b/i.test(str) || /(\d+[\.,]?\d*)\s*(M|MN)/i.test(str)) {
+        multiplier = 1000000;
+      } else if (/\b(K|BIN|BİN)\b/i.test(str) || /(\d+[\.,]?\d*)\s*(K)/i.test(str)) {
+        multiplier = 1000;
+      }
+      while (/(\d)\s+(\d)/.test(str)) {
+        str = str.replace(/(\d)\s+(\d)/g, '$1$2');
+      }
+      str = str.replace(/[^\d.,]/g, ' ').trim();
+      const match = str.match(/[\d.,]+/);
+      if (!match) return 0;
+      var s = match[0];
+      if (s.indexOf('.') !== -1 && s.indexOf(',') !== -1) {
+        if (s.lastIndexOf(',') > s.lastIndexOf('.')) {
+          s = s.replace(/\./g, '').replace(',', '.');
+        } else {
+          s = s.replace(/,/g, '');
+        }
+      } else if (s.indexOf(',') !== -1) {
+        var parts = s.split(',');
+        if (parts.length === 2 && parts[1].length <= 2) {
+          s = parts[0] + '.' + parts[1];
+        } else {
+          s = s.replace(/,/g, '');
+        }
+      } else if (s.indexOf('.') !== -1) {
+        var p = s.split('.');
+        if (p.length > 2) {
+          s = s.replace(/\./g, '');
+        } else if (p.length === 2 && p[1].length === 3 && p[0].length >= 1) {
+          s = p[0] + p[1];
+        }
+      }
+      var num = parseFloat(s);
+      return isNaN(num) ? 0 : Math.round(num * multiplier * 100) / 100;
+    }
+
     function escapeHtml(str) {
       if (!str) return '';
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -2186,7 +2266,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-05_v16_cari_alacak_verecek";
+    const APP_BUILD_VERSION = "2026-10-05_v17_proj_cari_tahsilat";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
@@ -2198,8 +2278,12 @@
         if (Array.isArray(existingAccounts) && existingAccounts.length > 0) {
           existingAccounts.forEach(a => {
             if (a.receivable === undefined) a.receivable = 0;
+            if (a.collected === undefined) a.collected = 0;
             if (a.payable === undefined) a.payable = 0;
-            if (a.balance === undefined) a.balance = Number((parseNumber(a.receivable) - parseNumber(a.payable)).toFixed(2));
+            const rec = parseNumber(a.receivable);
+            const coll = parseNumber(a.collected);
+            const pay = parseNumber(a.payable);
+            a.balance = Number(((rec - coll) - pay).toFixed(2));
           });
           localStorage.setItem('yg_accounts_lite', JSON.stringify(existingAccounts));
         }
@@ -2300,12 +2384,24 @@
         }
       }
       if (id === 'modal-new-account') {
+        populateAccountProjectSelect();
         if (!editingAccountId) {
           const tEl = document.getElementById('modal-account-title'); if (tEl) tEl.textContent = 'Yeni Cari Kartı';
           const bEl = document.getElementById('btn-save-account'); if (bEl) bEl.textContent = 'Kaydet';
+          const compEl = document.getElementById('a-company'); if (compEl) compEl.value = '';
+          const prjEl = document.getElementById('a-project'); if (prjEl) prjEl.value = '';
+          const cntEl = document.getElementById('a-contact'); if (cntEl) cntEl.value = '';
+          const phEl = document.getElementById('a-phone'); if (phEl) phEl.value = '';
+          const emEl = document.getElementById('a-email'); if (emEl) emEl.value = '';
+          const toEl = document.getElementById('a-tax-office'); if (toEl) toEl.value = '';
+          const tnEl = document.getElementById('a-tax-no'); if (tnEl) tnEl.value = '';
+          const adEl = document.getElementById('a-address'); if (adEl) adEl.value = '';
+          const ntEl = document.getElementById('a-notes'); if (ntEl) ntEl.value = '';
           const rEl = document.getElementById('a-receivable'); if (rEl) rEl.value = '';
+          const cEl = document.getElementById('a-collected'); if (cEl) cEl.value = '';
           const pEl = document.getElementById('a-payable'); if (pEl) pEl.value = '';
           const hEl = document.getElementById('account-invoices-hint'); if (hEl) hEl.textContent = '';
+          const bhEl = document.getElementById('a-project-budget-hint'); if (bhEl) bhEl.textContent = '';
           updateAccountBalanceCalc();
         }
       }
@@ -4512,6 +4608,7 @@ function doPost(e) {
           renderProjects();
           populateDocProjectSelect();
           populateInvoiceProjectSelect();
+          syncProjectsToAccounts(false);
 
           editingProjectId = null;
           closeModal('modal-new-project');
@@ -4588,6 +4685,7 @@ function doPost(e) {
       renderProjects();
       populateDocProjectSelect();
       populateInvoiceProjectSelect();
+      syncProjectsToAccounts(false);
       closeModal('modal-new-project');
       showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
 
@@ -4604,33 +4702,235 @@ function doPost(e) {
     /* ================================================================
        3. CARİLER
        ================================================================ */
+    function populateAccountProjectSelect() {
+      const sel = document.getElementById('a-project');
+      if (!sel) return;
+      const cur = sel.value;
+      let opts = '<option value="">-- Proje Seçilmedi / Bağımsız --</option>';
+      if (Array.isArray(projects)) {
+        projects.forEach(p => {
+          if (!p || !p.name) return;
+          const bgtStr = p.budget ? ` (Bütçe: ${p.budget})` : '';
+          const clientStr = p.client ? ` [İşveren: ${p.client}]` : '';
+          opts += `<option value="${escapeHtml(p.name)}">${escapeHtml(p.name)}${clientStr}${bgtStr}</option>`;
+        });
+      }
+      sel.innerHTML = opts;
+      if (cur) sel.value = cur;
+    }
+
+    function onAccountProjectSelectChange() {
+      const sel = document.getElementById('a-project');
+      if (!sel) return;
+      const val = sel.value;
+      const hintEl = document.getElementById('a-project-budget-hint');
+      if (!val) {
+        if (hintEl) hintEl.innerHTML = '';
+        return;
+      }
+      const p = projects.find(x => x && x.name === val);
+      if (p) {
+        const bgtVal = parseBudgetNumber(p.budget);
+        if (hintEl) {
+          hintEl.innerHTML = bgtVal > 0 ? `Bütçe: <strong>${(bgtVal).toLocaleString('tr-TR')} ₺</strong>` : (p.budget ? `Bütçe: ${escapeHtml(p.budget)}` : '');
+        }
+        const rInput = document.getElementById('a-receivable');
+        if (rInput && (!rInput.value || parseNumber(rInput.value) === 0) && bgtVal > 0) {
+          rInput.value = bgtVal;
+          showToast(`Proje bütçesi (${bgtVal.toLocaleString('tr-TR')} ₺) alacak olarak aktarıldı 📥`, 'ℹ️');
+        }
+        const compInput = document.getElementById('a-company');
+        if (compInput && !compInput.value.trim() && p.client) {
+          compInput.value = p.client;
+        }
+        const contactInput = document.getElementById('a-contact');
+        if (contactInput && !contactInput.value.trim() && p.managerName) {
+          contactInput.value = p.managerName + (p.managerName.toLowerCase().includes('yönetici') ? '' : ' (Yönetici)');
+        }
+        const phoneInput = document.getElementById('a-phone');
+        if (phoneInput && !phoneInput.value.trim() && p.managerPhone) {
+          phoneInput.value = p.managerPhone;
+        }
+        updateAccountBalanceCalc();
+      }
+    }
+
     function updateAccountBalanceCalc() {
       const rec = parseNumber(document.getElementById('a-receivable')?.value || 0);
+      const coll = parseNumber(document.getElementById('a-collected')?.value || 0);
       const pay = parseNumber(document.getElementById('a-payable')?.value || 0);
-      const bal = Number((rec - pay).toFixed(2));
+
+      const remainingRec = Math.max(0, rec - coll);
+      const netBal = Number(((rec - coll) - pay).toFixed(2));
+      const pct = rec > 0 ? Math.min(100, Math.round((coll / rec) * 100)) : 0;
+
+      const remEl = document.getElementById('account-remaining-rec');
+      const barEl = document.getElementById('account-progress-bar');
+      const prgTxt = document.getElementById('account-progress-text');
       const badge = document.getElementById('account-balance-badge');
-      if (!badge) return;
 
-      const formattedBal = Math.abs(bal).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const formatCur = (num) => (num || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺';
 
-      if (bal > 0) {
-        badge.className = 'badge';
-        badge.innerHTML = `🟢 +${formattedBal} ₺ (Alacaklıyız)`;
-        badge.style.background = '#ecfdf5';
-        badge.style.color = '#059669';
-        badge.style.border = '1px solid #10b981';
-      } else if (bal < 0) {
-        badge.className = 'badge';
-        badge.innerHTML = `🔴 -${formattedBal} ₺ (Borçluyuz)`;
-        badge.style.background = '#fef2f2';
-        badge.style.color = '#dc2626';
-        badge.style.border = '1px solid #ef4444';
-      } else {
-        badge.className = 'badge';
-        badge.innerHTML = `⚪ 0,00 ₺ (Bakiye Denk)`;
-        badge.style.background = '#f1f5f9';
-        badge.style.color = '#64748b';
-        badge.style.border = '1px solid #cbd5e1';
+      if (remEl) {
+        remEl.textContent = formatCur(remainingRec);
+        remEl.style.color = remainingRec > 0 ? '#047857' : (rec > 0 ? '#059669' : '#64748b');
+      }
+
+      if (barEl) {
+        barEl.style.width = pct + '%';
+        if (pct >= 100) {
+          barEl.style.background = '#10b981';
+        } else if (pct > 0) {
+          barEl.style.background = 'linear-gradient(90deg, #3b82f6, #10b981)';
+        } else {
+          barEl.style.background = '#cbd5e1';
+        }
+      }
+
+      if (prgTxt) {
+        if (rec > 0) {
+          prgTxt.innerHTML = pct >= 100 ? `✅ <strong>%100 Tamamı Tahsil Edildi</strong>` : `📊 <strong>%${pct}</strong> Tahsil Edildi (Kalan: ${formatCur(remainingRec)})`;
+        } else {
+          prgTxt.textContent = 'Alacak tutarı girilmedi';
+        }
+      }
+
+      if (badge) {
+        const formattedNet = Math.abs(netBal).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (netBal > 0) {
+          badge.className = 'badge';
+          badge.innerHTML = `🟢 +${formattedNet} ₺ (Alacaklıyız)`;
+          badge.style.background = '#ecfdf5';
+          badge.style.color = '#059669';
+          badge.style.border = '1px solid #10b981';
+        } else if (netBal < 0) {
+          badge.className = 'badge';
+          badge.innerHTML = `🔴 -${formattedNet} ₺ (Borçluyuz)`;
+          badge.style.background = '#fef2f2';
+          badge.style.color = '#dc2626';
+          badge.style.border = '1px solid #ef4444';
+        } else {
+          badge.className = 'badge';
+          badge.innerHTML = `⚪ 0,00 ₺ (Bakiye Denk)`;
+          badge.style.background = '#f1f5f9';
+          badge.style.color = '#64748b';
+          badge.style.border = '1px solid #cbd5e1';
+        }
+      }
+    }
+
+    function syncProjectsToAccounts(userTriggered = false) {
+      if (!Array.isArray(projects) || projects.length === 0) {
+        if (userTriggered) showToast('Aktarılacak proje bulunamadı.', 'ℹ️');
+        return;
+      }
+
+      let createdCount = 0;
+      let updatedCount = 0;
+
+      projects.forEach(p => {
+        if (!p) return;
+        const clientName = cleanText(p.client || '');
+        if (!clientName) return;
+
+        const projBudget = parseBudgetNumber(p.budget);
+        const projManager = cleanText(p.managerName || '');
+        const projPhone = cleanText(p.managerPhone || '');
+        const projEmail = cleanText(p.managerEmail || '');
+        const projLoc = cleanText(p.location || (p.neighborhood ? (p.neighborhood + (p.district ? ' / ' + p.district : '')) : ''));
+        const pName = cleanText(p.name || '');
+
+        const normClient = clientName.toLowerCase().replace(/\s+/g, ' ');
+
+        let acc = accounts.find(a => {
+          if (!a || !a.company) return false;
+          const normComp = a.company.toLowerCase().replace(/\s+/g, ' ');
+          if (normComp === normClient) return true;
+          if (a.contact && a.contact.toLowerCase().includes(normClient)) return true;
+          return false;
+        });
+
+        if (!acc) {
+          acc = {
+            id: 'a_p_' + makeProjectSlug(clientName) + '_' + Date.now().toString().slice(-4),
+            company: clientName,
+            type: 'Müşteri',
+            contact: projManager ? (projManager + (projManager.toLowerCase().includes('yönetici') ? '' : ' (Yönetici)')) : '',
+            phone: projPhone,
+            email: projEmail,
+            taxOffice: '',
+            taxNo: '',
+            tax: '',
+            address: projLoc,
+            notes: `İlgili Proje: ${pName}` + (p.managerNotes ? ` | Not: ${p.managerNotes}` : ''),
+            relatedProject: pName,
+            linkedProjectIds: p.id ? [p.id] : [],
+            receivable: projBudget,
+            collected: 0,
+            payable: 0,
+            balance: projBudget
+          };
+          accounts.push(acc);
+          createdCount++;
+        } else {
+          let changed = false;
+          if (!acc.linkedProjectIds) acc.linkedProjectIds = [];
+          const isAlreadyLinked = p.id && acc.linkedProjectIds.includes(p.id);
+
+          if (!acc.relatedProject) {
+            acc.relatedProject = pName;
+            changed = true;
+          } else if (pName && !acc.relatedProject.includes(pName)) {
+            acc.relatedProject = acc.relatedProject + ', ' + pName;
+            changed = true;
+          }
+
+          if (!isAlreadyLinked) {
+            if (p.id) acc.linkedProjectIds.push(p.id);
+            if (parseNumber(acc.receivable) === 0 && projBudget > 0) {
+              acc.receivable = projBudget;
+              changed = true;
+            } else if (projBudget > 0 && !isAlreadyLinked) {
+              acc.receivable = Number((parseNumber(acc.receivable) + projBudget).toFixed(2));
+              changed = true;
+            }
+          }
+
+          if (acc.collected === undefined || acc.collected === null) {
+            acc.collected = 0;
+            changed = true;
+          }
+          if (!acc.phone && projPhone) {
+            acc.phone = projPhone;
+            changed = true;
+          }
+          if (!acc.contact && projManager) {
+            acc.contact = projManager + (projManager.toLowerCase().includes('yönetici') ? '' : ' (Yönetici)');
+            changed = true;
+          }
+          if (!acc.address && projLoc) {
+            acc.address = projLoc;
+            changed = true;
+          }
+
+          const rec = parseNumber(acc.receivable);
+          const coll = parseNumber(acc.collected);
+          const pay = parseNumber(acc.payable);
+          acc.balance = Number(((rec - coll) - pay).toFixed(2));
+
+          if (changed) updatedCount++;
+        }
+      });
+
+      setStore('yg_accounts_lite', accounts);
+      renderAccounts();
+
+      if (userTriggered) {
+        if (createdCount > 0 || updatedCount > 0) {
+          showToast(`Projelerden ${createdCount} yeni cari eklendi, ${updatedCount} cari güncellendi! ⚡`);
+        } else {
+          showToast('Tüm proje işverenleri cari kartlar ile senkronize durumda. ✅');
+        }
       }
     }
 
@@ -4639,24 +4939,33 @@ function doPost(e) {
       const list = document.getElementById('accounts-list');
       if (!list) return;
 
-      // Stats
       let grandReceivable = 0;
+      let grandCollected = 0;
       let grandPayable = 0;
 
       accounts.forEach(a => {
         grandReceivable += parseNumber(a.receivable);
+        grandCollected += parseNumber(a.collected);
         grandPayable += parseNumber(a.payable);
       });
 
-      const grandBalance = Number((grandReceivable - grandPayable).toFixed(2));
+      const grandRemaining = Math.max(0, grandReceivable - grandCollected);
+      const grandBalance = Number(((grandReceivable - grandCollected) - grandPayable).toFixed(2));
+      const grandPct = grandReceivable > 0 ? Math.min(100, Math.round((grandCollected / grandReceivable) * 100)) : 0;
 
       const statRec = document.getElementById('stat-acc-receivable');
+      const statCol = document.getElementById('stat-acc-collected');
+      const statPct = document.getElementById('stat-acc-pct');
+      const statRem = document.getElementById('stat-acc-remaining');
       const statPay = document.getElementById('stat-acc-payable');
       const statBal = document.getElementById('stat-acc-balance');
 
       const formatCur = (num) => (num || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺';
 
       if (statRec) statRec.textContent = formatCur(grandReceivable);
+      if (statCol) statCol.textContent = formatCur(grandCollected);
+      if (statPct) statPct.textContent = `%${grandPct} Tahsilat`;
+      if (statRem) statRem.textContent = formatCur(grandRemaining);
       if (statPay) statPay.textContent = formatCur(grandPayable);
       if (statBal) {
         if (grandBalance > 0) {
@@ -4671,7 +4980,14 @@ function doPost(e) {
         }
       }
 
-      const filtered = accounts.filter(a => !q || a.company.toLowerCase().includes(q) || (a.contact && a.contact.toLowerCase().includes(q)) || (a.notes && a.notes.toLowerCase().includes(q)));
+      const filtered = accounts.filter(a => {
+        if (!q) return true;
+        const comp = (a.company || '').toLowerCase();
+        const cont = (a.contact || '').toLowerCase();
+        const note = (a.notes || '').toLowerCase();
+        const proj = (a.relatedProject || '').toLowerCase();
+        return comp.includes(q) || cont.includes(q) || note.includes(q) || proj.includes(q);
+      });
 
       if (filtered.length === 0) {
         list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Cari bulunamadı.</div>`;
@@ -4680,12 +4996,15 @@ function doPost(e) {
 
       list.innerHTML = filtered.map(a => {
         const rec = parseNumber(a.receivable);
+        const coll = parseNumber(a.collected);
+        const remRec = Math.max(0, rec - coll);
         const pay = parseNumber(a.payable);
-        const bal = Number((rec - pay).toFixed(2));
+        const bal = Number(((rec - coll) - pay).toFixed(2));
+        const pct = rec > 0 ? Math.min(100, Math.round((coll / rec) * 100)) : 0;
 
         let balBadgeHtml = '';
         if (bal > 0) {
-          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">🟢 +${formatCur(bal)} (Alacaklı)</span>`;
+          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">🟢 +${formatCur(bal)} (Net Alacaklı)</span>`;
         } else if (bal < 0) {
           balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #fef2f2; color: #dc2626; padding: 2px 7px; border-radius: 5px; border: 1px solid #ef4444;">🔴 -${formatCur(Math.abs(bal))} (Borçlu)</span>`;
         } else if (rec > 0 || pay > 0) {
@@ -4700,19 +5019,51 @@ function doPost(e) {
                 <div class="card-item-meta">
                   ${a.contact ? `<span>👤 ${escapeHtml(a.contact)}</span> • ` : ''}
                   ${a.taxOffice ? `<span>🏛️ ${escapeHtml(a.taxOffice)}</span> • ` : ''}
-                  ${a.taxNo ? `<span>VKN: ${escapeHtml(a.taxNo)}</span>` : (a.tax ? `<span>${escapeHtml(a.tax)}</span>` : '')}
+                  ${a.taxNo ? `<span>VKN: ${escapeHtml(a.taxNo)}</span> • ` : (a.tax ? `<span>${escapeHtml(a.tax)}</span> • ` : '')}
+                  ${a.relatedProject ? `<span style="background: #eff6ff; color: #1d4ed8; padding: 1px 6px; border-radius: 4px; font-weight: 700; border: 1px solid #bfdbfe;">🏗️ ${escapeHtml(a.relatedProject)}</span>` : ''}
                 </div>
               </div>
               <span class="badge ${a.type === 'Müşteri' ? 'badge-green' : (a.type === 'Taşeron' ? 'badge-purple' : 'badge-blue')}">${escapeHtml(a.type)}</span>
             </div>
 
-            <!-- Finansal Alacak / Verecek Özeti -->
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 7px 10px; margin: 6px 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; flex-wrap: wrap; gap: 6px;">
-              <div style="display: flex; gap: 10px; align-items: center;">
-                <span>🟢 Alacak: <strong style="color: #047857;">${formatCur(rec)}</strong></span>
-                <span>🔴 Verecek: <strong style="color: #b91c1c;">${formatCur(pay)}</strong></span>
+            <!-- Finansal Bütçe / Alacak / Tahsilat / Kalan Kartı -->
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px 12px; margin: 8px 0; font-size: 0.76rem;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 6px;">
+                <div>
+                  <div style="font-size: 0.64rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Toplam Bütçe / Alacak</div>
+                  <div style="font-weight: 800; color: #047857; font-size: 0.85rem;">${formatCur(rec)}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.64rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Tahsil Edilen</div>
+                  <div style="font-weight: 800; color: #2563eb; font-size: 0.85rem;">${formatCur(coll)}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.64rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Kalan Alacak</div>
+                  <div style="font-weight: 800; color: ${remRec > 0 ? '#059669' : '#64748b'}; font-size: 0.85rem;">${formatCur(remRec)}</div>
+                </div>
+                ${pay > 0 ? `
+                <div>
+                  <div style="font-size: 0.64rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Borç / Verecek</div>
+                  <div style="font-weight: 800; color: #b91c1c; font-size: 0.85rem;">${formatCur(pay)}</div>
+                </div>` : ''}
               </div>
-              <div>${balBadgeHtml || '<span style="font-size: 0.7rem; color: var(--muted); font-weight: 600;">Bakiye: 0,00 ₺</span>'}</div>
+
+              ${rec > 0 ? `
+              <!-- Tahsilat İlerleme Çubuğu -->
+              <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e2e8f0;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; font-weight: 700; margin-bottom: 3px;">
+                  <span style="color: #475569;">Tahsilat İlerlemesi</span>
+                  <span style="color: ${pct >= 100 ? '#059669' : '#2563eb'};">${pct >= 100 ? '✅ %100 Tamamlandı' : `%${pct} Tahsil Edildi`}</span>
+                </div>
+                <div style="background: #e2e8f0; border-radius: 999px; height: 6px; overflow: hidden;">
+                  <div style="background: ${pct >= 100 ? '#10b981' : 'linear-gradient(90deg, #3b82f6, #10b981)'}; width: ${pct}%; height: 100%; transition: width 0.3s ease;"></div>
+                </div>
+              </div>` : ''}
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e2e8f0;">
+                <span style="font-size: 0.7rem; color: #64748b; font-weight: 600;">Net Cari Durum:</span>
+                <div>${balBadgeHtml || '<span style="font-size: 0.7rem; color: var(--muted); font-weight: 600;">Bakiye: 0,00 ₺</span>'}</div>
+              </div>
             </div>
 
             ${a.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">📍 ${escapeHtml(a.address)}</div>` : ''}
@@ -4734,11 +5085,13 @@ function doPost(e) {
       if (!a) return;
 
       editingAccountId = id;
+      populateAccountProjectSelect();
       document.getElementById('modal-account-title').textContent = '✏️ Cari Kartı Düzenle';
       document.getElementById('btn-save-account').textContent = '💾 Değişiklikleri Güncelle';
 
       document.getElementById('a-company').value = a.company || '';
       document.getElementById('a-type').value = a.type || 'Müşteri';
+      document.getElementById('a-project').value = a.relatedProject || '';
       document.getElementById('a-contact').value = a.contact || '';
       document.getElementById('a-phone').value = a.phone || '';
       document.getElementById('a-email').value = a.email || '';
@@ -4748,12 +5101,13 @@ function doPost(e) {
       document.getElementById('a-notes').value = a.notes || '';
 
       const rInput = document.getElementById('a-receivable');
+      const cInput = document.getElementById('a-collected');
       const pInput = document.getElementById('a-payable');
       if (rInput) rInput.value = (a.receivable !== undefined && a.receivable !== null && a.receivable !== 0) ? a.receivable : '';
+      if (cInput) cInput.value = (a.collected !== undefined && a.collected !== null && a.collected !== 0) ? a.collected : '';
       if (pInput) pInput.value = (a.payable !== undefined && a.payable !== null && a.payable !== 0) ? a.payable : '';
       updateAccountBalanceCalc();
 
-      // İlgili alış faturaları analizi (Varsa bilgi ver)
       const compName = (a.company || '').trim().toLowerCase();
       const relatedInvoices = (typeof invoices !== 'undefined' && Array.isArray(invoices))
         ? invoices.filter(inv => (inv.vendor || '').trim().toLowerCase() === compName)
@@ -4794,8 +5148,10 @@ function doPost(e) {
       const taxOfficeVal = (document.getElementById('a-tax-office')?.value || '').trim();
       const taxNoVal = (document.getElementById('a-tax-no')?.value || '').trim();
       const recVal = parseNumber(document.getElementById('a-receivable')?.value || 0);
+      const collVal = parseNumber(document.getElementById('a-collected')?.value || 0);
       const payVal = parseNumber(document.getElementById('a-payable')?.value || 0);
-      const balVal = Number((recVal - payVal).toFixed(2));
+      const balVal = Number(((recVal - collVal) - payVal).toFixed(2));
+      const projVal = document.getElementById('a-project')?.value || '';
 
       if (editingAccountId) {
         const a = accounts.find(x => x.id === editingAccountId);
@@ -4803,6 +5159,7 @@ function doPost(e) {
           const oldCompany = a.company;
           a.company = document.getElementById('a-company').value.trim();
           a.type = document.getElementById('a-type').value;
+          a.relatedProject = projVal;
           a.contact = document.getElementById('a-contact').value.trim();
           a.phone = document.getElementById('a-phone').value.trim();
           a.email = (document.getElementById('a-email')?.value || '').trim();
@@ -4812,6 +5169,7 @@ function doPost(e) {
           a.address = (document.getElementById('a-address')?.value || '').trim();
           a.notes = (document.getElementById('a-notes')?.value || '').trim();
           a.receivable = recVal;
+          a.collected = collVal;
           a.payable = payVal;
           a.balance = balVal;
 
@@ -4833,6 +5191,7 @@ function doPost(e) {
         id: 'a_' + Date.now(),
         company: document.getElementById('a-company').value.trim(),
         type: document.getElementById('a-type').value,
+        relatedProject: projVal,
         contact: document.getElementById('a-contact').value.trim(),
         phone: document.getElementById('a-phone').value.trim(),
         email: (document.getElementById('a-email')?.value || '').trim(),
@@ -4842,6 +5201,7 @@ function doPost(e) {
         address: (document.getElementById('a-address')?.value || '').trim(),
         notes: (document.getElementById('a-notes')?.value || '').trim(),
         receivable: recVal,
+        collected: collVal,
         payable: payVal,
         balance: balVal
       };
@@ -6630,6 +6990,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         p.managerPhone || '',
         p.managerEmail || '',
         p.managerNotes || ''
+      ]));
       accounts.forEach(a => postToWebhook('Cari Kartları', [
         new Date().toISOString().split('T')[0],
         a.company,
@@ -6980,6 +7341,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         populateDocProjectSelect();
         populateInvoiceProjectSelect();
         populateTodoProjectSelect();
+        syncProjectsToAccounts(false);
       }
 
       // 3. Cari Kartları
@@ -6999,9 +7361,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             const ph = cleanText(r['Telefon'] || r['col_4']);
             const vDaire = cleanText(r['Vergi Dairesi'] || r['col_6']);
             const vNo = cleanText(r['VKN / TCKN'] || r['col_7']);
-            const recVal = parseNumber(r['Alacak (₺)'] || r['Alacak'] || r['col_10'] !== undefined ? (r['Alacak (₺)'] || r['Alacak'] || r['col_10']) : (local ? local.receivable : 0));
-            const payVal = parseNumber(r['Verecek (₺)'] || r['Verecek'] || r['Borç'] || r['col_11'] !== undefined ? (r['Verecek (₺)'] || r['Verecek'] || r['Borç'] || r['col_11']) : (local ? local.payable : 0));
-            const balVal = parseNumber(r['Bakiye (₺)'] || r['Bakiye'] || r['col_12'] !== undefined ? (r['Bakiye (₺)'] || r['Bakiye'] || r['col_12']) : (recVal - payVal));
+            const recVal = parseNumber(r['Alacak (₺)'] || r['Alacak'] || (r['col_10'] !== undefined ? r['col_10'] : (local ? local.receivable : 0)));
+            const collVal = parseNumber(r['Tahsil Edilen (₺)'] || r['Tahsil Edilen'] || r['Tahsilat'] || (local ? local.collected : 0));
+            const payVal = parseNumber(r['Verecek (₺)'] || r['Verecek'] || r['Borç'] || (r['col_11'] !== undefined ? r['col_11'] : (local ? local.payable : 0)));
+            const balVal = parseNumber(r['Bakiye (₺)'] || r['Bakiye'] || (r['col_12'] !== undefined ? r['col_12'] : (Math.max(0, recVal - collVal) - payVal)));
+            const relProj = cleanText(r['İlgili Proje'] || (local ? local.relatedProject : ''));
             return {
               id: (local && local.id) ? local.id : ('a_' + idx),
               company: comp,
@@ -7014,7 +7378,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               tax: `${vDaire} / ${vNo}`.replace(/^\s*\/\s*|\s*\/\s*$/g, ''),
               address: cleanText(r['Açık Adres'] || r['col_8']),
               notes: cleanText(r['Notlar / IBAN'] || r['col_9']),
+              relatedProject: relProj,
               receivable: recVal,
+              collected: collVal,
               payable: payVal,
               balance: balVal
             };
@@ -7028,6 +7394,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         });
 
         setStore('yg_accounts_lite', accounts);
+        syncProjectsToAccounts(false);
         renderAccounts();
       }
 
@@ -7283,6 +7650,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       renderCards();
       renderProjects();
+      syncProjectsToAccounts(false);
       renderAccounts();
       renderInvoices();
       populateInvoiceProjectSelect();
