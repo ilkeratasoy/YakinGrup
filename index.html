@@ -1608,154 +1608,25 @@
         </button>
       </div>
 
-      <!-- BÖLÜM 1: RESMİ ŞİRKET EVRAKLARI -->
-      <div style="margin-bottom: 1.5rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
-          <h4 style="font-size: 0.88rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin: 0; display: flex; align-items: center; gap: 6px;">
-            <span>📁</span> Resmi Şirket Evrakları
-          </h4>
-          <span style="font-size: 0.72rem; color: #64748b; font-weight: 600;">İndirme & Paylaşım</span>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <!-- 1. VERGİ LEVHASI -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
-                  📄
-                </div>
-                <div>
-                  <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Kurumsal Vergi Levhası (2025 - 2026)</div>
-                  <div style="font-size: 0.74rem; color: #64748b;">Kadıköy V.D. • VKN: 9290996193 • GİB Onaylı</div>
-                </div>
-              </div>
-              <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">GÜNCEL</span>
+      <!-- BÖLÜM 1: RESMİ ŞİRKET EVRAKLARI (Ayrı Pencerede Açılır) -->
+      <div style="margin-bottom: 1.3rem;">
+        <div onclick="openCompanyDocsModal()" style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; background: linear-gradient(135deg, #0b2545 0%, #153e75 100%); border: 1.5px solid #0284c7; border-radius: 14px; cursor: pointer; color: #ffffff; transition: all 0.25s ease; box-shadow: 0 8px 20px rgba(11,37,69,0.2);">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.14); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.25);">
+              📄
             </div>
-
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                👁️ Görüntüle
-              </a>
-              <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" download="Yakin_Grup_Vergi_Levhasi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ⬇️ PDF İndir
-              </a>
-              <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Vergi%20Levhas%C4%B1&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20vergi%20levhas%C4%B1%20ektedir.%0AVKN%3A%209290996193%20-%20Kad%C4%B1k%C3%B6y%20V.D.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ✉️ E-Posta
-              </a>
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: 800; font-size: 0.98rem; color: #ffffff;">Resmi Şirket Evrakları</span>
+                <span style="font-size: 0.68rem; font-weight: 800; background: #10b981; color: #ffffff; padding: 2px 7px; border-radius: 6px;">5 BELGE</span>
+              </div>
+              <div style="font-size: 0.77rem; color: #cbd5e1; margin-top: 3px;">
+                Vergi Levhası, Ticaret Sicili, İTO Faaliyet Belgesi, Ana Sözleşme ve İmza Sirküleri
+              </div>
             </div>
           </div>
-
-          <!-- 2. TİCARET SİCİLİ GAZETESİ -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
-                  📰
-                </div>
-                <div>
-                  <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Türkiye Ticaret Sicili Gazetesi</div>
-                  <div style="font-size: 0.74rem; color: #64748b;">2 Ekim 2025 • Sayı: 11428 • İlan Sıra: 215220 • Tescilli</div>
-                </div>
-              </div>
-              <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">TESCİLLİ</span>
-            </div>
-
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                👁️ Görüntüle
-              </a>
-              <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" download="Yakin_Grup_Ticaret_Sicil_Gazetesi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ⬇️ PDF İndir
-              </a>
-              <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Ticaret%20Sicili%20Gazetesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20resmi%20Ticaret%20Sicili%20Gazetesi%20n%C3%BCshas%C4%B1%20ektedir.%0ASicil%20No%3A%201103295%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ✉️ E-Posta
-              </a>
-            </div>
-          </div>
-
-          <!-- 3. İTO FAALİYET BELGESİ -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
-                  🏛️
-                </div>
-                <div>
-                  <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">İTO Faaliyet Belgesi (Oda Kayıt)</div>
-                  <div style="font-size: 0.74rem; color: #64748b;">İstanbul Ticaret Odası • Sicil: 1103295 • MERSİS: 0929099619300001</div>
-                </div>
-              </div>
-              <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">E-İMZALI</span>
-            </div>
-
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                👁️ Görüntüle
-              </a>
-              <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" download="Yakin_Grup_Faaliyet_Belgesi_ITO.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ⬇️ PDF İndir
-              </a>
-              <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0TO%20Faaliyet%20Belgesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20%C4%B0TO%20Faaliyet%20Belgesi%20ektedir.%0ASicil%20No%3A%201103295%20-%20MERS%C4%B0S%3A%200929099619300001%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ✉️ E-Posta
-              </a>
-            </div>
-          </div>
-
-          <!-- 4. ŞİRKET KURULUŞ ANA SÖZLEŞMESİ -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #ede9fe; color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
-                  📜
-                </div>
-                <div>
-                  <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Şirket Kuruluş Ana Sözleşmesi</div>
-                  <div style="font-size: 0.74rem; color: #64748b;">Kuruluş Sözleşmesi • Sermaye & Yönetim Yapısı (3 Sayfa)</div>
-                </div>
-              </div>
-              <span style="font-size: 0.68rem; font-weight: 800; background: #f3f4f6; color: #4b5563; padding: 2px 7px; border-radius: 5px; border: 1px solid #d1d5db;">RESMİ</span>
-            </div>
-
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                👁️ Görüntüle
-              </a>
-              <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" download="Yakin_Grup_Sirket_Sozlesmesi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ⬇️ PDF İndir
-              </a>
-              <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C5%9Eirket%20Kurulu%C5%9F%20S%C3%B6zle%C5%9Fmesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20kurulu%C5%9F%20ana%20s%C3%B6zle%C5%9Fmesi%20ektedir.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ✉️ E-Posta
-              </a>
-            </div>
-          </div>
-
-          <!-- 5. İMZA SİRKÜLERİ & YETKİ BELGESİ -->
-          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
-                  🖋️
-                </div>
-                <div>
-                  <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Noter Onaylı İmza Sirküleri</div>
-                  <div style="font-size: 0.74rem; color: #64748b;">Üsküdar 43. Noterliği • Yevmiye: 02716 • Münferit Temsil</div>
-                </div>
-              </div>
-              <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">NOTER ONAYLI</span>
-            </div>
-
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                👁️ Görüntüle
-              </a>
-              <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" download="Yakin_Grup_Imza_Sirkuleri.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ⬇️ PDF İndir
-              </a>
-              <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0mza%20Sirk%C3%BCleri&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20Noter%20onayl%C4%B1%20%C4%B0mza%20Sirk%C3%BCleri%20belgesi%20ektedir.%0AYevmiye%20No%3A%2002716%20-%20%C3%9Csk%C3%BCdar%2043.%20Noterli%C4%9Fi%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
-                ✉️ E-Posta
-              </a>
-            </div>
+          <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.18); padding: 8px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; color: #ffffff; white-space: nowrap; flex-shrink: 0;">
+            Evrakları Aç <span>➔</span>
           </div>
         </div>
       </div>
@@ -1836,6 +1707,185 @@
           </a>
         </div>
       </div>
+    </div>
+  </dialog>
+
+
+  <!-- DIALOG: Resmi Şirket Evrakları (Ayrı Pencere) -->
+  <dialog id="company-docs-dialog" class="market-modal" style="max-width: 680px; width: 94vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.4); background: #ffffff;">
+    <button class="modal-close-btn" onclick="closeCompanyDocsModal()" title="Kapat">×</button>
+    
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.9rem; margin-bottom: 1.2rem;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; border-radius: 12px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; border: 1px solid rgba(2, 132, 199, 0.2);">
+          📄
+        </div>
+        <div>
+          <span style="font-size: 0.7rem; font-weight: 800; color: #3d6e30; letter-spacing: 0.1em; text-transform: uppercase;">YAKIN GRUP LTD. ŞTİ.</span>
+          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #0b2545; margin: 2px 0 0 0;">Resmi Şirket Evrakları</h3>
+        </div>
+      </div>
+      <button onclick="closeCompanyDocsModal()" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 6px 12px; font-size: 0.78rem; font-weight: 700; color: #475569; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+        <span>✕</span> Kapat
+      </button>
+    </div>
+
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; margin-bottom: 1.2rem; font-size: 0.78rem; color: #475569; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <strong style="color: #0b2545;">Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti.</strong><br>
+        <span style="color: #64748b;">Kadıköy V.D. • VKN: 9290996193 • Sicil: 1103295 • MERSİS: 0929099619300001</span>
+      </div>
+      <span style="font-size: 0.7rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 3px 8px; border-radius: 6px; border: 1px solid #10b981;">
+        5 ONAYLI BELGE
+      </span>
+    </div>
+
+    <div style="max-height: 60vh; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 10px;">
+      <!-- 1. VERGİ LEVHASI -->
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+              📄
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Kurumsal Vergi Levhası (2025 - 2026)</div>
+              <div style="font-size: 0.74rem; color: #64748b;">Kadıköy V.D. • VKN: 9290996193 • GİB Onaylı</div>
+            </div>
+          </div>
+          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">GÜNCEL</span>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            👁️ Görüntüle
+          </a>
+          <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" download="Yakin_Grup_Vergi_Levhasi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ⬇️ PDF İndir
+          </a>
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Vergi%20Levhas%C4%B1&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20vergi%20levhas%C4%B1%20ektedir.%0AVKN%3A%209290996193%20-%20Kad%C4%B1k%C3%B6y%20V.D.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ✉️ E-Posta
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. TİCARET SİCİLİ GAZETESİ -->
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+              📰
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Türkiye Ticaret Sicili Gazetesi</div>
+              <div style="font-size: 0.74rem; color: #64748b;">2 Ekim 2025 • Sayı: 11428 • İlan Sıra: 215220 • Tescilli</div>
+            </div>
+          </div>
+          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">TESCİLLİ</span>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            👁️ Görüntüle
+          </a>
+          <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" download="Yakin_Grup_Ticaret_Sicil_Gazetesi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ⬇️ PDF İndir
+          </a>
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Ticaret%20Sicili%20Gazetesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20resmi%20Ticaret%20Sicili%20Gazetesi%20n%C3%BCshas%C4%B1%20ektedir.%0ASicil%20No%3A%201103295%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ✉️ E-Posta
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. İTO FAALİYET BELGESİ -->
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+              🏛️
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">İTO Faaliyet Belgesi (Oda Kayıt)</div>
+              <div style="font-size: 0.74rem; color: #64748b;">İstanbul Ticaret Odası • Sicil: 1103295 • MERSİS: 0929099619300001</div>
+            </div>
+          </div>
+          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">E-İMZALI</span>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            👁️ Görüntüle
+          </a>
+          <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" download="Yakin_Grup_Faaliyet_Belgesi_ITO.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ⬇️ PDF İndir
+          </a>
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0TO%20Faaliyet%20Belgesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20%C4%B0TO%20Faaliyet%20Belgesi%20ektedir.%0ASicil%20No%3A%201103295%20-%20MERS%C4%B0S%3A%200929099619300001%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ✉️ E-Posta
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. ŞİRKET KURULUŞ ANA SÖZLEŞMESİ -->
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #ede9fe; color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+              📜
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Şirket Kuruluş Ana Sözleşmesi</div>
+              <div style="font-size: 0.74rem; color: #64748b;">Kuruluş Sözleşmesi • Sermaye & Yönetim Yapısı (3 Sayfa)</div>
+            </div>
+          </div>
+          <span style="font-size: 0.68rem; font-weight: 800; background: #f3f4f6; color: #4b5563; padding: 2px 7px; border-radius: 5px; border: 1px solid #d1d5db;">RESMİ</span>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            👁️ Görüntüle
+          </a>
+          <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" download="Yakin_Grup_Sirket_Sozlesmesi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ⬇️ PDF İndir
+          </a>
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C5%9Eirket%20Kurulu%C5%9F%20S%C3%B6zle%C5%9Fmesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20kurulu%C5%9F%20ana%20s%C3%B6zle%C5%9Fmesi%20ektedir.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ✉️ E-Posta
+          </a>
+        </div>
+      </div>
+
+      <!-- 5. İMZA SİRKÜLERİ & YETKİ BELGESİ -->
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+              🖋️
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Noter Onaylı İmza Sirküleri</div>
+              <div style="font-size: 0.74rem; color: #64748b;">Üsküdar 43. Noterliği • Yevmiye: 02716 • Münferit Temsil</div>
+            </div>
+          </div>
+          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">NOTER ONAYLI</span>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            👁️ Görüntüle
+          </a>
+          <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" download="Yakin_Grup_Imza_Sirkuleri.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ⬇️ PDF İndir
+          </a>
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0mza%20Sirk%C3%BCleri&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20Noter%20onayl%C4%B1%20%C4%B0mza%20Sirk%C3%BCleri%20belgesi%20ektedir.%0AYevmiye%20No%3A%2002716%20-%20%C3%9Csk%C3%BCdar%2043.%20Noterli%C4%9Fi%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+            ✉️ E-Posta
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; text-align: center;">
+      <button onclick="closeCompanyDocsModal()" style="padding: 9px 20px; background: #0b2545; color: #ffffff; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+        ← Yönetici Portalı'na Dön
+      </button>
     </div>
   </dialog>
 

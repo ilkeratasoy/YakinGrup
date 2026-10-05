@@ -3380,8 +3380,24 @@ function openDesignFilesModal() {
 }
 
 function closeDesignFilesModal() {
+  closeCompanyDocsModal();
   const dialog = document.getElementById('design-files-dialog');
   if (dialog) dialog.close();
+}
+
+function openCompanyDocsModal() {
+  const dialog = document.getElementById('company-docs-dialog');
+  if (!dialog) return;
+  if (typeof dialog.showModal === 'function') {
+    dialog.showModal();
+  } else {
+    dialog.setAttribute('open', '');
+  }
+}
+
+function closeCompanyDocsModal() {
+  const dialog = document.getElementById('company-docs-dialog');
+  if (dialog && dialog.open) dialog.close();
 }
 
 function handleDesignFilesLogin(e) {
