@@ -1561,7 +1561,7 @@
   </dialog>
 
   <!-- DIALOG: Tasarım Dosyaları & Studio Hub (Şifre Korumalı) -->
-  <dialog id="design-files-dialog" class="market-modal" style="max-width: 640px; width: 94vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.35); background: #ffffff;">
+  <dialog id="design-files-dialog" class="market-modal portal-modal">
     <button class="modal-close-btn" onclick="closeDesignFilesModal()">×</button>
     
     <!-- 1. GİRİŞ PANELİ (Yetkilendirme) -->
@@ -1598,35 +1598,33 @@
 
     <!-- 2. STÜDYO & EVRAK HUB PANELİ (Giriş Başarılı) -->
     <div id="df-hub-pane" style="display: none; max-height: 78vh; overflow-y: auto; padding-right: 4px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.9rem; margin-bottom: 1.2rem;">
+      <div class="portal-header">
         <div>
-          <span style="font-size: 0.7rem; font-weight: 800; color: #3d6e30; letter-spacing: 0.1em; text-transform: uppercase;">YÖNETİCİ PORTALI</span>
-          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #0b2545; margin: 2px 0 0 0;">Tasarım Dosyaları & Şirket Evrakları</h3>
+          <span class="portal-tag">YÖNETİCİ PORTALI</span>
+          <h3 class="portal-title">Tasarım Dosyaları & Şirket Evrakları</h3>
         </div>
-        <button onclick="handleStudioLogout()" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 10px; font-size: 0.76rem; font-weight: 700; color: #64748b; cursor: pointer;">
+        <button onclick="handleStudioLogout()" class="portal-logout-btn">
           Çıkış Yap 🚪
         </button>
       </div>
 
       <!-- BÖLÜM 1: RESMİ ŞİRKET EVRAKLARI (Ayrı Pencerede Açılır) -->
-      <div style="margin-bottom: 1.3rem;">
-        <div onclick="openCompanyDocsModal()" style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; background: linear-gradient(135deg, #0b2545 0%, #153e75 100%); border: 1.5px solid #0284c7; border-radius: 14px; cursor: pointer; color: #ffffff; transition: all 0.25s ease; box-shadow: 0 8px 20px rgba(11,37,69,0.2);">
-          <div style="display: flex; align-items: center; gap: 14px;">
-            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.14); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.25);">
-              📄
-            </div>
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-weight: 800; font-size: 0.98rem; color: #ffffff;">Resmi Şirket Evrakları</span>
-                <span style="font-size: 0.68rem; font-weight: 800; background: #10b981; color: #ffffff; padding: 2px 7px; border-radius: 6px;">5 BELGE</span>
+      <div style="margin-bottom: 1.25rem;">
+        <div class="portal-doc-banner" onclick="openCompanyDocsModal()">
+          <div class="portal-doc-top">
+            <div class="portal-doc-icon">📄</div>
+            <div class="portal-doc-info">
+              <div class="portal-doc-title-row">
+                <span class="portal-doc-title">Resmi Şirket Evrakları</span>
+                <span class="portal-doc-badge">5 BELGE</span>
               </div>
-              <div style="font-size: 0.77rem; color: #cbd5e1; margin-top: 3px;">
+              <div class="portal-doc-desc">
                 Vergi Levhası, Ticaret Sicili, İTO Faaliyet Belgesi, Ana Sözleşme ve İmza Sirküleri
               </div>
             </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.18); padding: 8px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; color: #ffffff; white-space: nowrap; flex-shrink: 0;">
-            Evrakları Aç <span>➔</span>
+          <div class="portal-doc-action">
+            <span>Evrakları Aç</span> <span>➔</span>
           </div>
         </div>
       </div>
@@ -1638,72 +1636,70 @@
         </h4>
 
         <div style="display: flex; flex-direction: column; gap: 10px;">
-          <a href="data-platformu.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1.5px solid #10b981; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s; box-shadow: 0 4px 12px rgba(16,185,129,0.08);">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #ecfdf5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(16,185,129,0.3);">
+          <a href="data-platformu.html" target="_blank" class="portal-studio-card featured">
+            <div class="portal-studio-icon" style="background: #ecfdf5; border: 1px solid rgba(16,185,129,0.3);">
               <img src="assets/images/garanti-clover-refined.png" alt="Yakın Grup" style="width: 26px; height: 26px; object-fit: contain; filter: drop-shadow(0 2px 3px rgba(0,105,62,0.25));">
             </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 800; font-size: 0.95rem; color: #0b2545; display: flex; align-items: center; gap: 6px;">
-                Data Platformu
-              </div>
-              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Alış faturaları & fişler, müşteri rehberi, inşaat projeleri, cari kartlar ve Google Sheets senkronizasyonu</div>
+            <div class="portal-studio-info">
+              <div class="portal-studio-name">Data Platformu</div>
+              <div class="portal-studio-sub">Alış faturaları & fişler, müşteri rehberi, inşaat projeleri, cari kartlar ve Google Sheets senkronizasyonu</div>
             </div>
-            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+            <span class="portal-studio-arrow">➔</span>
           </a>
 
-          <a href="sosyal-medya.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #ede9fe; color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+          <a href="sosyal-medya.html" target="_blank" class="portal-studio-card">
+            <div class="portal-studio-icon" style="background: #ede9fe; color: #7c3aed;">
               📱
             </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Sosyal Medya İçerik Takvimi</div>
-              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">2026-2030 yayın takvimi, hazır HD görsel ve video üretici, onaylı metinler ve senkronizasyon</div>
+            <div class="portal-studio-info">
+              <div class="portal-studio-name">Sosyal Medya İçerik Takvimi</div>
+              <div class="portal-studio-sub">2026-2030 yayın takvimi, hazır HD görsel ve video üretici, onaylı metinler ve senkronizasyon</div>
             </div>
-            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+            <span class="portal-studio-arrow">➔</span>
           </a>
 
-          <a href="kartvizit.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+          <a href="kartvizit.html" target="_blank" class="portal-studio-card">
+            <div class="portal-studio-icon" style="background: #e0f2fe; color: #0284c7;">
               📇
             </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Dijital Kartvizit Stüdyosu</div>
-              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Baskı ve QR vCard profilleri, çift taraflı canlı tasarım</div>
+            <div class="portal-studio-info">
+              <div class="portal-studio-name">Dijital Kartvizit Stüdyosu</div>
+              <div class="portal-studio-sub">Baskı ve QR vCard profilleri, çift taraflı canlı tasarım</div>
             </div>
-            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+            <span class="portal-studio-arrow">➔</span>
           </a>
 
-          <a href="imza.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+          <a href="imza.html" target="_blank" class="portal-studio-card">
+            <div class="portal-studio-icon" style="background: #f0fdf4; color: #16a34a;">
               ✉️
             </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Kurumsal İmza Stüdyosu</div>
-              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Gmail & Outlook uyumlu, fotoğraflı ve butonlu e-posta imzası</div>
+            <div class="portal-studio-info">
+              <div class="portal-studio-name">Kurumsal İmza Stüdyosu</div>
+              <div class="portal-studio-sub">Gmail & Outlook uyumlu, fotoğraflı ve butonlu e-posta imzası</div>
             </div>
-            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+            <span class="portal-studio-arrow">➔</span>
           </a>
 
-          <a href="kentsel-donusum.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #ecfdf5; color: #1b4332; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+          <a href="kentsel-donusum.html" target="_blank" class="portal-studio-card">
+            <div class="portal-studio-icon" style="background: #ecfdf5; color: #1b4332;">
               🏗️
             </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Kentsel Dönüşüm Karar Motoru</div>
-              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">2026 Yarısı Bizden & İADŞP fizibilite ve ROI teklif motoru</div>
+            <div class="portal-studio-info">
+              <div class="portal-studio-name">Kentsel Dönüşüm Karar Motoru</div>
+              <div class="portal-studio-sub">2026 Yarısı Bizden & İADŞP fizibilite ve ROI teklif motoru</div>
             </div>
-            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+            <span class="portal-studio-arrow">➔</span>
           </a>
 
-          <a href="teklif.html" target="_blank" style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+          <a href="teklif.html" target="_blank" class="portal-studio-card">
+            <div class="portal-studio-icon" style="background: #fef3c7; color: #d97706;">
               📑
             </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 800; font-size: 0.92rem; color: #0b2545;">Hızlı Şartname & Teklif Stüdyosu</div>
-              <div style="font-size: 0.76rem; color: #64748b; margin-top: 1px;">Proje şartnamesi oluşturma, maliyet ve PDF teklif alma</div>
+            <div class="portal-studio-info">
+              <div class="portal-studio-name">Hızlı Şartname & Teklif Stüdyosu</div>
+              <div class="portal-studio-sub">Proje şartnamesi oluşturma, maliyet ve PDF teklif alma</div>
             </div>
-            <span style="color: #94a3b8; font-size: 1.1rem;">➔</span>
+            <span class="portal-studio-arrow">➔</span>
           </a>
         </div>
       </div>
@@ -1712,170 +1708,170 @@
 
 
   <!-- DIALOG: Resmi Şirket Evrakları (Ayrı Pencere) -->
-  <dialog id="company-docs-dialog" class="market-modal" style="max-width: 680px; width: 94vw; padding: 2rem; border-radius: 20px; border: 1px solid rgba(11, 37, 69, 0.15); box-shadow: 0 25px 60px rgba(11, 37, 69, 0.4); background: #ffffff;">
+  <dialog id="company-docs-dialog" class="market-modal company-docs-modal">
     <button class="modal-close-btn" onclick="closeCompanyDocsModal()" title="Kapat">×</button>
     
-    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.9rem; margin-bottom: 1.2rem;">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 44px; height: 44px; border-radius: 12px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; border: 1px solid rgba(2, 132, 199, 0.2);">
+    <div class="portal-header">
+      <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+        <div style="width: 38px; height: 38px; border-radius: 10px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0; border: 1px solid rgba(2, 132, 199, 0.25);">
           📄
         </div>
-        <div>
-          <span style="font-size: 0.7rem; font-weight: 800; color: #3d6e30; letter-spacing: 0.1em; text-transform: uppercase;">YAKIN GRUP LTD. ŞTİ.</span>
-          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #0b2545; margin: 2px 0 0 0;">Resmi Şirket Evrakları</h3>
+        <div style="min-width: 0;">
+          <span class="portal-tag">YAKIN GRUP LTD. ŞTİ.</span>
+          <h3 class="portal-title">Resmi Şirket Evrakları</h3>
         </div>
       </div>
-      <button onclick="closeCompanyDocsModal()" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 6px 12px; font-size: 0.78rem; font-weight: 700; color: #475569; cursor: pointer; display: flex; align-items: center; gap: 4px;">
-        <span>✕</span> Kapat
+      <button onclick="closeCompanyDocsModal()" class="portal-logout-btn">
+        ✕ Kapat
       </button>
     </div>
 
-    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; margin-bottom: 1.2rem; font-size: 0.78rem; color: #475569; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+    <div class="company-info-bar">
       <div>
         <strong style="color: #0b2545;">Yakın Grup Enerji Gıda İnşaat ve Ticaret Ltd. Şti.</strong><br>
-        <span style="color: #64748b;">Kadıköy V.D. • VKN: 9290996193 • Sicil: 1103295 • MERSİS: 0929099619300001</span>
+        <span style="color: #64748b; font-size: 0.72rem;">Kadıköy V.D. • VKN: 9290996193 • Sicil: 1103295 • MERSİS: 0929099619300001</span>
       </div>
-      <span style="font-size: 0.7rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 3px 8px; border-radius: 6px; border: 1px solid #10b981;">
+      <span class="company-badge-pill">
         5 ONAYLI BELGE
       </span>
     </div>
 
     <div style="max-height: 60vh; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 10px;">
       <!-- 1. VERGİ LEVHASI -->
-      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 36px; height: 36px; border-radius: 8px; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+      <div class="company-doc-item">
+        <div class="company-doc-top">
+          <div class="company-doc-main">
+            <div class="company-doc-item-icon" style="background: #fee2e2; color: #dc2626;">
               📄
             </div>
-            <div>
-              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Kurumsal Vergi Levhası (2025 - 2026)</div>
-              <div style="font-size: 0.74rem; color: #64748b;">Kadıköy V.D. • VKN: 9290996193 • GİB Onaylı</div>
+            <div class="company-doc-texts">
+              <div class="company-doc-name">Kurumsal Vergi Levhası (2025 - 2026)</div>
+              <div class="company-doc-detail">Kadıköy V.D. • VKN: 9290996193 • GİB Onaylı</div>
             </div>
           </div>
-          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">GÜNCEL</span>
+          <span class="company-doc-badge" style="background: #ecfdf5; color: #059669; border: 1px solid #10b981;">GÜNCEL</span>
         </div>
 
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+        <div class="company-doc-actions">
+          <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" target="_blank" class="company-doc-btn" style="background: #0284c7; color: #ffffff;">
             👁️ Görüntüle
           </a>
-          <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" download="Yakin_Grup_Vergi_Levhasi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="assets/documents/yakin_grup_vergi_levhasi.pdf" download="Yakin_Grup_Vergi_Levhasi.pdf" class="company-doc-btn" style="background: #0f766e; color: #ffffff;">
             ⬇️ PDF İndir
           </a>
-          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Vergi%20Levhas%C4%B1&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20vergi%20levhas%C4%B1%20ektedir.%0AVKN%3A%209290996193%20-%20Kad%C4%B1k%C3%B6y%20V.D.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Vergi%20Levhas%C4%B1&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20vergi%20levhas%C4%B1%20ektedir.%0AVKN%3A%209290996193%20-%20Kad%C4%B1k%C3%B6y%20V.D.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." class="company-doc-btn" style="background: #0b2545; color: #ffffff;">
             ✉️ E-Posta
           </a>
         </div>
       </div>
 
       <!-- 2. TİCARET SİCİLİ GAZETESİ -->
-      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 36px; height: 36px; border-radius: 8px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+      <div class="company-doc-item">
+        <div class="company-doc-top">
+          <div class="company-doc-main">
+            <div class="company-doc-item-icon" style="background: #fef3c7; color: #d97706;">
               📰
             </div>
-            <div>
-              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Türkiye Ticaret Sicili Gazetesi</div>
-              <div style="font-size: 0.74rem; color: #64748b;">2 Ekim 2025 • Sayı: 11428 • İlan Sıra: 215220 • Tescilli</div>
+            <div class="company-doc-texts">
+              <div class="company-doc-name">Türkiye Ticaret Sicili Gazetesi</div>
+              <div class="company-doc-detail">2 Ekim 2025 • Sayı: 11428 • İlan Sıra: 215220 • Tescilli</div>
             </div>
           </div>
-          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">TESCİLLİ</span>
+          <span class="company-doc-badge" style="background: #ecfdf5; color: #059669; border: 1px solid #10b981;">TESCİLLİ</span>
         </div>
 
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+        <div class="company-doc-actions">
+          <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" target="_blank" class="company-doc-btn" style="background: #0284c7; color: #ffffff;">
             👁️ Görüntüle
           </a>
-          <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" download="Yakin_Grup_Ticaret_Sicil_Gazetesi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="assets/documents/yakin_grup_ticaret_sicil_gazetesi.pdf" download="Yakin_Grup_Ticaret_Sicil_Gazetesi.pdf" class="company-doc-btn" style="background: #0f766e; color: #ffffff;">
             ⬇️ PDF İndir
           </a>
-          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Ticaret%20Sicili%20Gazetesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20resmi%20Ticaret%20Sicili%20Gazetesi%20n%C3%BCshas%C4%B1%20ektedir.%0ASicil%20No%3A%201103295%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20Ticaret%20Sicili%20Gazetesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20resmi%20Ticaret%20Sicili%20Gazetesi%20n%C3%BCshas%C4%B1%20ektedir.%0ASicil%20No%3A%201103295%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." class="company-doc-btn" style="background: #0b2545; color: #ffffff;">
             ✉️ E-Posta
           </a>
         </div>
       </div>
 
       <!-- 3. İTO FAALİYET BELGESİ -->
-      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+      <div class="company-doc-item">
+        <div class="company-doc-top">
+          <div class="company-doc-main">
+            <div class="company-doc-item-icon" style="background: #e0f2fe; color: #0284c7;">
               🏛️
             </div>
-            <div>
-              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">İTO Faaliyet Belgesi (Oda Kayıt)</div>
-              <div style="font-size: 0.74rem; color: #64748b;">İstanbul Ticaret Odası • Sicil: 1103295 • MERSİS: 0929099619300001</div>
+            <div class="company-doc-texts">
+              <div class="company-doc-name">İTO Faaliyet Belgesi (Oda Kayıt)</div>
+              <div class="company-doc-detail">İstanbul Ticaret Odası • Sicil: 1103295 • MERSİS: 0929099619300001</div>
             </div>
           </div>
-          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">E-İMZALI</span>
+          <span class="company-doc-badge" style="background: #ecfdf5; color: #059669; border: 1px solid #10b981;">E-İMZALI</span>
         </div>
 
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+        <div class="company-doc-actions">
+          <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" target="_blank" class="company-doc-btn" style="background: #0284c7; color: #ffffff;">
             👁️ Görüntüle
           </a>
-          <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" download="Yakin_Grup_Faaliyet_Belgesi_ITO.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="assets/documents/yakin_grup_faaliyet_belgesi_ito.pdf" download="Yakin_Grup_Faaliyet_Belgesi_ITO.pdf" class="company-doc-btn" style="background: #0f766e; color: #ffffff;">
             ⬇️ PDF İndir
           </a>
-          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0TO%20Faaliyet%20Belgesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20%C4%B0TO%20Faaliyet%20Belgesi%20ektedir.%0ASicil%20No%3A%201103295%20-%20MERS%C4%B0S%3A%200929099619300001%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0TO%20Faaliyet%20Belgesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20g%C3%BCncel%20%C4%B0TO%20Faaliyet%20Belgesi%20ektedir.%0ASicil%20No%3A%201103295%20-%20MERS%C4%B0S%3A%200929099619300001%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." class="company-doc-btn" style="background: #0b2545; color: #ffffff;">
             ✉️ E-Posta
           </a>
         </div>
       </div>
 
       <!-- 4. ŞİRKET KURULUŞ ANA SÖZLEŞMESİ -->
-      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 36px; height: 36px; border-radius: 8px; background: #ede9fe; color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+      <div class="company-doc-item">
+        <div class="company-doc-top">
+          <div class="company-doc-main">
+            <div class="company-doc-item-icon" style="background: #ede9fe; color: #7c3aed;">
               📜
             </div>
-            <div>
-              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Şirket Kuruluş Ana Sözleşmesi</div>
-              <div style="font-size: 0.74rem; color: #64748b;">Kuruluş Sözleşmesi • Sermaye & Yönetim Yapısı (3 Sayfa)</div>
+            <div class="company-doc-texts">
+              <div class="company-doc-name">Şirket Kuruluş Ana Sözleşmesi</div>
+              <div class="company-doc-detail">Kuruluş Sözleşmesi • Sermaye & Yönetim Yapısı (3 Sayfa)</div>
             </div>
           </div>
-          <span style="font-size: 0.68rem; font-weight: 800; background: #f3f4f6; color: #4b5563; padding: 2px 7px; border-radius: 5px; border: 1px solid #d1d5db;">RESMİ</span>
+          <span class="company-doc-badge" style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db;">RESMİ</span>
         </div>
 
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+        <div class="company-doc-actions">
+          <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" target="_blank" class="company-doc-btn" style="background: #0284c7; color: #ffffff;">
             👁️ Görüntüle
           </a>
-          <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" download="Yakin_Grup_Sirket_Sozlesmesi.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="assets/documents/yakin_grup_sirket_sozlesmesi.pdf" download="Yakin_Grup_Sirket_Sozlesmesi.pdf" class="company-doc-btn" style="background: #0f766e; color: #ffffff;">
             ⬇️ PDF İndir
           </a>
-          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C5%9Eirket%20Kurulu%C5%9F%20S%C3%B6zle%C5%9Fmesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20kurulu%C5%9F%20ana%20s%C3%B6zle%C5%9Fmesi%20ektedir.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C5%9Eirket%20Kurulu%C5%9F%20S%C3%B6zle%C5%9Fmesi&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20kurulu%C5%9F%20ana%20s%C3%B6zle%C5%9Fmesi%20ektedir.%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." class="company-doc-btn" style="background: #0b2545; color: #ffffff;">
             ✉️ E-Posta
           </a>
         </div>
       </div>
 
       <!-- 5. İMZA SİRKÜLERİ & YETKİ BELGESİ -->
-      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 36px; height: 36px; border-radius: 8px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+      <div class="company-doc-item">
+        <div class="company-doc-top">
+          <div class="company-doc-main">
+            <div class="company-doc-item-icon" style="background: #ecfdf5; color: #059669;">
               🖋️
             </div>
-            <div>
-              <div style="font-weight: 800; font-size: 0.9rem; color: #0b2545;">Noter Onaylı İmza Sirküleri</div>
-              <div style="font-size: 0.74rem; color: #64748b;">Üsküdar 43. Noterliği • Yevmiye: 02716 • Münferit Temsil</div>
+            <div class="company-doc-texts">
+              <div class="company-doc-name">Noter Onaylı İmza Sirküleri</div>
+              <div class="company-doc-detail">Üsküdar 43. Noterliği • Yevmiye: 02716 • Münferit Temsil</div>
             </div>
           </div>
-          <span style="font-size: 0.68rem; font-weight: 800; background: #ecfdf5; color: #059669; padding: 2px 7px; border-radius: 5px; border: 1px solid #10b981;">NOTER ONAYLI</span>
+          <span class="company-doc-badge" style="background: #ecfdf5; color: #059669; border: 1px solid #10b981;">NOTER ONAYLI</span>
         </div>
 
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" target="_blank" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0284c7; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+        <div class="company-doc-actions">
+          <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" target="_blank" class="company-doc-btn" style="background: #0284c7; color: #ffffff;">
             👁️ Görüntüle
           </a>
-          <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" download="Yakin_Grup_Imza_Sirkuleri.pdf" style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0f766e; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="assets/documents/yakin_grup_imza_sirkuleri.pdf" download="Yakin_Grup_Imza_Sirkuleri.pdf" class="company-doc-btn" style="background: #0f766e; color: #ffffff;">
             ⬇️ PDF İndir
           </a>
-          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0mza%20Sirk%C3%BCleri&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20Noter%20onayl%C4%B1%20%C4%B0mza%20Sirk%C3%BCleri%20belgesi%20ektedir.%0AYevmiye%20No%3A%2002716%20-%20%C3%9Csk%C3%BCdar%2043.%20Noterli%C4%9Fi%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." style="flex: 1; min-width: 90px; text-align: center; text-decoration: none; padding: 6px 8px; background: #0b2545; color: #ffffff; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">
+          <a href="mailto:?subject=Yak%C4%B1n%20Grup%20%C4%B0mza%20Sirk%C3%BCleri&body=Merhaba%2C%0A%0AYak%C4%B1n%20Grup%20Enerji%20G%C4%B1da%20%C4%B0n%C5%9Faat%20ve%20Ticaret%20Ltd.%20%C5%9Eti.%20Noter%20onayl%C4%B1%20%C4%B0mza%20Sirk%C3%BCleri%20belgesi%20ektedir.%0AYevmiye%20No%3A%2002716%20-%20%C3%9Csk%C3%BCdar%2043.%20Noterli%C4%9Fi%0A%0A%C4%B0yi%20%C3%A7al%C4%B1%C5%9Fmalar." class="company-doc-btn" style="background: #0b2545; color: #ffffff;">
             ✉️ E-Posta
           </a>
         </div>
@@ -1883,7 +1879,7 @@
     </div>
 
     <div style="margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; text-align: center;">
-      <button onclick="closeCompanyDocsModal()" style="padding: 9px 20px; background: #0b2545; color: #ffffff; border: none; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+      <button onclick="closeCompanyDocsModal()" class="company-return-btn">
         ← Yönetici Portalı'na Dön
       </button>
     </div>
