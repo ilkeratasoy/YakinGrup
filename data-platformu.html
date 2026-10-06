@@ -1229,7 +1229,25 @@
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 0.85rem; flex-wrap: wrap;">
-        <input type="text" id="search-accounts" class="search-input" placeholder="Cari, müşteri veya proje ara..." oninput="renderAccounts()" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+        <input type="text" id="search-accounts" class="search-input" placeholder="Cari, firma veya proje ara..." oninput="renderAccounts()" style="margin-bottom: 0; flex: 1; min-width: 140px;">
+        <select id="filter-account-type" onchange="renderAccounts()" style="padding: 7px 10px; font-size: 0.8rem; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; color: #1e293b; max-width: 180px;">
+          <option value="">Tüm Cari Türleri</option>
+          <option value="Müşteri">🟢 Müşteriler</option>
+          <option value="Taşeron">🔨 Taşeronlar</option>
+          <option value="Tedarikçi">📦 Tedarikçiler</option>
+          <option value="Mimari Proje">📐 Mimari Proje</option>
+          <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
+          <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+          <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
+          <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuk</option>
+          <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
+          <option value="Cephe Modelleme">🏢 Cephe Modelleme</option>
+          <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı</option>
+          <option value="Harita & Kadastro">🗺️ Harita & Kadastro</option>
+          <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat</option>
+          <option value="Elektrik Proje">⚡ Elektrik Proje</option>
+          <option value="Danışman / Hizmet">💼 Danışman / Hizmet</option>
+        </select>
         <div style="display: flex; gap: 6px; flex-shrink: 0;">
           <button class="btn btn-secondary btn-sm" onclick="syncProjectsToAccounts(true)" title="Projelerdeki işveren ve bütçeleri cari kartlara otomatik aktarır veya günceller" style="white-space: nowrap; font-weight: 700;">
             ⚡ Projelerden Eşitle
@@ -1698,12 +1716,29 @@
               <input type="text" id="a-company" required placeholder="Firma veya Müşteri Adı">
             </div>
             <div class="form-group">
-              <label>Cari Tipi</label>
+              <label>Cari Tipi / Branşı *</label>
               <select id="a-type" onchange="onAccountTypeChange()">
-                <option value="Müşteri">Müşteri</option>
-                <option value="Tedarikçi">Tedarikçi</option>
-                <option value="Taşeron">Taşeron</option>
-                <option value="Danışman / Hizmet">Danışman / Hizmet</option>
+                <optgroup label="Genel Cari Türleri">
+                  <option value="Müşteri">Müşteri (İşveren / Gelir)</option>
+                  <option value="Taşeron">Taşeron (Uygulama & İmalat)</option>
+                  <option value="Tedarikçi">Tedarikçi (Malzeme & Satıcı)</option>
+                  <option value="Danışman / Hizmet">Danışman / Hizmet</option>
+                </optgroup>
+                <optgroup label="Proje & Mühendislik Branşları">
+                  <option value="Mimari Proje">📐 Mimari Proje</option>
+                  <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
+                  <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+                  <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
+                  <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
+                  <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
+                  <option value="Cephe Modelleme">🏢 Cephe Modelleme</option>
+                  <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
+                  <option value="Harita & Kadastro">🗺️ Harita & Kadastro</option>
+                  <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat</option>
+                  <option value="Elektrik Proje">⚡ Elektrik Proje</option>
+                  <option value="Yapı Denetim">🔍 Yapı Denetim</option>
+                  <option value="Belediye & Ruhsat">📜 Belediye & Ruhsat</option>
+                </optgroup>
               </select>
             </div>
             <div class="form-group">
@@ -1821,18 +1856,23 @@
                     <div>
                       <label style="font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; display: block;">Gider Kalemi Türü *</label>
                       <select id="exp-category" onchange="onExpenseCategoryChange()" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff;">
+                        <option value="Mimari Proje">📐 Mimari Proje</option>
+                        <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
+                        <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+                        <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
+                        <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
+                        <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
+                        <option value="Cephe Modelleme">🏢 Cephe Modelleme (3D / Render)</option>
+                        <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
                         <option value="Harita & Kadastro">🗺️ Harita & Kadastro (Aplikasyon / Çap)</option>
                         <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat & Proje</option>
+                        <option value="Elektrik Proje & Tesisat">⚡ Elektrik Proje & Tesisat</option>
                         <option value="Belediye Harcı">🏛️ Belediye Harcı & İmar Masrafı</option>
                         <option value="Ruhsat Giderleri">📜 Ruhsat Giderleri & Onay Harçları</option>
-                        <option value="Mimari & Statik">📐 Mimari & Statik Mühendislik</option>
-                        <option value="Zemin Etüdü">🔬 Zemin Etüdü & Geoteknik</option>
-                        <option value="Hafriyat & Yıkım">🚜 Hafriyat, Yıkım & Moloz</option>
                         <option value="Yapı Denetim">🔍 Yapı Denetim Hizmet Bedeli</option>
-                        <option value="Elektrik & Tesisat">⚡ Elektrik Proje & Tesisat</option>
+                        <option value="Hafriyat & Yıkım">🚜 Hafriyat, Yıkım & Moloz</option>
                         <option value="Beton & Demir">🧱 Beton, Demir & Kaba Yapı</option>
                         <option value="Taşeron & İşçilik">🔨 Taşeron & İnce İşçilik</option>
-                        <option value="Noter & Sözleşme">📋 Noter, Avukat & Hukuki Harç</option>
                         <option value="Diğer">✏️ Diğer Gider Kalemi (Özel)</option>
                       </select>
                     </div>
@@ -1906,15 +1946,29 @@
             <input type="text" id="d-title" required placeholder="Örn: Mimari Ruhsat Projesi">
           </div>
           <div class="form-group">
-            <label>Türü</label>
+            <label>Evrak Türü</label>
             <select id="d-type">
-              <option value="Teklif">Teklif</option>
-              <option value="Şartname">Şartname</option>
-              <option value="Sözleşme">Sözleşme</option>
-              <option value="Mimari Proje">Mimari Proje</option>
-              <option value="Statik Rapor">Statik Rapor</option>
-              <option value="Ruhsat Belgesi">Ruhsat Belgesi</option>
-              <option value="Hakediş">Hakediş</option>
+              <optgroup label="Sözleşme & Ticari Evraklar">
+                <option value="Teklif">Teklif</option>
+                <option value="Şartname">Şartname</option>
+                <option value="Sözleşme">Sözleşme</option>
+                <option value="Hakediş">Hakediş</option>
+              </optgroup>
+              <optgroup label="Proje, Mühendislik & Ruhsat Belgeleri">
+                <option value="Mimari Proje">📐 Mimari Proje</option>
+                <option value="Statik Mühendislik">🏛️ Statik Mühendislik / Rapor</option>
+                <option value="Zemin Etüdü">🔬 Zemin Etüdü Raporu</option>
+                <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa Projesi</option>
+                <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı Projesi</option>
+                <option value="Cephe Modelleme">🏢 Cephe Modelleme & 3D Render</option>
+                <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
+                <option value="Harita & Kadastro">🗺️ Harita, Çap & Aplikasyon</option>
+                <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat Projesi</option>
+                <option value="Elektrik Proje">⚡ Elektrik Projesi</option>
+                <option value="Noter & Hukuki Evrak">⚖️ Noter & Hukuki Evrak</option>
+                <option value="Ruhsat Belgesi">📜 Ruhsat Belgesi & İzinler</option>
+                <option value="Yapı Denetim">🔍 Yapı Denetim Evrakları</option>
+              </optgroup>
               <option value="Diğer">Diğer</option>
             </select>
           </div>
@@ -2049,15 +2103,32 @@
           <div class="form-group full">
             <label>🏷️ Harcama / Gider Kategorisi *</label>
             <select id="inv-category" onchange="toggleCustomInvoiceCategory(this)">
-              <option value="Akaryakıt & Ulaşım">⛽ Akaryakıt & Ulaşım (Benzin, Mazot, Araç)</option>
-              <option value="Gıda & Mutfak">🍏 Gıda & Mutfak (Market, Yemek, Şantiye)</option>
-              <option value="Kırtasiye & Ofis">📎 Kırtasiye & Ofis (Kağıt, Toner, Büro)</option>
-              <option value="İnşaat & Yapı Malzemeleri">🧱 İnşaat & Yapı Malzemeleri</option>
-              <option value="Taşeron & İşçilik">🔨 Taşeron & İşçilik / Montaj</option>
-              <option value="Elektrik, Su & Abonelik">⚡ Elektrik, Su, Doğalgaz & İletişim</option>
-              <option value="Nakliye & Hafriyat">🚚 Nakliye, Hafriyat & Lojistik</option>
-              <option value="Bilişim & Yazılım">💻 Bilişim, Yazılım & Donanım</option>
-              <option value="Danışmanlık & Hizmet">⚖️ Danışmanlık, Müşavirlik & Hizmet</option>
+              <optgroup label="Genel Şantiye & Ofis Giderleri">
+                <option value="Akaryakıt & Ulaşım">⛽ Akaryakıt & Ulaşım (Benzin, Mazot, Araç)</option>
+                <option value="Gıda & Mutfak">🍏 Gıda & Mutfak (Market, Yemek, Şantiye)</option>
+                <option value="Kırtasiye & Ofis">📎 Kırtasiye & Ofis (Kağıt, Toner, Büro)</option>
+                <option value="İnşaat & Yapı Malzemeleri">🧱 İnşaat & Yapı Malzemeleri</option>
+                <option value="Taşeron & İşçilik">🔨 Taşeron & İşçilik / Montaj</option>
+                <option value="Elektrik, Su & Abonelik">⚡ Elektrik, Su, Doğalgaz & İletişim</option>
+                <option value="Nakliye & Hafriyat">🚚 Nakliye, Hafriyat & Lojistik</option>
+                <option value="Bilişim & Yazılım">💻 Bilişim, Yazılım & Donanım</option>
+                <option value="Danışmanlık & Hizmet">⚖️ Danışmanlık, Müşavirlik & Hizmet</option>
+              </optgroup>
+              <optgroup label="Proje, Mühendislik & Danışmanlık Kalemleri">
+                <option value="Mimari Proje">📐 Mimari Proje</option>
+                <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
+                <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+                <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
+                <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
+                <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
+                <option value="Cephe Modelleme">🏢 Cephe Modelleme (3D / Render)</option>
+                <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
+                <option value="Harita & Kadastro">🗺️ Harita & Kadastro</option>
+                <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat</option>
+                <option value="Elektrik Proje">⚡ Elektrik Proje</option>
+                <option value="Belediye Harcı & Ruhsat">📜 Belediye Harcı & Ruhsat Giderleri</option>
+                <option value="Yapı Denetim">🔍 Yapı Denetim Bedeli</option>
+              </optgroup>
               <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
             </select>
             <input type="text" id="inv-category-custom" placeholder="Özel kategori adı yazın..." style="display:none; margin-top:4px;">
@@ -2450,7 +2521,34 @@
       if (text.includes('YAZILIM') || text.includes('BİLİŞİM') || text.includes('BILISIM') || text.includes('HOSTING') || text.includes('DOMAIN') || text.includes('SUNUCU') || text.includes('CLOUD') || text.includes('BİLGİSAYAR') || text.includes('BILGISAYAR') || text.includes('MICROSOFT') || text.includes('GOOGLE') || text.includes('APPLE')) {
         return 'Bilişim & Yazılım';
       }
-      if (text.includes('AVUKAT') || text.includes('HUKUK') || text.includes('MALİ MÜŞAVİR') || text.includes('MALI MUSAVIR') || text.includes('DENETİM') || text.includes('DENETIM') || text.includes('YMM') || text.includes('SMMM') || text.includes('DANIŞMANLIK') || text.includes('DANISMANLIK') || text.includes('NOTER') || text.includes('SİGORTA') || text.includes('SIGORTA')) {
+      if (text.includes('MİMARİ') || text.includes('MIMARI') || text.includes('MİMARLIK') || text.includes('MIMARLIK')) {
+        return 'Mimari Proje';
+      }
+      if (text.includes('STATİK') || text.includes('STATIK') || text.includes('BETONARME HESAP') || text.includes('ÇELİK PROJE') || text.includes('CELIK PROJE')) {
+        return 'Statik Mühendislik';
+      }
+      if (text.includes('ZEMİN ETÜD') || text.includes('ZEMIN ETUD') || text.includes('SONDAJ')) {
+        return 'Zemin Etüdü';
+      }
+      if (text.includes('GEOTEKNİK') || text.includes('GEOTEKNIK') || text.includes('İKSA') || text.includes('IKSA') || text.includes('FORE KAZIK') || text.includes('ANKRAJ')) {
+        return 'Geoteknik & İksa';
+      }
+      if (text.includes('PEYZAJ') || text.includes('BAHÇE DÜZEN') || text.includes('BAHCE DUZEN')) {
+        return 'Peyzaj Mimarlığı';
+      }
+      if (text.includes('CEPHE') || text.includes('MODELLEME') || text.includes('RENDER') || text.includes('GÖRSELLEŞTİRME') || text.includes('GORSELLESTIRME')) {
+        return 'Cephe Modelleme';
+      }
+      if (text.includes('KAT İRTİFAK') || text.includes('KAT IRTIFAK') || text.includes('KAT MÜLKİYET') || text.includes('KAT MULKIYET') || text.includes('NUMARATAJ') || text.includes('CİNS DEĞİŞİKLİĞİ') || text.includes('CINS DEGISIKLIGI')) {
+        return 'Kat İrtifakı Dosyası';
+      }
+      if (text.includes('HARİTA') || text.includes('HARITA') || text.includes('KADASTRO') || text.includes('APLİKASYON') || text.includes('APLIKASYON') || text.includes('ÇAP') || text.includes('CAP') || text.includes('KOT KESİT') || text.includes('KOT KESIT')) {
+        return 'Harita & Kadastro';
+      }
+      if (text.includes('NOTER') || text.includes('HUKUK') || text.includes('AVUKAT') || text.includes('VEKALET')) {
+        return 'Noter & Hukuki Danışmanlık';
+      }
+      if (text.includes('MALİ MÜŞAVİR') || text.includes('MALI MUSAVIR') || text.includes('DENETİM') || text.includes('DENETIM') || text.includes('YMM') || text.includes('SMMM') || text.includes('DANIŞMANLIK') || text.includes('DANISMANLIK') || text.includes('SİGORTA') || text.includes('SIGORTA')) {
         return 'Danışmanlık & Hizmet';
       }
       return 'Diğer / Genel';
@@ -2544,7 +2642,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-06_v21_cari_gider_kalemleri_iban_web_full";
+    const APP_BUILD_VERSION = "2026-10-06_v22_mimari_statik_zemin_kategorileri";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
@@ -5116,6 +5214,56 @@ function doPost(e) {
       }
     }
 
+    function getAccountTypeBadge(type = 'Müşteri') {
+      const t = String(type || 'Müşteri').trim();
+      if (t === 'Müşteri') {
+        return `<span class="badge badge-green">🟢 ${escapeHtml(t)}</span>`;
+      }
+      if (t === 'Taşeron') {
+        return `<span class="badge badge-purple">🔨 ${escapeHtml(t)}</span>`;
+      }
+      if (t === 'Tedarikçi') {
+        return `<span class="badge badge-blue">📦 ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Mimari')) {
+        return `<span class="badge" style="background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; font-weight: 700;">📐 ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Statik')) {
+        return `<span class="badge" style="background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 700;">🏛️ ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Zemin')) {
+        return `<span class="badge" style="background: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-weight: 700;">🔬 ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Geoteknik') || t.includes('İksa') || t.includes('Iksa')) {
+        return `<span class="badge" style="background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; font-weight: 700;">⛏️ ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Noter') || t.includes('Hukuk')) {
+        return `<span class="badge" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; font-weight: 700;">⚖️ ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Peyzaj')) {
+        return `<span class="badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-weight: 700;">🌿 ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Cephe') || t.includes('Model')) {
+        return `<span class="badge" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-weight: 700;">🏢 ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Kat İrtifak') || t.includes('Kat Irtifak')) {
+        return `<span class="badge" style="background: #fdf4ff; color: #86198f; border: 1px solid #f5d0fe; font-weight: 700;">📑 ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Harita') || t.includes('Kadastro')) {
+        return `<span class="badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-weight: 700;">🗺️ ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Mekanik')) {
+        return `<span class="badge" style="background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; font-weight: 700;">⚙️ ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Elektrik')) {
+        return `<span class="badge" style="background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; font-weight: 700;">⚡ ${escapeHtml(t)}</span>`;
+      }
+      if (t.includes('Yapı Denetim') || t.includes('Yapi Denetim')) {
+        return `<span class="badge" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; font-weight: 700;">🔍 ${escapeHtml(t)}</span>`;
+      }
+      return `<span class="badge badge-purple">${escapeHtml(t)}</span>`;
+    }
+
     function onAccountTypeChange() {
       const type = document.getElementById('a-type')?.value || 'Müşteri';
       const badgePreview = document.getElementById('account-type-badge-preview');
@@ -5137,7 +5285,7 @@ function doPost(e) {
         }
         if (expenseTypeTag) expenseTypeTag.textContent = 'Proje Masraf & Harç Kalemleri';
       } else {
-        // Tedarikçi, Taşeron, Danışman / Hizmet
+        // Tedarikçi, Taşeron, Mimari Proje, Statik Mühendislik, Zemin Etüdü vb.
         if (recLabel) recLabel.innerHTML = `<span>🟢 Alacağımız / Avans (₺)</span><span style="font-size: 0.65rem; color: #10b981; font-weight: 700;">(Fazla Ödeme)</span>`;
         if (collLabel) collLabel.innerHTML = `<span>💵 Yapılan Ödeme (₺)</span><span style="font-size: 0.65rem; color: #3b82f6; font-weight: 700;">(Giderden Düşülen)</span>`;
         if (payLabel) payLabel.innerHTML = `<span>🔴 Toplam Gider / Sözleşme (₺)</span><span style="font-size: 0.65rem; color: #ef4444; font-weight: 700;">(Toplam Borç)</span>`;
@@ -5148,6 +5296,17 @@ function doPost(e) {
           badgePreview.style.borderColor = '#ddd6fe';
         }
         if (expenseTypeTag) expenseTypeTag.textContent = `${type} Gider Kalemleri`;
+
+        // Eğer seçilen tip bir branş/kategori ise gider kalemleri dropdown'ında otomatik eşle
+        const expCatSel = document.getElementById('exp-category');
+        if (expCatSel && type !== 'Tedarikçi' && type !== 'Taşeron' && type !== 'Danışman / Hizmet') {
+          for (let i = 0; i < expCatSel.options.length; i++) {
+            if (expCatSel.options[i].value === type) {
+              expCatSel.selectedIndex = i;
+              break;
+            }
+          }
+        }
       }
 
       // Proje adı etiketini güncelle
@@ -5167,7 +5326,7 @@ function doPost(e) {
     }
 
     function addExpenseItemToCurrentAccount() {
-      const catSel = document.getElementById('exp-category')?.value || 'Harita & Kadastro';
+      const catSel = document.getElementById('exp-category')?.value || 'Mimari Proje';
       const customCat = (document.getElementById('exp-custom-cat')?.value || '').trim();
       const finalCat = (catSel === 'Diğer' && customCat) ? customCat : catSel;
 
@@ -5748,13 +5907,16 @@ function doPost(e) {
         }
       }
 
+      const typeFilter = (document.getElementById('filter-account-type')?.value || '').trim().toLowerCase();
       const filtered = accounts.filter(a => {
+        if (typeFilter && !(a.type || '').toLowerCase().includes(typeFilter)) return false;
         if (!q) return true;
         const comp = (a.company || '').toLowerCase();
         const cont = (a.contact || '').toLowerCase();
         const note = (a.notes || '').toLowerCase();
         const proj = (a.relatedProject || '').toLowerCase();
-        return comp.includes(q) || cont.includes(q) || note.includes(q) || proj.includes(q);
+        const aType = (a.type || '').toLowerCase();
+        return comp.includes(q) || cont.includes(q) || note.includes(q) || proj.includes(q) || aType.includes(q);
       });
 
       if (filtered.length === 0) {
@@ -5802,7 +5964,7 @@ function doPost(e) {
                   ${a.relatedProject ? `<span style="background: #eff6ff; color: #1d4ed8; padding: 1px 6px; border-radius: 4px; font-weight: 700; border: 1px solid #bfdbfe;">🏗️ ${escapeHtml(a.relatedProject)}</span>` : ''}
                 </div>
               </div>
-              <span class="badge ${a.type === 'Müşteri' ? 'badge-green' : (a.type === 'Taşeron' ? 'badge-purple' : 'badge-blue')}">${escapeHtml(a.type)}</span>
+              ${getAccountTypeBadge(a.type)}
             </div>
 
             <!-- Finansal Bütçe / Alacak / Tahsilat / Gider Kartı -->
