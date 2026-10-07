@@ -1715,7 +1715,7 @@
               <label>Firma / Müşteri Ünvanı *</label>
               <input type="text" id="a-company" required placeholder="Firma veya Müşteri Adı">
             </div>
-            <div class="form-group">
+            <div class="form-group full">
               <label>Cari Tipi / Branşı *</label>
               <select id="a-type" onchange="onAccountTypeChange()">
                 <optgroup label="Genel Cari Türleri">
@@ -1740,25 +1740,6 @@
                   <option value="Belediye & Ruhsat">📜 Belediye & Ruhsat</option>
                 </optgroup>
               </select>
-            </div>
-            <div class="form-group">
-              <label style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
-                <span>🏗️ İlgili İnşaat Projeleri</span>
-                <span id="a-project-budget-hint" style="font-size: 0.68rem; color: #047857; font-weight: 700;"></span>
-              </label>
-              <div style="display: flex; gap: 6px; align-items: center;">
-                <select id="a-project-selector" onchange="onAccountProjectPickerChange(this.value)" style="flex: 1;">
-                  <option value="">➕ Proje Seç & Listeye Ekle...</option>
-                </select>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="onAccountProjectPickerBtnClick()" style="padding: 10px 14px; font-weight: 700; white-space: nowrap;" title="Seçili Projeyi Ekle">
-                  ➕ Ekle
-                </button>
-              </div>
-              <input type="hidden" id="a-project" value="">
-              <!-- Seçili Projelerin Listesi (Rozetler / Badges) -->
-              <div id="account-selected-projects-list" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; min-height: 24px; align-items: center;">
-                <span style="font-size: 0.72rem; color: #94a3b8; font-style: italic;">Henüz proje seçilmedi (Bağımsız cari)</span>
-              </div>
             </div>
             <div class="form-group">
               <label>Yetkili Kişi</label>
@@ -1795,6 +1776,27 @@
             <div class="form-group full">
               <label>📝 Notlar / Açıklama</label>
               <input type="text" id="a-notes" placeholder="Vade koşulu, özel cari veya mutabakat notu...">
+            </div>
+
+            <!-- İlgili İnşaat Projeleri (Notlar / Açıklama Altında) -->
+            <div class="form-group full" style="margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--border);">
+              <label style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+                <span>🏗️ İlgili İnşaat Projeleri (Çoklu Seçim)</span>
+                <span id="a-project-budget-hint" style="font-size: 0.68rem; color: #047857; font-weight: 700;"></span>
+              </label>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <select id="a-project-selector" onchange="onAccountProjectPickerChange(this.value)" style="flex: 1;">
+                  <option value="">➕ Proje Seç & Listeye Ekle...</option>
+                </select>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="onAccountProjectPickerBtnClick()" style="padding: 10px 14px; font-weight: 700; white-space: nowrap;" title="Seçili Projeyi Ekle">
+                  ➕ Ekle
+                </button>
+              </div>
+              <input type="hidden" id="a-project" value="">
+              <!-- Seçili Projelerin Listesi (Rozetler / Badges) -->
+              <div id="account-selected-projects-list" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; min-height: 24px; align-items: center;">
+                <span style="font-size: 0.72rem; color: #94a3b8; font-style: italic;">Henüz proje seçilmedi (Bağımsız cari)</span>
+              </div>
             </div>
 
             <!-- Gider Kalemleri Paneli (Harita, Mekanik, Belediye Harcı, Ruhsat vb.) -->
@@ -2648,7 +2650,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-07_v25_coklu_proje_secimi";
+    const APP_BUILD_VERSION = "2026-10-07_v26_proje_notlar_altinda";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
