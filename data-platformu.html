@@ -2593,7 +2593,6 @@
         if (rawName === "Bağdat Caddesi Kentsel Dönüşüm" || rawCode === "PRJ-2026-01") continue;
 
         if (rawName && isRecordDeleted('İnşaat Projeleri', rawName)) continue;
-        if (rawCode && isRecordDeleted('İnşaat Projeleri', rawCode)) continue;
 
         const lowerName = rawName.toLowerCase();
         
@@ -2650,13 +2649,26 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-07_v26_proje_notlar_altinda";
+    const APP_BUILD_VERSION = "2026-10-07_v27_gencosman_4012_kurtarma";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
         localStorage.removeItem('yg_invoices_lite');
+        localStorage.removeItem('yg_projects_lite');
         markAsDeleted('İnşaat Projeleri', 'Küçükçemece Florya Cennet Mh.');
         markAsDeleted('İnşaat Projeleri', 'Küçükçekmece Florya Cennet Mh.');
+
+        // Genel şablon proje kodlarını ve Gençosman 0/4012'yi silinmişler listesinden kurtar
+        const genericProjectCodes = [
+          'prj-rp-2025', 'prj-rp-2026', 'prj-kd-2026', 'prj-kd-2025', 'prj-kd-2024', 'prj-kk-2025',
+          'gencosman 0/4012', 'gençosman 0/4012', 'gencosman 4012', 'gençosman 4012', '0/4012', '4012'
+        ];
+        const delRecs = getDeletedRecords();
+        if (delRecs && delRecs['İnşaat Projeleri']) {
+          delRecs['İnşaat Projeleri'] = delRecs['İnşaat Projeleri'].filter(k => !genericProjectCodes.includes(String(k).toLowerCase().trim()));
+          localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(delRecs));
+        }
+        genericProjectCodes.forEach(c => unmarkDeleted('İnşaat Projeleri', c));
 
         const existingAccounts = JSON.parse(localStorage.getItem('yg_accounts_lite') || '[]');
         if (Array.isArray(existingAccounts) && existingAccounts.length > 0) {
@@ -5015,7 +5027,6 @@ function doPost(e) {
       if (!confirm(`"${p.name}" projesi silinsin mi?`)) return;
 
       markAsDeleted('İnşaat Projeleri', p.name);
-      if (p.code) markAsDeleted('İnşaat Projeleri', p.code);
 
       projects = projects.filter(x => x.id !== id);
       setStore('yg_projects_lite', projects);
@@ -5023,6 +5034,7 @@ function doPost(e) {
       populateDocProjectSelect();
       populateInvoiceProjectSelect();
       populateTodoProjectSelect();
+      populateAccountProjectSelect();
 
       postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name);
       showToast(`"${p.name}" silindi ✅`);
@@ -5094,6 +5106,7 @@ function doPost(e) {
           renderProjects();
           populateDocProjectSelect();
           populateInvoiceProjectSelect();
+          populateAccountProjectSelect();
           const syncRes = syncProjectsToAccounts(false, true);
 
           editingProjectId = null;
@@ -5175,6 +5188,7 @@ function doPost(e) {
       renderProjects();
       populateDocProjectSelect();
       populateInvoiceProjectSelect();
+      populateAccountProjectSelect();
       const syncRes = syncProjectsToAccounts(false, true);
       closeModal('modal-new-project');
       if (syncRes && syncRes.createdCount > 0) {
@@ -8423,7 +8437,6 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             if (!name && !code) return false;
             if (name === "Bağdat Caddesi Kentsel Dönüşüm" || code === "PRJ-2026-01") return false;
             if (name && isRecordDeleted('İnşaat Projeleri', name)) return false;
-            if (code && isRecordDeleted('İnşaat Projeleri', code)) return false;
             return true;
           })
           .map((r, idx) => {
@@ -8536,7 +8549,6 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         localProjects.forEach(lp => {
           if (!lp || !lp.name) return;
           if (isRecordDeleted('İnşaat Projeleri', lp.name)) return;
-          if (lp.code && isRecordDeleted('İnşaat Projeleri', lp.code)) return;
 
           const lpSlug = makeProjectSlug(lp.name);
           const lpApt = (lp.buildingName || '').trim().toLowerCase();
@@ -8567,6 +8579,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         populateDocProjectSelect();
         populateInvoiceProjectSelect();
         populateTodoProjectSelect();
+        populateAccountProjectSelect();
         syncProjectsToAccounts(false);
       }
 
@@ -8901,6 +8914,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderAccounts();
       renderInvoices();
       populateInvoiceProjectSelect();
+      populateAccountProjectSelect();
       renderDocs();
       renderTodos();
       renderStock();
