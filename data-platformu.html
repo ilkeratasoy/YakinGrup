@@ -1788,84 +1788,74 @@
             </div>
 
             <!-- Gider Kalemleri Paneli (Harita, Mekanik, Belediye Harcı, Ruhsat vb.) -->
-            <div class="form-group full" id="account-expense-section" style="margin-top: 10px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 12px 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
-                <div style="font-size: 0.88rem; font-weight: 800; color: #0b2545; display: flex; align-items: center; gap: 6px;">
+            <div class="form-group full" id="account-expense-section" style="margin-top: 10px; padding-top: 14px; border-top: 1px dashed var(--border);">
+              <div style="font-size: 0.88rem; font-weight: 800; color: var(--navy); display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
                   <span>🏗️ Proje Gider Kalemleri & Yapılan Ödemeler</span>
                   <span id="expense-type-tag" class="badge" style="font-size: 0.68rem; background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 700;">Proje Masraf & Harç Kalemleri</span>
                 </div>
-                <span style="font-size: 0.72rem; color: #64748b; font-weight: 600;">Harita, mekanik, belediye harcı, ruhsat vb. giderler</span>
+                <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Proje: <strong id="expense-target-project-label" style="color: #2563eb;">Seçili Proje</strong></span>
               </div>
-              <div style="font-size: 0.73rem; color: #475569; margin-bottom: 10px; line-height: 1.4;">
-                Bu cariye yapılan ödemeler seçili projenin toplam giderlerinden otomatik düşülür ve net bütçe takibine işlenir.
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 12px; line-height: 1.4;">
+                Harita, mekanik, belediye harcı, ruhsat vb. giderler seçili projenin toplam giderlerinden otomatik düşülür ve net bütçeye işlenir.
               </div>
 
-              <!-- Gider Kalemi Ekleme Form Kutusu -->
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; margin-bottom: 10px;">
-                <div style="font-size: 0.75rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
-                  <span>➕ Yeni Gider / Ödeme Kalemi Ekle:</span>
-                  <span style="font-size: 0.68rem; color: #2563eb; font-weight: 600;">Proje: <strong id="expense-target-project-label">Seçili Proje</strong></span>
+              <!-- Gider Kalemi Giriş Alanları (Form ile Aynı Düzende) -->
+              <div class="form-grid" style="margin-bottom: 12px;">
+                <div class="form-group">
+                  <label>Gider Kalemi Türü *</label>
+                  <select id="exp-category" onchange="onExpenseCategoryChange()">
+                    <option value="Mimari Proje">📐 Mimari Proje</option>
+                    <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
+                    <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+                    <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
+                    <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
+                    <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
+                    <option value="Cephe Modelleme">🏢 Cephe Modelleme (3D / Render)</option>
+                    <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
+                    <option value="Harita & Kadastro">🗺️ Harita & Kadastro (Aplikasyon / Çap)</option>
+                    <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat & Proje</option>
+                    <option value="Elektrik Proje & Tesisat">⚡ Elektrik Proje & Tesisat</option>
+                    <option value="Belediye Harcı">🏛️ Belediye Harcı & İmar Masrafı</option>
+                    <option value="Ruhsat Giderleri">📜 Ruhsat Giderleri & Onay Harçları</option>
+                    <option value="Yapı Denetim">🔍 Yapı Denetim Hizmet Bedeli</option>
+                    <option value="Hafriyat & Yıkım">🚜 Hafriyat, Yıkım & Moloz</option>
+                    <option value="Beton & Demir">🧱 Beton, Demir & Kaba Yapı</option>
+                    <option value="Taşeron & İşçilik">🔨 Taşeron & İnce İşçilik</option>
+                    <option value="Diğer">✏️ Diğer Gider Kalemi (Özel)</option>
+                  </select>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 8px;">
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; display: block;">Gider Kalemi Türü *</label>
-                    <select id="exp-category" onchange="onExpenseCategoryChange()" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff;">
-                      <option value="Mimari Proje">📐 Mimari Proje</option>
-                      <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
-                      <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
-                      <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
-                      <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
-                      <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
-                      <option value="Cephe Modelleme">🏢 Cephe Modelleme (3D / Render)</option>
-                      <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
-                      <option value="Harita & Kadastro">🗺️ Harita & Kadastro (Aplikasyon / Çap)</option>
-                      <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat & Proje</option>
-                      <option value="Elektrik Proje & Tesisat">⚡ Elektrik Proje & Tesisat</option>
-                      <option value="Belediye Harcı">🏛️ Belediye Harcı & İmar Masrafı</option>
-                      <option value="Ruhsat Giderleri">📜 Ruhsat Giderleri & Onay Harçları</option>
-                      <option value="Yapı Denetim">🔍 Yapı Denetim Hizmet Bedeli</option>
-                      <option value="Hafriyat & Yıkım">🚜 Hafriyat, Yıkım & Moloz</option>
-                      <option value="Beton & Demir">🧱 Beton, Demir & Kaba Yapı</option>
-                      <option value="Taşeron & İşçilik">🔨 Taşeron & İnce İşçilik</option>
-                      <option value="Diğer">✏️ Diğer Gider Kalemi (Özel)</option>
-                    </select>
-                  </div>
-                  <div id="exp-custom-cat-box" style="display: none;">
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; display: block;">Özel Gider Adı *</label>
-                    <input type="text" id="exp-custom-cat" placeholder="Örn: Akustik Raporu Bedeli" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff;">
-                  </div>
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #b91c1c; margin-bottom: 2px; display: block;">Gider / Anlaşma Tutarı (₺) *</label>
-                    <input type="number" id="exp-amount" step="0.01" min="0" placeholder="Örn: 85000" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; font-weight: 700; color: #b91c1c; background: #fff;">
-                  </div>
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #047857; margin-bottom: 2px; display: block;">Yapılan Ödeme (₺) (Ödenen)</label>
-                    <input type="number" id="exp-paid" step="0.01" min="0" placeholder="Örn: 50000" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; font-weight: 700; color: #047857; background: #fff;">
-                  </div>
+                <div class="form-group" id="exp-custom-cat-box" style="display: none;">
+                  <label>Özel Gider Adı *</label>
+                  <input type="text" id="exp-custom-cat" placeholder="Örn: Akustik Raporu Bedeli">
                 </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 8px;">
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; display: block;">Ödeme / İşlem Tarihi</label>
-                    <input type="date" id="exp-date" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff;">
-                  </div>
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; display: block;">Ödeme Durumu</label>
-                    <select id="exp-status" style="width: 100%; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff;">
-                      <option value="Ödendi">✅ Tamamı Ödendi</option>
-                      <option value="Kısmi">🔄 Kısmi Ödeme Yapıldı</option>
-                      <option value="Bekliyor">⏳ Ödeme Bekliyor</option>
-                    </select>
-                  </div>
-                  <div style="grid-column: 1 / -1;">
-                    <label style="font-size: 0.72rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; display: block;">Açıklama / Fatura & Dekont No</label>
-                    <div style="display: flex; gap: 8px;">
-                      <input type="text" id="exp-note" placeholder="Örn: Belediye vezne dekontu / Onaylı aplikasyon harcı..." style="flex: 1; padding: 7px 9px; font-size: 0.82rem; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff;">
-                      <button type="button" class="btn btn-navy" onclick="addExpenseItemToCurrentAccount()" style="padding: 7px 16px; font-weight: 700; font-size: 0.82rem; white-space: nowrap;">
-                        ➕ Listeye Ekle
-                      </button>
-                    </div>
+                <div class="form-group">
+                  <label style="color: #b91c1c;">Gider / Anlaşma Tutarı (₺) *</label>
+                  <input type="number" id="exp-amount" step="0.01" min="0" placeholder="0,00" style="font-weight: 700; color: #b91c1c;">
+                </div>
+                <div class="form-group">
+                  <label style="color: #047857;">Yapılan Ödeme (₺) (Ödenen)</label>
+                  <input type="number" id="exp-paid" step="0.01" min="0" placeholder="0,00" style="font-weight: 700; color: #047857;">
+                </div>
+                <div class="form-group">
+                  <label>Ödeme / İşlem Tarihi</label>
+                  <input type="date" id="exp-date">
+                </div>
+                <div class="form-group">
+                  <label>Ödeme Durumu</label>
+                  <select id="exp-status">
+                    <option value="Ödendi">✅ Tamamı Ödendi</option>
+                    <option value="Kısmi">🔄 Kısmi Ödeme Yapıldı</option>
+                    <option value="Bekliyor">⏳ Ödeme Bekliyor</option>
+                  </select>
+                </div>
+                <div class="form-group full">
+                  <label>Açıklama / Fatura & Dekont No</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="text" id="exp-note" placeholder="Örn: Belediye vezne dekontu / Onaylı aplikasyon harcı..." style="flex: 1;">
+                    <button type="button" class="btn btn-navy" onclick="addExpenseItemToCurrentAccount()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; border-radius: 9px;">
+                      ➕ Listeye Ekle
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2642,7 +2632,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-07_v23_gider_kalemleri_ustte";
+    const APP_BUILD_VERSION = "2026-10-07_v24_gider_kalemleri_form_duzeni";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
