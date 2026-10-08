@@ -2697,7 +2697,11 @@
 
         if (rawName === "Bağdat Caddesi Kentsel Dönüşüm" || rawCode === "PRJ-2026-01") continue;
 
-        if (rawName && isRecordDeleted('İnşaat Projeleri', rawName)) continue;
+        if (rawName && isRecordDeleted('İnşaat Projeleri', rawName)) {
+          const lower = rawName.toLowerCase();
+          if (lower.includes('cennet') || lower.includes('florya')) continue;
+          unmarkDeleted('İnşaat Projeleri', rawName);
+        }
 
         const lowerName = rawName.toLowerCase();
         
@@ -2754,26 +2758,26 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-08_v28_sirket_evraklari_vergi_levhasi";
+    const APP_BUILD_VERSION = "2026-10-08_v29_gencosman_12357_kurtarma";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
         localStorage.removeItem('yg_invoices_lite');
         localStorage.removeItem('yg_projects_lite');
-        markAsDeleted('İnşaat Projeleri', 'Küçükçemece Florya Cennet Mh.');
-        markAsDeleted('İnşaat Projeleri', 'Küçükçekmece Florya Cennet Mh.');
 
-        // Genel şablon proje kodlarını ve Gençosman 0/4012'yi silinmişler listesinden kurtar
-        const genericProjectCodes = [
-          'prj-rp-2025', 'prj-rp-2026', 'prj-kd-2026', 'prj-kd-2025', 'prj-kd-2024', 'prj-kk-2025',
-          'gencosman 0/4012', 'gençosman 0/4012', 'gencosman 4012', 'gençosman 4012', '0/4012', '4012'
-        ];
+        // İnşaat Projeleri silinmişler listesini temizle, sadece mükerrer Florya Cennet kaydını tut
         const delRecs = getDeletedRecords();
-        if (delRecs && delRecs['İnşaat Projeleri']) {
-          delRecs['İnşaat Projeleri'] = delRecs['İnşaat Projeleri'].filter(k => !genericProjectCodes.includes(String(k).toLowerCase().trim()));
+        if (delRecs) {
+          delRecs['İnşaat Projeleri'] = ['küçükçemece florya cennet mh.', 'küçükçekmece florya cennet mh.'];
           localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(delRecs));
         }
-        genericProjectCodes.forEach(c => unmarkDeleted('İnşaat Projeleri', c));
+        unmarkDeleted('İnşaat Projeleri', 'Gençosman 12357/58');
+        unmarkDeleted('İnşaat Projeleri', 'gencosman 12357/58');
+        unmarkDeleted('İnşaat Projeleri', '12357/58');
+        unmarkDeleted('İnşaat Projeleri', 'Gençosman 0/4012');
+        unmarkDeleted('İnşaat Projeleri', 'gencosman 0/4012');
+        unmarkDeleted('İnşaat Projeleri', 'PRJ-RP-2026');
+        unmarkDeleted('İnşaat Projeleri', 'PRJ-RP-2025');
 
         const existingAccounts = JSON.parse(localStorage.getItem('yg_accounts_lite') || '[]');
         if (Array.isArray(existingAccounts) && existingAccounts.length > 0) {
@@ -9087,7 +9091,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             const code = cleanText(r['Proje Kodu'] || r['col_1']);
             if (!name && !code) return false;
             if (name === "Bağdat Caddesi Kentsel Dönüşüm" || code === "PRJ-2026-01") return false;
-            if (name && isRecordDeleted('İnşaat Projeleri', name)) return false;
+            if (name && isRecordDeleted('İnşaat Projeleri', name)) {
+              const lower = name.toLowerCase();
+              if (lower.includes('cennet') || lower.includes('florya')) return false;
+              unmarkDeleted('İnşaat Projeleri', name);
+            }
             return true;
           })
           .map((r, idx) => {
