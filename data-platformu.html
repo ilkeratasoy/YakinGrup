@@ -17,6 +17,8 @@
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
   <!-- QRCode.js -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- Supabase JS Client (v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
@@ -2386,9 +2388,46 @@
         <span style="font-size: 0.7rem; color: var(--muted);">Kartvizit ve fatura okumada kullanılır (Varsayılan aktif).</span>
       </div>
 
-      <!-- Google Sheets Webhook Section -->
+      <!-- Supabase PostgreSQL Entegrasyonu (Hibrit Model: Birincil DB) -->
+      <div style="margin-bottom: 14px; padding: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <label style="font-size: 0.8rem; font-weight: 800; color: #166534; display: flex; align-items: center; gap: 6px; margin: 0;">
+            ⚡ Supabase Veritabanı (Birincil DB + Realtime)
+          </label>
+          <span id="supabase-status-pill" style="font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; background: #e2e8f0; color: #475569;">
+            Yapılandırılmadı
+          </span>
+        </div>
+        <p style="font-size: 0.7rem; color: #15803d; margin-bottom: 8px; line-height: 1.4;">
+          ACID veri güvenliği, çoklu cihaz anlık senkronizasyon ve döküman arşivi. Google Sheets arka planda canlı yedek olarak güncellenir.
+        </p>
+        <div style="margin-bottom: 6px;">
+          <label style="font-size: 0.72rem; font-weight: 700; color: #166534; display: block; margin-bottom: 2px;">Project URL</label>
+          <input type="url" id="supabase-url-input" placeholder="https://xxxxxxxx.supabase.co" style="font-family: monospace; font-size: 0.76rem; width: 100%; padding: 7px 10px; border: 1px solid #86efac; border-radius: 6px; background: #ffffff;">
+        </div>
+        <div style="margin-bottom: 8px;">
+          <label style="font-size: 0.72rem; font-weight: 700; color: #166534; display: block; margin-bottom: 2px;">Anon Public Key</label>
+          <input type="password" id="supabase-key-input" placeholder="eyJhbGciOiJIUzI1NiIsIn..." style="font-family: monospace; font-size: 0.76rem; width: 100%; padding: 7px 10px; border: 1px solid #86efac; border-radius: 6px; background: #ffffff;">
+        </div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-navy btn-sm" onclick="testSupabaseConnection()" style="font-size: 0.72rem; padding: 6px 10px; flex: 1;">
+            🔌 Bağlantıyı Test Et
+          </button>
+          <button type="button" class="btn btn-sm" onclick="copySupabaseSchemaSql()" style="font-size: 0.72rem; padding: 6px 10px; background: #ffffff; border: 1px solid #86efac; color: #166534;">
+            📋 SQL Şemasını Kopyala
+          </button>
+        </div>
+        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed #bbf7d0;">
+          <button type="button" class="btn btn-sm btn-full" onclick="migrateSheetsToSupabase()" style="font-size: 0.74rem; font-weight: 700; padding: 7px 10px; background: #16a34a; color: #ffffff; border: none; border-radius: 6px;">
+            🚀 Google Sheets'ten Supabase'e Aktar (Migrate)
+          </button>
+          <div id="supabase-migrate-status" style="font-size: 0.68rem; color: #15803d; margin-top: 4px; display: none;"></div>
+        </div>
+      </div>
+
+      <!-- Google Sheets Webhook Section (Canlı Yedekleme) -->
       <div style="margin-bottom: 14px;">
-        <label style="font-size: 0.78rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px;">📊 Google Sheets Webhook URL</label>
+        <label style="font-size: 0.78rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px;">📊 Google Sheets Canlı Yedek Webhook</label>
         <input type="url" id="webhook-url-input" placeholder="https://script.google.com/macros/s/.../exec" style="font-family: monospace; font-size: 0.78rem; width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;">
         <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 8px;">
           <button type="button" class="btn btn-navy btn-sm" onclick="sendSetupHeadersToSheets()" style="font-size: 0.72rem; padding: 6px 10px; flex: 1;">
@@ -2459,6 +2498,8 @@
     const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwg6DlYRkTwnPaAki8KygD7ZxETuOUbr-k0Y6aFQt_Jc3yIh8TtXBK9IOrayMr13-lh/exec";
     const WEBHOOK_STORAGE_KEY = "yg_gas_webhook_url";
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
+    const SUPABASE_URL_KEY = "yg_supabase_url";
+    const SUPABASE_KEY_KEY = "yg_supabase_key";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
@@ -3287,6 +3328,8 @@ function doPost(e) {
     function saveSettings() {
       const gKey = document.getElementById('gemini-key-input').value.trim();
       const wUrl = document.getElementById('webhook-url-input').value.trim();
+      const sUrl = (document.getElementById('supabase-url-input')?.value || '').trim();
+      const sKey = (document.getElementById('supabase-key-input')?.value || '').trim();
 
       if (gKey) {
         localStorage.setItem(GEMINI_STORAGE_KEY, gKey);
@@ -3298,6 +3341,20 @@ function doPost(e) {
         localStorage.setItem(WEBHOOK_STORAGE_KEY, wUrl);
       } else {
         localStorage.removeItem(WEBHOOK_STORAGE_KEY);
+      }
+
+      if (sUrl && sKey) {
+        localStorage.setItem(SUPABASE_URL_KEY, sUrl);
+        localStorage.setItem(SUPABASE_KEY_KEY, sKey);
+        initSupabase();
+      } else {
+        localStorage.removeItem(SUPABASE_URL_KEY);
+        localStorage.removeItem(SUPABASE_KEY_KEY);
+        if (supabaseClient && realtimeChannel) {
+          try { supabaseClient.removeChannel(realtimeChannel); } catch(e){}
+        }
+        supabaseClient = null;
+        updateSupabaseStatusPill('missing');
       }
 
       closeModal('modal-settings');
@@ -4069,12 +4126,7 @@ function doPost(e) {
         c.sector = newSec.trim();
         setStore('yg_cards_lite', cards);
         renderCards();
-        postToWebhook('Müşteriler', [
-          c.date || new Date().toISOString().split('T')[0],
-          c.name, c.company, c.role || '', c.sector,
-          c.mobile || '', c.office || '', c.email || '',
-          c.category || 'Müşteri', c.address || '', c.notes || ''
-        ]);
+        dbSync.saveCard(c, true, c.name);
         showToast(`Sektör güncellendi: ${c.sector}`, '🏢');
       }
     }
@@ -4104,14 +4156,9 @@ function doPost(e) {
           setStore('yg_cards_lite', cards);
           renderCards();
 
-          postDeleteToWebhook('Müşteriler', 'Ad Soyad', oldName);
-          postToWebhook('Müşteriler', [
-            c.date || new Date().toISOString().split('T')[0],
-            c.name, c.company, c.role, c.sector, c.mobile, c.office, c.email, c.category, c.address, c.notes
-          ]);
-
           cancelCardEdit();
           showToast(`"${c.name}" kartviziti güncellendi! ✏️`);
+          dbSync.saveCard(c, true, oldName);
           return;
         }
       }
@@ -4140,10 +4187,7 @@ function doPost(e) {
       if (newC.office) unmarkDeleted('Müşteriler', newC.office);
       if (newC.email) unmarkDeleted('Müşteriler', newC.email);
 
-      // Auto Send to Google Sheets Webhook (11 sütun: Sektör ayrımı ile birlikte)
-      postToWebhook('Müşteriler', [
-        newC.date, newC.name, newC.company, newC.role, newC.sector, newC.mobile, newC.office, newC.email, newC.category, newC.address, newC.notes
-      ]);
+      dbSync.saveCard(newC, false);
 
       renderCards();
       document.getElementById('card-form').reset();
@@ -4151,7 +4195,7 @@ function doPost(e) {
       if (custInput) custInput.style.display = 'none';
       document.getElementById('card-preview').style.display = 'none';
       document.getElementById('ocr-loader').style.display = 'none';
-      showToast(`Kartvizit (${newC.sector}) kaydedildi & Sheets ile senkronize!`, '📇');
+      showToast(`Kartvizit (${newC.sector}) kaydedildi & Senkronize!`, '📇');
     }
 
     function renderCards() {
@@ -4260,7 +4304,7 @@ function doPost(e) {
       setStore('yg_cards_lite', cards);
       renderCards();
 
-      postDeleteToWebhook('Müşteriler', 'Ad Soyad', c.name);
+      dbSync.deleteCard(c);
       showToast(`"${c.name}" silindi ✅`);
     }
 
@@ -5150,7 +5194,7 @@ function doPost(e) {
       populateTodoProjectSelect();
       populateAccountProjectSelect();
 
-      postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name);
+      dbSync.deleteProject(p);
       showToast(`"${p.name}" silindi ✅`);
     }
 
@@ -5231,26 +5275,7 @@ function doPost(e) {
             showToast(`"${p.name}" projesi güncellendi! ✏️`);
           }
 
-          (async () => {
-            try {
-              if (oldName) {
-                await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
-              }
-              if (oldCode && oldCode !== p.code) {
-                await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
-              }
-              await postToWebhook('İnşaat Projeleri', [
-                p.date || new Date().toISOString().split('T')[0],
-                p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
-                `%${p.progress}`, p.status, p.notes,
-                p.district, p.neighborhood, p.ada, p.parsel, p.area,
-                p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
-                p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
-              ]);
-            } catch(syncErr) {
-              console.warn("Proje senkronizasyon uyarısı:", syncErr);
-            }
-          })();
+          dbSync.saveProject(p, true, oldName, oldCode);
           return;
         }
       }
@@ -5311,14 +5336,7 @@ function doPost(e) {
         showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
       }
 
-      postToWebhook('İnşaat Projeleri', [
-        newP.date,
-        newP.code, newP.name, newP.type, newP.client, newP.location, newP.budget, newP.startDate, newP.endDate,
-        `%${newP.progress}`, newP.status, newP.notes,
-        newP.district, newP.neighborhood, newP.ada, newP.parsel, newP.area,
-        newP.municipality, newP.imarUrl, newP.taks, newP.kaks, newP.floors, newP.setbacks, newP.nizam,
-        newP.buildingName, newP.unitCount, newP.managerName, newP.managerPhone, newP.managerEmail, newP.managerNotes
-      ]);
+      dbSync.saveProject(newP, false);
     }
 
     /* ================================================================
@@ -6953,7 +6971,7 @@ function doPost(e) {
       setStore('yg_accounts_lite', accounts);
       renderAccounts();
 
-      postDeleteToWebhook('Cari Kartları', 'Firma Adı', a.company);
+      dbSync.deleteAccount(a);
       showToast(`"${a.company}" silindi ✅`);
     }
 
@@ -7036,10 +7054,7 @@ function doPost(e) {
           closeModal('modal-new-account');
           showToast(`"${a.company}" cari kartı güncellendi! ✏️`);
 
-          postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
-          postToWebhook('Cari Kartları', [
-            new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, webhookNotes, a.receivable, a.payable, a.balance
-          ]);
+          dbSync.saveAccount(a, true, oldCompany, webhookNotes);
           return;
         }
       }
@@ -7094,9 +7109,7 @@ function doPost(e) {
 
       unmarkDeleted('Cari Kartları', newA.company);
 
-      postToWebhook('Cari Kartları', [
-        new Date().toISOString().split('T')[0], newA.company, newA.type, newA.contact, newA.phone, newA.email, newA.taxOffice, newA.taxNo, newA.address, webhookNotes, newA.receivable, newA.payable, newA.balance
-      ]);
+      dbSync.saveAccount(newA, false, null, webhookNotes);
 
       closeModal('modal-new-account');
       renderAccounts();
@@ -7648,28 +7661,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (loadEl) loadEl.style.display = 'none';
           const custInput = document.getElementById('inv-category-custom');
           if (custInput) custInput.style.display = 'none';
-          e.target.reset();
-
-          if (oldNo) {
-            await postDeleteToWebhook('Alış Faturaları', 'Fatura No', oldNo);
-          }
-          await postToWebhook('Alış Faturaları', [
-            inv.regDate || new Date().toISOString().split('T')[0],
-            inv.date,
-            inv.no,
-            inv.category,
-            inv.vendor,
-            inv.tax,
-            inv.project,
-            inv.subtotal,
-            inv.vat,
-            inv.total,
-            inv.dueDate,
-            inv.status,
-            inv.method,
-            inv.desc,
-            inv.notes
-          ]);
+          dbSync.saveInvoice(inv, true, oldNo);
           return;
         }
       }
@@ -7711,23 +7703,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (custInput) custInput.style.display = 'none';
       e.target.reset();
 
-      await postToWebhook('Alış Faturaları', [
-        newInv.regDate,
-        newInv.date,
-        newInv.no,
-        newInv.category,
-        newInv.vendor,
-        newInv.tax,
-        newInv.project,
-        newInv.subtotal,
-        newInv.vat,
-        newInv.total,
-        newInv.dueDate,
-        newInv.status,
-        newInv.method,
-        newInv.desc,
-        newInv.notes
-      ]);
+      dbSync.saveInvoice(newInv, false);
     }
 
     function renderInvoices() {
@@ -7949,23 +7925,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_invoices_lite', invoices);
       renderInvoices();
       showToast(`Fatura ${inv.status} olarak güncellendi!`, '🧾');
-      postToWebhook('Alış Faturaları', [
-        inv.regDate || new Date().toISOString().split('T')[0],
-        inv.date,
-        inv.no,
-        inv.category,
-        inv.vendor,
-        inv.tax || '',
-        inv.project || '',
-        inv.subtotal || 0,
-        inv.vat || 0,
-        inv.total || 0,
-        inv.dueDate || '',
-        inv.status,
-        inv.method || 'Banka Havale / EFT',
-        inv.desc || '',
-        inv.notes || ''
-      ]);
+      dbSync.saveInvoice(inv, true, inv.no);
     }
 
     function deleteInvoice(id) {
@@ -7979,7 +7939,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_invoices_lite', invoices);
       renderInvoices();
 
-      postDeleteToWebhook('Alış Faturaları', 'Fatura No', inv.no);
+      dbSync.deleteInvoice(inv);
       showToast(`"${inv.no}" fatura silindi ✅`);
     }
 
@@ -8118,7 +8078,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_docs_lite', docs);
       renderDocs();
 
-      postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', d.title);
+      dbSync.deleteDoc(d);
       showToast(`"${d.title}" silindi ✅`);
     }
 
@@ -8144,10 +8104,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           closeModal('modal-new-doc');
           showToast(`"${d.title}" dökümanı güncellendi! ✏️`);
 
-          postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', oldTitle);
-          postToWebhook('Proje Dökümanları', [
-            new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date, d.expiry, d.url, d.notes
-          ]);
+          dbSync.saveDoc(d, true, oldTitle);
           return;
         }
       }
@@ -8168,9 +8125,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       unmarkDeleted('Proje Dökümanları', newD.title);
 
-      postToWebhook('Proje Dökümanları', [
-        new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.date, newD.expiry, newD.url, newD.notes
-      ]);
+      dbSync.saveDoc(newD, false);
 
       clearGeneralDocFile();
       closeModal('modal-new-doc');
@@ -8431,14 +8386,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
           if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
 
-          // 2. ARKA PLANDA BULUT SENKRONİZASYONU (Arayüzü bekletmez / dondurmaz)
-          (async () => {
-            await postDeleteToWebhook('To Do list', 'To Do List', oldTitle);
-            postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
-            postDeleteToWebhook('Yapılacaklar', 'To Do List', oldTitle);
-            await postToWebhook('To Do list', rowData);
-          })();
-
+          dbSync.saveTodo(t, true, oldTitle);
           return;
         }
       }
@@ -8471,9 +8419,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
       if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
 
-      postToWebhook('To Do list', [
-        newT.createdAt, newT.title, newT.project, newT.priority, newT.assignee, newT.dueDate, 'Bekliyor', newT.notes
-      ]);
+      dbSync.saveTodo(newT, false);
     }
 
     function toggleTodoStatus(id) {
@@ -8484,22 +8430,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderTodos();
 
       showToast(t.completed ? 'Görev tamamlandı! 🎉' : 'Görev bekliyor yapıldı', t.completed ? '✅' : '⏳');
-
-      const rowData = [
-        t.createdAt || new Date().toISOString().split('T')[0],
-        t.title,
-        t.project || 'Genel',
-        t.priority || 'Normal',
-        t.assignee || '',
-        t.dueDate || '',
-        t.completed ? 'Tamamlandı' : 'Bekliyor',
-        t.notes || ''
-      ];
-
-      (async () => {
-        await postDeleteToWebhook('To Do list', 'To Do List', t.title);
-        await postToWebhook('To Do list', rowData);
-      })();
+      dbSync.saveTodo(t, true, t.title);
     }
 
     function deleteTodo(id) {
@@ -8515,10 +8446,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderTodos();
       showToast(`"${t.title}" silindi ✅`);
 
-      (async () => {
-        await postDeleteToWebhook('To Do list', 'To Do List', t.title);
-        postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title);
-      })();
+      dbSync.deleteTodo(t);
     }
 
     function exportTodosCsv() {
@@ -8607,7 +8535,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_stock_lite', stock);
       renderStock();
 
-      postDeleteToWebhook('Stok', 'Malzeme Adı', s.name);
+      dbSync.deleteStock(s);
       showToast(`"${s.name}" silindi ✅`);
     }
 
@@ -8641,10 +8569,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           closeModal('modal-new-stock');
           showToast(`"${s.name}" stok kalemi güncellendi! ✏️`);
 
-          postDeleteToWebhook('Stok', 'Malzeme Adı', oldName);
-          postToWebhook('Stok', [
-            new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.price, s.totalValue, s.location, s.status, s.notes
-          ]);
+          dbSync.saveStock(s, true, oldName);
           return;
         }
       }
@@ -8670,9 +8595,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       unmarkDeleted('Stok', newS.name);
       if (newS.code) unmarkDeleted('Stok', newS.code);
 
-      postToWebhook('Stok', [
-        new Date().toISOString().split('T')[0], newS.code, newS.name, newS.category, newS.qty, newS.unit, newS.price, newS.totalValue, newS.location, newS.status, newS.notes
-      ]);
+      dbSync.saveStock(newS, false);
 
       closeModal('modal-new-stock');
       renderStock();
@@ -8751,6 +8674,1190 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         console.error("Update sync error", err);
       }
     }
+
+    /* ================================================================
+       SUPABASE VERİTABANI & ÇİFT YÖNLÜ SENKRONİZASYON (HİBRİT MODEL)
+       ================================================================ */
+    let supabaseClient = null;
+    let realtimeChannel = null;
+
+    function getSupabaseConfig() {
+      const url = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
+      const key = (localStorage.getItem(SUPABASE_KEY_KEY) || '').trim();
+      return {
+        url,
+        key,
+        isConfigured: Boolean(url && key && url.startsWith('http'))
+      };
+    }
+
+    function isSupabaseActive() {
+      return Boolean(supabaseClient && getSupabaseConfig().isConfigured);
+    }
+
+    function initSupabase() {
+      const conf = getSupabaseConfig();
+      if (conf.isConfigured && window.supabase && typeof window.supabase.createClient === 'function') {
+        try {
+          supabaseClient = window.supabase.createClient(conf.url, conf.key, {
+            auth: { persistSession: false },
+            realtime: { params: { eventsPerSecond: 10 } }
+          });
+          updateSupabaseStatusPill('connected');
+          subscribeToSupabaseRealtime();
+          return supabaseClient;
+        } catch(e) {
+          console.warn("Supabase başlatma hatası:", e);
+          supabaseClient = null;
+          updateSupabaseStatusPill('error');
+        }
+      } else {
+        supabaseClient = null;
+        updateSupabaseStatusPill(conf.isConfigured ? 'lib_missing' : 'missing');
+      }
+      return null;
+    }
+
+    function updateSupabaseStatusPill(status) {
+      const pill = document.getElementById('supabase-status-pill');
+      if (!pill) return;
+      if (status === 'connected') {
+        pill.textContent = '🟢 Aktif (PostgreSQL)';
+        pill.style.background = '#dcfce7';
+        pill.style.color = '#15803d';
+      } else if (status === 'connected_notables') {
+        pill.textContent = '🟡 Tablolar Bekleniyor';
+        pill.style.background = '#fef9c3';
+        pill.style.color = '#854d0e';
+      } else if (status === 'error') {
+        pill.textContent = '🔴 Bağlantı Hatası';
+        pill.style.background = '#fee2e2';
+        pill.style.color = '#b91c1c';
+      } else if (status === 'lib_missing') {
+        pill.textContent = '🟡 SDK Yükleniyor...';
+        pill.style.background = '#fef9c3';
+        pill.style.color = '#854d0e';
+      } else {
+        pill.textContent = '⚪ Yapılandırılmadı (Sheets Modu)';
+        pill.style.background = '#f1f5f9';
+        pill.style.color = '#475569';
+      }
+    }
+
+    async function testSupabaseConnection() {
+      const urlEl = document.getElementById('supabase-url-input');
+      const keyEl = document.getElementById('supabase-key-input');
+      const url = (urlEl ? urlEl.value : '').trim();
+      const key = (keyEl ? keyEl.value : '').trim();
+
+      if (!url || !key) {
+        showToast('Lütfen önce Supabase URL ve Anon Key girin!', '⚠️');
+        updateSupabaseStatusPill('missing');
+        return;
+      }
+
+      showToast('Supabase bağlantısı test ediliyor...', '🔌');
+      try {
+        if (!window.supabase) {
+          throw new Error('Supabase kütüphanesi henüz hazır değil');
+        }
+        const testClient = window.supabase.createClient(url, key, { auth: { persistSession: false } });
+        const { data, error } = await testClient.from('projects').select('count', { count: 'exact', head: true });
+        if (error) {
+          if (error.code === '42P01') {
+            showToast('Bağlantı başarılı! Ancak "projects" tablosu henüz açılmamış. SQL şemasını çalıştırın.', '⚠️');
+            updateSupabaseStatusPill('connected_notables');
+            return;
+          }
+          throw error;
+        }
+        showToast('Supabase bağlantısı başarılı! 🟢 PostgreSQL hazır.', '✅');
+        updateSupabaseStatusPill('connected');
+      } catch(err) {
+        console.error("Supabase test hatası:", err);
+        showToast('Bağlantı hatası: ' + (err.message || 'Erişilemedi'), '❌');
+        updateSupabaseStatusPill('error');
+      }
+    }
+
+    const SUPABASE_SCHEMA_SQL = `-- ========================================================================
+-- YAKIN GRUP DATA PLATFORMU — SUPABASE (POSTGRESQL) SCHEMA
+-- ========================================================================
+
+-- 1. İNŞAAT PROJELERİ TABLOSU
+CREATE TABLE IF NOT EXISTS public.projects (
+  id TEXT PRIMARY KEY,
+  date TEXT DEFAULT '',
+  code TEXT DEFAULT '',
+  name TEXT UNIQUE NOT NULL,
+  type TEXT DEFAULT 'Kentsel Dönüşüm',
+  client TEXT DEFAULT '',
+  location TEXT DEFAULT '',
+  budget TEXT DEFAULT '',
+  start_date TEXT DEFAULT '',
+  end_date TEXT DEFAULT '',
+  progress INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'Planlama',
+  notes TEXT DEFAULT '',
+  district TEXT DEFAULT '',
+  neighborhood TEXT DEFAULT '',
+  ada TEXT DEFAULT '',
+  parsel TEXT DEFAULT '',
+  area TEXT DEFAULT '',
+  municipality TEXT DEFAULT '',
+  imar_url TEXT DEFAULT '',
+  taks TEXT DEFAULT '',
+  kaks TEXT DEFAULT '',
+  floors TEXT DEFAULT '',
+  setbacks TEXT DEFAULT '',
+  nizam TEXT DEFAULT 'Ayrık Nizam',
+  building_name TEXT DEFAULT '',
+  unit_count TEXT DEFAULT '',
+  manager_name TEXT DEFAULT '',
+  manager_phone TEXT DEFAULT '',
+  manager_email TEXT DEFAULT '',
+  manager_notes TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. CARİ KARTLARI TABLOSU
+CREATE TABLE IF NOT EXISTS public.accounts (
+  id TEXT PRIMARY KEY,
+  company TEXT UNIQUE NOT NULL,
+  type TEXT DEFAULT 'Müşteri',
+  related_project TEXT DEFAULT '',
+  related_projects JSONB DEFAULT '[]'::jsonb,
+  contact TEXT DEFAULT '',
+  phone TEXT DEFAULT '',
+  email TEXT DEFAULT '',
+  website TEXT DEFAULT '',
+  tax_office TEXT DEFAULT '',
+  tax_no TEXT DEFAULT '',
+  tax TEXT DEFAULT '',
+  iban TEXT DEFAULT '',
+  address TEXT DEFAULT '',
+  notes TEXT DEFAULT '',
+  receivable NUMERIC DEFAULT 0,
+  collected NUMERIC DEFAULT 0,
+  payable NUMERIC DEFAULT 0,
+  balance NUMERIC DEFAULT 0,
+  expense_items JSONB DEFAULT '[]'::jsonb,
+  documents JSONB DEFAULT '[]'::jsonb,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 3. ALIŞ FATURALARI TABLOSU
+CREATE TABLE IF NOT EXISTS public.invoices (
+  id TEXT PRIMARY KEY,
+  reg_date TEXT DEFAULT '',
+  date TEXT DEFAULT '',
+  no TEXT UNIQUE NOT NULL,
+  category TEXT DEFAULT '',
+  vendor TEXT DEFAULT '',
+  tax TEXT DEFAULT '',
+  project TEXT DEFAULT '',
+  subtotal NUMERIC DEFAULT 0,
+  vat NUMERIC DEFAULT 0,
+  total NUMERIC DEFAULT 0,
+  due_date TEXT DEFAULT '',
+  status TEXT DEFAULT 'Bekliyor',
+  method TEXT DEFAULT 'Banka Havale / EFT',
+  description TEXT DEFAULT '',
+  notes TEXT DEFAULT '',
+  file_url TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 4. PROJE DÖKÜMANLARI TABLOSU
+CREATE TABLE IF NOT EXISTS public.documents (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  type TEXT DEFAULT '',
+  project TEXT DEFAULT '',
+  date TEXT DEFAULT '',
+  expiry TEXT DEFAULT '',
+  url TEXT DEFAULT '',
+  notes TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 5. TO DO LIST TABLOSU
+CREATE TABLE IF NOT EXISTS public.todos (
+  id TEXT PRIMARY KEY,
+  created_at_date TEXT DEFAULT '',
+  title TEXT NOT NULL,
+  project TEXT DEFAULT 'Genel',
+  priority TEXT DEFAULT 'Normal',
+  assignee TEXT DEFAULT '',
+  due_date TEXT DEFAULT '',
+  completed BOOLEAN DEFAULT false,
+  notes TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 6. STOK TABLOSU
+CREATE TABLE IF NOT EXISTS public.stock (
+  id TEXT PRIMARY KEY,
+  code TEXT DEFAULT '',
+  name TEXT NOT NULL,
+  category TEXT DEFAULT 'Demir & Çelik',
+  qty NUMERIC DEFAULT 0,
+  unit TEXT DEFAULT 'Adet',
+  price TEXT DEFAULT '',
+  total_value TEXT DEFAULT '',
+  location TEXT DEFAULT '',
+  status TEXT DEFAULT 'Yeterli',
+  notes TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 7. MÜŞTERİLER / KARTVİZİTLER TABLOSU
+CREATE TABLE IF NOT EXISTS public.cards (
+  id TEXT PRIMARY KEY,
+  date TEXT DEFAULT '',
+  name TEXT NOT NULL,
+  company TEXT DEFAULT '',
+  role TEXT DEFAULT '',
+  sector TEXT DEFAULT 'İnşaat & Taahhüt',
+  mobile TEXT DEFAULT '',
+  office TEXT DEFAULT '',
+  phone TEXT DEFAULT '',
+  email TEXT DEFAULT '',
+  category TEXT DEFAULT 'Müşteri',
+  address TEXT DEFAULT '',
+  notes TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Row Level Security (RLS) & Anon Yetkileri
+ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.accounts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.todos ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.stock ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cards ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Anon public access on projects" ON public.projects;
+CREATE POLICY "Anon public access on projects" ON public.projects FOR ALL TO anon USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anon public access on accounts" ON public.accounts;
+CREATE POLICY "Anon public access on accounts" ON public.accounts FOR ALL TO anon USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anon public access on invoices" ON public.invoices;
+CREATE POLICY "Anon public access on invoices" ON public.invoices FOR ALL TO anon USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anon public access on documents" ON public.documents;
+CREATE POLICY "Anon public access on documents" ON public.documents FOR ALL TO anon USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anon public access on todos" ON public.todos;
+CREATE POLICY "Anon public access on todos" ON public.todos FOR ALL TO anon USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anon public access on stock" ON public.stock;
+CREATE POLICY "Anon public access on stock" ON public.stock FOR ALL TO anon USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anon public access on cards" ON public.cards;
+CREATE POLICY "Anon public access on cards" ON public.cards FOR ALL TO anon USING (true) WITH CHECK (true);
+
+-- Realtime Publication
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'projects') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.projects;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'accounts') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.accounts;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'invoices') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.invoices;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'documents') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.documents;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'todos') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.todos;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'stock') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.stock;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'cards') THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.cards;
+  END IF;
+END $$;
+`;
+
+    function copySupabaseSchemaSql() {
+      navigator.clipboard.writeText(SUPABASE_SCHEMA_SQL).then(() => {
+        showToast('Supabase SQL şeması kopyalandı! Supabase SQL Editor\'e yapıştırıp çalıştırabilirsiniz 📋');
+      }).catch(() => {
+        prompt("Aşağıdaki SQL şemasını kopyalayıp Supabase SQL Editor'e yapıştırın:", SUPABASE_SCHEMA_SQL);
+      });
+    }
+
+    // ==========================================
+    // MAPPERS: CLIENT MODEL <-> SUPABASE POSTGRESQL
+    // ==========================================
+    function toSupabaseProject(p) {
+      return {
+        id: p.id || ('p_' + (makeProjectSlug(p.name) || Date.now())),
+        date: p.date || '',
+        code: p.code || '',
+        name: p.name || '',
+        type: p.type || 'Kentsel Dönüşüm',
+        client: p.client || '',
+        location: p.location || '',
+        budget: p.budget || '',
+        start_date: p.startDate || '',
+        end_date: p.endDate || '',
+        progress: parseInt(p.progress) || 0,
+        status: p.status || 'Planlama',
+        notes: p.notes || '',
+        district: p.district || '',
+        neighborhood: p.neighborhood || '',
+        ada: p.ada || '',
+        parsel: p.parsel || '',
+        area: p.area || '',
+        municipality: p.municipality || '',
+        imar_url: p.imarUrl || '',
+        taks: p.taks || '',
+        kaks: p.kaks || '',
+        floors: p.floors || '',
+        setbacks: p.setbacks || '',
+        nizam: p.nizam || 'Ayrık Nizam',
+        building_name: p.buildingName || '',
+        unit_count: p.unitCount || '',
+        manager_name: p.managerName || '',
+        manager_phone: p.managerPhone || '',
+        manager_email: p.managerEmail || '',
+        manager_notes: p.managerNotes || '',
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseProject(r) {
+      return {
+        id: r.id,
+        date: r.date || '',
+        code: r.code || '',
+        name: r.name || '',
+        type: r.type || 'Kentsel Dönüşüm',
+        client: r.client || '',
+        location: r.location || '',
+        budget: r.budget || '',
+        startDate: r.start_date || '',
+        endDate: r.end_date || '',
+        progress: parseInt(r.progress) || 0,
+        status: r.status || 'Planlama',
+        notes: r.notes || '',
+        district: r.district || '',
+        neighborhood: r.neighborhood || '',
+        ada: r.ada || '',
+        parsel: r.parsel || '',
+        area: r.area || '',
+        municipality: r.municipality || '',
+        imarUrl: r.imar_url || '',
+        taks: r.taks || '',
+        kaks: r.kaks || '',
+        floors: r.floors || '',
+        setbacks: r.setbacks || '',
+        nizam: r.nizam || 'Ayrık Nizam',
+        buildingName: r.building_name || '',
+        unitCount: r.unit_count || '',
+        managerName: r.manager_name || '',
+        managerPhone: r.manager_phone || '',
+        managerEmail: r.manager_email || '',
+        managerNotes: r.manager_notes || ''
+      };
+    }
+
+    function toSupabaseAccount(a) {
+      return {
+        id: a.id || ('a_' + Date.now()),
+        company: a.company || '',
+        type: a.type || 'Müşteri',
+        related_project: a.relatedProject || '',
+        related_projects: Array.isArray(a.relatedProjects) ? a.relatedProjects : [],
+        contact: a.contact || '',
+        phone: a.phone || '',
+        email: a.email || '',
+        website: a.website || '',
+        tax_office: a.taxOffice || '',
+        tax_no: a.taxNo || '',
+        tax: a.tax || '',
+        iban: a.iban || '',
+        address: a.address || '',
+        notes: a.notes || '',
+        receivable: parseNumber(a.receivable),
+        collected: parseNumber(a.collected),
+        payable: parseNumber(a.payable),
+        balance: parseNumber(a.balance),
+        expense_items: Array.isArray(a.expenseItems) ? a.expenseItems : [],
+        documents: Array.isArray(a.documents) ? a.documents : [],
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseAccount(r) {
+      return {
+        id: r.id,
+        company: r.company || '',
+        type: r.type || 'Müşteri',
+        relatedProject: r.related_project || '',
+        relatedProjects: Array.isArray(r.related_projects) ? r.related_projects : [],
+        contact: r.contact || '',
+        phone: r.phone || '',
+        email: r.email || '',
+        website: r.website || '',
+        taxOffice: r.tax_office || '',
+        taxNo: r.tax_no || '',
+        tax: r.tax || '',
+        iban: r.iban || '',
+        address: r.address || '',
+        notes: r.notes || '',
+        receivable: parseFloat(r.receivable) || 0,
+        collected: parseFloat(r.collected) || 0,
+        payable: parseFloat(r.payable) || 0,
+        balance: parseFloat(r.balance) || 0,
+        expenseItems: Array.isArray(r.expense_items) ? r.expense_items : [],
+        documents: Array.isArray(r.documents) ? r.documents : []
+      };
+    }
+
+    function toSupabaseInvoice(inv) {
+      return {
+        id: inv.id || ('inv_' + Date.now()),
+        reg_date: inv.regDate || new Date().toISOString().split('T')[0],
+        date: inv.date || '',
+        no: inv.no || '',
+        category: inv.category || '',
+        vendor: inv.vendor || '',
+        tax: inv.tax || '',
+        project: inv.project || '',
+        subtotal: parseNumber(inv.subtotal),
+        vat: parseNumber(inv.vat),
+        total: parseNumber(inv.total),
+        due_date: inv.dueDate || '',
+        status: inv.status || 'Bekliyor',
+        method: inv.method || 'Banka Havale / EFT',
+        description: inv.desc || '',
+        notes: inv.notes || '',
+        file_url: inv.fileUrl || '',
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseInvoice(r) {
+      return {
+        id: r.id,
+        regDate: r.reg_date || '',
+        date: r.date || '',
+        no: r.no || '',
+        category: r.category || '',
+        vendor: r.vendor || '',
+        tax: r.tax || '',
+        project: r.project || '',
+        subtotal: parseFloat(r.subtotal) || 0,
+        vat: parseFloat(r.vat) || 0,
+        total: parseFloat(r.total) || 0,
+        dueDate: r.due_date || '',
+        status: r.status || 'Bekliyor',
+        method: r.method || 'Banka Havale / EFT',
+        desc: r.description || '',
+        notes: r.notes || '',
+        fileUrl: r.file_url || ''
+      };
+    }
+
+    function toSupabaseDoc(d) {
+      return {
+        id: d.id || ('d_' + Date.now()),
+        title: d.title || '',
+        type: d.type || '',
+        project: d.project || '',
+        date: d.date || '',
+        expiry: d.expiry || '',
+        url: d.url || '',
+        notes: d.notes || '',
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseDoc(r) {
+      return {
+        id: r.id,
+        title: r.title || '',
+        type: r.type || '',
+        project: r.project || '',
+        date: r.date || '',
+        expiry: r.expiry || '',
+        url: r.url || '',
+        notes: r.notes || ''
+      };
+    }
+
+    function toSupabaseTodo(t) {
+      return {
+        id: t.id || ('todo_' + Date.now()),
+        created_at_date: t.createdAt || new Date().toISOString().split('T')[0],
+        title: t.title || '',
+        project: t.project || 'Genel',
+        priority: t.priority || 'Normal',
+        assignee: t.assignee || '',
+        due_date: t.dueDate || '',
+        completed: Boolean(t.completed),
+        notes: t.notes || '',
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseTodo(r) {
+      return {
+        id: r.id,
+        createdAt: r.created_at_date || '',
+        title: r.title || '',
+        project: r.project || 'Genel',
+        priority: r.priority || 'Normal',
+        assignee: r.assignee || '',
+        dueDate: r.due_date || '',
+        completed: Boolean(r.completed),
+        notes: r.notes || ''
+      };
+    }
+
+    function toSupabaseStock(s) {
+      return {
+        id: s.id || ('s_' + Date.now()),
+        code: s.code || '',
+        name: s.name || '',
+        category: s.category || 'Demir & Çelik',
+        qty: parseFloat(s.qty) || 0,
+        unit: s.unit || 'Adet',
+        price: s.price || '',
+        total_value: s.totalValue || '',
+        location: s.location || '',
+        status: s.status || 'Yeterli',
+        notes: s.notes || '',
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseStock(r) {
+      return {
+        id: r.id,
+        code: r.code || '',
+        name: r.name || '',
+        category: r.category || 'Demir & Çelik',
+        qty: parseFloat(r.qty) || 0,
+        unit: r.unit || 'Adet',
+        price: r.price || '',
+        totalValue: r.total_value || '',
+        location: r.location || '',
+        status: r.status || 'Yeterli',
+        notes: r.notes || ''
+      };
+    }
+
+    function toSupabaseCard(c) {
+      return {
+        id: c.id || ('c_' + Date.now()),
+        date: c.date || new Date().toISOString().split('T')[0],
+        name: c.name || '',
+        company: c.company || '',
+        role: c.role || '',
+        sector: c.sector || 'İnşaat & Taahhüt',
+        mobile: c.mobile || '',
+        office: c.office || '',
+        phone: c.phone || '',
+        email: c.email || '',
+        category: c.category || 'Müşteri',
+        address: c.address || '',
+        notes: c.notes || '',
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function fromSupabaseCard(r) {
+      return {
+        id: r.id,
+        date: r.date || '',
+        name: r.name || '',
+        company: r.company || '',
+        role: r.role || '',
+        sector: r.sector || 'İnşaat & Taahhüt',
+        mobile: r.mobile || '',
+        office: r.office || '',
+        phone: r.phone || '',
+        email: r.email || '',
+        category: r.category || 'Müşteri',
+        address: r.address || '',
+        notes: r.notes || ''
+      };
+    }
+
+    // ==========================================
+    // REALTIME WEBSOCKET SUBSCRIPTION
+    // ==========================================
+    function subscribeToSupabaseRealtime() {
+      if (!supabaseClient) return;
+      if (realtimeChannel) {
+        try { supabaseClient.removeChannel(realtimeChannel); } catch(e){}
+      }
+      try {
+        realtimeChannel = supabaseClient.channel('yg-public-realtime')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, payload => handleRealtimeChange('projects', payload))
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'accounts' }, payload => handleRealtimeChange('accounts', payload))
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'invoices' }, payload => handleRealtimeChange('invoices', payload))
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'documents' }, payload => handleRealtimeChange('documents', payload))
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'todos' }, payload => handleRealtimeChange('todos', payload))
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'stock' }, payload => handleRealtimeChange('stock', payload))
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'cards' }, payload => handleRealtimeChange('cards', payload))
+          .subscribe();
+      } catch(e) {
+        console.warn("Realtime abonelik uyarısı:", e);
+      }
+    }
+
+    function handleRealtimeChange(table, payload) {
+      console.log(`[Supabase Realtime] ${table}:`, payload.eventType, payload.new, payload.old);
+      const { eventType, new: newRecord, old: oldRecord } = payload;
+      
+      if (table === 'projects') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const p = fromSupabaseProject(newRecord);
+          const idx = projects.findIndex(x => x.id === p.id || (p.name && x.name.toLowerCase() === p.name.toLowerCase()));
+          if (idx >= 0) projects[idx] = p;
+          else projects.unshift(p);
+          setStore('yg_projects_lite', projects);
+          renderProjects();
+          populateDocProjectSelect();
+          populateInvoiceProjectSelect();
+          populateTodoProjectSelect();
+          populateAccountProjectSelect();
+          syncProjectsToAccounts(false);
+        } else if (eventType === 'DELETE' && oldRecord) {
+          projects = projects.filter(x => x.id !== oldRecord.id && x.name !== oldRecord.name);
+          setStore('yg_projects_lite', projects);
+          renderProjects();
+        }
+      } else if (table === 'accounts') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const a = fromSupabaseAccount(newRecord);
+          const idx = accounts.findIndex(x => x.id === a.id || (a.company && x.company.toLowerCase() === a.company.toLowerCase()));
+          if (idx >= 0) accounts[idx] = a;
+          else accounts.unshift(a);
+          setStore('yg_accounts_lite', accounts);
+          renderAccounts();
+        } else if (eventType === 'DELETE' && oldRecord) {
+          accounts = accounts.filter(x => x.id !== oldRecord.id && x.company !== oldRecord.company);
+          setStore('yg_accounts_lite', accounts);
+          renderAccounts();
+        }
+      } else if (table === 'invoices') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const inv = fromSupabaseInvoice(newRecord);
+          const idx = invoices.findIndex(x => x.id === inv.id || (inv.no && x.no.toLowerCase() === inv.no.toLowerCase()));
+          if (idx >= 0) invoices[idx] = inv;
+          else invoices.unshift(inv);
+          setStore('yg_invoices_lite', invoices);
+          renderInvoices();
+        } else if (eventType === 'DELETE' && oldRecord) {
+          invoices = invoices.filter(x => x.id !== oldRecord.id && x.no !== oldRecord.no);
+          setStore('yg_invoices_lite', invoices);
+          renderInvoices();
+        }
+      } else if (table === 'documents') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const doc = fromSupabaseDoc(newRecord);
+          const idx = docs.findIndex(x => x.id === doc.id || (doc.title && x.title.toLowerCase() === doc.title.toLowerCase()));
+          if (idx >= 0) docs[idx] = doc;
+          else docs.unshift(doc);
+          setStore('yg_docs_lite', docs);
+          renderDocs();
+        } else if (eventType === 'DELETE' && oldRecord) {
+          docs = docs.filter(x => x.id !== oldRecord.id && x.title !== oldRecord.title);
+          setStore('yg_docs_lite', docs);
+          renderDocs();
+        }
+      } else if (table === 'todos') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const t = fromSupabaseTodo(newRecord);
+          const idx = todos.findIndex(x => x.id === t.id || (t.title && x.title.toLowerCase() === t.title.toLowerCase()));
+          if (idx >= 0) todos[idx] = t;
+          else todos.unshift(t);
+          setStore('yg_todos_lite', todos);
+          renderTodos();
+        } else if (eventType === 'DELETE' && oldRecord) {
+          todos = todos.filter(x => x.id !== oldRecord.id && x.title !== oldRecord.title);
+          setStore('yg_todos_lite', todos);
+          renderTodos();
+        }
+      } else if (table === 'stock') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const s = fromSupabaseStock(newRecord);
+          const idx = stock.findIndex(x => x.id === s.id || (s.code && x.code.toLowerCase() === s.code.toLowerCase()));
+          if (idx >= 0) stock[idx] = s;
+          else stock.unshift(s);
+          setStore('yg_stock_lite', stock);
+          renderStock();
+        } else if (eventType === 'DELETE' && oldRecord) {
+          stock = stock.filter(x => x.id !== oldRecord.id && x.code !== oldRecord.code);
+          setStore('yg_stock_lite', stock);
+          renderStock();
+        }
+      } else if (table === 'cards') {
+        if (eventType === 'INSERT' || eventType === 'UPDATE') {
+          if (!newRecord) return;
+          const c = fromSupabaseCard(newRecord);
+          const idx = cards.findIndex(x => x.id === c.id || (c.name && x.name.toLowerCase() === c.name.toLowerCase()));
+          if (idx >= 0) cards[idx] = c;
+          else cards.unshift(c);
+          setStore('yg_cards_lite', cards);
+          renderCards();
+        } else if (eventType === 'DELETE' && oldRecord) {
+          cards = cards.filter(x => x.id !== oldRecord.id && x.name !== oldRecord.name);
+          setStore('yg_cards_lite', cards);
+          renderCards();
+        }
+      }
+    }
+
+    // ==========================================
+    // SUPABASE'TEN VERİLERİ YÜKLEME
+    // ==========================================
+    async function loadFromSupabase() {
+      if (!supabaseClient) return false;
+      try {
+        const [pRes, aRes, iRes, dRes, tRes, sRes, cRes] = await Promise.all([
+          supabaseClient.from('projects').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('accounts').select('*').order('company', { ascending: true }),
+          supabaseClient.from('invoices').select('*').order('date', { ascending: false }),
+          supabaseClient.from('documents').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('todos').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('stock').select('*').order('name', { ascending: true }),
+          supabaseClient.from('cards').select('*').order('name', { ascending: true })
+        ]);
+
+        let loadedCount = 0;
+
+        if (pRes.data && pRes.data.length > 0) {
+          projects = pRes.data.map(fromSupabaseProject);
+          setStore('yg_projects_lite', projects);
+          renderProjects();
+          populateDocProjectSelect();
+          populateInvoiceProjectSelect();
+          populateTodoProjectSelect();
+          populateAccountProjectSelect();
+          loadedCount += pRes.data.length;
+        }
+
+        if (aRes.data && aRes.data.length > 0) {
+          accounts = aRes.data.map(fromSupabaseAccount);
+          setStore('yg_accounts_lite', accounts);
+          syncProjectsToAccounts(false);
+          renderAccounts();
+          loadedCount += aRes.data.length;
+        }
+
+        if (iRes.data && iRes.data.length > 0) {
+          invoices = iRes.data.map(fromSupabaseInvoice);
+          setStore('yg_invoices_lite', invoices);
+          renderInvoices();
+          populateInvoiceProjectSelect();
+          loadedCount += iRes.data.length;
+        }
+
+        if (dRes.data && dRes.data.length > 0) {
+          docs = dRes.data.map(fromSupabaseDoc);
+          setStore('yg_docs_lite', docs);
+          renderDocs();
+          loadedCount += dRes.data.length;
+        }
+
+        if (tRes.data && tRes.data.length > 0) {
+          todos = tRes.data.map(fromSupabaseTodo);
+          setStore('yg_todos_lite', todos);
+          renderTodos();
+          loadedCount += tRes.data.length;
+        }
+
+        if (sRes.data && sRes.data.length > 0) {
+          stock = sRes.data.map(fromSupabaseStock);
+          setStore('yg_stock_lite', stock);
+          renderStock();
+          loadedCount += sRes.data.length;
+        }
+
+        if (cRes.data && cRes.data.length > 0) {
+          cards = cRes.data.map(fromSupabaseCard);
+          setStore('yg_cards_lite', cards);
+          renderCards();
+          loadedCount += cRes.data.length;
+        }
+
+        return loadedCount > 0;
+      } catch(err) {
+        console.warn("Supabase verileri yüklenirken hata:", err);
+        return false;
+      }
+    }
+
+    // ==========================================
+    // TEK TIKLA MİGRASYON: GOOGLE SHEETS -> SUPABASE
+    // ==========================================
+    async function migrateSheetsToSupabase() {
+      const conf = getSupabaseConfig();
+      if (!conf.isConfigured || !supabaseClient) {
+        showToast('Lütfen önce Supabase URL ve Anon Key girip "Kaydet"e basın!', '⚠️');
+        return;
+      }
+
+      const statusEl = document.getElementById('supabase-migrate-status');
+      if (statusEl) {
+        statusEl.style.display = 'block';
+        statusEl.textContent = '⏳ Google Sheets verileri taranıyor...';
+      }
+
+      try {
+        if (projects.length === 0 || accounts.length === 0) {
+          await loadFromGoogleSheets(true);
+        }
+
+        let summary = [];
+
+        if (projects.length > 0) {
+          if (statusEl) statusEl.textContent = `⏳ ${projects.length} proje Supabase'e yazılıyor...`;
+          const pRows = projects.map(toSupabaseProject);
+          const { error } = await supabaseClient.from('projects').upsert(pRows, { onConflict: 'id' });
+          if (error) throw new Error('Projeler aktarılamadı: ' + error.message);
+          summary.push(`${projects.length} Proje`);
+        }
+
+        if (accounts.length > 0) {
+          if (statusEl) statusEl.textContent = `⏳ ${accounts.length} cari kart Supabase'e yazılıyor...`;
+          const aRows = accounts.map(toSupabaseAccount);
+          const { error } = await supabaseClient.from('accounts').upsert(aRows, { onConflict: 'id' });
+          if (error) throw new Error('Cari Kartlar aktarılamadı: ' + error.message);
+          summary.push(`${accounts.length} Cari`);
+        }
+
+        if (invoices.length > 0) {
+          if (statusEl) statusEl.textContent = `⏳ ${invoices.length} fatura Supabase'e yazılıyor...`;
+          const iRows = invoices.map(toSupabaseInvoice);
+          const { error } = await supabaseClient.from('invoices').upsert(iRows, { onConflict: 'id' });
+          if (error) throw new Error('Faturalar aktarılamadı: ' + error.message);
+          summary.push(`${invoices.length} Fatura`);
+        }
+
+        if (docs.length > 0) {
+          const dRows = docs.map(toSupabaseDoc);
+          await supabaseClient.from('documents').upsert(dRows, { onConflict: 'id' });
+          summary.push(`${docs.length} Evrak`);
+        }
+
+        if (todos.length > 0) {
+          const tRows = todos.map(toSupabaseTodo);
+          await supabaseClient.from('todos').upsert(tRows, { onConflict: 'id' });
+          summary.push(`${todos.length} Görev`);
+        }
+
+        if (stock.length > 0) {
+          const sRows = stock.map(toSupabaseStock);
+          await supabaseClient.from('stock').upsert(sRows, { onConflict: 'id' });
+          summary.push(`${stock.length} Stok`);
+        }
+
+        if (cards.length > 0) {
+          const cRows = cards.map(toSupabaseCard);
+          await supabaseClient.from('cards').upsert(cRows, { onConflict: 'id' });
+          summary.push(`${cards.length} Müşteri`);
+        }
+
+        if (statusEl) {
+          statusEl.textContent = `✅ Başarılı! Aktarılan: ${summary.join(', ')}`;
+          statusEl.style.color = '#15803d';
+        }
+        showToast(`Tüm veriler Supabase veritabanına aktarıldı! (${summary.join(', ')}) 🚀`, '✅');
+      } catch(err) {
+        console.error("Migration hatası:", err);
+        if (statusEl) {
+          statusEl.textContent = `❌ Hata: ${err.message}`;
+          statusEl.style.color = '#b91c1c';
+        }
+        showToast('Aktarım hatası: ' + err.message, '❌');
+      }
+    }
+
+    // ==========================================
+    // HİBRİT SENKRONİZASYON MOTORU (dbSync)
+    // ==========================================
+    const dbSync = {
+      async saveProject(p, isEdit, oldName, oldCode) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseProject(p);
+            await supabaseClient.from('projects').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveProject uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldName) {
+              await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
+            }
+            if (isEdit && oldCode && oldCode !== p.code) {
+              await postDeleteToWebhook('İnşaat Projeleri', 'Proje Kodu', oldCode);
+            }
+            await postToWebhook('İnşaat Projeleri', [
+              p.date || new Date().toISOString().split('T')[0],
+              p.code, p.name, p.type, p.client, p.location, p.budget, p.startDate, p.endDate,
+              `%${p.progress}`, p.status, p.notes,
+              p.district, p.neighborhood, p.ada, p.parsel, p.area,
+              p.municipality, p.imarUrl, p.taks, p.kaks, p.floors, p.setbacks, p.nizam,
+              p.buildingName, p.unitCount, p.managerName, p.managerPhone, p.managerEmail, p.managerNotes
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteProject(p) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('projects').delete().or(`id.eq.${p.id},name.eq.${p.name}`);
+          } catch(err) {
+            console.warn("Supabase deleteProject uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name);
+      },
+
+      async saveAccount(a, isEdit, oldCompany, webhookNotes) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseAccount(a);
+            await supabaseClient.from('accounts').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveAccount uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldCompany) {
+              await postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
+            }
+            await postToWebhook('Cari Kartları', [
+              new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, webhookNotes, a.receivable, a.payable, a.balance
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteAccount(a) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('accounts').delete().or(`id.eq.${a.id},company.eq.${a.company}`);
+          } catch(err) {
+            console.warn("Supabase deleteAccount uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('Cari Kartları', 'Firma Adı', a.company);
+      },
+
+      async saveInvoice(inv, isEdit, oldNo) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseInvoice(inv);
+            await supabaseClient.from('invoices').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveInvoice uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldNo) {
+              await postDeleteToWebhook('Alış Faturaları', 'Fatura No', oldNo);
+            }
+            await postToWebhook('Alış Faturaları', [
+              inv.regDate || new Date().toISOString().split('T')[0],
+              inv.date, inv.no, inv.category, inv.vendor, inv.tax, inv.project,
+              inv.subtotal, inv.vat, inv.total, inv.dueDate, inv.status, inv.method,
+              inv.desc, inv.notes
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteInvoice(inv) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('invoices').delete().or(`id.eq.${inv.id},no.eq.${inv.no}`);
+          } catch(err) {
+            console.warn("Supabase deleteInvoice uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('Alış Faturaları', 'Fatura No', inv.no);
+      },
+
+      async saveDoc(d, isEdit, oldTitle) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseDoc(d);
+            await supabaseClient.from('documents').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveDoc uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldTitle) {
+              await postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', oldTitle);
+            }
+            await postToWebhook('Proje Dökümanları', [
+              new Date().toISOString().split('T')[0], d.title, d.type, d.project, d.date, d.expiry, d.url, d.notes
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteDoc(d) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('documents').delete().or(`id.eq.${d.id},title.eq.${d.title}`);
+          } catch(err) {
+            console.warn("Supabase deleteDoc uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', d.title);
+      },
+
+      async saveTodo(t, isEdit, oldTitle) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseTodo(t);
+            await supabaseClient.from('todos').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveTodo uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldTitle) {
+              await postDeleteToWebhook('To Do list', 'To Do List', oldTitle);
+              await postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', oldTitle);
+            }
+            await postToWebhook('To Do list', [
+              t.createdAt || new Date().toISOString().split('T')[0],
+              t.title, t.project || 'Genel', t.priority || 'Normal',
+              t.assignee || '', t.dueDate || '', t.completed ? 'Tamamlandı' : 'Bekliyor', t.notes || ''
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteTodo(t) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('todos').delete().or(`id.eq.${t.id},title.eq.${t.title}`);
+          } catch(err) {
+            console.warn("Supabase deleteTodo uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('To Do list', 'To Do List', t.title);
+        postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title);
+      },
+
+      async saveStock(s, isEdit, oldName) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseStock(s);
+            await supabaseClient.from('stock').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveStock uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldName) {
+              await postDeleteToWebhook('Stok', 'Malzeme Adı', oldName);
+            }
+            await postToWebhook('Stok', [
+              new Date().toISOString().split('T')[0], s.code, s.name, s.category, s.qty, s.unit, s.price, s.totalValue, s.location, s.status, s.notes
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteStock(s) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('stock').delete().or(`id.eq.${s.id},name.eq.${s.name}`);
+          } catch(err) {
+            console.warn("Supabase deleteStock uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('Stok', 'Malzeme Adı', s.name);
+      },
+
+      async saveCard(c, isEdit, oldName) {
+        if (supabaseClient) {
+          try {
+            const row = toSupabaseCard(c);
+            await supabaseClient.from('cards').upsert(row, { onConflict: 'id' });
+          } catch(err) {
+            console.warn("Supabase saveCard uyarısı:", err);
+          }
+        }
+        (async () => {
+          try {
+            if (isEdit && oldName) {
+              await postDeleteToWebhook('Müşteriler', 'Ad Soyad', oldName);
+            }
+            await postToWebhook('Müşteriler', [
+              c.date || new Date().toISOString().split('T')[0],
+              c.name, c.company, c.role, c.sector, c.mobile, c.office, c.email, c.category, c.address, c.notes
+            ]);
+          } catch(err) {
+            console.warn("Sheets mirror uyarısı:", err);
+          }
+        })();
+      },
+
+      async deleteCard(c) {
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('cards').delete().or(`id.eq.${c.id},name.eq.${c.name}`);
+          } catch(err) {
+            console.warn("Supabase deleteCard uyarısı:", err);
+          }
+        }
+        postDeleteToWebhook('Müşteriler', 'Ad Soyad', c.name);
+      }
+    };
 
     async function resetAllToSingleSample() {
       if (!confirm("E-tablo ve platformdaki tüm fazla örnekler temizlenecek, her kategori için sadece 1 adet temiz örnek bırakılacak. Devam etmek istiyor musunuz?")) return;
@@ -9562,6 +10669,20 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       }
     }
 
+    async function loadInitialData() {
+      const conf = getSupabaseConfig();
+      if (conf.isConfigured && supabaseClient) {
+        showToast('Supabase veritabanı taranıyor...', '⚡');
+        const ok = await loadFromSupabase();
+        if (ok && (projects.length > 0 || accounts.length > 0)) {
+          showToast('Supabase canlı veritabanı yüklendi! ⚡', '✅');
+          return;
+        }
+      }
+      // Supabase yapılandırılmamışsa veya henüz boşsa Google Sheets'ten yükle
+      loadFromGoogleSheets(true);
+    }
+
     // Init
     document.addEventListener('DOMContentLoaded', () => {
       const activeKey = getGeminiApiKey();
@@ -9570,6 +10691,15 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       const webhookEl = document.getElementById('webhook-url-input');
       if (webhookEl) webhookEl.value = getWebhookUrl();
+
+      // Supabase Ayarları & Başlatma
+      const sConf = getSupabaseConfig();
+      const sUrlEl = document.getElementById('supabase-url-input');
+      const sKeyEl = document.getElementById('supabase-key-input');
+      if (sUrlEl) sUrlEl.value = sConf.url;
+      if (sKeyEl) sKeyEl.value = sConf.key;
+
+      initSupabase();
 
       renderCards();
       renderProjects();
@@ -9582,8 +10712,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderTodos();
       renderStock();
 
-      // Açılışta Google Sheets'ten canlı verileri otomatik çek (Tüm cihazlar güncel kalsın)
-      loadFromGoogleSheets(true);
+      // Canlı verileri otomatik çek (Hibrit model: Supabase aktifse öncelikli, yoksa Sheets)
+      loadInitialData();
     });
   </script>
 </body>
