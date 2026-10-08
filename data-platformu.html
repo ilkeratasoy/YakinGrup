@@ -1799,6 +1799,71 @@
               </div>
             </div>
 
+            <!-- Şirket Evrakları & Resmi Belgeler (Vergi Levhası, İmza Sirküleri vb.) -->
+            <div class="form-group full" id="account-docs-section" style="margin-top: 10px; padding-top: 14px; border-top: 1px dashed var(--border);">
+              <div style="font-size: 0.88rem; font-weight: 800; color: var(--navy); display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span>📁 Şirket Evrakları & Resmi Belgeler</span>
+                  <span class="badge" style="font-size: 0.68rem; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-weight: 700;">Vergi Levhası & Şirket Evrakları</span>
+                </div>
+                <span id="account-docs-count-badge" style="font-size: 0.72rem; color: #64748b; font-weight: 600;">0 Belge Ekli</span>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 12px; line-height: 1.4;">
+                Vergi levhası, imza sirküleri, ticaret sicil gazetesi, faaliyet belgesi ve sözleşmeleri doğrudan dosya (PDF / Görsel) olarak yükleyebilir veya bağlantı (Drive / URL) olarak ekleyebilirsiniz.
+              </div>
+
+              <!-- Evrak Giriş Alanları (Form ile Aynı Düzende) -->
+              <div class="form-grid" style="margin-bottom: 12px;">
+                <div class="form-group">
+                  <label>Evrak Türü *</label>
+                  <select id="adoc-type" onchange="onAccountDocTypeChange()">
+                    <option value="Vergi Levhası">📄 Vergi Levhası</option>
+                    <option value="İmza Sirküleri">✍️ İmza Sirküleri</option>
+                    <option value="Ticaret Sicil Gazetesi">📰 Ticaret Sicil Gazetesi</option>
+                    <option value="Faaliyet Belgesi">🏢 Faaliyet Belgesi / Oda Kayıt</option>
+                    <option value="Sözleşme / Protokol">📑 Sözleşme / Protokol</option>
+                    <option value="Kimlik / Vekaletname">🆔 Kimlik / Vekaletname</option>
+                    <option value="Banka / IBAN Yazısı">🏦 Banka / IBAN Teyit Yazısı</option>
+                    <option value="SGK / Borcu Yoktur">📜 SGK / Vergi Borcu Yoktur</option>
+                    <option value="Diğer Şirket Evrakı">📎 Diğer Şirket Evrakı</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Evrak Başlığı / Tanımı</label>
+                  <input type="text" id="adoc-title" placeholder="Örn: 2025-2026 Güncel Vergi Levhası">
+                </div>
+                <div class="form-group">
+                  <label>Evrak / Geçerlilik Tarihi</label>
+                  <input type="date" id="adoc-date">
+                </div>
+                <div class="form-group">
+                  <label>Belge Dosyası (PDF / Görsel)</label>
+                  <div style="display: flex; gap: 6px; align-items: center;">
+                    <input type="file" id="adoc-file" accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx" style="display: none;" onchange="handleAccountDocFileSelected(event)">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('adoc-file').click()" style="padding: 9px 12px; font-size: 0.78rem; font-weight: 700; flex: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="adoc-file-btn">
+                      📎 Dosya Seç (PDF / Resim)
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="adoc-file-clear-btn" onclick="clearAccountDocFile()" style="display: none; padding: 9px 10px; font-size: 0.78rem;" title="Dosyayı Kaldır">✕</button>
+                  </div>
+                  <div id="adoc-file-info" style="font-size: 0.70rem; color: #047857; margin-top: 3px; font-weight: 600; display: none;"></div>
+                </div>
+                <div class="form-group full">
+                  <label>Veya Drive / Bulut Linki (URL)</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="url" id="adoc-url" placeholder="https://drive.google.com/..." style="flex: 1;">
+                    <button type="button" class="btn btn-navy" onclick="addDocItemToCurrentAccount()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; border-radius: 9px;">
+                      ➕ Evrak Ekle
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kayıtlı Evraklar Listesi -->
+              <div id="account-docs-items-container">
+                <!-- JS dinamik doldurur -->
+              </div>
+            </div>
+
             <!-- Gider Kalemleri Paneli (Harita, Mekanik, Belediye Harcı, Ruhsat vb.) -->
             <div class="form-group full" id="account-expense-section" style="margin-top: 10px; padding-top: 14px; border-top: 1px dashed var(--border);">
               <div style="font-size: 0.88rem; font-weight: 800; color: var(--navy); display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
@@ -1956,6 +2021,14 @@
           <div class="form-group">
             <label>Evrak Türü</label>
             <select id="d-type">
+              <optgroup label="Şirket & Resmi Evraklar">
+                <option value="Vergi Levhası">📄 Vergi Levhası</option>
+                <option value="İmza Sirküleri">✍️ İmza Sirküleri</option>
+                <option value="Ticaret Sicil Gazetesi">📰 Ticaret Sicil Gazetesi</option>
+                <option value="Faaliyet Belgesi">🏢 Faaliyet Belgesi / Oda Kayıt</option>
+                <option value="Sözleşme / Protokol">📑 Şirket Sözleşmesi / Protokol</option>
+                <option value="SGK / Borcu Yoktur">📜 SGK / Vergi Borcu Yoktur</option>
+              </optgroup>
               <optgroup label="Sözleşme & Ticari Evraklar">
                 <option value="Teklif">Teklif</option>
                 <option value="Şartname">Şartname</option>
@@ -1993,7 +2066,18 @@
             <input type="date" id="d-expiry">
           </div>
           <div class="form-group full">
-            <label>Drive / Dosya Linki</label>
+            <label>Evrak Dosyası Yükle (PDF / Resim)</label>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <input type="file" id="d-file" accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx" style="display: none;" onchange="handleGeneralDocFileSelected(event)">
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('d-file').click()" style="padding: 9px 12px; font-size: 0.78rem; font-weight: 700; flex: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="d-file-btn">
+                📎 Dosya Seç (PDF / Görsel)
+              </button>
+              <button type="button" class="btn btn-secondary" id="d-file-clear-btn" onclick="clearGeneralDocFile()" style="display: none; padding: 9px 10px; font-size: 0.78rem;">✕</button>
+            </div>
+            <div id="d-file-info" style="font-size: 0.70rem; color: #047857; margin-top: 3px; font-weight: 600; display: none;"></div>
+          </div>
+          <div class="form-group full">
+            <label>Veya Drive / Dosya Linki</label>
             <input type="url" id="d-url" placeholder="https://drive.google.com/...">
           </div>
           <div class="form-group full">
@@ -2339,6 +2423,27 @@
     </div>
   </div>
 
+  <!-- ========================================== -->
+  <!-- MODAL: BELGE / EVRAK GÖRÜNTÜLEYİCİ -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-doc-viewer" style="z-index: 9999;">
+    <div class="modal-sheet" style="max-width: 820px; max-height: 92vh; display: flex; flex-direction: column;">
+      <div class="modal-header-bar" style="background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 12px 12px 0 0;">
+        <div>
+          <h3 id="doc-viewer-title" style="font-size: 1.1rem; font-weight: 800; color: #ffffff; margin: 0;">Evrak Görüntüleyici</h3>
+          <div id="doc-viewer-subtitle" style="font-size: 0.72rem; color: #cbd5e1; margin-top: 2px;">Şirket Resmi Belgesi</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" id="doc-viewer-open-btn" class="btn btn-secondary btn-sm" onclick="openCurrentDocInNewTab()" style="padding: 6px 12px; font-weight: 700; border-radius: 8px; font-size: 0.78rem; background: rgba(255,255,255,0.18); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">↗ Yeni Sekmede Aç</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-doc-viewer')" style="padding: 6px 12px; font-weight: 700; border-radius: 8px; font-size: 0.85rem; background: rgba(255,255,255,0.18); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">✕ Kapat</button>
+        </div>
+      </div>
+      <div id="doc-viewer-body" style="flex: 1; overflow: auto; padding: 14px; background: #0f172a; display: flex; align-items: center; justify-content: center; min-height: 420px; border-radius: 0 0 12px 12px;">
+        <!-- Dinamik içerik -->
+      </div>
+    </div>
+  </div>
+
   <!-- Toast -->
   <div id="toast">
     <span id="toast-icon">✅</span>
@@ -2649,7 +2754,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-07_v27_gencosman_4012_kurtarma";
+    const APP_BUILD_VERSION = "2026-10-08_v28_sirket_evraklari_vergi_levhasi";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
@@ -2676,6 +2781,7 @@
             if (a.receivable === undefined) a.receivable = 0;
             if (a.collected === undefined) a.collected = 0;
             if (a.payable === undefined) a.payable = 0;
+            if (!Array.isArray(a.documents)) a.documents = [];
             const rec = parseNumber(a.receivable);
             const coll = parseNumber(a.collected);
             const pay = parseNumber(a.payable);
@@ -2760,6 +2866,7 @@
           const bEl = document.getElementById('btn-save-doc'); if (bEl) bEl.textContent = 'Kaydet';
           const formEl = document.querySelector('#modal-new-doc form');
           if (formEl) formEl.reset();
+          clearGeneralDocFile();
         }
       }
       if (id === 'modal-new-todo') {
@@ -2804,6 +2911,9 @@
           const bhEl = document.getElementById('a-project-budget-hint'); if (bhEl) bhEl.textContent = '';
           currentAccountExpenseItems = [];
           renderAccountExpenseItems();
+          currentAccountDocs = [];
+          renderAccountDocItems();
+          clearAccountDocFile();
           onAccountTypeChange();
           updateAccountBalanceCalc();
         }
@@ -5413,6 +5523,473 @@ function doPost(e) {
       if (sel && sel.value) onAccountProjectPickerChange(sel.value);
     }
 
+    /* ================================================================
+       ŞİRKET EVRAKLARI & RESMİ BELGELER (VERGİ LEVHASI, İMZA SİRKÜLERİ VB.)
+       ================================================================ */
+    let currentAccountDocs = [];
+    let selectedDocFileDataUrl = null;
+    let selectedDocFileName = '';
+    let selectedDocFileType = '';
+    let currentActiveViewingDoc = null;
+    let generalDocFileDataUrl = null;
+    let generalDocFileName = '';
+
+    function formatDocFileSize(bytes) {
+      if (!bytes || bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function readDocFileAsDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function compressDocImageFile(file, maxDim = 1400, quality = 0.82) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = function() {
+            resolve(e.target.result);
+          };
+          img.src = e.target.result;
+        };
+        reader.onerror = function() {
+          resolve('');
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function dataUrlToBlobObj(dataUrl) {
+      const parts = dataUrl.split(';base64,');
+      if (parts.length < 2) return null;
+      const contentType = parts[0].split(':')[1];
+      const raw = window.atob(parts[1]);
+      const rawLength = raw.length;
+      const uInt8Array = new Uint8Array(rawLength);
+      for (let i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      return new Blob([uInt8Array], { type: contentType });
+    }
+
+    async function handleAccountDocFileSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const btn = document.getElementById('adoc-file-btn');
+      const clearBtn = document.getElementById('adoc-file-clear-btn');
+      const infoEl = document.getElementById('adoc-file-info');
+      const titleInput = document.getElementById('adoc-title');
+      const typeSelect = document.getElementById('adoc-type');
+
+      if (btn) btn.textContent = '⏳ Yükleniyor...';
+
+      try {
+        selectedDocFileName = file.name;
+        selectedDocFileType = file.type || '';
+
+        if (file.type && file.type.startsWith('image/')) {
+          selectedDocFileDataUrl = await compressDocImageFile(file, 1400, 0.82);
+        } else {
+          selectedDocFileDataUrl = await readDocFileAsDataURL(file);
+        }
+
+        const sizeStr = formatDocFileSize(file.size);
+        if (btn) {
+          btn.textContent = `📎 ${file.name} (${sizeStr})`;
+          btn.style.color = '#047857';
+          btn.style.fontWeight = '700';
+        }
+        if (clearBtn) clearBtn.style.display = 'inline-block';
+        if (infoEl) {
+          infoEl.textContent = `✅ Dosya seçildi: ${file.name} (${sizeStr})`;
+          infoEl.style.display = 'block';
+        }
+
+        if (titleInput && !titleInput.value) {
+          const cleanName = file.name.replace(/\.[^/.]+$/, "");
+          titleInput.value = cleanName;
+        }
+
+        const lowerName = file.name.toLowerCase();
+        if (typeSelect) {
+          if (lowerName.includes('vergi') || lowerName.includes('levha')) {
+            typeSelect.value = 'Vergi Levhası';
+          } else if (lowerName.includes('imza') || lowerName.includes('sirk')) {
+            typeSelect.value = 'İmza Sirküleri';
+          } else if (lowerName.includes('sicil') || lowerName.includes('gazete')) {
+            typeSelect.value = 'Ticaret Sicil Gazetesi';
+          } else if (lowerName.includes('faaliyet') || lowerName.includes('oda')) {
+            typeSelect.value = 'Faaliyet Belgesi';
+          } else if (lowerName.includes('sozlesme') || lowerName.includes('sözleşme') || lowerName.includes('protokol')) {
+            typeSelect.value = 'Sözleşme / Protokol';
+          } else if (lowerName.includes('kimlik') || lowerName.includes('vekalet')) {
+            typeSelect.value = 'Kimlik / Vekaletname';
+          } else if (lowerName.includes('iban') || lowerName.includes('banka')) {
+            typeSelect.value = 'Banka / IBAN Yazısı';
+          } else if (lowerName.includes('sgk') || lowerName.includes('borcu yok')) {
+            typeSelect.value = 'SGK / Borcu Yoktur';
+          }
+        }
+      } catch (err) {
+        console.error("Dosya yükleme hatası:", err);
+        showToast("Dosya okunamadı: " + (err.message || 'Hata'), "⚠️");
+        clearAccountDocFile();
+      }
+    }
+
+    function clearAccountDocFile() {
+      selectedDocFileDataUrl = null;
+      selectedDocFileName = '';
+      selectedDocFileType = '';
+      const fileInput = document.getElementById('adoc-file');
+      if (fileInput) fileInput.value = '';
+      const btn = document.getElementById('adoc-file-btn');
+      if (btn) {
+        btn.textContent = '📎 Dosya Seç (PDF / Resim)';
+        btn.style.color = '';
+        btn.style.fontWeight = '700';
+      }
+      const clearBtn = document.getElementById('adoc-file-clear-btn');
+      if (clearBtn) clearBtn.style.display = 'none';
+      const infoEl = document.getElementById('adoc-file-info');
+      if (infoEl) infoEl.style.display = 'none';
+    }
+
+    function onAccountDocTypeChange() {
+      const type = document.getElementById('adoc-type')?.value;
+      const titleInput = document.getElementById('adoc-title');
+      if (type && titleInput && !titleInput.value) {
+        titleInput.placeholder = `Örn: 2025-2026 ${type}`;
+      }
+    }
+
+    function addDocItemToCurrentAccount() {
+      const type = document.getElementById('adoc-type').value;
+      const titleVal = (document.getElementById('adoc-title').value || '').trim();
+      const dateVal = document.getElementById('adoc-date').value || '';
+      const urlVal = (document.getElementById('adoc-url').value || '').trim();
+
+      const fileUrl = selectedDocFileDataUrl || urlVal;
+      const fileName = selectedDocFileName || (urlVal ? 'Web / Drive Bağlantısı' : '');
+      const fileType = selectedDocFileType || (urlVal ? 'url' : 'file');
+      const finalTitle = titleVal || `${type}${fileName ? ' (' + fileName + ')' : ''}`;
+
+      if (!fileUrl && !titleVal) {
+        showToast('Lütfen bir belge dosyası seçin veya Drive / web linki girin.', '⚠️');
+        return;
+      }
+
+      const item = {
+        id: 'cdoc_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+        type: type,
+        title: finalTitle,
+        date: dateVal,
+        fileUrl: fileUrl,
+        fileName: fileName,
+        fileType: fileType
+      };
+
+      currentAccountDocs.push(item);
+      renderAccountDocItems();
+
+      // Form alanlarını temizle
+      document.getElementById('adoc-title').value = '';
+      document.getElementById('adoc-date').value = '';
+      document.getElementById('adoc-url').value = '';
+      clearAccountDocFile();
+
+      showToast(`"${finalTitle}" evrakı eklendi! 📁`);
+    }
+
+    function removeAccountDocItem(idx) {
+      if (idx >= 0 && idx < currentAccountDocs.length) {
+        const removed = currentAccountDocs.splice(idx, 1);
+        renderAccountDocItems();
+        if (removed && removed[0]) showToast(`"${removed[0].title || removed[0].type}" kaldırıldı.`);
+      }
+    }
+
+    function getDocTypeIcon(type) {
+      if (!type) return '📎';
+      const t = String(type).toLowerCase();
+      if (t.includes('vergi') || t.includes('levha')) return '📄';
+      if (t.includes('imza') || t.includes('sirk')) return '✍️';
+      if (t.includes('sicil') || t.includes('gazete')) return '📰';
+      if (t.includes('faaliyet') || t.includes('oda')) return '🏢';
+      if (t.includes('sözleşme') || t.includes('sozlesme') || t.includes('protokol')) return '📑';
+      if (t.includes('kimlik') || t.includes('vekalet')) return '🆔';
+      if (t.includes('banka') || t.includes('iban')) return '🏦';
+      if (t.includes('sgk') || t.includes('borc')) return '📜';
+      return '📎';
+    }
+
+    function getAccountDocTypeBadge(type) {
+      const t = String(type || '').trim();
+      if (t === 'Vergi Levhası') {
+        return `<span style="background: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">📄 Vergi Levhası</span>`;
+      }
+      if (t === 'İmza Sirküleri') {
+        return `<span style="background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">✍️ İmza Sirküleri</span>`;
+      }
+      if (t === 'Ticaret Sicil Gazetesi') {
+        return `<span style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">📰 Ticaret Sicil</span>`;
+      }
+      if (t.includes('Faaliyet')) {
+        return `<span style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">🏢 Faaliyet Belgesi</span>`;
+      }
+      if (t.includes('Sözleşme') || t.includes('Protokol')) {
+        return `<span style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">📑 Sözleşme</span>`;
+      }
+      if (t.includes('Kimlik') || t.includes('Vekalet')) {
+        return `<span style="background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">🆔 Kimlik / Vekalet</span>`;
+      }
+      if (t.includes('Banka') || t.includes('IBAN')) {
+        return `<span style="background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">🏦 Banka / IBAN</span>`;
+      }
+      if (t.includes('SGK') || t.includes('Borcu')) {
+        return `<span style="background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">📜 SGK / Borcu Yoktur</span>`;
+      }
+      return `<span style="background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; padding: 2px 7px; border-radius: 5px; font-weight: 700; font-size: 0.70rem; white-space: nowrap;">📎 ${escapeHtml(t || 'Evrak')}</span>`;
+    }
+
+    function renderAccountDocItems() {
+      const container = document.getElementById('account-docs-items-container');
+      const countBadge = document.getElementById('account-docs-count-badge');
+      if (!container) return;
+
+      if (countBadge) {
+        countBadge.textContent = `${currentAccountDocs.length} Belge Ekli`;
+      }
+
+      if (!Array.isArray(currentAccountDocs) || currentAccountDocs.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 12px; color: #94a3b8; font-size: 0.74rem; background: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1;">
+            Henüz eklenmiş şirket evrakı (Vergi levhası, imza sirküleri vb.) yok. Yukarıdaki formdan ekleyebilirsiniz.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+          ${currentAccountDocs.map((doc, idx) => {
+            const hasFile = Boolean(doc.fileUrl);
+            return `
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
+                  ${getAccountDocTypeBadge(doc.type)}
+                  <div style="min-width: 0;">
+                    <div style="font-weight: 700; font-size: 0.78rem; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      ${escapeHtml(doc.title || doc.type)}
+                    </div>
+                    <div style="font-size: 0.68rem; color: #64748b;">
+                      ${doc.fileName ? `📎 ${escapeHtml(doc.fileName)} ` : ''}
+                      ${doc.date ? `• 📅 ${escapeHtml(doc.date)} ` : ''}
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  ${hasFile ? `
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="openDocPreviewModal('${escapeHtml(doc.title || doc.type)}', ${idx}, true)" style="padding: 4px 9px; font-size: 0.72rem; font-weight: 700; color: #0284c7;" title="Evrakı Görüntüle">
+                      👁️ Görüntüle
+                    </button>
+                  ` : ''}
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="removeAccountDocItem(${idx})" style="padding: 4px 8px; font-size: 0.72rem; color: #ef4444;" title="Evrakı Kaldır">
+                    🗑️
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function openDocPreviewModal(title, docOrIdx, isCurrentModal = false) {
+      let doc = null;
+      if (typeof docOrIdx === 'number' && isCurrentModal) {
+        doc = currentAccountDocs[docOrIdx];
+      } else if (typeof docOrIdx === 'object') {
+        doc = docOrIdx;
+      }
+      if (!doc || !doc.fileUrl) {
+        showToast('Görüntülenecek dosya bağlantısı bulunamadı.', '⚠️');
+        return;
+      }
+
+      currentActiveViewingDoc = doc;
+
+      const titleEl = document.getElementById('doc-viewer-title');
+      const subEl = document.getElementById('doc-viewer-subtitle');
+      const bodyEl = document.getElementById('doc-viewer-body');
+
+      if (titleEl) titleEl.textContent = doc.title || title || 'Evrak Görüntüleyici';
+      if (subEl) subEl.textContent = `${doc.type || 'Şirket Belgesi'} ${doc.fileName ? ' • ' + doc.fileName : ''}`;
+
+      if (bodyEl) {
+        const url = doc.fileUrl;
+        if (url.startsWith('data:image/') || url.match(/\.(jpeg|jpg|gif|png|webp)($|\?)/i)) {
+          bodyEl.innerHTML = `
+            <div style="text-align: center; max-width: 100%;">
+              <img src="${url}" alt="Belge Görseli" style="max-width: 100%; max-height: 72vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); object-fit: contain;">
+            </div>
+          `;
+        } else if (url.startsWith('data:application/pdf') || url.includes('.pdf')) {
+          bodyEl.innerHTML = `
+            <div style="width: 100%; height: 75vh; display: flex; flex-direction: column;">
+              <iframe src="${url}" style="width: 100%; flex: 1; border: none; border-radius: 8px; background: #ffffff;"></iframe>
+            </div>
+          `;
+        } else if (url.startsWith('http')) {
+          bodyEl.innerHTML = `
+            <div style="text-align: center; color: #ffffff; padding: 2rem;">
+              <div style="font-size: 2.5rem; margin-bottom: 12px;">🔗</div>
+              <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: #ffffff;">${escapeHtml(doc.title || 'Harici Belge Bağlantısı')}</h4>
+              <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 16px;">Bu belge Google Drive veya harici bulut sunucusunda saklanmaktadır.</p>
+              <a href="${url}" target="_blank" rel="noopener noreferrer" class="btn btn-navy" style="background: #2563eb; color: #ffffff; padding: 10px 20px; font-size: 0.88rem; font-weight: 700; border-radius: 8px; text-decoration: none; display: inline-block;">
+                ↗️ Belgeyi Drive / Tarayıcıda Aç
+              </a>
+            </div>
+          `;
+        } else {
+          bodyEl.innerHTML = `
+            <div style="text-align: center; color: #ffffff; padding: 2rem;">
+              <div style="font-size: 2.5rem; margin-bottom: 12px;">📎</div>
+              <h4 style="font-size: 1.05rem; margin-bottom: 8px; color: #ffffff;">${escapeHtml(doc.fileName || doc.title || 'Belge Dosyası')}</h4>
+              <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 16px;">Dosya formatı doğrudan önizlenemiyor.</p>
+              <button type="button" class="btn btn-navy" onclick="openCurrentDocInNewTab()" style="padding: 10px 20px; font-weight: 700;">⬇️ İndir / Aç</button>
+            </div>
+          `;
+        }
+      }
+
+      openModal('modal-doc-viewer');
+    }
+
+    function openCurrentDocInNewTab() {
+      if (!currentActiveViewingDoc || !currentActiveViewingDoc.fileUrl) return;
+      openDocInNewTab(currentActiveViewingDoc.fileUrl, currentActiveViewingDoc.fileName || currentActiveViewingDoc.title || 'belge');
+    }
+
+    function openAccountDocFromCard(accountId, docIdx) {
+      const a = accounts.find(x => x.id === accountId);
+      if (!a || !Array.isArray(a.documents) || !a.documents[docIdx]) {
+        showToast('Evrak bulunamadı.', '⚠️');
+        return;
+      }
+      openDocPreviewModal(a.documents[docIdx].title, a.documents[docIdx], false);
+    }
+
+    function openDocInNewTab(url, title = 'belge') {
+      if (!url) return;
+      if (url.startsWith('data:')) {
+        try {
+          const blob = dataUrlToBlobObj(url);
+          if (blob) {
+            const blobUrl = URL.createObjectURL(blob);
+            const w = window.open(blobUrl, '_blank');
+            if (!w) {
+              const a = document.createElement('a');
+              a.href = blobUrl;
+              a.download = title;
+              a.click();
+            }
+            return;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      window.open(url, '_blank');
+    }
+
+    async function handleGeneralDocFileSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const btn = document.getElementById('d-file-btn');
+      const clearBtn = document.getElementById('d-file-clear-btn');
+      const infoEl = document.getElementById('d-file-info');
+      const titleInput = document.getElementById('d-title');
+
+      if (btn) btn.textContent = '⏳ Yükleniyor...';
+
+      try {
+        generalDocFileName = file.name;
+        if (file.type && file.type.startsWith('image/')) {
+          generalDocFileDataUrl = await compressDocImageFile(file, 1400, 0.82);
+        } else {
+          generalDocFileDataUrl = await readDocFileAsDataURL(file);
+        }
+
+        const sizeStr = formatDocFileSize(file.size);
+        if (btn) {
+          btn.textContent = `📎 ${file.name} (${sizeStr})`;
+          btn.style.color = '#047857';
+          btn.style.fontWeight = '700';
+        }
+        if (clearBtn) clearBtn.style.display = 'inline-block';
+        if (infoEl) {
+          infoEl.textContent = `✅ Dosya seçildi: ${file.name} (${sizeStr})`;
+          infoEl.style.display = 'block';
+        }
+
+        if (titleInput && !titleInput.value) {
+          titleInput.value = file.name.replace(/\.[^/.]+$/, "");
+        }
+      } catch (err) {
+        console.error("Evrak dosya yükleme hatası:", err);
+        showToast("Dosya okunamadı: " + (err.message || 'Hata'), "⚠️");
+        clearGeneralDocFile();
+      }
+    }
+
+    function clearGeneralDocFile() {
+      generalDocFileDataUrl = null;
+      generalDocFileName = '';
+      const fInput = document.getElementById('d-file');
+      if (fInput) fInput.value = '';
+      const btn = document.getElementById('d-file-btn');
+      if (btn) {
+        btn.textContent = '📎 Dosya Seç (PDF / Görsel)';
+        btn.style.color = '';
+        btn.style.fontWeight = '700';
+      }
+      const clearBtn = document.getElementById('d-file-clear-btn');
+      if (clearBtn) clearBtn.style.display = 'none';
+      const infoEl = document.getElementById('d-file-info');
+      if (infoEl) infoEl.style.display = 'none';
+    }
+
     let currentAccountExpenseItems = [];
 
     function copyIban(ibanStr) {
@@ -6249,6 +6826,23 @@ function doPost(e) {
               </div>
             </div>` : ''}
 
+            <!-- Kayıtlı Şirket Evrakları (Vergi Levhası, İmza Sirküleri vb.) -->
+            ${Array.isArray(a.documents) && a.documents.length > 0 ? `
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 7px 10px; margin: 6px 0; font-size: 0.72rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #166534; margin-bottom: 5px;">
+                <span>📁 Şirket Evrakları (${a.documents.length})</span>
+                <span style="font-size: 0.68rem; color: #15803d; font-weight: 600;">Vergi Levhası & Resmi Belgeler</span>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                ${a.documents.map((cd, docIdx) => `
+                  <span style="background: #ffffff; border: 1px solid #86efac; color: #14532d; padding: 3px 8px; border-radius: 6px; font-weight: 600; font-size: 0.69rem; display: inline-flex; align-items: center; gap: 5px;">
+                    <span>${getDocTypeIcon(cd.type)} <b>${escapeHtml(cd.title || cd.type)}</b></span>
+                    ${cd.fileUrl ? `<a href="javascript:void(0)" onclick="openAccountDocFromCard('${escapeHtml(a.id)}', ${docIdx})" style="color: #0284c7; font-weight: 700; text-decoration: underline; margin-left: 2px;" title="Evrakı Görüntüle">👁️ Aç</a>` : ''}
+                  </span>
+                `).join('')}
+              </div>
+            </div>` : ''}
+
             <!-- IBAN Bilgisi -->
             ${a.iban ? `
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 5px 8px; margin: 4px 0 2px 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 0.73rem;">
@@ -6318,6 +6912,9 @@ function doPost(e) {
 
       currentAccountExpenseItems = Array.isArray(a.expenseItems) ? JSON.parse(JSON.stringify(a.expenseItems)) : [];
       renderAccountExpenseItems();
+      currentAccountDocs = Array.isArray(a.documents) ? JSON.parse(JSON.stringify(a.documents)) : [];
+      renderAccountDocItems();
+      clearAccountDocFile();
       onAccountTypeChange();
       updateAccountBalanceCalc();
 
@@ -6375,10 +6972,12 @@ function doPost(e) {
       const payVal = parseNumber(document.getElementById('a-payable')?.value || 0);
       const balVal = Number(((recVal - collVal) - payVal).toFixed(2));
       const expenseItemsVal = Array.isArray(currentAccountExpenseItems) ? JSON.parse(JSON.stringify(currentAccountExpenseItems)) : [];
+      const docsVal = Array.isArray(currentAccountDocs) ? JSON.parse(JSON.stringify(currentAccountDocs)) : [];
 
       let webhookNotes = notesVal;
       if (ibanVal) webhookNotes = (webhookNotes ? webhookNotes + ' | ' : '') + 'IBAN: ' + ibanVal;
       if (websiteVal) webhookNotes = (webhookNotes ? webhookNotes + ' | ' : '') + 'Web: ' + websiteVal;
+      if (docsVal.length > 0) webhookNotes = (webhookNotes ? webhookNotes + ' | ' : '') + 'Evraklar: ' + docsVal.map(d => d.type).join(', ');
 
       if (editingAccountId) {
         const a = accounts.find(x => x.id === editingAccountId);
@@ -6403,9 +7002,32 @@ function doPost(e) {
           a.payable = payVal;
           a.balance = balVal;
           a.expenseItems = expenseItemsVal;
+          a.documents = docsVal;
 
           setStore('yg_accounts_lite', accounts);
           renderAccounts();
+
+          if (docsVal.length > 0) {
+            docsVal.forEach(cd => {
+              const docTitle = `${companyVal} — ${cd.title || cd.type}`;
+              const existing = docs.find(d => d.id === cd.id || d.title === docTitle);
+              if (!existing) {
+                docs.unshift({
+                  id: cd.id,
+                  title: docTitle,
+                  type: cd.type,
+                  project: (projVal || (currentAccountProjects && currentAccountProjects[0])) || companyVal,
+                  date: cd.date || new Date().toISOString().split('T')[0],
+                  expiry: '',
+                  url: cd.fileUrl || '',
+                  notes: `${companyVal} şirket evrakı (${cd.type})`
+                });
+              }
+            });
+            setStore('yg_docs_lite', docs);
+            renderDocs();
+          }
+
           editingAccountId = null;
           closeModal('modal-new-account');
           showToast(`"${a.company}" cari kartı güncellendi! ✏️`);
@@ -6438,11 +7060,33 @@ function doPost(e) {
         collected: collVal,
         payable: payVal,
         balance: balVal,
-        expenseItems: expenseItemsVal
+        expenseItems: expenseItemsVal,
+        documents: docsVal
       };
 
       accounts.unshift(newA);
       setStore('yg_accounts_lite', accounts);
+
+      if (docsVal.length > 0) {
+        docsVal.forEach(cd => {
+          const docTitle = `${companyVal} — ${cd.title || cd.type}`;
+          const existing = docs.find(d => d.id === cd.id || d.title === docTitle);
+          if (!existing) {
+            docs.unshift({
+              id: cd.id,
+              title: docTitle,
+              type: cd.type,
+              project: (projVal || (currentAccountProjects && currentAccountProjects[0])) || companyVal,
+              date: cd.date || new Date().toISOString().split('T')[0],
+              expiry: '',
+              url: cd.fileUrl || '',
+              notes: `${companyVal} şirket evrakı (${cd.type})`
+            });
+          }
+        });
+        setStore('yg_docs_lite', docs);
+        renderDocs();
+      }
 
       unmarkDeleted('Cari Kartları', newA.company);
 
@@ -7358,6 +8002,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     function getDocTypeBadge(type) {
       if (!type) return '<span class="badge badge-purple">Evrak</span>';
       const t = type.toLowerCase();
+      if (t.includes('vergi') || t.includes('levha')) return '<span class="badge" style="background:#fef3c7; color:#92400e; font-weight:700; border:1px solid #fde68a;">📄 Vergi Levhası</span>';
+      if (t.includes('imza') || t.includes('sirk')) return '<span class="badge" style="background:#ede9fe; color:#6d28d9; font-weight:700; border:1px solid #ddd6fe;">✍️ İmza Sirküleri</span>';
+      if (t.includes('sicil') || t.includes('gazete')) return '<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:700; border:1px solid #bae6fd;">📰 Ticaret Sicil</span>';
+      if (t.includes('faaliyet') || t.includes('oda')) return '<span class="badge" style="background:#ecfdf5; color:#047857; font-weight:700; border:1px solid #a7f3d0;">🏢 Faaliyet Belgesi</span>';
       if (t.includes('teklif')) return '<span class="badge badge-amber" style="background:#fef3c7; color:#b45309; font-weight:700;">📑 Teklif</span>';
       if (t.includes('şartname') || t.includes('sartname')) return '<span class="badge badge-purple" style="background:#f3e8ff; color:#7e22ce; font-weight:700;">📜 Şartname</span>';
       if (t.includes('sözleşme') || t.includes('sozlesme')) return '<span class="badge badge-green" style="background:#dcfce7; color:#15803d; font-weight:700;">✍️ Sözleşme</span>';
@@ -7400,7 +8048,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           ` : ''}
           ${d.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(d.notes)}</div>` : ''}
           <div style="display:flex; justify-content: flex-end; gap: 6px; margin-top: 4px;">
-            <a href="${d.url}" target="_blank" class="btn btn-navy btn-sm">👁️ Evrakı Aç ↗</a>
+            ${d.url ? `<button type="button" class="btn btn-navy btn-sm" onclick="openDocPreviewModal('${escapeHtml(d.title)}', { title: '${escapeHtml(d.title)}', type: '${escapeHtml(d.type || 'Evrak')}', fileUrl: '${d.url.replace(/'/g, "\\'")}', fileName: '${escapeHtml(d.title)}' })">👁️ Evrakı Aç ↗</button>` : ''}
             <button class="btn btn-secondary btn-sm" onclick="editDoc('${d.id}')" title="Evrakı Düzenle">✏️ Düzenle</button>
             <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteDoc('${d.id}')" title="Evrakı Sil">🗑️</button>
           </div>
@@ -7414,6 +8062,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       editingDocId = id;
       populateDocProjectSelect();
+      clearGeneralDocFile();
 
       document.getElementById('modal-doc-title').textContent = '✏️ Evrakı Düzenle';
       document.getElementById('btn-save-doc').textContent = '💾 Değişiklikleri Güncelle';
@@ -7481,12 +8130,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           d.project = document.getElementById('d-project-select').value;
           d.date = document.getElementById('d-date')?.value || '';
           d.expiry = document.getElementById('d-expiry')?.value || '';
-          d.url = document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing';
+          d.url = generalDocFileDataUrl || document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing';
           d.notes = (document.getElementById('d-notes')?.value || '').trim();
 
           setStore('yg_docs_lite', docs);
           renderDocs();
           editingDocId = null;
+          clearGeneralDocFile();
           closeModal('modal-new-doc');
           showToast(`"${d.title}" dökümanı güncellendi! ✏️`);
 
@@ -7505,7 +8155,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         project: document.getElementById('d-project-select').value,
         date: document.getElementById('d-date')?.value || '',
         expiry: document.getElementById('d-expiry')?.value || '',
-        url: document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing',
+        url: generalDocFileDataUrl || document.getElementById('d-url').value.trim() || 'https://docs.google.com/spreadsheets/d/1JmA7FGEdbiaI_o09i75BDQIM2lfdWKIfgKEReJsnbLI/edit?usp=sharing',
         notes: (document.getElementById('d-notes')?.value || '').trim()
       };
 
@@ -7518,6 +8168,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         new Date().toISOString().split('T')[0], newD.title, newD.type, newD.project, newD.date, newD.expiry, newD.url, newD.notes
       ]);
 
+      clearGeneralDocFile();
       closeModal('modal-new-doc');
       renderDocs();
       showToast('Evrak eklendi');
@@ -8609,6 +9260,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             let loadedIban = (local && local.iban) ? local.iban : cleanText(r['IBAN'] || r['Banka IBAN'] || '');
             let loadedWebsite = (local && local.website) ? local.website : cleanText(r['Web Sitesi'] || r['Web'] || '');
             let loadedExpenseItems = (local && Array.isArray(local.expenseItems)) ? local.expenseItems : [];
+            let loadedDocs = (local && Array.isArray(local.documents)) ? local.documents : [];
+            let loadedProjects = (local && Array.isArray(local.relatedProjects)) ? local.relatedProjects : (relProj ? relProj.split(',').map(s=>s.trim()).filter(Boolean) : []);
             let cleanNotes = rawNotes;
 
             if (!loadedIban && rawNotes) {
@@ -8635,11 +9288,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               address: cleanText(r['Açık Adres'] || r['col_8']),
               notes: cleanNotes,
               relatedProject: relProj,
+              relatedProjects: loadedProjects,
               receivable: recVal,
               collected: collVal,
               payable: payVal,
               balance: balVal,
-              expenseItems: loadedExpenseItems
+              expenseItems: loadedExpenseItems,
+              documents: loadedDocs
             };
           });
 
