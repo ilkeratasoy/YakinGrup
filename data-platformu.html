@@ -9032,6 +9032,27 @@ BEGIN
     ALTER PUBLICATION supabase_realtime ADD TABLE public.cards;
   END IF;
 END $$;
+
+-- Storage Bucket (Belgeler, Faturalar, Evraklar)
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('yakin-docs', 'yakin-docs', true)
+ON CONFLICT (id) DO NOTHING;
+
+DROP POLICY IF EXISTS "Anon public upload on yakin-docs" ON storage.objects;
+CREATE POLICY "Anon public upload on yakin-docs" ON storage.objects 
+FOR INSERT TO anon WITH CHECK (bucket_id = 'yakin-docs');
+
+DROP POLICY IF EXISTS "Anon public read on yakin-docs" ON storage.objects;
+CREATE POLICY "Anon public read on yakin-docs" ON storage.objects 
+FOR SELECT TO anon USING (bucket_id = 'yakin-docs');
+
+DROP POLICY IF EXISTS "Anon public update on yakin-docs" ON storage.objects;
+CREATE POLICY "Anon public update on yakin-docs" ON storage.objects 
+FOR UPDATE TO anon USING (bucket_id = 'yakin-docs') WITH CHECK (bucket_id = 'yakin-docs');
+
+DROP POLICY IF EXISTS "Anon public delete on yakin-docs" ON storage.objects;
+CREATE POLICY "Anon public delete on yakin-docs" ON storage.objects 
+FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
 `;
 
     function copySupabaseSchemaSql() {

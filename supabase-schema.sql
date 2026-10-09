@@ -269,6 +269,10 @@ DROP POLICY IF EXISTS "Anon public read on yakin-docs" ON storage.objects;
 CREATE POLICY "Anon public read on yakin-docs" ON storage.objects 
 FOR SELECT TO anon USING (bucket_id = 'yakin-docs');
 
+DROP POLICY IF EXISTS "Anon public update on yakin-docs" ON storage.objects;
+CREATE POLICY "Anon public update on yakin-docs" ON storage.objects 
+FOR UPDATE TO anon USING (bucket_id = 'yakin-docs') WITH CHECK (bucket_id = 'yakin-docs');
+
 DROP POLICY IF EXISTS "Anon public delete on yakin-docs" ON storage.objects;
 CREATE POLICY "Anon public delete on yakin-docs" ON storage.objects 
-FOR DELETE TO anon WITH CHECK (bucket_id = 'yakin-docs');
+FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
