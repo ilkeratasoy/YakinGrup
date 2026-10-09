@@ -2725,14 +2725,154 @@
         .replace(/^_|_$/g, '');
     }
 
+    function normText(s) {
+      return String(s || "")
+        .replace(/İ/g, "i")
+        .replace(/I/g, "i")
+        .replace(/ı/g, "i")
+        .toLowerCase()
+        .replace(/\u0307/g, "")
+        .replace(/[ğ]/g, "g")
+        .replace(/[ü]/g, "u")
+        .replace(/[ş]/g, "s")
+        .replace(/[ö]/g, "o")
+        .replace(/[ç]/g, "c")
+        .replace(/[^a-z0-9]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    // Kanonik Şirket, Yetkili Kişi ve Proje Haritası
+    const CANONICAL_COMPANIES = [
+      {
+        company: "YOLVERCAN Yapı İnşaat Taahhüt",
+        contact: "Kasım YOLVERCAN",
+        phone: "5317366549",
+        type: "Müşteri",
+        aliases: [
+          "kasim", "yolvercan", "kasim bey", "kasim yolvercan",
+          "kasim bey yonetici", "kasim bey yuklenici",
+          "gencosman 0 4012 yolvercan", "gencosman 12357 58 yolvercan",
+          "gencosman 12070 71 yolvercan", "gencosman 335 6 yolvercan",
+          "yolvercan yapi", "yolvercan yapi insaat taahhut"
+        ],
+        projects: ["Gençosman 0/4012", "Gençosman 12070/71", "Gençosman 12357/58", "Gençosman 335/6"],
+        defaultNotes: "Yetkili: Kasım YOLVERCAN | Projeler: Gençosman 0/4012, Gençosman 12070/71, Gençosman 12357/58, Gençosman 335/6"
+      },
+      {
+        company: "Atlas Han Grup",
+        contact: "İdris Dalan - Murat Tapan",
+        phone: "",
+        type: "Müşteri",
+        aliases: ["atlas han", "atlas han grup", "idris dalan", "murat tapan", "yuklenici murat tapan", "idris dalan murat tapan"],
+        projects: ["Uğurmumcu 10603/5"],
+        defaultNotes: "Yüklenici: Murat Tapan - İdris Dalan"
+      },
+      {
+        company: "Güzel Konut Sitesi Yönetimi",
+        contact: "İbrahim Çelikol - Ömer Kart",
+        phone: "",
+        type: "Müşteri",
+        aliases: ["guzel konut", "guzel konut sitesi", "ibrahim celikol", "omer kart", "ibrahim celikol omer kart", "ibrahim celikol malik"],
+        projects: ["Gençosman 0/12057"],
+        defaultNotes: "Site Yönetimi: İbrahim Çelikol - Ömer Kart"
+      },
+      {
+        company: "Turkay Apt. Yönetimi",
+        contact: "Binnur ERBAŞOĞLU (Yönetici)",
+        phone: "5324848138",
+        type: "Müşteri",
+        aliases: ["turkay apt", "turkay apartmani", "binnur erbasoglu"],
+        projects: ["Kartaltepe 535/2"]
+      },
+      {
+        company: "Florya Cennet Sitesi Yönetimi",
+        contact: "Hande METE (Yönetici)",
+        phone: "5316371114",
+        type: "Müşteri",
+        aliases: ["florya cennet", "florya cennet sitesi", "hande mete"],
+        projects: ["Florya 5595/96-97-98-99"]
+      },
+      {
+        company: "Celalbey - Birlik - Şenyuva Apt. Yönetimi",
+        contact: "Av.Saniye Hanım ve Hasan Başaran",
+        phone: "",
+        type: "Müşteri",
+        aliases: ["celalbey", "birlik apt", "senyuva", "saniye hanim", "hasan basaran", "av saniye hanim", "av saniye hanim ve hasan basaran"],
+        projects: ["Salacak 341/1-2"]
+      },
+      {
+        company: "AZM Proje Yapı",
+        contact: "Azim DAŞDAN",
+        phone: "5306120993",
+        type: "Müşteri",
+        aliases: ["azm", "azm proje", "azm proje yapi", "azim dasdan"],
+        projects: ["Cevizli 16118/43"]
+      },
+      {
+        company: "NELTAŞ Yapı İnşaat",
+        contact: "",
+        phone: "",
+        type: "Müşteri",
+        aliases: ["neltas", "neltas yapi", "neltas yapi insaat"],
+        projects: ["Yakacık 11691/32"]
+      },
+      {
+        company: "Büyük RÖNESANS",
+        contact: "Haydar Kurşun - Canercan Pirikoğlu",
+        phone: "5357650606",
+        type: "Müşteri",
+        aliases: ["buyuk ronesans", "ronesans", "haydar kursun", "canercan pirikoglu"],
+        projects: ["Fatih 1485/21"]
+      },
+      {
+        company: "PLATO Yapı İnşaat",
+        contact: "Aydın POLAT",
+        phone: "5326594104",
+        type: "Müşteri",
+        aliases: ["plato", "plato yapi", "plato yapi insaat", "aydin polat"],
+        projects: ["Cevizli 10485/445", "Kartaltepe 535/2"]
+      },
+      {
+        company: "MTİ Mimarlık,İnşaat",
+        contact: "SÖZER MTI",
+        phone: "",
+        type: "Müşteri",
+        aliases: ["mti", "mti mimarlik", "sozer mti"],
+        projects: ["Florya 5595/96-97-98-99"]
+      }
+    ];
+
+    function findCanonicalCompany(personName, projName) {
+      const normP = normText(personName);
+      const normPrj = normText(projName);
+      for (const c of CANONICAL_COMPANIES) {
+        if (normP && c.aliases.some(a => normP.includes(a))) return c;
+        if (normPrj && c.projects.some(p => normPrj.includes(normText(p)) || normText(p).includes(normPrj))) return c;
+      }
+      return null;
+    }
+
+    function normalizeProjectContractor(p) {
+      if (!p) return p;
+      const canon = findCanonicalCompany(p.client || p.managerName, p.name);
+      if (canon) {
+        p.client = canon.company;
+        p.managerName = canon.contact || p.managerName;
+        if (canon.phone && !p.managerPhone) p.managerPhone = canon.phone;
+      }
+      return p;
+    }
+
     function deduplicateProjects(projList) {
       if (!Array.isArray(projList)) return [];
       const result = [];
       const seenSlugs = new Set();
       const seenAptKeys = new Set();
 
-      for (const p of projList) {
+      for (let p of projList) {
         if (!p) continue;
+        p = normalizeProjectContractor(p);
         const rawName = (p.name || '').trim();
         const rawCode = (p.code || '').trim();
         const rawApt = (p.buildingName || '').trim().toLowerCase();
@@ -2800,113 +2940,10 @@
       });
     }
 
-    function normText(s) {
-      return String(s || "")
-        .replace(/İ/g, "i")
-        .replace(/I/g, "i")
-        .replace(/ı/g, "i")
-        .toLowerCase()
-        .replace(/\u0307/g, "")
-        .replace(/[ğ]/g, "g")
-        .replace(/[ü]/g, "u")
-        .replace(/[ş]/g, "s")
-        .replace(/[ö]/g, "o")
-        .replace(/[ç]/g, "c")
-        .replace(/[^a-z0-9]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
     function unifyAndCleanAccounts(accList) {
       if (!Array.isArray(accList) || accList.length === 0) return [];
 
-      // 1. Kasım Yolvercan unification -> Sadece Firma Adı: "YOLVERCAN Yapı İnşaat Taahhüt"
-      let yolvercan = accList.find(a => normText(a.company).includes("yolvercan") || normText(a.contact).includes("kasim yolvercan"));
-      const kasimBey = accList.find(a => normText(a.company) === "kasim bey" || normText(a.contact).includes("kasim bey"));
-      if (!yolvercan && kasimBey) yolvercan = kasimBey;
-      if (yolvercan) {
-        yolvercan.company = "YOLVERCAN Yapı İnşaat Taahhüt";
-        yolvercan.contact = "Kasım YOLVERCAN";
-        yolvercan.phone = yolvercan.phone || "5317366549";
-        yolvercan.relatedProject = "Gençosman 0/4012, Gençosman 12357/58";
-        yolvercan.relatedProjects = ["Gençosman 0/4012", "Gençosman 12357/58", "Gençosman 12070/71", "Gençosman 335/6"];
-        if (kasimBey && kasimBey !== yolvercan) {
-          const extraNotes = kasimBey.notes || kasimBey.address || "";
-          if (extraNotes && (!yolvercan.notes || !yolvercan.notes.includes(extraNotes))) {
-            yolvercan.notes = (yolvercan.notes ? yolvercan.notes + " | " : "") + extraNotes;
-          }
-        }
-      }
-
-      // 2. Atlas Han Grup / Murat Tapan - İdris Dalan unification -> "Atlas Han Grup"
-      const atlas = accList.find(a => normText(a.company).includes("atlas han") || normText(a.company).includes("idris dalan murat tapan"));
-      if (atlas) {
-        atlas.company = "Atlas Han Grup";
-        atlas.contact = "İdris Dalan - Murat Tapan";
-        atlas.relatedProject = "Uğurmumcu 10603/5";
-        atlas.relatedProjects = ["Uğurmumcu 10603/5"];
-      }
-
-      // 3. Güzel Konut Sitesi / İbrahim Çelikol unification -> "Güzel Konut Sitesi Yönetimi"
-      const ibrahimSite = accList.find(a => normText(a.company).includes("ibrahim celikol omer kart") || normText(a.contact).includes("guzel konut"));
-      const ibrahimMalik = accList.find(a => normText(a.company).includes("ibrahim celikol malik"));
-      const ibrahim = ibrahimSite || ibrahimMalik;
-      if (ibrahim) {
-        ibrahim.company = "Güzel Konut Sitesi Yönetimi";
-        ibrahim.contact = "İbrahim Çelikol - Ömer Kart";
-        ibrahim.relatedProject = "Gençosman 0/12057";
-        ibrahim.relatedProjects = ["Gençosman 0/12057"];
-        const maxRec = Math.max(parseNumber(ibrahimSite?.receivable), parseNumber(ibrahimMalik?.receivable), 18000000);
-        ibrahim.receivable = maxRec;
-        ibrahim.balance = maxRec;
-      }
-
-      // 4. Turkay Apt / Binnur ERBAŞOĞLU -> "Turkay Apt. Yönetimi"
-      const binnur = accList.find(a => normText(a.company).includes("binnur erbasoglu") || normText(a.company).includes("turkay apt"));
-      if (binnur) {
-        binnur.company = "Turkay Apt. Yönetimi";
-        binnur.contact = "Binnur ERBAŞOĞLU (Yönetici)";
-        binnur.phone = binnur.phone || "5324848138";
-        binnur.relatedProject = "Kartaltepe 535/2";
-        binnur.relatedProjects = ["Kartaltepe 535/2"];
-      }
-
-      // 5. Florya Cennet / Hande METE -> "Florya Cennet Sitesi Yönetimi"
-      const hande = accList.find(a => normText(a.company).includes("hande mete") || normText(a.company).includes("florya cennet"));
-      if (hande) {
-        hande.company = "Florya Cennet Sitesi Yönetimi";
-        hande.contact = "Hande METE (Yönetici)";
-        hande.phone = hande.phone || "5316371114";
-        hande.relatedProject = "Florya 5595/96-97-98-99";
-        hande.relatedProjects = ["Florya 5595/96-97-98-99"];
-      }
-
-      // 6. Salacak / Av. Saniye Hanım -> "Celalbey - Birlik - Şenyuva Apt. Yönetimi"
-      const saniye = accList.find(a => normText(a.company).includes("saniye hanim") || normText(a.company).includes("celalbey"));
-      if (saniye) {
-        saniye.company = "Celalbey - Birlik - Şenyuva Apt. Yönetimi";
-        saniye.contact = "Av.Saniye Hanım ve Hasan Başaran";
-        saniye.relatedProject = "Salacak 341/1-2";
-        saniye.relatedProjects = ["Salacak 341/1-2"];
-      }
-
-      // 7. Proje Şirketleri (Sade Firma Adı + Detayda Eşitlenmiş Proje)
-      const azm = accList.find(a => normText(a.company).includes("azm proje"));
-      if (azm) { azm.company = "AZM Proje Yapı"; azm.relatedProject = "Cevizli 16118/43"; azm.relatedProjects = ["Cevizli 16118/43"]; }
-
-      const neltas = accList.find(a => normText(a.company).includes("neltas yapi"));
-      if (neltas) { neltas.company = "NELTAŞ Yapı İnşaat"; neltas.relatedProject = "Yakacık 11691/32"; neltas.relatedProjects = ["Yakacık 11691/32"]; }
-
-      const ronesans = accList.find(a => normText(a.company).includes("ronesans"));
-      if (ronesans) { ronesans.company = "Büyük RÖNESANS"; ronesans.relatedProject = "Fatih 1485/21"; ronesans.relatedProjects = ["Fatih 1485/21"]; }
-
-      const plato = accList.find(a => normText(a.company).includes("plato yapi"));
-      if (plato) { plato.company = "PLATO Yapı İnşaat"; plato.relatedProject = "Cevizli 10485/445, Kartaltepe 535/2"; plato.relatedProjects = ["Cevizli 10485/445", "Kartaltepe 535/2"]; }
-
-      const mti = accList.find(a => normText(a.company).includes("mti mimarlik"));
-      if (mti) { mti.company = "MTİ Mimarlık,İnşaat"; mti.relatedProject = "Florya 5595/96-97-98-99"; mti.relatedProjects = ["Florya 5595/96-97-98-99"]; }
-
-      // 8. Herhangi bir caride hala proje prefixi varsa temizle (örn. "Gençosman 0/4012 YOLVERCAN ..." -> "YOLVERCAN ...")
+      // 1. Herhangi bir caride hala proje prefixi varsa temizle (örn. "Gençosman 0/4012 YOLVERCAN ..." -> "YOLVERCAN ...")
       accList.forEach(a => {
         if (!a || !a.company) return;
         const orig = a.company;
@@ -2922,32 +2959,116 @@
         }
       });
 
-      // Mükerrer ve silinmiş kayıtları filtrele
-      const filtered = accList.filter(a => {
-        if (!a || !a.company) return false;
-        const n = normText(a.company);
-        if (n === "kasim bey") return false;
-        if (n.startsWith("yuklenici murat tapan")) return false;
-        if (n.includes("ibrahim celikol malik")) return false;
-        if (n.includes("betonsa hazir beton")) return false;
-        if (isRecordDeleted('Cari Kartları', a.company)) return false;
-        return true;
+      const matchedAccountIds = new Set();
+      const unifiedList = [];
+
+      // 2. KANONİK FİRMA VE YÜKLENİCİLERİ BİRLEŞTİR (Kasım Bey, Yüklenici vb. tek firma altında toplanır)
+      CANONICAL_COMPANIES.forEach(canon => {
+        const matches = accList.filter(a => {
+          if (!a || !a.company) return false;
+          const normComp = normText(a.company);
+          const normCont = normText(a.contact);
+          return canon.aliases.some(alias => normComp.includes(alias) || normCont.includes(alias));
+        });
+
+        if (matches.length > 0) {
+          matches.forEach(m => matchedAccountIds.add(m.id));
+
+          let primary = matches.find(m => normText(m.company) === normText(canon.company)) || matches[0];
+          const unifiedAcc = Object.assign({}, primary);
+
+          unifiedAcc.company = canon.company;
+          unifiedAcc.contact = canon.contact || unifiedAcc.contact;
+          unifiedAcc.phone = canon.phone || unifiedAcc.phone;
+          unifiedAcc.type = canon.type || unifiedAcc.type || 'Müşteri';
+
+          // İlgili projeleri eksiksiz birleştir
+          const projSet = new Set(canon.projects || []);
+          matches.forEach(m => {
+            if (m.relatedProject) {
+              m.relatedProject.split(',').forEach(p => {
+                const tr = p.trim();
+                if (tr) projSet.add(tr);
+              });
+            }
+            if (Array.isArray(m.relatedProjects)) {
+              m.relatedProjects.forEach(p => { if (p && p.trim()) projSet.add(p.trim()); });
+            }
+          });
+          unifiedAcc.relatedProjects = Array.from(projSet);
+          unifiedAcc.relatedProject = unifiedAcc.relatedProjects.join(', ');
+
+          // Finansalları güvenle birleştir
+          const allRecs = matches.map(m => parseNumber(m.receivable)).filter(n => !isNaN(n));
+          const allColls = matches.map(m => parseNumber(m.collected)).filter(n => !isNaN(n));
+          const allPays = matches.map(m => parseNumber(m.payable)).filter(n => !isNaN(n));
+
+          let maxRec = allRecs.length > 0 ? Math.max(...allRecs) : 0;
+          if (canon.company.includes("Güzel Konut")) maxRec = Math.max(maxRec, 18000000);
+          unifiedAcc.receivable = maxRec;
+          unifiedAcc.collected = allColls.length > 0 ? Math.max(...allColls) : 0;
+          unifiedAcc.payable = allPays.length > 0 ? Math.max(...allPays) : 0;
+          unifiedAcc.balance = Math.max(0, unifiedAcc.receivable - unifiedAcc.collected) - unifiedAcc.payable;
+
+          // Notları birleştir
+          const combinedNotes = [];
+          matches.forEach(m => {
+            if (m.notes && !combinedNotes.includes(m.notes)) combinedNotes.push(m.notes);
+            if (m.address && !unifiedAcc.address) unifiedAcc.address = m.address;
+            if (m.iban && !unifiedAcc.iban) unifiedAcc.iban = m.iban;
+            if (m.email && !unifiedAcc.email) unifiedAcc.email = m.email;
+          });
+          if (canon.defaultNotes && !combinedNotes.includes(canon.defaultNotes)) combinedNotes.push(canon.defaultNotes);
+          unifiedAcc.notes = combinedNotes.join(' | ');
+
+          // Gider ve evrakları birleştir
+          const combinedExp = [];
+          const combinedDocs = [];
+          matches.forEach(m => {
+            if (Array.isArray(m.expenseItems)) combinedExp.push(...m.expenseItems);
+            if (Array.isArray(m.documents)) combinedDocs.push(...m.documents);
+          });
+          unifiedAcc.expenseItems = combinedExp;
+          unifiedAcc.documents = combinedDocs;
+
+          unifiedList.push(unifiedAcc);
+        }
       });
 
-      // Tekil şirket adına göre dedup
+      // 3. Eşleşmeyen diğer carileri filtrele ve ekle
+      accList.forEach(a => {
+        if (!a || !a.company) return;
+        if (matchedAccountIds.has(a.id)) return;
+
+        const normComp = normText(a.company);
+        const normCont = normText(a.contact);
+
+        // Kanonik firmaların aliaslarını içeren (yetim kalmış) mükerrer kayıtları temizle
+        const isOrphanAlias = CANONICAL_COMPANIES.some(c => 
+          c.aliases.some(alias => normComp.includes(alias) || normCont.includes(alias))
+        );
+        if (isOrphanAlias) return;
+
+        if (normComp.includes("betonsa")) return;
+        if (isRecordDeleted('Cari Kartları', a.company)) return;
+
+        unifiedList.push(a);
+      });
+
+      // 4. Tekil şirket adına göre dedup
       const seen = new Set();
-      const result = [];
-      for (const a of filtered) {
+      const finalResult = [];
+      for (const a of unifiedList) {
         const k = normText(a.company);
         if (seen.has(k)) continue;
         seen.add(k);
-        result.push(a);
+        finalResult.push(a);
       }
-      return result;
+      return finalResult;
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-09_v32_cariler_sade_firma_adi";
+    const APP_BUILD_VERSION = "2026-10-09_v33_firma_ve_yuklenici_esitleme";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const currentSupabaseUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
@@ -2961,23 +3082,23 @@
         localStorage.removeItem('yg_projects_lite');
 
         // Mükerrer cari kayıtlarını silinmiş olarak işaretle ve Google Sheets'ten sil
-        markAsDeleted('Cari Kartları', 'Kasım Bey');
-        markAsDeleted('Cari Kartları', 'kasim bey');
-        markAsDeleted('Cari Kartları', 'Yüklenici Murat Tapan - İdris Dalan');
-        markAsDeleted('Cari Kartları', 'İbrahim Çelikol (Malik)');
-        markAsDeleted('Cari Kartları', 'Betonsa Hazır Beton A.Ş.');
-
-        try {
-          postDeleteToWebhook('Cari Kartları', 'Firma Adı', 'Kasım Bey');
-          postDeleteToWebhook('Cari Kartları', 'Firma Adı', 'Yüklenici Murat Tapan - İdris Dalan');
-          postDeleteToWebhook('Cari Kartları', 'Firma Adı', 'İbrahim Çelikol (Malik)');
-        } catch(e) {}
+        const obsoleteNames = [
+          'Kasım Bey', 'kasim bey', 'Kasım Bey (Yönetici)', 'Kasım Bey (Yüklenici)',
+          'Kasım YOLVERCAN', 'kasim yolvercan', 'Gençosman 0/4012 YOLVERCAN Yapı İnşaat Taahhüt',
+          'Gençosman 0/4012 YOLVERCAN', 'Yüklenici Murat Tapan - İdris Dalan',
+          'İbrahim Çelikol (Malik)', 'Betonsa Hazır Beton A.Ş.',
+          'İdris Dalan - Murat Tapan  Atlas Han Grup'
+        ];
+        obsoleteNames.forEach(name => {
+          markAsDeleted('Cari Kartları', name);
+          try { postDeleteToWebhook('Cari Kartları', 'Firma Adı', name); } catch(e) {}
+        });
 
         // İnşaat Projeleri silinmişler listesini temizle, sadece mükerrer Florya Cennet kaydını tut
         const delRecs = getDeletedRecords();
         if (delRecs) {
           delRecs['İnşaat Projeleri'] = ['küçükçemece florya cennet mh.', 'küçükçekmece florya cennet mh.'];
-          delRecs['Cari Kartları'] = ['kasım bey', 'yüklenici murat tapan - idris dalan', 'ibrahim çelikol (malik)', 'betonsa hazır beton a.ş.'];
+          delRecs['Cari Kartları'] = obsoleteNames.map(s => normText(s));
           localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(delRecs));
         }
         unmarkDeleted('İnşaat Projeleri', 'Gençosman 12357/58');
@@ -6647,47 +6768,59 @@ function doPost(e) {
         const projLoc = cleanText(p.location || (p.neighborhood ? (p.neighborhood + (p.district ? ' / ' + p.district : '')) : ''));
         const projNotes = cleanText(p.managerNotes || p.notes || '');
 
-        // 1. Projeye girilen İşveren / Müşteri isimleri
-        const clientNames = extractClientNames(p.client || '');
-
-        // 2. Projeye girilen Apartman / Bina Yöneticisi kişi
-        const managerName = projManager;
-
-        // Eşitleyeceğimiz kişiler listesini hazırla
+        // Kanonik firma kontrolü (Kasım Yolvercan, Atlas Han, Güzel Konut vb. yüklenici/firma eşitlemesi)
+        const canon = findCanonicalCompany(p.client || p.managerName, pName);
         const personsToSync = [];
 
-        // İşveren(ler) ekle
-        clientNames.forEach((cName, idx) => {
-          if (!cName) return;
-          const allocBudget = clientNames.length === 1 ? projBudget : (idx === 0 ? projBudget : 0);
+        if (canon) {
+          // Bu proje doğrudan kanonik bir firmaya/yükleniciye ait: asla ayrı şahıs (örn. Kasım Bey) carisi açma, doğrudan firma adı altında topla!
           personsToSync.push({
-            name: cName,
+            name: canon.company,
             isClient: true,
             isManager: false,
-            budget: allocBudget,
-            contactPerson: managerName ? `${managerName} (Yönetici)` : cName,
-            phone: projPhone,
+            budget: projBudget,
+            contactPerson: canon.contact,
+            phone: canon.phone || projPhone,
             email: projEmail,
-            notesRole: 'İşveren / Yatırımcı'
+            notesRole: 'Firma / Yüklenici',
+            canonicalCompany: canon.company
           });
-        });
+        } else {
+          // 1. Projeye girilen İşveren / Müşteri isimleri
+          const clientNames = extractClientNames(p.client || '');
+          const managerName = projManager;
 
-        // Yönetici kişi: Eğer girilmişse ve işveren adı ile aynı değilse otomatik cari kartı oluştur!
-        if (managerName) {
-          const alreadyInClients = clientNames.some(c => c.toLowerCase().trim() === managerName.toLowerCase().trim());
-          if (!alreadyInClients) {
-            // Eğer hiç işveren girilmemişse proje bütçesini doğrudan yöneticiye ata
-            const allocBudget = clientNames.length === 0 ? projBudget : 0;
+          clientNames.forEach((cName, idx) => {
+            if (!cName) return;
+            const allocBudget = clientNames.length === 1 ? projBudget : (idx === 0 ? projBudget : 0);
             personsToSync.push({
-              name: managerName,
-              isClient: false,
-              isManager: true,
+              name: cName,
+              isClient: true,
+              isManager: false,
               budget: allocBudget,
-              contactPerson: `${managerName} (${p.buildingName || pName || 'Proje'} Yöneticisi)`,
+              contactPerson: managerName ? `${managerName} (Yönetici)` : cName,
               phone: projPhone,
               email: projEmail,
-              notesRole: 'Bina/Apartman Yöneticisi'
+              notesRole: 'İşveren / Yatırımcı'
             });
+          });
+
+          // Yönetici kişi: Eğer girilmişse ve işveren adı ile aynı değilse otomatik cari kartı oluştur!
+          if (managerName) {
+            const alreadyInClients = clientNames.some(c => c.toLowerCase().trim() === managerName.toLowerCase().trim());
+            if (!alreadyInClients) {
+              const allocBudget = clientNames.length === 0 ? projBudget : 0;
+              personsToSync.push({
+                name: managerName,
+                isClient: false,
+                isManager: true,
+                budget: allocBudget,
+                contactPerson: `${managerName} (${p.buildingName || pName || 'Proje'} Yöneticisi)`,
+                phone: projPhone,
+                email: projEmail,
+                notesRole: 'Bina/Apartman Yöneticisi'
+              });
+            }
           }
         }
 
@@ -6702,19 +6835,25 @@ function doPost(e) {
           if (!isExplicitSave && isRecordDeleted('Cari Kartları', personName)) return;
 
           // Akıllı Eşleştirme: Şirket adında veya yetkilisinde veya proje adında geçen mevcut cariyi bul
-          let acc = accounts.find(a => {
-            if (!a || !a.company) return false;
-            const normComp = normText(a.company);
-            // 1. Proje adı ile eşleşen cari (örn. Gençosman 0/4012 YOLVERCAN)
-            if (normProj && normComp.includes(normProj)) return true;
-            // 2. Kişi/Şirket adı eşleşmesi
-            if (normComp === normPerson || normComp.includes(normPerson) || normPerson.includes(normComp)) return true;
-            // 3. Yetkili kişi eşleşmesi
-            if (a.contact && (normText(a.contact).includes(normPerson) || normPerson.includes(normText(a.contact)))) return true;
-            // 4. İlgili proje alanında geçiyor mu
-            if (a.relatedProject && normProj && normText(a.relatedProject).includes(normProj)) return true;
-            return false;
-          });
+          let acc = null;
+          if (person.canonicalCompany) {
+            acc = accounts.find(a => normText(a.company) === normText(person.canonicalCompany));
+          }
+          if (!acc) {
+            acc = accounts.find(a => {
+              if (!a || !a.company) return false;
+              const normComp = normText(a.company);
+              // 1. Proje adı ile eşleşen cari
+              if (normProj && normComp.includes(normProj)) return true;
+              // 2. Kişi/Şirket adı eşleşmesi
+              if (normComp === normPerson || normComp.includes(normPerson) || normPerson.includes(normComp)) return true;
+              // 3. Yetkili kişi eşleşmesi
+              if (a.contact && (normText(a.contact).includes(normPerson) || normPerson.includes(normText(a.contact)))) return true;
+              // 4. İlgili proje alanında geçiyor mu
+              if (a.relatedProject && normProj && normText(a.relatedProject).includes(normProj)) return true;
+              return false;
+            });
+          }
 
           // Otomatik sayfa yüklemelerinde (!userTriggered && !isExplicitSave) yeni cari türetme!
           if (!acc && !userTriggered && !isExplicitSave) {
@@ -6723,7 +6862,7 @@ function doPost(e) {
 
           if (!acc) {
             // Sadece kullanıcı açıkça senkronizasyon istediğinde veya proje kaydettiğinde yeni cari aç (sade firma/kişi adı)
-            const unifiedName = personName;
+            const unifiedName = person.canonicalCompany || personName;
             const newId = 'a_p_' + makeProjectSlug(unifiedName) + '_' + Date.now().toString().slice(-4) + Math.floor(Math.random() * 100);
             const notesDetail = `İlgili Proje: ${pName}` +
               (p.buildingName ? ` | Bina: ${p.buildingName}` : '') +
@@ -6774,6 +6913,17 @@ function doPost(e) {
             createdNames.push(unifiedName);
           } else {
             let changed = false;
+            if (person.canonicalCompany) {
+              if (acc.company !== person.canonicalCompany) {
+                acc.company = person.canonicalCompany;
+                changed = true;
+              }
+              if (person.contactPerson && acc.contact !== person.contactPerson) {
+                acc.contact = person.contactPerson;
+                changed = true;
+              }
+            }
+
             if (!acc.linkedProjectIds) acc.linkedProjectIds = [];
             const isAlreadyLinked = p.id && acc.linkedProjectIds.includes(p.id);
 
@@ -6782,6 +6932,12 @@ function doPost(e) {
               changed = true;
             } else if (pName && !acc.relatedProject.includes(pName)) {
               acc.relatedProject = acc.relatedProject + ', ' + pName;
+              changed = true;
+            }
+
+            if (!Array.isArray(acc.relatedProjects)) acc.relatedProjects = [];
+            if (pName && !acc.relatedProjects.includes(pName)) {
+              acc.relatedProjects.push(pName);
               changed = true;
             }
 
