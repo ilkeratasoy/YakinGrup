@@ -2874,6 +2874,157 @@
         .trim();
     }
 
+    const ISTANBUL_DISTRICTS_LIST = [
+      "Kadıköy", "Maltepe", "Ataşehir", "Üsküdar", "Kartal", "Pendik", "Ümraniye", "Beykoz", "Çekmeköy", "Sancaktepe", "Sultanbeyli", "Tuzla", "Şile", "Adalar",
+      "Küçükçekmece", "Bakırköy", "Beşiktaş", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Avcılar", "Bağcılar", "Bahçelievler", "Başakşehir", "Bayrampaşa",
+      "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kâğıthane", "Sarıyer", "Silivri", "Sultangazi", "Şişli", "Zeytinburnu", "Arnavutköy", "Çatalca"
+    ];
+
+    const ISTANBUL_NEIGHBORHOOD_MAP = {
+      // Kadıköy
+      "göztepe": "Kadıköy",
+      "goztepe": "Kadıköy",
+      "fenerbahçe": "Kadıköy",
+      "fenerbahce": "Kadıköy",
+      "caddebostan": "Kadıköy",
+      "bostancı": "Kadıköy",
+      "bostanci": "Kadıköy",
+      "erenköy": "Kadıköy",
+      "erenkoy": "Kadıköy",
+      "suadiye": "Kadıköy",
+      "kozyatağı": "Kadıköy",
+      "kozyatagi": "Kadıköy",
+      "fikirtepe": "Kadıköy",
+      "hasanpaşa": "Kadıköy",
+      "hasanpasa": "Kadıköy",
+      "acıbadem": "Kadıköy",
+      "acibadem": "Kadıköy",
+      "moda": "Kadıköy",
+      "feneryolu": "Kadıköy",
+      "rasimpaşa": "Kadıköy",
+      "osmanağa": "Kadıköy",
+      "caferağa": "Kadıköy",
+      "sahrayıcedid": "Kadıköy",
+      "sahrayicedid": "Kadıköy",
+      "merdivenköy": "Kadıköy",
+      "kadıköy": "Kadıköy",
+      "kadikoy": "Kadıköy",
+
+      // Güngören
+      "gençosman": "Güngören",
+      "gencosman": "Güngören",
+      "merter": "Güngören",
+      "tozkoparan": "Güngören",
+      "haznedar": "Güngören",
+      "mareşal çakmak": "Güngören",
+      "güven": "Güngören",
+      "akıncılar": "Güngören",
+      "güngören": "Güngören",
+      "gungoren": "Güngören",
+
+      // Bakırköy
+      "florya": "Bakırköy",
+      "yeşilköy": "Bakırköy",
+      "yesilkoy": "Bakırköy",
+      "yeşilyurt": "Bakırköy",
+      "yesilyurt": "Bakırköy",
+      "ataköy": "Bakırköy",
+      "atakoy": "Bakırköy",
+      "kartaltepe": "Bakırköy",
+      "zuhuratbaba": "Bakırköy",
+      "osmaniye": "Bakırköy",
+      "şenlikköy": "Bakırköy",
+      "senlikkoy": "Bakırköy",
+      "basınköy": "Bakırköy",
+      "bakırköy": "Bakırköy",
+      "bakirkoy": "Bakırköy",
+
+      // Kartal
+      "cevizli": "Kartal",
+      "uğurmumcu": "Kartal",
+      "ugurmumcu": "Kartal",
+      "yakacık": "Kartal",
+      "yakacik": "Kartal",
+      "soğanlık": "Kartal",
+      "soganlik": "Kartal",
+      "atalar": "Kartal",
+      "kordonboyu": "Kartal",
+      "petroliş": "Kartal",
+      "petrol is": "Kartal",
+      "karlıktepe": "Kartal",
+      "kartal": "Kartal",
+
+      // Üsküdar
+      "salacak": "Üsküdar",
+      "kuzguncuk": "Üsküdar",
+      "beylerbeyi": "Üsküdar",
+      "çengelköy": "Üsküdar",
+      "cengelkoy": "Üsküdar",
+      "altunizade": "Üsküdar",
+      "kandilli": "Üsküdar",
+      "üsküdar": "Üsküdar",
+      "uskudar": "Üsküdar",
+
+      // Maltepe
+      "küçükyalı": "Maltepe",
+      "kucukyali": "Maltepe",
+      "idealtepe": "Maltepe",
+      "altayçeşme": "Maltepe",
+      "zümrütevler": "Maltepe",
+      "bağlarbaşı": "Maltepe",
+      "maltepe": "Maltepe",
+
+      // Fatih
+      "aksaray": "Fatih",
+      "balat": "Fatih",
+      "fener": "Fatih",
+      "topkapı": "Fatih",
+      "fındıkzade": "Fatih",
+      "fatih": "Fatih",
+
+      // Bahçelievler
+      "şirinevler": "Bahçelievler",
+      "yenibosna": "Bahçelievler",
+      "bahçelievler": "Bahçelievler",
+      "bahcelievler": "Bahçelievler"
+    };
+
+    function findDistrict(distStr, locStr, nameStr) {
+      if (distStr && ISTANBUL_DISTRICTS_LIST.includes(distStr)) return distStr;
+      
+      const combined = `${distStr || ''} ${locStr || ''} ${nameStr || ''}`.toLowerCase();
+      
+      // 1. Doğrudan ilçe adı eşleşmesi
+      for (const d of ISTANBUL_DISTRICTS_LIST) {
+        if (combined.includes(d.toLowerCase())) return d;
+      }
+
+      // 2. Semt / Mahalle eşleşmesi (örn: Göztepe -> Kadıköy, Gençosman -> Güngören)
+      for (const [neighborhood, dist] of Object.entries(ISTANBUL_NEIGHBORHOOD_MAP)) {
+        if (combined.includes(neighborhood.toLowerCase())) {
+          return dist;
+        }
+      }
+
+      return (distStr && distStr !== 'Diğer') ? distStr : 'Diğer';
+    }
+
+    function normalizeProjectLocation(p) {
+      if (!p) return p;
+      if (!p.district || p.district === 'Diğer' || p.district === 'İstanbul') {
+        const detected = findDistrict(p.district, p.location, p.name);
+        if (detected && detected !== 'Diğer') {
+          p.district = detected;
+        }
+      }
+      if (p.district && p.district !== 'Diğer') {
+        if (!p.location || p.location === 'İstanbul' || p.location.trim() === '' || p.location === 'Diğer') {
+          p.location = `${p.district} / İstanbul`;
+        }
+      }
+      return p;
+    }
+
     // Kanonik Şirket, Yetkili Kişi ve Proje Haritası
     const CANONICAL_COMPANIES = [
       {
@@ -3005,6 +3156,7 @@
       for (let p of projList) {
         if (!p) continue;
         p = normalizeProjectContractor(p);
+        p = normalizeProjectLocation(p);
         const rawName = (p.name || '').trim();
         const rawCode = (p.code || '').trim();
         const rawApt = (p.buildingName || '').trim().toLowerCase();
@@ -5277,26 +5429,10 @@ function doPost(e) {
     function getProjectDistrictGroupKey(p) {
       if (!p) return 'Diğer / Belirtilmemiş Bölge';
       let dist = (p.district || '').trim();
-      if (!dist && p.location) {
-        dist = findDistrict('', p.location);
+      if (!dist || dist === 'Diğer' || dist === 'İstanbul') {
+        dist = findDistrict(p.district, p.location, p.name);
       }
-      if (!dist && p.name) {
-        dist = findDistrict('', p.name);
-      }
-      if (!dist || dist === 'Diğer') {
-        const textToScan = `${p.name || ''} ${p.location || ''} ${p.notes || ''}`.toLowerCase();
-        if (textToScan.includes('gençosman') || textToScan.includes('gencosman')) dist = 'Güngören';
-        else if (textToScan.includes('florya')) dist = 'Bakırköy';
-        else if (textToScan.includes('cevizli')) dist = 'Kartal';
-        else if (textToScan.includes('uğurmumcu') || textToScan.includes('ugurmumcu')) dist = 'Kartal';
-        else if (textToScan.includes('yakacık') || textToScan.includes('yakacik')) dist = 'Kartal';
-        else if (textToScan.includes('kartaltepe')) dist = 'Bakırköy';
-        else if (textToScan.includes('salacak')) dist = 'Üsküdar';
-        else if (textToScan.includes('fatih')) dist = 'Fatih';
-        else if (textToScan.includes('maltepe')) dist = 'Maltepe';
-        else if (textToScan.includes('kadıköy') || textToScan.includes('kadikoy')) dist = 'Kadıköy';
-      }
-      return dist || 'Diğer / Belirtilmemiş Bölge';
+      return (dist && dist !== 'Diğer') ? dist : 'Diğer / Belirtilmemiş Bölge';
     }
 
     function getSafeProjectGroupId(key) {
@@ -9787,7 +9923,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
     }
 
     function fromSupabaseProject(r) {
-      return {
+      const p = {
         id: r.id,
         date: r.date || '',
         code: r.code || '',
@@ -9820,6 +9956,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
         managerEmail: r.manager_email || '',
         managerNotes: r.manager_notes || ''
       };
+      return normalizeProjectLocation(normalizeProjectContractor(p));
     }
 
     function deduplicateRowsById(rows, prefix = 'row') {
@@ -10909,21 +11046,6 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
       return s;
     };
 
-    const ISTANBUL_DISTRICTS_LIST = [
-      "Kadıköy", "Maltepe", "Ataşehir", "Üsküdar", "Kartal", "Pendik", "Ümraniye", "Beykoz", "Çekmeköy", "Sancaktepe", "Sultanbeyli", "Tuzla", "Şile", "Adalar",
-      "Küçükçekmece", "Bakırköy", "Beşiktaş", "Beylikdüzü", "Beyoğlu", "Büyükçekmece", "Avcılar", "Bağcılar", "Bahçelievler", "Başakşehir", "Bayrampaşa",
-      "Esenler", "Esenyurt", "Eyüpsultan", "Fatih", "Gaziosmanpaşa", "Güngören", "Kâğıthane", "Sarıyer", "Silivri", "Sultangazi", "Şişli", "Zeytinburnu", "Arnavutköy", "Çatalca"
-    ];
-
-    function findDistrict(distStr, locStr) {
-      if (distStr && ISTANBUL_DISTRICTS_LIST.includes(distStr)) return distStr;
-      const combo = `${distStr || ''} ${locStr || ''}`.toLowerCase();
-      for (const d of ISTANBUL_DISTRICTS_LIST) {
-        if (combo.includes(d.toLowerCase())) return d;
-      }
-      return distStr || 'Diğer';
-    }
-
     function processDataFromSheet(d) {
       if (!d) return;
 
@@ -11014,7 +11136,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
             const pName = cleanText(r['Proje Adı'] || r['col_2']);
             const rawLoc = cleanText(r['Konum'] || r['col_5']);
             const rawDist = getSmartVal(['Semt', 'İlçe', 'Ilce', 'Bölge', 'col_12'], 12, '');
-            const finalDist = findDistrict(rawDist, rawLoc);
+            const finalDist = findDistrict(rawDist, rawLoc, pName);
 
             let prg = r['İlerleme'] || r['col_9'];
             let numPrg = 0;
