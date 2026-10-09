@@ -2402,12 +2402,12 @@
           ACID veri güvenliği, çoklu cihaz anlık senkronizasyon ve döküman arşivi. Google Sheets arka planda canlı yedek olarak güncellenir.
         </p>
         <div style="margin-bottom: 6px;">
-          <label style="font-size: 0.72rem; font-weight: 700; color: #166534; display: block; margin-bottom: 2px;">Project URL</label>
-          <input type="url" id="supabase-url-input" placeholder="https://xxxxxxxx.supabase.co" style="font-family: monospace; font-size: 0.76rem; width: 100%; padding: 7px 10px; border: 1px solid #86efac; border-radius: 6px; background: #ffffff;">
+          <label style="font-size: 0.72rem; font-weight: 700; color: #166534; display: block; margin-bottom: 2px;">Project URL (EU West / İrlanda)</label>
+          <input type="url" id="supabase-url-input" placeholder="https://ivycsdzbnvuvobrbeftz.supabase.co" style="font-family: monospace; font-size: 0.76rem; width: 100%; padding: 7px 10px; border: 1px solid #86efac; border-radius: 6px; background: #ffffff;">
         </div>
         <div style="margin-bottom: 8px;">
-          <label style="font-size: 0.72rem; font-weight: 700; color: #166534; display: block; margin-bottom: 2px;">Anon Public Key</label>
-          <input type="password" id="supabase-key-input" placeholder="eyJhbGciOiJIUzI1NiIsIn..." style="font-family: monospace; font-size: 0.76rem; width: 100%; padding: 7px 10px; border: 1px solid #86efac; border-radius: 6px; background: #ffffff;">
+          <label style="font-size: 0.72rem; font-weight: 700; color: #166534; display: block; margin-bottom: 2px;">Publishable Key (Anon)</label>
+          <input type="password" id="supabase-key-input" placeholder="sb_publishable_3aCM2mHfMdKXtOkcfpxG4A_1cFfvZ_S" style="font-family: monospace; font-size: 0.76rem; width: 100%; padding: 7px 10px; border: 1px solid #86efac; border-radius: 6px; background: #ffffff;">
         </div>
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button type="button" class="btn btn-navy btn-sm" onclick="testSupabaseConnection()" style="font-size: 0.72rem; padding: 6px 10px; flex: 1;">
@@ -2500,6 +2500,8 @@
     const GEMINI_STORAGE_KEY = "yg_gemini_vision_key";
     const SUPABASE_URL_KEY = "yg_supabase_url";
     const SUPABASE_KEY_KEY = "yg_supabase_key";
+    const DEFAULT_SUPABASE_URL = "https://ivycsdzbnvuvobrbeftz.supabase.co";
+    const DEFAULT_SUPABASE_KEY = "sb_publishable_3aCM2mHfMdKXtOkcfpxG4A_1cFfvZ_S";
 
     function getWebhookUrl() {
       const custom = localStorage.getItem(WEBHOOK_STORAGE_KEY);
@@ -2799,9 +2801,15 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-08_v29_gencosman_12357_kurtarma";
+    const APP_BUILD_VERSION = "2026-10-09_v30_supabase_eu_west";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
+        const currentSupabaseUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
+        if (!currentSupabaseUrl || !currentSupabaseUrl.includes('ivycsdzbnvuvobrbeftz')) {
+          localStorage.setItem(SUPABASE_URL_KEY, DEFAULT_SUPABASE_URL);
+          localStorage.setItem(SUPABASE_KEY_KEY, DEFAULT_SUPABASE_KEY);
+        }
+        localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
         localStorage.removeItem('yg_invoices_lite');
         localStorage.removeItem('yg_projects_lite');
@@ -8703,9 +8711,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     }
 
     function getSupabaseConfig() {
-      const rawUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
+      const storedUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
+      const rawUrl = storedUrl || DEFAULT_SUPABASE_URL;
       const url = sanitizeSupabaseUrl(rawUrl);
-      const key = (localStorage.getItem(SUPABASE_KEY_KEY) || '').trim();
+      const key = (localStorage.getItem(SUPABASE_KEY_KEY) || '').trim() || DEFAULT_SUPABASE_KEY;
       return {
         url,
         key,
@@ -8769,13 +8778,13 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     async function testSupabaseConnection() {
       const urlEl = document.getElementById('supabase-url-input');
       const keyEl = document.getElementById('supabase-key-input');
-      const rawUrl = (urlEl ? urlEl.value : '').trim();
+      const rawUrl = (urlEl ? urlEl.value : '').trim() || DEFAULT_SUPABASE_URL;
       const url = sanitizeSupabaseUrl(rawUrl);
       if (urlEl && url && url !== rawUrl) urlEl.value = url;
-      const key = (keyEl ? keyEl.value : '').trim();
+      const key = (keyEl ? keyEl.value : '').trim() || DEFAULT_SUPABASE_KEY;
 
       if (!url || !key) {
-        showToast('Lütfen önce Supabase URL ve Anon Key girin!', '⚠️');
+        showToast('Lütfen önce Supabase URL ve Publishable Key girin!', '⚠️');
         updateSupabaseStatusPill('missing');
         return;
       }
@@ -8788,8 +8797,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         const testClient = window.supabase.createClient(url, key, { auth: { persistSession: false } });
         const { data, error } = await testClient.from('projects').select('count', { count: 'exact', head: true });
         if (error) {
-          if (error.code === '42P01') {
-            showToast('Bağlantı başarılı! Ancak "projects" tablosu henüz açılmamış. SQL şemasını çalıştırın.', '⚠️');
+          if (error.code === '42P01' || error.code === 'PGRST205' || (error.message && error.message.includes('schema cache'))) {
+            showToast('Bağlantı başarılı! 🟢 Ancak tablolar henüz oluşturulmamış. "📋 SQL Şemasını Kopyala" ile Supabase SQL Editor\'de çalıştırın.', '⚠️');
             updateSupabaseStatusPill('connected_notables');
             return;
           }
@@ -8813,7 +8822,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
   id TEXT PRIMARY KEY,
   date TEXT DEFAULT '',
   code TEXT DEFAULT '',
-  name TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
   type TEXT DEFAULT 'Kentsel Dönüşüm',
   client TEXT DEFAULT '',
   location TEXT DEFAULT '',
@@ -8848,7 +8857,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
 -- 2. CARİ KARTLARI TABLOSU
 CREATE TABLE IF NOT EXISTS public.accounts (
   id TEXT PRIMARY KEY,
-  company TEXT UNIQUE NOT NULL,
+  company TEXT NOT NULL,
   type TEXT DEFAULT 'Müşteri',
   related_project TEXT DEFAULT '',
   related_projects JSONB DEFAULT '[]'::jsonb,
@@ -8877,7 +8886,7 @@ CREATE TABLE IF NOT EXISTS public.invoices (
   id TEXT PRIMARY KEY,
   reg_date TEXT DEFAULT '',
   date TEXT DEFAULT '',
-  no TEXT UNIQUE NOT NULL,
+  no TEXT DEFAULT '',
   category TEXT DEFAULT '',
   vendor TEXT DEFAULT '',
   tax TEXT DEFAULT '',
@@ -8989,6 +8998,14 @@ CREATE POLICY "Anon public access on stock" ON public.stock FOR ALL TO anon USIN
 
 DROP POLICY IF EXISTS "Anon public access on cards" ON public.cards;
 CREATE POLICY "Anon public access on cards" ON public.cards FOR ALL TO anon USING (true) WITH CHECK (true);
+
+-- Performans İndeksleri
+CREATE INDEX IF NOT EXISTS idx_projects_name ON public.projects(name);
+CREATE INDEX IF NOT EXISTS idx_accounts_company ON public.accounts(company);
+CREATE INDEX IF NOT EXISTS idx_invoices_project ON public.invoices(project);
+CREATE INDEX IF NOT EXISTS idx_invoices_no ON public.invoices(no);
+CREATE INDEX IF NOT EXISTS idx_documents_project ON public.documents(project);
+CREATE INDEX IF NOT EXISTS idx_todos_project ON public.todos(project);
 
 -- Realtime Publication
 DO $$
@@ -9542,9 +9559,12 @@ END $$;
     // TEK TIKLA MİGRASYON: GOOGLE SHEETS -> SUPABASE
     // ==========================================
     async function migrateSheetsToSupabase() {
-      const conf = getSupabaseConfig();
+      let conf = getSupabaseConfig();
+      if (!supabaseClient && conf.isConfigured) {
+        initSupabase();
+      }
       if (!conf.isConfigured || !supabaseClient) {
-        showToast('Lütfen önce Supabase URL ve Anon Key girip "Kaydet"e basın!', '⚠️');
+        showToast('Lütfen önce Supabase URL ve Publishable Key girip "Kaydet"e basın!', '⚠️');
         return;
       }
 

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
   id TEXT PRIMARY KEY,
   date TEXT DEFAULT '',
   code TEXT DEFAULT '',
-  name TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
   type TEXT DEFAULT 'Kentsel Dönüşüm',
   client TEXT DEFAULT '',
   location TEXT DEFAULT '',
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
 -- 2. CARİ KARTLARI TABLOSU
 CREATE TABLE IF NOT EXISTS public.accounts (
   id TEXT PRIMARY KEY,
-  company TEXT UNIQUE NOT NULL,
+  company TEXT NOT NULL,
   type TEXT DEFAULT 'Müşteri',
   related_project TEXT DEFAULT '',
   related_projects JSONB DEFAULT '[]'::jsonb,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS public.invoices (
   id TEXT PRIMARY KEY,
   reg_date TEXT DEFAULT '',
   date TEXT DEFAULT '',
-  no TEXT UNIQUE NOT NULL,
+  no TEXT DEFAULT '',
   category TEXT DEFAULT '',
   vendor TEXT DEFAULT '',
   tax TEXT DEFAULT '',
@@ -188,6 +188,16 @@ CREATE POLICY "Anon public access on stock" ON public.stock FOR ALL TO anon USIN
 
 DROP POLICY IF EXISTS "Anon public access on cards" ON public.cards;
 CREATE POLICY "Anon public access on cards" ON public.cards FOR ALL TO anon USING (true) WITH CHECK (true);
+
+-- ========================================================================
+-- PERFORMANS İNDEKSLERİ
+-- ========================================================================
+CREATE INDEX IF NOT EXISTS idx_projects_name ON public.projects(name);
+CREATE INDEX IF NOT EXISTS idx_accounts_company ON public.accounts(company);
+CREATE INDEX IF NOT EXISTS idx_invoices_project ON public.invoices(project);
+CREATE INDEX IF NOT EXISTS idx_invoices_no ON public.invoices(no);
+CREATE INDEX IF NOT EXISTS idx_documents_project ON public.documents(project);
+CREATE INDEX IF NOT EXISTS idx_todos_project ON public.todos(project);
 
 -- ========================================================================
 -- REALTIME YAYIN AYARLARI (Canlı senkronizasyon için)
