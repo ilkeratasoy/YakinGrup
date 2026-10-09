@@ -655,6 +655,114 @@
       gap: 10px;
     }
 
+    /* Proje Gruplama / Akordeon Görünümü */
+    .project-group-block {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: all 0.2s ease;
+    }
+    .project-group-block:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    }
+    .project-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 14px;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-left: 4px solid var(--navy);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease;
+      gap: 10px;
+    }
+    .project-group-header:hover {
+      background: #f1f5f9;
+    }
+    .project-group-block.expanded .project-group-header {
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+    .project-group-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+    .project-group-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .project-group-subtitle {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .project-group-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .project-group-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 20px;
+      background: #ffffff;
+      color: var(--navy);
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .project-group-toggle-btn:hover {
+      background: #f1f5f9;
+      border-color: var(--navy);
+    }
+    .project-group-chevron {
+      display: inline-block;
+      transition: transform 0.22s ease;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .project-group-block.expanded .project-group-chevron {
+      transform: rotate(180deg);
+    }
+    .project-group-body {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #fafbfc;
+    }
+    .project-group-block .card-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .project-group-block .card-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
     .quick-actions-row {
       display: flex;
       align-items: center;
@@ -1199,6 +1307,30 @@
         <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-project')" style="white-space: nowrap;">
           ➕ Yeni Proje
         </button>
+      </div>
+
+      <!-- Proje Gruplama / Akordeon Kontrolleri -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 8px; flex-wrap: wrap; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 7px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+          <span style="font-size: 0.74rem; font-weight: 700; color: var(--navy); margin-right: 2px;">📁 Gruplama:</span>
+          <button type="button" class="sector-pill active" id="btn-prj-group-firm" onclick="setProjectGroupBy('firm')">
+            🏢 Firmaya Göre Topla
+          </button>
+          <button type="button" class="sector-pill" id="btn-prj-group-district" onclick="setProjectGroupBy('district')">
+            📍 İlçeye / Bölgeye Göre Topla
+          </button>
+          <button type="button" class="sector-pill" id="btn-prj-group-none" onclick="setProjectGroupBy('none')">
+            📋 Düz Liste
+          </button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;" id="prj-group-actions">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllProjectGroups()" style="padding: 3px 9px; font-size: 0.72rem; border-radius: 8px;" title="Tüm grupları genişlet">
+            ⏬ Tümünü Aç
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllProjectGroups()" style="padding: 3px 9px; font-size: 0.72rem; border-radius: 8px;" title="Tüm grupları daralt">
+            ⏫ Tümünü Daralt
+          </button>
+        </div>
       </div>
 
       <div class="items-list" id="projects-list"></div>
@@ -5129,7 +5261,326 @@ function doPost(e) {
       return `<span class="badge badge-blue" style="font-weight:700;">${escapeHtml(t)}</span>`;
     }
 
+    let projectGroupBy = localStorage.getItem('yg_project_group_by') || 'firm';
+    const expandedProjectGroups = new Set();
+
+    function getProjectFirmGroupKey(p) {
+      if (!p) return 'Bağımsız / Belirtilmemiş Firma';
+      let firm = (p.client || '').trim();
+      if (!firm) {
+        const canon = findCanonicalCompany(p.managerName, p.name);
+        if (canon) firm = canon.company;
+      }
+      return firm || 'Bağımsız / Belirtilmemiş Firma';
+    }
+
+    function getProjectDistrictGroupKey(p) {
+      if (!p) return 'Diğer / Belirtilmemiş Bölge';
+      let dist = (p.district || '').trim();
+      if (!dist && p.location) {
+        dist = findDistrict('', p.location);
+      }
+      if (!dist && p.name) {
+        dist = findDistrict('', p.name);
+      }
+      if (!dist || dist === 'Diğer') {
+        const textToScan = `${p.name || ''} ${p.location || ''} ${p.notes || ''}`.toLowerCase();
+        if (textToScan.includes('gençosman') || textToScan.includes('gencosman')) dist = 'Güngören';
+        else if (textToScan.includes('florya')) dist = 'Bakırköy';
+        else if (textToScan.includes('cevizli')) dist = 'Kartal';
+        else if (textToScan.includes('uğurmumcu') || textToScan.includes('ugurmumcu')) dist = 'Kartal';
+        else if (textToScan.includes('yakacık') || textToScan.includes('yakacik')) dist = 'Kartal';
+        else if (textToScan.includes('kartaltepe')) dist = 'Bakırköy';
+        else if (textToScan.includes('salacak')) dist = 'Üsküdar';
+        else if (textToScan.includes('fatih')) dist = 'Fatih';
+        else if (textToScan.includes('maltepe')) dist = 'Maltepe';
+        else if (textToScan.includes('kadıköy') || textToScan.includes('kadikoy')) dist = 'Kadıköy';
+      }
+      return dist || 'Diğer / Belirtilmemiş Bölge';
+    }
+
+    function getSafeProjectGroupId(key) {
+      return 'prj_grp_' + String(key).toLowerCase()
+        .replace(/[ğ]/g, 'g').replace(/[ü]/g, 'u').replace(/[ş]/g, 's')
+        .replace(/[ı]/g, 'i').replace(/[ö]/g, 'o').replace(/[ç]/g, 'c')
+        .replace(/[^a-z0-9]/g, '_')
+        .substring(0, 45);
+    }
+
+    function toggleProjectGroup(groupId) {
+      const box = document.getElementById(groupId);
+      if (!box) return;
+      const isExp = box.classList.contains('expanded');
+      const body = box.querySelector('.project-group-body');
+      const toggleText = box.querySelector('.project-group-toggle-text');
+      if (isExp) {
+        box.classList.remove('expanded');
+        if (body) body.style.display = 'none';
+        if (toggleText) toggleText.textContent = 'Genişlet';
+        expandedProjectGroups.delete(groupId);
+      } else {
+        box.classList.add('expanded');
+        if (body) body.style.display = 'flex';
+        if (toggleText) toggleText.textContent = 'Daralt';
+        expandedProjectGroups.add(groupId);
+      }
+    }
+
+    function expandAllProjectGroups() {
+      document.querySelectorAll('.project-group-block').forEach(box => {
+        box.classList.add('expanded');
+        const body = box.querySelector('.project-group-body');
+        if (body) body.style.display = 'flex';
+        const toggleText = box.querySelector('.project-group-toggle-text');
+        if (toggleText) toggleText.textContent = 'Daralt';
+        if (box.id) expandedProjectGroups.add(box.id);
+      });
+    }
+
+    function collapseAllProjectGroups() {
+      document.querySelectorAll('.project-group-block').forEach(box => {
+        box.classList.remove('expanded');
+        const body = box.querySelector('.project-group-body');
+        if (body) body.style.display = 'none';
+        const toggleText = box.querySelector('.project-group-toggle-text');
+        if (toggleText) toggleText.textContent = 'Genişlet';
+      });
+      expandedProjectGroups.clear();
+    }
+
+    function setProjectGroupBy(mode) {
+      projectGroupBy = mode;
+      try { localStorage.setItem('yg_project_group_by', mode); } catch(e) {}
+      expandedProjectGroups.clear();
+      updateProjectGroupPills();
+      renderProjects();
+    }
+
+    function updateProjectGroupPills() {
+      const btnFirm = document.getElementById('btn-prj-group-firm');
+      const btnDist = document.getElementById('btn-prj-group-district');
+      const btnNone = document.getElementById('btn-prj-group-none');
+      const actions = document.getElementById('prj-group-actions');
+      if (btnFirm) btnFirm.classList.toggle('active', projectGroupBy === 'firm');
+      if (btnDist) btnDist.classList.toggle('active', projectGroupBy === 'district');
+      if (btnNone) btnNone.classList.toggle('active', projectGroupBy === 'none');
+      if (actions) actions.style.display = (projectGroupBy === 'none') ? 'none' : 'flex';
+    }
+
+    function renderSingleProjectCard(p) {
+      const hasLandInfo = !!(p.ada || p.parsel || p.district || p.neighborhood || p.area || p.imarUrl || p.taks || p.kaks || p.floors || p.setbacks || (p.nizam && p.nizam !== 'Ayrık Nizam'));
+      const hasManagerInfo = !!(p.buildingName || p.managerName || p.managerPhone || p.managerEmail || p.unitCount || p.managerNotes);
+      const cleanPhoneDigits = p.managerPhone ? p.managerPhone.replace(/[^0-9]/g, '').replace(/^(90|0)/, '') : '';
+
+      return `
+        <div class="card-item">
+          <div class="card-item-header">
+            <div style="flex:1; min-width:0;">
+              <div class="card-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${escapeHtml(p.name)}
+              </div>
+              <div class="card-item-meta">
+                <span>${escapeHtml(p.code)}</span> • <span>${escapeHtml(p.client || 'İşveren')}</span> • <span>📍 ${escapeHtml(p.location || (p.district ? p.district + ' / İstanbul' : 'İstanbul'))}</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+              ${getProjectTypeBadge(p.type)}
+              <span class="badge ${p.status === 'Tamamlandı' ? 'badge-green' : 'badge-amber'}">${escapeHtml(p.status)}</span>
+            </div>
+          </div>
+
+          <!-- İlerleme Çubuğu -->
+          <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0;">
+            <div style="flex:1; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
+              <div style="height:100%; width:${p.progress || 0}%; background: var(--green);"></div>
+            </div>
+            <span style="font-size: 0.75rem; font-weight: 800; color:var(--navy);">%${p.progress || 0}</span>
+          </div>
+
+          <!-- 1. ADA / PARSEL & İMAR BİLGİ KARTÇIĞI -->
+          ${hasLandInfo ? `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <div>
+                  <span style="font-weight:800; color:var(--navy);">🗺️ Tapu & Parsel:</span>
+                  <span style="font-weight:600; color:#1e293b;">
+                    ${escapeHtml(p.district || '')}${p.neighborhood ? ' / ' + escapeHtml(p.neighborhood) : ''}
+                  </span>
+                  ${(p.ada || p.parsel) ? `<span style="background:#e2e8f0; padding:1px 6px; border-radius:6px; font-weight:700; margin-left:4px; color:#0f172a;">Ada: ${escapeHtml(p.ada || '-')} / Parsel: ${escapeHtml(p.parsel || '-')}</span>` : ''}
+                  ${p.area ? `<span style="color:var(--muted); font-size:0.7rem; margin-left:3px;">(${escapeHtml(p.area)} m²)</span>` : ''}
+                </div>
+                <div style="display:flex; gap:4px; flex-shrink:0;">
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openTkgmForProject('${p.id}')" title="TKGM Parsel Sorgu Sayfasını Aç">
+                    🗺️ TKGM ↗
+                  </button>
+                  ${p.imarUrl ? `
+                    <a href="${escapeHtml(p.imarUrl)}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Belediye E-İmar Sitesini Aç">
+                      🏛️ E-İmar ↗
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+
+              ${(p.taks || p.kaks || p.floors || p.setbacks || p.nizam) ? `
+                <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-top:5px; padding-top:5px; border-top:1px dashed #cbd5e1; font-size:0.71rem;">
+                  <span style="font-weight:700; color:var(--navy); margin-right:2px;">🏛️ İmar Durumu:</span>
+                  ${p.taks ? `<span class="badge" style="background:#f1f5f9; color:#334155;">TAKS: ${escapeHtml(p.taks)}</span>` : ''}
+                  ${p.kaks ? `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:800;">KAKS/Emsal: ${escapeHtml(p.kaks)}</span>` : ''}
+                  ${p.floors ? `<span class="badge" style="background:#fef3c7; color:#b45309;">${escapeHtml(p.floors)}</span>` : ''}
+                  ${p.setbacks ? `<span class="badge" style="background:#ede9fe; color:#6d28d9;" title="Çekme Mesafeleri">${escapeHtml(p.setbacks)}</span>` : ''}
+                  ${p.nizam ? `<span class="badge" style="background:#ecfdf5; color:#047857;">${escapeHtml(p.nizam)}</span>` : ''}
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+
+          <!-- 2. APARTMAN / YÖNETİCİ İLETİŞİM KARTÇIĞI -->
+          ${hasManagerInfo ? `
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <div>
+                  <span style="font-weight:800; color:#14532d;">🏢 ${escapeHtml(p.buildingName || 'Bina / Apartman')}</span>
+                  ${p.unitCount ? `<span style="font-size:0.7rem; color:#166534; margin-left:4px; font-weight:600;">(${escapeHtml(p.unitCount)})</span>` : ''}
+                  ${p.managerName ? `<div style="font-size:0.72rem; color:#1e293b; margin-top:2px;">👤 Yönetici: <strong>${escapeHtml(p.managerName)}</strong></div>` : ''}
+                </div>
+                <div style="display:flex; gap:4px; align-items:center; flex-shrink:0;">
+                  ${p.managerPhone ? `
+                    <a href="tel:${escapeHtml(p.managerPhone)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Yöneticiyi Telefonla Ara">
+                      📞 Ara
+                    </a>
+                    <a href="https://wa.me/90${cleanPhoneDigits}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; color:#15803d; text-decoration:none;" title="WhatsApp İle Mesaj Gönder">
+                      💬 WA
+                    </a>
+                  ` : ''}
+                  ${p.managerEmail ? `
+                    <a href="mailto:${escapeHtml(p.managerEmail)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="E-Posta Gönder">
+                      ✉️
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+              ${p.managerNotes ? `<div style="font-size:0.71rem; color:#166534; font-style:italic; margin-top:3px;">📝 ${escapeHtml(p.managerNotes)}</div>` : ''}
+            </div>
+          ` : ''}
+
+          ${(p.startDate || p.endDate) ? `
+            <div style="font-size: 0.72rem; color: var(--muted); margin: 1px 0;">
+              📅 Başlangıç: ${escapeHtml(p.startDate || '-')} — Teslim: ${escapeHtml(p.endDate || '-')}
+            </div>
+          ` : ''}
+
+          ${p.notes ? `<div style="font-size: 0.73rem; color: #475569; font-style: italic; margin: 1px 0 3px 0;">📝 ${escapeHtml(p.notes)}</div>` : ''}
+
+          ${(() => {
+            const projBudget = parseBudgetNumber(p.budget);
+            const formatCur = (num) => (num || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺';
+            const pNameLower = (p.name || '').toLowerCase().trim();
+            const linkedAccounts = (typeof accounts !== 'undefined' && Array.isArray(accounts)) ? accounts.filter(a => {
+              if (!a) return false;
+              const rel = (a.relatedProject || '').toLowerCase().trim();
+              if (rel === pNameLower || rel.includes(pNameLower)) return true;
+              if (Array.isArray(a.linkedProjectIds) && p.id && a.linkedProjectIds.includes(p.id)) return true;
+              return false;
+            }) : [];
+
+            const expenseAccounts = linkedAccounts.filter(a => a.type !== 'Müşteri' || (Array.isArray(a.expenseItems) && a.expenseItems.length > 0));
+
+            let totalProjectExpenses = 0;
+            let totalPaidProjectExpenses = 0;
+            const catMap = {};
+
+            expenseAccounts.forEach(a => {
+              if (Array.isArray(a.expenseItems) && a.expenseItems.length > 0) {
+                a.expenseItems.forEach(it => {
+                  if (it.project && it.project.trim()) {
+                    const itProjLower = it.project.toLowerCase().trim();
+                    if (itProjLower !== pNameLower && !itProjLower.includes(pNameLower) && !pNameLower.includes(itProjLower)) {
+                      return;
+                    }
+                  }
+                  const amt = parseNumber(it.amount);
+                  const paid = parseNumber(it.paidAmount !== undefined ? it.paidAmount : it.paid);
+                  totalProjectExpenses += amt;
+                  totalPaidProjectExpenses += paid;
+                  const cat = it.category || 'Diğer Gider';
+                  catMap[cat] = (catMap[cat] || 0) + amt;
+                });
+              } else {
+                const pay = parseNumber(a.payable);
+                const coll = parseNumber(a.collected);
+                totalProjectExpenses += pay;
+                totalPaidProjectExpenses += coll;
+                const cat = a.expenseCategory || a.type || 'Gider Kalemi';
+                catMap[cat] = (catMap[cat] || 0) + pay;
+              }
+            });
+
+            if (typeof invoices !== 'undefined' && Array.isArray(invoices)) {
+              invoices.filter(inv => (inv.project || '').toLowerCase().trim() === pNameLower).forEach(inv => {
+                const tot = parseNumber(inv.total);
+                totalProjectExpenses += tot;
+                const isPaid = (inv.status || '').toLowerCase().includes('öden') || (inv.status || '').toLowerCase().includes('tamam');
+                if (isPaid) totalPaidProjectExpenses += tot;
+                const cat = inv.category || 'Fatura Gideri';
+                catMap[cat] = (catMap[cat] || 0) + tot;
+              });
+            }
+
+            const remainingBudget = Math.max(0, projBudget - totalProjectExpenses);
+
+            if (totalProjectExpenses <= 0) return '';
+
+            const catEntries = Object.entries(catMap);
+
+            return `
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 7px 10px; margin: 4px 0; font-size: 0.74rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; margin-bottom: 4px;">
+                  <span style="font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+                    <span>📊 Proje Gider & Harcama Takibi:</span>
+                  </span>
+                  <span style="font-weight: 700; color: #047857;">Bütçe: ${escapeHtml(p.budget || '-')}</span>
+                </div>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 4px;">
+                  <span class="badge" style="background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; font-weight: 700;">
+                    📉 Toplam Gider: ${formatCur(totalProjectExpenses)}
+                  </span>
+                  <span class="badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-weight: 700;">
+                    💵 Ödenen (Düşülen): ${formatCur(totalPaidProjectExpenses)}
+                  </span>
+                  ${projBudget > 0 ? `
+                  <span class="badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-weight: 800;">
+                    ✨ Kalan Net Bütçe: ${formatCur(remainingBudget)}
+                  </span>` : ''}
+                </div>
+                ${catEntries.length > 0 ? `
+                  <div style="display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 3px; font-size: 0.68rem;">
+                    <span style="color: #64748b; font-weight: 600;">Gider Kalemleri:</span>
+                    ${catEntries.map(([c, amt]) => `
+                      <span class="badge" style="background: #ffffff; color: #334155; font-size: 0.67rem; border: 1px solid #cbd5e1; font-weight: 600;">
+                        ${escapeHtml(c)}: ${formatCur(amt)}
+                      </span>
+                    `).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          })()}
+
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem; margin-top: 2px;">
+            <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget || '-')}</strong>
+            <div style="display:flex; gap:5px; align-items:center;">
+              <button class="btn btn-secondary btn-sm" onclick="filterDocsForProject('${p.id}')">📁 Evraklar</button>
+              <button class="btn btn-secondary btn-sm" onclick="filterTodosForProject('${p.id}')">✅ Görevler</button>
+              <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
+              <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')" title="Projeyi Sil">🗑️</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     function renderProjects() {
+      updateProjectGroupPills();
       const q = (document.getElementById('search-projects')?.value || '').toLowerCase().trim();
       const typeFilter = (document.getElementById('filter-project-type')?.value || '').trim().toLowerCase();
       const list = document.getElementById('projects-list');
@@ -5160,213 +5611,103 @@ function doPost(e) {
         return;
       }
 
-      list.innerHTML = filtered.map(p => {
-        const hasLandInfo = !!(p.ada || p.parsel || p.district || p.neighborhood || p.area || p.imarUrl || p.taks || p.kaks || p.floors || p.setbacks || (p.nizam && p.nizam !== 'Ayrık Nizam'));
-        const hasManagerInfo = !!(p.buildingName || p.managerName || p.managerPhone || p.managerEmail || p.unitCount || p.managerNotes);
-        const cleanPhoneDigits = p.managerPhone ? p.managerPhone.replace(/[^0-9]/g, '').replace(/^(90|0)/, '') : '';
+      // 1. Düz Liste Görünümü
+      if (projectGroupBy === 'none') {
+        list.innerHTML = filtered.map(renderSingleProjectCard).join('');
+        return;
+      }
+
+      // 2. Gruplu / Akordeon Görünüm (Firmaya Göre veya İlçeye Göre)
+      const isDistrictMode = projectGroupBy === 'district';
+      const groupsMap = new Map();
+
+      filtered.forEach(p => {
+        const groupKey = isDistrictMode ? getProjectDistrictGroupKey(p) : getProjectFirmGroupKey(p);
+        if (!groupsMap.has(groupKey)) {
+          groupsMap.set(groupKey, []);
+        }
+        groupsMap.get(groupKey).push(p);
+      });
+
+      // Grupları sırala: Çok projesi olan gruplar üstte, sonra alfabetik
+      const sortedGroupEntries = Array.from(groupsMap.entries()).sort((a, b) => {
+        if (b[1].length !== a[1].length) {
+          return b[1].length - a[1].length;
+        }
+        return a[0].localeCompare(b[0], 'tr');
+      });
+
+      list.innerHTML = sortedGroupEntries.map(([groupName, groupProjects]) => {
+        const groupId = getSafeProjectGroupId(groupName);
+        // Arama yapılıyorsa otomatik aç, değilse kullanıcının açtığı durumunu koru
+        const isExpanded = (q.length > 0) || expandedProjectGroups.has(groupId);
+
+        let totalBudgetNum = 0;
+        const districtSet = new Set();
+        const firmSet = new Set();
+        const managerSet = new Set();
+        let totalProgress = 0;
+
+        groupProjects.forEach(p => {
+          totalBudgetNum += parseBudgetNumber(p.budget);
+          totalProgress += (p.progress || 0);
+          const d = getProjectDistrictGroupKey(p);
+          if (d && !d.includes('Belirtilmemiş')) districtSet.add(d);
+          const f = getProjectFirmGroupKey(p);
+          if (f && !f.includes('Belirtilmemiş')) firmSet.add(f);
+          if (p.managerName && p.managerName.trim()) managerSet.add(p.managerName.trim());
+        });
+
+        const avgProgress = groupProjects.length > 0 ? Math.round(totalProgress / groupProjects.length) : 0;
+        const formattedBudget = totalBudgetNum > 0 ? (totalBudgetNum.toLocaleString('tr-TR') + ' ₺') : '';
+
+        const subtitleParts = [];
+        if (isDistrictMode) {
+          if (firmSet.size > 0) {
+            subtitleParts.push(`🏢 ${Array.from(firmSet).slice(0, 3).join(', ')}${firmSet.size > 3 ? '...' : ''}`);
+          }
+        } else {
+          if (districtSet.size > 0) {
+            subtitleParts.push(`📍 ${Array.from(districtSet).join(', ')}`);
+          }
+          if (managerSet.size > 0) {
+            subtitleParts.push(`👤 ${Array.from(managerSet).slice(0, 2).join(', ')}`);
+          }
+        }
+        if (formattedBudget) {
+          subtitleParts.push(`💰 Toplam Bütçe: ${formattedBudget}`);
+        }
+        if (avgProgress > 0) {
+          subtitleParts.push(`📈 Ort. İlerleme: %${avgProgress}`);
+        }
+
+        const subtitleHtml = subtitleParts.map(s => escapeHtml(s)).join(' <span style="opacity:0.4;">•</span> ');
+        const groupIcon = isDistrictMode ? '📍' : '🏢';
 
         return `
-          <div class="card-item">
-            <div class="card-item-header">
-              <div style="flex:1; min-width:0;">
-                <div class="card-item-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  ${escapeHtml(p.name)}
-                </div>
-                <div class="card-item-meta">
-                  <span>${escapeHtml(p.code)}</span> • <span>${escapeHtml(p.client || 'İşveren')}</span> • <span>📍 ${escapeHtml(p.location || (p.district ? p.district + ' / İstanbul' : 'İstanbul'))}</span>
+          <div class="project-group-block ${isExpanded ? 'expanded' : ''}" id="${groupId}">
+            <div class="project-group-header" onclick="toggleProjectGroup('${groupId}')">
+              <div class="project-group-title-wrap">
+                <span style="font-size: 1.25rem;">${groupIcon}</span>
+                <div style="flex:1; min-width:0;">
+                  <div class="project-group-title">
+                    <span>${escapeHtml(groupName)}</span>
+                    <span class="badge badge-purple" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 99px;">
+                      ${groupProjects.length} Proje
+                    </span>
+                  </div>
+                  ${subtitleHtml ? `<div class="project-group-subtitle">${subtitleHtml}</div>` : ''}
                 </div>
               </div>
-              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-                ${getProjectTypeBadge(p.type)}
-                <span class="badge ${p.status === 'Tamamlandı' ? 'badge-green' : 'badge-amber'}">${escapeHtml(p.status)}</span>
+              <div class="project-group-actions-right">
+                <button type="button" class="project-group-toggle-btn" onclick="event.stopPropagation(); toggleProjectGroup('${groupId}')">
+                  <span class="project-group-toggle-text">${isExpanded ? 'Daralt' : 'Genişlet'}</span>
+                  <span class="project-group-chevron">▼</span>
+                </button>
               </div>
             </div>
-
-            <!-- İlerleme Çubuğu -->
-            <div style="display: flex; align-items: center; gap: 8px; margin: 2px 0;">
-              <div style="flex:1; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
-                <div style="height:100%; width:${p.progress || 0}%; background: var(--green);"></div>
-              </div>
-              <span style="font-size: 0.75rem; font-weight: 800; color:var(--navy);">%${p.progress || 0}</span>
-            </div>
-
-            <!-- 1. ADA / PARSEL & İMAR BİLGİ KARTÇIĞI -->
-            ${hasLandInfo ? `
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-                  <div>
-                    <span style="font-weight:800; color:var(--navy);">🗺️ Tapu & Parsel:</span>
-                    <span style="font-weight:600; color:#1e293b;">
-                      ${escapeHtml(p.district || '')}${p.neighborhood ? ' / ' + escapeHtml(p.neighborhood) : ''}
-                    </span>
-                    ${(p.ada || p.parsel) ? `<span style="background:#e2e8f0; padding:1px 6px; border-radius:6px; font-weight:700; margin-left:4px; color:#0f172a;">Ada: ${escapeHtml(p.ada || '-')} / Parsel: ${escapeHtml(p.parsel || '-')}</span>` : ''}
-                    ${p.area ? `<span style="color:var(--muted); font-size:0.7rem; margin-left:3px;">(${escapeHtml(p.area)} m²)</span>` : ''}
-                  </div>
-                  <div style="display:flex; gap:4px; flex-shrink:0;">
-                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openTkgmForProject('${p.id}')" title="TKGM Parsel Sorgu Sayfasını Aç">
-                      🗺️ TKGM ↗
-                    </button>
-                    ${p.imarUrl ? `
-                      <a href="${escapeHtml(p.imarUrl)}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Belediye E-İmar Sitesini Aç">
-                        🏛️ E-İmar ↗
-                      </a>
-                    ` : ''}
-                  </div>
-                </div>
-
-                ${(p.taks || p.kaks || p.floors || p.setbacks || p.nizam) ? `
-                  <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-top:5px; padding-top:5px; border-top:1px dashed #cbd5e1; font-size:0.71rem;">
-                    <span style="font-weight:700; color:var(--navy); margin-right:2px;">🏛️ İmar Durumu:</span>
-                    ${p.taks ? `<span class="badge" style="background:#f1f5f9; color:#334155;">TAKS: ${escapeHtml(p.taks)}</span>` : ''}
-                    ${p.kaks ? `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:800;">KAKS/Emsal: ${escapeHtml(p.kaks)}</span>` : ''}
-                    ${p.floors ? `<span class="badge" style="background:#fef3c7; color:#b45309;">${escapeHtml(p.floors)}</span>` : ''}
-                    ${p.setbacks ? `<span class="badge" style="background:#ede9fe; color:#6d28d9;" title="Çekme Mesafeleri">${escapeHtml(p.setbacks)}</span>` : ''}
-                    ${p.nizam ? `<span class="badge" style="background:#ecfdf5; color:#047857;">${escapeHtml(p.nizam)}</span>` : ''}
-                  </div>
-                ` : ''}
-              </div>
-            ` : ''}
-
-            <!-- 2. APARTMAN / YÖNETİCİ İLETİŞİM KARTÇIĞI -->
-            ${hasManagerInfo ? `
-              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-                  <div>
-                    <span style="font-weight:800; color:#14532d;">🏢 ${escapeHtml(p.buildingName || 'Bina / Apartman')}</span>
-                    ${p.unitCount ? `<span style="font-size:0.7rem; color:#166534; margin-left:4px; font-weight:600;">(${escapeHtml(p.unitCount)})</span>` : ''}
-                    ${p.managerName ? `<div style="font-size:0.72rem; color:#1e293b; margin-top:2px;">👤 Yönetici: <strong>${escapeHtml(p.managerName)}</strong></div>` : ''}
-                  </div>
-                  <div style="display:flex; gap:4px; align-items:center; flex-shrink:0;">
-                    ${p.managerPhone ? `
-                      <a href="tel:${escapeHtml(p.managerPhone)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Yöneticiyi Telefonla Ara">
-                        📞 Ara
-                      </a>
-                      <a href="https://wa.me/90${cleanPhoneDigits}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; color:#15803d; text-decoration:none;" title="WhatsApp İle Mesaj Gönder">
-                        💬 WA
-                      </a>
-                    ` : ''}
-                    ${p.managerEmail ? `
-                      <a href="mailto:${escapeHtml(p.managerEmail)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="E-Posta Gönder">
-                        ✉️
-                      </a>
-                    ` : ''}
-                  </div>
-                </div>
-                ${p.managerNotes ? `<div style="font-size:0.71rem; color:#166534; font-style:italic; margin-top:3px;">📝 ${escapeHtml(p.managerNotes)}</div>` : ''}
-              </div>
-            ` : ''}
-
-            ${(p.startDate || p.endDate) ? `
-              <div style="font-size: 0.72rem; color: var(--muted); margin: 1px 0;">
-                📅 Başlangıç: ${escapeHtml(p.startDate || '-')} — Teslim: ${escapeHtml(p.endDate || '-')}
-              </div>
-            ` : ''}
-
-            ${p.notes ? `<div style="font-size: 0.73rem; color: #475569; font-style: italic; margin: 1px 0 3px 0;">📝 ${escapeHtml(p.notes)}</div>` : ''}
-
-            ${(() => {
-              const projBudget = parseBudgetNumber(p.budget);
-              const formatCur = (num) => (num || 0).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺';
-              const pNameLower = (p.name || '').toLowerCase().trim();
-              const linkedAccounts = (typeof accounts !== 'undefined' && Array.isArray(accounts)) ? accounts.filter(a => {
-                if (!a) return false;
-                const rel = (a.relatedProject || '').toLowerCase().trim();
-                if (rel === pNameLower || rel.includes(pNameLower)) return true;
-                if (Array.isArray(a.linkedProjectIds) && p.id && a.linkedProjectIds.includes(p.id)) return true;
-                return false;
-              }) : [];
-
-              const expenseAccounts = linkedAccounts.filter(a => a.type !== 'Müşteri' || (Array.isArray(a.expenseItems) && a.expenseItems.length > 0));
-
-              let totalProjectExpenses = 0;
-              let totalPaidProjectExpenses = 0;
-              const catMap = {};
-
-              expenseAccounts.forEach(a => {
-                if (Array.isArray(a.expenseItems) && a.expenseItems.length > 0) {
-                  a.expenseItems.forEach(it => {
-                    if (it.project && it.project.trim()) {
-                      const itProjLower = it.project.toLowerCase().trim();
-                      if (itProjLower !== pNameLower && !itProjLower.includes(pNameLower) && !pNameLower.includes(itProjLower)) {
-                        return;
-                      }
-                    }
-                    const amt = parseNumber(it.amount);
-                    const paid = parseNumber(it.paidAmount !== undefined ? it.paidAmount : it.paid);
-                    totalProjectExpenses += amt;
-                    totalPaidProjectExpenses += paid;
-                    const cat = it.category || 'Diğer Gider';
-                    catMap[cat] = (catMap[cat] || 0) + amt;
-                  });
-                } else {
-                  const pay = parseNumber(a.payable);
-                  const coll = parseNumber(a.collected);
-                  totalProjectExpenses += pay;
-                  totalPaidProjectExpenses += coll;
-                  const cat = a.expenseCategory || a.type || 'Gider Kalemi';
-                  catMap[cat] = (catMap[cat] || 0) + pay;
-                }
-              });
-
-              if (typeof invoices !== 'undefined' && Array.isArray(invoices)) {
-                invoices.filter(inv => (inv.project || '').toLowerCase().trim() === pNameLower).forEach(inv => {
-                  const tot = parseNumber(inv.total);
-                  totalProjectExpenses += tot;
-                  const isPaid = (inv.status || '').toLowerCase().includes('öden') || (inv.status || '').toLowerCase().includes('tamam');
-                  if (isPaid) totalPaidProjectExpenses += tot;
-                  const cat = inv.category || 'Fatura Gideri';
-                  catMap[cat] = (catMap[cat] || 0) + tot;
-                });
-              }
-
-              const remainingBudget = Math.max(0, projBudget - totalProjectExpenses);
-
-              if (totalProjectExpenses <= 0) return '';
-
-              const catEntries = Object.entries(catMap);
-
-              return `
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 7px 10px; margin: 4px 0; font-size: 0.74rem;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; margin-bottom: 4px;">
-                    <span style="font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 4px;">
-                      <span>📊 Proje Gider & Harcama Takibi:</span>
-                    </span>
-                    <span style="font-weight: 700; color: #047857;">Bütçe: ${escapeHtml(p.budget || '-')}</span>
-                  </div>
-                  <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 4px;">
-                    <span class="badge" style="background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; font-weight: 700;">
-                      📉 Toplam Gider: ${formatCur(totalProjectExpenses)}
-                    </span>
-                    <span class="badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-weight: 700;">
-                      💵 Ödenen (Düşülen): ${formatCur(totalPaidProjectExpenses)}
-                    </span>
-                    ${projBudget > 0 ? `
-                    <span class="badge" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-weight: 800;">
-                      ✨ Kalan Net Bütçe: ${formatCur(remainingBudget)}
-                    </span>` : ''}
-                  </div>
-                  ${catEntries.length > 0 ? `
-                    <div style="display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 3px; font-size: 0.68rem;">
-                      <span style="color: #64748b; font-weight: 600;">Gider Kalemleri:</span>
-                      ${catEntries.map(([c, amt]) => `
-                        <span class="badge" style="background: #ffffff; color: #334155; font-size: 0.67rem; border: 1px solid #cbd5e1; font-weight: 600;">
-                          ${escapeHtml(c)}: ${formatCur(amt)}
-                        </span>
-                      `).join('')}
-                    </div>
-                  ` : ''}
-                </div>
-              `;
-            })()}
-
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size: 0.78rem; margin-top: 2px;">
-              <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget || '-')}</strong>
-              <div style="display:flex; gap:5px; align-items:center;">
-                <button class="btn btn-secondary btn-sm" onclick="filterDocsForProject('${p.id}')">📁 Evraklar</button>
-                <button class="btn btn-secondary btn-sm" onclick="filterTodosForProject('${p.id}')">✅ Görevler</button>
-                <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
-                <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')" title="Projeyi Sil">🗑️</button>
-              </div>
+            <div class="project-group-body" style="display: ${isExpanded ? 'flex' : 'none'};">
+              ${groupProjects.map(renderSingleProjectCard).join('')}
             </div>
           </div>
         `;
