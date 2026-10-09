@@ -3328,7 +3328,10 @@ function doPost(e) {
     function saveSettings() {
       const gKey = document.getElementById('gemini-key-input').value.trim();
       const wUrl = document.getElementById('webhook-url-input').value.trim();
-      const sUrl = (document.getElementById('supabase-url-input')?.value || '').trim();
+      const rawSUrl = (document.getElementById('supabase-url-input')?.value || '').trim();
+      const sUrl = sanitizeSupabaseUrl(rawSUrl);
+      const sUrlEl = document.getElementById('supabase-url-input');
+      if (sUrlEl && sUrl && sUrl !== rawSUrl) sUrlEl.value = sUrl;
       const sKey = (document.getElementById('supabase-key-input')?.value || '').trim();
 
       if (gKey) {
@@ -8681,8 +8684,27 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     let supabaseClient = null;
     let realtimeChannel = null;
 
+    function sanitizeSupabaseUrl(raw) {
+      if (!raw) return '';
+      let str = String(raw).trim();
+      // Dashboard URL: https://supabase.com/dashboard/project/xyz123...
+      const dashMatch = str.match(/\/project\/([a-z0-9_-]+)/i);
+      if (dashMatch) return `https://${dashMatch[1]}.supabase.co`;
+      // Connection string: postgresql://postgres.xyz123:pass@...
+      const connMatch = str.match(/postgres\.([a-z0-9_-]+):/i);
+      if (connMatch) return `https://${connMatch[1]}.supabase.co`;
+      // Env var / direct: https://xyz123.supabase.co
+      const envMatch = str.match(/https:\/\/([a-z0-9_-]+)\.supabase\.co/i);
+      if (envMatch) return `https://${envMatch[1]}.supabase.co`;
+      // Raw project ref: 15-40 alphanum characters
+      if (/^[a-z0-9_-]{15,40}$/i.test(str)) return `https://${str}.supabase.co`;
+      if (str.startsWith('http')) return str.replace(/\/+$/, '');
+      return str;
+    }
+
     function getSupabaseConfig() {
-      const url = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
+      const rawUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
+      const url = sanitizeSupabaseUrl(rawUrl);
       const key = (localStorage.getItem(SUPABASE_KEY_KEY) || '').trim();
       return {
         url,
@@ -8747,7 +8769,9 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     async function testSupabaseConnection() {
       const urlEl = document.getElementById('supabase-url-input');
       const keyEl = document.getElementById('supabase-key-input');
-      const url = (urlEl ? urlEl.value : '').trim();
+      const rawUrl = (urlEl ? urlEl.value : '').trim();
+      const url = sanitizeSupabaseUrl(rawUrl);
+      if (urlEl && url && url !== rawUrl) urlEl.value = url;
       const key = (keyEl ? keyEl.value : '').trim();
 
       if (!url || !key) {
