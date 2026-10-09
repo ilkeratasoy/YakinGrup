@@ -2940,6 +2940,22 @@
       });
     }
 
+    function sanitizeAccountIds(accList) {
+      if (!Array.isArray(accList)) return [];
+      const seen = new Set();
+      accList.forEach((a, idx) => {
+        if (!a) return;
+        const slug = makeProjectSlug(a.company) || 'acc';
+        let targetId = (a.id && String(a.id).trim() !== '') ? String(a.id).trim() : `a_${slug}_${idx + 1}`;
+        if (seen.has(targetId)) {
+          targetId = `a_${slug}_${idx + 1}_${Math.random().toString(36).slice(2, 6)}`;
+        }
+        seen.add(targetId);
+        a.id = targetId;
+      });
+      return accList;
+    }
+
     function unifyAndCleanAccounts(accList) {
       if (!Array.isArray(accList) || accList.length === 0) return [];
 
@@ -3064,11 +3080,11 @@
         seen.add(k);
         finalResult.push(a);
       }
-      return finalResult;
+      return sanitizeAccountIds(finalResult);
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-09_v33_firma_ve_yuklenici_esitleme";
+    const APP_BUILD_VERSION = "2026-10-09_v34_supabase_migrate_unique_ids";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const currentSupabaseUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
@@ -9465,9 +9481,29 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
       };
     }
 
-    function toSupabaseAccount(a) {
+    function deduplicateRowsById(rows, prefix = 'row') {
+      if (!Array.isArray(rows)) return [];
+      const seenIds = new Set();
+      const deduped = [];
+      rows.forEach((r, idx) => {
+        if (!r) return;
+        let targetId = String(r.id || '').trim();
+        if (!targetId || seenIds.has(targetId)) {
+          targetId = `${prefix}_${idx + 1}_${Math.random().toString(36).slice(2, 7)}`;
+        }
+        seenIds.add(targetId);
+        r.id = targetId;
+        deduped.push(r);
+      });
+      return deduped;
+    }
+
+
+    function toSupabaseAccount(a, idx = 0) {
+      const slug = makeProjectSlug(a.company) || 'acc';
+      const cleanId = (a.id && String(a.id).trim() !== '') ? String(a.id).trim() : `a_${slug}_${idx + 1}`;
       return {
-        id: a.id || ('a_' + Date.now()),
+        id: cleanId,
         company: a.company || '',
         type: a.type || 'Müşteri',
         related_project: a.relatedProject || '',
@@ -9930,53 +9966,59 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
 
         if (projects.length > 0) {
           if (statusEl) statusEl.textContent = `⏳ ${projects.length} proje Supabase'e yazılıyor...`;
-          const pRows = projects.map(toSupabaseProject);
+          projects = sanitizeProjectIds(projects);
+          const pRows = deduplicateRowsById(projects.map(toSupabaseProject), 'p');
           const { error } = await supabaseClient.from('projects').upsert(pRows, { onConflict: 'id' });
           if (error) throw new Error('Projeler aktarılamadı: ' + error.message);
-          summary.push(`${projects.length} Proje`);
+          summary.push(`${pRows.length} Proje`);
         }
 
         if (accounts.length > 0) {
           accounts = unifyAndCleanAccounts(accounts);
+          accounts = sanitizeAccountIds(accounts);
           setStore('yg_accounts_lite', accounts);
           renderAccounts();
           if (statusEl) statusEl.textContent = `⏳ ${accounts.length} cari kart Supabase'e yazılıyor...`;
-          const aRows = accounts.map(toSupabaseAccount);
+          const aRows = deduplicateRowsById(accounts.map((a, i) => toSupabaseAccount(a, i)), 'a');
           const { error } = await supabaseClient.from('accounts').upsert(aRows, { onConflict: 'id' });
           if (error) throw new Error('Cari Kartlar aktarılamadı: ' + error.message);
-          summary.push(`${accounts.length} Cari`);
+          summary.push(`${aRows.length} Cari`);
         }
 
         if (invoices.length > 0) {
           if (statusEl) statusEl.textContent = `⏳ ${invoices.length} fatura Supabase'e yazılıyor...`;
-          const iRows = invoices.map(toSupabaseInvoice);
+          const iRows = deduplicateRowsById(invoices.map(toSupabaseInvoice), 'inv');
           const { error } = await supabaseClient.from('invoices').upsert(iRows, { onConflict: 'id' });
           if (error) throw new Error('Faturalar aktarılamadı: ' + error.message);
-          summary.push(`${invoices.length} Fatura`);
+          summary.push(`${iRows.length} Fatura`);
         }
 
         if (docs.length > 0) {
-          const dRows = docs.map(toSupabaseDoc);
-          await supabaseClient.from('documents').upsert(dRows, { onConflict: 'id' });
-          summary.push(`${docs.length} Evrak`);
+          const dRows = deduplicateRowsById(docs.map(toSupabaseDoc), 'doc');
+          const { error } = await supabaseClient.from('documents').upsert(dRows, { onConflict: 'id' });
+          if (error) throw new Error('Evraklar aktarılamadı: ' + error.message);
+          summary.push(`${dRows.length} Evrak`);
         }
 
         if (todos.length > 0) {
-          const tRows = todos.map(toSupabaseTodo);
-          await supabaseClient.from('todos').upsert(tRows, { onConflict: 'id' });
-          summary.push(`${todos.length} Görev`);
+          const tRows = deduplicateRowsById(todos.map(toSupabaseTodo), 'todo');
+          const { error } = await supabaseClient.from('todos').upsert(tRows, { onConflict: 'id' });
+          if (error) throw new Error('Görevler aktarılamadı: ' + error.message);
+          summary.push(`${tRows.length} Görev`);
         }
 
         if (stock.length > 0) {
-          const sRows = stock.map(toSupabaseStock);
-          await supabaseClient.from('stock').upsert(sRows, { onConflict: 'id' });
-          summary.push(`${stock.length} Stok`);
+          const sRows = deduplicateRowsById(stock.map(toSupabaseStock), 'stk');
+          const { error } = await supabaseClient.from('stock').upsert(sRows, { onConflict: 'id' });
+          if (error) throw new Error('Stoklar aktarılamadı: ' + error.message);
+          summary.push(`${sRows.length} Stok`);
         }
 
         if (cards.length > 0) {
-          const cRows = cards.map(toSupabaseCard);
-          await supabaseClient.from('cards').upsert(cRows, { onConflict: 'id' });
-          summary.push(`${cards.length} Müşteri`);
+          const cRows = deduplicateRowsById(cards.map(toSupabaseCard), 'c');
+          const { error } = await supabaseClient.from('cards').upsert(cRows, { onConflict: 'id' });
+          if (error) throw new Error('Müşteriler aktarılamadı: ' + error.message);
+          summary.push(`${cRows.length} Müşteri`);
         }
 
         if (statusEl) {
