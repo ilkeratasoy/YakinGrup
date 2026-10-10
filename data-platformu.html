@@ -3750,7 +3750,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-09_v34_supabase_migrate_unique_ids";
+    const APP_BUILD_VERSION = "2026-10-10_v35_sync_sheets_cards_and_invoices";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const currentSupabaseUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
@@ -3760,7 +3760,10 @@
         }
         localStorage.setItem("yg_app_build_version", APP_BUILD_VERSION);
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
+        unmarkDeleted('Müşteriler', 'Bora Güzey');
+        unmarkDeleted('Müşteriler', 'bora güzey');
         localStorage.removeItem('yg_invoices_lite');
+        localStorage.removeItem('yg_cards_lite');
         localStorage.removeItem('yg_projects_lite');
 
         // Mükerrer cari kayıtlarını silinmiş olarak işaretle ve Google Sheets'ten sil
@@ -9138,11 +9141,12 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         }
       }
 
+      const fNoInput = document.getElementById('inv-no').value.trim();
       const newInv = {
         id: 'inv_' + Date.now(),
         regDate: new Date().toISOString().split('T')[0],
         date: document.getElementById('inv-date').value,
-        no: document.getElementById('inv-no').value.trim(),
+        no: fNoInput || ('FİŞ-' + Date.now().toString().slice(-6)),
         category: catVal,
         vendor: document.getElementById('inv-vendor').value.trim(),
         tax: document.getElementById('inv-tax').value.trim(),
@@ -9154,7 +9158,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         status: document.getElementById('inv-status').value,
         method: document.getElementById('inv-method').value,
         desc: document.getElementById('inv-desc').value.trim(),
-        notes: (document.getElementById('inv-notes')?.value || '').trim()
+        notes: (document.getElementById('inv-notes')?.value || '').trim(),
+        _isLocalDraft: true
       };
 
       invoices.unshift(newInv);
@@ -11746,7 +11751,6 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
             const off = cleanText(r['Ofis / Sabit Tel'] || r['col_6']);
             const email = cleanText(r['E-Posta'] || r['col_7']);
             if (!name && !mob && !off && !email) return false;
-            if (name === "Bora Güzey") return false;
             if (isRecordDeleted('Müşteriler', name)) return false;
             if (mob && isRecordDeleted('Müşteriler', mob)) return false;
             if (off && isRecordDeleted('Müşteriler', off)) return false;
@@ -12024,14 +12028,19 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
       if (d['Alış Faturaları'] && d['Alış Faturaları'].length > 0) {
         const localInvoices = getStore('yg_invoices_lite', []);
         invoices = d['Alış Faturaları']
-          .filter(r => {
-            const fNo = cleanText(r['Fatura No'] || r['col_2']);
-            if (!fNo) return false;
+          .filter((r, idx) => {
+            const fNoRaw = cleanText(r['Fatura No'] || r['col_2']);
+            const fNo = fNoRaw || ('FİŞ-' + String(idx + 1).padStart(3, '0'));
+            const vendor = cleanText(r['Tedarikçi / Cari'] || r['Tedarikçi'] || r['Cari'] || r['col_4']);
+            const tot = parseNumber(r['Toplam Tutar (₺)'] || r['Toplam Tutar'] || r['Tutar'] || r['col_9']);
+            if (!fNoRaw && !vendor && tot === 0) return false;
             if (isRecordDeleted('Alış Faturaları', fNo)) return false;
+            if (fNoRaw && isRecordDeleted('Alış Faturaları', fNoRaw)) return false;
             return true;
           })
           .map((r, idx) => {
-            const fNo = cleanText(r['Fatura No'] || r['col_2']);
+            const fNoRaw = cleanText(r['Fatura No'] || r['col_2']);
+            const fNo = fNoRaw || ('FİŞ-' + String(idx + 1).padStart(3, '0'));
             const vendorStr = cleanText(r['Tedarikçi / Cari'] || r['Tedarikçi'] || r['Cari'] || r['col_4']);
             const descStr = cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama'] || r['col_13']);
             const catStr = normalizeInvoiceCategory(cleanText(r['Kategori'] || r['col_3']) || inferInvoiceCategory(vendorStr, descStr));
@@ -12087,6 +12096,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
         localInvoices.forEach(li => {
           if (!li || !li.no) return;
           if (isRecordDeleted('Alış Faturaları', li.no)) return;
+          if (!li._isLocalDraft) return;
           const exists = invoices.some(inv => 
             inv.no && li.no && inv.no.trim().toLowerCase() === li.no.trim().toLowerCase()
           );
