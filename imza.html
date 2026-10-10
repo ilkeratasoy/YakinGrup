@@ -491,6 +491,111 @@
       line-height: 1.7;
       color: #334155;
     }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        height: auto;
+      }
+
+      .brand-title {
+        justify-content: flex-start;
+      }
+
+      .brand-title h1 {
+        font-size: 1rem;
+      }
+
+      .brand-title h1 span {
+        display: none;
+      }
+
+      .header-actions {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        gap: 6px;
+      }
+
+      .header-actions .btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      .studio-container {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .controls-panel {
+        max-height: none;
+        padding: 1.25rem 1rem;
+      }
+
+      .stage-container {
+        padding: 1.25rem 1rem;
+      }
+
+      .email-client-mockup {
+        width: 100%;
+        max-width: 100% !important;
+      }
+
+      .email-mockup-body {
+        padding: 14px;
+      }
+
+      #live-signature-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .stage-action-bar {
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .stage-action-bar .btn {
+        flex: 1 1 calc(50% - 6px);
+        text-align: center;
+        justify-content: center;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.8rem;
+      }
+
+      /* iOS Auto-zoom Prevention */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-actions .btn {
+        padding: 0.4rem 0.65rem;
+        font-size: 0.75rem;
+      }
+
+      .grid-2x2 {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .comp-pill, .profile-pill {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+      }
+
+      .stage-action-bar .btn {
+        flex: 1 1 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -615,11 +720,11 @@
       <h1>YAKIN GRUP <span>E-Posta İmza Tasarım Stüdyosu</span></h1>
     </a>
     <div class="header-actions">
-      <a href="Sunum.html" class="btn btn-outline">📊 Vizyon Sunumu</a>
-      <button class="btn btn-outline" onclick="toggleLanguage()" id="btn-lang">🇬🇧 English</button>
-      <a href="kartvizit.html" class="btn btn-outline">📇 Kartvizit Stüdyosu</a>
-      <a href="teklif.html" class="btn btn-outline">📑 Hızlı Şartname & Teklif</a>
-      <button class="btn btn-primary" onclick="copySignatureToClipboard()">📋 Gmail İçin Kopyala</button>
+      <a href="Sunum.html" class="btn btn-outline">Sunum</a>
+      <button class="btn btn-outline" onclick="toggleLanguage()" id="btn-lang">English</button>
+      <a href="kartvizit.html" class="btn btn-outline">Kartvizit</a>
+      <a href="teklif.html" class="btn btn-outline">Şartname</a>
+      <button class="btn btn-primary" onclick="copySignatureToClipboard()">Gmail Kopyala</button>
     </div>
   </header>
 
@@ -643,10 +748,10 @@
       <div class="panel-section">
         <div class="panel-title">2. Kişi & Ünvan Pozisyonlama</div>
         <div class="grid-2x2">
-          <div class="comp-pill active" id="btn-order-title-top" onclick="setPersonOrder('title-top', this)">⬆️ Ünvan Üstte (Modern)</div>
-          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first', this)">⬅️ İsim Üstte (Standart)</div>
-          <div class="comp-pill" id="btn-order-title-middle" onclick="setPersonOrder('title-middle', this)">🎯 Ortada (Merkezli)</div>
-          <div class="comp-pill" id="btn-order-right-align" onclick="setPersonOrder('right-align', this)">➡️ Sağda Hizalı</div>
+          <div class="comp-pill active" id="btn-order-title-top" onclick="setPersonOrder('title-top', this)">Ünvan Üstte</div>
+          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first', this)">İsim Üstte</div>
+          <div class="comp-pill" id="btn-order-title-middle" onclick="setPersonOrder('title-middle', this)">Ortada</div>
+          <div class="comp-pill" id="btn-order-right-align" onclick="setPersonOrder('right-align', this)">Sağda Hizalı</div>
         </div>
       </div>
 
@@ -704,7 +809,7 @@
         
         <div class="toggles-grid">
           <label class="toggle-label" style="grid-column: 1 / -1; background: rgba(61, 110, 48, 0.08); border-color: rgba(61, 110, 48, 0.3); font-weight: 700; color: #1e3a17;">
-            <input type="checkbox" id="chk-person-photo" checked onchange="updateSignaturePreview()"> 📸 Kişi Fotoğrafı / Portre Avatar (Opsiyonel)
+            <input type="checkbox" id="chk-person-photo" checked onchange="updateSignaturePreview()"> Portre Avatar (Opsiyonel)
           </label>
           <label class="toggle-label">
             <input type="checkbox" id="chk-header-img" checked onchange="updateSignaturePreview()"> Üst Bina Görseli
@@ -729,8 +834,8 @@
 
       <!-- Quick Action Buttons -->
       <div class="panel-section">
-        <button class="btn btn-primary" style="width: 100%; margin-bottom: 8px;" onclick="copySignatureToClipboard()">📋 Gmail İçin Kopyala (Zengin Metin)</button>
-        <button class="btn btn-outline" style="width: 100%;" onclick="copyHTMLSource()">Code &lt;/&gt; Kaynak HTML Kodunu Kopyala</button>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 8px;" onclick="copySignatureToClipboard()">Gmail Kopyala</button>
+        <button class="btn btn-outline" style="width: 100%;" onclick="copyHTMLSource()">HTML Kodu Kopyala</button>
       </div>
 
     </aside>
@@ -741,10 +846,10 @@
       <!-- Stage Toolbar -->
       <div class="stage-toolbar">
         <div class="stage-tools">
-          <button class="tool-btn active" id="btn-view-desktop" onclick="setViewMode('desktop')">💻 Masaüstü (Gmail)</button>
-          <button class="tool-btn" id="btn-view-mobile" onclick="setViewMode('mobile')">📱 Mobil İstemci</button>
+          <button class="tool-btn active" id="btn-view-desktop" onclick="setViewMode('desktop')">Masaüstü</button>
+          <button class="tool-btn" id="btn-view-mobile" onclick="setViewMode('mobile')">Mobil</button>
         </div>
-        <button class="btn btn-outline" style="padding: 4px 12px; font-size: 0.78rem;" onclick="showGuideModal()">❓ Kurulum Kılavuzu</button>
+        <button class="btn btn-outline" style="padding: 4px 12px; font-size: 0.78rem;" onclick="showGuideModal()">Kılavuz</button>
       </div>
 
       <!-- Simulated Email Client Window -->
@@ -776,9 +881,9 @@
 
       <!-- Bottom Actions -->
       <div class="stage-action-bar">
-        <button class="btn btn-primary" onclick="copySignatureToClipboard()">📋 Gmail İçin Kopyala</button>
-        <button class="btn btn-outline" onclick="copyHTMLSource()">&lt;/&gt; HTML Kopyala</button>
-        <button class="btn btn-outline" onclick="downloadVCard()">📇 vCard İndir (.vcf)</button>
+        <button class="btn btn-primary" onclick="copySignatureToClipboard()">Gmail Kopyala</button>
+        <button class="btn btn-outline" onclick="copyHTMLSource()">HTML Kopyala</button>
+        <button class="btn btn-outline" onclick="downloadVCard()">vCard İndir</button>
       </div>
 
     </main>
@@ -868,7 +973,7 @@
 
     function toggleLanguage() {
       currentLang = currentLang === 'tr' ? 'en' : 'tr';
-      document.getElementById('btn-lang').innerText = currentLang === 'tr' ? '🇬🇧 English' : '🇹🇷 Türkçe';
+      document.getElementById('btn-lang').innerText = currentLang === 'tr' ? 'English' : 'Türkçe';
       
       const currentName = document.getElementById('inp-name').value;
       if (currentName.includes('İlker') || currentName.includes('Ilker')) {

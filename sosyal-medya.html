@@ -836,10 +836,96 @@
     }
 
     @media (max-width: 768px) {
-      header { padding: 0.8rem 1rem; }
-      .posts-grid { grid-template-columns: 1fr; }
-      .studio-hero { padding: 1.5rem; }
-      .controls-bar { flex-direction: column; align-items: stretch; }
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.65rem 0.85rem;
+        gap: 8px;
+      }
+      .brand-wrap {
+        justify-content: flex-start;
+      }
+      .brand-badge {
+        display: none;
+      }
+      .header-links {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+      .header-links::-webkit-scrollbar {
+        display: none;
+      }
+      .btn-top {
+        flex: 0 0 auto;
+        padding: 0.4rem 0.65rem;
+        font-size: 0.74rem;
+        min-height: 34px;
+      }
+      .container {
+        padding: 0.75rem 0.5rem;
+      }
+      .studio-hero {
+        padding: 1.25rem 1rem;
+      }
+      .studio-hero h1 {
+        font-size: 1.15rem;
+      }
+      .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .filter-pills {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+      .filter-pills::-webkit-scrollbar {
+        display: none;
+      }
+      .filter-pill {
+        flex: 0 0 auto;
+        padding: 5px 10px;
+        font-size: 0.75rem;
+      }
+      .view-switcher {
+        width: 100%;
+        display: flex;
+      }
+      .view-btn {
+        flex: 1;
+        text-align: center;
+        font-size: 0.75rem;
+        padding: 6px 8px;
+      }
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn-top {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.55rem;
+      }
+      .hero-sync-box {
+        padding: 10px;
+      }
+      .btn-sync-action {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+      }
     }
   </style>
 </head>
@@ -880,15 +966,15 @@
       </div>
     </div>
     <div class="header-links">
-      <a href="index.html" class="btn-top">🏛️ Holding Ana Sayfa</a>
+      <a href="index.html" class="btn-top">Ana Sayfa</a>
       <button onclick="openOpenAIModal()" class="btn-top" id="header-openai-btn" title="OpenAI DALL-E 3 API Yapılandırması">
-        🤖 <span id="header-openai-label">DALL-E 3 API</span>
+        <span id="header-openai-label">DALL-E 3</span>
       </button>
       <button onclick="exportAllICS()" class="btn-top sync-btn" title="Tüm yılı iPhone/Mac/Outlook/Google takviminize alarmlarıyla ekler">
-        📅 1 Yıllık Takvimi İndir (.ICS)
+        Takvim İndir (.ICS)
       </button>
       <button onclick="exportAllCSV()" class="btn-top primary">
-        📊 Excel / CSV İndir
+        CSV İndir
       </button>
     </div>
   </header>
@@ -904,9 +990,9 @@
       </div>
 
       <div class="hero-sync-box">
-        <div class="sync-title">🔔 Canlı Takvim Bildirimleri</div>
+        <div class="sync-title">Canlı Takvim Bildirimleri</div>
         <button onclick="exportAllICS()" class="btn-sync-action">
-          <span>📲</span> Apple / Outlook / Telefona Senkronize Et (.ICS)
+          Takvime Senkronize Et (.ICS)
         </button>
         <div style="font-size: 0.75rem; opacity: 0.8; text-align: center;">
           ✓ Sabah 09:00 otomatik alarm bildirimi<br>✓ Etkinlik içinde hazır metin & doğrudan linkler
@@ -918,18 +1004,18 @@
     <div class="controls-bar">
       <!-- Filter Pills -->
       <div class="filter-pills">
-        <button class="filter-pill active" onclick="filterPosts('all', this)">🌟 Tümü (22 Etkinlik)</button>
-        <button class="filter-pill" onclick="filterPosts('milli', this)">🇹🇷 Milli Bayramlar</button>
-        <button class="filter-pill" onclick="filterPosts('dini', this)">🌙 Dini Günler & Yılbaşı</button>
-        <button class="filter-pill" onclick="filterPosts('sektor', this)">⚡ Sektörel & Küresel Günler</button>
-        <button class="filter-pill" onclick="filterPosts('proje', this)">🏗️ Sektör Proje Vitrini</button>
+        <button class="filter-pill active" onclick="filterPosts('all', this)">Tümü (22)</button>
+        <button class="filter-pill" onclick="filterPosts('milli', this)">Milli Bayramlar</button>
+        <button class="filter-pill" onclick="filterPosts('dini', this)">Dini Günler</button>
+        <button class="filter-pill" onclick="filterPosts('sektor', this)">Sektörel Günler</button>
+        <button class="filter-pill" onclick="filterPosts('proje', this)">Proje Vitrini</button>
       </div>
 
       <!-- View Switcher -->
       <div class="view-switcher">
-        <button class="view-btn active" id="btn-view-cal" onclick="switchView('calendar')">📅 Aylık Takvim</button>
-        <button class="view-btn" id="btn-view-grid" onclick="switchView('grid')">🗂️ Kartlar</button>
-        <button class="view-btn" id="btn-view-list" onclick="switchView('list')">📋 Liste</button>
+        <button class="view-btn active" id="btn-view-cal" onclick="switchView('calendar')">Takvim</button>
+        <button class="view-btn" id="btn-view-grid" onclick="switchView('grid')">Kartlar</button>
+        <button class="view-btn" id="btn-view-list" onclick="switchView('list')">Liste</button>
       </div>
     </div>
 

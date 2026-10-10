@@ -1318,6 +1318,84 @@
         padding: 1rem;
       }
     }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.65rem 0.85rem;
+        gap: 8px;
+      }
+      .brand-title h1 {
+        font-size: 1rem;
+      }
+      .brand-title h1 span {
+        display: none;
+      }
+      .header-actions {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+      .header-actions::-webkit-scrollbar {
+        display: none;
+      }
+      .header-actions .btn {
+        flex: 0 0 auto;
+        padding: 0.4rem 0.65rem;
+        font-size: 0.74rem;
+        min-height: 34px;
+      }
+      .controls-panel {
+        padding: 1rem 0.85rem;
+      }
+      .preview-stage {
+        padding: 1rem 0.5rem;
+      }
+      .doc-sheet {
+        padding: 0.85rem 0.65rem;
+        font-size: 0.78rem;
+      }
+      .pills-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      .form-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .modal-window {
+        width: 100% !important;
+        max-width: 100vw !important;
+        max-height: 94vh !important;
+        border-radius: 20px 20px 0 0 !important;
+        margin: auto 0 0 0 !important;
+      }
+      .modal-overlay {
+        align-items: flex-end !important;
+        padding: 0 !important;
+      }
+      input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-actions .btn {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.7rem;
+      }
+      .doc-header {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .proforma-header-grid, .dispatch-info-grid, .invoice-details-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
   
     /* ERP & Dış Ticaret & Modal Stilleri */
     .modal-overlay {
@@ -1579,16 +1657,16 @@
     </a>
 
     <div class="header-actions">
-      <button class="btn btn-outline" style="border-color: #15803d; color: #15803d; font-weight: 800; background: rgba(21,128,61,0.08);" onclick="quickSaveActiveProposal()" title="Aktif teklifi anında veritabanına ve buluta kaydet">💾 Kaydet</button>
-      <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 800; background: rgba(29,78,216,0.08);" onclick="openArchiveModal()" title="Kayıtlı tüm teklifleri ve arşivi görüntüle">📁 Teklif Arşivi</button>
-      <button class="btn btn-outline" style="border-color: #b45309; color: #b45309; font-weight: 700; background: rgba(180,83,9,0.06);" onclick="openCustomersModal()">👥 Cari & Alacak</button>
-      <button class="btn btn-outline" style="border-color: #4338ca; color: #4338ca; font-weight: 700; background: rgba(67,56,202,0.06);" onclick="openInventoryModal()">📦 Stok Takibi</button>
-      <button class="btn btn-outline" style="border-color: #475569; color: #475569;" onclick="openBackupModal()" title="Veritabanı İçe/Dışa Aktar">⚙️ DB</button>
-      <button class="btn btn-outline" onclick="copyDocumentText()">📋 Kopyala</button>
-      <button class="btn btn-outline" onclick="exportToWordDoc()">📄 Word</button>
-      <button class="btn btn-whatsapp" onclick="shareWhatsApp()">💬 WhatsApp</button>
-      <button class="btn btn-outline" style="border-color: #0284c7; color: #0284c7; font-weight: 700; background: rgba(2,132,199,0.08);" onclick="openEmailModal()" title="Teklifi PDF olarak hazırla ve e-posta ile gönder">✉️ E-Posta</button>
-      <button class="btn btn-primary" onclick="window.print()">🖨️ PDF / Yazdır</button>
+      <button class="btn btn-outline" style="border-color: #15803d; color: #15803d; font-weight: 800; background: rgba(21,128,61,0.08);" onclick="quickSaveActiveProposal()" title="Aktif teklifi anında veritabanına ve buluta kaydet">Kaydet</button>
+      <button class="btn btn-outline" style="border-color: #1d4ed8; color: #1d4ed8; font-weight: 800; background: rgba(29,78,216,0.08);" onclick="openArchiveModal()" title="Kayıtlı tüm teklifleri ve arşivi görüntüle">Arşiv</button>
+      <button class="btn btn-outline" style="border-color: #b45309; color: #b45309; font-weight: 700; background: rgba(180,83,9,0.06);" onclick="openCustomersModal()">Cari</button>
+      <button class="btn btn-outline" style="border-color: #4338ca; color: #4338ca; font-weight: 700; background: rgba(67,56,202,0.06);" onclick="openInventoryModal()">Stok</button>
+      <button class="btn btn-outline" style="border-color: #475569; color: #475569;" onclick="openBackupModal()" title="Veritabanı İçe/Dışa Aktar">DB</button>
+      <button class="btn btn-outline" onclick="copyDocumentText()">Kopyala</button>
+      <button class="btn btn-outline" onclick="exportToWordDoc()">Word</button>
+      <button class="btn btn-whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
+      <button class="btn btn-outline" style="border-color: #0284c7; color: #0284c7; font-weight: 700; background: rgba(2,132,199,0.08);" onclick="openEmailModal()" title="Teklifi PDF olarak hazırla ve e-posta ile gönder">E-Posta</button>
+      <button class="btn btn-primary" onclick="window.print()">PDF / Yazdır</button>
     </div>
   </header>
 
@@ -1601,30 +1679,30 @@
       <!-- 1. Belge Modu & Şirket Seçimi -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>📑 1. Belge Modu & Antet</span>
+          <span>1. Belge Modu & Antet</span>
           <span class="badge-pill" id="badge-doc-type">Teknik Şartname</span>
         </div>
 
         <div class="form-group">
           <label>Belge Formatı / Ticari Mod</label>
           <div class="pills-grid" style="grid-template-columns: repeat(3, 1fr); gap: 6px;">
-            <button class="pill-btn active" id="btn-mode-spec" onclick="setDocMode('spec')">📑 Şartname</button>
-            <button class="pill-btn" id="btn-mode-prop" onclick="setDocMode('prop')">💰 Fiyat Teklifi</button>
-            <button class="pill-btn" id="btn-mode-hybrid" onclick="setDocMode('hybrid')">💎 Birleşik Paket</button>
-            <button class="pill-btn" id="btn-mode-proforma" onclick="setDocMode('proforma')">🌍 Proforma Fatura</button>
-            <button class="pill-btn" id="btn-mode-dispatch" onclick="setDocMode('dispatch')">🚚 Sevk İrsaliyesi</button>
-            <button class="pill-btn" id="btn-mode-invoice" onclick="setDocMode('invoice')">🧾 E-Fatura Kes</button>
+            <button class="pill-btn active" id="btn-mode-spec" onclick="setDocMode('spec')">Şartname</button>
+            <button class="pill-btn" id="btn-mode-prop" onclick="setDocMode('prop')">Teklif</button>
+            <button class="pill-btn" id="btn-mode-hybrid" onclick="setDocMode('hybrid')">Paket</button>
+            <button class="pill-btn" id="btn-mode-proforma" onclick="setDocMode('proforma')">Proforma</button>
+            <button class="pill-btn" id="btn-mode-dispatch" onclick="setDocMode('dispatch')">İrsaliye</button>
+            <button class="pill-btn" id="btn-mode-invoice" onclick="setDocMode('invoice')">Fatura</button>
           </div>
         </div>
 
         <div class="form-group">
           <label>Yakın Grup Şirketi / Sektör Anteti</label>
           <div class="pills-grid">
-            <button class="pill-btn active" onclick="setCompany('group')">🏢 Yakın Holding</button>
-            <button class="pill-btn" onclick="setCompany('enerji')">☀️ Yakın Enerji</button>
-            <button class="pill-btn" onclick="setCompany('insaat')">🏗️ Yakın İnşaat</button>
-            <button class="pill-btn" onclick="setCompany('teknoloji')">💻 Yakın Teknoloji</button>
-            <button class="pill-btn" onclick="setCompany('capital')">📈 Yakın Capital</button>
+            <button class="pill-btn active" onclick="setCompany('group')">Yakın Holding</button>
+            <button class="pill-btn" onclick="setCompany('enerji')">Yakın Enerji</button>
+            <button class="pill-btn" onclick="setCompany('insaat')">Yakın İnşaat</button>
+            <button class="pill-btn" onclick="setCompany('teknoloji')">Yakın Teknoloji</button>
+            <button class="pill-btn" onclick="setCompany('capital')">Yakın Capital</button>
           </div>
         </div>
       </div>
@@ -1632,7 +1710,7 @@
       <!-- 2. Proje & Muhatap Bilgileri -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>📋 2. Proje & Cari Bilgileri</span>
+          <span>2. Proje & Cari Bilgileri</span>
           <button class="btn-action-sm" onclick="openCustomersModal(); showNewCustomerForm();" style="color:#b45309; font-weight:700;">+ Yeni Cari</button>
         </div>
 
@@ -1752,7 +1830,7 @@
 
         <!-- Sevk ve Taşıma İrsaliyesi Özel Parametreleri -->
         <div id="panel-dispatch-fields" style="display: none; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px; margin-bottom: 12px;">
-          <div style="font-size: 0.72rem; font-weight: 800; color: #1e40af; margin-bottom: 6px; text-transform: uppercase;">🚚 Sevk ve Lojistik Parametreleri</div>
+          <div style="font-size: 0.72rem; font-weight: 800; color: #1e40af; margin-bottom: 6px; text-transform: uppercase;">Sevk ve Lojistik Parametreleri</div>
           <div class="form-row">
             <div class="form-group">
               <label>Sevk Tarihi & Saati</label>
@@ -1781,7 +1859,7 @@
 
         <!-- E-Fatura Kesme Özel Parametreleri -->
         <div id="panel-invoice-fields" style="display: none; background: #fefce8; border: 1px solid #fef08a; border-radius: 8px; padding: 10px; margin-bottom: 12px;">
-          <div style="font-size: 0.72rem; font-weight: 800; color: #854d0e; margin-bottom: 6px; text-transform: uppercase;">🧾 Kurumsal E-Fatura Parametreleri</div>
+          <div style="font-size: 0.72rem; font-weight: 800; color: #854d0e; margin-bottom: 6px; text-transform: uppercase;">Kurumsal E-Fatura Parametreleri</div>
           <div class="form-row">
             <div class="form-group">
               <label>E-Fatura Senaryosu</label>
@@ -1834,7 +1912,7 @@
       <!-- 3. Finansal Oranlar, Ödeme Planı & İmza -->
       <div class="panel-section" id="panel-financial-settings">
         <div class="panel-title">
-          <span>💰 3. Finans, Ödeme Planı & İmza</span>
+          <span>3. Finans, Ödeme Planı & İmza</span>
         </div>
 
         <div class="form-row">
@@ -1856,8 +1934,8 @@
         <div class="form-group">
           <label>Ödeme / Peşinat Planı Şablonu</label>
           <div class="pills-grid" style="grid-template-columns: repeat(3, 1fr);">
-            <button type="button" class="pill-btn payment-pill-btn active" onclick="setPaymentPreset(30)">⚡ %30 Peşinat</button>
-            <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(40)">⚡ %40 Peşinat</button>
+            <button type="button" class="pill-btn payment-pill-btn active" onclick="setPaymentPreset(30)">%30 Peşinat</button>
+            <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(40)">%40 Peşinat</button>
             <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(50)">%50 Peşinat</button>
             <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(20)">%20 Peşinat</button>
             <button type="button" class="pill-btn payment-pill-btn" onclick="setPaymentPreset(100)">%100 Peşin</button>
@@ -1922,14 +2000,14 @@
       <!-- 4. Sektörel Hazır Şablonlar -->
       <div class="panel-section">
         <div class="panel-title">
-          <span>⚡ 4. Hazır Sektörel Şablonlar</span>
+          <span>4. Hazır Sektörel Şablonlar</span>
           <span style="font-size: 0.72rem; color: #64748b;">1-Tıkla Yükle</span>
         </div>
 
         <div class="template-card-list">
           <div class="template-card" onclick="loadTemplate('ges')">
             <div>
-              <h4>☀️ 1 MWp Endüstriyel Çatı GES Şartnamesi & Teklifi</h4>
+              <h4>1 MWp Endüstriyel Çatı GES Şartnamesi & Teklifi</h4>
               <p>Tier-1 Panel, String İnvertör, Statik Konstrüksiyon, TEDAŞ Kabul</p>
             </div>
             <span class="badge">Enerji EPC</span>
@@ -1937,7 +2015,7 @@
 
           <div class="template-card" onclick="loadTemplate('datacenter')">
             <div>
-              <h4>🏢 Tier-III Veri Merkezi & Endüstriyel Tesis Şartnamesi</h4>
+              <h4>Tier-III Veri Merkezi & Endüstriyel Tesis Şartnamesi</h4>
               <p>N+1 Hassas Soğutma, FM200 Gazlı Söndürme, 2N Pano Altyapısı</p>
             </div>
             <span class="badge">İnşaat / MEP</span>
@@ -1945,7 +2023,7 @@
 
           <div class="template-card" onclick="loadTemplate('bim')">
             <div>
-              <h4>💻 BIM 5D & Dijital İkiz Modelleme Şartnamesi</h4>
+              <h4>BIM 5D & Dijital İkiz Modelleme Şartnamesi</h4>
               <p>LOD 400 As-Built BIM, Çakışma Yönetimi, CDE Bulut Ortamı</p>
             </div>
             <span class="badge">Teknoloji</span>
@@ -1953,7 +2031,7 @@
 
           <div class="template-card" onclick="loadTemplate('cyber')">
             <div>
-              <h4>🔒 Kurumsal Siber Güvenlik, SOC & Pentest Şartnamesi</h4>
+              <h4>Kurumsal Siber Güvenlik, SOC & Pentest Şartnamesi</h4>
               <p>ISO 27001 Uyum, Dış/İç Penetrasyon Testi, 7/24 SIEM & SLA</p>
             </div>
             <span class="badge">Siber Güvenlik</span>
@@ -1961,7 +2039,7 @@
 
           <div class="template-card" onclick="loadTemplate('finance')">
             <div>
-              <h4>📈 Proje Finansmanı & Fizibilite Şartnamesi</h4>
+              <h4>Proje Finansmanı & Fizibilite Şartnamesi</h4>
               <p>Banka Kredi Dosyası, DSCR Modeli, Bağımsız Mühendis Raporu</p>
             </div>
             <span class="badge">Capital</span>
@@ -1972,7 +2050,7 @@
       <!-- 5. Teklif Kalemleri (Financial Items) -->
       <div class="panel-section" id="panel-prop-items">
         <div class="panel-title">
-          <span>📦 5. Fiyat & Keşif Kalemleri</span>
+          <span>5. Fiyat & Keşif Kalemleri</span>
           <div style="display:flex; gap:6px;">
             <button class="btn-action-sm" style="color:#4338ca; font-weight:700;" onclick="openInventoryModal()">+ Stoktan Ekle</button>
             <button class="btn-action-sm" style="color: #64748b;" onclick="resetItems()">Sıfırla</button>
@@ -1984,14 +2062,14 @@
         </div>
 
         <button class="btn-add-dashed" onclick="addNewItem()">
-          <span>➕ Yeni Fiyat Kalemi Ekle</span>
+          <span>+ Kalem Ekle</span>
         </button>
 
         <!-- Ürün & Malzeme Teknik Açıklamaları Bölümü -->
         <div style="margin-top: 14px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <label style="font-size:0.75rem; font-weight:700; color:#1e293b; display:block;">📝 Ürün / Malzeme Açıklamaları & Notları</label>
-            <button type="button" class="btn-action-sm" onclick="autoGenerateProductSpecs()" style="font-size:0.68rem; color:#3d6e30; font-weight:700;">⚡ Otomatik Doldur</button>
+            <label style="font-size:0.75rem; font-weight:700; color:#1e293b; display:block;">Ürün / Malzeme Açıklamaları & Notları</label>
+            <button type="button" class="btn-action-sm" onclick="autoGenerateProductSpecs()" style="font-size:0.68rem; color:#3d6e30; font-weight:700;">Otomatik Doldur</button>
           </div>
           <textarea id="inp-product-specs" rows="4" oninput="appState.productSpecs = this.value; renderApp()" placeholder="Teklif kalemlerine ait marka/model, menşei, teknik standart ve ürün açıklamalarını buraya yazabilirsiniz..." style="width:100%; box-sizing:border-box; font-size:0.78rem; border:1px solid #cbd5e1; border-radius:6px; padding:6px 8px; font-family:inherit; resize:vertical;"></textarea>
         </div>
@@ -2000,7 +2078,7 @@
       <!-- 6. Şartname Madde Editörü (Specification Clauses) -->
       <div class="panel-section" id="panel-spec-clauses">
         <div class="panel-title">
-          <span>📜 6. Şartname Maddeleri</span>
+          <span>6. Şartname Maddeleri</span>
           <button class="btn-action-sm" style="color: #64748b;" onclick="resetClauses()">Sıfırla</button>
         </div>
 
@@ -2022,7 +2100,7 @@
         </div>
 
         <button class="btn-add-dashed" onclick="addNewClause()">
-          <span>➕ Yeni Şartname Maddesi Ekle</span>
+          <span>+ Madde Ekle</span>
         </button>
       </div>
 
@@ -2033,7 +2111,7 @@
       
       <!-- Stage Toolbar -->
       <div class="stage-toolbar">
-        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">📄 Canlı A4 Şartname & Teklif Önizleme</span>
+        <span style="font-size: 0.82rem; font-weight: 700; color: #1e3a17;" id="preview-stage-label">Canlı Önizleme</span>
         <button class="zoom-btn" onclick="setZoom(0.85)">85%</button>
         <button class="zoom-btn" onclick="setZoom(1)">100%</button>
         <button class="zoom-btn" onclick="setZoom(1.15)">115%</button>

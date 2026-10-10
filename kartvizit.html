@@ -176,6 +176,66 @@
       }
     }
 
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.65rem 0.85rem;
+        gap: 8px;
+      }
+      .brand-title h1 {
+        font-size: 1rem;
+      }
+      .brand-title h1 span {
+        display: none;
+      }
+      .header-actions {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding-bottom: 3px;
+        scrollbar-width: none;
+      }
+      .header-actions::-webkit-scrollbar {
+        display: none;
+      }
+      .header-actions .btn {
+        flex: 0 0 auto;
+        padding: 0.4rem 0.65rem;
+        font-size: 0.74rem;
+        min-height: 34px;
+      }
+      .controls-panel {
+        padding: 1.1rem 0.85rem;
+        max-height: none;
+      }
+      .stage-container {
+        padding: 1rem 0.5rem;
+      }
+      .card-box {
+        max-width: 90vw !important;
+        transform: scale(0.92);
+        transform-origin: center top;
+      }
+      .company-select-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-box {
+        transform: scale(0.82);
+      }
+      .company-select-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* Sidebar Controls - Light Theme */
     .controls-panel {
       background: #ffffff;
@@ -1173,22 +1233,22 @@
 
     <div class="header-actions">
       <a href="Sunum.html" class="btn btn-outline">
-        <span>📊</span> Vizyon Sunumu
+        Sunum
       </a>
       <a href="imza.html" class="btn btn-outline">
-        <span>✉️</span> E-Posta İmza
+        İmza
       </a>
       <a href="teklif.html" class="btn btn-outline">
-        <span>📑</span> Şartname
+        Şartname
       </a>
       <button class="btn btn-outline" onclick="downloadVCard()">
-        <span>📇</span> vCard (.vcf)
+        vCard
       </button>
       <button class="btn btn-gold" id="btn-download-pdf-direct" onclick="downloadHighResPDF()" style="box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);">
-        <span>📥</span> Vektörel PDF İndir (300 DPI)
+        PDF İndir
       </button>
       <button class="btn btn-outline" onclick="window.print()">
-        <span>🖨️</span> A4 Baskı / Yazdır
+        Yazdır
       </button>
     </div>
   </header>
@@ -1231,10 +1291,10 @@
           <span>İsim & Ünvan Yerleşim Planı</span>
         </div>
         <div class="company-select-grid">
-          <div class="comp-pill active" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">🎯 Ortada (Merkezli)</div>
-          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first')">⬅️ Solda Hizalı (Standart)</div>
-          <div class="comp-pill" id="btn-order-title-top" onclick="setPersonOrder('title-top')">⬆️ Ünvan Üstte (Sol)</div>
-          <div class="comp-pill" id="btn-order-right-align" onclick="setPersonOrder('right-align')">➡️ Sağda Hizalı (Modern)</div>
+          <div class="comp-pill active" id="btn-order-title-middle" onclick="setPersonOrder('title-middle')">Ortada</div>
+          <div class="comp-pill" id="btn-order-name-first" onclick="setPersonOrder('name-first')">Solda</div>
+          <div class="comp-pill" id="btn-order-title-top" onclick="setPersonOrder('title-top')">Ünvan Üstte</div>
+          <div class="comp-pill" id="btn-order-right-align" onclick="setPersonOrder('right-align')">Sağda</div>
         </div>
       </div>
 
@@ -1270,11 +1330,11 @@
         <div class="form-group">
           <label>QR Kod Hedefi</label>
           <select id="inp-qr-target" class="form-control" onchange="updateCardPreview()">
-            <option value="web-vcard" selected>🌐 Akıllı Dijital vCard Sayfası (Kameradan Doğrudan Aç & Kaydet)</option>
-            <option value="vcard">📱 Doğrudan vCard 3.0 Kamera Kaydı (Raw Contact)</option>
-            <option value="vcf-file">💾 .VCF Dosya İndirme Bağlantısı</option>
-            <option value="web">🏢 Kurumsal Web Sitesi (www.yakingrup.net)</option>
-            <option value="linkedin">💼 LinkedIn Şirket Profili</option>
+            <option value="web-vcard" selected>Akıllı vCard Sayfası (vCard Web)</option>
+            <option value="vcard">Doğrudan vCard 3.0 (Kişi Kartı)</option>
+            <option value="vcf-file">.VCF Dosya İndirme</option>
+            <option value="web">Kurumsal Web Sitesi</option>
+            <option value="linkedin">LinkedIn Şirket Profili</option>
           </select>
         </div>
       </div>
