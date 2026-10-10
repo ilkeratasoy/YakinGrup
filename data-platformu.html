@@ -617,28 +617,70 @@
       border-color: var(--navy);
     }
 
-    /* Sector Separator Block in Grouped View */
+    /* Sektörel Kartvizit Akordeon Görünümü */
     .sector-group-block {
-      margin-bottom: 18px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: all 0.2s ease;
+    }
+    .sector-group-block:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
     }
     .sector-separator-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 11px 14px;
       background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1px solid #e2e8f0;
       border-left: 4px solid var(--navy);
-      border-radius: 10px;
-      margin-bottom: 8px;
+      border-bottom: 1px solid transparent;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease;
+      gap: 10px;
+    }
+    .sector-separator-header:hover {
+      background: #f1f5f9;
+    }
+    .sector-group-block.expanded .sector-separator-header {
+      border-bottom-color: #e2e8f0;
+      background: #f8fafc;
     }
     .sector-title-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+    .sector-title-text {
       font-weight: 800;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .sector-subtitle {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sector-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
     }
     .sector-count-tag {
       font-size: 0.72rem;
@@ -649,10 +691,48 @@
       border-radius: 12px;
       border: 1px solid #e2e8f0;
     }
+    .sector-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 20px;
+      background: #ffffff;
+      color: var(--navy);
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .sector-toggle-btn:hover {
+      background: #f1f5f9;
+      border-color: var(--navy);
+    }
+    .sector-chevron {
+      display: inline-block;
+      transition: transform 0.22s ease;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .sector-group-block.expanded .sector-chevron {
+      transform: rotate(180deg);
+    }
     .sector-cards-container {
+      padding: 10px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      background: #fafbfc;
+    }
+    .sector-group-block .card-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .sector-group-block .card-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     /* Proje Gruplama / Akordeon Görünümü */
@@ -1270,13 +1350,21 @@
             <span>🏢 Sektörel Seperasyon</span>
             <span id="active-sector-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
           </span>
-          <div style="display:flex; gap: 4px;">
-            <button type="button" id="btn-view-grouped" class="btn-view-mode active" onclick="setCardViewMode('grouped')" title="Sektörlere Göre Gruplanmış Görünüm">
-              📑 Gruplu
+          <div style="display:flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+            <button type="button" id="btn-view-grouped" class="btn-view-mode active" onclick="setCardViewMode('grouped')" title="Sektörlere Göre Akordeon Gruplanmış Görünüm">
+              📑 Gruplu (Akordeon)
             </button>
             <button type="button" id="btn-view-flat" class="btn-view-mode" onclick="setCardViewMode('flat')" title="Tümünü Düz Liste Görünümü">
               📋 Düz Liste
             </button>
+            <div id="card-group-actions" style="display: inline-flex; gap: 4px; margin-left: 4px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllCardSectorGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm sektörleri aç">
+                ⏬ Tümünü Aç
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllCardSectorGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm sektörleri daralt">
+                ⏫ Tümünü Daralt
+              </button>
+            </div>
           </div>
         </div>
         <div class="sector-pills-row" id="sector-pills">
@@ -4527,11 +4615,64 @@ function doPost(e) {
       return sel.value || 'Genel';
     }
 
+    const expandedCardSectorGroups = new Set();
+
+    function getSafeSectorGroupId(secName) {
+      return 'card_sec_' + String(secName).toLowerCase()
+        .replace(/[ğ]/g, 'g').replace(/[ü]/g, 'u').replace(/[ş]/g, 's')
+        .replace(/[ı]/g, 'i').replace(/[ö]/g, 'o').replace(/[ç]/g, 'c')
+        .replace(/[^a-z0-9]/g, '_')
+        .substring(0, 45);
+    }
+
+    function toggleCardSectorGroup(groupId) {
+      const box = document.getElementById(groupId);
+      if (!box) return;
+      const isExp = box.classList.contains('expanded');
+      const body = box.querySelector('.sector-cards-container');
+      const toggleText = box.querySelector('.sector-toggle-text');
+      if (isExp) {
+        box.classList.remove('expanded');
+        if (body) body.style.display = 'none';
+        if (toggleText) toggleText.textContent = 'Genişlet';
+        expandedCardSectorGroups.delete(groupId);
+      } else {
+        box.classList.add('expanded');
+        if (body) body.style.display = 'flex';
+        if (toggleText) toggleText.textContent = 'Daralt';
+        expandedCardSectorGroups.add(groupId);
+      }
+    }
+
+    function expandAllCardSectorGroups() {
+      document.querySelectorAll('.sector-group-block').forEach(box => {
+        box.classList.add('expanded');
+        const body = box.querySelector('.sector-cards-container');
+        if (body) body.style.display = 'flex';
+        const toggleText = box.querySelector('.sector-toggle-text');
+        if (toggleText) toggleText.textContent = 'Daralt';
+        if (box.id) expandedCardSectorGroups.add(box.id);
+      });
+    }
+
+    function collapseAllCardSectorGroups() {
+      document.querySelectorAll('.sector-group-block').forEach(box => {
+        box.classList.remove('expanded');
+        const body = box.querySelector('.sector-cards-container');
+        if (body) body.style.display = 'none';
+        const toggleText = box.querySelector('.sector-toggle-text');
+        if (toggleText) toggleText.textContent = 'Genişlet';
+      });
+      expandedCardSectorGroups.clear();
+    }
+
     function setCardViewMode(mode) {
       cardViewMode = mode;
       document.querySelectorAll('.btn-view-mode').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById(mode === 'grouped' ? 'btn-view-grouped' : 'btn-view-flat');
       if (activeBtn) activeBtn.classList.add('active');
+      const actionsEl = document.getElementById('card-group-actions');
+      if (actionsEl) actionsEl.style.display = (mode === 'grouped') ? 'inline-flex' : 'none';
       renderCards();
     }
 
@@ -4830,21 +4971,52 @@ function doPost(e) {
         sortedSecNames.forEach(secName => {
           const secCards = groups[secName];
           const meta = getSectorMeta(secName);
+          const groupId = getSafeSectorGroupId(secName);
+          const isExpanded = (q.length > 0) || expandedCardSectorGroups.has(groupId);
+
+          // Sektör özeti: Firma ve kişi bilgileri
+          const companySet = new Set();
+          const contactSet = new Set();
+          secCards.forEach(c => {
+            if (c.company && c.company.trim()) companySet.add(c.company.trim());
+            if (c.name && c.name.trim()) contactSet.add(c.name.trim());
+          });
+
+          const subtitleParts = [];
+          if (companySet.size > 0) {
+            subtitleParts.push(`🏢 ${Array.from(companySet).slice(0, 3).join(', ')}${companySet.size > 3 ? '...' : ''}`);
+          }
+          if (contactSet.size > 0) {
+            subtitleParts.push(`👤 ${Array.from(contactSet).slice(0, 2).join(', ')}${contactSet.size > 2 ? '...' : ''}`);
+          }
+          const subtitleHtml = subtitleParts.map(s => escapeHtml(s)).join(' <span style="opacity:0.4;">•</span> ');
+
           html += `
-            <div class="sector-group-block">
-              <div class="sector-separator-header">
+            <div class="sector-group-block ${isExpanded ? 'expanded' : ''}" id="${groupId}">
+              <div class="sector-separator-header" onclick="toggleCardSectorGroup('${groupId}')">
                 <div class="sector-title-wrap">
-                  <span style="font-size: 1.15rem;">${meta.icon}</span>
-                  <span>${escapeHtml(secName)}</span>
+                  <span style="font-size: 1.25rem;">${meta.icon}</span>
+                  <div style="flex:1; min-width:0;">
+                    <div class="sector-title-text">
+                      <span>${escapeHtml(secName)}</span>
+                      <span class="badge badge-purple" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 99px;">
+                        ${secCards.length} Kartvizit
+                      </span>
+                    </div>
+                    ${subtitleHtml ? `<div class="sector-subtitle">${subtitleHtml}</div>` : ''}
+                  </div>
                 </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="sector-count-tag">${secCards.length} Kartvizit</span>
-                  <button type="button" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 0.7rem;" onclick="filterBySector('${escapeHtml(secName)}')">
+                <div class="sector-actions-right">
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding: 3px 8px; font-size: 0.68rem; border-radius: 8px;" onclick="event.stopPropagation(); filterBySector('${escapeHtml(secName)}')" title="Yalnızca bu sektörü filtrele">
                     Yalnızca Bu Sektör 🔍
+                  </button>
+                  <button type="button" class="sector-toggle-btn" onclick="event.stopPropagation(); toggleCardSectorGroup('${groupId}')">
+                    <span class="sector-toggle-text">${isExpanded ? 'Daralt' : 'Genişlet'}</span>
+                    <span class="sector-chevron">▼</span>
                   </button>
                 </div>
               </div>
-              <div class="sector-cards-container">
+              <div class="sector-cards-container" style="display: ${isExpanded ? 'flex' : 'none'};">
                 ${secCards.map(c => renderCardItemHtml(c)).join('')}
               </div>
             </div>
