@@ -1453,17 +1453,17 @@
             <div class="form-group">
               <label>🏢 Sektör / Faaliyet Alanı *</label>
               <select id="card-sector" onchange="toggleCustomSector(this)">
+                <option value="Bilişim & Teknoloji">💻 Bilişim & Teknoloji</option>
+                <option value="Elektrik & Mekanik (MEP)">⚡ Elektrik & Mekanik (MEP)</option>
+                <option value="Finans & Bankacılık">💰 Finans & Bankacılık</option>
+                <option value="Gayrimenkul & Yatırım">🏢 Gayrimenkul & Yatırım</option>
+                <option value="Gıda & Market">🛒 Gıda & Market (Restoran, Catering, Toptan Gıda)</option>
+                <option value="Hukuk & Danışmanlık">⚖️ Hukuk & Danışmanlık</option>
                 <option value="İnşaat & Taahhüt">🏗️ İnşaat & Taahhüt</option>
                 <option value="Mimarlık & Tasarım">📐 Mimarlık & Tasarım</option>
                 <option value="Mühendislik & Müşavirlik">⚙️ Mühendislik & Müşavirlik</option>
-                <option value="Gayrimenkul & Yatırım">🏢 Gayrimenkul & Yatırım</option>
-                <option value="Yapı Malzemeleri & Tedarik">🧱 Yapı Malzemeleri & Tedarik</option>
                 <option value="Taşeron & Uygulama">🔨 Taşeron & Uygulama</option>
-                <option value="Elektrik & Mekanik (MEP)">⚡ Elektrik & Mekanik</option>
-                <option value="Gıda & Market">🛒 Gıda & Market (Restoran, Catering, Toptan Gıda)</option>
-                <option value="Finans & Bankacılık">💰 Finans & Bankacılık</option>
-                <option value="Hukuk & Danışmanlık">⚖️ Hukuk & Danışmanlık</option>
-                <option value="Bilişim & Teknoloji">💻 Bilişim & Teknoloji</option>
+                <option value="Yapı Malzemeleri & Tedarik">🧱 Yapı Malzemeleri & Tedarik</option>
                 <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
               </select>
               <input type="text" id="card-sector-custom" placeholder="Özel sektör adı yazın..." style="display:none; margin-top:4px;">
@@ -1483,12 +1483,12 @@
             <div class="form-group">
               <label>Kategori</label>
               <select id="card-category">
-                <option value="Müşteri">Müşteri</option>
-                <option value="Yatırımcı">Yatırımcı</option>
-                <option value="Mimar / Mühendis">Mimar / Mühendis</option>
-                <option value="Tedarikçi">Tedarikçi</option>
-                <option value="Taşeron">Taşeron</option>
                 <option value="İş Ortağı">İş Ortağı</option>
+                <option value="Mimar / Mühendis">Mimar / Mühendis</option>
+                <option value="Müşteri">Müşteri</option>
+                <option value="Taşeron">Taşeron</option>
+                <option value="Tedarikçi">Tedarikçi</option>
+                <option value="Yatırımcı">Yatırımcı</option>
               </select>
             </div>
             <div class="form-group full">
@@ -2604,29 +2604,29 @@
             <select id="inv-category" onchange="toggleCustomInvoiceCategory(this)">
               <optgroup label="Genel Şantiye & Ofis Giderleri">
                 <option value="Akaryakıt & Ulaşım">⛽ Akaryakıt & Ulaşım (Benzin, Mazot, Araç)</option>
-                <option value="Market & Gıda">🛒 Market & Gıda (BİM, A101, Migros, Şok, Yemek, Mutfak)</option>
-                <option value="Kırtasiye & Ofis">📎 Kırtasiye & Ofis (Kağıt, Toner, Büro)</option>
-                <option value="İnşaat & Yapı Malzemeleri">🧱 İnşaat & Yapı Malzemeleri</option>
-                <option value="Taşeron & İşçilik">🔨 Taşeron & İşçilik / Montaj</option>
-                <option value="Elektrik, Su & Abonelik">⚡ Elektrik, Su, Doğalgaz & İletişim</option>
-                <option value="Nakliye & Hafriyat">🚚 Nakliye, Hafriyat & Lojistik</option>
                 <option value="Bilişim & Yazılım">💻 Bilişim, Yazılım & Donanım</option>
                 <option value="Danışmanlık & Hizmet">⚖️ Danışmanlık, Müşavirlik & Hizmet</option>
+                <option value="Elektrik, Su & Abonelik">⚡ Elektrik, Su, Doğalgaz & İletişim</option>
+                <option value="İnşaat & Yapı Malzemeleri">🧱 İnşaat & Yapı Malzemeleri</option>
+                <option value="Kırtasiye & Ofis">📎 Kırtasiye & Ofis (Kağıt, Toner, Büro)</option>
+                <option value="Market & Gıda">🛒 Market & Gıda (BİM, A101, Migros, Şok, Yemek, Mutfak)</option>
+                <option value="Nakliye & Hafriyat">🚚 Nakliye, Hafriyat & Lojistik</option>
+                <option value="Taşeron & İşçilik">🔨 Taşeron & İşçilik / Montaj</option>
               </optgroup>
               <optgroup label="Proje, Mühendislik & Danışmanlık Kalemleri">
-                <option value="Mimari Proje">📐 Mimari Proje</option>
-                <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
-                <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+                <option value="Belediye Harcı & Ruhsat">📜 Belediye Harcı & Ruhsat Giderleri</option>
+                <option value="Cephe Modelleme">🏢 Cephe Modelleme (3D / Render)</option>
+                <option value="Elektrik Proje">⚡ Elektrik Proje</option>
                 <option value="Geoteknik & İksa">⛏️ Geoteknik & İksa</option>
+                <option value="Harita & Kadastro">🗺️ Harita & Kadastro</option>
+                <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
+                <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat</option>
+                <option value="Mimari Proje">📐 Mimari Proje</option>
                 <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
                 <option value="Peyzaj Mimarlığı">🌿 Peyzaj Mimarlığı</option>
-                <option value="Cephe Modelleme">🏢 Cephe Modelleme (3D / Render)</option>
-                <option value="Kat İrtifakı Dosyası">📑 Kat İrtifakı Dosyası</option>
-                <option value="Harita & Kadastro">🗺️ Harita & Kadastro</option>
-                <option value="Mekanik Tesisat">⚙️ Mekanik Tesisat</option>
-                <option value="Elektrik Proje">⚡ Elektrik Proje</option>
-                <option value="Belediye Harcı & Ruhsat">📜 Belediye Harcı & Ruhsat Giderleri</option>
+                <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
                 <option value="Yapı Denetim">🔍 Yapı Denetim Bedeli</option>
+                <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
               </optgroup>
               <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
             </select>
@@ -4747,17 +4747,17 @@ function doPost(e) {
     let cardViewMode = 'grouped'; // 'grouped' veya 'flat'
 
     const STANDARD_SECTORS = [
+      { name: "Bilişim & Teknoloji", icon: "💻", css: "badge-sector-bilisim" },
+      { name: "Elektrik & Mekanik (MEP)", icon: "⚡", css: "badge-sector-mep" },
+      { name: "Finans & Bankacılık", icon: "💰", css: "badge-sector-finans" },
+      { name: "Gayrimenkul & Yatırım", icon: "🏢", css: "badge-sector-gayrimenkul" },
+      { name: "Gıda & Market", icon: "🛒", css: "badge-sector-gida" },
+      { name: "Hukuk & Danışmanlık", icon: "⚖️", css: "badge-sector-hukuk" },
       { name: "İnşaat & Taahhüt", icon: "🏗️", css: "badge-sector-insaat" },
       { name: "Mimarlık & Tasarım", icon: "📐", css: "badge-sector-mimarlik" },
       { name: "Mühendislik & Müşavirlik", icon: "⚙️", css: "badge-sector-muhendislik" },
-      { name: "Gayrimenkul & Yatırım", icon: "🏢", css: "badge-sector-gayrimenkul" },
-      { name: "Yapı Malzemeleri & Tedarik", icon: "🧱", css: "badge-sector-malzeme" },
       { name: "Taşeron & Uygulama", icon: "🔨", css: "badge-sector-taseron" },
-      { name: "Elektrik & Mekanik (MEP)", icon: "⚡", css: "badge-sector-mep" },
-      { name: "Gıda & Market", icon: "🛒", css: "badge-sector-gida" },
-      { name: "Finans & Bankacılık", icon: "💰", css: "badge-sector-finans" },
-      { name: "Hukuk & Danışmanlık", icon: "⚖️", css: "badge-sector-hukuk" },
-      { name: "Bilişim & Teknoloji", icon: "💻", css: "badge-sector-bilisim" },
+      { name: "Yapı Malzemeleri & Tedarik", icon: "🧱", css: "badge-sector-malzeme" },
       { name: "Diğer", icon: "📦", css: "badge-sector" }
     ];
 
@@ -4767,17 +4767,17 @@ function doPost(e) {
       const found = STANDARD_SECTORS.find(s => s.name.toLowerCase() === trimmed.toLowerCase());
       if (found) return found;
       const lower = trimmed.toLowerCase();
-      if (lower.includes('inşaat') || lower.includes('insaat') || lower.includes('taahhüt')) return STANDARD_SECTORS[0];
-      if (lower.includes('mimar') || lower.includes('tasarım')) return STANDARD_SECTORS[1];
-      if (lower.includes('mühendis') || lower.includes('muhendis') || lower.includes('statik')) return STANDARD_SECTORS[2];
-      if (lower.includes('gayrimenkul') || lower.includes('emlak') || lower.includes('yatırım')) return STANDARD_SECTORS[3];
-      if (lower.includes('malzeme') || lower.includes('beton') || lower.includes('demir') || lower.includes('tedarik')) return STANDARD_SECTORS[4];
-      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('uygulama')) return STANDARD_SECTORS[5];
-      if (lower.includes('elektrik') || lower.includes('mekanik') || lower.includes('mep') || lower.includes('tesisat')) return STANDARD_SECTORS[6];
-      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('market') || lower.includes('yemek') || lower.includes('catering') || lower.includes('restoran')) return STANDARD_SECTORS[7];
-      if (lower.includes('finans') || lower.includes('banka') || lower.includes('faktoring')) return STANDARD_SECTORS[8];
-      if (lower.includes('hukuk') || lower.includes('avukat') || lower.includes('müşavir')) return STANDARD_SECTORS[9];
-      if (lower.includes('bilişim') || lower.includes('yazılım') || lower.includes('teknoloji')) return STANDARD_SECTORS[10];
+      if (lower.includes('bilişim') || lower.includes('yazılım') || lower.includes('teknoloji')) return STANDARD_SECTORS.find(s => s.name.startsWith('Bilişim')) || STANDARD_SECTORS[0];
+      if (lower.includes('elektrik') || lower.includes('mekanik') || lower.includes('mep') || lower.includes('tesisat')) return STANDARD_SECTORS.find(s => s.name.startsWith('Elektrik')) || STANDARD_SECTORS[1];
+      if (lower.includes('finans') || lower.includes('banka') || lower.includes('faktoring')) return STANDARD_SECTORS.find(s => s.name.startsWith('Finans')) || STANDARD_SECTORS[2];
+      if (lower.includes('gayrimenkul') || lower.includes('emlak') || lower.includes('yatırım')) return STANDARD_SECTORS.find(s => s.name.startsWith('Gayrimenkul')) || STANDARD_SECTORS[3];
+      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('market') || lower.includes('yemek') || lower.includes('catering') || lower.includes('restoran')) return STANDARD_SECTORS.find(s => s.name.startsWith('Gıda')) || STANDARD_SECTORS[4];
+      if (lower.includes('hukuk') || lower.includes('avukat') || lower.includes('müşavir')) return STANDARD_SECTORS.find(s => s.name.startsWith('Hukuk')) || STANDARD_SECTORS[5];
+      if (lower.includes('inşaat') || lower.includes('insaat') || lower.includes('taahhüt')) return STANDARD_SECTORS.find(s => s.name.startsWith('İnşaat')) || STANDARD_SECTORS[6];
+      if (lower.includes('mimar') || lower.includes('tasarım')) return STANDARD_SECTORS.find(s => s.name.startsWith('Mimar')) || STANDARD_SECTORS[7];
+      if (lower.includes('mühendis') || lower.includes('muhendis') || lower.includes('statik')) return STANDARD_SECTORS.find(s => s.name.startsWith('Mühendis')) || STANDARD_SECTORS[8];
+      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('uygulama')) return STANDARD_SECTORS.find(s => s.name.startsWith('Taşeron')) || STANDARD_SECTORS[9];
+      if (lower.includes('malzeme') || lower.includes('beton') || lower.includes('demir') || lower.includes('tedarik')) return STANDARD_SECTORS.find(s => s.name.startsWith('Yapı')) || STANDARD_SECTORS[10];
       return { name: trimmed, icon: "🏷️", css: "badge-sector" };
     }
 
@@ -4895,7 +4895,11 @@ function doPost(e) {
         </button>
       `;
 
-      const presentSectors = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+      const presentSectors = Object.keys(counts).sort((a,b) => {
+        if (a === 'Diğer' || a === 'Genel') return 1;
+        if (b === 'Diğer' || b === 'Genel') return -1;
+        return a.localeCompare(b, 'tr');
+      });
       const displaySectors = new Set(presentSectors);
 
       if (presentSectors.length === 0) {
@@ -5152,7 +5156,11 @@ function doPost(e) {
           groups[sec].push(c);
         });
 
-        const sortedSecNames = Object.keys(groups).sort((a,b) => groups[b].length - groups[a].length);
+        const sortedSecNames = Object.keys(groups).sort((a,b) => {
+          if (a === 'Diğer' || a === 'Genel') return 1;
+          if (b === 'Diğer' || b === 'Genel') return -1;
+          return a.localeCompare(b, 'tr');
+        });
 
         let html = '';
         sortedSecNames.forEach(secName => {
@@ -6124,11 +6132,10 @@ function doPost(e) {
         groupsMap.get(groupKey).push(p);
       });
 
-      // Grupları sırala: Çok projesi olan gruplar üstte, sonra alfabetik
+      // Grupları sırala: A'dan Z'ye alfabetik sırala (Bağımsız/Belirtilmemiş en sonda)
       const sortedGroupEntries = Array.from(groupsMap.entries()).sort((a, b) => {
-        if (b[1].length !== a[1].length) {
-          return b[1].length - a[1].length;
-        }
+        if (a[0].startsWith('Bağımsız') || a[0].startsWith('Diğer') || a[0].startsWith('Belirtilmemiş')) return 1;
+        if (b[0].startsWith('Bağımsız') || b[0].startsWith('Diğer') || b[0].startsWith('Belirtilmemiş')) return -1;
         return a[0].localeCompare(b[0], 'tr');
       });
 
@@ -8497,14 +8504,14 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     const STANDARD_INVOICE_CATEGORIES = [
       { name: "Akaryakıt & Ulaşım", icon: "⛽", css: "badge-inv-akaryakit" },
-      { name: "Market & Gıda", icon: "🛒", css: "badge-inv-gida" },
-      { name: "Kırtasiye & Ofis", icon: "📎", css: "badge-inv-kirtasiye" },
-      { name: "İnşaat & Yapı Malzemeleri", icon: "🧱", css: "badge-inv-yapi" },
-      { name: "Taşeron & İşçilik", icon: "🔨", css: "badge-inv-taseron" },
-      { name: "Elektrik, Su & Abonelik", icon: "⚡", css: "badge-inv-enerji" },
-      { name: "Nakliye & Hafriyat", icon: "🚚", css: "badge-inv-nakliye" },
       { name: "Bilişim & Yazılım", icon: "💻", css: "badge-inv-bilisim" },
       { name: "Danışmanlık & Hizmet", icon: "⚖️", css: "badge-inv-danismanlik" },
+      { name: "Elektrik, Su & Abonelik", icon: "⚡", css: "badge-inv-enerji" },
+      { name: "İnşaat & Yapı Malzemeleri", icon: "🧱", css: "badge-inv-yapi" },
+      { name: "Kırtasiye & Ofis", icon: "📎", css: "badge-inv-kirtasiye" },
+      { name: "Market & Gıda", icon: "🛒", css: "badge-inv-gida" },
+      { name: "Nakliye & Hafriyat", icon: "🚚", css: "badge-inv-nakliye" },
+      { name: "Taşeron & İşçilik", icon: "🔨", css: "badge-inv-taseron" },
       { name: "Diğer / Genel", icon: "📦", css: "badge-inv-cat" }
     ];
 
@@ -8531,15 +8538,15 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const found = STANDARD_INVOICE_CATEGORIES.find(c => c.name.toLowerCase() === norm.toLowerCase());
       if (found) return found;
       const lower = norm.toLowerCase();
-      if (lower.includes('akaryakıt') || lower.includes('akaryakit') || lower.includes('benzin') || lower.includes('yakıt')) return STANDARD_INVOICE_CATEGORIES[0];
-      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market') || lower.includes('mutfak')) return STANDARD_INVOICE_CATEGORIES[1];
-      if (lower.includes('kırtasiye') || lower.includes('kirtasiye') || lower.includes('ofis') || lower.includes('büro')) return STANDARD_INVOICE_CATEGORIES[2];
-      if (lower.includes('yapı') || lower.includes('yapi') || lower.includes('inşaat') || lower.includes('insaat') || lower.includes('beton') || lower.includes('demir')) return STANDARD_INVOICE_CATEGORIES[3];
-      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES[4];
-      if (lower.includes('elektrik') || lower.includes('su') || lower.includes('enerji') || lower.includes('abonelik')) return STANDARD_INVOICE_CATEGORIES[5];
-      if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES[6];
-      if (lower.includes('bilişim') || lower.includes('bilisim') || lower.includes('yazılım') || lower.includes('donanım')) return STANDARD_INVOICE_CATEGORIES[7];
-      if (lower.includes('danışmanlık') || lower.includes('hizmet') || lower.includes('müşavir') || lower.includes('hukuk')) return STANDARD_INVOICE_CATEGORIES[8];
+      if (lower.includes('akaryakıt') || lower.includes('akaryakit') || lower.includes('benzin') || lower.includes('yakıt')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Akaryakıt')) || STANDARD_INVOICE_CATEGORIES[0];
+      if (lower.includes('bilişim') || lower.includes('bilisim') || lower.includes('yazılım') || lower.includes('donanım')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Bilişim')) || STANDARD_INVOICE_CATEGORIES[1];
+      if (lower.includes('danışmanlık') || lower.includes('hizmet') || lower.includes('müşavir') || lower.includes('hukuk')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Danışmanlık')) || STANDARD_INVOICE_CATEGORIES[2];
+      if (lower.includes('elektrik') || lower.includes('su') || lower.includes('enerji') || lower.includes('abonelik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Elektrik')) || STANDARD_INVOICE_CATEGORIES[3];
+      if (lower.includes('yapı') || lower.includes('yapi') || lower.includes('inşaat') || lower.includes('insaat') || lower.includes('beton') || lower.includes('demir')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('İnşaat')) || STANDARD_INVOICE_CATEGORIES[4];
+      if (lower.includes('kırtasiye') || lower.includes('kirtasiye') || lower.includes('ofis') || lower.includes('büro')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Kırtasiye')) || STANDARD_INVOICE_CATEGORIES[5];
+      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market') || lower.includes('mutfak')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Market')) || STANDARD_INVOICE_CATEGORIES[6];
+      if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Nakliye')) || STANDARD_INVOICE_CATEGORIES[7];
+      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Taşeron')) || STANDARD_INVOICE_CATEGORIES[8];
       return { name: norm, icon: "🏷️", css: "badge-inv-cat" };
     }
 
@@ -8672,7 +8679,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         </button>
       `;
 
-      const presentCategories = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+      const presentCategories = Object.keys(counts).sort((a,b) => {
+        if (a.startsWith('Diğer') || a === 'Genel Gider') return 1;
+        if (b.startsWith('Diğer') || b === 'Genel Gider') return -1;
+        return a.localeCompare(b, 'tr');
+      });
       const displayCategories = new Set(presentCategories);
 
       if (presentCategories.length === 0) {
@@ -9122,7 +9133,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           sums[cat] += tot;
         });
 
-        const sortedCatNames = Object.keys(groups).sort((a,b) => sums[b] - sums[a]);
+        const sortedCatNames = Object.keys(groups).sort((a,b) => {
+          if (a.startsWith('Diğer') || a === 'Genel Gider') return 1;
+          if (b.startsWith('Diğer') || b === 'Genel Gider') return -1;
+          return a.localeCompare(b, 'tr');
+        });
 
         let html = '';
         sortedCatNames.forEach(catName => {
