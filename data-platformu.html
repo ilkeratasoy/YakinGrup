@@ -1506,150 +1506,9 @@
   <main class="container">
 
     <!-- ========================================== -->
-    <!-- 1. KARTVİZİT TAB -->
+    <!-- 1. PROJELER TAB -->
     <!-- ========================================== -->
-    <div id="tab-cards" class="tab-pane active">
-
-      <!-- Scanner Box -->
-      <div class="scanner-card">
-        <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none;" onchange="handleCardSelected(event)">
-        <input type="file" id="gallery-input" accept="image/*" style="display:none;" onchange="handleCardSelected(event)">
-
-        <div class="scanner-actions-grid">
-          <button type="button" class="btn btn-gold" onclick="document.getElementById('camera-input').click()">
-            Fotoğraf Çek
-          </button>
-          <button type="button" class="btn btn-secondary" onclick="document.getElementById('gallery-input').click()">
-            Galeri
-          </button>
-        </div>
-
-        <img id="card-preview" class="preview-box" alt="Önizleme">
-        <div id="ocr-loader" class="ocr-loader">Kartvizit taranıyor...</div>
-
-        <!-- Scanned Card Form -->
-        <form id="card-form" onsubmit="saveCard(event)">
-          <!-- Collapsible Header Bar -->
-          <div class="card-form-collapsible-bar" id="card-form-collapsible-header" onclick="toggleCardFormCollapse()">
-            <div class="card-form-bar-left">
-              <span class="card-form-bar-icon" style="display:none;"></span>
-              <div class="card-form-bar-titles">
-                <div class="card-form-bar-title" id="card-form-bar-title">Kartvizit Bilgileri</div>
-              </div>
-            </div>
-            <div class="card-form-bar-right">
-              <span class="card-form-badge" id="card-form-badge">Genişlet</span>
-            </div>
-          </div>
-
-          <!-- Collapsible Body (Hidden by default, expands on click, OCR or edit) -->
-          <div class="card-form-body" id="card-form-body" style="display: none;">
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Ad Soyad *</label>
-                <input type="text" id="card-name" placeholder="Kişi adı">
-              </div>
-              <div class="form-group">
-                <label>Şirket *</label>
-                <input type="text" id="card-company" placeholder="Firma adı">
-              </div>
-              <div class="form-group">
-                <label>Unvan</label>
-                <input type="text" id="card-role" placeholder="Direktör, Mimar, Satış Müdürü...">
-              </div>
-              <div class="form-group">
-                <label>Sektör / Faaliyet Alanı *</label>
-                <select id="card-sector" onchange="toggleCustomSector(this)">
-                  <option value="Bilişim & Teknoloji">Bilişim & Teknoloji</option>
-                  <option value="Elektrik & Mekanik (MEP)">Elektrik & Mekanik (MEP)</option>
-                  <option value="Finans & Bankacılık">Finans & Bankacılık</option>
-                  <option value="Gayrimenkul & Yatırım">Gayrimenkul & Yatırım</option>
-                  <option value="Gıda & Market">Gıda & Market</option>
-                  <option value="Hukuk & Danışmanlık">Hukuk & Danışmanlık</option>
-                  <option value="İnşaat & Taahhüt">İnşaat & Taahhüt</option>
-                  <option value="Mimarlık & Tasarım">Mimarlık & Tasarım</option>
-                  <option value="Mühendislik & Müşavirlik">Mühendislik & Müşavirlik</option>
-                  <option value="Taşeron & Uygulama">Taşeron & Uygulama</option>
-                  <option value="Yapı Malzemeleri & Tedarik">Yapı Malzemeleri & Tedarik</option>
-                  <option value="DİĞER">Diğer</option>
-                </select>
-                <input type="text" id="card-sector-custom" placeholder="Özel sektör adı yazın..." style="display:none; margin-top:4px;">
-              </div>
-              <div class="form-group">
-                <label>Cep Telefonu (GSM / WhatsApp)</label>
-                <input type="tel" id="card-mobile" placeholder="+90 (533) 210 93 28">
-              </div>
-              <div class="form-group">
-                <label>Ofis / Sabit Telefon</label>
-                <input type="tel" id="card-office" placeholder="444 7 339 veya 0212...">
-              </div>
-              <div class="form-group">
-                <label>E-Posta</label>
-                <input type="email" id="card-email" placeholder="ornek@sirket.com">
-              </div>
-              <div class="form-group">
-                <label>Kategori</label>
-                <select id="card-category">
-                  <option value="İş Ortağı">İş Ortağı</option>
-                  <option value="Mimar / Mühendis">Mimar / Mühendis</option>
-                  <option value="Müşteri">Müşteri</option>
-                  <option value="Taşeron">Taşeron</option>
-                  <option value="Tedarikçi">Tedarikçi</option>
-                  <option value="Yatırımcı">Yatırımcı</option>
-                </select>
-              </div>
-              <div class="form-group full">
-                <label>Açık Adres</label>
-                <input type="text" id="card-address" placeholder="İlçe, İl / Cadde, Mahalle, No...">
-              </div>
-              <div class="form-group full">
-                <label>Notlar</label>
-                <input type="text" id="card-notes" placeholder="Görüşme notları, proje ilgisi, web sitesi...">
-              </div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 8px; margin-top: 10px;">
-            <button type="submit" id="btn-save-card" class="btn btn-navy btn-full" style="min-height: 44px; font-weight: 700; font-size: 0.92rem;">
-              Kaydet
-            </button>
-            <button type="button" id="btn-cancel-card-edit" class="btn btn-secondary btn-sm" onclick="cancelCardEdit()" style="display:none; white-space:nowrap; min-height: 44px; padding: 0 14px;">
-              İptal
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Search & Export Bar -->
-      <div class="search-bar" style="margin-bottom: 8px;">
-        <input type="text" id="search-cards" class="search-input" placeholder="İsim, firma, unvan veya sektörde ara..." oninput="renderCards()">
-        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()" title="CSV Olarak İndir">
-          CSV
-        </button>
-      </div>
-
-      <!-- Sector Filter Container -->
-      <div class="sector-filter-container">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-          <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
-            <span>Sektörler</span>
-            <span id="active-sector-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
-          </span>
-        </div>
-        <div class="sector-pills-row" id="sector-pills">
-          <!-- Dynamic Sector Pills -->
-        </div>
-      </div>
-
-      <!-- Cards List -->
-      <div class="items-list" id="cards-list"></div>
-    </div>
-
-
-    <!-- ========================================== -->
-    <!-- 2. PROJELER TAB -->
-    <!-- ========================================== -->
-    <div id="tab-projects" class="tab-pane">
+    <div id="tab-projects" class="tab-pane active">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 8px; flex-wrap: wrap;">
         <input type="text" id="search-projects" class="search-input" placeholder="Proje ara (ad, tip, ilçe, ada/parsel)..." oninput="renderProjects()" style="margin-bottom: 0; flex: 1; min-width: 150px;">
         <select id="filter-project-type" onchange="renderProjects()" style="padding: 8px 10px; font-size: 0.78rem; border: 1.5px solid var(--border); border-radius: 8px; background: white; color: var(--navy); font-weight: 600; cursor: pointer;">
@@ -1881,6 +1740,148 @@
       <div class="items-list" id="stock-list"></div>
     </div>
 
+
+    <!-- ========================================== -->
+    <!-- 7. KARTVİZİT TAB -->
+    <!-- ========================================== -->
+    <div id="tab-cards" class="tab-pane">
+
+      <!-- Scanner Box -->
+      <div class="scanner-card">
+        <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none;" onchange="handleCardSelected(event)">
+        <input type="file" id="gallery-input" accept="image/*" style="display:none;" onchange="handleCardSelected(event)">
+
+        <div class="scanner-actions-grid">
+          <button type="button" class="btn btn-gold" onclick="document.getElementById('camera-input').click()">
+            Fotoğraf Çek
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('gallery-input').click()">
+            Galeri
+          </button>
+        </div>
+
+        <img id="card-preview" class="preview-box" alt="Önizleme">
+        <div id="ocr-loader" class="ocr-loader">Kartvizit taranıyor...</div>
+
+        <!-- Scanned Card Form -->
+        <form id="card-form" onsubmit="saveCard(event)">
+          <!-- Collapsible Header Bar -->
+          <div class="card-form-collapsible-bar" id="card-form-collapsible-header" onclick="toggleCardFormCollapse()">
+            <div class="card-form-bar-left">
+              <span class="card-form-bar-icon" style="display:none;"></span>
+              <div class="card-form-bar-titles">
+                <div class="card-form-bar-title" id="card-form-bar-title">Kartvizit Bilgileri</div>
+              </div>
+            </div>
+            <div class="card-form-bar-right">
+              <span class="card-form-badge" id="card-form-badge">Genişlet</span>
+            </div>
+          </div>
+
+          <!-- Collapsible Body (Hidden by default, expands on click, OCR or edit) -->
+          <div class="card-form-body" id="card-form-body" style="display: none;">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Ad Soyad *</label>
+                <input type="text" id="card-name" placeholder="Kişi adı">
+              </div>
+              <div class="form-group">
+                <label>Şirket *</label>
+                <input type="text" id="card-company" placeholder="Firma adı">
+              </div>
+              <div class="form-group">
+                <label>Unvan</label>
+                <input type="text" id="card-role" placeholder="Direktör, Mimar, Satış Müdürü...">
+              </div>
+              <div class="form-group">
+                <label>Sektör / Faaliyet Alanı *</label>
+                <select id="card-sector" onchange="toggleCustomSector(this)">
+                  <option value="Bilişim & Teknoloji">Bilişim & Teknoloji</option>
+                  <option value="Elektrik & Mekanik (MEP)">Elektrik & Mekanik (MEP)</option>
+                  <option value="Finans & Bankacılık">Finans & Bankacılık</option>
+                  <option value="Gayrimenkul & Yatırım">Gayrimenkul & Yatırım</option>
+                  <option value="Gıda & Market">Gıda & Market</option>
+                  <option value="Hukuk & Danışmanlık">Hukuk & Danışmanlık</option>
+                  <option value="İnşaat & Taahhüt">İnşaat & Taahhüt</option>
+                  <option value="Mimarlık & Tasarım">Mimarlık & Tasarım</option>
+                  <option value="Mühendislik & Müşavirlik">Mühendislik & Müşavirlik</option>
+                  <option value="Taşeron & Uygulama">Taşeron & Uygulama</option>
+                  <option value="Yapı Malzemeleri & Tedarik">Yapı Malzemeleri & Tedarik</option>
+                  <option value="DİĞER">Diğer</option>
+                </select>
+                <input type="text" id="card-sector-custom" placeholder="Özel sektör adı yazın..." style="display:none; margin-top:4px;">
+              </div>
+              <div class="form-group">
+                <label>Cep Telefonu (GSM / WhatsApp)</label>
+                <input type="tel" id="card-mobile" placeholder="+90 (533) 210 93 28">
+              </div>
+              <div class="form-group">
+                <label>Ofis / Sabit Telefon</label>
+                <input type="tel" id="card-office" placeholder="444 7 339 veya 0212...">
+              </div>
+              <div class="form-group">
+                <label>E-Posta</label>
+                <input type="email" id="card-email" placeholder="ornek@sirket.com">
+              </div>
+              <div class="form-group">
+                <label>Kategori</label>
+                <select id="card-category">
+                  <option value="İş Ortağı">İş Ortağı</option>
+                  <option value="Mimar / Mühendis">Mimar / Mühendis</option>
+                  <option value="Müşteri">Müşteri</option>
+                  <option value="Taşeron">Taşeron</option>
+                  <option value="Tedarikçi">Tedarikçi</option>
+                  <option value="Yatırımcı">Yatırımcı</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label>Açık Adres</label>
+                <input type="text" id="card-address" placeholder="İlçe, İl / Cadde, Mahalle, No...">
+              </div>
+              <div class="form-group full">
+                <label>Notlar</label>
+                <input type="text" id="card-notes" placeholder="Görüşme notları, proje ilgisi, web sitesi...">
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button type="submit" id="btn-save-card" class="btn btn-navy btn-full" style="min-height: 44px; font-weight: 700; font-size: 0.92rem;">
+              Kaydet
+            </button>
+            <button type="button" id="btn-cancel-card-edit" class="btn btn-secondary btn-sm" onclick="cancelCardEdit()" style="display:none; white-space:nowrap; min-height: 44px; padding: 0 14px;">
+              İptal
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Search & Export Bar -->
+      <div class="search-bar" style="margin-bottom: 8px;">
+        <input type="text" id="search-cards" class="search-input" placeholder="İsim, firma, unvan veya sektörde ara..." oninput="renderCards()">
+        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()" title="CSV Olarak İndir">
+          CSV
+        </button>
+      </div>
+
+      <!-- Sector Filter Container -->
+      <div class="sector-filter-container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+          <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
+            <span>Sektörler</span>
+            <span id="active-sector-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
+          </span>
+        </div>
+        <div class="sector-pills-row" id="sector-pills">
+          <!-- Dynamic Sector Pills -->
+        </div>
+      </div>
+
+      <!-- Cards List -->
+      <div class="items-list" id="cards-list"></div>
+    </div>
+
+
   </main>
 
 
@@ -1888,10 +1889,7 @@
   <!-- NATIVE BOTTOM NAVIGATION -->
   <!-- ========================================== -->
   <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchNav('tab-cards')">
-      <span class="nav-label">Kartvizit</span>
-    </button>
-    <button class="nav-item" onclick="switchNav('tab-projects')">
+    <button class="nav-item active" onclick="switchNav('tab-projects')">
       <span class="nav-label">Projeler</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-accounts')">
@@ -1908,6 +1906,9 @@
     </button>
     <button class="nav-item" onclick="switchNav('tab-stock')">
       <span class="nav-label">Stok</span>
+    </button>
+    <button class="nav-item" onclick="switchNav('tab-cards')">
+      <span class="nav-label">Kartvizit</span>
     </button>
   </nav>
 
@@ -12220,16 +12221,23 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
 
     async function loadInitialData() {
       const conf = getSupabaseConfig();
+      let supabaseOk = false;
       if (conf.isConfigured && supabaseClient) {
         showToast('Veritabanı taranıyor...');
-        const ok = await loadFromSupabase();
-        if (ok && (projects.length > 0 || accounts.length > 0)) {
-          showToast('Veritabanı güncellendi');
-          return;
-        }
+        supabaseOk = await loadFromSupabase();
       }
-      // Supabase yapılandırılmamışsa veya henüz boşsa Google Sheets'ten yükle
-      loadFromGoogleSheets(true);
+      // Eğer Supabase bağlı değilse veya herhangi bir kategoride veri eksikse Google Sheets'ten tamamla
+      const hasMissingData = !supabaseOk || 
+        projects.length === 0 || 
+        accounts.length < 15 || 
+        invoices.length < 10 || 
+        docs.length === 0 || 
+        todos.length === 0;
+
+      if (hasMissingData) {
+        await loadFromGoogleSheets(true);
+      }
+      showToast('Veriler güncellendi');
     }
 
     // Init
