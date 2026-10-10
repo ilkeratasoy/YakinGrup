@@ -1532,13 +1532,21 @@
             <span>🧾 Harcama / Gider Seperasyonu</span>
             <span id="active-inv-category-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
           </span>
-          <div style="display:flex; gap: 4px;">
-            <button type="button" id="btn-inv-view-grouped" class="btn-view-mode active" onclick="setInvoiceViewMode('grouped')" title="Kategoriye Göre Gruplanmış Ayrıştırma">
-              📑 Gruplu
+          <div style="display:flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+            <button type="button" id="btn-inv-view-grouped" class="btn-view-mode active" onclick="setInvoiceViewMode('grouped')" title="Kategoriye Göre Akordeon Gruplanmış Ayrıştırma">
+              📑 Gruplu (Akordeon)
             </button>
             <button type="button" id="btn-inv-view-flat" class="btn-view-mode" onclick="setInvoiceViewMode('flat')" title="Düz Liste Görünümü">
               📋 Düz Liste
             </button>
+            <div id="inv-group-actions" style="display: inline-flex; gap: 4px; margin-left: 4px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllInvoiceCategoryGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm kategorileri aç">
+                ⏬ Tümünü Aç
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllInvoiceCategoryGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm kategorileri daralt">
+                ⏫ Tümünü Daralt
+              </button>
+            </div>
           </div>
         </div>
         <div class="sector-pills-row" id="invoice-category-pills">
@@ -8360,11 +8368,64 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       return sel.value || 'Genel Gider';
     }
 
+    const expandedInvoiceCategoryGroups = new Set();
+
+    function getSafeInvoiceCategoryGroupId(catName) {
+      return 'inv_cat_' + String(catName).toLowerCase()
+        .replace(/[ğ]/g, 'g').replace(/[ü]/g, 'u').replace(/[ş]/g, 's')
+        .replace(/[ı]/g, 'i').replace(/[ö]/g, 'o').replace(/[ç]/g, 'c')
+        .replace(/[^a-z0-9]/g, '_')
+        .substring(0, 45);
+    }
+
+    function toggleInvoiceCategoryGroup(groupId) {
+      const box = document.getElementById(groupId);
+      if (!box) return;
+      const isExp = box.classList.contains('expanded');
+      const body = box.querySelector('.sector-cards-container');
+      const toggleText = box.querySelector('.sector-toggle-text');
+      if (isExp) {
+        box.classList.remove('expanded');
+        if (body) body.style.display = 'none';
+        if (toggleText) toggleText.textContent = 'Genişlet';
+        expandedInvoiceCategoryGroups.delete(groupId);
+      } else {
+        box.classList.add('expanded');
+        if (body) body.style.display = 'flex';
+        if (toggleText) toggleText.textContent = 'Daralt';
+        expandedInvoiceCategoryGroups.add(groupId);
+      }
+    }
+
+    function expandAllInvoiceCategoryGroups() {
+      document.querySelectorAll('#invoices-list .sector-group-block').forEach(box => {
+        box.classList.add('expanded');
+        const body = box.querySelector('.sector-cards-container');
+        if (body) body.style.display = 'flex';
+        const toggleText = box.querySelector('.sector-toggle-text');
+        if (toggleText) toggleText.textContent = 'Daralt';
+        if (box.id) expandedInvoiceCategoryGroups.add(box.id);
+      });
+    }
+
+    function collapseAllInvoiceCategoryGroups() {
+      document.querySelectorAll('#invoices-list .sector-group-block').forEach(box => {
+        box.classList.remove('expanded');
+        const body = box.querySelector('.sector-cards-container');
+        if (body) body.style.display = 'none';
+        const toggleText = box.querySelector('.sector-toggle-text');
+        if (toggleText) toggleText.textContent = 'Genişlet';
+      });
+      expandedInvoiceCategoryGroups.clear();
+    }
+
     function setInvoiceViewMode(mode) {
       invoiceViewMode = mode;
       document.querySelectorAll('#tab-invoices .btn-view-mode').forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.getElementById(mode === 'grouped' ? 'btn-inv-view-grouped' : 'btn-inv-view-flat');
       if (activeBtn) activeBtn.classList.add('active');
+      const actionsEl = document.getElementById('inv-group-actions');
+      if (actionsEl) actionsEl.style.display = (mode === 'grouped') ? 'inline-flex' : 'none';
       renderInvoices();
     }
 
@@ -8871,21 +8932,62 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           const catInvoices = groups[catName];
           const catTotal = sums[catName];
           const meta = getInvoiceCategoryMeta(catName);
+          const groupId = getSafeInvoiceCategoryGroupId(catName);
+          const isExpanded = (q.length > 0) || expandedInvoiceCategoryGroups.has(groupId);
+
+          // Subtitle özeti: Tedarikçi firmalar ve ödeme durumu
+          const vendorSet = new Set();
+          let paidCount = 0;
+          let pendingCount = 0;
+          catInvoices.forEach(inv => {
+            if (inv.vendor && inv.vendor.trim()) vendorSet.add(inv.vendor.trim());
+            const sLower = (inv.status || '').toLowerCase().trim();
+            const isPaid = sLower === 'ödendi' || sLower === 'odendi' || sLower === 'tamamlandı';
+            if (isPaid) paidCount++; else pendingCount++;
+          });
+
+          const subtitleParts = [];
+          if (vendorSet.size > 0) {
+            subtitleParts.push(`🏢 ${Array.from(vendorSet).slice(0, 3).join(', ')}${vendorSet.size > 3 ? '...' : ''}`);
+          }
+          subtitleParts.push(`💰 Toplam: ${catTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺`);
+          if (pendingCount > 0) {
+            subtitleParts.push(`⏳ ${pendingCount} Bekleyen`);
+          }
+          if (paidCount > 0) {
+            subtitleParts.push(`✅ ${paidCount} Ödendi`);
+          }
+          const subtitleHtml = subtitleParts.map(s => escapeHtml(s)).join(' <span style="opacity:0.4;">•</span> ');
+
           html += `
-            <div class="sector-group-block">
-              <div class="sector-separator-header">
+            <div class="sector-group-block ${isExpanded ? 'expanded' : ''}" id="${groupId}">
+              <div class="sector-separator-header" onclick="toggleInvoiceCategoryGroup('${groupId}')">
                 <div class="sector-title-wrap">
-                  <span style="font-size: 1.15rem;">${meta.icon}</span>
-                  <span>${escapeHtml(catName)}</span>
+                  <span style="font-size: 1.25rem;">${meta.icon}</span>
+                  <div style="flex:1; min-width:0;">
+                    <div class="sector-title-text">
+                      <span>${escapeHtml(catName)}</span>
+                      <span class="badge badge-purple" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 99px;">
+                        ${catInvoices.length} Fatura
+                      </span>
+                      <span class="badge" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; font-size: 0.72rem; font-weight:700;">
+                        ${catTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺
+                      </span>
+                    </div>
+                    ${subtitleHtml ? `<div class="sector-subtitle">${subtitleHtml}</div>` : ''}
+                  </div>
                 </div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="sector-count-tag">${catInvoices.length} Fatura • ${catTotal.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺</span>
-                  <button type="button" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 0.7rem;" onclick="filterInvoiceByCategory('${escapeHtml(catName)}')">
+                <div class="sector-actions-right">
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding: 3px 8px; font-size: 0.68rem; border-radius: 8px;" onclick="event.stopPropagation(); filterInvoiceByCategory('${escapeHtml(catName)}')" title="Yalnızca bu kategoriyi filtrele">
                     Yalnızca Bu Kategori 🔍
+                  </button>
+                  <button type="button" class="sector-toggle-btn" onclick="event.stopPropagation(); toggleInvoiceCategoryGroup('${groupId}')">
+                    <span class="sector-toggle-text">${isExpanded ? 'Daralt' : 'Genişlet'}</span>
+                    <span class="sector-chevron">▼</span>
                   </button>
                 </div>
               </div>
-              <div class="sector-cards-container">
+              <div class="sector-cards-container" style="display: ${isExpanded ? 'flex' : 'none'};">
                 ${catInvoices.map(inv => renderInvoiceCardHtml(inv)).join('')}
               </div>
             </div>
