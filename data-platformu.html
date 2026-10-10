@@ -1310,14 +1310,14 @@
       .form-group input, .form-group select, .form-group textarea,
       .search-input {
         font-size: 16px !important;
-        min-height: 42px !important;
+        min-height: 40px !important;
         -webkit-appearance: none;
       }
 
       /* 2. Form Grids on Mobile */
       .form-grid {
         grid-template-columns: 1fr !important;
-        gap: 10px !important;
+        gap: 8px !important;
       }
       .form-group.full {
         grid-column: 1 / -1 !important;
@@ -1325,7 +1325,7 @@
 
       /* 3. Container & Spacing */
       .container {
-        padding: 0.65rem 0.65rem !important;
+        padding: 0.6rem 0.6rem !important;
       }
 
       /* 4. Scanner Capture Grid */
@@ -1334,73 +1334,92 @@
         gap: 8px;
       }
       .scanner-actions-grid .btn {
-        min-height: 44px;
-        font-size: 0.88rem;
+        min-height: 42px;
+        font-size: 0.86rem;
       }
 
       /* 5. Sector & Project & Invoice Accordion Headers */
-      .sector-separator-header {
-        padding: 10px 12px !important;
+      .sector-separator-header,
+      .project-group-header {
+        padding: 9px 11px !important;
         gap: 6px !important;
         flex-wrap: wrap !important;
       }
-      .sector-title-wrap {
-        flex: 1 1 180px !important;
-        min-width: 140px !important;
+      .sector-title-wrap,
+      .project-group-title-wrap {
+        flex: 1 1 160px !important;
+        min-width: 120px !important;
       }
-      .sector-title-text {
-        font-size: 0.84rem !important;
-        gap: 6px !important;
+      .sector-title-text,
+      .project-group-title {
+        font-size: 0.82rem !important;
+        gap: 5px !important;
       }
-      .sector-subtitle {
-        font-size: 0.68rem !important;
+      .sector-subtitle,
+      .project-group-subtitle {
+        font-size: 0.67rem !important;
       }
-      .sector-actions-right {
+      .sector-actions-right,
+      .project-group-actions-right {
         margin-left: auto !important;
         display: flex !important;
         align-items: center !important;
         gap: 4px !important;
       }
-      .sector-toggle-btn {
-        padding: 4px 9px !important;
-        font-size: 0.70rem !important;
-        min-height: 30px !important;
+      .sector-toggle-btn,
+      .project-group-toggle-btn {
+        padding: 3px 8px !important;
+        font-size: 0.68rem !important;
+        min-height: 28px !important;
       }
 
       /* 6. Filter & View Mode Toolbars */
       .sector-filter-container {
-        padding: 8px 10px !important;
+        padding: 7px 9px !important;
+        margin-bottom: 8px !important;
       }
       .sector-pills-row {
-        gap: 5px !important;
+        gap: 4px !important;
         -webkit-overflow-scrolling: touch !important;
       }
       .sector-pill {
-        padding: 4px 10px !important;
-        font-size: 0.72rem !important;
-        min-height: 32px !important;
+        padding: 4px 9px !important;
+        font-size: 0.70rem !important;
+        min-height: 28px !important;
+      }
+      .filter-pill {
+        padding: 4px 9px !important;
+        font-size: 0.70rem !important;
       }
       .btn-view-mode {
-        padding: 3px 8px !important;
-        font-size: 0.68rem !important;
+        padding: 3px 7px !important;
+        font-size: 0.67rem !important;
       }
 
       /* 7. Card Items & Actions */
       .card-item {
-        padding: 0.85rem !important;
-        gap: 7px !important;
+        padding: 0.75rem 0.8rem !important;
+        gap: 6px !important;
+        border-radius: 12px !important;
       }
       .card-item-title {
-        font-size: 0.88rem !important;
+        font-size: 0.86rem !important;
       }
-      .card-item-actions {
+      .card-item-meta {
+        font-size: 0.68rem !important;
+      }
+      .card-item-actions,
+      .quick-actions-row {
         flex-wrap: wrap !important;
-        gap: 6px !important;
+        gap: 4px !important;
+        padding-top: 6px !important;
       }
-      .card-item-actions .btn {
-        padding: 4px 9px !important;
-        font-size: 0.72rem !important;
-        min-height: 32px !important;
+      .card-item-actions .btn,
+      .quick-actions-row .btn {
+        padding: 4px 8px !important;
+        font-size: 0.70rem !important;
+        min-height: 28px !important;
+        border-radius: 6px !important;
       }
 
       /* 8. Modals (Bottom-Sheet Feel) */
@@ -1413,16 +1432,19 @@
         max-width: 100% !important;
         max-height: 92vh !important;
         max-height: 92dvh !important;
-        border-radius: 20px 20px 0 0 !important;
-        padding: 1.15rem 1rem calc(1.15rem + var(--safe-bottom)) 1rem !important;
+        border-radius: 18px 18px 0 0 !important;
+        padding: 1rem 0.85rem calc(0.85rem + var(--safe-bottom)) 0.85rem !important;
         -webkit-overflow-scrolling: touch !important;
       }
 
       /* 9. Dashboard Metric Grids */
-      .dashboard-metrics-grid,
-      #tab-invoices > div:first-child,
       #tab-accounts > div:first-child {
+        grid-template-columns: 1fr 1fr !important;
         gap: 6px !important;
+      }
+      #tab-invoices > div:first-child {
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 5px !important;
       }
 
       /* 10. Horizontal Swipe Containers */
@@ -1440,39 +1462,58 @@
 
     @media (max-width: 480px) {
       .app-header {
-        padding: 0.55rem 0.75rem !important;
+        padding: 0.45rem 0.65rem !important;
+        gap: 6px !important;
+      }
+      .brand-box {
+        gap: 6px !important;
       }
       .brand-title {
-        font-size: 0.88rem !important;
+        font-size: 0.84rem !important;
       }
       .brand-sub {
-        font-size: 0.60rem !important;
+        font-size: 0.58rem !important;
       }
       .brand-emblem-img {
-        width: 28px !important;
-        height: 28px !important;
+        width: 26px !important;
+        height: 26px !important;
       }
-      .icon-btn {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: 0.9rem !important;
+      .header-actions {
+        gap: 3px !important;
+      }
+      .header-btn {
+        height: 28px !important;
+        padding: 3px 6px !important;
+        font-size: 0.68rem !important;
+        border-radius: 6px !important;
       }
       .sync-pill {
         padding: 3px 6px !important;
-        font-size: 0.66rem !important;
+        font-size: 0.65rem !important;
       }
-      .nav-icon {
-        font-size: 1.05rem !important;
-      }
-      .nav-label {
-        font-size: 0.58rem !important;
-        letter-spacing: -0.3px !important;
-      }
+
+      /* Native Bottom Nav Scaled for 7 items */
       .bottom-nav {
         padding: 4px 1px calc(4px + var(--safe-bottom)) 1px !important;
       }
       .nav-item {
-        padding: 3px 0 !important;
+        padding: 5px 1px !important;
+      }
+      .nav-label {
+        font-size: 0.67rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.2px !important;
+      }
+
+      /* Search & Action Rows */
+      .search-bar {
+        gap: 6px !important;
+        margin-bottom: 6px !important;
+      }
+      .search-input {
+        padding: 0.5rem 0.65rem !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
       }
     }
   </style>
@@ -1510,9 +1551,9 @@
     <!-- ========================================== -->
     <div id="tab-projects" class="tab-pane active">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 8px; flex-wrap: wrap;">
-        <input type="text" id="search-projects" class="search-input" placeholder="Proje ara (ad, tip, ilçe, ada/parsel)..." oninput="renderProjects()" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+        <input type="text" id="search-projects" class="search-input" placeholder="Proje ara..." oninput="renderProjects()" style="margin-bottom: 0; flex: 1; min-width: 140px;">
         <select id="filter-project-type" onchange="renderProjects()" style="padding: 8px 10px; font-size: 0.78rem; border: 1.5px solid var(--border); border-radius: 8px; background: white; color: var(--navy); font-weight: 600; cursor: pointer;">
-          <option value="">Tüm Proje Tipleri</option>
+          <option value="">Tüm Tipler</option>
           <option value="Kentsel Dönüşüm">Kentsel Dönüşüm</option>
           <option value="Kat Karşılığı">Kat Karşılığı</option>
           <option value="Arazi">Arazi</option>
@@ -1521,7 +1562,7 @@
           <option value="Ticari & Sanayi">Ticari & Sanayi</option>
         </select>
         <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-project')" style="white-space: nowrap;">
-          Yeni Proje
+          + Proje
         </button>
       </div>
 
@@ -1568,9 +1609,9 @@
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 0.85rem; flex-wrap: wrap;">
-        <input type="text" id="search-accounts" class="search-input" placeholder="Cari, firma veya proje ara..." oninput="renderAccounts()" style="margin-bottom: 0; flex: 1; min-width: 140px;">
+        <input type="text" id="search-accounts" class="search-input" placeholder="Cari ara..." oninput="renderAccounts()" style="margin-bottom: 0; flex: 1; min-width: 140px;">
         <select id="filter-account-type" onchange="renderAccounts()" style="padding: 7px 10px; font-size: 0.8rem; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; color: #1e293b; max-width: 180px;">
-          <option value="">Tüm Cari Türleri</option>
+          <option value="">Tüm Türler</option>
           <option value="Müşteri">Müşteriler</option>
           <option value="Taşeron">Taşeronlar</option>
           <option value="Tedarikçi">Tedarikçiler</option>
@@ -1589,7 +1630,7 @@
         </select>
         <div style="display: flex; gap: 6px; flex-shrink: 0;">
           <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="white-space: nowrap;">
-            Yeni Cari
+            + Cari
           </button>
         </div>
       </div>
@@ -1623,9 +1664,9 @@
 
       <!-- Action Bar -->
       <div style="display: flex; gap: 8px; margin-bottom: 0.75rem; align-items: center;">
-        <input type="text" id="search-invoices" class="search-input" placeholder="Fatura veya firma ara..." oninput="renderInvoices()" style="margin-bottom: 0; flex: 1;">
+        <input type="text" id="search-invoices" class="search-input" placeholder="Fatura ara..." oninput="renderInvoices()" style="margin-bottom: 0; flex: 1;">
         <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-invoice')">
-          Fatura Ekle
+          + Fatura
         </button>
         <button class="btn btn-secondary btn-sm" onclick="exportInvoicesCsv()">
           CSV
@@ -1657,7 +1698,7 @@
 
 
     <!-- ========================================== -->
-    <!-- 5. EVRAKLAR TAB -->
+    <!-- 4. EVRAKLAR TAB -->
     <!-- ========================================== -->
     <div id="tab-docs" class="tab-pane">
       <!-- Sibling Switcher Bar -->
@@ -1667,10 +1708,35 @@
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
-        <input type="text" id="search-docs" class="search-input" placeholder="Evrak ara..." oninput="renderDocs()" style="margin-bottom: 0;">
+        <input type="text" id="search-docs" class="search-input" placeholder="Evrak veya bölge ara..." oninput="renderDocs()" style="margin-bottom: 0;">
         <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-doc')" style="margin-left: 8px; white-space:nowrap;">
-          Yeni Evrak
+          + Evrak
         </button>
+      </div>
+
+      <!-- Görünüm Seçici ve Grup Aksiyonları -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+        <div class="view-mode-toggle" style="display:inline-flex; gap:4px; background:#f1f5f9; padding:2px; border-radius:8px;">
+          <button type="button" class="btn-view-mode active" id="btn-doc-view-grouped" onclick="setDocViewMode('grouped')">Bölgeye Göre</button>
+          <button type="button" class="btn-view-mode" id="btn-doc-view-flat" onclick="setDocViewMode('flat')">Liste</button>
+        </div>
+        <div id="doc-group-actions" style="display:inline-flex; gap:6px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllDocGroups()" style="padding: 3px 8px; font-size: 0.70rem;">Tümünü Aç</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllDocGroups()" style="padding: 3px 8px; font-size: 0.70rem;">Kapat</button>
+        </div>
+      </div>
+
+      <!-- Bölge Filtreleme Hapları -->
+      <div class="sector-filter-container" style="margin-bottom: 10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+          <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
+            <span>Bölgeler</span>
+            <span id="active-doc-district-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
+          </span>
+        </div>
+        <div class="sector-pills-row" id="doc-district-pills">
+          <!-- Dinamik Bölge Hapları -->
+        </div>
       </div>
 
       <div class="items-list" id="docs-list"></div>
@@ -1708,7 +1774,7 @@
 
         <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;" id="todo-filter-pills">
           <button type="button" class="filter-pill active" onclick="filterTodosByStatus('ALL')">Tümü</button>
-          <button type="button" class="filter-pill" onclick="filterTodosByStatus('PENDING')">⏳ Bekleyenler</button>
+          <button type="button" class="filter-pill" onclick="filterTodosByStatus('PENDING')">Bekleyenler</button>
           <button type="button" class="filter-pill" onclick="filterTodosByStatus('DONE')">Tamamlananlar</button>
           <button type="button" class="filter-pill" onclick="filterTodosByStatus('URGENT')">Acil</button>
         </div>
@@ -1720,7 +1786,7 @@
       <!-- Export CSV -->
       <div style="display:flex; justify-content:flex-end; margin-top:12px;">
         <button type="button" class="btn btn-secondary btn-sm" onclick="exportTodosCsv()">
-          CSV İndir
+          CSV
         </button>
       </div>
     </div>
@@ -1733,7 +1799,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
         <input type="text" id="search-stock" class="search-input" placeholder="Stok ara..." oninput="renderStock()" style="margin-bottom: 0;">
         <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-stock')" style="margin-left: 8px;">
-          Yeni Stok
+          + Stok
         </button>
       </div>
 
@@ -1753,7 +1819,7 @@
 
         <div class="scanner-actions-grid">
           <button type="button" class="btn btn-gold" onclick="document.getElementById('camera-input').click()">
-            Fotoğraf Çek
+            Kamera
           </button>
           <button type="button" class="btn btn-secondary" onclick="document.getElementById('gallery-input').click()">
             Galeri
@@ -1858,8 +1924,8 @@
 
       <!-- Search & Export Bar -->
       <div class="search-bar" style="margin-bottom: 8px;">
-        <input type="text" id="search-cards" class="search-input" placeholder="İsim, firma, unvan veya sektörde ara..." oninput="renderCards()">
-        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()" title="CSV Olarak İndir">
+        <input type="text" id="search-cards" class="search-input" placeholder="Kartvizit ara..." oninput="renderCards()">
+        <button class="btn btn-secondary btn-sm" onclick="exportCardsCsv()" title="CSV İndir">
           CSV
         </button>
       </div>
@@ -1890,25 +1956,25 @@
   <!-- ========================================== -->
   <nav class="bottom-nav">
     <button class="nav-item active" onclick="switchNav('tab-projects')">
-      <span class="nav-label">Projeler</span>
+      <span class="nav-label">Proje</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-accounts')">
-      <span class="nav-label">Cariler</span>
+      <span class="nav-label">Cari</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-invoices')">
-      <span class="nav-label">Faturalar</span>
+      <span class="nav-label">Fatura</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-docs')">
-      <span class="nav-label">Evraklar</span>
+      <span class="nav-label">Evrak</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-todos')">
-      <span class="nav-label">Görevler</span>
+      <span class="nav-label">Görev</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-stock')">
       <span class="nav-label">Stok</span>
     </button>
     <button class="nav-item" onclick="switchNav('tab-cards')">
-      <span class="nav-label">Kartvizit</span>
+      <span class="nav-label">Kart</span>
     </button>
   </nav>
 
@@ -2312,8 +2378,8 @@
                   <label>Veya Drive / Bulut Linki (URL)</label>
                   <div style="display: flex; gap: 8px;">
                     <input type="url" id="adoc-url" placeholder="https://drive.google.com/..." style="flex: 1;">
-                    <button type="button" class="btn btn-navy" onclick="addDocItemToCurrentAccount()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; border-radius: 9px;">
-                      Evrak Ekle
+                    <button type="button" class="btn btn-navy" onclick="addDocItemToCurrentAccount()" style="padding: 10px 16px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; border-radius: 9px;">
+                      Ekle
                     </button>
                   </div>
                 </div>
@@ -2350,10 +2416,10 @@
                   <label>Gider Kalemi Türü *</label>
                   <select id="exp-category" onchange="onExpenseCategoryChange()">
                     <option value="Mimari Proje">Mimari Proje</option>
-                    <option value="Statik Mühendislik">🏛️ Statik Mühendislik</option>
-                    <option value="Zemin Etüdü">🔬 Zemin Etüdü</option>
+                    <option value="Statik Mühendislik">Statik Mühendislik</option>
+                    <option value="Zemin Etüdü">Zemin Etüdü</option>
                     <option value="Geoteknik & İksa">Geoteknik & İksa</option>
-                    <option value="Noter & Hukuki Danışmanlık">⚖️ Noter & Hukuki Danışmanlık</option>
+                    <option value="Noter & Hukuki Danışmanlık">Noter & Hukuki Danışmanlık</option>
                     <option value="Peyzaj Mimarlığı">Peyzaj Mimarlığı</option>
                     <option value="Cephe Modelleme">Cephe Modelleme</option>
                     <option value="Kat İrtifakı Dosyası">Kat İrtifakı Dosyası</option>
@@ -2397,8 +2463,8 @@
                   <label>Açıklama / Fatura & Dekont No</label>
                   <div style="display: flex; gap: 8px;">
                     <input type="text" id="exp-note" placeholder="Örn: Belediye vezne dekontu / Onaylı aplikasyon harcı..." style="flex: 1;">
-                    <button type="button" class="btn btn-navy" onclick="addExpenseItemToCurrentAccount()" style="padding: 10px 18px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; border-radius: 9px;">
-                      Listeye Ekle
+                    <button type="button" class="btn btn-navy" onclick="addExpenseItemToCurrentAccount()" style="padding: 10px 16px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; border-radius: 9px;">
+                      Ekle
                     </button>
                   </div>
                 </div>
@@ -2870,15 +2936,15 @@
         </div>
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button type="button" class="btn btn-navy btn-sm" onclick="testSupabaseConnection()" style="font-size: 0.72rem; padding: 6px 10px; flex: 1;">
-            Bağlantıyı Test Et
+            Test Et
           </button>
           <button type="button" class="btn btn-sm" onclick="copySupabaseSchemaSql()" style="font-size: 0.72rem; padding: 6px 10px; background: #ffffff; border: 1px solid #86efac; color: #166534;">
-            Şemayı Kopyala
+            Şema Kopyala
           </button>
         </div>
         <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed #bbf7d0;">
           <button type="button" class="btn btn-sm btn-full" onclick="migrateSheetsToSupabase()" style="font-size: 0.74rem; font-weight: 700; padding: 7px 10px; background: #16a34a; color: #ffffff; border: none; border-radius: 6px;">
-            Verileri Aktar
+            Aktar
           </button>
           <div id="supabase-migrate-status" style="font-size: 0.68rem; color: #15803d; margin-top: 4px; display: none;"></div>
         </div>
@@ -2890,10 +2956,10 @@
         <input type="url" id="webhook-url-input" placeholder="https://script.google.com/macros/s/.../exec" style="font-family: monospace; font-size: 0.78rem; width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;">
         <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-top: 8px;">
           <button type="button" class="btn btn-navy btn-sm" onclick="sendSetupHeadersToSheets()" style="font-size: 0.72rem; padding: 6px 10px; flex: 1;">
-            Başlıkları Güncelle
+            Başlıkları Gönder
           </button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="copyAppsScriptCode()" style="font-size: 0.72rem; padding: 6px 10px;">
-            Kodu Kopyala
+            Kod Kopyala
           </button>
         </div>
       </div>
@@ -2902,7 +2968,7 @@
         <label style="font-size: 0.78rem; font-weight: 700; color: #b45309; display: block; margin-bottom: 4px;">Tarayıcı Önbelleğini Sıfırla</label>
         <p style="font-size: 0.7rem; color: var(--muted); margin-bottom: 8px;">Farklı tarayıcı veya cihazlarda eski veriler kalmışsa önbelleği temizleyip sayfayı taze sürümle yeniden başlatır.</p>
         <button type="button" class="btn btn-secondary btn-full" onclick="forceHardRefresh()" style="border-color: #fde68a; color: #b45309; font-size: 0.76rem; background: #fffbeb;">
-          Önbelleği Temizle
+          Önbellek Temizle
         </button>
       </div>
 
@@ -2910,7 +2976,7 @@
         <label style="font-size: 0.78rem; font-weight: 700; color: #dc2626; display: block; margin-bottom: 4px;">Verileri Sıfırla</label>
         <p style="font-size: 0.7rem; color: var(--muted); margin-bottom: 8px;">Tüm sekmeleri ve yerel hafızayı temizler, her kategori için sadece 1 adet temiz örnek içerik bırakır.</p>
         <button type="button" class="btn btn-secondary btn-full" onclick="resetAllToSingleSample()" style="border-color: #fca5a5; color: #dc2626; font-size: 0.76rem;">
-          Varsayılana Sıfırla
+          Sıfırla
         </button>
       </div>
 
@@ -2932,7 +2998,7 @@
           <div id="doc-viewer-subtitle" style="font-size: 0.72rem; color: #cbd5e1; margin-top: 2px;">Şirket Resmi Belgesi</div>
         </div>
         <div style="display: flex; gap: 8px;">
-          <button type="button" id="doc-viewer-open-btn" class="btn btn-secondary btn-sm" onclick="openCurrentDocInNewTab()" style="padding: 6px 12px; font-weight: 700; border-radius: 8px; font-size: 0.78rem; background: rgba(255,255,255,0.18); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">Yeni Sekmede Aç</button>
+          <button type="button" id="doc-viewer-open-btn" class="btn btn-secondary btn-sm" onclick="openCurrentDocInNewTab()" style="padding: 6px 12px; font-weight: 700; border-radius: 8px; font-size: 0.78rem; background: rgba(255,255,255,0.18); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">Aç ↗</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modal-doc-viewer')" style="padding: 6px 12px; font-weight: 700; border-radius: 8px; font-size: 0.85rem; background: rgba(255,255,255,0.18); color: #ffffff; border: 1px solid rgba(255,255,255,0.3);">Kapat</button>
         </div>
       </div>
@@ -6028,7 +6094,7 @@ function doPost(e) {
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 7px 10px; margin: 3px 0; font-size: 0.74rem;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
                 <div>
-                  <span style="font-weight:800; color:var(--navy);">🗺️ Tapu & Parsel:</span>
+                  <span style="font-weight:800; color:var(--navy);">Tapu & Parsel:</span>
                   <span style="font-weight:600; color:#1e293b;">
                     ${escapeHtml(p.district || '')}${p.neighborhood ? ' / ' + escapeHtml(p.neighborhood) : ''}
                   </span>
@@ -6049,7 +6115,7 @@ function doPost(e) {
 
               ${(p.taks || p.kaks || p.floors || p.setbacks || p.nizam) ? `
                 <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin-top:5px; padding-top:5px; border-top:1px dashed #cbd5e1; font-size:0.71rem;">
-                  <span style="font-weight:700; color:var(--navy); margin-right:2px;">🏛️ İmar Durumu:</span>
+                  <span style="font-weight:700; color:var(--navy); margin-right:2px;">İmar Durumu:</span>
                   ${p.taks ? `<span class="badge" style="background:#f1f5f9; color:#334155;">TAKS: ${escapeHtml(p.taks)}</span>` : ''}
                   ${p.kaks ? `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:800;">KAKS/Emsal: ${escapeHtml(p.kaks)}</span>` : ''}
                   ${p.floors ? `<span class="badge" style="background:#fef3c7; color:#b45309;">${escapeHtml(p.floors)}</span>` : ''}
@@ -6072,7 +6138,7 @@ function doPost(e) {
                 <div style="display:flex; gap:4px; align-items:center; flex-shrink:0;">
                   ${p.managerPhone ? `
                     <a href="tel:${escapeHtml(p.managerPhone)}" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; text-decoration:none;" title="Yöneticiyi Telefonla Ara">
-                      📞 Ara
+                      Ara
                     </a>
                     <a href="https://wa.me/90${cleanPhoneDigits}" target="_blank" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; color:#15803d; text-decoration:none;" title="WhatsApp İle Mesaj Gönder">
                       WhatsApp
@@ -6083,7 +6149,7 @@ function doPost(e) {
                   ` : ''}
                 </div>
               </div>
-              ${p.managerNotes ? `<div style="font-size:0.71rem; color:#166534; font-style:italic; margin-top:3px;">📝 ${escapeHtml(p.managerNotes)}</div>` : ''}
+              ${p.managerNotes ? `<div style="font-size:0.71rem; color:#166534; font-style:italic; margin-top:3px;">${escapeHtml(p.managerNotes)}</div>` : ''}
             </div>
           ` : ''}
 
@@ -6093,7 +6159,7 @@ function doPost(e) {
             </div>
           ` : ''}
 
-          ${p.notes ? `<div style="font-size: 0.73rem; color: #475569; font-style: italic; margin: 1px 0 3px 0;">📝 ${escapeHtml(p.notes)}</div>` : ''}
+          ${p.notes ? `<div style="font-size: 0.73rem; color: #475569; font-style: italic; margin: 1px 0 3px 0;">${escapeHtml(p.notes)}</div>` : ''}
 
           ${(() => {
             const projBudget = parseBudgetNumber(p.budget);
@@ -8078,7 +8144,7 @@ function doPost(e) {
         } else if (bal < 0) {
           balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #fef2f2; color: #dc2626; padding: 2px 7px; border-radius: 5px; border: 1px solid #ef4444;">-${formatCur(Math.abs(bal))} (Borçlu)</span>`;
         } else if (rec > 0 || pay > 0) {
-          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #f1f5f9; color: #64748b; padding: 2px 7px; border-radius: 5px; border: 1px solid #cbd5e1;">⚪ 0,00 ₺ (Denk)</span>`;
+          balBadgeHtml = `<span style="font-size: 0.72rem; font-weight: 800; background: #f1f5f9; color: #64748b; padding: 2px 7px; border-radius: 5px; border: 1px solid #cbd5e1;">0,00 ₺ (Denk)</span>`;
         }
 
         const expItems = Array.isArray(a.expenseItems) ? a.expenseItems : [];
@@ -8095,7 +8161,7 @@ function doPost(e) {
                   ${a.contact ? `<span>${escapeHtml(a.contact)}</span> • ` : ''}
                   ${a.taxOffice ? `<span>${escapeHtml(a.taxOffice)}</span> • ` : ''}
                   ${a.taxNo ? `<span>VKN: ${escapeHtml(a.taxNo)}</span> • ` : (a.tax ? `<span>${escapeHtml(a.tax)}</span> • ` : '')}
-                  ${a.relatedProject ? a.relatedProject.split(',').map(p => p.trim()).filter(Boolean).map(p => `<span style="background: #eff6ff; color: #1d4ed8; padding: 1px 6px; border-radius: 4px; font-weight: 700; border: 1px solid #bfdbfe; margin-right: 4px; display: inline-block;">🏗️ ${escapeHtml(p)}</span>`).join('') : ''}
+                  ${a.relatedProject ? a.relatedProject.split(',').map(p => p.trim()).filter(Boolean).map(p => `<span style="background: #eff6ff; color: #1d4ed8; padding: 1px 6px; border-radius: 4px; font-weight: 700; border: 1px solid #bfdbfe; margin-right: 4px; display: inline-block;">${escapeHtml(p)}</span>`).join('') : ''}
                 </div>
               </div>
               ${getAccountTypeBadge(a.type)}
@@ -8191,8 +8257,8 @@ function doPost(e) {
               <button type="button" class="btn btn-secondary btn-sm" style="padding: 1px 7px; font-size: 0.66rem; height: 22px; line-height: 1;" onclick="copyIban('${escapeHtml(a.iban)}')">Kopyala</button>
             </div>` : ''}
 
-            ${a.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">📍 ${escapeHtml(a.address)}</div>` : ''}
-            ${a.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">📝 ${escapeHtml(a.notes)}</div>` : ''}
+            ${a.address ? `<div style="font-size: 0.75rem; color: #1e293b; margin: 4px 0 2px 0; font-weight: 500;">${escapeHtml(a.address)}</div>` : ''}
+            ${a.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin-top:2px;">${escapeHtml(a.notes)}</div>` : ''}
 
             <div class="quick-actions-row">
               ${a.phone ? `<a href="tel:${a.phone}" class="btn btn-secondary btn-sm">Ara</a>` : ''}
@@ -8667,7 +8733,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     function getInvoiceCategoryMeta(catName) {
       const norm = normalizeInvoiceCategory(catName);
-      if (!catName || norm === 'Diğer / Genel') return { name: "Genel Gider", icon: "📦", css: "badge-inv-cat" };
+      if (!catName || norm === 'Diğer / Genel') return { name: "Genel Gider", icon: "", css: "badge-inv-cat" };
       const found = STANDARD_INVOICE_CATEGORIES.find(c => c.name.toLowerCase() === norm.toLowerCase());
       if (found) return found;
       const lower = norm.toLowerCase();
@@ -8696,7 +8762,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market') || lower.includes('mutfak')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Market'));
       if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Nakliye'));
       if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Taşeron'));
-      return { name: norm, icon: "🏷️", css: "badge-inv-cat" };
+      return { name: norm, icon: "", css: "badge-inv-cat" };
     }
 
     function toggleCustomInvoiceCategory(sel) {
@@ -8921,7 +8987,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
             <span>Vade: ${escapeHtml(inv.dueDate || '-')}</span>
           </div>
 
-          ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 4px; font-style: italic;">📝 ${escapeHtml(inv.desc)}</div>` : ''}
+          ${inv.desc ? `<div style="font-size: 0.75rem; color: #475569; margin-bottom: 4px; font-style: italic;">${escapeHtml(inv.desc)}</div>` : ''}
           ${inv.notes ? `<div style="font-size: 0.73rem; color: #1e293b; margin-bottom: 6px;">Not: ${escapeHtml(inv.notes)}</div>` : ''}
 
           <div class="card-item-actions" style="margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 6px; display:flex; justify-content:space-between; align-items:center;">
@@ -9437,44 +9503,244 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       return `<span class="badge badge-purple">${escapeHtml(type)}</span>`;
     }
 
-    function renderDocs(customFilter = null) {
-      const q = customFilter || document.getElementById('search-docs').value.toLowerCase().trim();
-      const list = document.getElementById('docs-list');
+    // Evrak Bölge Gruplama & Durum Değişkenleri
+    let docViewMode = 'grouped'; // 'grouped' | 'flat'
+    let activeDocDistrictFilter = 'ALL';
+    const collapsedDocDistrictGroups = new Set();
 
-      const filtered = docs.filter(d => !q || 
-        d.title.toLowerCase().includes(q) || 
-        d.project.toLowerCase().includes(q) || 
-        (d.type && d.type.toLowerCase().includes(q)) ||
-        (d.notes && d.notes.toLowerCase().includes(q))
-      );
+    function setDocViewMode(mode) {
+      docViewMode = mode;
+      document.querySelectorAll('#tab-docs .btn-view-mode').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(mode === 'grouped' ? 'btn-doc-view-grouped' : 'btn-doc-view-flat');
+      if (activeBtn) activeBtn.classList.add('active');
+      const actionsEl = document.getElementById('doc-group-actions');
+      if (actionsEl) actionsEl.style.display = (mode === 'grouped') ? 'inline-flex' : 'none';
+      renderDocs();
+    }
 
-      if (filtered.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem;">Evrak bulunamadı.</div>`;
-        return;
+    function toggleDocDistrictGroup(groupId) {
+      if (collapsedDocDistrictGroups.has(groupId)) {
+        collapsedDocDistrictGroups.delete(groupId);
+      } else {
+        collapsedDocDistrictGroups.add(groupId);
+      }
+      renderDocs();
+    }
+
+    function expandAllDocGroups() {
+      collapsedDocDistrictGroups.clear();
+      renderDocs();
+    }
+
+    function collapseAllDocGroups() {
+      const allDists = docs.map(d => getDocDistrict(d));
+      allDists.forEach(dist => {
+        collapsedDocDistrictGroups.add('doc_group_' + makeProjectSlug(dist));
+      });
+      renderDocs();
+    }
+
+    function filterDocByDistrict(dist) {
+      activeDocDistrictFilter = dist;
+      renderDocs();
+    }
+
+    function getDocDistrict(d) {
+      if (!d) return 'Genel';
+
+      // 1. İlgili Projeden tespit et
+      if (d.project && typeof projects !== 'undefined' && Array.isArray(projects)) {
+        const pMatch = projects.find(p => p && (
+          (p.name && p.name.trim().toLowerCase() === d.project.trim().toLowerCase()) ||
+          (p.name && p.name.toLowerCase().includes(d.project.toLowerCase())) ||
+          (d.project && d.project.toLowerCase().includes((p.name || '').toLowerCase())) ||
+          (p.code && p.code.toLowerCase() === d.project.toLowerCase())
+        ));
+        if (pMatch && pMatch.district && pMatch.district !== 'Diğer') {
+          return pMatch.district;
+        }
       }
 
-      list.innerHTML = filtered.map(d => `
+      // 2. Başlık ve notlarda ilçe / semt eşleşmesi
+      const detected = findDistrict('', d.project || '', `${d.title || ''} ${d.notes || ''}`);
+      if (detected && detected !== 'Diğer') {
+        return detected;
+      }
+
+      return 'Genel';
+    }
+
+    function renderDocDistrictPills() {
+      const container = document.getElementById('doc-district-pills');
+      if (!container) return;
+
+      const q = (document.getElementById('search-docs')?.value || '').toLowerCase().trim();
+      const baseFiltered = docs.filter(d => {
+        const dist = getDocDistrict(d);
+        return !q || 
+          d.title.toLowerCase().includes(q) || 
+          d.project.toLowerCase().includes(q) || 
+          dist.toLowerCase().includes(q) ||
+          (d.type && d.type.toLowerCase().includes(q)) ||
+          (d.notes && d.notes.toLowerCase().includes(q));
+      });
+
+      const counts = {};
+      baseFiltered.forEach(d => {
+        const dist = getDocDistrict(d);
+        counts[dist] = (counts[dist] || 0) + 1;
+      });
+
+      let pillsHtml = `
+        <button type="button" class="sector-pill ${activeDocDistrictFilter === 'ALL' ? 'active' : ''}" onclick="filterDocByDistrict('ALL')">
+          <span>Tüm Bölgeler</span>
+          <span class="pill-badge">${baseFiltered.length}</span>
+        </button>
+      `;
+
+      const sortedDists = Object.keys(counts).sort((a,b) => {
+        if (a === 'Genel' || a === 'Diğer') return 1;
+        if (b === 'Genel' || b === 'Diğer') return -1;
+        return a.localeCompare(b, 'tr');
+      });
+
+      sortedDists.forEach(dist => {
+        const cnt = counts[dist] || 0;
+        const isActive = activeDocDistrictFilter.toLowerCase() === dist.toLowerCase();
+        pillsHtml += `
+          <button type="button" class="sector-pill ${isActive ? 'active' : ''}" onclick="filterDocByDistrict('${escapeHtml(dist)}')">
+            <span>📍 ${escapeHtml(dist)}</span>
+            <span class="pill-badge">${cnt}</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = pillsHtml;
+
+      const countEl = document.getElementById('active-doc-district-count');
+      if (countEl) {
+        countEl.textContent = activeDocDistrictFilter === 'ALL' 
+          ? `${baseFiltered.length} Evrak` 
+          : `${counts[activeDocDistrictFilter] || 0} Evrak`;
+      }
+    }
+
+    function renderDocCardHtml(d) {
+      const dist = getDocDistrict(d);
+      return `
         <div class="card-item">
           <div class="card-item-header">
             <div>
               <div class="card-item-title">${escapeHtml(d.title)}</div>
-              <div class="card-item-sub">${escapeHtml(d.project)}</div>
+              <div class="card-item-sub" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:3px;">
+                <span style="font-weight:600;">${escapeHtml(d.project)}</span>
+                <span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:700; padding:1px 7px; font-size:0.68rem; border:1px solid #bae6fd;">📍 ${escapeHtml(dist)}</span>
+              </div>
             </div>
             ${getDocTypeBadge(d.type)}
           </div>
           ${(d.date || d.expiry) ? `
-            <div style="font-size: 0.72rem; color: var(--muted); margin: 3px 0;">
+            <div style="font-size: 0.72rem; color: var(--muted); margin: 4px 0 2px 0;">
               Tarih: ${escapeHtml(d.date || '-')} ${d.expiry ? `• Geçerlilik: ${escapeHtml(d.expiry)}` : ''}
             </div>
           ` : ''}
           ${d.notes ? `<div style="font-size: 0.74rem; color: #475569; font-style: italic; margin: 2px 0 4px 0;">📝 ${escapeHtml(d.notes)}</div>` : ''}
-          <div style="display:flex; justify-content: flex-end; gap: 6px; margin-top: 4px;">
+          <div style="display:flex; justify-content: flex-end; gap: 6px; margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 6px;">
             ${d.url ? `<button type="button" class="btn btn-navy btn-sm" onclick="openDocPreviewModal('${escapeHtml(d.title)}', { title: '${escapeHtml(d.title)}', type: '${escapeHtml(d.type || 'Evrak')}', fileUrl: '${d.url.replace(/'/g, "\\'")}', fileName: '${escapeHtml(d.title)}' })">Evrakı Aç ↗</button>` : ''}
             <button class="btn btn-secondary btn-sm" onclick="editDoc('${d.id}')" title="Düzenle">Düzenle</button>
             <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteDoc('${d.id}')" title="Sil">Sil</button>
           </div>
         </div>
-      `).join('');
+      `;
+    }
+
+    function renderDocs(customFilter = null) {
+      const q = customFilter || (document.getElementById('search-docs')?.value || '').toLowerCase().trim();
+      const list = document.getElementById('docs-list');
+      if (!list) return;
+
+      renderDocDistrictPills();
+
+      let filtered = docs.filter(d => {
+        const dist = getDocDistrict(d);
+        const matchesQ = !q || 
+          d.title.toLowerCase().includes(q) || 
+          d.project.toLowerCase().includes(q) || 
+          dist.toLowerCase().includes(q) ||
+          (d.type && d.type.toLowerCase().includes(q)) ||
+          (d.notes && d.notes.toLowerCase().includes(q));
+
+        const matchesDistrict = (activeDocDistrictFilter === 'ALL') || 
+          (dist.toLowerCase() === activeDocDistrictFilter.toLowerCase());
+
+        return matchesQ && matchesDistrict;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); font-size: 0.85rem; background:#ffffff; border-radius:12px; border:1px dashed var(--border);">Evrak bulunamadı.</div>`;
+        return;
+      }
+
+      // Bölgeye Göre Gruplanmış Akordeon Görünüm
+      if (docViewMode === 'grouped' && activeDocDistrictFilter === 'ALL') {
+        const groups = {};
+        filtered.forEach(d => {
+          const dist = getDocDistrict(d);
+          if (!groups[dist]) groups[dist] = [];
+          groups[dist].push(d);
+        });
+
+        const sortedDists = Object.keys(groups).sort((a,b) => {
+          if (a === 'Genel' || a === 'Diğer') return 1;
+          if (b === 'Genel' || b === 'Diğer') return -1;
+          return a.localeCompare(b, 'tr');
+        });
+
+        let html = '';
+        sortedDists.forEach(distName => {
+          const groupDocs = groups[distName];
+          const groupId = 'doc_group_' + makeProjectSlug(distName);
+          const isCollapsed = collapsedDocDistrictGroups.has(groupId) && (q.length === 0);
+
+          // Subtitle özeti: Bu bölgedeki projeler
+          const projSet = new Set();
+          groupDocs.forEach(d => {
+            if (d.project && d.project.trim()) projSet.add(d.project.trim());
+          });
+          const projSummary = Array.from(projSet).slice(0, 3).join(', ') + (projSet.size > 3 ? '...' : '');
+
+          html += `
+            <div class="sector-group-block ${isCollapsed ? '' : 'expanded'}" id="${groupId}">
+              <div class="sector-separator-header" onclick="toggleDocDistrictGroup('${groupId}')">
+                <div class="sector-title-wrap">
+                  <span style="font-size: 1.25rem;">📍</span>
+                  <div style="flex:1; min-width:0;">
+                    <div class="sector-title-text">
+                      <span>${escapeHtml(distName)} Bölgesi</span>
+                      <span class="badge badge-purple" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 99px;">
+                        ${groupDocs.length} Evrak
+                      </span>
+                    </div>
+                    <div class="sector-subtitle-text">${escapeHtml(projSummary || 'Genel Projeler')}</div>
+                  </div>
+                </div>
+                <div class="sector-count-badge">
+                  <span class="sector-chevron">${isCollapsed ? '▼' : '▲'}</span>
+                </div>
+              </div>
+              <div class="sector-cards-container" style="${isCollapsed ? 'display:none;' : 'display:flex;'}">
+                ${groupDocs.map(renderDocCardHtml).join('')}
+              </div>
+            </div>
+          `;
+        });
+
+        list.innerHTML = html;
+        return;
+      }
+
+      // Liste (Flat) Görünüm veya Tek Bölge Seçildiğinde
+      list.innerHTML = filtered.map(renderDocCardHtml).join('');
     }
 
     function editDoc(id) {
@@ -11672,27 +11938,29 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
     function processDataFromSheet(d) {
       if (!d) return;
 
-      // 1. Müşteriler
-      if (d['Müşteriler'] && d['Müşteriler'].length > 0) {
-        cards = d['Müşteriler']
+      // 1. Kartvizitler (Kartvizitler / Müşteriler)
+      const rawCards = d['Kartvizitler'] || d['Müşteriler'];
+      if (rawCards && rawCards.length > 0) {
+        cards = rawCards
           .filter(r => {
             const name = cleanText(r['Ad Soyad'] || r['col_1']);
+            const comp = cleanText(r['Firma'] || r['col_2']);
             const mob = cleanText(r['Cep Telefonu'] || r['col_5']);
             const off = cleanText(r['Ofis / Sabit Tel'] || r['col_6']);
             const email = cleanText(r['E-Posta'] || r['col_7']);
-            if (!name && !mob && !off && !email) return false;
-            if (isRecordDeleted('Müşteriler', name)) return false;
-            if (mob && isRecordDeleted('Müşteriler', mob)) return false;
-            if (off && isRecordDeleted('Müşteriler', off)) return false;
-            if (email && isRecordDeleted('Müşteriler', email)) return false;
+            if (!name && !mob && !off && !email && !comp) return false;
+            if (isRecordDeleted('Kartvizitler', name) || isRecordDeleted('Müşteriler', name)) return false;
+            if (mob && (isRecordDeleted('Kartvizitler', mob) || isRecordDeleted('Müşteriler', mob))) return false;
+            if (off && (isRecordDeleted('Kartvizitler', off) || isRecordDeleted('Müşteriler', off))) return false;
+            if (email && (isRecordDeleted('Kartvizitler', email) || isRecordDeleted('Müşteriler', email))) return false;
             return true;
           })
           .map((r, idx) => {
             const mob = cleanText(r['Cep Telefonu'] || r['col_5']);
             const off = cleanText(r['Ofis / Sabit Tel'] || r['col_6']);
             return {
-              id: 'c_' + idx,
-              date: cleanDate(r['Tarih'] || r['col_0']),
+              id: 'c_' + (idx + 1),
+              date: cleanDate(r['Tarih'] || r['col_0']) || new Date().toISOString().split('T')[0],
               name: cleanText(r['Ad Soyad'] || r['col_1']),
               company: cleanText(r['Firma'] || r['col_2']),
               role: cleanText(r['Unvan'] || r['col_3']),
@@ -12184,7 +12452,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
 
       // 1. ADIM: Google Sheets GViz üzerinden anında (300-500ms) ultra-hızlı yükleme
       try {
-        const sheetNames = ['İnşaat Projeleri', 'Alış Faturaları', 'Proje Dökümanları', 'To Do list', 'Müşteriler', 'Cari Kartları', 'Stok'];
+        const sheetNames = ['İnşaat Projeleri', 'Alış Faturaları', 'Proje Dökümanları', 'To Do list', 'Kartvizitler', 'Müşteriler', 'Cari Kartları', 'Stok'];
         const gvizResults = await Promise.allSettled(sheetNames.map(s => fetchGvizSheet(s)));
         const gvizData = {};
         sheetNames.forEach((s, idx) => {
@@ -12232,7 +12500,8 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
         accounts.length < 15 || 
         invoices.length < 10 || 
         docs.length === 0 || 
-        todos.length === 0;
+        todos.length === 0 || 
+        cards.length === 0;
 
       if (hasMissingData) {
         await loadFromGoogleSheets(true);
