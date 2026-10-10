@@ -356,6 +356,97 @@
       margin-top: 8px;
     }
 
+    /* Card Form Collapsible Accordion Bar */
+    .card-form-collapsible-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card-form-collapsible-bar:hover,
+    .card-form-collapsible-bar:active {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .card-form-collapsible-bar.is-expanded {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+    .card-form-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }
+    .card-form-bar-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(11, 37, 69, 0.08);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .card-form-collapsible-bar.is-expanded .card-form-bar-icon {
+      background: var(--navy);
+      color: #ffffff;
+    }
+    .card-form-bar-titles {
+      min-width: 0;
+      flex: 1;
+    }
+    .card-form-bar-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+    .card-form-bar-subtitle {
+      font-size: 0.70rem;
+      color: var(--muted);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    .card-form-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card-form-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: rgba(11, 37, 69, 0.08);
+      padding: 4px 10px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-form-collapsible-bar.is-expanded .card-form-badge {
+      background: var(--navy);
+      color: #ffffff;
+    }
+    .card-form-body {
+      transition: all 0.25s ease;
+    }
+
     /* Form Inputs */
     .form-grid {
       display: grid;
@@ -537,6 +628,7 @@
     .badge-inv-nakliye { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
     .badge-inv-bilisim { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
     .badge-inv-danismanlik { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-inv-mimarlik { background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; }
 
     /* Sector Filter Container & Pills */
     .sector-filter-container {
@@ -1437,75 +1529,92 @@
 
         <!-- Scanned Card Form -->
         <form id="card-form" onsubmit="saveCard(event)">
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Ad Soyad *</label>
-              <input type="text" id="card-name" required placeholder="Kişi adı">
+          <!-- Collapsible Header Bar -->
+          <div class="card-form-collapsible-bar" id="card-form-collapsible-header" onclick="toggleCardFormCollapse()">
+            <div class="card-form-bar-left">
+              <span class="card-form-bar-icon">✍️</span>
+              <div class="card-form-bar-titles">
+                <div class="card-form-bar-title" id="card-form-bar-title">Kartvizit Form Bilgileri</div>
+                <div class="card-form-bar-subtitle" id="card-form-bar-subtitle">Detayları görmek veya manuel düzenlemek için dokunun</div>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Şirket *</label>
-              <input type="text" id="card-company" required placeholder="Firma adı">
+            <div class="card-form-bar-right">
+              <span class="card-form-badge" id="card-form-badge">Genişlet ▾</span>
             </div>
-            <div class="form-group">
-              <label>Unvan</label>
-              <input type="text" id="card-role" placeholder="Direktör, Mimar, Satış Müdürü...">
-            </div>
-            <div class="form-group">
-              <label>🏢 Sektör / Faaliyet Alanı *</label>
-              <select id="card-sector" onchange="toggleCustomSector(this)">
-                <option value="Bilişim & Teknoloji">💻 Bilişim & Teknoloji</option>
-                <option value="Elektrik & Mekanik (MEP)">⚡ Elektrik & Mekanik (MEP)</option>
-                <option value="Finans & Bankacılık">💰 Finans & Bankacılık</option>
-                <option value="Gayrimenkul & Yatırım">🏢 Gayrimenkul & Yatırım</option>
-                <option value="Gıda & Market">🛒 Gıda & Market (Restoran, Catering, Toptan Gıda)</option>
-                <option value="Hukuk & Danışmanlık">⚖️ Hukuk & Danışmanlık</option>
-                <option value="İnşaat & Taahhüt">🏗️ İnşaat & Taahhüt</option>
-                <option value="Mimarlık & Tasarım">📐 Mimarlık & Tasarım</option>
-                <option value="Mühendislik & Müşavirlik">⚙️ Mühendislik & Müşavirlik</option>
-                <option value="Taşeron & Uygulama">🔨 Taşeron & Uygulama</option>
-                <option value="Yapı Malzemeleri & Tedarik">🧱 Yapı Malzemeleri & Tedarik</option>
-                <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
-              </select>
-              <input type="text" id="card-sector-custom" placeholder="Özel sektör adı yazın..." style="display:none; margin-top:4px;">
-            </div>
-            <div class="form-group">
-              <label>Cep Telefonu (GSM / WhatsApp)</label>
-              <input type="tel" id="card-mobile" placeholder="+90 (533) 210 93 28">
-            </div>
-            <div class="form-group">
-              <label>Ofis / Sabit Telefon</label>
-              <input type="tel" id="card-office" placeholder="444 7 339 veya 0212...">
-            </div>
-            <div class="form-group">
-              <label>E-Posta</label>
-              <input type="email" id="card-email" placeholder="ornek@sirket.com">
-            </div>
-            <div class="form-group">
-              <label>Kategori</label>
-              <select id="card-category">
-                <option value="İş Ortağı">İş Ortağı</option>
-                <option value="Mimar / Mühendis">Mimar / Mühendis</option>
-                <option value="Müşteri">Müşteri</option>
-                <option value="Taşeron">Taşeron</option>
-                <option value="Tedarikçi">Tedarikçi</option>
-                <option value="Yatırımcı">Yatırımcı</option>
-              </select>
-            </div>
-            <div class="form-group full">
-              <label>📍 Açık Adres</label>
-              <input type="text" id="card-address" placeholder="İlçe, İl / Cadde, Mahalle, No...">
-            </div>
-            <div class="form-group full">
-              <label>📝 Notlar / Özel Detaylar</label>
-              <input type="text" id="card-notes" placeholder="Görüşme notları, proje ilgisi, web sitesi...">
+          </div>
+
+          <!-- Collapsible Body (Hidden by default, expands on click, OCR or edit) -->
+          <div class="card-form-body" id="card-form-body" style="display: none;">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Ad Soyad *</label>
+                <input type="text" id="card-name" placeholder="Kişi adı">
+              </div>
+              <div class="form-group">
+                <label>Şirket *</label>
+                <input type="text" id="card-company" placeholder="Firma adı">
+              </div>
+              <div class="form-group">
+                <label>Unvan</label>
+                <input type="text" id="card-role" placeholder="Direktör, Mimar, Satış Müdürü...">
+              </div>
+              <div class="form-group">
+                <label>🏢 Sektör / Faaliyet Alanı *</label>
+                <select id="card-sector" onchange="toggleCustomSector(this)">
+                  <option value="Bilişim & Teknoloji">💻 Bilişim & Teknoloji</option>
+                  <option value="Elektrik & Mekanik (MEP)">⚡ Elektrik & Mekanik (MEP)</option>
+                  <option value="Finans & Bankacılık">💰 Finans & Bankacılık</option>
+                  <option value="Gayrimenkul & Yatırım">🏢 Gayrimenkul & Yatırım</option>
+                  <option value="Gıda & Market">🛒 Gıda & Market (Restoran, Catering, Toptan Gıda)</option>
+                  <option value="Hukuk & Danışmanlık">⚖️ Hukuk & Danışmanlık</option>
+                  <option value="İnşaat & Taahhüt">🏗️ İnşaat & Taahhüt</option>
+                  <option value="Mimarlık & Tasarım">📐 Mimarlık & Tasarım</option>
+                  <option value="Mühendislik & Müşavirlik">⚙️ Mühendislik & Müşavirlik</option>
+                  <option value="Taşeron & Uygulama">🔨 Taşeron & Uygulama</option>
+                  <option value="Yapı Malzemeleri & Tedarik">🧱 Yapı Malzemeleri & Tedarik</option>
+                  <option value="DİĞER">➕ Diğer (Özel Belirtin)...</option>
+                </select>
+                <input type="text" id="card-sector-custom" placeholder="Özel sektör adı yazın..." style="display:none; margin-top:4px;">
+              </div>
+              <div class="form-group">
+                <label>Cep Telefonu (GSM / WhatsApp)</label>
+                <input type="tel" id="card-mobile" placeholder="+90 (533) 210 93 28">
+              </div>
+              <div class="form-group">
+                <label>Ofis / Sabit Telefon</label>
+                <input type="tel" id="card-office" placeholder="444 7 339 veya 0212...">
+              </div>
+              <div class="form-group">
+                <label>E-Posta</label>
+                <input type="email" id="card-email" placeholder="ornek@sirket.com">
+              </div>
+              <div class="form-group">
+                <label>Kategori</label>
+                <select id="card-category">
+                  <option value="İş Ortağı">İş Ortağı</option>
+                  <option value="Mimar / Mühendis">Mimar / Mühendis</option>
+                  <option value="Müşteri">Müşteri</option>
+                  <option value="Taşeron">Taşeron</option>
+                  <option value="Tedarikçi">Tedarikçi</option>
+                  <option value="Yatırımcı">Yatırımcı</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label>📍 Açık Adres</label>
+                <input type="text" id="card-address" placeholder="İlçe, İl / Cadde, Mahalle, No...">
+              </div>
+              <div class="form-group full">
+                <label>📝 Notlar / Özel Detaylar</label>
+                <input type="text" id="card-notes" placeholder="Görüşme notları, proje ilgisi, web sitesi...">
+              </div>
             </div>
           </div>
 
           <div style="display: flex; gap: 8px; margin-top: 10px;">
-            <button type="submit" id="btn-save-card" class="btn btn-navy btn-full">
+            <button type="submit" id="btn-save-card" class="btn btn-navy btn-full" style="min-height: 44px; font-weight: 700; font-size: 0.92rem;">
               💾 Kaydet & Sheets'e Aktar
             </button>
-            <button type="button" id="btn-cancel-card-edit" class="btn btn-secondary btn-sm" onclick="cancelCardEdit()" style="display:none; white-space:nowrap;">
+            <button type="button" id="btn-cancel-card-edit" class="btn btn-secondary btn-sm" onclick="cancelCardEdit()" style="display:none; white-space:nowrap; min-height: 44px; padding: 0 14px;">
               ✕ İptal
             </button>
           </div>
@@ -4562,6 +4671,9 @@ function doPost(e) {
       } catch(e) {
         console.error("İşlem hatası:", e);
         loader.textContent = '⚠️ Hata oluştu, manuel girebilirsiniz.';
+      } finally {
+        updateCardFormSummary();
+        expandCardForm();
       }
     }
 
@@ -4802,6 +4914,51 @@ function doPost(e) {
       return sel.value || 'Genel';
     }
 
+    let isCardFormExpanded = false;
+
+    function toggleCardFormCollapse() {
+      if (isCardFormExpanded) {
+        collapseCardForm();
+      } else {
+        expandCardForm();
+      }
+    }
+
+    function expandCardForm() {
+      isCardFormExpanded = true;
+      const body = document.getElementById('card-form-body');
+      const bar = document.getElementById('card-form-collapsible-header');
+      const badge = document.getElementById('card-form-badge');
+      if (body) body.style.display = 'block';
+      if (bar) bar.classList.add('is-expanded');
+      if (badge) badge.innerHTML = 'Daralt ▴';
+    }
+
+    function collapseCardForm() {
+      isCardFormExpanded = false;
+      const body = document.getElementById('card-form-body');
+      const bar = document.getElementById('card-form-collapsible-header');
+      const badge = document.getElementById('card-form-badge');
+      if (body) body.style.display = 'none';
+      if (bar) bar.classList.remove('is-expanded');
+      if (badge) badge.innerHTML = 'Genişlet ▾';
+    }
+
+    function updateCardFormSummary() {
+      const name = (document.getElementById('card-name')?.value || '').trim();
+      const company = (document.getElementById('card-company')?.value || '').trim();
+      const sub = document.getElementById('card-form-bar-subtitle');
+      if (!sub) return;
+      if (name || company) {
+        const parts = [];
+        if (name) parts.push(name);
+        if (company) parts.push(company);
+        sub.innerHTML = `👤 <strong>${escapeHtml(parts.join(' • '))}</strong>`;
+      } else {
+        sub.textContent = 'Detayları görmek veya manuel düzenlemek için dokunun';
+      }
+    }
+
     const expandedCardSectorGroups = new Set();
 
     function getSafeSectorGroupId(secName) {
@@ -5016,6 +5173,9 @@ function doPost(e) {
       const btnCancel = document.getElementById('btn-cancel-card-edit');
       if (btnCancel) btnCancel.style.display = 'inline-flex';
 
+      expandCardForm();
+      updateCardFormSummary();
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
       showToast('Kartvizit düzenleme modunda açıldı ✏️', 'ℹ️');
     }
@@ -5029,6 +5189,8 @@ function doPost(e) {
       if (btnSave) btnSave.textContent = "💾 Kaydet & Sheets'e Aktar";
       const btnCancel = document.getElementById('btn-cancel-card-edit');
       if (btnCancel) btnCancel.style.display = 'none';
+      collapseCardForm();
+      updateCardFormSummary();
     }
 
     function changeCardSector(id) {
@@ -5048,6 +5210,15 @@ function doPost(e) {
 
     function saveCard(e) {
       e.preventDefault();
+      const nameVal = document.getElementById('card-name').value.trim();
+      const compVal = document.getElementById('card-company').value.trim();
+      if (!nameVal && !compVal) {
+        expandCardForm();
+        document.getElementById('card-name').focus();
+        showToast('Lütfen en azından Kişi Adı veya Firma girin ⚠️', '⚠️');
+        return;
+      }
+
       const mobileVal = document.getElementById('card-mobile').value.trim();
       const officeVal = document.getElementById('card-office').value.trim();
       const sectorVal = getSelectedSector();
@@ -5056,8 +5227,8 @@ function doPost(e) {
         const c = cards.find(x => x.id === editingCardId);
         if (c) {
           const oldName = c.name;
-          c.name = document.getElementById('card-name').value.trim();
-          c.company = document.getElementById('card-company').value.trim();
+          c.name = nameVal;
+          c.company = compVal;
           c.role = document.getElementById('card-role').value.trim();
           c.sector = sectorVal;
           c.mobile = mobileVal;
@@ -5080,8 +5251,8 @@ function doPost(e) {
 
       const newC = {
         id: 'c_' + Date.now(),
-        name: document.getElementById('card-name').value.trim(),
-        company: document.getElementById('card-company').value.trim(),
+        name: nameVal,
+        company: compVal,
         role: document.getElementById('card-role').value.trim(),
         sector: sectorVal,
         mobile: mobileVal,
@@ -5110,6 +5281,8 @@ function doPost(e) {
       if (custInput) custInput.style.display = 'none';
       document.getElementById('card-preview').style.display = 'none';
       document.getElementById('ocr-loader').style.display = 'none';
+      collapseCardForm();
+      updateCardFormSummary();
       showToast(`Kartvizit (${newC.sector}) kaydedildi & Senkronize!`, '📇');
     }
 
@@ -8504,14 +8677,27 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     const STANDARD_INVOICE_CATEGORIES = [
       { name: "Akaryakıt & Ulaşım", icon: "⛽", css: "badge-inv-akaryakit" },
+      { name: "Belediye Harcı & Ruhsat", icon: "📜", css: "badge-inv-danismanlik" },
       { name: "Bilişim & Yazılım", icon: "💻", css: "badge-inv-bilisim" },
+      { name: "Cephe Modelleme", icon: "🏢", css: "badge-inv-yapi" },
       { name: "Danışmanlık & Hizmet", icon: "⚖️", css: "badge-inv-danismanlik" },
+      { name: "Elektrik Proje", icon: "⚡", css: "badge-inv-enerji" },
       { name: "Elektrik, Su & Abonelik", icon: "⚡", css: "badge-inv-enerji" },
+      { name: "Geoteknik & İksa", icon: "⛏️", css: "badge-inv-taseron" },
+      { name: "Harita & Kadastro", icon: "🗺️", css: "badge-inv-danismanlik" },
       { name: "İnşaat & Yapı Malzemeleri", icon: "🧱", css: "badge-inv-yapi" },
+      { name: "Kat İrtifakı Dosyası", icon: "📑", css: "badge-inv-kirtasiye" },
       { name: "Kırtasiye & Ofis", icon: "📎", css: "badge-inv-kirtasiye" },
       { name: "Market & Gıda", icon: "🛒", css: "badge-inv-gida" },
+      { name: "Mekanik Tesisat", icon: "⚙️", css: "badge-inv-enerji" },
+      { name: "Mimari Proje", icon: "📐", css: "badge-inv-mimarlik" },
       { name: "Nakliye & Hafriyat", icon: "🚚", css: "badge-inv-nakliye" },
+      { name: "Noter & Hukuki Danışmanlık", icon: "⚖️", css: "badge-inv-danismanlik" },
+      { name: "Peyzaj Mimarlığı", icon: "🌿", css: "badge-inv-danismanlik" },
+      { name: "Statik Mühendislik", icon: "🏛️", css: "badge-inv-danismanlik" },
       { name: "Taşeron & İşçilik", icon: "🔨", css: "badge-inv-taseron" },
+      { name: "Yapı Denetim", icon: "🔍", css: "badge-inv-danismanlik" },
+      { name: "Zemin Etüdü", icon: "🔬", css: "badge-inv-danismanlik" },
       { name: "Diğer / Genel", icon: "📦", css: "badge-inv-cat" }
     ];
 
@@ -8538,15 +8724,31 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const found = STANDARD_INVOICE_CATEGORIES.find(c => c.name.toLowerCase() === norm.toLowerCase());
       if (found) return found;
       const lower = norm.toLowerCase();
-      if (lower.includes('akaryakıt') || lower.includes('akaryakit') || lower.includes('benzin') || lower.includes('yakıt')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Akaryakıt')) || STANDARD_INVOICE_CATEGORIES[0];
-      if (lower.includes('bilişim') || lower.includes('bilisim') || lower.includes('yazılım') || lower.includes('donanım')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Bilişim')) || STANDARD_INVOICE_CATEGORIES[1];
-      if (lower.includes('danışmanlık') || lower.includes('hizmet') || lower.includes('müşavir') || lower.includes('hukuk')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Danışmanlık')) || STANDARD_INVOICE_CATEGORIES[2];
-      if (lower.includes('elektrik') || lower.includes('su') || lower.includes('enerji') || lower.includes('abonelik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Elektrik')) || STANDARD_INVOICE_CATEGORIES[3];
-      if (lower.includes('yapı') || lower.includes('yapi') || lower.includes('inşaat') || lower.includes('insaat') || lower.includes('beton') || lower.includes('demir')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('İnşaat')) || STANDARD_INVOICE_CATEGORIES[4];
-      if (lower.includes('kırtasiye') || lower.includes('kirtasiye') || lower.includes('ofis') || lower.includes('büro')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Kırtasiye')) || STANDARD_INVOICE_CATEGORIES[5];
-      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market') || lower.includes('mutfak')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Market')) || STANDARD_INVOICE_CATEGORIES[6];
-      if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Nakliye')) || STANDARD_INVOICE_CATEGORIES[7];
-      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Taşeron')) || STANDARD_INVOICE_CATEGORIES[8];
+      // Specific checks first
+      if (lower.includes('yapı denetim') || lower.includes('yapi denetim')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Yapı Denetim');
+      if (lower.includes('elektrik proje')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Elektrik Proje');
+      if (lower.includes('statik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Statik Mühendislik');
+      if (lower.includes('mimari')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Mimari Proje');
+      if (lower.includes('zemin etüd') || lower.includes('zemin etud')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Zemin Etüdü');
+      if (lower.includes('geoteknik') || lower.includes('iksa')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Geoteknik & İksa');
+      if (lower.includes('kadastro') || lower.includes('harita')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Harita & Kadastro');
+      if (lower.includes('irtifak')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Kat İrtifakı Dosyası');
+      if (lower.includes('belediye') || lower.includes('ruhsat')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Belediye Harcı & Ruhsat');
+      if (lower.includes('noter')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Noter & Hukuki Danışmanlık');
+      if (lower.includes('peyzaj')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Peyzaj Mimarlığı');
+      if (lower.includes('mekanik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Mekanik Tesisat');
+      if (lower.includes('cephe')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name === 'Cephe Modelleme');
+
+      // Generic checks
+      if (lower.includes('akaryakıt') || lower.includes('akaryakit') || lower.includes('benzin') || lower.includes('yakıt')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Akaryakıt'));
+      if (lower.includes('bilişim') || lower.includes('bilisim') || lower.includes('yazılım') || lower.includes('donanım')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Bilişim'));
+      if (lower.includes('danışmanlık') || lower.includes('hizmet') || lower.includes('müşavir') || lower.includes('hukuk')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Danışmanlık'));
+      if (lower.includes('elektrik') || lower.includes('su') || lower.includes('enerji') || lower.includes('abonelik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Elektrik, Su'));
+      if (lower.includes('yapı') || lower.includes('yapi') || lower.includes('inşaat') || lower.includes('insaat') || lower.includes('beton') || lower.includes('demir')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('İnşaat'));
+      if (lower.includes('kırtasiye') || lower.includes('kirtasiye') || lower.includes('ofis') || lower.includes('büro')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Kırtasiye'));
+      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market') || lower.includes('mutfak')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Market'));
+      if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Nakliye'));
+      if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES.find(c => c.name.startsWith('Taşeron'));
       return { name: norm, icon: "🏷️", css: "badge-inv-cat" };
     }
 
@@ -12092,6 +12294,8 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
       initSupabase();
 
       renderCards();
+      document.getElementById('card-name')?.addEventListener('input', updateCardFormSummary);
+      document.getElementById('card-company')?.addEventListener('input', updateCardFormSummary);
       renderProjects();
       syncProjectsToAccounts(false);
       renderAccounts();
