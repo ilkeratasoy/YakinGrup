@@ -518,6 +518,7 @@
     .badge-sector-finans { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
     .badge-sector-hukuk { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
     .badge-sector-bilisim { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .badge-sector-gida { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
 
     /* Invoice Category Badges & Styles */
     .badge-inv-cat {
@@ -1284,6 +1285,7 @@
                 <option value="Yapı Malzemeleri & Tedarik">🧱 Yapı Malzemeleri & Tedarik</option>
                 <option value="Taşeron & Uygulama">🔨 Taşeron & Uygulama</option>
                 <option value="Elektrik & Mekanik (MEP)">⚡ Elektrik & Mekanik</option>
+                <option value="Gıda & Market">🛒 Gıda & Market (Restoran, Catering, Toptan Gıda)</option>
                 <option value="Finans & Bankacılık">💰 Finans & Bankacılık</option>
                 <option value="Hukuk & Danışmanlık">⚖️ Hukuk & Danışmanlık</option>
                 <option value="Bilişim & Teknoloji">💻 Bilişim & Teknoloji</option>
@@ -2427,7 +2429,7 @@
             <select id="inv-category" onchange="toggleCustomInvoiceCategory(this)">
               <optgroup label="Genel Şantiye & Ofis Giderleri">
                 <option value="Akaryakıt & Ulaşım">⛽ Akaryakıt & Ulaşım (Benzin, Mazot, Araç)</option>
-                <option value="Gıda & Mutfak">🍏 Gıda & Mutfak (Market, Yemek, Şantiye)</option>
+                <option value="Market & Gıda">🛒 Market & Gıda (BİM, A101, Migros, Şok, Yemek, Mutfak)</option>
                 <option value="Kırtasiye & Ofis">📎 Kırtasiye & Ofis (Kağıt, Toner, Büro)</option>
                 <option value="İnşaat & Yapı Malzemeleri">🧱 İnşaat & Yapı Malzemeleri</option>
                 <option value="Taşeron & İşçilik">🔨 Taşeron & İşçilik / Montaj</option>
@@ -2884,8 +2886,8 @@
       if (text.includes('PETROL') || text.includes('OPET') || text.includes('SHELL') || text.includes('BP') || text.includes('TOTAL') || text.includes('AYTEMİZ') || text.includes('AYTEMIZ') || text.includes('AKARYAKIT') || text.includes('MAZOT') || text.includes('BENZIN') || text.includes('BENZİN') || text.includes('YAKIT') || text.includes('OTOGAZ') || text.includes('LPG') || text.includes('HGS') || text.includes('OGS') || text.includes('OTOPARK') || text.includes('LASTİK') || text.includes('LASTIK') || text.includes('OTO')) {
         return 'Akaryakıt & Ulaşım';
       }
-      if (text.includes('YEMEK') || text.includes('GIDA') || text.includes('MARKET') || text.includes('MİGROS') || text.includes('MIGROS') || text.includes('CARREFOUR') || text.includes('BİM') || text.includes('BIM') || text.includes('A101') || text.includes('ŞOK') || text.includes('SOK') || text.includes('METRO GROSS') || text.includes('RESTORAN') || text.includes('LOKANTA') || text.includes('CAFE') || text.includes('KAFE') || text.includes('FIRIN') || text.includes('KASAP') || text.includes('SODEXO') || text.includes('MULTINET') || text.includes('TICKET') || text.includes('METROPOL') || text.includes('MUTFAK') || text.includes('İÇECEK') || text.includes('ICECEK')) {
-        return 'Gıda & Mutfak';
+      if (text.includes('YEMEK') || text.includes('GIDA') || text.includes('MARKET') || text.includes('MİGROS') || text.includes('MIGROS') || text.includes('CARREFOUR') || text.includes('BİM') || text.includes('BIM') || text.includes('A101') || text.includes('ŞOK') || text.includes('SOK') || text.includes('FİLE') || text.includes('FILE') || text.includes('METRO GROSS') || text.includes('METRO TOPTANCI') || text.includes('BİZİM TOPTAN') || text.includes('BIZIM TOPTAN') || text.includes('ONUR MARKET') || text.includes('HAKMAR') || text.includes('HAPPY CENTER') || text.includes('KİPA') || text.includes('KIPA') || text.includes('NAMLI') || text.includes('ŞARKÜTERİ') || text.includes('SARKUTERI') || text.includes('KASAP') || text.includes('MANAV') || text.includes('FIRIN') || text.includes('PASTANE') || text.includes('TATLI') || text.includes('LOKANTA') || text.includes('RESTORAN') || text.includes('RESTAURANT') || text.includes('CAFE') || text.includes('KAFE') || text.includes('KAHVE') || text.includes('STARBUCKS') || text.includes('ESPRESSOLAB') || text.includes('BÜFE') || text.includes('BUFE') || text.includes('BÖREK') || text.includes('BOREK') || text.includes('PİDE') || text.includes('PIDE') || text.includes('DÖNER') || text.includes('DONER') || text.includes('KEBAP') || text.includes('KÖFTE') || text.includes('KOFTE') || text.includes('CATERING') || text.includes('TABLDOT') || text.includes('TABLODOT') || text.includes('YEMEKHANE') || text.includes('SODEXO') || text.includes('MULTINET') || text.includes('MULTİNET') || text.includes('TICKET') || text.includes('METROPOL') || text.includes('YEMEKSEPETİ') || text.includes('YEMEKSEPETI') || text.includes('GETİR') || text.includes('GETIR') || text.includes('TRENDYOL YEMEK') || text.includes('MİGROS YEMEK') || text.includes('MIGROS YEMEK') || text.includes('MUTFAK') || text.includes('İÇECEK') || text.includes('ICECEK') || text.includes('DAMACANA') || text.includes('ERİKLİ') || text.includes('ERIKLI') || text.includes('SIRMA') || text.includes('HAMİDİYE') || text.includes('HAMIDIYE') || text.includes('HAYAT SU') || text.includes('BAKKAL') || text.includes('TEKEL')) {
+        return 'Market & Gıda';
       }
       if (text.includes('KIRTASİYE') || text.includes('KIRTASIYE') || text.includes('D&R') || text.includes('OFİS') || text.includes('OFIS') || text.includes('BÜRO') || text.includes('BURO') || text.includes('KAĞIT') || text.includes('KAGIT') || text.includes('TONER') || text.includes('KARTUŞ') || text.includes('KARTUS') || text.includes('FOTOKOPİ') || text.includes('FOTOKOPI') || text.includes('MATBAA') || text.includes('OZALİT') || text.includes('OZALIT') || text.includes('KALEM') || text.includes('DEFTER')) {
         return 'Kırtasiye & Ofis';
@@ -3528,7 +3530,7 @@
         const existingInvoices = JSON.parse(localStorage.getItem('yg_invoices_lite') || '[]');
         if (Array.isArray(existingInvoices) && existingInvoices.length > 0) {
           existingInvoices.forEach(inv => {
-            if (!inv.category) inv.category = inferInvoiceCategory(inv.vendor, inv.desc);
+            inv.category = inv.category ? normalizeInvoiceCategory(inv.category) : inferInvoiceCategory(inv.vendor, inv.desc);
             let tot = parseNumber(inv.total);
             let sub = parseNumber(inv.subtotal);
             let v = parseNumber(inv.vat);
@@ -4181,7 +4183,7 @@ function doPost(e) {
   "name": "Kişinin Adı Soyadı",
   "company": "Şirket / Firma Ünvanı",
   "role": "Pozisyon veya Mesleği / Unvanı",
-  "sector": "İnşaat & Taahhüt / Mimarlık & Tasarım / Mühendislik & Müşavirlik / Gayrimenkul & Yatırım / Yapı Malzemeleri & Tedarik / Taşeron & Uygulama / Elektrik & Mekanik (MEP) / Finans & Bankacılık / Hukuk & Danışmanlık / Bilişim & Teknoloji / Diğer arasından en uygun olanı",
+  "sector": "İnşaat & Taahhüt / Mimarlık & Tasarım / Mühendislik & Müşavirlik / Gayrimenkul & Yatırım / Yapı Malzemeleri & Tedarik / Taşeron & Uygulama / Elektrik & Mekanik (MEP) / Gıda & Market / Finans & Bankacılık / Hukuk & Danışmanlık / Bilişim & Teknoloji / Diğer arasından en uygun olanı",
   "mobilePhone": "Kişisel Cep Telefonu veya GSM Numarası (örn: +90 533 210 93 28 veya 05xx)",
   "officePhone": "Şirket / Ofis / Santral / Sabit Hat Numarası (örn: 444 7 339 veya 0212/0216 santral)",
   "email": "E-Posta Adresi",
@@ -4577,6 +4579,7 @@ function doPost(e) {
       { name: "Yapı Malzemeleri & Tedarik", icon: "🧱", css: "badge-sector-malzeme" },
       { name: "Taşeron & Uygulama", icon: "🔨", css: "badge-sector-taseron" },
       { name: "Elektrik & Mekanik (MEP)", icon: "⚡", css: "badge-sector-mep" },
+      { name: "Gıda & Market", icon: "🛒", css: "badge-sector-gida" },
       { name: "Finans & Bankacılık", icon: "💰", css: "badge-sector-finans" },
       { name: "Hukuk & Danışmanlık", icon: "⚖️", css: "badge-sector-hukuk" },
       { name: "Bilişim & Teknoloji", icon: "💻", css: "badge-sector-bilisim" },
@@ -4596,9 +4599,10 @@ function doPost(e) {
       if (lower.includes('malzeme') || lower.includes('beton') || lower.includes('demir') || lower.includes('tedarik')) return STANDARD_SECTORS[4];
       if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('uygulama')) return STANDARD_SECTORS[5];
       if (lower.includes('elektrik') || lower.includes('mekanik') || lower.includes('mep') || lower.includes('tesisat')) return STANDARD_SECTORS[6];
-      if (lower.includes('finans') || lower.includes('banka') || lower.includes('faktoring')) return STANDARD_SECTORS[7];
-      if (lower.includes('hukuk') || lower.includes('avukat') || lower.includes('müşavir')) return STANDARD_SECTORS[8];
-      if (lower.includes('bilişim') || lower.includes('yazılım') || lower.includes('teknoloji')) return STANDARD_SECTORS[9];
+      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('market') || lower.includes('yemek') || lower.includes('catering') || lower.includes('restoran')) return STANDARD_SECTORS[7];
+      if (lower.includes('finans') || lower.includes('banka') || lower.includes('faktoring')) return STANDARD_SECTORS[8];
+      if (lower.includes('hukuk') || lower.includes('avukat') || lower.includes('müşavir')) return STANDARD_SECTORS[9];
+      if (lower.includes('bilişim') || lower.includes('yazılım') || lower.includes('teknoloji')) return STANDARD_SECTORS[10];
       return { name: trimmed, icon: "🏷️", css: "badge-sector" };
     }
 
@@ -8223,7 +8227,7 @@ function doPost(e) {
   "taxNo": "Satıcının VKN (Vergi Kimlik No) veya TCKN",
   "invoiceNo": "Fatura Numarası (Örn: GIB2026..., ETTN veya Belge No)",
   "date": "Fatura Tarihi (YYYY-AA-GG formatında, örn: 2026-09-18)",
-  "category": "Akaryakıt & Ulaşım / Gıda & Mutfak / Kırtasiye & Ofis / İnşaat & Yapı Malzemeleri / Taşeron & İşçilik / Elektrik, Su & Abonelik / Nakliye & Hafriyat / Bilişim & Yazılım / Danışmanlık & Hizmet / Diğer arasından faturadaki mal ve hizmete en uygun olanı",
+  "category": "Akaryakıt & Ulaşım / Market & Gıda / Kırtasiye & Ofis / İnşaat & Yapı Malzemeleri / Taşeron & İşçilik / Elektrik, Su & Abonelik / Nakliye & Hafriyat / Bilişim & Yazılım / Danışmanlık & Hizmet / Diğer arasından faturadaki mal ve hizmete en uygun olanı",
   "subtotal": 0.0,
   "vat": 0.0,
   "total": 0.0,
@@ -8280,7 +8284,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (invoiceData.description) document.getElementById('inv-desc').value = invoiceData.description;
 
           // Kategori Otomatik Seçimi (Yapay Zeka + Akıllı Çıkarım)
-          const detectedCat = invoiceData.category || inferInvoiceCategory(invoiceData.vendor, invoiceData.description);
+          const detectedCat = normalizeInvoiceCategory(invoiceData.category || inferInvoiceCategory(invoiceData.vendor, invoiceData.description));
           const catSel = document.getElementById('inv-category');
           if (catSel) {
             let matched = false;
@@ -8318,7 +8322,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
     const STANDARD_INVOICE_CATEGORIES = [
       { name: "Akaryakıt & Ulaşım", icon: "⛽", css: "badge-inv-akaryakit" },
-      { name: "Gıda & Mutfak", icon: "🍏", css: "badge-inv-gida" },
+      { name: "Market & Gıda", icon: "🛒", css: "badge-inv-gida" },
       { name: "Kırtasiye & Ofis", icon: "📎", css: "badge-inv-kirtasiye" },
       { name: "İnşaat & Yapı Malzemeleri", icon: "🧱", css: "badge-inv-yapi" },
       { name: "Taşeron & İşçilik", icon: "🔨", css: "badge-inv-taseron" },
@@ -8329,14 +8333,31 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       { name: "Diğer / Genel", icon: "📦", css: "badge-inv-cat" }
     ];
 
-    function getInvoiceCategoryMeta(catName) {
-      if (!catName) return { name: "Genel Gider", icon: "📦", css: "badge-inv-cat" };
-      const trimmed = catName.trim();
-      const found = STANDARD_INVOICE_CATEGORIES.find(c => c.name.toLowerCase() === trimmed.toLowerCase());
-      if (found) return found;
+    function normalizeInvoiceCategory(cat) {
+      if (!cat) return 'Diğer / Genel';
+      const trimmed = String(cat).trim();
       const lower = trimmed.toLowerCase();
+      if (
+        lower === 'gıda & mutfak' || lower === 'gida & mutfak' ||
+        lower === 'market & gıda' || lower === 'market & gida' ||
+        lower === 'market, gıda & mutfak' || lower === 'gıda, market & mutfak' ||
+        lower === 'market gıda' || lower === 'market gida' ||
+        lower === 'gıda' || lower === 'gida' || lower === 'market' ||
+        lower === 'yemek' || lower === 'mutfak'
+      ) {
+        return 'Market & Gıda';
+      }
+      return trimmed;
+    }
+
+    function getInvoiceCategoryMeta(catName) {
+      const norm = normalizeInvoiceCategory(catName);
+      if (!catName || norm === 'Diğer / Genel') return { name: "Genel Gider", icon: "📦", css: "badge-inv-cat" };
+      const found = STANDARD_INVOICE_CATEGORIES.find(c => c.name.toLowerCase() === norm.toLowerCase());
+      if (found) return found;
+      const lower = norm.toLowerCase();
       if (lower.includes('akaryakıt') || lower.includes('akaryakit') || lower.includes('benzin') || lower.includes('yakıt')) return STANDARD_INVOICE_CATEGORIES[0];
-      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market')) return STANDARD_INVOICE_CATEGORIES[1];
+      if (lower.includes('gıda') || lower.includes('gida') || lower.includes('yemek') || lower.includes('market') || lower.includes('mutfak')) return STANDARD_INVOICE_CATEGORIES[1];
       if (lower.includes('kırtasiye') || lower.includes('kirtasiye') || lower.includes('ofis') || lower.includes('büro')) return STANDARD_INVOICE_CATEGORIES[2];
       if (lower.includes('yapı') || lower.includes('yapi') || lower.includes('inşaat') || lower.includes('insaat') || lower.includes('beton') || lower.includes('demir')) return STANDARD_INVOICE_CATEGORIES[3];
       if (lower.includes('taşeron') || lower.includes('taseron') || lower.includes('işçilik') || lower.includes('iscilik')) return STANDARD_INVOICE_CATEGORIES[4];
@@ -8344,7 +8365,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (lower.includes('nakliye') || lower.includes('hafriyat') || lower.includes('lojistik')) return STANDARD_INVOICE_CATEGORIES[6];
       if (lower.includes('bilişim') || lower.includes('bilisim') || lower.includes('yazılım') || lower.includes('donanım')) return STANDARD_INVOICE_CATEGORIES[7];
       if (lower.includes('danışmanlık') || lower.includes('hizmet') || lower.includes('müşavir') || lower.includes('hukuk')) return STANDARD_INVOICE_CATEGORIES[8];
-      return { name: trimmed, icon: "🏷️", css: "badge-inv-cat" };
+      return { name: norm, icon: "🏷️", css: "badge-inv-cat" };
     }
 
     function toggleCustomInvoiceCategory(sel) {
@@ -8430,7 +8451,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     }
 
     function filterInvoiceByCategory(cat) {
-      activeInvoiceCategoryFilter = cat;
+      activeInvoiceCategoryFilter = (cat === 'ALL') ? 'ALL' : normalizeInvoiceCategory(cat);
       renderInvoices();
     }
 
@@ -8462,7 +8483,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const counts = {};
       const sums = {};
       baseFiltered.forEach(inv => {
-        const cat = (inv.category || 'Diğer / Genel').trim();
+        const cat = normalizeInvoiceCategory(inv.category);
         counts[cat] = (counts[cat] || 0) + 1;
         let tot = parseNumber(inv.total);
         if (tot === 0 && (inv.subtotal || inv.vat)) tot = parseNumber(inv.subtotal) + parseNumber(inv.vat);
@@ -8541,8 +8562,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               </div>
             </div>
             <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-              <span class="badge ${catMeta.css}" title="Gider Kategorisi: ${escapeHtml(inv.category || 'Genel Gider')}">
-                ${catMeta.icon} ${escapeHtml(inv.category || 'Genel Gider')}
+              <span class="badge ${catMeta.css}" title="Gider Kategorisi: ${escapeHtml(normalizeInvoiceCategory(inv.category || 'Genel Gider'))}">
+                ${catMeta.icon} ${escapeHtml(normalizeInvoiceCategory(inv.category || 'Genel Gider'))}
               </span>
               <span class="badge ${badgeClass}" onclick="toggleInvoiceStatus('${inv.id}')" style="cursor: pointer; user-select: none;" title="Durumu Değiştir">
                 ${badgeIcon} ${escapeHtml(inv.status)}
@@ -8608,11 +8629,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       const catSel = document.getElementById('inv-category');
       const custInput = document.getElementById('inv-category-custom');
-      let catMatched = false;
-      if (catSel && inv.category) {
+      const targetCat = normalizeInvoiceCategory(inv.category || '');
+      if (catSel && targetCat) {
         for (let i = 0; i < catSel.options.length; i++) {
-          if (catSel.options[i].value.toLowerCase().includes(inv.category.toLowerCase()) || 
-              inv.category.toLowerCase().includes(catSel.options[i].value.toLowerCase())) {
+          if (catSel.options[i].value.toLowerCase().includes(targetCat.toLowerCase()) || 
+              targetCat.toLowerCase().includes(catSel.options[i].value.toLowerCase())) {
             catSel.selectedIndex = i;
             catMatched = true;
             break;
@@ -8646,7 +8667,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const inv = invoices.find(x => x.id === id);
       if (!inv) return;
       const current = inv.category || 'İnşaat & Yapı Malzemeleri';
-      const promptText = `"${inv.vendor}" (${inv.no}) faturasının gider kategorisini güncelleyin:\n\nÖrnekler:\n• Akaryakıt & Ulaşım\n• Gıda & Mutfak\n• Kırtasiye & Ofis\n• İnşaat & Yapı Malzemeleri\n• Taşeron & İşçilik\n• Elektrik, Su & Abonelik\n• Nakliye & Hafriyat\n• Bilişim & Yazılım\n• Danışmanlık & Hizmet\n• Diğer`;
+      const promptText = `"${inv.vendor}" (${inv.no}) faturasının gider kategorisini güncelleyin:\n\nÖrnekler:\n• Akaryakıt & Ulaşım\n• Market & Gıda\n• Kırtasiye & Ofis\n• İnşaat & Yapı Malzemeleri\n• Taşeron & İşçilik\n• Elektrik, Su & Abonelik\n• Nakliye & Hafriyat\n• Bilişim & Yazılım\n• Danışmanlık & Hizmet\n• Diğer`;
       const newCat = prompt(promptText, current);
       if (newCat && newCat.trim() && newCat.trim() !== current) {
         inv.category = newCat.trim();
@@ -8827,7 +8848,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       });
 
       if (activeInvoiceCategoryFilter !== 'ALL') {
-        filtered = filtered.filter(inv => (inv.category || 'Diğer / Genel').toLowerCase() === activeInvoiceCategoryFilter.toLowerCase());
+        const normFilter = normalizeInvoiceCategory(activeInvoiceCategoryFilter).toLowerCase();
+        filtered = filtered.filter(inv => normalizeInvoiceCategory(inv.category).toLowerCase() === normFilter);
       }
 
       // Filtered totals
@@ -8914,7 +8936,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         const groups = {};
         const sums = {};
         filtered.forEach(inv => {
-          const cat = (inv.category || 'Diğer / Genel').trim();
+          const cat = normalizeInvoiceCategory(inv.category);
           if (!groups[cat]) {
             groups[cat] = [];
             sums[cat] = 0;
@@ -11620,7 +11642,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
             const fNo = cleanText(r['Fatura No'] || r['col_2']);
             const vendorStr = cleanText(r['Tedarikçi / Cari'] || r['Tedarikçi'] || r['Cari'] || r['col_4']);
             const descStr = cleanText(r['Mal / Hizmet Açıklaması'] || r['Açıklama'] || r['col_13']);
-            const catStr = cleanText(r['Kategori'] || r['col_3']) || inferInvoiceCategory(vendorStr, descStr);
+            const catStr = normalizeInvoiceCategory(cleanText(r['Kategori'] || r['col_3']) || inferInvoiceCategory(vendorStr, descStr));
 
             const local = localInvoices.find(li => 
               li && li.no && fNo && li.no.trim().toLowerCase() === fNo.trim().toLowerCase()
