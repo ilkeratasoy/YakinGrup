@@ -9506,7 +9506,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     // Evrak Bölge Gruplama & Durum Değişkenleri
     let docViewMode = 'grouped'; // 'grouped' | 'flat'
     let activeDocDistrictFilter = 'ALL';
-    const collapsedDocDistrictGroups = new Set();
+    const expandedDocDistrictGroups = new Set(); // Varsayılan olarak kapalı (daraltılmış)
 
     function setDocViewMode(mode) {
       docViewMode = mode;
@@ -9519,24 +9519,24 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
     }
 
     function toggleDocDistrictGroup(groupId) {
-      if (collapsedDocDistrictGroups.has(groupId)) {
-        collapsedDocDistrictGroups.delete(groupId);
+      if (expandedDocDistrictGroups.has(groupId)) {
+        expandedDocDistrictGroups.delete(groupId);
       } else {
-        collapsedDocDistrictGroups.add(groupId);
+        expandedDocDistrictGroups.add(groupId);
       }
       renderDocs();
     }
 
     function expandAllDocGroups() {
-      collapsedDocDistrictGroups.clear();
+      const allDists = docs.map(d => getDocDistrict(d));
+      allDists.forEach(dist => {
+        expandedDocDistrictGroups.add('doc_group_' + makeProjectSlug(dist));
+      });
       renderDocs();
     }
 
     function collapseAllDocGroups() {
-      const allDists = docs.map(d => getDocDistrict(d));
-      allDists.forEach(dist => {
-        collapsedDocDistrictGroups.add('doc_group_' + makeProjectSlug(dist));
-      });
+      expandedDocDistrictGroups.clear();
       renderDocs();
     }
 
@@ -9601,7 +9601,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       const sortedDists = Object.keys(counts).sort((a,b) => {
         if (a === 'Genel' || a === 'Diğer') return 1;
         if (b === 'Genel' || b === 'Diğer') return -1;
-        return a.localeCompare(b, 'tr');
+        return a.localeCompare(b, 'tr', { sensitivity: 'base' });
       });
 
       sortedDists.forEach(dist => {
@@ -9693,24 +9693,28 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         const sortedDists = Object.keys(groups).sort((a,b) => {
           if (a === 'Genel' || a === 'Diğer') return 1;
           if (b === 'Genel' || b === 'Diğer') return -1;
-          return a.localeCompare(b, 'tr');
+          return a.localeCompare(b, 'tr', { sensitivity: 'base' });
         });
 
         let html = '';
         sortedDists.forEach(distName => {
           const groupDocs = groups[distName];
-          const groupId = 'doc_group_' + makeProjectSlug(distName);
-          const isCollapsed = collapsedDocDistrictGroups.has(groupId) && (q.length === 0);
+          // Evrakları A dan Z ye sırala
+          groupDocs.sort((a, b) => (a.title || '').localeCompare(b.title || '', 'tr', { sensitivity: 'base' }));
 
-          // Subtitle özeti: Bu bölgedeki projeler
+          const groupId = 'doc_group_' + makeProjectSlug(distName);
+          // Varsayılan olarak kapalı (daraltılmış); arama varsa veya kullanıcı açtıysa açık
+          const isExpanded = (q.length > 0) || expandedDocDistrictGroups.has(groupId);
+
+          // Subtitle özeti: Bu bölgedeki projeler (A-Z)
           const projSet = new Set();
           groupDocs.forEach(d => {
             if (d.project && d.project.trim()) projSet.add(d.project.trim());
           });
-          const projSummary = Array.from(projSet).slice(0, 3).join(', ') + (projSet.size > 3 ? '...' : '');
+          const projSummary = Array.from(projSet).sort((a,b) => a.localeCompare(b, 'tr')).slice(0, 3).join(', ') + (projSet.size > 3 ? '...' : '');
 
           html += `
-            <div class="sector-group-block ${isCollapsed ? '' : 'expanded'}" id="${groupId}">
+            <div class="sector-group-block ${isExpanded ? 'expanded' : ''}" id="${groupId}">
               <div class="sector-separator-header" onclick="toggleDocDistrictGroup('${groupId}')">
                 <div class="sector-title-wrap">
                   <span style="font-size: 1.25rem;">📍</span>
@@ -9725,10 +9729,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
                   </div>
                 </div>
                 <div class="sector-count-badge">
-                  <span class="sector-chevron">${isCollapsed ? '▼' : '▲'}</span>
+                  <span class="sector-chevron">${isExpanded ? '▲' : '▼'}</span>
                 </div>
               </div>
-              <div class="sector-cards-container" style="${isCollapsed ? 'display:none;' : 'display:flex;'}">
+              <div class="sector-cards-container" style="${isExpanded ? 'display:flex;' : 'display:none;'}">
                 ${groupDocs.map(renderDocCardHtml).join('')}
               </div>
             </div>
@@ -9739,7 +9743,8 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
         return;
       }
 
-      // Liste (Flat) Görünüm veya Tek Bölge Seçildiğinde
+      // Liste (Flat) Görünüm veya Tek Bölge Seçildiğinde - A dan Z ye sırala
+      filtered.sort((a, b) => (a.title || '').localeCompare(b.title || '', 'tr', { sensitivity: 'base' }));
       list.innerHTML = filtered.map(renderDocCardHtml).join('');
     }
 
