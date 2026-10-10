@@ -1202,6 +1202,181 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+
+    /* ================================================================
+       NATIVE MOBILE & RESPONSIVE DESIGN SYSTEM
+       ================================================================ */
+    @media (max-width: 768px) {
+      /* 1. Universal iOS Zoom Prevention (Inputs 16px minimum on touch) */
+      input, select, textarea,
+      .form-group input, .form-group select, .form-group textarea,
+      .search-input {
+        font-size: 16px !important;
+        min-height: 42px !important;
+        -webkit-appearance: none;
+      }
+
+      /* 2. Form Grids on Mobile */
+      .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
+      .form-group.full {
+        grid-column: 1 / -1 !important;
+      }
+
+      /* 3. Container & Spacing */
+      .container {
+        padding: 0.65rem 0.65rem !important;
+      }
+
+      /* 4. Scanner Capture Grid */
+      .scanner-actions-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .scanner-actions-grid .btn {
+        min-height: 44px;
+        font-size: 0.88rem;
+      }
+
+      /* 5. Sector & Project & Invoice Accordion Headers */
+      .sector-separator-header {
+        padding: 10px 12px !important;
+        gap: 6px !important;
+        flex-wrap: wrap !important;
+      }
+      .sector-title-wrap {
+        flex: 1 1 180px !important;
+        min-width: 140px !important;
+      }
+      .sector-title-text {
+        font-size: 0.84rem !important;
+        gap: 6px !important;
+      }
+      .sector-subtitle {
+        font-size: 0.68rem !important;
+      }
+      .sector-actions-right {
+        margin-left: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+      }
+      .sector-toggle-btn {
+        padding: 4px 9px !important;
+        font-size: 0.70rem !important;
+        min-height: 30px !important;
+      }
+
+      /* 6. Filter & View Mode Toolbars */
+      .sector-filter-container {
+        padding: 8px 10px !important;
+      }
+      .sector-pills-row {
+        gap: 5px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .sector-pill {
+        padding: 4px 10px !important;
+        font-size: 0.72rem !important;
+        min-height: 32px !important;
+      }
+      .btn-view-mode {
+        padding: 3px 8px !important;
+        font-size: 0.68rem !important;
+      }
+
+      /* 7. Card Items & Actions */
+      .card-item {
+        padding: 0.85rem !important;
+        gap: 7px !important;
+      }
+      .card-item-title {
+        font-size: 0.88rem !important;
+      }
+      .card-item-actions {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      .card-item-actions .btn {
+        padding: 4px 9px !important;
+        font-size: 0.72rem !important;
+        min-height: 32px !important;
+      }
+
+      /* 8. Modals (Bottom-Sheet Feel) */
+      .modal-backdrop {
+        align-items: flex-end !important;
+        padding: 0 !important;
+      }
+      .modal-sheet {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 92vh !important;
+        max-height: 92dvh !important;
+        border-radius: 20px 20px 0 0 !important;
+        padding: 1.15rem 1rem calc(1.15rem + var(--safe-bottom)) 1rem !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      /* 9. Dashboard Metric Grids */
+      .dashboard-metrics-grid,
+      #tab-invoices > div:first-child,
+      #tab-accounts > div:first-child {
+        gap: 6px !important;
+      }
+
+      /* 10. Horizontal Swipe Containers */
+      .table-responsive,
+      .sector-pills-row,
+      #todo-filter-pills {
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+      }
+      .sector-pills-row::-webkit-scrollbar,
+      #todo-filter-pills::-webkit-scrollbar {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app-header {
+        padding: 0.55rem 0.75rem !important;
+      }
+      .brand-title {
+        font-size: 0.88rem !important;
+      }
+      .brand-sub {
+        font-size: 0.60rem !important;
+      }
+      .brand-emblem-img {
+        width: 28px !important;
+        height: 28px !important;
+      }
+      .icon-btn {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.9rem !important;
+      }
+      .sync-pill {
+        padding: 3px 6px !important;
+        font-size: 0.66rem !important;
+      }
+      .nav-icon {
+        font-size: 1.05rem !important;
+      }
+      .nav-label {
+        font-size: 0.58rem !important;
+        letter-spacing: -0.3px !important;
+      }
+      .bottom-nav {
+        padding: 4px 1px calc(4px + var(--safe-bottom)) 1px !important;
+      }
+      .nav-item {
+        padding: 3px 0 !important;
+      }
+    }
   </style>
 </head>
 <body>

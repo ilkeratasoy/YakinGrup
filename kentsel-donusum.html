@@ -26,7 +26,7 @@
   /></noscript>
   <!-- End Meta Pixel Code -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>Yakın Grup — Kentsel Dönüşüm Proje Karar Motoru & Teklif Platformu (2026)</title>
   <meta name="description" content="Kentsel dönüşümde otomatik fizibilite, 2026 Yarısı Bizden (1.875.000 TL) ve Dünya Bankası İADŞP (3.000.000 TL %0,69) destekli finansman optimizasyonu ve karar motoru.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -202,8 +202,32 @@
   background: #112953 !important;
 }
 @media (max-width: 768px) {
+  .modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .modal-window, #modal-kd-archive .modal-window {
+    width: 100% !important;
+    max-width: 100vw !important;
+    max-height: 94vh !important;
+    height: auto !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-bottom: none !important;
+    margin: auto 0 0 0 !important;
+  }
+  .modal-header {
+    padding: 0.85rem 1.15rem !important;
+  }
+  .modal-body {
+    padding: 1rem 1.15rem !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .modal-footer {
+    padding: 0.75rem 1.15rem calc(0.75rem + env(safe-area-inset-bottom, 16px)) 1.15rem !important;
+  }
   .archive-stats-grid {
     grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
   }
 }
   </style>
@@ -2204,6 +2228,9 @@
           if (i === stageNum) {
             tab.classList.add('active');
             stage.classList.add('active');
+            try {
+              tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            } catch (err) {}
           } else {
             tab.classList.remove('active');
             stage.classList.remove('active');
