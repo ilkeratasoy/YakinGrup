@@ -1535,7 +1535,6 @@
               <span class="card-form-bar-icon">✍️</span>
               <div class="card-form-bar-titles">
                 <div class="card-form-bar-title" id="card-form-bar-title">Kartvizit Form Bilgileri</div>
-                <div class="card-form-bar-subtitle" id="card-form-bar-subtitle">Detayları görmek veya manuel düzenlemek için dokunun</div>
               </div>
             </div>
             <div class="card-form-bar-right">
@@ -1629,29 +1628,13 @@
         </button>
       </div>
 
-      <!-- Sector Filter Container & View Mode Controls -->
+      <!-- Sector Filter Container -->
       <div class="sector-filter-container">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
           <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
-            <span>🏢 Sektörel Seperasyon</span>
+            <span>🏢 Sektörler</span>
             <span id="active-sector-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
           </span>
-          <div style="display:flex; gap: 4px; align-items: center; flex-wrap: wrap;">
-            <button type="button" id="btn-view-grouped" class="btn-view-mode active" onclick="setCardViewMode('grouped')" title="Sektörlere Göre Akordeon Gruplanmış Görünüm">
-              📑 Gruplu (Akordeon)
-            </button>
-            <button type="button" id="btn-view-flat" class="btn-view-mode" onclick="setCardViewMode('flat')" title="Tümünü Düz Liste Görünümü">
-              📋 Düz Liste
-            </button>
-            <div id="card-group-actions" style="display: inline-flex; gap: 4px; margin-left: 4px;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllCardSectorGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm sektörleri aç">
-                ⏬ Tümünü Aç
-              </button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllCardSectorGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm sektörleri daralt">
-                ⏫ Tümünü Daralt
-              </button>
-            </div>
-          </div>
         </div>
         <div class="sector-pills-row" id="sector-pills">
           <!-- Dynamic Sector Pills -->
@@ -1683,28 +1666,17 @@
         </button>
       </div>
 
-      <!-- Proje Gruplama / Akordeon Kontrolleri -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 8px; flex-wrap: wrap; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 7px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
-        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-          <span style="font-size: 0.74rem; font-weight: 700; color: var(--navy); margin-right: 2px;">📁 Gruplama:</span>
-          <button type="button" class="sector-pill active" id="btn-prj-group-firm" onclick="setProjectGroupBy('firm')">
-            🏢 Firmaya Göre Topla
-          </button>
-          <button type="button" class="sector-pill" id="btn-prj-group-district" onclick="setProjectGroupBy('district')">
-            📍 İlçeye / Bölgeye Göre Topla
-          </button>
-          <button type="button" class="sector-pill" id="btn-prj-group-none" onclick="setProjectGroupBy('none')">
-            📋 Düz Liste
-          </button>
-        </div>
-        <div style="display: flex; align-items: center; gap: 6px;" id="prj-group-actions">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllProjectGroups()" style="padding: 3px 9px; font-size: 0.72rem; border-radius: 8px;" title="Tüm grupları genişlet">
-            ⏬ Tümünü Aç
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllProjectGroups()" style="padding: 3px 9px; font-size: 0.72rem; border-radius: 8px;" title="Tüm grupları daralt">
-            ⏫ Tümünü Daralt
-          </button>
-        </div>
+      <!-- Proje Gruplama Kontrolleri -->
+      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.85rem; overflow-x: auto; padding-bottom: 2px;">
+        <button type="button" class="sector-pill active" id="btn-prj-group-firm" onclick="setProjectGroupBy('firm')">
+          🏢 Firmaya Göre
+        </button>
+        <button type="button" class="sector-pill" id="btn-prj-group-district" onclick="setProjectGroupBy('district')">
+          📍 İlçeye Göre
+        </button>
+        <button type="button" class="sector-pill" id="btn-prj-group-none" onclick="setProjectGroupBy('none')">
+          📋 Düz Liste
+        </button>
       </div>
 
       <div class="items-list" id="projects-list"></div>
@@ -1757,9 +1729,6 @@
           <option value="Danışman / Hizmet">💼 Danışman / Hizmet</option>
         </select>
         <div style="display: flex; gap: 6px; flex-shrink: 0;">
-          <button class="btn btn-secondary btn-sm" onclick="syncProjectsToAccounts(true)" title="Projelerdeki işveren ve bütçeleri cari kartlara otomatik aktarır veya günceller" style="white-space: nowrap; font-weight: 700;">
-            ⚡ Projelerden Eşitle
-          </button>
           <button class="btn btn-navy btn-sm" onclick="openModal('modal-new-account')" style="white-space: nowrap;">
             ➕ Yeni Cari
           </button>
@@ -1815,25 +1784,9 @@
       <div class="sector-filter-container">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
           <span style="font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; font-size: 0.78rem;">
-            <span>🧾 Harcama / Gider Seperasyonu</span>
+            <span>🧾 Harcama Kategorileri</span>
             <span id="active-inv-category-count" style="background: rgba(11,37,69,0.08); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;"></span>
           </span>
-          <div style="display:flex; gap: 4px; align-items: center; flex-wrap: wrap;">
-            <button type="button" id="btn-inv-view-grouped" class="btn-view-mode active" onclick="setInvoiceViewMode('grouped')" title="Kategoriye Göre Akordeon Gruplanmış Ayrıştırma">
-              📑 Gruplu (Akordeon)
-            </button>
-            <button type="button" id="btn-inv-view-flat" class="btn-view-mode" onclick="setInvoiceViewMode('flat')" title="Düz Liste Görünümü">
-              📋 Düz Liste
-            </button>
-            <div id="inv-group-actions" style="display: inline-flex; gap: 4px; margin-left: 4px;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="expandAllInvoiceCategoryGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm kategorileri aç">
-                ⏬ Tümünü Aç
-              </button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="collapseAllInvoiceCategoryGroups()" style="padding: 2px 7px; font-size: 0.68rem; border-radius: 6px;" title="Tüm kategorileri daralt">
-                ⏫ Tümünü Daralt
-              </button>
-            </div>
-          </div>
         </div>
         <div class="sector-pills-row" id="invoice-category-pills">
           <!-- Dynamic Category Pills with counts & amounts -->
@@ -3750,7 +3703,7 @@
     }
 
     // Otomatik Sürüm Kontrolü
-    const APP_BUILD_VERSION = "2026-10-10_v35_sync_sheets_cards_and_invoices";
+    const APP_BUILD_VERSION = "2026-10-10_v36_clean_ui_and_full_sheet_sync";
     if (localStorage.getItem("yg_app_build_version") !== APP_BUILD_VERSION) {
       try {
         const currentSupabaseUrl = (localStorage.getItem(SUPABASE_URL_KEY) || '').trim();
@@ -3762,9 +3715,14 @@
         unmarkDeleted('Alış Faturaları', 'EFA2026000004128');
         unmarkDeleted('Müşteriler', 'Bora Güzey');
         unmarkDeleted('Müşteriler', 'bora güzey');
+        unmarkDeleted('İnşaat Projeleri', 'Florya 5595/96-97-98-99');
         localStorage.removeItem('yg_invoices_lite');
         localStorage.removeItem('yg_cards_lite');
         localStorage.removeItem('yg_projects_lite');
+        localStorage.removeItem('yg_accounts_lite');
+        localStorage.removeItem('yg_docs_lite');
+        localStorage.removeItem('yg_todos_lite');
+        localStorage.removeItem('yg_stock_lite');
 
         // Mükerrer cari kayıtlarını silinmiş olarak işaretle ve Google Sheets'ten sil
         const obsoleteNames = [
@@ -5118,19 +5076,16 @@ function doPost(e) {
 
           <div class="quick-actions-row">
             ${c.mobile ? `
-              <a href="tel:${c.mobile.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">📱 Cepten Ara</a>
+              <a href="tel:${c.mobile.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">📞 Ara</a>
               <a href="https://wa.me/${c.mobile.replace(/[^0-9]/g, '').replace(/^0/, '90')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
             ` : (c.phone ? `
               <a href="tel:${c.phone.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">📞 Ara</a>
               <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '').replace(/^0/, '90')}" target="_blank" class="btn btn-green btn-sm">💬 WhatsApp</a>
             ` : '')}
-            ${c.office ? `<a href="tel:${c.office.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">☎️ Ofisi Ara</a>` : ''}
+            ${c.office ? `<a href="tel:${c.office.replace(/[^0-9+]/g, '')}" class="btn btn-secondary btn-sm">☎️ Ofis</a>` : ''}
             ${c.email ? `<a href="mailto:${c.email}" class="btn btn-secondary btn-sm">✉️ E-Posta</a>` : ''}
-            <button class="btn btn-secondary btn-sm" onclick="changeCardSector('${c.id}')" title="Sektörü Değiştir">🏢 Sektör</button>
-            <button class="btn btn-secondary btn-sm" onclick="editCard('${c.id}')" title="Kartviziti Düzenle">✏️ Düzenle</button>
-            <button class="btn btn-secondary btn-sm" onclick="showCardQr('${c.id}')">📱 QR</button>
-            <button class="btn btn-secondary btn-sm" onclick="downloadVcf('${c.id}')">⬇️ vCard</button>
-            <button class="btn btn-secondary btn-sm" style="color: #ef4444; margin-left: auto;" onclick="deleteCard('${c.id}')">🗑️</button>
+            <button class="btn btn-secondary btn-sm" style="margin-left: auto;" onclick="editCard('${c.id}')" title="Kartviziti Düzenle">✏️ Düzenle</button>
+            <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteCard('${c.id}')" title="Kartviziti Sil">🗑️</button>
           </div>
         </div>
       `;
@@ -6249,8 +6204,7 @@ function doPost(e) {
             <strong style="color: var(--green-dark);">Bütçe: ${escapeHtml(p.budget || '-')}</strong>
             <div style="display:flex; gap:5px; align-items:center;">
               <button class="btn btn-secondary btn-sm" onclick="filterDocsForProject('${p.id}')">📁 Evraklar</button>
-              <button class="btn btn-secondary btn-sm" onclick="filterTodosForProject('${p.id}')">✅ Görevler</button>
-              <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️</button>
+              <button class="btn btn-secondary btn-sm" onclick="editProject('${p.id}')" title="Projeyi Düzenle">✏️ Düzenle</button>
               <button class="btn btn-secondary btn-sm" style="color: #ef4444;" onclick="deleteProject('${p.id}')" title="Projeyi Sil">🗑️</button>
             </div>
           </div>
@@ -8985,16 +8939,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
               💳 ${escapeHtml(inv.method || 'Havale')}
             </span>
             <div style="display: flex; gap: 6px;">
-              <button class="btn btn-secondary btn-sm" onclick="editInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;" title="Faturayı Düzenle">
+              <button class="btn btn-secondary btn-sm" onclick="editInvoice('${inv.id}')" style="padding: 4px 10px; font-size: 0.72rem;" title="Faturayı Düzenle">
                 ✏️ Düzenle
               </button>
-              <button class="btn btn-secondary btn-sm" onclick="changeInvoiceCategory('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;" title="Kategoriyi Değiştir">
-                🏷️ Kategori
-              </button>
-              <button class="btn btn-secondary btn-sm" onclick="toggleInvoiceStatus('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem;">
-                ${isPaid ? 'Bekliyor Yap' : 'Ödendi İşaretle'}
-              </button>
-              <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.7rem; color: var(--danger);" title="Faturayı Sil">
+              <button class="btn btn-secondary btn-sm" onclick="deleteInvoice('${inv.id}')" style="padding: 4px 8px; font-size: 0.72rem; color: var(--danger);" title="Faturayı Sil">
                 🗑️
               </button>
             </div>
@@ -11788,12 +11736,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
             const name = cleanText(r['Proje Adı'] || r['col_2']);
             const code = cleanText(r['Proje Kodu'] || r['col_1']);
             if (!name && !code) return false;
-            if (name === "Bağdat Caddesi Kentsel Dönüşüm" || code === "PRJ-2026-01") return false;
-            if (name && isRecordDeleted('İnşaat Projeleri', name)) {
-              const lower = name.toLowerCase();
-              if (lower.includes('cennet') || lower.includes('florya')) return false;
-              unmarkDeleted('İnşaat Projeleri', name);
-            }
+            if (isRecordDeleted('İnşaat Projeleri', name)) return false;
             return true;
           })
           .map((r, idx) => {
@@ -11906,6 +11849,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
         localProjects.forEach(lp => {
           if (!lp || !lp.name) return;
           if (isRecordDeleted('İnşaat Projeleri', lp.name)) return;
+          if (!lp._isLocalDraft) return;
 
           const lpSlug = makeProjectSlug(lp.name);
           const lpApt = (lp.buildingName || '').trim().toLowerCase();
@@ -12009,6 +11953,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
         localAccounts.forEach(la => {
           if (!la || !la.company) return;
           if (isRecordDeleted('Cari Kartları', la.company)) return;
+          if (!la._isLocalDraft) return;
           const exists = accounts.some(a => a.company && a.company.trim().toLowerCase() === la.company.trim().toLowerCase());
           if (!exists) accounts.push(la);
         });
@@ -12112,24 +12057,33 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
 
       // 5. Proje Dökümanları
       if (d['Proje Dökümanları'] && d['Proje Dökümanları'].length > 0) {
+        const localDocs = getStore('yg_docs_lite', []);
         docs = d['Proje Dökümanları']
           .filter(r => {
             const title = cleanText(r['Evrak Başlığı'] || r['col_1']);
             if (!title) return false;
-            if (title.includes("Kadıköy — Onaylı Mimari")) return false;
             if (isRecordDeleted('Proje Dökümanları', title)) return false;
             return true;
           })
           .map((r, idx) => ({
             id: 'd_' + idx,
             title: cleanText(r['Evrak Başlığı'] || r['col_1']),
-            type: cleanText(r['Evrak / Proje Türü'] || r['col_2']),
+            type: cleanText(r['Evrak / Proje Türü'] || r['Evrak Türü'] || r['col_2']),
             project: cleanText(r['İlgili Proje'] || r['col_3']),
             date: cleanDate(r['Evrak Tarihi'] || r['col_4']),
             expiry: cleanDate(r['Geçerlilik Tarihi'] || r['col_5']),
             url: cleanText(r['Belge / Link URL'] || r['col_6']),
             notes: cleanText(r['Evrak Notu / Açıklama'] || r['col_7'])
           }));
+
+        localDocs.forEach(ld => {
+          if (!ld || !ld.title) return;
+          if (isRecordDeleted('Proje Dökümanları', ld.title)) return;
+          if (!ld._isLocalDraft) return;
+          const exists = docs.some(d => d.title && d.title.trim().toLowerCase() === ld.title.trim().toLowerCase());
+          if (!exists) docs.push(ld);
+        });
+
         setStore('yg_docs_lite', docs);
         renderDocs();
       }
@@ -12191,6 +12145,7 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
         localTodos.forEach(lt => {
           if (!lt || !lt.title) return;
           if (isRecordDeleted('To Do list', lt.title) || isRecordDeleted('Yapılacaklar', lt.title)) return;
+          if (!lt._isLocalDraft) return;
           const exists = todos.some(t => t.title && t.title.trim().toLowerCase() === lt.title.trim().toLowerCase());
           if (!exists) {
             todos.push(lt);
@@ -12203,11 +12158,13 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
 
       // 7. Stok
       if (d['Stok'] && d['Stok'].length > 0) {
+        const localStock = getStore('yg_stock_lite', []);
         stock = d['Stok']
           .filter(r => {
             const name = cleanText(r['Malzeme Adı'] || r['col_2']);
             const code = cleanText(r['Stok Kodu'] || r['col_1']);
             if (!name && !code) return false;
+            if (name === "Malzeme Adı" || code === "Stok Kodu") return false;
             if (code === "STK-DM-14" || name.includes("B420C")) return false;
             if (name && isRecordDeleted('Stok', name)) return false;
             if (code && isRecordDeleted('Stok', code)) return false;
@@ -12224,8 +12181,17 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
             totalValue: cleanText(r['Toplam Değer (₺)'] || r['col_7']),
             location: cleanText(r['Depo / Konum'] || r['col_8']),
             status: cleanText(r['Durum'] || r['col_9'], 'Yeterli'),
-            notes: cleanText(r['Notlar / Detay'] || r['col_10'])
+            notes: cleanText(r['Notlar / Detay'] || r['Notlar'] || r['col_10'])
           }));
+
+        localStock.forEach(ls => {
+          if (!ls || !ls.name) return;
+          if (isRecordDeleted('Stok', ls.name) || (ls.code && isRecordDeleted('Stok', ls.code))) return;
+          if (!ls._isLocalDraft) return;
+          const exists = stock.some(s => s.name && s.name.trim().toLowerCase() === ls.name.trim().toLowerCase());
+          if (!exists) stock.push(ls);
+        });
+
         setStore('yg_stock_lite', stock);
         renderStock();
       }
