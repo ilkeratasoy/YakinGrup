@@ -5209,7 +5209,7 @@ function doPost(e) {
       updateCardFormSummary();
     }
 
-    function changeCardSector(id) {
+    async function changeCardSector(id) {
       const c = cards.find(x => x.id === id);
       if (!c) return;
       const current = c.sector || 'İnşaat & Taahhüt';
@@ -5219,12 +5219,12 @@ function doPost(e) {
         c.sector = newSec.trim();
         setStore('yg_cards_lite', cards);
         renderCards();
-        dbSync.saveCard(c, true, c.name);
+        await dbSync.saveCard(c, true, c.name);
         showToast(`Sektör güncellendi: ${c.sector}`);
       }
     }
 
-    function saveCard(e) {
+    async function saveCard(e) {
       e.preventDefault();
       const nameVal = document.getElementById('card-name').value.trim();
       const compVal = document.getElementById('card-company').value.trim();
@@ -5260,7 +5260,7 @@ function doPost(e) {
 
           cancelCardEdit();
           showToast(`"${c.name}" kartviziti güncellendi`);
-          dbSync.saveCard(c, true, oldName);
+          await dbSync.saveCard(c, true, oldName);
           return;
         }
       }
@@ -5284,12 +5284,13 @@ function doPost(e) {
       cards.unshift(newC);
       setStore('yg_cards_lite', cards);
 
+      unmarkDeleted('Kartvizitler', newC.name);
       unmarkDeleted('Müşteriler', newC.name);
-      if (newC.mobile) unmarkDeleted('Müşteriler', newC.mobile);
-      if (newC.office) unmarkDeleted('Müşteriler', newC.office);
-      if (newC.email) unmarkDeleted('Müşteriler', newC.email);
+      if (newC.mobile) { unmarkDeleted('Kartvizitler', newC.mobile); unmarkDeleted('Müşteriler', newC.mobile); }
+      if (newC.office) { unmarkDeleted('Kartvizitler', newC.office); unmarkDeleted('Müşteriler', newC.office); }
+      if (newC.email) { unmarkDeleted('Kartvizitler', newC.email); unmarkDeleted('Müşteriler', newC.email); }
 
-      dbSync.saveCard(newC, false);
+      await dbSync.saveCard(newC, false);
 
       renderCards();
       document.getElementById('card-form').reset();
@@ -5428,22 +5429,23 @@ function doPost(e) {
       }
     }
 
-    function deleteCard(id) {
+    async function deleteCard(id) {
       const c = cards.find(x => x.id === id);
       if (!c) return;
       if (!confirm(`"${c.name}" kartviziti silinsin mi?`)) return;
 
+      markAsDeleted('Kartvizitler', c.name);
       markAsDeleted('Müşteriler', c.name);
-      if (c.mobile) markAsDeleted('Müşteriler', c.mobile);
-      if (c.office) markAsDeleted('Müşteriler', c.office);
-      if (c.phone) markAsDeleted('Müşteriler', c.phone);
-      if (c.email) markAsDeleted('Müşteriler', c.email);
+      if (c.mobile) { markAsDeleted('Kartvizitler', c.mobile); markAsDeleted('Müşteriler', c.mobile); }
+      if (c.office) { markAsDeleted('Kartvizitler', c.office); markAsDeleted('Müşteriler', c.office); }
+      if (c.phone) { markAsDeleted('Kartvizitler', c.phone); markAsDeleted('Müşteriler', c.phone); }
+      if (c.email) { markAsDeleted('Kartvizitler', c.email); markAsDeleted('Müşteriler', c.email); }
 
       cards = cards.filter(x => x.id !== id);
       setStore('yg_cards_lite', cards);
       renderCards();
 
-      dbSync.deleteCard(c);
+      await dbSync.deleteCard(c);
       showToast(`"${c.name}" silindi`);
     }
 
@@ -6507,7 +6509,7 @@ function doPost(e) {
       openModal('modal-new-project');
     }
 
-    function deleteProject(id) {
+    async function deleteProject(id) {
       const p = projects.find(x => x.id === id);
       if (!p) return;
       if (!confirm(`"${p.name}" projesi silinsin mi?`)) return;
@@ -6522,7 +6524,7 @@ function doPost(e) {
       populateTodoProjectSelect();
       populateAccountProjectSelect();
 
-      dbSync.deleteProject(p);
+      await dbSync.deleteProject(p);
       showToast(`"${p.name}" silindi ✅`);
     }
 
@@ -6603,7 +6605,7 @@ function doPost(e) {
             showToast(`"${p.name}" projesi güncellendi! ✏️`);
           }
 
-          dbSync.saveProject(p, true, oldName, oldCode);
+          await dbSync.saveProject(p, true, oldName, oldCode);
           return;
         }
       }
@@ -6664,7 +6666,7 @@ function doPost(e) {
         showToast('Yeni proje ve imar/parsel kayıtları eklendi! 🏗️');
       }
 
-      dbSync.saveProject(newP, false);
+      await dbSync.saveProject(newP, false);
     }
 
     /* ================================================================
@@ -7937,22 +7939,8 @@ function doPost(e) {
             accounts.push(acc);
             unmarkDeleted('Cari Kartları', unifiedName);
 
-            // Google Sheets'e kaydet (Canlı Webhook Sync)
-            postToWebhook('Cari Kartları', [
-              new Date().toISOString().split('T')[0],
-              acc.company,
-              acc.type,
-              acc.contact,
-              acc.phone,
-              acc.email,
-              acc.taxOffice,
-              acc.taxNo,
-              acc.address,
-              acc.notes,
-              acc.receivable,
-              acc.payable,
-              acc.balance
-            ]);
+            // Google Sheets & Supabase senkronizasyonu (Hibrit)
+            dbSync.saveAccount(acc, false, null, acc.notes);
 
             createdCount++;
             createdNames.push(unifiedName);
@@ -8343,7 +8331,7 @@ function doPost(e) {
       openModal('modal-new-account');
     }
 
-    function deleteAccount(id) {
+    async function deleteAccount(id) {
       const a = accounts.find(x => x.id === id);
       if (!a) return;
       if (!confirm(`"${a.company}" cari kartı silinsin mi?`)) return;
@@ -8353,11 +8341,11 @@ function doPost(e) {
       setStore('yg_accounts_lite', accounts);
       renderAccounts();
 
-      dbSync.deleteAccount(a);
+      await dbSync.deleteAccount(a);
       showToast(`"${a.company}" silindi ✅`);
     }
 
-    function saveAccount(e) {
+    async function saveAccount(e) {
       e.preventDefault();
       const companyVal = document.getElementById('a-company').value.trim();
       const typeVal = document.getElementById('a-type').value;
@@ -8436,7 +8424,7 @@ function doPost(e) {
           closeModal('modal-new-account');
           showToast(`"${a.company}" cari kartı güncellendi! ✏️`);
 
-          dbSync.saveAccount(a, true, oldCompany, webhookNotes);
+          await dbSync.saveAccount(a, true, oldCompany, webhookNotes);
           return;
         }
       }
@@ -8491,7 +8479,7 @@ function doPost(e) {
 
       unmarkDeleted('Cari Kartları', newA.company);
 
-      dbSync.saveAccount(newA, false, null, webhookNotes);
+      await dbSync.saveAccount(newA, false, null, webhookNotes);
 
       closeModal('modal-new-account');
       renderAccounts();
@@ -9136,7 +9124,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (loadEl) loadEl.style.display = 'none';
           const custInput = document.getElementById('inv-category-custom');
           if (custInput) custInput.style.display = 'none';
-          dbSync.saveInvoice(inv, true, oldNo);
+          await dbSync.saveInvoice(inv, true, oldNo);
           return;
         }
       }
@@ -9180,7 +9168,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (custInput) custInput.style.display = 'none';
       e.target.reset();
 
-      dbSync.saveInvoice(newInv, false);
+      await dbSync.saveInvoice(newInv, false);
     }
 
     function renderInvoices() {
@@ -9451,7 +9439,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       dbSync.saveInvoice(inv, true, inv.no);
     }
 
-    function deleteInvoice(id) {
+    async function deleteInvoice(id) {
       const inv = invoices.find(i => i.id === id);
       if (!inv) return;
       if (!confirm(`"${inv.no}" numaralı faturayı silmek istediğinize emin misiniz?`)) return;
@@ -9462,7 +9450,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_invoices_lite', invoices);
       renderInvoices();
 
-      dbSync.deleteInvoice(inv);
+      await dbSync.deleteInvoice(inv);
       showToast(`"${inv.no}" fatura silindi ✅`);
     }
 
@@ -9795,7 +9783,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderDocs(projName.toLowerCase());
     }
 
-    function deleteDoc(id) {
+    async function deleteDoc(id) {
       const d = docs.find(x => x.id === id);
       if (!d) return;
       if (!confirm(`"${d.title}" dökümanı silinsin mi?`)) return;
@@ -9806,11 +9794,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_docs_lite', docs);
       renderDocs();
 
-      dbSync.deleteDoc(d);
+      await dbSync.deleteDoc(d);
       showToast(`"${d.title}" silindi`);
     }
 
-    function saveDoc(e) {
+    async function saveDoc(e) {
       e.preventDefault();
 
       if (editingDocId) {
@@ -9832,7 +9820,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           closeModal('modal-new-doc');
           showToast(`"${d.title}" güncellendi`);
 
-          dbSync.saveDoc(d, true, oldTitle);
+          await dbSync.saveDoc(d, true, oldTitle);
           return;
         }
       }
@@ -9853,7 +9841,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
 
       unmarkDeleted('Proje Dökümanları', newD.title);
 
-      dbSync.saveDoc(newD, false);
+      await dbSync.saveDoc(newD, false);
 
       clearGeneralDocFile();
       closeModal('modal-new-doc');
@@ -10070,7 +10058,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       showToast('Görev eklendi');
     }
 
-    function saveTodo(e) {
+    async function saveTodo(e) {
       e.preventDefault();
       const title = document.getElementById('todo-title').value.trim();
       if (!title) return;
@@ -10110,7 +10098,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
           if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
 
-          dbSync.saveTodo(t, true, oldTitle);
+          await dbSync.saveTodo(t, true, oldTitle);
           return;
         }
       }
@@ -10143,10 +10131,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       if (document.getElementById('todo-due-date')) document.getElementById('todo-due-date').value = '';
       if (document.getElementById('todo-notes')) document.getElementById('todo-notes').value = '';
 
-      dbSync.saveTodo(newT, false);
+      await dbSync.saveTodo(newT, false);
     }
 
-    function toggleTodoStatus(id) {
+    async function toggleTodoStatus(id) {
       const t = todos.find(x => x.id === id);
       if (!t) return;
       t.completed = !t.completed;
@@ -10154,10 +10142,10 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderTodos();
 
       showToast(t.completed ? 'Görev tamamlandı' : 'Görev bekliyor durumuna alındı');
-      dbSync.saveTodo(t, true, t.title);
+      await dbSync.saveTodo(t, true, t.title);
     }
 
-    function deleteTodo(id) {
+    async function deleteTodo(id) {
       const t = todos.find(x => x.id === id);
       if (!t) return;
       if (!confirm(`"${t.title}" görevini silmek istediğinize emin misiniz?`)) return;
@@ -10170,7 +10158,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       renderTodos();
       showToast(`"${t.title}" silindi`);
 
-      dbSync.deleteTodo(t);
+      await dbSync.deleteTodo(t);
     }
 
     function exportTodosCsv() {
@@ -10247,7 +10235,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       openModal('modal-new-stock');
     }
 
-    function deleteStock(id) {
+    async function deleteStock(id) {
       const s = stock.find(x => x.id === id);
       if (!s) return;
       if (!confirm(`"${s.name}" stok kalemi silinsin mi?`)) return;
@@ -10259,11 +10247,11 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       setStore('yg_stock_lite', stock);
       renderStock();
 
-      dbSync.deleteStock(s);
+      await dbSync.deleteStock(s);
       showToast(`"${s.name}" silindi`);
     }
 
-    function saveStock(e) {
+    async function saveStock(e) {
       e.preventDefault();
       const qtyVal = parseFloat(document.getElementById('s-qty').value) || 0;
       const minQtyVal = parseFloat(document.getElementById('s-min-qty')?.value) || 5;
@@ -10293,7 +10281,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
           closeModal('modal-new-stock');
           showToast(`"${s.name}" güncellendi`);
 
-          dbSync.saveStock(s, true, oldName);
+          await dbSync.saveStock(s, true, oldName);
           return;
         }
       }
@@ -10319,7 +10307,7 @@ Not: subtotal (matrah), vat (KDV) ve total (genel toplam) değerlerini sadece sa
       unmarkDeleted('Stok', newS.name);
       if (newS.code) unmarkDeleted('Stok', newS.code);
 
-      dbSync.saveStock(newS, false);
+      await dbSync.saveStock(newS, false);
 
       closeModal('modal-new-stock');
       renderStock();
@@ -11413,15 +11401,18 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
     // ==========================================
     const dbSync = {
       async saveProject(p, isEdit, oldName, oldCode) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseProject(p);
-            await supabaseClient.from('projects').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveProject uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseProject(p);
+              await supabaseClient.from('projects').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveProject uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldName) {
               await postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', oldName);
@@ -11440,64 +11431,92 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteProject(p) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('projects').delete().or(`id.eq.${p.id},name.eq.${p.name}`);
-          } catch(err) {
-            console.warn("Supabase deleteProject uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('projects').delete().or(`id.eq.${p.id},name.eq.${p.name}`);
+            } catch(err) {
+              console.warn("Supabase deleteProject uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name);
+        promises.push(postDeleteToWebhook('İnşaat Projeleri', 'Proje Adı', p.name));
+        await Promise.allSettled(promises);
       },
 
       async saveAccount(a, isEdit, oldCompany, webhookNotes) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseAccount(a);
-            await supabaseClient.from('accounts').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveAccount uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseAccount(a);
+              await supabaseClient.from('accounts').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveAccount uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldCompany) {
               await postDeleteToWebhook('Cari Kartları', 'Firma Adı', oldCompany);
             }
             await postToWebhook('Cari Kartları', [
-              new Date().toISOString().split('T')[0], a.company, a.type, a.contact, a.phone, a.email, a.taxOffice, a.taxNo, a.address, webhookNotes, a.receivable, a.payable, a.balance
+              new Date().toISOString().split('T')[0],
+              a.company,
+              a.type || 'Müşteri',
+              a.contact || '',
+              a.phone || '',
+              a.email || '',
+              a.taxOffice || a.tax_office || '',
+              a.taxNo || a.tax_no || '',
+              a.address || '',
+              webhookNotes || a.notes || '',
+              a.receivable || 0,
+              a.payable || 0,
+              a.balance || 0
             ]);
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteAccount(a) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('accounts').delete().or(`id.eq.${a.id},company.eq.${a.company}`);
-          } catch(err) {
-            console.warn("Supabase deleteAccount uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('accounts').delete().or(`id.eq.${a.id},company.eq.${a.company}`);
+            } catch(err) {
+              console.warn("Supabase deleteAccount uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('Cari Kartları', 'Firma Adı', a.company);
+        promises.push(postDeleteToWebhook('Cari Kartları', 'Firma Adı', a.company));
+        await Promise.allSettled(promises);
       },
 
       async saveInvoice(inv, isEdit, oldNo) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseInvoice(inv);
-            await supabaseClient.from('invoices').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveInvoice uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseInvoice(inv);
+              await supabaseClient.from('invoices').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveInvoice uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldNo) {
               await postDeleteToWebhook('Alış Faturaları', 'Fatura No', oldNo);
@@ -11511,30 +11530,38 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteInvoice(inv) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('invoices').delete().or(`id.eq.${inv.id},no.eq.${inv.no}`);
-          } catch(err) {
-            console.warn("Supabase deleteInvoice uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('invoices').delete().or(`id.eq.${inv.id},no.eq.${inv.no}`);
+            } catch(err) {
+              console.warn("Supabase deleteInvoice uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('Alış Faturaları', 'Fatura No', inv.no);
+        promises.push(postDeleteToWebhook('Alış Faturaları', 'Fatura No', inv.no));
+        await Promise.allSettled(promises);
       },
 
       async saveDoc(d, isEdit, oldTitle) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseDoc(d);
-            await supabaseClient.from('documents').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveDoc uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseDoc(d);
+              await supabaseClient.from('documents').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveDoc uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldTitle) {
               await postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', oldTitle);
@@ -11545,30 +11572,38 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteDoc(d) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('documents').delete().or(`id.eq.${d.id},title.eq.${d.title}`);
-          } catch(err) {
-            console.warn("Supabase deleteDoc uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('documents').delete().or(`id.eq.${d.id},title.eq.${d.title}`);
+            } catch(err) {
+              console.warn("Supabase deleteDoc uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', d.title);
+        promises.push(postDeleteToWebhook('Proje Dökümanları', 'Evrak Başlığı', d.title));
+        await Promise.allSettled(promises);
       },
 
       async saveTodo(t, isEdit, oldTitle) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseTodo(t);
-            await supabaseClient.from('todos').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveTodo uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseTodo(t);
+              await supabaseClient.from('todos').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveTodo uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldTitle) {
               await postDeleteToWebhook('To Do list', 'To Do List', oldTitle);
@@ -11582,31 +11617,39 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteTodo(t) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('todos').delete().or(`id.eq.${t.id},title.eq.${t.title}`);
-          } catch(err) {
-            console.warn("Supabase deleteTodo uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('todos').delete().or(`id.eq.${t.id},title.eq.${t.title}`);
+            } catch(err) {
+              console.warn("Supabase deleteTodo uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('To Do list', 'To Do List', t.title);
-        postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title);
+        promises.push(postDeleteToWebhook('To Do list', 'To Do List', t.title));
+        promises.push(postDeleteToWebhook('Yapılacaklar', 'Görev Başlığı', t.title));
+        await Promise.allSettled(promises);
       },
 
       async saveStock(s, isEdit, oldName) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseStock(s);
-            await supabaseClient.from('stock').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveStock uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseStock(s);
+              await supabaseClient.from('stock').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveStock uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldName) {
               await postDeleteToWebhook('Stok', 'Malzeme Adı', oldName);
@@ -11617,53 +11660,66 @@ FOR DELETE TO anon USING (bucket_id = 'yakin-docs');
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteStock(s) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('stock').delete().or(`id.eq.${s.id},name.eq.${s.name}`);
-          } catch(err) {
-            console.warn("Supabase deleteStock uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('stock').delete().or(`id.eq.${s.id},name.eq.${s.name}`);
+            } catch(err) {
+              console.warn("Supabase deleteStock uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('Stok', 'Malzeme Adı', s.name);
+        promises.push(postDeleteToWebhook('Stok', 'Malzeme Adı', s.name));
+        await Promise.allSettled(promises);
       },
 
       async saveCard(c, isEdit, oldName) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            const row = toSupabaseCard(c);
-            await supabaseClient.from('cards').upsert(row, { onConflict: 'id' });
-          } catch(err) {
-            console.warn("Supabase saveCard uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              const row = toSupabaseCard(c);
+              await supabaseClient.from('cards').upsert(row, { onConflict: 'id' });
+            } catch(err) {
+              console.warn("Supabase saveCard uyarısı:", err);
+            }
+          })());
         }
-        (async () => {
+        promises.push((async () => {
           try {
             if (isEdit && oldName) {
-              await postDeleteToWebhook('Müşteriler', 'Ad Soyad', oldName);
+              await postDeleteToWebhook('Kartvizitler', 'Ad Soyad', oldName);
             }
-            await postToWebhook('Müşteriler', [
+            await postToWebhook('Kartvizitler', [
               c.date || new Date().toISOString().split('T')[0],
               c.name, c.company, c.role, c.sector, c.mobile, c.office, c.email, c.category, c.address, c.notes
             ]);
           } catch(err) {
             console.warn("Sheets mirror uyarısı:", err);
           }
-        })();
+        })());
+        await Promise.allSettled(promises);
       },
 
       async deleteCard(c) {
+        const promises = [];
         if (supabaseClient) {
-          try {
-            await supabaseClient.from('cards').delete().or(`id.eq.${c.id},name.eq.${c.name}`);
-          } catch(err) {
-            console.warn("Supabase deleteCard uyarısı:", err);
-          }
+          promises.push((async () => {
+            try {
+              await supabaseClient.from('cards').delete().or(`id.eq.${c.id},name.eq.${c.name}`);
+            } catch(err) {
+              console.warn("Supabase deleteCard uyarısı:", err);
+            }
+          })());
         }
-        postDeleteToWebhook('Müşteriler', 'Ad Soyad', c.name);
+        promises.push(postDeleteToWebhook('Kartvizitler', 'Ad Soyad', c.name));
+        await Promise.allSettled(promises);
       }
     };
 
