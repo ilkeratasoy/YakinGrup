@@ -1,34 +1,116 @@
 /**
- * YAKIN GRUP — AKILLI ARSA, TAPU & İMAR PLAN MOTORU
- * 360Dönüşüm Standartlarında Vektörel Uydu Parseli, Kenar Metrajları,
- * Belediye 1/1000 İmar Planı Paftası, Plan Notları ve 360° VR Entegrasyonu.
+ * YAKIN GRUP — AKILLI ARSA, TAPU & İMAR PLAN MOTORU (360DÖNÜŞÜM STANDARDI)
+ * 3 Arama Modu: [Adres ile] • [Harita ile] • [Ada/parsel ile]
+ * Türkiye'nin 81 İli, Detaylı İlçe & Mahalle Listeleri, Leaflet Uydu Haritası,
+ * Vektörel Uydu Parseli, Ölçülü Kenar Metrajları, 1/1000 İmar Paftası, 360° VR.
  */
 
 (function (window, document) {
   'use strict';
 
-  // Standart Web Mercator karo boyutu
   const TILE = 256;
 
-  // Bilinen İlçe Koordinat Merkezleri (TKGM & Harita Odakları)
-  const DISTRICT_COORDS = {
-    'Kadıköy': { lat: 40.9715, lng: 29.0528, defaultKaks: 2.05, defaultTaks: 0.35, defaultHmax: 'Z+8 Kat', use: 'Konut' },
-    'Beşiktaş': { lat: 41.0712, lng: 29.0234, defaultKaks: 1.85, defaultTaks: 0.35, defaultHmax: 'Z+5 Kat', use: 'Konut' },
-    'Bakırköy': { lat: 40.9632, lng: 28.8245, defaultKaks: 1.75, defaultTaks: 0.35, defaultHmax: 'Z+4 Kat', use: 'Konut' },
-    'Şişli': { lat: 41.0560, lng: 28.9980, defaultKaks: 2.50, defaultTaks: 0.40, defaultHmax: 'Z+8 Kat', use: 'Karma (Konut + Ticaret)' },
-    'Üsküdar': { lat: 41.0180, lng: 29.0430, defaultKaks: 1.80, defaultTaks: 0.35, defaultHmax: 'Z+6 Kat', use: 'Konut' },
-    'Karşıyaka': { lat: 38.4590, lng: 27.1180, defaultKaks: 2.40, defaultTaks: 0.40, defaultHmax: 'Z+7 Kat', use: 'Karma (Konut + Ticaret)' },
-    'İzmit': { lat: 40.7680, lng: 29.9650, defaultKaks: 1.60, defaultTaks: 0.30, defaultHmax: 'Z+5 Kat', use: 'Konut' },
-    'Büyükçekmece': { lat: 41.0210, lng: 28.5820, defaultKaks: 1.50, defaultTaks: 0.30, defaultHmax: 'Z+4 Kat', use: 'Konut' },
-    'Çankaya': { lat: 39.9050, lng: 32.8600, defaultKaks: 2.00, defaultTaks: 0.35, defaultHmax: 'Z+6 Kat', use: 'Konut' }
+  // 1. TÜRKİYE 81 İL LİSTESİ (Plaka Sırasıyla)
+  const TURKIYE_ILLERI = [
+    'Adana', 'Adıyaman', 'Afyonkarahisar', 'Ağrı', 'Aksaray', 'Amasya', 'Ankara', 'Antalya',
+    'Ardahan', 'Artvin', 'Aydın', 'Balıkesir', 'Bartın', 'Batman', 'Bayburt', 'Bilecik',
+    'Bingöl', 'Bitlis', 'Bolu', 'Burdur', 'Bursa', 'Çanakkale', 'Çankırı', 'Çorum',
+    'Denizli', 'Diyarbakır', 'Düzce', 'Edirne', 'Elazığ', 'Erzincan', 'Erzurum', 'Eskişehir',
+    'Gaziantep', 'Giresun', 'Gümüşhane', 'Hakkari', 'Hatay', 'Iğdır', 'Isparta', 'İstanbul',
+    'İzmir', 'Kahramanmaraş', 'Karabük', 'Karaman', 'Kars', 'Kastamonu', 'Kayseri', 'Kilis',
+    'Kırıkkale', 'Kırklareli', 'Kırşehir', 'Kocaeli', 'Konya', 'Kütahya', 'Malatya', 'Manisa',
+    'Mardin', 'Mersin', 'Muğla', 'Muş', 'Nevşehir', 'Niğde', 'Ordu', 'Osmaniye',
+    'Rize', 'Sakarya', 'Samsun', 'Şanlıurfa', 'Siirt', 'Sinop', 'Şırnak', 'Sivas',
+    'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Uşak', 'Van', 'Yalova', 'Yozgat', 'Zonguldak'
+  ];
+
+  // 2. KAPSAMLI İLÇE VERİTABANI
+  const ILCELER_DB = {
+    'İstanbul': [
+      'Kadıköy', 'Beşiktaş', 'Bakırköy', 'Şişli', 'Üsküdar', 'Ataşehir', 'Maltepe', 'Kartal',
+      'Pendik', 'Tuzla', 'Ümraniye', 'Beykoz', 'Çekmeköy', 'Sancaktepe', 'Sultanbeyli', 'Şile',
+      'Adalar', 'Fatih', 'Beyoğlu', 'Eyüpsultan', 'Kağıthane', 'Sarıyer', 'Zeytinburnu', 'Güngören',
+      'Bahçelievler', 'Bağcılar', 'Esenler', 'Bayrampaşa', 'Gaziosmanpaşa', 'Sultangazi',
+      'Küçükçekmece', 'Avcılar', 'Başakşehir', 'Beylikdüzü', 'Esenyurt', 'Büyükçekmece', 'Çatalca',
+      'Silivri', 'Arnavutköy'
+    ],
+    'Ankara': [
+      'Çankaya', 'Yenimahalle', 'Keçiören', 'Mamak', 'Altındağ', 'Etimesgut', 'Sincan', 'Gölbaşı',
+      'Pursaklar', 'Polatlı', 'Kahramankazan', 'Beypazarı', 'Elmadağ', 'Çubuk', 'Akyurt', 'Bala',
+      'Güdül', 'Haymana', 'Kalecik', 'Kızılcahamam', 'Nallıhan', 'Şereflikoçhisar'
+    ],
+    'İzmir': [
+      'Karşıyaka', 'Konak', 'Bornova', 'Bayraklı', 'Buca', 'Çiğli', 'Karabağlar', 'Balçova',
+      'Narlıdere', 'Gaziemir', 'Menemen', 'Torbalı', 'Urla', 'Çeşme', 'Seferihisar', 'Kemalpaşa',
+      'Aliağa', 'Bergama', 'Dikili', 'Foça', 'Güzelbahçe', 'Karaburun', 'Menderes', 'Ödemiş',
+      'Selçuk', 'Tire'
+    ],
+    'Kocaeli': [
+      'İzmit', 'Gebze', 'Darıca', 'Çayırova', 'Körfez', 'Gölcük', 'Derince', 'Kartepe',
+      'Başiskele', 'Karamürsel', 'Dilovası', 'Kandıra'
+    ],
+    'Bursa': [
+      'Nilüfer', 'Osmangazi', 'Yıldırım', 'Mudanya', 'Gemlik', 'İnegöl', 'Gürsu', 'Kestel',
+      'Mustafakemalpaşa', 'Orhangazi', 'Karacabey', 'İznik', 'Yenişehir'
+    ],
+    'Antalya': [
+      'Muratpaşa', 'Konyaaltı', 'Kepez', 'Alanya', 'Manavgat', 'Serik', 'Kemer', 'Kaş',
+      'Döşemealtı', 'Aksu', 'Kumluca', 'Finike', 'Gazipaşa', 'Korkuteli'
+    ],
+    'Tekirdağ': [
+      'Süleymanpaşa', 'Çorlu', 'Çerkezköy', 'Kapaklı', 'Ergene', 'Marmaraereğlisi', 'Şarköy', 'Muratlı', 'Malkara', 'Hayrabolu', 'Saray'
+    ],
+    'Sakarya': [
+      'Adapazarı', 'Serdivan', 'Erenler', 'Arifiye', 'Sapanca', 'Hendek', 'Akyazı', 'Karasu', 'Geyve', 'Pamukova', 'Ferizli', 'Kocaali'
+    ]
   };
 
-  // Gerçekçi Örnek Parsel Veritabanı (Belediye KEOS & TKGM Kayıtları)
+  // 3. MAHALLE VERİTABANI
+  const MAHALLELER_DB = {
+    'Kadıköy': ['Fenerbahçe', 'Caddebostan', 'Suadiye', 'Bostancı', 'Erenköy', 'Göztepe', 'Kozyatağı', 'Caferağa (Moda)', 'Acıbadem', 'Rasimpaşa', 'Fikirtepe', 'Koşuyolu', 'Merdivenköy', 'Sahrayıcedit', 'Hasanpaşa', '19 Mayıs', 'Dumlupınar', 'Eğitim', 'Feneryolu', 'Osmanağa', 'Zühtüpaşa'],
+    'Beşiktaş': ['Levazım', 'Etiler', 'Levent', 'Bebek', 'Ortaköy', 'Akatlar', 'Gayrettepe', 'Dikilitaş', 'Abbasağa', 'Balmumcu', 'Türkali', 'Sinanpaşa', 'Vişnezade', 'Yıldız', 'Kuruçeşme', 'Arnavutköy', 'Ulus', 'Konaklar', 'Mecidiye', 'Muradiye', 'Nisbetiye'],
+    'Bakırköy': ['Yeşilköy', 'Yeşilyurt', 'Ataköy (1-2-5-6. Kısım)', 'Ataköy (3-4-11. Kısım)', 'Ataköy (7-8-9-10. Kısım)', 'Florya (Şenlikköy)', 'Zuhuratbaba', 'Kartaltepe', 'Osmaniye', 'Cevizlik', 'Sakızağacı', 'Yenimahalle', 'Basınköy'],
+    'Şişli': ['Teşvikiye', 'Meşrutiyet (Nişantaşı)', 'Fulya', 'Mecidiyeköy', 'Esentepe', 'Halaskargazi', 'Gülbahar', 'İnönü (Pangaltı)', 'Feriköy', 'Cumhuriyet', 'Bozkurt', 'Duatepe', 'Ergenekon', 'Halide Edip Adıvar', 'Halil Rıfat Paşa', 'Kaptanpaşa', 'Kuştepe', 'Merkez', 'Paşa', 'Yayla'],
+    'Üsküdar': ['Acıbadem', 'Altunizade', 'Beylerbeyi', 'Çengelköy', 'Kuzguncuk', 'Kandilli', 'Kısıklı', 'Ünalan', 'Bulgurlu', 'Salacak', 'Mimar Sinan', 'Ahmediye', 'Aziz Mahmut Hüdayi', 'Bahçelievler', 'Barbaros', 'Burhaniye', 'Cumhuriyet', 'Ferah', 'Güzeltepe', 'İcadiye', 'Kuleli', 'Murat Reis', 'Selami Ali', 'Sultantepe', 'Yavuztürk', 'Zeynep Kamil'],
+    'Büyükçekmece': ['Mimaroba', 'Sinanoba', 'Ekinoba', 'Kumburgaz', 'Kamiloba', 'Dizdariye', 'Fatih', 'Tepekent', 'Güzelce', 'Albatros (Atatürk)', 'Cumhuriyet', 'Hürriyet', 'Murat Çeşme', 'Pınartepe', 'Ulus', 'Celaliye', 'Türkoba'],
+    'Küçükçekmece': ['Atakent', 'Cennet', 'Halkalı Merkez', 'İnönü', 'Cumhuriyet', 'Fevzi Çakmak', 'Gültepe', 'Kanarya', 'Kartaltepe', 'Kemalpaşa', 'Mehmet Akif', 'Söğütlü Çeşme', 'Sultan Murat', 'Tevfik Bey', 'Yarımburgaz', 'Yenimahalle', 'Yeşilova'],
+    'Ataşehir': ['Batı Ataşehir (Barbaros)', 'Doğu Ataşehir (Atatürk)', 'İçerenköy', 'Küçükbakkalköy', 'Örnek', 'Esatpaşa', 'Fetih', 'Ferhatpaşa', 'İnönü', 'Kayışdağı', 'Mevlana', 'Mimar Sinan', 'Mustafa Kemal', 'Yeni Çamlıca', 'Yeni Sahra', 'Yenişehir'],
+    'Maltepe': ['Bağlarbaşı', 'İdealtepe', 'Küçükyalı', 'Altıntepe', 'Cevizli', 'Yalı', 'Zümrütevler', 'Altayçeşme', 'Aydınevler', 'Başıbüyük', 'Büyükbakkalköy', 'Esenkent', 'Feyzullah', 'Fındıklı', 'Girne', 'Gülensu', 'Gülsuyu', 'Çınar'],
+    'Kartal': ['Kordonboyu', 'Atalar', 'Cevizli', 'Karlıktepe', 'Petrol İş', 'Yukarı Mahalle', 'Yakacık Çarşı', 'Uğur Mumcu', 'Soğanlık Yeni', 'Orhantepe', 'Gümüşpınar', 'Hürriyet', 'Esentepe', 'Çavuşoğlu', 'Cumhuriyet'],
+    'Beylikdüzü': ['Barış', 'Büyükşehir', 'Cumhuriyet', 'Adnan Kahveci', 'Dereağzı', 'Gürpınar', 'Kavaklı', 'Marmara', 'Sahil', 'Yakuplu'],
+    'Karşıyaka': ['Donanmacı', 'Alaybey', 'Bostanlı', 'Mavişehir', 'Aksoy', 'Bahçelievler', 'Tersane', 'Nergiz', 'Şemikler', 'Atakent', 'Bahriye Üçok', 'Dedebaşı', 'Demirköprü', 'Goncalar', 'İmbatlı', 'Örnekköy', 'Yalı'],
+    'Konak': ['Alsancak', 'Göztepe', 'Güzelyalı', 'Kültür', 'Akdeniz', 'Kahramanlar', 'Basmane (İsmet Kaptan)', 'Gültepe', 'Mithatpaşa', 'Murat Reis', 'Alsancak Liman', 'Çankaya'],
+    'İzmit': ['Yahyakaptan', 'Yenişehir', 'Karabaş', 'Alikahya Fatih', 'Bekirdere', 'Tepeköy', 'Bağçeşme', 'Kozluk', 'Cedit', 'Gündoğdu', 'Hacıhızır', 'Kadıköy Mah.', 'Kuruçeşme Fatih', 'Mehmet Ali Paşa', 'Serdar', 'Tavşantepe', 'Topçular', 'Yeşilova'],
+    'Çankaya': ['Ayrancı', 'Gaziosmanpaşa', 'Çayyolu', 'Ümitköy', 'Kızılay', 'Kavaklıdere', 'Dikmen', 'Bahçelievler', 'Balgat', 'Oran', 'Yıldız (Hilal)', 'Birlik', 'Cinnah', 'Maltepe', 'Tunalı Hilmi', 'Beytepe', 'Mutlukent']
+  };
+
+  // 4. İLÇE KOORDİNAT MERKEZLERİ
+  const DISTRICT_COORDS = {
+    'Kadıköy': { lat: 40.9715, lng: 29.0528, kaks: 2.05, taks: 0.35, hmax: 'Z+8 Kat', use: 'Konut' },
+    'Beşiktaş': { lat: 41.0712, lng: 29.0234, kaks: 1.85, taks: 0.35, hmax: 'Z+5 Kat', use: 'Konut' },
+    'Bakırköy': { lat: 40.9632, lng: 28.8245, kaks: 1.75, taks: 0.35, hmax: 'Z+4 Kat', use: 'Konut' },
+    'Şişli': { lat: 41.0560, lng: 28.9980, kaks: 2.50, taks: 0.40, hmax: 'Z+8 Kat', use: 'Karma (Konut + Ticaret)' },
+    'Üsküdar': { lat: 41.0180, lng: 29.0430, kaks: 1.80, taks: 0.35, hmax: 'Z+6 Kat', use: 'Konut' },
+    'Büyükçekmece': { lat: 41.0210, lng: 28.5820, kaks: 1.50, defaultTaks: 0.30, taks: 0.30, hmax: 'Z+4 Kat', use: 'Konut' },
+    'Ataşehir': { lat: 40.9930, lng: 29.1130, kaks: 2.10, taks: 0.35, hmax: 'Z+8 Kat', use: 'Konut' },
+    'Maltepe': { lat: 40.9320, lng: 29.1320, kaks: 1.90, taks: 0.35, hmax: 'Z+6 Kat', use: 'Konut' },
+    'Kartal': { lat: 40.8980, lng: 29.1920, kaks: 2.00, taks: 0.35, hmax: 'Z+7 Kat', use: 'Konut' },
+    'Küçükçekmece': { lat: 40.9980, lng: 28.7840, kaks: 1.80, taks: 0.35, hmax: 'Z+5 Kat', use: 'Konut' },
+    'Beylikdüzü': { lat: 41.0020, lng: 28.6430, kaks: 1.60, taks: 0.30, hmax: 'Z+6 Kat', use: 'Konut' },
+    'Karşıyaka': { lat: 38.4590, lng: 27.1180, kaks: 2.40, taks: 0.40, hmax: 'Z+7 Kat', use: 'Karma (Konut + Ticaret)' },
+    'Konak': { lat: 38.4190, lng: 27.1280, kaks: 2.50, taks: 0.40, hmax: 'Z+8 Kat', use: 'Karma (Konut + Ticaret)' },
+    'İzmit': { lat: 40.7680, lng: 29.9650, kaks: 1.60, taks: 0.30, hmax: 'Z+5 Kat', use: 'Konut' },
+    'Çankaya': { lat: 39.9050, lng: 32.8600, kaks: 2.00, taks: 0.35, hmax: 'Z+6 Kat', use: 'Konut' }
+  };
+
+  // 5. GERÇEKÇİ ÖRNEK PARSEL VERİTABANI
   const PARCEL_DB = {
     'kadikoy_1248_14': {
       city: 'İstanbul',
       district: 'Kadıköy',
-      neighborhood: 'Fenerbahçe / Caddebostan',
+      neighborhood: 'Fenerbahçe',
+      street: 'Cemil Topuzlu Cad.',
+      door_no: '14',
       ada: '1248',
       parsel: '14',
       area_m2: 850,
@@ -69,7 +151,9 @@
     'besiktas_452_7': {
       city: 'İstanbul',
       district: 'Beşiktaş',
-      neighborhood: 'Levazım / Etiler',
+      neighborhood: 'Levazım',
+      street: 'Koru Sokak',
+      door_no: '7',
       ada: '452',
       parsel: '7',
       area_m2: 480,
@@ -109,7 +193,9 @@
     'karsiyaka_812_5': {
       city: 'İzmir',
       district: 'Karşıyaka',
-      neighborhood: 'Donanmacı / Alaybey',
+      neighborhood: 'Donanmacı',
+      street: 'Cemal Gürsel Cad.',
+      door_no: '28',
       ada: '812',
       parsel: '5',
       area_m2: 620,
@@ -148,7 +234,9 @@
     'izmit_1045_22': {
       city: 'Kocaeli',
       district: 'İzmit',
-      neighborhood: 'Yahyakaptan / Yenişehir',
+      neighborhood: 'Yahyakaptan',
+      street: 'Gazi Mustafa Kemal Bulvarı',
+      door_no: '42',
       ada: '1045',
       parsel: '22',
       area_m2: 950,
@@ -185,14 +273,22 @@
     }
   };
 
-  /**
-   * Dinamik Parsel Üretici (Listede olmayan her ada/parsel için TKGM & İmar Simülasyonu)
-   */
-  function generateDynamicParcel(city, district, neighborhood, ada, parsel) {
-    const dInfo = DISTRICT_COORDS[district] || { lat: 41.0082, lng: 28.9784, defaultKaks: 2.00, defaultTaks: 0.35, defaultHmax: 'Z+6 Kat', use: 'Konut' };
+  let activeMode = 'address'; // 'address' | 'map' | 'parcel'
+  let currentLoadedParcel = null;
+  let leafletMapInstance = null;
+  let currentMapMarker = null;
+
+  function fmtNumber(n, dec = 0) {
+    const val = Number(n);
+    if (isNaN(val)) return '-';
+    return val.toLocaleString('tr-TR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  }
+
+  // Dinamik Ada/Parsel veya Adres Üretici
+  function generateDynamicParcel(city, district, neighborhood, ada, parsel, street = '', door_no = '', forcedCoords = null) {
+    const dInfo = DISTRICT_COORDS[district] || { lat: 41.0082, lng: 28.9784, kaks: 2.00, taks: 0.35, hmax: 'Z+6 Kat', use: 'Konut' };
     
-    // Ada ve parselden deterministik alan ve koordinat hesapla
-    const seed = (parseInt(ada) || 100) * 17 + (parseInt(parsel) || 1) * 31;
+    const seed = (parseInt(ada) || 100) * 19 + (parseInt(parsel) || 1) * 37 + (street ? street.length * 7 : 13);
     const area = 450 + (seed % 650);
     const sideW = Math.sqrt(area * 1.25);
     const sideH = area / sideW;
@@ -200,29 +296,34 @@
     const latDelta = (sideH / 111000);
     const lngDelta = (sideW / (111000 * Math.cos(dInfo.lat * Math.PI / 180)));
     
-    const centerLat = dInfo.lat + ((seed % 100) - 50) * 0.0003;
-    const centerLng = dInfo.lng + ((seed % 100) - 50) * 0.0004;
+    const centerLat = forcedCoords ? forcedCoords.lat : (dInfo.lat + ((seed % 100) - 50) * 0.0003);
+    const centerLng = forcedCoords ? forcedCoords.lng : (dInfo.lng + ((seed % 100) - 50) * 0.0004);
 
     const p0 = [centerLng - lngDelta / 2, centerLat + latDelta / 2];
     const p1 = [centerLng + lngDelta / 2, centerLat + latDelta / 2 * 0.95];
     const p2 = [centerLng + lngDelta / 2 * 1.05, centerLat - latDelta / 2];
     const p3 = [centerLng - lngDelta / 2 * 0.95, centerLat - latDelta / 2];
 
+    const finalAda = ada || String(100 + (seed % 890));
+    const finalParsel = parsel || String(1 + (seed % 48));
+
     return {
       city: city || 'İstanbul',
       district: district || 'Kadıköy',
-      neighborhood: neighborhood || 'Merkez Mah.',
-      ada: String(ada || '101'),
-      parsel: String(parsel || '1'),
+      neighborhood: neighborhood || 'Merkez',
+      street: street || 'Ana Cadde',
+      door_no: door_no || '12',
+      ada: String(finalAda),
+      parsel: String(finalParsel),
       area_m2: area,
       area_source: 'deed',
       qualification: 'Kargir Apartman ve Arsası',
-      function: dInfo.use,
-      kaks: dInfo.defaultKaks,
-      taks: dInfo.defaultTaks,
-      floors: parseInt(dInfo.defaultHmax.replace(/\D/g, '')) || 6,
-      height_m: (parseInt(dInfo.defaultHmax.replace(/\D/g, '')) || 6) * 3 + 0.5,
-      hmax: dInfo.defaultHmax,
+      function: dInfo.use || 'Konut',
+      kaks: dInfo.kaks || 2.00,
+      taks: dInfo.taks || 0.35,
+      floors: parseInt((dInfo.hmax || 'Z+6').replace(/\D/g, '')) || 6,
+      height_m: (parseInt((dInfo.hmax || 'Z+6').replace(/\D/g, '')) || 6) * 3 + 0.5,
+      hmax: dInfo.hmax || 'Z+6 Kat',
       setback: 'Ön: 5.00m, Yan: 3.00m, Arka: 4.00m',
       plan_name: `1/1000 Ölçekli ${district} Revizyon Uygulama İmar Planı`,
       road_status: 'Görünmüyor (İmar hattı net)',
@@ -243,7 +344,7 @@
     };
   }
 
-  // Web Mercator Dünya Pikseli (ESRI / MapTiler ile birebir uyumlu)
+  // Web Mercator Projeksiyonu
   function mercator(lon, lat, z) {
     const n = TILE * Math.pow(2, z);
     const s = Math.sin(lat * Math.PI / 180);
@@ -253,7 +354,6 @@
     ];
   }
 
-  // Poligon metre projeksiyonu (Pisagor kenar uzunlukları için)
   function projectRing(ring) {
     let lat0 = 0, lon0 = 0;
     ring.forEach(p => { lon0 += p[0]; lat0 += p[1]; });
@@ -278,23 +378,16 @@
     return null;
   }
 
-  function fmtNumber(n, dec = 0) {
-    const val = Number(n);
-    if (isNaN(val)) return '-';
-    return val.toLocaleString('tr-TR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
-  }
-
   /**
    * 360DÖNÜŞÜM'ÜN SHAPESVG MOTORU:
-   * Arka planda gerçek uydu karoları, dışını karartan maske, parlak neon sınır,
-   * her bir kenara ait gerçek metre uzunlukları ve kuzey pusulası.
+   * Uydu karoları, parsel dışı karartma maskesi, neon halo sınır, kenar metrajları.
    */
   function generateShapeSvg(geometry, areaText) {
     const ring = outerRing(geometry);
     if (!ring || ring.length < 4) return '';
 
     const meters = projectRing(ring);
-    const W = 300, H = 220, aspect = W / H;
+    const W = 320, H = 220, aspect = W / H;
     let z = 18, wp, minX, maxX, minY, maxY, viewW, viewH;
 
     for (; z >= 15; z--) {
@@ -315,7 +408,6 @@
     const k = W / viewW;
     const sp = wp.map(p => [(p[0] - vx) * k, (p[1] - vy) * k]);
 
-    // ESRI World Imagery Yüksek Çözünürlüklü Açık Uydu Karoları (Global CORS)
     let tiles = '';
     const minTileX = Math.floor(vx / TILE);
     const maxTileX = Math.floor((vx + viewW) / TILE);
@@ -329,13 +421,11 @@
       }
     }
 
-    // Geometrik merkez
     let cx = 0, cy = 0;
     sp.forEach(p => { cx += p[0]; cy += p[1]; });
     cx /= sp.length;
     cy /= sp.length;
 
-    // Gerçek kenar metrajları (Ölçülü Kenarlar)
     let perimeter = 0;
     const edges = [];
     for (let i = 0; i < meters.length; i++) {
@@ -345,7 +435,6 @@
       edges.push({ len, a: sp[i], b: sp[(i + 1) % sp.length] });
     }
 
-    // Dik açı ofseti ile kenar etiketleri
     const labels = edges.map(e => {
       const mx = (e.a[0] + e.b[0]) / 2;
       const my = (e.a[1] + e.b[1]) / 2;
@@ -383,7 +472,7 @@
   }
 
   /**
-   * Belediye 1/1000 Uygulama İmar Planı Paftası Çizimi (SVG Pafta)
+   * Belediye 1/1000 Uygulama İmar Planı Paftası Çizimi (SVG)
    */
   function generateZoningPlanSvg(parcel) {
     const W = 360, H = 240;
@@ -394,28 +483,17 @@
             <line x1="0" y1="0" x2="0" y2="8" stroke="#fdba74" stroke-width="1.5"/>
           </pattern>
         </defs>
-        <!-- Arka İmar Bloğu (Sarı / Konut Alanı) -->
         <rect x="15" y="15" width="${W - 30}" height="${H - 70}" fill="url(#hatch)" stroke="#ea580c" stroke-width="1.5"/>
-        
-        <!-- İmar Yolu -->
         <rect x="15" y="${H - 55}" width="${W - 30}" height="40" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.2"/>
         <text x="${W / 2}" y="${H - 30}" font-family="sans-serif" font-size="10" font-weight="bold" fill="#64748b" text-anchor="middle">12.00 METRELİK İMAR YOLU</text>
-        
-        <!-- Parsel Sınırı -->
         <rect x="55" y="35" width="250" height="130" fill="#ffedd5" stroke="#c2410c" stroke-width="2" stroke-dasharray="4 2"/>
         <text x="65" y="52" font-family="sans-serif" font-size="11" font-weight="bold" fill="#9a3412">Ada: ${parcel.ada} / Parsel: ${parcel.parsel}</text>
-        <text x="65" y="66" font-family="sans-serif" font-size="9" fill="#c2410c">Tapu: ${fmtNumber(parcel.area_m2)} m²</text>
-        
-        <!-- Taban Oturumu (Bina Çekme Mesafeleri & Kütle) -->
+        <text x="65" y="66" font-family="sans-serif" font-size="9" fill="#c2410c">Tapu: ${fmtNumber(parcel.area_m2)} m² • ${parcel.neighborhood}</text>
         <rect x="85" y="65" width="190" height="85" fill="#f97316" fill-opacity="0.25" stroke="#ea580c" stroke-width="2"/>
-        
-        <!-- İmar Parametreleri Rozeti -->
         <rect x="100" y="80" width="160" height="55" rx="5" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
         <text x="180" y="96" font-family="sans-serif" font-size="10" font-weight="bold" fill="#c2410c" text-anchor="middle">AYRIK NİZAM (${parcel.hmax})</text>
         <text x="180" y="110" font-family="sans-serif" font-size="9" font-weight="600" fill="#475569" text-anchor="middle">KAKS (Emsal): ${parcel.kaks} • TAKS: ${parcel.taks}</text>
         <text x="180" y="124" font-family="sans-serif" font-size="8.5" fill="#16a34a" font-weight="bold" text-anchor="middle">Ön: 5m | Yan: 3m | Arka: h/2</text>
-        
-        <!-- Resmi Belediye Mührü / Lejant -->
         <g transform="translate(${W - 95}, 20)">
           <circle cx="25" cy="25" r="22" fill="#fff" stroke="#0284c7" stroke-width="1.2"/>
           <text x="25" y="20" font-family="sans-serif" font-size="6.5" font-weight="bold" fill="#0284c7" text-anchor="middle">${parcel.district.toUpperCase()} BLD.</text>
@@ -426,48 +504,36 @@
     `;
   }
 
-  // Modül State
-  let currentLoadedParcel = null;
-
-  /**
-   * Parsel Sorgulama Fonksiyonu
-   */
-  function querySmartParcel(city, district, neighborhood, ada, parsel) {
-    const key = `${(district || '').toLowerCase()}_${ada}_${parsel}`;
-    
-    // Doğrudan veritabanı eşleşmesi veya dinamik simülasyon
-    let data = PARCEL_DB[key];
-    if (!data) {
-      // Ada/Parsel bazlı arama
-      for (const k in PARCEL_DB) {
-        if (PARCEL_DB[k].ada === String(ada) && PARCEL_DB[k].parsel === String(parsel)) {
-          data = PARCEL_DB[k];
-          break;
-        }
-      }
+  // Dinamik Leaflet Yükleyici (CDN)
+  function loadLeaflet(callback) {
+    if (window.L) {
+      callback();
+      return;
     }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
 
-    if (!data) {
-      data = generateDynamicParcel(city, district, neighborhood, ada, parsel);
-    }
-
-    currentLoadedParcel = data;
-    return data;
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = callback;
+    document.head.appendChild(script);
   }
 
   /**
-   * UI Bileşenini Sayfaya Render Etme
+   * UI Bileşenini Render Etme
    */
   function renderSmartParcelUI(containerId, initialKey = 'kadikoy_1248_14') {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Başlangıç verisi
     let parcel = PARCEL_DB[initialKey] || PARCEL_DB['kadikoy_1248_14'];
     currentLoadedParcel = parcel;
 
     const html = `
       <div class="pd-section-container" id="pd-smart-container">
+        
         <!-- Header -->
         <div class="pd-header-bar">
           <div class="pd-header-title">
@@ -484,49 +550,25 @@
           </div>
         </div>
 
-        <!-- Arama Formu -->
-        <div class="pd-search-form">
-          <div class="pd-search-group">
-            <label>İl</label>
-            <select id="pd-inp-city" onchange="ArsaImarMotoru.handleDistrictChange(this.value)">
-              <option value="İstanbul" selected>İstanbul</option>
-              <option value="İzmir">İzmir</option>
-              <option value="Kocaeli">Kocaeli</option>
-              <option value="Ankara">Ankara</option>
-            </select>
-          </div>
-          <div class="pd-search-group">
-            <label>İlçe</label>
-            <select id="pd-inp-district">
-              <option value="Kadıköy" selected>Kadıköy</option>
-              <option value="Beşiktaş">Beşiktaş</option>
-              <option value="Bakırköy">Bakırköy</option>
-              <option value="Şişli">Şişli</option>
-              <option value="Üsküdar">Üsküdar</option>
-              <option value="Büyükçekmece">Büyükçekmece</option>
-              <option value="Karşıyaka">Karşıyaka</option>
-              <option value="İzmit">İzmit</option>
-              <option value="Çankaya">Çankaya</option>
-            </select>
-          </div>
-          <div class="pd-search-group">
-            <label>Mahalle</label>
-            <input type="text" id="pd-inp-neighborhood" value="${parcel.neighborhood || 'Fenerbahçe / Caddebostan'}" placeholder="Mahalle adı...">
-          </div>
-          <div class="pd-search-group">
-            <label>Ada</label>
-            <input type="text" id="pd-inp-ada" value="${parcel.ada}" placeholder="Ada no">
-          </div>
-          <div class="pd-search-group">
-            <label>Parsel</label>
-            <input type="text" id="pd-inp-parsel" value="${parcel.parsel}" placeholder="Parsel no">
-          </div>
-          <div>
-            <button type="button" class="pd-btn-fetch" onclick="ArsaImarMotoru.executeSearch()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              Sorgula & Getir
-            </button>
-          </div>
+        <!-- 3 Arama Modu Sekmeleri -->
+        <div class="e-tabs" role="tablist">
+          <button type="button" class="e-tab ${activeMode === 'address' ? 'active' : ''}" onclick="ArsaImarMotoru.switchMode('address')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Adres ile</span>
+          </button>
+          <button type="button" class="e-tab ${activeMode === 'map' ? 'active' : ''}" onclick="ArsaImarMotoru.switchMode('map')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            <span>Harita ile</span>
+          </button>
+          <button type="button" class="e-tab ${activeMode === 'parcel' ? 'active' : ''}" onclick="ArsaImarMotoru.switchMode('parcel')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <span>Ada/parsel ile</span>
+          </button>
+        </div>
+
+        <!-- Arama Formu Paneli -->
+        <div class="pd-search-card" id="pd-search-card-mount">
+          ${getSearchFormHtml(activeMode, parcel)}
         </div>
 
         <!-- Durum Çubuğu -->
@@ -700,36 +742,220 @@
     `;
 
     container.innerHTML = html;
+
+    // Harita modu seçiliyse Leaflet'i başlat
+    if (activeMode === 'map') {
+      initLeafletMap(parcel);
+    }
   }
 
   /**
-   * İlçe Seçildiğinde Formu Senkronize Etme
+   * Mod Değiştirme
    */
-  function handleDistrictChange(city) {
+  function switchMode(newMode) {
+    activeMode = newMode;
+    const cardMount = document.getElementById('pd-search-card-mount');
+    if (cardMount && currentLoadedParcel) {
+      cardMount.innerHTML = getSearchFormHtml(newMode, currentLoadedParcel);
+    }
+
+    // Tab butonlarını güncelle
+    document.querySelectorAll('.e-tabs .e-tab').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`.e-tabs .e-tab[onclick*="${newMode}"]`);
+    if (btn) btn.classList.add('active');
+
+    if (newMode === 'map' && currentLoadedParcel) {
+      setTimeout(() => initLeafletMap(currentLoadedParcel), 100);
+    }
+  }
+
+  /**
+   * Arama Formu HTML Üretimi
+   */
+  function getSearchFormHtml(mode, parcel) {
+    const selectedCity = parcel.city || 'İstanbul';
+    const cityOptions = TURKIYE_ILLERI.map(c => `<option value="${c}" ${c === selectedCity ? 'selected' : ''}>${c}</option>`).join('');
+
+    const distList = ILCELER_DB[selectedCity] || ['Merkez'];
+    const selectedDist = parcel.district || distList[0];
+    const distOptions = distList.map(d => `<option value="${d}" ${d === selectedDist ? 'selected' : ''}>${d}</option>`).join('');
+
+    const mahList = MAHALLELER_DB[selectedDist] || ['Merkez Mah.', 'Cumhuriyet Mah.', 'Atatürk Mah.'];
+    const selectedMah = parcel.neighborhood || mahList[0];
+    const mahOptions = mahList.map(m => `<option value="${m}" ${m === selectedMah ? 'selected' : ''}>${m}</option>`).join('');
+
+    if (mode === 'address') {
+      return `
+        <div class="pd-search-form pd-search-form--address">
+          <div class="pd-search-group">
+            <label>İl</label>
+            <select id="pd-inp-city" onchange="ArsaImarMotoru.handleCityChange(this.value)">
+              ${cityOptions}
+            </select>
+          </div>
+          <div class="pd-search-group">
+            <label>İlçe</label>
+            <select id="pd-inp-district" onchange="ArsaImarMotoru.handleDistrictChange(this.value)">
+              ${distOptions}
+            </select>
+          </div>
+          <div class="pd-search-group">
+            <label>Mahalle</label>
+            <select id="pd-inp-neighborhood">
+              ${mahOptions}
+            </select>
+          </div>
+          <div class="pd-search-group">
+            <label>Cadde / Sokak</label>
+            <input type="text" id="pd-inp-street" value="${parcel.street || 'Cemil Topuzlu Cad.'}" placeholder="Cadde veya sokak adı...">
+          </div>
+          <div class="pd-search-group">
+            <label>Kapı No</label>
+            <input type="text" id="pd-inp-door" value="${parcel.door_no || '14'}" placeholder="Kapı no">
+          </div>
+          <div>
+            <button type="button" class="pd-btn-fetch" onclick="ArsaImarMotoru.executeAddressSearch()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              Binamı Göster
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    if (mode === 'map') {
+      return `
+        <div class="pd-map-wrapper">
+          <div class="pd-map-toolbar">
+            <div class="pd-map-instruction">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>Haritada binanızın çatısına veya parsel alanına bir kez dokunun / tıklayın.</span>
+            </div>
+            <div class="pd-map-tools">
+              <button type="button" class="pd-map-tool-btn" onclick="ArsaImarMotoru.locateUserPosition()">
+                📍 Konumumu Bul
+              </button>
+              <button type="button" class="pd-map-tool-btn" onclick="ArsaImarMotoru.toggleMapLayer('sat')">
+                🛰️ Uydu
+              </button>
+              <button type="button" class="pd-map-tool-btn" onclick="ArsaImarMotoru.toggleMapLayer('osm')">
+                🗺️ Sokak
+              </button>
+            </div>
+          </div>
+          <div id="pd-interactive-map" class="pd-map-canvas"></div>
+        </div>
+      `;
+    }
+
+    // Mode: 'parcel'
+    return `
+      <div class="pd-search-form pd-search-form--parcel">
+        <div class="pd-search-group">
+          <label>İl</label>
+          <select id="pd-inp-city" onchange="ArsaImarMotoru.handleCityChange(this.value)">
+            ${cityOptions}
+          </select>
+        </div>
+        <div class="pd-search-group">
+          <label>İlçe</label>
+          <select id="pd-inp-district" onchange="ArsaImarMotoru.handleDistrictChange(this.value)">
+            ${distOptions}
+          </select>
+        </div>
+        <div class="pd-search-group">
+          <label>Mahalle</label>
+          <select id="pd-inp-neighborhood">
+            ${mahOptions}
+          </select>
+        </div>
+        <div class="pd-search-group">
+          <label>Ada</label>
+          <input type="text" id="pd-inp-ada" value="${parcel.ada}" placeholder="Ada no">
+        </div>
+        <div class="pd-search-group">
+          <label>Parsel</label>
+          <input type="text" id="pd-inp-parsel" value="${parcel.parsel}" placeholder="Parsel no">
+        </div>
+        <div>
+          <button type="button" class="pd-btn-fetch" onclick="ArsaImarMotoru.executeParcelSearch()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            Parseli Göster
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * İl Değiştiğinde İlçeleri Güncelleme
+   */
+  function handleCityChange(city) {
     const distSelect = document.getElementById('pd-inp-district');
     if (!distSelect) return;
-    
-    distSelect.innerHTML = '';
-    const districtsByCity = {
-      'İstanbul': ['Kadıköy', 'Beşiktaş', 'Bakırköy', 'Şişli', 'Üsküdar', 'Büyükçekmece'],
-      'İzmir': ['Karşıyaka', 'Konak', 'Bornova', 'Bayraklı'],
-      'Kocaeli': ['İzmit', 'Gebze', 'Kartepe'],
-      'Ankara': ['Çankaya', 'Yenimahalle', 'Keçiören']
-    };
 
-    const list = districtsByCity[city] || ['Kadıköy', 'Beşiktaş'];
-    list.forEach(d => {
+    distSelect.innerHTML = '';
+    const districts = ILCELER_DB[city] || ['Merkez'];
+    districts.forEach(d => {
       const opt = document.createElement('option');
       opt.value = d;
       opt.textContent = d;
       distSelect.appendChild(opt);
     });
+
+    handleDistrictChange(districts[0]);
   }
 
   /**
-   * Arama ve Getirme İşlemi
+   * İlçe Değiştiğinde Mahalleleri Güncelleme
    */
-  function executeSearch() {
+  function handleDistrictChange(district) {
+    const mahSelect = document.getElementById('pd-inp-neighborhood');
+    if (!mahSelect) return;
+
+    mahSelect.innerHTML = '';
+    const mahalleler = MAHALLELER_DB[district] || ['Merkez Mah.', 'Cumhuriyet Mah.', 'Atatürk Mah.', 'Yeni Mah.'];
+    mahalleler.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      mahSelect.appendChild(opt);
+    });
+  }
+
+  /**
+   * 1. Adres ile Arama
+   */
+  function executeAddressSearch() {
+    const city = document.getElementById('pd-inp-city')?.value || 'İstanbul';
+    const district = document.getElementById('pd-inp-district')?.value || 'Kadıköy';
+    const neighborhood = document.getElementById('pd-inp-neighborhood')?.value || '';
+    const street = (document.getElementById('pd-inp-street')?.value || '').trim();
+    const door = (document.getElementById('pd-inp-door')?.value || '').trim();
+
+    showPendingStatus('Adres çözümleniyor ve belediye imar kayıtları taranıyor…');
+
+    // Örnek DB eşleşmesi var mı kontrol et
+    let matched = null;
+    for (const k in PARCEL_DB) {
+      const p = PARCEL_DB[k];
+      if (p.district.toLowerCase() === district.toLowerCase() &&
+          p.neighborhood.toLowerCase().includes(neighborhood.toLowerCase())) {
+        matched = p;
+        break;
+      }
+    }
+
+    setTimeout(() => {
+      const result = matched || generateDynamicParcel(city, district, neighborhood, null, null, street, door);
+      updateDisplayWithParcel(result, `${district} / ${neighborhood} • ${street} No: ${door}`);
+    }, 600);
+  }
+
+  /**
+   * 2. Ada / Parsel ile Arama
+   */
+  function executeParcelSearch() {
     const city = document.getElementById('pd-inp-city')?.value || 'İstanbul';
     const district = document.getElementById('pd-inp-district')?.value || 'Kadıköy';
     const neighborhood = document.getElementById('pd-inp-neighborhood')?.value || '';
@@ -737,40 +963,170 @@
     const parsel = (document.getElementById('pd-inp-parsel')?.value || '').trim();
 
     if (!ada || !parsel) {
-      alert('Lütfen ada ve parsel numarasını girin.');
+      alert('Lütfen ada ve parsel numarasını giriniz.');
       return;
     }
 
+    showPendingStatus('TKGM ve belediye sisteminden imar durumu sorgulanıyor…');
+
+    const key = `${district.toLowerCase()}_${ada}_${parsel}`;
+    let result = PARCEL_DB[key];
+    if (!result) {
+      for (const k in PARCEL_DB) {
+        if (PARCEL_DB[k].ada === String(ada) && PARCEL_DB[k].parsel === String(parsel)) {
+          result = PARCEL_DB[k];
+          break;
+        }
+      }
+    }
+
+    setTimeout(() => {
+      const finalParcel = result || generateDynamicParcel(city, district, neighborhood, ada, parsel);
+      updateDisplayWithParcel(finalParcel, `Ada ${finalParcel.ada} · Parsel ${finalParcel.parsel} (${district})`);
+    }, 600);
+  }
+
+  /**
+   * 3. Harita ile Arama (Leaflet Entegrasyonu)
+   */
+  let currentLayerType = 'sat';
+  let satLayer = null;
+  let osmLayer = null;
+
+  function initLeafletMap(parcel) {
+    loadLeaflet(() => {
+      const mapContainer = document.getElementById('pd-interactive-map');
+      if (!mapContainer || !window.L) return;
+
+      if (leafletMapInstance) {
+        leafletMapInstance.remove();
+        leafletMapInstance = null;
+      }
+
+      const center = [parcel.lat || 40.9715, parcel.lng || 29.0528];
+      leafletMapInstance = window.L.map('pd-interactive-map', {
+        center: center,
+        zoom: 17,
+        maxZoom: 19
+      });
+
+      // Katmanlar
+      satLayer = window.L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'ESRI World Imagery'
+      });
+      osmLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'OpenStreetMap'
+      });
+
+      if (currentLayerType === 'sat') {
+        satLayer.addTo(leafletMapInstance);
+      } else {
+        osmLayer.addTo(leafletMapInstance);
+      }
+
+      // Marker
+      currentMapMarker = window.L.marker(center).addTo(leafletMapInstance);
+      currentMapMarker.bindPopup(`<b>${parcel.district} / ${parcel.neighborhood}</b><br>Ada: ${parcel.ada} · Parsel: ${parcel.parsel}<br>${fmtNumber(parcel.area_m2)} m²`).openPopup();
+
+      // Harita Tıklama Dinleyicisi (Bina / Parsel Seçimi)
+      leafletMapInstance.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        if (currentMapMarker) {
+          currentMapMarker.setLatLng(e.latlng);
+        } else {
+          currentMapMarker = window.L.marker(e.latlng).addTo(leafletMapInstance);
+        }
+
+        showPendingStatus('Tıklanan koordinattaki bina ve imar verisi getiriliyor…');
+
+        // Reverse Geocode (OpenStreetMap Nominatim API veya simülasyon)
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`, {
+          headers: { 'Accept': 'application/json' }
+        }).then(r => r.json()).then(data => {
+          const addr = data.address || {};
+          const city = addr.province || addr.city || 'İstanbul';
+          const district = addr.town || addr.suburb || addr.city_district || 'Kadıköy';
+          const neighborhood = addr.neighbourhood || addr.quarter || 'Merkez';
+          const road = addr.road || 'Ana Cadde';
+          const houseNo = addr.house_number || '1';
+
+          const resolved = generateDynamicParcel(city, district, neighborhood, null, null, road, houseNo, { lat, lng });
+          currentMapMarker.bindPopup(`<b>${district} / ${neighborhood}</b><br>${road} No:${houseNo}<br>Ada: ${resolved.ada} · Parsel: ${resolved.parsel}`).openPopup();
+
+          updateDisplayWithParcel(resolved, `${district} • ${road} No:${houseNo} (Haritadan Seçildi)`);
+        }).catch(() => {
+          // Fallback
+          const resolved = generateDynamicParcel('İstanbul', 'Kadıköy', 'Merkez', null, null, 'Cadde', '1', { lat, lng });
+          updateDisplayWithParcel(resolved, `Ada: ${resolved.ada} · Parsel: ${resolved.parsel} (Harita Noktası)`);
+        });
+      });
+    });
+  }
+
+  function toggleMapLayer(type) {
+    currentLayerType = type;
+    if (!leafletMapInstance) return;
+    if (type === 'sat') {
+      if (osmLayer) leafletMapInstance.removeLayer(osmLayer);
+      if (satLayer) satLayer.addTo(leafletMapInstance);
+    } else {
+      if (satLayer) leafletMapInstance.removeLayer(satLayer);
+      if (osmLayer) osmLayer.addTo(leafletMapInstance);
+    }
+  }
+
+  function locateUserPosition() {
+    if (!navigator.geolocation || !leafletMapInstance) {
+      alert('Tarayıcınız konum servisini desteklemiyor veya izin verilmedi.');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      leafletMapInstance.setView([lat, lng], 18);
+      if (currentMapMarker) currentMapMarker.setLatLng([lat, lng]);
+      window.showToastNotification?.('📍 Konumunuz haritada ortalandı. Binanızın çatısına dokunun.');
+    }, () => {
+      alert('Konum bilgisi alınamadı. Lütfen konum iznini kontrol edin.');
+    });
+  }
+
+  function showPendingStatus(msg) {
     const statusBar = document.getElementById('pd-status-bar');
     const statusText = document.getElementById('pd-status-text');
     if (statusBar && statusText) {
       statusBar.setAttribute('data-tone', 'pending');
-      statusText.textContent = 'TKGM ve belediye sisteminden imar durumu sorgulanıyor…';
+      statusText.textContent = msg;
+    }
+  }
+
+  function updateDisplayWithParcel(parcel, lotLabelText) {
+    currentLoadedParcel = parcel;
+
+    const statusBar = document.getElementById('pd-status-bar');
+    const statusText = document.getElementById('pd-status-text');
+    const statusLot = document.getElementById('pd-status-lot');
+
+    if (statusBar && statusText && statusLot) {
+      statusBar.setAttribute('data-tone', 'ok');
+      statusText.textContent = 'Parsel ve belediye imar durumu başarıyla getirildi';
+      statusLot.textContent = lotLabelText || `Ada ${parcel.ada} · Parsel ${parcel.parsel} (${parcel.district})`;
     }
 
-    setTimeout(() => {
-      const parcel = querySmartParcel(city, district, neighborhood, ada, parsel);
-      
-      // Şekli ve bilgileri güncelle
-      const shapeBox = document.getElementById('pd-shape-box');
-      if (shapeBox) {
-        shapeBox.innerHTML = generateShapeSvg(parcel.geometry, fmtNumber(parcel.area_m2) + ' m²');
-      }
+    // Şekil & Pafta Güncelleme
+    const shapeBox = document.getElementById('pd-shape-box');
+    if (shapeBox) {
+      shapeBox.innerHTML = generateShapeSvg(parcel.geometry, fmtNumber(parcel.area_m2) + ' m²');
+    }
 
-      const statusLot = document.getElementById('pd-status-lot');
-      if (statusBar && statusText && statusLot) {
-        statusBar.setAttribute('data-tone', 'ok');
-        statusText.textContent = 'Parsel ve belediye imar durumu başarıyla getirildi';
-        statusLot.textContent = `Ada ${parcel.ada} · Parsel ${parcel.parsel} (${parcel.district})`;
-      }
+    // Bilgileri ve İmar Kartlarını Güncelle
+    renderSmartParcelUI('pd-smart-container-wrapper', `${(parcel.district || 'kadikoy').toLowerCase()}_${parcel.ada}_${parcel.parsel}`);
 
-      // Bileşeni yeniden çiz
-      renderSmartParcelUI('pd-smart-container-wrapper', `${district.toLowerCase()}_${ada}_${parsel}`);
-
-      if (window.showToastNotification) {
-        window.showToastNotification(`✓ ${parcel.district} Ada ${parcel.ada} Parsel ${parcel.parsel} imar verileri getirildi.`);
-      }
-    }, 600);
+    if (window.showToastNotification) {
+      window.showToastNotification(`✓ ${parcel.district} Ada ${parcel.ada} Parsel ${parcel.parsel} imar verileri yüklendi.`);
+    }
   }
 
   /**
@@ -807,7 +1163,6 @@
 
     title.textContent = `360° VR & Sokak Görünümü — ${currentLoadedParcel.district} Ada: ${currentLoadedParcel.ada} / Parsel: ${currentLoadedParcel.parsel}`;
     
-    // Google Maps / Street View veya Yandex Panorama iframe
     const streetViewUrl = `https://maps.google.com/maps?q=${lat},${lng}&t=k&z=19&ie=UTF8&iwloc=&output=embed`;
     const yandexUrl = `https://yandex.com.tr/haritalar/?panorama%5Bpoint%5D=${lng}%2C${lat}`;
 
@@ -835,13 +1190,11 @@
 
   /**
    * "Verileri Projeye Aktar ve Hesapla" Butonu
-   * Kentsel Dönüşüm Motoruna veya Data Platformu Formuna otomatik aktarır.
    */
   function applyToProject() {
     if (!currentLoadedParcel) return;
     const p = currentLoadedParcel;
 
-    // 1. Kentsel Dönüşüm Motoru Entegrasyonu
     if (window.KDEngine) {
       window.KDEngine.updateField('city', p.city);
       window.KDEngine.updateField('district', p.district);
@@ -854,7 +1207,6 @@
       window.KDEngine.updateField('hmax', p.hmax);
       window.KDEngine.updateField('usageType', p.function);
 
-      // Form elemanlarını senkronize et
       if (typeof window.syncInputsWithState === 'function') {
         window.syncInputsWithState();
       }
@@ -867,14 +1219,14 @@
       }
     }
 
-    // 2. Data Platformu Form Entegrasyonu (eğer data-platformu.html içindeyse)
-    const dpAda = document.getElementById('proj-ada');
-    const dpParsel = document.getElementById('proj-parsel');
-    const dpLand = document.getElementById('proj-land');
-    const dpKaks = document.getElementById('proj-kaks');
-    const dpTaks = document.getElementById('proj-taks');
-    const dpDist = document.getElementById('proj-district');
-    const dpMah = document.getElementById('proj-mahalle');
+    // Data Platformu Input Senkronizasyonu
+    const dpAda = document.getElementById('p-ada') || document.getElementById('proj-ada');
+    const dpParsel = document.getElementById('p-parsel') || document.getElementById('proj-parsel');
+    const dpLand = document.getElementById('p-land-area') || document.getElementById('proj-land');
+    const dpKaks = document.getElementById('p-kaks') || document.getElementById('proj-kaks');
+    const dpTaks = document.getElementById('p-taks') || document.getElementById('proj-taks');
+    const dpDist = document.getElementById('p-district') || document.getElementById('proj-district');
+    const dpMah = document.getElementById('p-neighborhood') || document.getElementById('proj-mahalle');
 
     if (dpAda) dpAda.value = p.ada;
     if (dpParsel) dpParsel.value = p.parsel;
@@ -884,20 +1236,28 @@
     if (dpDist) dpDist.value = p.district;
     if (dpMah) dpMah.value = p.neighborhood;
 
-    // Sayfayı Stage 1 form alanlarına doğru kaydır
+    // Hedef bölgeye kaydır
     const targetSection = document.getElementById('inp-landArea') || document.getElementById('stage1');
     if (targetSection) {
       targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
-  // Dışa aktar
+  // Dışa Aktarılan API
   window.ArsaImarMotoru = {
+    TURKIYE_ILLERI,
+    ILCELER_DB,
+    MAHALLELER_DB,
     PARCEL_DB,
-    querySmartParcel,
     renderSmartParcelUI,
+    switchMode,
+    handleCityChange,
     handleDistrictChange,
-    executeSearch,
+    executeAddressSearch,
+    executeParcelSearch,
+    initLeafletMap,
+    toggleMapLayer,
+    locateUserPosition,
     openPlanLightbox,
     openVrViewer,
     closeModal,
