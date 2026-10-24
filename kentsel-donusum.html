@@ -37,6 +37,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="assets/css/kentsel-donusum.css?v=2026.8">
+  <link rel="stylesheet" href="assets/css/arsa-imar.css?v=2026.1">
   <style>
 /* =========================================================================
    MODAL & POPUP DIALOG STYLES (vCard / Modal Mantığı)
@@ -444,6 +445,9 @@
           <button class="btn btn-gold btn-sm" onclick="printReport('all')">Tüm Rapor (PDF)</button>
         </div>
       </div>
+
+      <!-- Akıllı Arsa, Tapu & İmar Planı Sorgu Modülü (360Dönüşüm Standardı) -->
+      <div id="pd-smart-container-wrapper" class="no-print"></div>
 
       <div class="layout-2col">
         
@@ -2207,6 +2211,7 @@
        ========================================================================== -->
   <script src="assets/js/kentsel-donusum-engine.js?v=2026.2"></script>
   <script src="assets/js/kentsel-donusum-db.js?v=2026.2"></script>
+  <script src="assets/js/arsa-imar-sorgu.js?v=2026.1"></script>
   <script>
     let currentStage = 1;
 
@@ -2378,6 +2383,16 @@
         window.KDEngine.loadPreset(key);
         syncInputsWithState();
         renderUI();
+      }
+      if (window.ArsaImarMotoru) {
+        const presetKeys = {
+          kadikoy: 'kadikoy_1248_14',
+          besiktas: 'besiktas_452_7',
+          karsiyaka: 'karsiyaka_812_5',
+          izmit: 'izmit_1045_22'
+        };
+        const pKey = presetKeys[key] || 'kadikoy_1248_14';
+        window.ArsaImarMotoru.renderSmartParcelUI('pd-smart-container-wrapper', pKey);
       }
     }
 
@@ -4434,6 +4449,9 @@ Web: www.yakingrup.net | E-Posta: info@yakingrup.net`;
       window.KDEngine.calculate();
       syncInputsWithState();
       renderUI();
+      if (window.ArsaImarMotoru) {
+        window.ArsaImarMotoru.renderSmartParcelUI('pd-smart-container-wrapper', 'kadikoy_1248_14');
+      }
       try {
         const savedScale = localStorage.getItem('yg_print_scale');
         if (savedScale) setPrintScale(savedScale);

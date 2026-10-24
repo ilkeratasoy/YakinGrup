@@ -19,6 +19,9 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <!-- Supabase JS Client (v2) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Akıllı Arsa, Tapu & İmar Plan Motoru (360Dönüşüm Standardı) -->
+  <link rel="stylesheet" href="assets/css/arsa-imar.css?v=2026.1">
+  <script src="assets/js/arsa-imar-sorgu.js?v=2026.1"></script>
 
   <style>
     :root {
@@ -2054,9 +2057,14 @@
         <!-- 2. TAPU, ADA/PARSEL & TKGM SORGULAMA -->
         <div style="font-size:0.78rem; font-weight:800; color:var(--navy); margin:14px 0 2px 0; border-bottom:1.5px solid #e2e8f0; padding-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
           <span>2. Tapu & Parsel Bilgileri</span>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="openTkgmQueryFromForm()" style="padding:2px 8px; font-size:0.7rem; color:#2563eb;" title="TKGM Parsel Sorgu Sayfasını Aç">
-            TKGM Sorgula ↗
-          </button>
+          <div style="display:flex; gap:6px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openSmartParcelModalFromForm()" style="padding:2px 8px; font-size:0.7rem; color:#0284c7; font-weight:700;" title="Akıllı İmar, Uydu Çizimi ve 360° VR Aç">
+              🔍 Akıllı İmar & 360° VR
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openTkgmQueryFromForm()" style="padding:2px 8px; font-size:0.7rem; color:#2563eb;" title="TKGM Parsel Sorgu Sayfasını Aç">
+              TKGM ↗
+            </button>
+          </div>
         </div>
         <div class="form-grid">
           <div class="form-group">
@@ -6024,6 +6032,47 @@ function doPost(e) {
       openTkgmDirect(p.district, p.neighborhood, p.ada, p.parsel);
     }
 
+    function openSmartParcelModalFromForm() {
+      const dist = document.getElementById('p-district')?.value || 'Kadıköy';
+      const mah = document.getElementById('p-neighborhood')?.value || '';
+      const ada = document.getElementById('p-ada')?.value || '1248';
+      const parsel = document.getElementById('p-parsel')?.value || '14';
+      openSmartParcelModalDirect('İstanbul', dist, mah, ada, parsel);
+    }
+
+    function openSmartParcelModalForProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+      openSmartParcelModalDirect('İstanbul', p.district || 'Kadıköy', p.neighborhood || '', p.ada || '1248', p.parsel || '14');
+    }
+
+    function openSmartParcelModalDirect(city, district, neighborhood, ada, parsel) {
+      let modal = document.getElementById('modal-smart-parcel-popup');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'modal-smart-parcel-popup';
+        modal.className = 'pd-modal-backdrop';
+        modal.style.display = 'none';
+        modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+        modal.innerHTML = `
+          <div class="pd-modal-content" style="max-width:960px; max-height:92vh; overflow-y:auto; padding:18px;" onclick="event.stopPropagation()">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1.5px solid #e2e8f0; padding-bottom:8px;">
+              <h3 style="font-size:1.05rem; font-weight:800; color:var(--navy); margin:0;">
+                🏛️ Akıllı Tapu, İmar & Uydu Parseli (360° VR)
+              </h3>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('modal-smart-parcel-popup').style.display='none'">✕ Kapat</button>
+            </div>
+            <div id="dp-smart-parcel-mount"></div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+      modal.style.display = 'flex';
+      if (window.ArsaImarMotoru) {
+        window.ArsaImarMotoru.renderSmartParcelUI('dp-smart-parcel-mount', `${(district || 'kadikoy').toLowerCase()}_${ada}_${parsel}`);
+      }
+    }
+
     function filterDocsForProject(id) {
       const p = projects.find(x => x.id === id);
       if (p && p.name) filterDocsToProject(p.name);
@@ -6186,6 +6235,9 @@ function doPost(e) {
                   ${p.area ? `<span style="color:var(--muted); font-size:0.7rem; margin-left:3px;">(${escapeHtml(p.area)} m²)</span>` : ''}
                 </div>
                 <div style="display:flex; gap:4px; flex-shrink:0;">
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem; color:#0284c7; font-weight:700;" onclick="openSmartParcelModalForProject('${p.id}')" title="360° VR, İmar Planı ve Vektörel Uydu Çizimini Aç">
+                    🔍 Akıllı İmar (360° VR)
+                  </button>
                   <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openTkgmForProject('${p.id}')" title="TKGM Parsel Sorgu Sayfasını Aç">
                     TKGM ↗
                   </button>
